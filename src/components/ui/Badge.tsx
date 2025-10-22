@@ -15,7 +15,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
     const baseClasses = 'inline-flex items-center rounded-full font-medium';
 
     const variants = {
-      default: 'bg-[var(--primary-primary)] text-white',
+      default: 'bg-[var(--default-default)] text-white',
       success:
         'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
       warning:

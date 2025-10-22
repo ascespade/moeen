@@ -52,7 +52,7 @@ const insuranceStatusConfig = {
 
 const treatmentStatusConfig = {
   active: { label: 'نشط', color: 'success' as const },
-  completed: { label: 'مكتمل', color: 'secondary' as const },
+  completed: { label: 'مكتمل', color: 'info' as const },
   paused: { label: 'متوقف', color: 'warning' as const },
   cancelled: { label: 'ملغي', color: 'error' as const },
 };
@@ -160,8 +160,8 @@ export default function MedicalFilePage() {
   const getBlockStatus = (record: MedicalRecord) => {
     if (record.isBlocked) {
       return (
-        <div className='flex items-center gap-2 text-primary-error'>
-          <span className='h-2 w-2 rounded-full bg-primary-error'></span>
+        <div className='flex items-center gap-2 text-default-error'>
+          <span className='h-2 w-2 rounded-full bg-default-error'></span>
           <span className='text-sm font-medium'>محظور</span>
           {record.blockReason && (
             <span className='text-xs text-gray-500'>
@@ -172,8 +172,8 @@ export default function MedicalFilePage() {
       );
     }
     return (
-      <div className='flex items-center gap-2 text-primary-success'>
-        <span className='h-2 w-2 rounded-full bg-primary-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>نشط</span>
       </div>
     );
@@ -182,8 +182,8 @@ export default function MedicalFilePage() {
   const getOutstandingBalance = (record: MedicalRecord) => {
     if (record.hasOutstandingBalance) {
       return (
-        <div className='flex items-center gap-2 text-primary-primary'>
-          <span className='h-2 w-2 rounded-full bg-primary-primary'></span>
+        <div className='flex items-center gap-2 text-default-default'>
+          <span className='h-2 w-2 rounded-full bg-default-default'></span>
           <span className='text-sm font-medium'>
             رصيد مستحق: {record.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -191,8 +191,8 @@ export default function MedicalFilePage() {
       );
     }
     return (
-      <div className='flex items-center gap-2 text-primary-success'>
-        <span className='h-2 w-2 rounded-full bg-primary-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -214,9 +214,9 @@ export default function MedicalFilePage() {
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary-primary)] mx-auto mb-4'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto mb-4'></div>
           <p className='text-gray-600'>جاري تحميل الملفات الطبية...</p>
         </div>
       </div>
@@ -225,13 +225,13 @@ export default function MedicalFilePage() {
 
   if (error) {
     return (
-      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className='px-4 py-2 bg-[var(--primary-primary)] text-white rounded-lg hover:bg-[var(--primary-primary-dark)]'
+            className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
           </button>
@@ -241,9 +241,9 @@ export default function MedicalFilePage() {
   }
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -255,7 +255,7 @@ export default function MedicalFilePage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-primary text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   الملفات الطبية
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -267,7 +267,7 @@ export default function MedicalFilePage() {
               <Button variant='outline' size='sm'>
                 تصدير التقرير
               </Button>
-              <Button variant='primary' size='sm'>
+              <Button variant='default' size='sm'>
                 إضافة ملف جديد
               </Button>
             </div>
@@ -279,7 +279,7 @@ export default function MedicalFilePage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <Card className='p-6 text-center'>
-            <div className='text-primary mb-2 text-3xl font-bold'>
+            <div className='text-default mb-2 text-3xl font-bold'>
               {records.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -287,7 +287,7 @@ export default function MedicalFilePage() {
             </div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {
                 records.filter(r => !r.isBlocked && !r.hasOutstandingBalance)
                   .length
@@ -296,13 +296,13 @@ export default function MedicalFilePage() {
             <div className='text-gray-600 dark:text-gray-300'>ملفات نشطة</div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-error'>
+            <div className='mb-2 text-3xl font-bold text-default-error'>
               {records.filter(r => r.isBlocked).length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>ملفات محظورة</div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {records.filter(r => r.hasOutstandingBalance).length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>رصيد مستحق</div>
@@ -322,28 +322,28 @@ export default function MedicalFilePage() {
           </div>
           <div className='flex gap-3'>
             <Button
-              variant={filter === 'all' ? 'primary' : 'outline'}
+              variant={filter === 'all' ? 'default' : 'outline'}
               size='sm'
               onClick={() => setFilter('all')}
             >
               جميع الملفات
             </Button>
             <Button
-              variant={filter === 'active' ? 'primary' : 'outline'}
+              variant={filter === 'active' ? 'default' : 'outline'}
               size='sm'
               onClick={() => setFilter('active')}
             >
               نشطة
             </Button>
             <Button
-              variant={filter === 'blocked' ? 'primary' : 'outline'}
+              variant={filter === 'blocked' ? 'default' : 'outline'}
               size='sm'
               onClick={() => setFilter('blocked')}
             >
               محظورة
             </Button>
             <Button
-              variant={filter === 'outstanding' ? 'primary' : 'outline'}
+              variant={filter === 'outstanding' ? 'default' : 'outline'}
               size='sm'
               onClick={() => setFilter('outstanding')}
             >
@@ -403,7 +403,7 @@ export default function MedicalFilePage() {
                     <span className='text-sm text-gray-600 dark:text-gray-300'>
                       الموعد القادم:
                     </span>
-                    <span className='text-primary text-sm font-medium'>
+                    <span className='text-default text-sm font-medium'>
                       {record.nextAppointment}
                     </span>
                   </div>
@@ -443,7 +443,7 @@ export default function MedicalFilePage() {
                 <Button variant='outline' size='sm' className='flex-1'>
                   عرض الملف
                 </Button>
-                <Button variant='primary' size='sm' className='flex-1'>
+                <Button variant='default' size='sm' className='flex-1'>
                   تحديث
                 </Button>
               </div>
@@ -475,7 +475,7 @@ export default function MedicalFilePage() {
             <p className='mb-4 text-gray-600 dark:text-gray-300'>
               لا توجد ملفات طبية تطابق البحث أو الفلتر المحدد
             </p>
-            <Button variant='primary'>إضافة ملف جديد</Button>
+            <Button variant='default'>إضافة ملف جديد</Button>
           </Card>
         )}
       </main>
@@ -651,7 +651,7 @@ export default function MedicalFilePage() {
                             (condition, index) => (
                               <Badge
                                 key={index}
-                                variant='secondary'
+                                variant='info'
                                 className='text-xs'
                               >
                                 {condition}
@@ -691,7 +691,7 @@ export default function MedicalFilePage() {
                             (medication, index) => (
                               <Badge
                                 key={index}
-                                variant='secondary'
+                                variant='info'
                                 className='text-xs'
                               >
                                 {medication}
@@ -757,7 +757,7 @@ export default function MedicalFilePage() {
                 <Button variant='outline' className='flex-1'>
                   طباعة الملف
                 </Button>
-                <Button variant='primary' className='flex-1'>
+                <Button variant='default' className='flex-1'>
                   تحديث الملف
                 </Button>
               </div>

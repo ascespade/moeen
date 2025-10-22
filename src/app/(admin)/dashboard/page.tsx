@@ -211,7 +211,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       <div className='container-app py-6'>
         {/* Header */}
         <div className='flex justify-between items-center mb-8'>

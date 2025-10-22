@@ -19,8 +19,8 @@ const pricingPlans = [
     ],
     cta: 'ابدأ مجاناً',
     popular: false,
-    color: 'text-[var(--primary-accent)]',
-    bgColor: 'bg-[var(--primary-accent)]/10',
+    color: 'text-[var(--default-accent)]',
+    bgColor: 'bg-[var(--default-accent)]/10',
   },
   {
     id: 2,
@@ -40,8 +40,8 @@ const pricingPlans = [
     ],
     cta: 'جرب مجاناً لمدة 14 يوم',
     popular: true,
-    color: 'text-[var(--primary-primary)]',
-    bgColor: 'bg-[var(--primary-primary)]/10',
+    color: 'text-[var(--default-default)]',
+    bgColor: 'bg-[var(--default-default)]/10',
   },
   {
     id: 3,
@@ -96,7 +96,7 @@ export default function PricingPage() {
   return (
     <div className='min-h-screen bg-background text-foreground'>
       {/* Header */}
-      <div className='bg-gradient-to-r from-[var(--primary-primary)] to-[var(--primary-secondary)] py-20'>
+      <div className='bg-gradient-to-r from-[var(--default-default)] to-[var(--default-info)] py-20'>
         <div className='container-app text-center'>
           <h1 className='text-5xl font-bold text-white mb-6'>خطط الأسعار</h1>
           <p className='text-xl text-white/90 max-w-3xl mx-auto'>
@@ -115,13 +115,13 @@ export default function PricingPage() {
                 key={plan.id}
                 className={`p-8 relative ${
                   plan.popular
-                    ? 'ring-2 ring-[var(--primary-primary)] shadow-xl scale-105'
+                    ? 'ring-2 ring-[var(--default-default)] shadow-xl scale-105'
                     : ''
                 }`}
               >
                 {plan.popular && (
                   <div className='absolute -top-4 left-1/2 transform -translate-x-1/2'>
-                    <Badge className='badge-primary px-4 py-2'>
+                    <Badge className='badge-default px-4 py-2'>
                       الأكثر شعبية
                     </Badge>
                   </div>
@@ -135,7 +135,7 @@ export default function PricingPage() {
                     {plan.description}
                   </p>
                   <div className='mb-4'>
-                    <span className='text-5xl font-bold text-[var(--primary-primary)]'>
+                    <span className='text-5xl font-bold text-[var(--default-default)]'>
                       {plan.price}
                     </span>
                     <span className='text-muted-foreground ml-2'>
@@ -157,7 +157,7 @@ export default function PricingPage() {
 
                 <Button
                   className={`w-full ${
-                    plan.popular ? 'btn-primary' : 'btn-outline'
+                    plan.popular ? 'btn-default' : 'btn-outline'
                   }`}
                 >
                   {plan.cta}
@@ -169,7 +169,7 @@ export default function PricingPage() {
       </div>
 
       {/* FAQ Section */}
-      <div className='py-20 bg-[var(--primary-surface)]'>
+      <div className='py-20 bg-[var(--default-surface)]'>
         <div className='container-app'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-bold text-foreground mb-4'>
@@ -204,7 +204,7 @@ export default function PricingPage() {
             يوم
           </p>
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            <Button className='btn-primary btn-lg'>
+            <Button className='btn-default btn-lg'>
               ابدأ التجربة المجانية
             </Button>
             <Button className='btn-outline btn-lg'>تواصل معنا</Button>

@@ -276,8 +276,8 @@ export default function AdminPage() {
     return (
       <div className='flex items-center justify-center min-h-screen'>
         <div className='text-center'>
-          <AlertTriangle className='h-8 w-8 text-primary-error mx-auto mb-4' />
-          <p className='text-primary-error mb-4'>Error: {error}</p>
+          <AlertTriangle className='h-8 w-8 text-default-error mx-auto mb-4' />
+          <p className='text-default-error mb-4'>Error: {error}</p>
           <Button onClick={loadAdminData}>Retry</Button>
         </div>
       </div>
@@ -285,7 +285,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       <div className='container-app py-6'>
         {/* Header */}
         <div className='flex justify-between items-center mb-8'>
@@ -311,7 +311,7 @@ export default function AdminPage() {
           <Card data-testid='admin-summary-card'>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <CardTitle className='text-sm font-medium'>Total Users</CardTitle>
-              <Users className='h-4 w-4 text-primary-primary' />
+              <Users className='h-4 w-4 text-default-default' />
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>{users.length}</div>
@@ -326,7 +326,7 @@ export default function AdminPage() {
               <CardTitle className='text-sm font-medium'>
                 System Configs
               </CardTitle>
-              <Settings className='h-4 w-4 text-primary-success' />
+              <Settings className='h-4 w-4 text-default-success' />
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>{configs.length}</div>
@@ -341,7 +341,7 @@ export default function AdminPage() {
               <CardTitle className='text-sm font-medium'>
                 Security Events
               </CardTitle>
-              <Shield className='h-4 w-4 text-primary-error' />
+              <Shield className='h-4 w-4 text-default-error' />
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>{securityEvents.length}</div>
@@ -354,7 +354,7 @@ export default function AdminPage() {
               <CardTitle className='text-sm font-medium'>
                 Failed Logins
               </CardTitle>
-              <Lock className='h-4 w-4 text-primary-primary' />
+              <Lock className='h-4 w-4 text-default-default' />
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
@@ -534,7 +534,7 @@ export default function AdminPage() {
                           </div>
                         </div>
                         {config.isSecret && (
-                          <Key className='h-4 w-4 text-primary-warning' />
+                          <Key className='h-4 w-4 text-default-warning' />
                         )}
                       </div>
                       <div className='flex items-center gap-2'>
@@ -586,9 +586,9 @@ export default function AdminPage() {
                     >
                       <div className='flex items-center gap-3'>
                         {event.success ? (
-                          <CheckCircle className='h-5 w-5 text-primary-success' />
+                          <CheckCircle className='h-5 w-5 text-default-success' />
                         ) : (
-                          <AlertTriangle className='h-5 w-5 text-primary-error' />
+                          <AlertTriangle className='h-5 w-5 text-default-error' />
                         )}
                         <div>
                           <div className='font-medium'>{event.action}</div>

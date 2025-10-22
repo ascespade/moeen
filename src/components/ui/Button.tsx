@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+  variant?: 'default' | 'info' | 'outline' | 'ghost' | 'destructive';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   loading?: boolean;
   children: React.ReactNode;
@@ -13,7 +13,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
-      variant = 'primary',
+      variant = 'default',
       size = 'md',
       loading = false,
       disabled,
@@ -26,14 +26,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variants = {
-      primary:
-        'bg-[var(--primary-primary)] text-white hover:bg-[var(--primary-primary-hover)] focus:ring-[var(--primary-primary)]',
-      secondary:
-        'bg-[var(--primary-secondary)] text-white hover:bg-opacity-90 focus:ring-[var(--primary-secondary)]',
+      default:
+        'bg-[var(--default-default)] text-white hover:bg-[var(--default-default-hover)] focus:ring-[var(--default-default)]',
+      info:
+        'bg-[var(--default-info)] text-white hover:bg-opacity-90 focus:ring-[var(--default-info)]',
       outline:
-        'border-2 border-[var(--primary-primary)] text-[var(--primary-primary)] hover:bg-[var(--primary-primary)] hover:text-white focus:ring-[var(--primary-primary)]',
+        'border-2 border-[var(--default-default)] text-[var(--default-default)] hover:bg-[var(--default-default)] hover:text-white focus:ring-[var(--default-default)]',
       ghost:
-        'text-[var(--primary-primary)] hover:bg-[var(--primary-primary)] hover:bg-opacity-10 focus:ring-[var(--primary-primary)]',
+        'text-[var(--default-default)] hover:bg-[var(--default-default)] hover:bg-opacity-10 focus:ring-[var(--default-default)]',
       destructive: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-600',
     };
 

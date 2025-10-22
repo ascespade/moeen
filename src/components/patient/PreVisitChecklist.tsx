@@ -124,11 +124,11 @@ export default function PreVisitChecklist({
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'documents':
-        return 'text-primary-primary bg-blue-100 dark:bg-blue-900/20';
+        return 'text-default-default bg-blue-100 dark:bg-blue-900/20';
       case 'payment':
-        return 'text-primary-success bg-green-100 dark:bg-green-900/20';
+        return 'text-default-success bg-green-100 dark:bg-green-900/20';
       case 'health':
-        return 'text-primary-error bg-red-100 dark:bg-red-900/20';
+        return 'text-default-error bg-red-100 dark:bg-red-900/20';
       case 'appointment':
         return 'text-purple-600 bg-purple-100 dark:bg-purple-900/20';
       default:
@@ -193,7 +193,7 @@ export default function PreVisitChecklist({
           </div>
           <div className='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
             <div
-              className='bg-primary-primary h-2 rounded-full transition-all duration-300'
+              className='bg-default-default h-2 rounded-full transition-all duration-300'
               style={{ width: `${(completedItems / totalItems) * 100}%` }}
             />
           </div>
@@ -239,12 +239,12 @@ export default function PreVisitChecklist({
                       </h4>
                       <div className='flex items-center space-x-2'>
                         {item.required && (
-                          <Badge variant='secondary' className='text-xs'>
+                          <Badge variant='info' className='text-xs'>
                             {t('common.required')}
                           </Badge>
                         )}
                         {item.completed && (
-                          <CheckCircle className='h-4 w-4 text-primary-success' />
+                          <CheckCircle className='h-4 w-4 text-default-success' />
                         )}
                       </div>
                     </div>
@@ -269,7 +269,7 @@ export default function PreVisitChecklist({
               {completedRequiredItems}/{requiredItems.length}
             </p>
             {!allRequiredCompleted && (
-              <p className='text-sm text-primary-primary dark:text-orange-400 mt-1'>
+              <p className='text-sm text-default-default dark:text-orange-400 mt-1'>
                 {t('patient.checklist.required_warning')}
               </p>
             )}

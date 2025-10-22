@@ -46,7 +46,7 @@ export default function UsersAdminPage() {
   }
 
   return (
-    <main className='min-h-screen bg-[var(--primary-surface)]'>
+    <main className='min-h-screen bg-[var(--default-surface)]'>
       <div className='container-app py-6'>
         <div className='grid gap-4'>
           <div className='grid grid-cols-1 md:grid-cols-2 gap-3 items-center'>
@@ -78,7 +78,7 @@ export default function UsersAdminPage() {
           ) : (
             <div className='overflow-x-auto card'>
               <table className='w-full text-sm'>
-                <thead className='bg-[var(--primary-surface)]'>
+                <thead className='bg-[var(--default-surface)]'>
                   <tr>
                     <th className='text-start p-3 text-[var(--foreground)]'>
                       البريد
@@ -98,7 +98,7 @@ export default function UsersAdminPage() {
                   {filtered.map(r => (
                     <tr
                       key={r.id}
-                      className='border-t border-[var(--primary-border)]'
+                      className='border-t border-[var(--default-border)]'
                     >
                       <td className='p-3 text-[var(--foreground)]'>
                         {r.email}

@@ -326,7 +326,7 @@ const PatientRecords: React.FC = () => {
         <h1 className='text-3xl font-bold text-gray-900'>سجلات المرضى</h1>
         <Button
           onClick={() => setShowAddPatient(true)}
-          className='bg-[var(--primary-primary)] hover:brightness-95'
+          className='bg-[var(--default-default)] hover:brightness-95'
         >
           <Plus className='w-4 h-4 mr-2' />
           إضافة مريض جديد
@@ -505,7 +505,7 @@ const PatientRecords: React.FC = () => {
                         </label>
                         <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.specialNeeds.map((need, index) => (
-                            <Badge key={index} variant='secondary'>
+                            <Badge key={index} variant='info'>
                               {need}
                             </Badge>
                           ))}
@@ -536,7 +536,7 @@ const PatientRecords: React.FC = () => {
                         <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.medications.map(
                             (medication, index) => (
-                              <Badge key={index} variant='secondary'>
+                              <Badge key={index} variant='info'>
                                 {medication}
                               </Badge>
                             )
@@ -566,7 +566,7 @@ const PatientRecords: React.FC = () => {
                                 {record.date}
                               </p>
                             </div>
-                            <Badge variant='secondary'>
+                            <Badge variant='info'>
                               {record.diagnosis}
                             </Badge>
                           </div>
@@ -629,7 +629,7 @@ const PatientRecords: React.FC = () => {
                         <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.medicalHistory.map(
                             (condition, index) => (
-                              <Badge key={index} variant='secondary'>
+                              <Badge key={index} variant='info'>
                                 {condition}
                               </Badge>
                             )
@@ -793,7 +793,7 @@ const PatientRecords: React.FC = () => {
               </Button>
               <Button
                 onClick={handleAddPatient}
-                className='bg-[var(--primary-primary)] hover:brightness-95'
+                className='bg-[var(--default-default)] hover:brightness-95'
               >
                 إضافة المريض
               </Button>

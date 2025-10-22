@@ -23,13 +23,13 @@ export default function GlobalError({
             height={80}
             className='mx-auto rounded mb-4'
           />
-          <h1 className='text-4xl font-bold text-primary'>مُعين</h1>
+          <h1 className='text-4xl font-bold text-default'>مُعين</h1>
         </div>
 
         {/* Error Content */}
         <div className='bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700'>
           <div className='w-20 h-20 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-6'>
-            <AlertTriangle className='w-10 h-10 text-primary-error dark:text-red-400' />
+            <AlertTriangle className='w-10 h-10 text-default-error dark:text-red-400' />
           </div>
 
           <h2 className='text-3xl font-bold text-gray-900 dark:text-white mb-4'>
@@ -51,7 +51,7 @@ export default function GlobalError({
           <div className='flex flex-col sm:flex-row gap-4 justify-center mb-8'>
             <button
               onClick={() => reset()}
-              className='inline-flex items-center justify-center gap-2 bg-[var(--primary-primary)] text-white px-6 py-3 rounded-lg hover:bg-[var(--primary-primary-hover)] transition-colors'
+              className='inline-flex items-center justify-center gap-2 bg-[var(--default-default)] text-white px-6 py-3 rounded-lg hover:bg-[var(--default-default-hover)] transition-colors'
             >
               <RefreshCw className='w-5 h-5' />
               إعادة المحاولة
@@ -75,7 +75,7 @@ export default function GlobalError({
                 href='/contact'
                 className='flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors'
               >
-                <Bug className='w-5 h-5 text-[var(--primary-primary)]' />
+                <Bug className='w-5 h-5 text-[var(--default-default)]' />
                 <span className='text-gray-700 dark:text-gray-300'>
                   الإبلاغ عن المشكلة
                 </span>
@@ -84,7 +84,7 @@ export default function GlobalError({
                 href='/faq'
                 className='flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors'
               >
-                <AlertTriangle className='w-5 h-5 text-[var(--primary-primary)]' />
+                <AlertTriangle className='w-5 h-5 text-[var(--default-default)]' />
                 <span className='text-gray-700 dark:text-gray-300'>
                   الحصول على المساعدة
                 </span>

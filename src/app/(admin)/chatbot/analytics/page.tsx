@@ -91,8 +91,8 @@ export default function ChatbotAnalyticsPage() {
   >('messages');
 
   const getGrowthColor = (growth: number) => {
-    if (growth > 0) return 'text-primary-success';
-    if (growth < 0) return 'text-primary-error';
+    if (growth > 0) return 'text-default-success';
+    if (growth < 0) return 'text-default-error';
     return 'text-gray-600';
   };
 
@@ -103,9 +103,9 @@ export default function ChatbotAnalyticsPage() {
   };
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -117,7 +117,7 @@ export default function ChatbotAnalyticsPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-primary text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   تحليلات الشات بوت
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -136,7 +136,7 @@ export default function ChatbotAnalyticsPage() {
                 <option value='month'>هذا الشهر</option>
                 <option value='year'>هذا العام</option>
               </select>
-              <button className='btn-primary rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 تصدير التقرير
               </button>
             </div>
@@ -148,24 +148,24 @@ export default function ChatbotAnalyticsPage() {
         {/* Key Metrics */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockAnalytics.totalMessages.toLocaleString()}
             </div>
             <div className='mb-2 text-gray-600 dark:text-gray-300'>
               إجمالي الرسائل
             </div>
-            <div className='text-sm text-primary-success'>
+            <div className='text-sm text-default-success'>
               +12.5% من الشهر الماضي
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockAnalytics.totalUsers.toLocaleString()}
             </div>
             <div className='mb-2 text-gray-600 dark:text-gray-300'>
               إجمالي المستخدمين
             </div>
-            <div className='text-sm text-primary-success'>
+            <div className='text-sm text-default-success'>
               +8.3% من الشهر الماضي
             </div>
           </div>
@@ -176,18 +176,18 @@ export default function ChatbotAnalyticsPage() {
             <div className='mb-2 text-gray-600 dark:text-gray-300'>
               متوسط وقت الاستجابة
             </div>
-            <div className='text-sm text-primary-success'>
+            <div className='text-sm text-default-success'>
               -0.5ث من الشهر الماضي
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockAnalytics.satisfactionRate}/5
             </div>
             <div className='mb-2 text-gray-600 dark:text-gray-300'>
               معدل الرضا
             </div>
-            <div className='text-sm text-primary-success'>
+            <div className='text-sm text-default-success'>
               +0.2 من الشهر الماضي
             </div>
           </div>
@@ -204,7 +204,7 @@ export default function ChatbotAnalyticsPage() {
                   onClick={() => setSelectedMetric('messages')}
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'messages'
-                      ? 'bg-[var(--primary-primary)] text-white'
+                      ? 'bg-[var(--default-default)] text-white'
                       : 'bg-surface text-gray-600'
                   }`}
                 >
@@ -214,7 +214,7 @@ export default function ChatbotAnalyticsPage() {
                   onClick={() => setSelectedMetric('users')}
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'users'
-                      ? 'bg-[var(--primary-primary)] text-white'
+                      ? 'bg-[var(--default-default)] text-white'
                       : 'bg-surface text-gray-600'
                   }`}
                 >
@@ -226,7 +226,7 @@ export default function ChatbotAnalyticsPage() {
               {mockAnalytics.hourlyStats.map((stat, index) => (
                 <div key={index} className='flex flex-col items-center'>
                   <div
-                    className='mb-2 w-4 rounded-t bg-[var(--primary-primary)]'
+                    className='mb-2 w-4 rounded-t bg-[var(--default-default)]'
                     style={{
                       height: `${(selectedMetric === 'messages' ? stat.messages : stat.users) / 20}px`,
                     }}
@@ -256,10 +256,10 @@ export default function ChatbotAnalyticsPage() {
                     <div
                       className={`h-2 rounded-full ${
                         sentiment.sentiment === 'إيجابي'
-                          ? 'bg-primary-success'
+                          ? 'bg-default-success'
                           : sentiment.sentiment === 'محايد'
-                            ? 'bg-primary-warning'
-                            : 'bg-primary-error'
+                            ? 'bg-default-warning'
+                            : 'bg-default-error'
                       }`}
                       style={{ width: `${sentiment.percentage}%` }}
                     ></div>
@@ -282,7 +282,7 @@ export default function ChatbotAnalyticsPage() {
                 className='flex items-center justify-between rounded-lg bg-surface p-4 dark:bg-gray-800'
               >
                 <div className='flex items-center gap-4'>
-                  <div className='flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary-primary)] text-sm font-semibold text-white'>
+                  <div className='flex h-8 w-8 items-center justify-center rounded-full bg-[var(--default-default)] text-sm font-semibold text-white'>
                     {index + 1}
                   </div>
                   <div>

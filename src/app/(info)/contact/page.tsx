@@ -85,7 +85,7 @@ export default function ContactPage() {
           <div className='rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'>
             <div className='text-center'>
               <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900'>
-                <CheckCircle className='h-8 w-8 text-primary-success dark:text-green-400' />
+                <CheckCircle className='h-8 w-8 text-default-success dark:text-green-400' />
               </div>
               <h2 className='mb-2 text-lg font-semibold text-gray-900 dark:text-white'>
                 رسالتك في الطريق
@@ -95,7 +95,7 @@ export default function ContactPage() {
               </p>
               <Link
                 href='/'
-                className='inline-flex w-full items-center justify-center rounded-lg bg-[var(--primary-primary)] px-4 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+                className='inline-flex w-full items-center justify-center rounded-lg bg-[var(--default-default)] px-4 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 العودة للرئيسية
               </Link>
@@ -122,7 +122,7 @@ export default function ContactPage() {
               />
               <span
                 className='text-xl font-bold'
-                style={{ color: 'var(--primary-primary)' }}
+                style={{ color: 'var(--default-default)' }}
               >
                 مُعين
               </span>
@@ -130,19 +130,19 @@ export default function ContactPage() {
             <nav className='hidden items-center gap-6 md:flex'>
               <Link
                 href='/'
-                className='text-gray-600 hover:text-[var(--primary-primary)] dark:text-gray-400'
+                className='text-gray-600 hover:text-[var(--default-default)] dark:text-gray-400'
               >
                 الرئيسية
               </Link>
               <Link
                 href='/about'
-                className='text-gray-600 hover:text-[var(--primary-primary)] dark:text-gray-400'
+                className='text-gray-600 hover:text-[var(--default-default)] dark:text-gray-400'
               >
                 من نحن
               </Link>
               <Link
                 href='/contact'
-                className='font-medium text-[var(--primary-primary)]'
+                className='font-medium text-[var(--default-default)]'
               >
                 تواصل
               </Link>
@@ -152,7 +152,7 @@ export default function ContactPage() {
       </header>
 
       {/* Hero Section */}
-      <section className='bg-gradient-to-br from-[var(--primary-primary)] to-[var(--primary-secondary)] py-20 text-white'>
+      <section className='bg-gradient-to-br from-[var(--default-default)] to-[var(--default-info)] py-20 text-white'>
         <div className='mx-auto max-w-screen-xl px-4 text-center'>
           <h1 className='mb-6 text-4xl font-bold md:text-6xl'>تواصل معنا</h1>
           <p className='mb-8 text-xl opacity-90 md:text-2xl'>
@@ -171,8 +171,8 @@ export default function ContactPage() {
           <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-4'>
             {contactInfo.map((info, index) => (
               <div key={index} className='text-center'>
-                <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--primary-primary)] bg-opacity-10'>
-                  <div className='text-[var(--primary-primary)]'>
+                <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--default-default)] bg-opacity-10'>
+                  <div className='text-[var(--default-default)]'>
                     {info.icon}
                   </div>
                 </div>
@@ -181,7 +181,7 @@ export default function ContactPage() {
                 </h3>
                 <a
                   href={info.link}
-                  className='text-gray-600 transition-colors hover:text-[var(--primary-primary)] dark:text-gray-400'
+                  className='text-gray-600 transition-colors hover:text-[var(--default-default)] dark:text-gray-400'
                 >
                   {info.value}
                 </a>
@@ -220,7 +220,7 @@ export default function ContactPage() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder='اسمك الكامل'
-                      className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)] dark:border-gray-600 dark:bg-gray-700 dark:text-white'
+                      className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)] dark:border-gray-600 dark:bg-gray-700 dark:text-white'
                       required
                     />
                   </div>
@@ -238,7 +238,7 @@ export default function ContactPage() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder='name@example.com'
-                      className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)] dark:border-gray-600 dark:bg-gray-700 dark:text-white'
+                      className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)] dark:border-gray-600 dark:bg-gray-700 dark:text-white'
                       required
                     />
                   </div>
@@ -258,7 +258,7 @@ export default function ContactPage() {
                     value={formData.subject}
                     onChange={handleChange}
                     placeholder='موضوع الرسالة'
-                    className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)] dark:border-gray-600 dark:bg-gray-700 dark:text-white'
+                    className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)] dark:border-gray-600 dark:bg-gray-700 dark:text-white'
                     required
                   />
                 </div>
@@ -277,7 +277,7 @@ export default function ContactPage() {
                     onChange={handleChange}
                     rows={5}
                     placeholder='نص الرسالة'
-                    className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)] dark:border-gray-600 dark:bg-gray-700 dark:text-white'
+                    className='w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)] dark:border-gray-600 dark:bg-gray-700 dark:text-white'
                     required
                   />
                 </div>
@@ -285,7 +285,7 @@ export default function ContactPage() {
                 <button
                   type='submit'
                   disabled={isSending}
-                  className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary-primary)] px-6 py-3 text-white transition-colors hover:bg-[var(--primary-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50'
+                  className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--default-default)] px-6 py-3 text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50'
                 >
                   {isSending ? (
                     <>
@@ -309,7 +309,7 @@ export default function ContactPage() {
               <div className='space-y-6'>
                 {contactInfo.map((info, index) => (
                   <div key={index} className='flex items-start gap-4'>
-                    <div className='mt-1 text-[var(--primary-primary)]'>
+                    <div className='mt-1 text-[var(--default-default)]'>
                       {info.icon}
                     </div>
                     <div>
@@ -318,7 +318,7 @@ export default function ContactPage() {
                       </h4>
                       <a
                         href={info.link}
-                        className='text-gray-600 transition-colors hover:text-[var(--primary-primary)] dark:text-gray-400'
+                        className='text-gray-600 transition-colors hover:text-[var(--default-default)] dark:text-gray-400'
                       >
                         {info.value}
                       </a>
@@ -327,7 +327,7 @@ export default function ContactPage() {
                 ))}
               </div>
 
-              <div className='mt-8 rounded-lg bg-[var(--primary-primary)] bg-opacity-10 p-6'>
+              <div className='mt-8 rounded-lg bg-[var(--default-default)] bg-opacity-10 p-6'>
                 <h4 className='mb-2 font-semibold text-gray-900 dark:text-white'>
                   أوقات الاستجابة
                 </h4>

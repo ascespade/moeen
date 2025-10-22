@@ -132,9 +132,9 @@ export default function InsuranceClaimsPage() {
     : null;
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -146,7 +146,7 @@ export default function InsuranceClaimsPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-primary text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   المطالبات التأمينية
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -157,7 +157,7 @@ export default function InsuranceClaimsPage() {
             <div className='flex items-center gap-3'>
               <button
                 onClick={() => setShowCreateModal(true)}
-                className='btn-primary rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+                className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة مطالبة
               </button>
@@ -170,7 +170,7 @@ export default function InsuranceClaimsPage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockClaims.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -184,13 +184,13 @@ export default function InsuranceClaimsPage() {
             <div className='text-gray-600 dark:text-gray-300'>قيد الانتظار</div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockClaims.filter(c => c.status === 'approved').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>موافق عليها</div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-error'>
+            <div className='mb-2 text-3xl font-bold text-default-error'>
               {mockClaims.filter(c => c.status === 'rejected').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>مرفوضة</div>
@@ -209,7 +209,7 @@ export default function InsuranceClaimsPage() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder='ابحث بالاسم أو رقم المطالبة...'
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
             </div>
 
@@ -220,7 +220,7 @@ export default function InsuranceClaimsPage() {
               <select
                 value={selectedStatus}
                 onChange={e => setSelectedStatus(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع الحالات</option>
                 <option value='pending'>قيد الانتظار</option>
@@ -231,7 +231,7 @@ export default function InsuranceClaimsPage() {
             </div>
 
             <div className='flex items-end'>
-              <button className='btn-primary w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 تطبيق الفلاتر
               </button>
             </div>
@@ -312,7 +312,7 @@ export default function InsuranceClaimsPage() {
                       <div className='flex gap-2'>
                         <button
                           onClick={() => setShowDetailsModal(claim.id)}
-                          className='text-[var(--primary-primary)] hover:text-[var(--primary-primary-hover)]'
+                          className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
                         >
                           عرض
                         </button>
@@ -320,7 +320,7 @@ export default function InsuranceClaimsPage() {
                           تعديل
                         </button>
                         {claim.status === 'pending' && (
-                          <button className='text-primary-success hover:text-green-700'>
+                          <button className='text-default-success hover:text-green-700'>
                             موافقة
                           </button>
                         )}
@@ -369,7 +369,7 @@ export default function InsuranceClaimsPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     المريض
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value=''>اختر المريض</option>
                     <option value='1'>أحمد العتيبي</option>
                     <option value='2'>فاطمة السعيد</option>
@@ -381,7 +381,7 @@ export default function InsuranceClaimsPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     شركة التأمين
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value=''>اختر شركة التأمين</option>
                     <option value='التأمين التعاوني'>التأمين التعاوني</option>
                     <option value='الراجحي للتأمين'>الراجحي للتأمين</option>
@@ -395,7 +395,7 @@ export default function InsuranceClaimsPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     نوع العلاج
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value=''>اختر نوع العلاج</option>
                     <option value='علاج طبيعي'>علاج طبيعي</option>
                     <option value='علاج نفسي'>علاج نفسي</option>
@@ -409,7 +409,7 @@ export default function InsuranceClaimsPage() {
                   </label>
                   <input
                     type='number'
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0'
                   />
                 </div>
@@ -421,7 +421,7 @@ export default function InsuranceClaimsPage() {
                 </label>
                 <textarea
                   rows={3}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='وصف مفصل للعلاج المطلوب...'
                 />
               </div>
@@ -447,7 +447,7 @@ export default function InsuranceClaimsPage() {
                 </button>
                 <button
                   type='submit'
-                  className='btn-primary flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   إضافة المطالبة
                 </button>
@@ -605,7 +605,7 @@ export default function InsuranceClaimsPage() {
                 إغلاق
               </button>
               {selectedClaim.status === 'pending' && (
-                <button className='btn-primary flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                   مراجعة المطالبة
                 </button>
               )}

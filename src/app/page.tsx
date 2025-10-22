@@ -34,9 +34,9 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className='relative min-h-screen flex items-center justify-center overflow-hidden'>
         {/* Background Elements */}
-        <div className='absolute inset-0 bg-gradient-to-br from-background via-background to-[var(--primary-primary)]/5'></div>
-        <div className='absolute top-20 left-20 w-72 h-72 bg-[var(--primary-primary)]/10 rounded-full blur-3xl'></div>
-        <div className='absolute bottom-20 right-20 w-96 h-96 bg-[var(--primary-secondary)]/10 rounded-full blur-3xl'></div>
+        <div className='absolute inset-0 bg-gradient-to-br from-background via-background to-[var(--default-default)]/5'></div>
+        <div className='absolute top-20 left-20 w-72 h-72 bg-[var(--default-default)]/10 rounded-full blur-3xl'></div>
+        <div className='absolute bottom-20 right-20 w-96 h-96 bg-[var(--default-info)]/10 rounded-full blur-3xl'></div>
 
         <div className='container-app relative z-10'>
           <div className='text-center max-w-4xl mx-auto'>
@@ -46,7 +46,7 @@ export default function HomePage() {
             <h1 className='text-5xl md:text-7xl font-bold text-foreground mb-6'>
               مركز الهمم للرعاية الصحية
             </h1>
-            <h2 className='text-2xl md:text-3xl text-[var(--primary-primary)] mb-6'>
+            <h2 className='text-2xl md:text-3xl text-[var(--default-default)] mb-6'>
               رعاية شاملة لذوي الاحتياجات الخاصة
             </h2>
             <p className='text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto'>
@@ -54,7 +54,7 @@ export default function HomePage() {
               الاحتياجات الخاصة مع أحدث التقنيات الطبية
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <Button asChild size='lg' className='btn-primary'>
+              <Button asChild size='lg' className='btn-default'>
                 <Link
                   href='/appointments'
                   data-testid='book-appointment-button'
@@ -75,12 +75,12 @@ export default function HomePage() {
 
         {/* Slide Indicators */}
         <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2'>
-          <button className='w-3 h-3 rounded-full bg-[var(--primary-primary)]' />
+          <button className='w-3 h-3 rounded-full bg-[var(--default-default)]' />
         </div>
       </section>
 
       {/* Services Section */}
-      <section id='services' className='py-20 bg-[var(--primary-surface)]'>
+      <section id='services' className='py-20 bg-[var(--default-surface)]'>
         <div className='container-app'>
           <div className='text-center mb-16'>
             <Badge variant='success' className='mb-4'>
@@ -116,8 +116,8 @@ export default function HomePage() {
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
             <Card className='text-center hover:shadow-lg transition-shadow'>
               <CardHeader>
-                <div className='w-16 h-16 bg-[var(--primary-primary)]/10 rounded-full flex items-center justify-center mx-auto mb-4'>
-                  <Heart className='w-8 h-8 text-[var(--primary-primary)]' />
+                <div className='w-16 h-16 bg-[var(--default-default)]/10 rounded-full flex items-center justify-center mx-auto mb-4'>
+                  <Heart className='w-8 h-8 text-[var(--default-default)]' />
                 </div>
                 <CardTitle>رعاية متخصصة</CardTitle>
                 <CardDescription>
@@ -144,8 +144,8 @@ export default function HomePage() {
 
             <Card className='text-center hover:shadow-lg transition-shadow'>
               <CardHeader>
-                <div className='w-16 h-16 bg-[var(--primary-secondary)]/10 rounded-full flex items-center justify-center mx-auto mb-4'>
-                  <Shield className='w-8 h-8 text-[var(--primary-secondary)]' />
+                <div className='w-16 h-16 bg-[var(--default-info)]/10 rounded-full flex items-center justify-center mx-auto mb-4'>
+                  <Shield className='w-8 h-8 text-[var(--default-info)]' />
                 </div>
                 <CardTitle>تقنيات حديثة</CardTitle>
                 <CardDescription>
@@ -172,8 +172,8 @@ export default function HomePage() {
 
             <Card className='text-center hover:shadow-lg transition-shadow'>
               <CardHeader>
-                <div className='w-16 h-16 bg-[var(--primary-accent)]/10 rounded-full flex items-center justify-center mx-auto mb-4'>
-                  <Users className='w-8 h-8 text-[var(--primary-accent)]' />
+                <div className='w-16 h-16 bg-[var(--default-accent)]/10 rounded-full flex items-center justify-center mx-auto mb-4'>
+                  <Users className='w-8 h-8 text-[var(--default-accent)]' />
                 </div>
                 <CardTitle>فريق متكامل</CardTitle>
                 <CardDescription>
@@ -202,7 +202,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className='py-20 bg-[var(--primary-surface)]'>
+      <section className='py-20 bg-[var(--default-surface)]'>
         <div className='container-app'>
           <DynamicStats />
         </div>
@@ -239,8 +239,8 @@ export default function HomePage() {
                   والخدمات ممتازة.&quot;
                 </p>
                 <div className='flex items-center'>
-                  <div className='w-10 h-10 bg-[var(--primary-primary)]/10 rounded-full flex items-center justify-center mr-3'>
-                    <span className='text-[var(--primary-primary)] font-bold'>
+                  <div className='w-10 h-10 bg-[var(--default-default)]/10 rounded-full flex items-center justify-center mr-3'>
+                    <span className='text-[var(--default-default)] font-bold'>
                       أ
                     </span>
                   </div>
@@ -267,8 +267,8 @@ export default function HomePage() {
                   ملحوظ.&quot;
                 </p>
                 <div className='flex items-center'>
-                  <div className='w-10 h-10 bg-[var(--primary-secondary)]/10 rounded-full flex items-center justify-center mr-3'>
-                    <span className='text-[var(--primary-secondary)] font-bold'>
+                  <div className='w-10 h-10 bg-[var(--default-info)]/10 rounded-full flex items-center justify-center mr-3'>
+                    <span className='text-[var(--default-info)] font-bold'>
                       س
                     </span>
                   </div>
@@ -295,8 +295,8 @@ export default function HomePage() {
                   به بشدة.&quot;
                 </p>
                 <div className='flex items-center'>
-                  <div className='w-10 h-10 bg-[var(--primary-accent)]/10 rounded-full flex items-center justify-center mr-3'>
-                    <span className='text-[var(--primary-accent)] font-bold'>
+                  <div className='w-10 h-10 bg-[var(--default-accent)]/10 rounded-full flex items-center justify-center mr-3'>
+                    <span className='text-[var(--default-accent)] font-bold'>
                       خ
                     </span>
                   </div>
@@ -312,7 +312,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className='py-20 bg-gradient-to-r from-[var(--primary-primary)] to-[var(--primary-secondary)]'>
+      <section className='py-20 bg-gradient-to-r from-[var(--default-default)] to-[var(--default-info)]'>
         <div className='container-app text-center'>
           <h2 className='text-4xl font-bold text-white mb-4'>
             ابدأ رحلتك معنا اليوم
@@ -324,7 +324,7 @@ export default function HomePage() {
             <Button
               asChild
               size='lg'
-              className='bg-white text-[var(--primary-primary)] hover:bg-gray-100'
+              className='bg-white text-[var(--default-default)] hover:bg-gray-100'
             >
               <Link href='/register' data-testid='create-account-button'>
                 <Users className='w-5 h-5 mr-2' />
@@ -335,7 +335,7 @@ export default function HomePage() {
               asChild
               variant='outline'
               size='lg'
-              className='border-white text-white hover:bg-white hover:text-[var(--primary-primary)]'
+              className='border-white text-white hover:bg-white hover:text-[var(--default-default)]'
             >
               <Link href='/contact' data-testid='contact-us-button'>
                 <MessageCircle className='w-5 h-5 mr-2' />
@@ -366,7 +366,7 @@ export default function HomePage() {
                 مع أكثر من 1000 مريض نشط و 98% معدل رضا، نحن نثق في قدرتنا على
                 تحسين جودة الحياة لذوي الاحتياجات الخاصة.
               </p>
-              <Button asChild size='lg' className='btn-primary'>
+              <Button asChild size='lg' className='btn-default'>
                 <Link href='/about' data-testid='learn-about-button'>
                   تعرف على المزيد
                   <ArrowRight className='w-5 h-5 mr-2' />
@@ -374,18 +374,18 @@ export default function HomePage() {
               </Button>
             </div>
             <div className='relative'>
-              <div className='aspect-square bg-gradient-to-br from-[var(--primary-primary)]/20 to-[var(--primary-secondary)]/20 rounded-2xl flex items-center justify-center'>
+              <div className='aspect-square bg-gradient-to-br from-[var(--default-default)]/20 to-[var(--default-info)]/20 rounded-2xl flex items-center justify-center'>
                 <div className='text-8xl'>🏥</div>
               </div>
-              <div className='absolute -top-4 -right-4 w-24 h-24 bg-[var(--primary-primary)]/20 rounded-full blur-xl'></div>
-              <div className='absolute -bottom-4 -left-4 w-32 h-32 bg-[var(--primary-secondary)]/20 rounded-full blur-xl'></div>
+              <div className='absolute -top-4 -right-4 w-24 h-24 bg-[var(--default-default)]/20 rounded-full blur-xl'></div>
+              <div className='absolute -bottom-4 -left-4 w-32 h-32 bg-[var(--default-info)]/20 rounded-full blur-xl'></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Contact Section - Dynamic */}
-      <section className='py-20 bg-[var(--primary-surface)]'>
+      <section className='py-20 bg-[var(--default-surface)]'>
         <div className='container-app'>
           <div className='text-center mb-16'>
             <Badge variant='success' className='mb-4'>

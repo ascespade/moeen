@@ -72,12 +72,12 @@ export function ChartsB() {
       {data.map((d, i) => (
         <div key={i} className='flex h-full items-end gap-1'>
           <div
-            className='w-3 bg-[var(--primary-primary)]/80 rounded-sm'
+            className='w-3 bg-[var(--default-default)]/80 rounded-sm'
             style={{ height: `${(d.messages / maxY) * 100}%` }}
             title={`Messages: ${d.messages}`}
           />
           <div
-            className='w-3 bg-primary-success/80 rounded-sm'
+            className='w-3 bg-default-success/80 rounded-sm'
             style={{ height: `${(d.conversations / maxY) * 100}%` }}
             title={`Conversations: ${d.conversations}`}
           />

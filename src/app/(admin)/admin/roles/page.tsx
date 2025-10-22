@@ -70,8 +70,8 @@ export default function RolesPage() {
   const [editingRole, setEditingRole] = useState<Role | null>(null);
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
-      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -83,7 +83,7 @@ export default function RolesPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-primary text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   إدارة الأدوار والصلاحيات
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -93,7 +93,7 @@ export default function RolesPage() {
             </div>
             <button
               onClick={() => setShowCreateModal(true)}
-              className='btn-primary rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+              className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
             >
               إضافة دور
             </button>
@@ -104,7 +104,7 @@ export default function RolesPage() {
       <main className='container-app py-8'>
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockRoles.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -112,7 +112,7 @@ export default function RolesPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockRoles.reduce((sum, r) => sum + r.userCount, 0)}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -128,7 +128,7 @@ export default function RolesPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               4
             </div>
             <div className='text-gray-600 dark:text-gray-300'>أدوار نشطة</div>
@@ -198,7 +198,7 @@ export default function RolesPage() {
                   >
                     <input
                       type='checkbox'
-                      className='h-4 w-4 rounded border-gray-300 text-[var(--primary-primary)] focus:ring-[var(--primary-primary)]'
+                      className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                     />
                     <span className='text-sm text-gray-700 dark:text-gray-300'>
                       {permission.name}
@@ -230,7 +230,7 @@ export default function RolesPage() {
                 </label>
                 <input
                   type='text'
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل اسم الدور'
                 />
               </div>
@@ -240,7 +240,7 @@ export default function RolesPage() {
                 </label>
                 <textarea
                   rows={3}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل وصف الدور'
                 ></textarea>
               </div>
@@ -256,7 +256,7 @@ export default function RolesPage() {
                     >
                       <input
                         type='checkbox'
-                        className='h-4 w-4 rounded border-gray-300 text-[var(--primary-primary)] focus:ring-[var(--primary-primary)]'
+                        className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                       />
                       <span className='text-sm text-gray-700 dark:text-gray-300'>
                         {permission.name}
@@ -275,7 +275,7 @@ export default function RolesPage() {
                 </button>
                 <button
                   type='submit'
-                  className='btn-primary flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   إضافة الدور
                 </button>

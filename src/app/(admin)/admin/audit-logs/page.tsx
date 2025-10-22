@@ -133,8 +133,8 @@ export default function AuditLogsPage() {
   );
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
-      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center gap-4'>
             <Image
@@ -145,7 +145,7 @@ export default function AuditLogsPage() {
               className='rounded-lg'
             />
             <div>
-              <h1 className='text-primary text-2xl font-bold'>سجل التدقيق</h1>
+              <h1 className='text-default text-2xl font-bold'>سجل التدقيق</h1>
               <p className='text-gray-600 dark:text-gray-300'>
                 تتبع جميع أنشطة النظام
               </p>
@@ -157,7 +157,7 @@ export default function AuditLogsPage() {
       <main className='container-app py-8'>
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockAuditLogs.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -165,13 +165,13 @@ export default function AuditLogsPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockAuditLogs.filter(l => l.status === 'success').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>نجح</div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-error'>
+            <div className='mb-2 text-3xl font-bold text-default-error'>
               {mockAuditLogs.filter(l => l.status === 'failed').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>فشل</div>
@@ -195,7 +195,7 @@ export default function AuditLogsPage() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder='ابحث في السجلات...'
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
             </div>
             <div>
@@ -205,7 +205,7 @@ export default function AuditLogsPage() {
               <select
                 value={statusFilter}
                 onChange={e => setStatusFilter(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع الحالات</option>
                 <option value='success'>نجح</option>
@@ -220,7 +220,7 @@ export default function AuditLogsPage() {
               <select
                 value={actionFilter}
                 onChange={e => setActionFilter(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع الإجراءات</option>
                 {allActions.map(action => (
@@ -231,7 +231,7 @@ export default function AuditLogsPage() {
               </select>
             </div>
             <div className='flex items-end'>
-              <button className='btn-primary w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 تطبيق الفلاتر
               </button>
             </div>
@@ -274,7 +274,7 @@ export default function AuditLogsPage() {
                   >
                     <td className='whitespace-nowrap px-6 py-4'>
                       <div className='flex items-center'>
-                        <div className='ml-3 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary-primary)] text-sm font-semibold text-white'>
+                        <div className='ml-3 flex h-8 w-8 items-center justify-center rounded-full bg-[var(--default-default)] text-sm font-semibold text-white'>
                           {log.user.charAt(0)}
                         </div>
                         <div className='text-sm font-medium text-gray-900 dark:text-white'>

@@ -152,9 +152,9 @@ export default function PatientDetailsPage({
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary-primary)] mx-auto mb-4'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto mb-4'></div>
           <p className='text-gray-600'>جاري تحميل بيانات المريض...</p>
         </div>
       </div>
@@ -163,7 +163,7 @@ export default function PatientDetailsPage({
 
   if (error || !patient) {
     return (
-      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>
@@ -171,7 +171,7 @@ export default function PatientDetailsPage({
           </p>
           <button
             onClick={() => window.location.reload()}
-            className='px-4 py-2 bg-[var(--primary-primary)] text-white rounded-lg hover:bg-[var(--primary-primary-dark)]'
+            className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
           </button>
@@ -181,9 +181,9 @@ export default function PatientDetailsPage({
   }
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -193,7 +193,7 @@ export default function PatientDetailsPage({
               >
                 ← العودة
               </Link>
-              <div className='flex h-16 w-16 items-center justify-center rounded-full bg-[var(--primary-primary)] text-xl font-semibold text-white'>
+              <div className='flex h-16 w-16 items-center justify-center rounded-full bg-[var(--default-default)] text-xl font-semibold text-white'>
                 {patient?.name?.charAt(0) || '?'}
               </div>
               <div>
@@ -210,7 +210,7 @@ export default function PatientDetailsPage({
               >
                 تعديل البيانات
               </button>
-              <button className='btn-primary rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 حجز موعد
               </button>
             </div>
@@ -223,7 +223,7 @@ export default function PatientDetailsPage({
         <div className='card mb-8 p-6'>
           <div className='grid grid-cols-1 gap-6 md:grid-cols-4'>
             <div className='text-center'>
-              <div className='mb-2 text-3xl font-bold text-[var(--primary-primary)]'>
+              <div className='mb-2 text-3xl font-bold text-[var(--default-default)]'>
                 {sessions.length}
               </div>
               <div className='text-gray-600 dark:text-gray-300'>
@@ -231,7 +231,7 @@ export default function PatientDetailsPage({
               </div>
             </div>
             <div className='text-center'>
-              <div className='mb-2 text-3xl font-bold text-primary-success'>
+              <div className='mb-2 text-3xl font-bold text-default-success'>
                 {sessions.filter(s => s.status === 'completed').length}
               </div>
               <div className='text-gray-600 dark:text-gray-300'>
@@ -239,7 +239,7 @@ export default function PatientDetailsPage({
               </div>
             </div>
             <div className='text-center'>
-              <div className='mb-2 text-3xl font-bold text-primary-primary'>
+              <div className='mb-2 text-3xl font-bold text-default-default'>
                 {documents.length}
               </div>
               <div className='text-gray-600 dark:text-gray-300'>الوثائق</div>
@@ -267,7 +267,7 @@ export default function PatientDetailsPage({
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`border-b-2 px-1 py-4 text-sm font-medium ${
                     activeTab === tab.id
-                      ? 'border-[var(--primary-primary)] text-[var(--primary-primary)]'
+                      ? 'border-[var(--default-default)] text-[var(--default-default)]'
                       : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                   }`}
                 >
@@ -419,7 +419,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>سجل الجلسات</h3>
-                  <button className='btn-primary rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                     إضافة جلسة
                   </button>
                 </div>
@@ -462,7 +462,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>الوثائق</h3>
-                  <button className='btn-primary rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                     رفع وثيقة
                   </button>
                 </div>
@@ -474,7 +474,7 @@ export default function PatientDetailsPage({
                     >
                       <div className='mb-2 flex items-center gap-3'>
                         <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-red-100'>
-                          <span className='font-semibold text-primary-error'>
+                          <span className='font-semibold text-default-error'>
                             PDF
                           </span>
                         </div>
@@ -488,7 +488,7 @@ export default function PatientDetailsPage({
                       <div className='flex items-center justify-between text-xs text-gray-500'>
                         <span>{doc.uploadDate}</span>
                         <div className='flex gap-2'>
-                          <button className='text-[var(--primary-primary)] hover:underline'>
+                          <button className='text-[var(--default-default)] hover:underline'>
                             عرض
                           </button>
                           <button className='text-gray-500 hover:underline'>
@@ -507,7 +507,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>الأقارب</h3>
-                  <button className='btn-primary rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                     إضافة قريب
                   </button>
                 </div>
@@ -525,7 +525,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>المطالبات التأمينية</h3>
-                  <button className='btn-primary rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                     إضافة مطالبة
                   </button>
                 </div>
@@ -594,7 +594,7 @@ export default function PatientDetailsPage({
                   <input
                     type='text'
                     defaultValue={patient.name}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
                 <div>
@@ -604,7 +604,7 @@ export default function PatientDetailsPage({
                   <input
                     type='tel'
                     defaultValue={patient.phone}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
               </div>
@@ -617,7 +617,7 @@ export default function PatientDetailsPage({
                   <input
                     type='email'
                     defaultValue={patient.email}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
                 <div>
@@ -627,7 +627,7 @@ export default function PatientDetailsPage({
                   <input
                     type='number'
                     defaultValue={patient.age}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
               </div>
@@ -639,7 +639,7 @@ export default function PatientDetailsPage({
                   </label>
                   <select
                     defaultValue={patient.gender}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   >
                     <option value='male'>ذكر</option>
                     <option value='female'>أنثى</option>
@@ -651,7 +651,7 @@ export default function PatientDetailsPage({
                   </label>
                   <select
                     defaultValue={patient.status}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   >
                     <option value='active'>نشط</option>
                     <option value='inactive'>غير نشط</option>
@@ -667,7 +667,7 @@ export default function PatientDetailsPage({
                 <textarea
                   rows={3}
                   defaultValue={patient.notes}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                 />
               </div>
 
@@ -681,7 +681,7 @@ export default function PatientDetailsPage({
                 </button>
                 <button
                   type='submit'
-                  className='btn-primary flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   حفظ التغييرات
                 </button>

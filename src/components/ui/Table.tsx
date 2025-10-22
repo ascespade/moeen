@@ -29,7 +29,7 @@ export function TBody({
 }: React.HTMLAttributes<HTMLTableSectionElement>) {
   return (
     <tbody
-      className={clsx('divide-y divide-primary-border', className)}
+      className={clsx('divide-y divide-default-border', className)}
       {...props}
     />
   );
@@ -54,7 +54,7 @@ export function TH({
   return (
     <th
       className={clsx(
-        'px-4 py-3 text-start font-semibold text-gray-700 dark:text-gray-200 border-b border-primary-border',
+        'px-4 py-3 text-start font-semibold text-gray-700 dark:text-gray-200 border-b border-default-border',
         className
       )}
       {...props}

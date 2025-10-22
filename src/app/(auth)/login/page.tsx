@@ -78,11 +78,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--primary-surface)] via-white to-[var(--bg-gray-50)] p-4'>
+    <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--default-surface)] via-white to-[var(--bg-gray-50)] p-4'>
       <div className='w-full max-w-md'>
         {/* Logo and Header */}
         <div className='mb-8 text-center'>
-          <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-[var(--primary-primary)] to-[var(--primary-secondary)] shadow-lg'>
+          <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-[var(--default-default)] to-[var(--default-info)] shadow-lg'>
             <span className='text-2xl font-bold text-white'>م</span>
           </div>
           <h1 className='mb-2 text-3xl font-bold text-gray-900 dark:text-white'>
@@ -154,14 +154,14 @@ export default function LoginPage() {
                     name='rememberMe'
                     checked={formData.rememberMe}
                     onChange={handleInputChange}
-                    className='text-primary focus:ring-primary h-4 w-4 rounded border-gray-300 focus:ring-2'
+                    className='text-default focus:ring-default h-4 w-4 rounded border-gray-300 focus:ring-2'
                     data-testid='remember-me-checkbox'
                   />
                   {t('auth.rememberMe', 'تذكرني')}
                 </label>
                 <Link
                   href='/forgot-password'
-                  className='text-primary text-sm font-medium transition-colors hover:text-[var(--primary-primary-hover)]'
+                  className='text-default text-sm font-medium transition-colors hover:text-[var(--default-default-hover)]'
                 >
                   نسيت كلمة المرور؟
                 </Link>
@@ -170,7 +170,7 @@ export default function LoginPage() {
               <button
                 type='submit'
                 disabled={submitting || isLoading}
-                className='btn btn-primary btn-lg w-full font-semibold'
+                className='btn btn-default btn-lg w-full font-semibold'
                 data-testid='login-button'
               >
                 {submitting ? (
@@ -198,7 +198,7 @@ export default function LoginPage() {
               >
                 {submitting ? (
                   <>
-                    <div className='h-4 w-4 animate-spin rounded-full border-2 border-[var(--primary-primary)] border-t-transparent'></div>
+                    <div className='h-4 w-4 animate-spin rounded-full border-2 border-[var(--default-default)] border-t-transparent'></div>
                     جارٍ تسجيل الدخول...
                   </>
                 ) : (
@@ -213,12 +213,12 @@ export default function LoginPage() {
               </p>
             </div>
 
-            <div className='border-primary mt-6 border-t pt-6'>
+            <div className='border-default mt-6 border-t pt-6'>
               <p className='text-center text-sm text-gray-600 dark:text-gray-400'>
                 ليس لديك حساب؟{' '}
                 <Link
                   href={ROUTES.REGISTER}
-                  className='text-primary font-medium transition-colors hover:text-[var(--primary-primary-hover)]'
+                  className='text-default font-medium transition-colors hover:text-[var(--default-default-hover)]'
                 >
                   إنشاء حساب جديد
                 </Link>

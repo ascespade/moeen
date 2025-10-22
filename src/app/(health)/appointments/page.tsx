@@ -194,7 +194,7 @@ const AppointmentsPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/chatbot')}
-            className='bg-[var(--primary-primary)] hover:brightness-95'
+            className='bg-[var(--default-default)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             حجز موعد جديد
@@ -206,7 +206,7 @@ const AppointmentsPage: React.FC = () => {
           <Card>
             <CardContent className='p-6'>
               <div className='flex items-center'>
-                <Calendar className='h-8 w-8 text-[var(--primary-primary)]' />
+                <Calendar className='h-8 w-8 text-[var(--default-default)]' />
                 <div className='mr-4'>
                   <p className='text-sm font-medium text-gray-600'>
                     المواعيد القادمة
@@ -222,7 +222,7 @@ const AppointmentsPage: React.FC = () => {
           <Card>
             <CardContent className='p-6'>
               <div className='flex items-center'>
-                <Clock className='h-8 w-8 text-primary-success' />
+                <Clock className='h-8 w-8 text-default-success' />
                 <div className='mr-4'>
                   <p className='text-sm font-medium text-gray-600'>
                     المواعيد المكتملة
@@ -241,7 +241,7 @@ const AppointmentsPage: React.FC = () => {
           <Card>
             <CardContent className='p-6'>
               <div className='flex items-center'>
-                <User className='h-8 w-8 text-primary-primary' />
+                <User className='h-8 w-8 text-default-default' />
                 <div className='mr-4'>
                   <p className='text-sm font-medium text-gray-600'>
                     إجمالي المواعيد
@@ -274,7 +274,7 @@ const AppointmentsPage: React.FC = () => {
               <select
                 value={statusFilter}
                 onChange={e => setStatusFilter(e.target.value)}
-                className='px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary-primary)]'
+                className='px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع الحالات</option>
                 <option value='scheduled'>مجدول</option>
@@ -284,7 +284,7 @@ const AppointmentsPage: React.FC = () => {
               </select>
 
               <Button
-                variant={showUpcoming ? 'primary' : 'outline'}
+                variant={showUpcoming ? 'default' : 'outline'}
                 onClick={() => setShowUpcoming(!showUpcoming)}
                 className='flex items-center gap-2'
               >
@@ -299,7 +299,7 @@ const AppointmentsPage: React.FC = () => {
       {/* Appointments List */}
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
       ) : filteredAppointments.length === 0 ? (
         <Card>
@@ -313,7 +313,7 @@ const AppointmentsPage: React.FC = () => {
             </p>
             <Button
               onClick={() => router.push('/chatbot')}
-              className='bg-[var(--primary-primary)] hover:brightness-95'
+              className='bg-[var(--default-default)] hover:brightness-95'
             >
               حجز موعد جديد
             </Button>
@@ -330,7 +330,7 @@ const AppointmentsPage: React.FC = () => {
                 <div className='flex items-start justify-between'>
                   <div className='flex-1'>
                     <div className='flex items-center gap-4 mb-3'>
-                      <div className='w-12 h-12 bg-[var(--primary-primary)] rounded-full flex items-center justify-center'>
+                      <div className='w-12 h-12 bg-[var(--default-default)] rounded-full flex items-center justify-center'>
                         <Image
                           src='/logo.png'
                           alt='Doctor'
@@ -392,7 +392,7 @@ const AppointmentsPage: React.FC = () => {
                         variant='outline'
                         size='sm'
                         onClick={() => handleCancelAppointment(appointment.id)}
-                        className='text-primary-error hover:text-red-700'
+                        className='text-default-error hover:text-red-700'
                       >
                         <Trash2 className='w-4 h-4 mr-1' />
                         إلغاء

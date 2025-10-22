@@ -145,7 +145,7 @@ export default function GlobalHeader() {
               height={50}
               className='rounded-lg'
             />
-            <h1 className='text-primary text-2xl font-bold'>مُعين</h1>
+            <h1 className='text-default text-2xl font-bold'>مُعين</h1>
           </div>
           <div className='hidden items-center gap-6 md:flex'>
             <Link href='#services' className='nav-link'>
@@ -167,7 +167,7 @@ export default function GlobalHeader() {
             <Link href={ROUTES.LOGIN} className='btn btn-outline'>
               {t('auth.login', 'تسجيل الدخول')}
             </Link>
-            <Link href={ROUTES.REGISTER} className='btn btn-primary'>
+            <Link href={ROUTES.REGISTER} className='btn btn-default'>
               {t('auth.register', 'إنشاء حساب')}
             </Link>
           </div>

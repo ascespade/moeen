@@ -27,7 +27,7 @@ const mockIntegrations: Integration[] = [
     lastSync: '2024-01-15 14:30',
     messageCount: 1247,
     icon: '📱',
-    color: 'text-primary-success',
+    color: 'text-default-success',
   },
   {
     id: '2',
@@ -39,7 +39,7 @@ const mockIntegrations: Integration[] = [
     lastSync: '2024-01-15 14:25',
     messageCount: 892,
     icon: '🌐',
-    color: 'text-primary-primary',
+    color: 'text-default-default',
   },
   {
     id: '3',
@@ -49,7 +49,7 @@ const mockIntegrations: Integration[] = [
     description: 'تكامل مع تيليجرام للرسائل',
     messageCount: 0,
     icon: '✈️',
-    color: 'text-primary-primary',
+    color: 'text-default-default',
   },
   {
     id: '4',
@@ -112,9 +112,9 @@ export default function ChatbotIntegrationsPage() {
   };
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -126,7 +126,7 @@ export default function ChatbotIntegrationsPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-primary text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   تكاملات الشات بوت
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -135,7 +135,7 @@ export default function ChatbotIntegrationsPage() {
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <button className='btn-primary rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 إضافة تكامل
               </button>
             </div>
@@ -147,7 +147,7 @@ export default function ChatbotIntegrationsPage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockIntegrations.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -155,13 +155,13 @@ export default function ChatbotIntegrationsPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockIntegrations.filter(i => i.status === 'connected').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>متصلة</div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-error'>
+            <div className='mb-2 text-3xl font-bold text-default-error'>
               {mockIntegrations.filter(i => i.status === 'error').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>خطأ</div>
@@ -244,7 +244,7 @@ export default function ChatbotIntegrationsPage() {
                     </button>
                     <button
                       onClick={() => handleDisconnect(integration.id)}
-                      className='rounded-lg border border-red-300 px-3 py-2 text-sm text-primary-error transition-colors hover:bg-surface'
+                      className='rounded-lg border border-red-300 px-3 py-2 text-sm text-default-error transition-colors hover:bg-surface'
                     >
                       قطع الاتصال
                     </button>
@@ -252,7 +252,7 @@ export default function ChatbotIntegrationsPage() {
                 ) : (
                   <button
                     onClick={() => handleConnect(integration.id)}
-                    className='btn-primary flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+                    className='btn-default flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'
                   >
                     {integration.status === 'error' ? 'إعادة الاتصال' : 'اتصال'}
                   </button>
@@ -331,7 +331,7 @@ export default function ChatbotIntegrationsPage() {
                 </label>
                 <input
                   type='text'
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل API Key'
                 />
               </div>
@@ -342,7 +342,7 @@ export default function ChatbotIntegrationsPage() {
                 </label>
                 <input
                   type='text'
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='https://api.moeen.com/webhook/...'
                   readOnly
                 />
@@ -364,7 +364,7 @@ export default function ChatbotIntegrationsPage() {
                 </button>
                 <button
                   onClick={() => setShowConnectModal(null)}
-                  className='btn-primary flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   حفظ الإعدادات
                 </button>

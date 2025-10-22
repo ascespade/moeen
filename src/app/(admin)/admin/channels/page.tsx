@@ -1,6 +1,6 @@
 export default function ChannelsAdminPage() {
   return (
-    <main className='min-h-screen bg-[var(--primary-surface)]'>
+    <main className='min-h-screen bg-[var(--default-surface)]'>
       <div className='container-app py-6'>
         <h1 className='text-2xl font-semibold text-[var(--foreground)] mb-4'>
           القنوات (واتساب)

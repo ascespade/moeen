@@ -191,13 +191,13 @@ const ContactsPage: React.FC = () => {
   const getActivityIcon = (type: string) => {
     switch (type) {
       case 'call':
-        return <Phone className='w-4 h-4 text-primary-primary' />;
+        return <Phone className='w-4 h-4 text-default-default' />;
       case 'email':
-        return <Mail className='w-4 h-4 text-primary-success' />;
+        return <Mail className='w-4 h-4 text-default-success' />;
       case 'meeting':
         return <Calendar className='w-4 h-4 text-purple-500' />;
       case 'note':
-        return <MessageCircle className='w-4 h-4 text-primary-primary' />;
+        return <MessageCircle className='w-4 h-4 text-default-default' />;
       default:
         return <Activity className='w-4 h-4 text-gray-500' />;
     }
@@ -243,7 +243,7 @@ const ContactsPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/crm/contacts/new')}
-            className='bg-[var(--primary-primary)] hover:brightness-95'
+            className='bg-[var(--default-default)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             إضافة جهة اتصال
@@ -367,7 +367,7 @@ const ContactsPage: React.FC = () => {
             <CardContent>
               {loading ? (
                 <div className='flex justify-center items-center h-64'>
-                  <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
+                  <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
                 </div>
               ) : filteredContacts.length === 0 ? (
                 <div className='text-center py-12'>
@@ -380,7 +380,7 @@ const ContactsPage: React.FC = () => {
                   </p>
                   <Button
                     onClick={() => router.push('/crm/contacts/new')}
-                    className='bg-[var(--primary-primary)] hover:brightness-95'
+                    className='bg-[var(--default-default)] hover:brightness-95'
                   >
                     إضافة جهة اتصال
                   </Button>
@@ -392,7 +392,7 @@ const ContactsPage: React.FC = () => {
                       key={contact.id}
                       className={`p-4 border rounded-lg cursor-pointer transition-colors ${
                         selectedContact?.id === contact.id
-                          ? 'border-[var(--primary-primary)] bg-surface'
+                          ? 'border-[var(--default-default)] bg-surface'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                       onClick={() => setSelectedContact(contact)}

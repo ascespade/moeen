@@ -219,19 +219,19 @@ const NotificationsPage: React.FC = () => {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'appointment':
-        return <Calendar className='w-4 h-4 text-primary-primary' />;
+        return <Calendar className='w-4 h-4 text-default-default' />;
       case 'reminder':
-        return <Clock className='w-4 h-4 text-primary-primary' />;
+        return <Clock className='w-4 h-4 text-default-default' />;
       case 'success':
-        return <CheckCircle className='w-4 h-4 text-primary-success' />;
+        return <CheckCircle className='w-4 h-4 text-default-success' />;
       case 'warning':
-        return <AlertCircle className='w-4 h-4 text-primary-warning' />;
+        return <AlertCircle className='w-4 h-4 text-default-warning' />;
       case 'error':
-        return <AlertCircle className='w-4 h-4 text-primary-error' />;
+        return <AlertCircle className='w-4 h-4 text-default-error' />;
       case 'system':
         return <Settings className='w-4 h-4 text-gray-500' />;
       default:
-        return <Info className='w-4 h-4 text-primary-primary' />;
+        return <Info className='w-4 h-4 text-default-default' />;
     }
   };
 
@@ -332,7 +332,7 @@ const NotificationsPage: React.FC = () => {
             </Button>
             <Button
               onClick={() => setShowCompose(true)}
-              className='bg-[var(--primary-primary)] hover:brightness-95'
+              className='bg-[var(--default-default)] hover:brightness-95'
             >
               <Plus className='w-4 h-4 mr-2' />
               إرسال إشعار
@@ -345,7 +345,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className='p-4'>
               <div className='flex items-center gap-2'>
-                <Bell className='w-5 h-5 text-primary-primary' />
+                <Bell className='w-5 h-5 text-default-default' />
                 <div>
                   <div className='text-2xl font-bold'>
                     {notifications.length}
@@ -359,7 +359,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className='p-4'>
               <div className='flex items-center gap-2'>
-                <BellRing className='w-5 h-5 text-primary-primary' />
+                <BellRing className='w-5 h-5 text-default-default' />
                 <div>
                   <div className='text-2xl font-bold'>{unreadCount}</div>
                   <div className='text-sm text-gray-600'>غير مقروء</div>
@@ -371,7 +371,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className='p-4'>
               <div className='flex items-center gap-2'>
-                <Calendar className='w-5 h-5 text-primary-success' />
+                <Calendar className='w-5 h-5 text-default-success' />
                 <div>
                   <div className='text-2xl font-bold'>
                     {notifications.filter(n => n.type === 'appointment').length}
@@ -448,7 +448,7 @@ const NotificationsPage: React.FC = () => {
 
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
       ) : (
         <div className='space-y-4'>

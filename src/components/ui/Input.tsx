@@ -33,7 +33,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const variants = {
       default:
-        'border-gray-300 dark:border-gray-600 focus:ring-[var(--primary-primary)] focus:border-transparent',
+        'border-gray-300 dark:border-gray-600 focus:ring-[var(--default-default)] focus:border-transparent',
       error: 'border-red-500 focus:ring-red-500 focus:border-transparent',
       success: 'border-green-500 focus:ring-green-500 focus:border-transparent',
     };

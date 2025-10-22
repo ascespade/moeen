@@ -44,7 +44,7 @@ interface FamilyMember {
   email?: string;
   address?: string;
   emergency_contact: boolean;
-  primary_caregiver: boolean;
+  default_caregiver: boolean;
   notes?: string;
   created_at: string;
   updated_at: string;
@@ -133,7 +133,7 @@ const FamilySupportPage: React.FC = () => {
           email: 'fatima@example.com',
           address: 'جدة، المملكة العربية السعودية',
           emergency_contact: true,
-          primary_caregiver: true,
+          default_caregiver: true,
           notes: 'متابعة يومية للطفل',
           created_at: '2024-01-01T00:00:00Z',
           updated_at: '2024-01-15T00:00:00Z',
@@ -154,7 +154,7 @@ const FamilySupportPage: React.FC = () => {
           phone: '0507654321',
           email: 'abdullah@example.com',
           emergency_contact: false,
-          primary_caregiver: false,
+          default_caregiver: false,
           created_at: '2024-01-01T00:00:00Z',
           updated_at: '2024-01-15T00:00:00Z',
           patients: {
@@ -233,14 +233,14 @@ const FamilySupportPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      scheduled: { label: 'مجدولة', variant: 'primary' as const },
-      completed: { label: 'مكتملة', variant: 'primary' as const },
+      scheduled: { label: 'مجدولة', variant: 'default' as const },
+      completed: { label: 'مكتملة', variant: 'default' as const },
       cancelled: { label: 'ملغية', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'primary' as const,
+      variant: 'default' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -248,13 +248,13 @@ const FamilySupportPage: React.FC = () => {
   const getResourceIcon = (type: string) => {
     switch (type) {
       case 'document':
-        return <FileText className='w-4 h-4 text-primary-primary' />;
+        return <FileText className='w-4 h-4 text-default-default' />;
       case 'video':
-        return <Video className='w-4 h-4 text-primary-error' />;
+        return <Video className='w-4 h-4 text-default-error' />;
       case 'link':
-        return <BookOpen className='w-4 h-4 text-primary-success' />;
+        return <BookOpen className='w-4 h-4 text-default-success' />;
       case 'guide':
-        return <Lightbulb className='w-4 h-4 text-primary-warning' />;
+        return <Lightbulb className='w-4 h-4 text-default-warning' />;
       default:
         return <FileText className='w-4 h-4 text-gray-500' />;
     }
@@ -264,10 +264,10 @@ const FamilySupportPage: React.FC = () => {
     switch (relationship) {
       case 'أم':
       case 'أب':
-        return <Heart className='w-4 h-4 text-primary-error' />;
+        return <Heart className='w-4 h-4 text-default-error' />;
       case 'أخ':
       case 'أخت':
-        return <Users className='w-4 h-4 text-primary-primary' />;
+        return <Users className='w-4 h-4 text-default-default' />;
       case 'جد':
       case 'جدة':
         return <Shield className='w-4 h-4 text-purple-500' />;
@@ -318,7 +318,7 @@ const FamilySupportPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/family-support/new')}
-            className='bg-[var(--primary-primary)] hover:brightness-95'
+            className='bg-[var(--default-default)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             إضافة عضو أسرة
@@ -346,7 +346,7 @@ const FamilySupportPage: React.FC = () => {
           <CardContent>
             <div className='text-2xl font-bold'>{familyMembers.length}</div>
             <p className='text-xs text-muted-foreground'>
-              {familyMembers.filter(m => m.primary_caregiver).length} مقدم رعاية
+              {familyMembers.filter(m => m.default_caregiver).length} مقدم رعاية
               أساسي
             </p>
           </CardContent>
@@ -430,7 +430,7 @@ const FamilySupportPage: React.FC = () => {
       {/* Content based on active tab */}
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
       ) : (
         <>
@@ -449,7 +449,7 @@ const FamilySupportPage: React.FC = () => {
                     </p>
                     <Button
                       onClick={() => router.push('/family-support/new')}
-                      className='bg-[var(--primary-primary)] hover:brightness-95'
+                      className='bg-[var(--default-default)] hover:brightness-95'
                     >
                       إضافة عضو أسرة
                     </Button>
@@ -472,7 +472,7 @@ const FamilySupportPage: React.FC = () => {
                               height={48}
                               className='rounded-full'
                             />
-                            <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-primary-primary rounded-full border-2 border-white flex items-center justify-center'>
+                            <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-default-default rounded-full border-2 border-white flex items-center justify-center'>
                               {getRelationshipIcon(member.relationship)}
                             </div>
                           </div>
@@ -488,8 +488,8 @@ const FamilySupportPage: React.FC = () => {
                           </div>
                         </div>
                         <div className='flex items-center gap-2'>
-                          {member.primary_caregiver && (
-                            <Badge variant='primary'>مقدم رعاية أساسي</Badge>
+                          {member.default_caregiver && (
+                            <Badge variant='default'>مقدم رعاية أساسي</Badge>
                           )}
                           {member.emergency_contact && (
                             <Badge variant='error'>جهة اتصال طارئة</Badge>
@@ -572,7 +572,7 @@ const FamilySupportPage: React.FC = () => {
                       onClick={() =>
                         router.push('/family-support/sessions/new')
                       }
-                      className='bg-[var(--primary-primary)] hover:brightness-95'
+                      className='bg-[var(--default-default)] hover:brightness-95'
                     >
                       جدولة جلسة دعم
                     </Button>
@@ -634,7 +634,7 @@ const FamilySupportPage: React.FC = () => {
                           {session.topics_discussed.map((topic, index) => (
                             <Badge
                               key={index}
-                              variant='secondary'
+                              variant='info'
                               className='text-xs'
                             >
                               {topic}
@@ -651,7 +651,7 @@ const FamilySupportPage: React.FC = () => {
                           {session.recommendations.map((rec, index) => (
                             <Badge
                               key={index}
-                              variant='secondary'
+                              variant='info'
                               className='text-xs'
                             >
                               {rec}
@@ -712,7 +712,7 @@ const FamilySupportPage: React.FC = () => {
                       onClick={() =>
                         router.push('/family-support/resources/new')
                       }
-                      className='bg-[var(--primary-primary)] hover:brightness-95'
+                      className='bg-[var(--default-default)] hover:brightness-95'
                     >
                       إضافة مورد جديد
                     </Button>
@@ -740,7 +740,7 @@ const FamilySupportPage: React.FC = () => {
                           </div>
                         </div>
                         <div className='flex items-center gap-2'>
-                          <Badge variant='secondary'>{resource.category}</Badge>
+                          <Badge variant='info'>{resource.category}</Badge>
                           <Button variant='outline' size='sm'>
                             <MoreVertical className='w-4 h-4' />
                           </Button>
@@ -755,7 +755,7 @@ const FamilySupportPage: React.FC = () => {
                           {resource.tags.map((tag, index) => (
                             <Badge
                               key={index}
-                              variant='secondary'
+                              variant='info'
                               className='text-xs'
                             >
                               {tag}

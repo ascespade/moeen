@@ -152,15 +152,15 @@ const TherapyPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      scheduled: { label: 'مجدولة', variant: 'primary' as const },
-      in_progress: { label: 'جارية', variant: 'secondary' as const },
-      completed: { label: 'مكتملة', variant: 'primary' as const },
+      scheduled: { label: 'مجدولة', variant: 'default' as const },
+      in_progress: { label: 'جارية', variant: 'info' as const },
+      completed: { label: 'مكتملة', variant: 'default' as const },
       cancelled: { label: 'ملغية', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'primary' as const,
+      variant: 'default' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -168,11 +168,11 @@ const TherapyPage: React.FC = () => {
   const getTherapyTypeIcon = (type: string) => {
     switch (type) {
       case 'العلاج الطبيعي':
-        return <Activity className='w-4 h-4 text-primary-primary' />;
+        return <Activity className='w-4 h-4 text-default-default' />;
       case 'العلاج الوظيفي':
-        return <Target className='w-4 h-4 text-primary-success' />;
+        return <Target className='w-4 h-4 text-default-success' />;
       case 'علاج النطق':
-        return <Heart className='w-4 h-4 text-primary-error' />;
+        return <Heart className='w-4 h-4 text-default-error' />;
       case 'العلاج النفسي':
         return <Brain className='w-4 h-4 text-purple-500' />;
       default:
@@ -217,7 +217,7 @@ const TherapyPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/therapy/new')}
-            className='bg-[var(--primary-primary)] hover:brightness-95'
+            className='bg-[var(--default-default)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             جلسة علاج جديدة
@@ -338,7 +338,7 @@ const TherapyPage: React.FC = () => {
       <div className='space-y-6'>
         {loading ? (
           <div className='flex justify-center items-center h-64'>
-            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
+            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
           </div>
         ) : filteredSessions.length === 0 ? (
           <Card>
@@ -350,7 +350,7 @@ const TherapyPage: React.FC = () => {
               <p className='text-gray-600 mb-4'>ابدأ بإنشاء جلسة علاج جديدة</p>
               <Button
                 onClick={() => router.push('/therapy/new')}
-                className='bg-[var(--primary-primary)] hover:brightness-95'
+                className='bg-[var(--default-default)] hover:brightness-95'
               >
                 إنشاء جلسة جديدة
               </Button>
@@ -373,7 +373,7 @@ const TherapyPage: React.FC = () => {
                         height={48}
                         className='rounded-full'
                       />
-                      <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-primary-success rounded-full border-2 border-white'></div>
+                      <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-default-success rounded-full border-2 border-white'></div>
                     </div>
                     <div>
                       <h3 className='text-lg font-semibold'>
@@ -419,7 +419,7 @@ const TherapyPage: React.FC = () => {
                     {session.goals.map((goal, index) => (
                       <Badge
                         key={index}
-                        variant='secondary'
+                        variant='info'
                         className='text-xs'
                       >
                         {goal}
@@ -434,7 +434,7 @@ const TherapyPage: React.FC = () => {
                     {session.activities.map((activity, index) => (
                       <Badge
                         key={index}
-                        variant='secondary'
+                        variant='info'
                         className='text-xs'
                       >
                         {activity}

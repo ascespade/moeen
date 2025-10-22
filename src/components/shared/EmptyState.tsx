@@ -32,7 +32,7 @@ export default function EmptyState({
       {action && (
         <button
           onClick={action.onClick}
-          className='btn-primary rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+          className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
         >
           {action.label}
         </button>

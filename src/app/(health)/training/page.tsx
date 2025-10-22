@@ -166,15 +166,15 @@ const TrainingPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      active: { label: 'نشط', variant: 'primary' as const },
-      completed: { label: 'مكتمل', variant: 'primary' as const },
-      paused: { label: 'متوقف', variant: 'secondary' as const },
+      active: { label: 'نشط', variant: 'default' as const },
+      completed: { label: 'مكتمل', variant: 'default' as const },
+      paused: { label: 'متوقف', variant: 'info' as const },
       cancelled: { label: 'ملغي', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'primary' as const,
+      variant: 'default' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -195,9 +195,9 @@ const TrainingPage: React.FC = () => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'المهارات الحياتية':
-        return <BookOpen className='w-4 h-4 text-primary-primary' />;
+        return <BookOpen className='w-4 h-4 text-default-default' />;
       case 'التأهيل المهني':
-        return <GraduationCap className='w-4 h-4 text-primary-success' />;
+        return <GraduationCap className='w-4 h-4 text-default-success' />;
       case 'التكنولوجيا':
         return <Award className='w-4 h-4 text-purple-500' />;
       default:
@@ -236,7 +236,7 @@ const TrainingPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/training/new')}
-            className='bg-[var(--primary-primary)] hover:brightness-95'
+            className='bg-[var(--default-default)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             برنامج تدريبي جديد
@@ -352,7 +352,7 @@ const TrainingPage: React.FC = () => {
       <div className='space-y-6'>
         {loading ? (
           <div className='flex justify-center items-center h-64'>
-            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
+            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
           </div>
         ) : filteredPrograms.length === 0 ? (
           <Card>
@@ -366,7 +366,7 @@ const TrainingPage: React.FC = () => {
               </p>
               <Button
                 onClick={() => router.push('/training/new')}
-                className='bg-[var(--primary-primary)] hover:brightness-95'
+                className='bg-[var(--default-default)] hover:brightness-95'
               >
                 إنشاء برنامج جديد
               </Button>
@@ -401,7 +401,7 @@ const TrainingPage: React.FC = () => {
 
                 <div className='grid grid-cols-1 md:grid-cols-4 gap-4 mb-4'>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='secondary'>{program.category}</Badge>
+                    <Badge variant='info'>{program.category}</Badge>
                     {getLevelBadge(program.level)}
                   </div>
                   <div className='flex items-center gap-2'>
@@ -432,7 +432,7 @@ const TrainingPage: React.FC = () => {
                     {program.skills_covered.map((skill, index) => (
                       <Badge
                         key={index}
-                        variant='secondary'
+                        variant='info'
                         className='text-xs'
                       >
                         {skill}
@@ -447,7 +447,7 @@ const TrainingPage: React.FC = () => {
                     {program.prerequisites.map((prereq, index) => (
                       <Badge
                         key={index}
-                        variant='secondary'
+                        variant='info'
                         className='text-xs'
                       >
                         {prereq}
@@ -471,7 +471,7 @@ const TrainingPage: React.FC = () => {
                   </div>
                   <div className='w-full bg-gray-200 rounded-full h-2'>
                     <div
-                      className='bg-[var(--primary-primary)] h-2 rounded-full transition-all duration-300'
+                      className='bg-[var(--default-default)] h-2 rounded-full transition-all duration-300'
                       style={{
                         width: `${(program.current_participants / program.max_participants) * 100}%`,
                       }}

@@ -188,11 +188,11 @@ const IntegrationsPage: React.FC = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'active':
-        return <CheckCircle className='w-4 h-4 text-primary-success' />;
+        return <CheckCircle className='w-4 h-4 text-default-success' />;
       case 'error':
-        return <XCircle className='w-4 h-4 text-primary-error' />;
+        return <XCircle className='w-4 h-4 text-default-error' />;
       case 'pending':
-        return <AlertCircle className='w-4 h-4 text-primary-warning' />;
+        return <AlertCircle className='w-4 h-4 text-default-warning' />;
       default:
         return <XCircle className='w-4 h-4 text-gray-500' />;
     }
@@ -201,15 +201,15 @@ const IntegrationsPage: React.FC = () => {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'api':
-        return <Globe className='w-4 h-4 text-primary-primary' />;
+        return <Globe className='w-4 h-4 text-default-default' />;
       case 'webhook':
         return <Plug className='w-4 h-4 text-purple-500' />;
       case 'oauth':
-        return <Key className='w-4 h-4 text-primary-success' />;
+        return <Key className='w-4 h-4 text-default-success' />;
       case 'sms':
-        return <Phone className='w-4 h-4 text-primary-primary' />;
+        return <Phone className='w-4 h-4 text-default-default' />;
       case 'email':
-        return <Mail className='w-4 h-4 text-primary-error' />;
+        return <Mail className='w-4 h-4 text-default-error' />;
       case 'calendar':
         return <Calendar className='w-4 h-4 text-indigo-500' />;
       default:
@@ -279,8 +279,8 @@ const IntegrationsPage: React.FC = () => {
                   <span
                     className={
                       integration.health_score > 80
-                        ? 'text-primary-success'
-                        : 'text-primary-error'
+                        ? 'text-default-success'
+                        : 'text-default-error'
                     }
                   >
                     {integration.health_score}%

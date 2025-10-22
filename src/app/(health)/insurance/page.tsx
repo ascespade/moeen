@@ -34,7 +34,7 @@ const statusConfig = {
   pending: { label: 'قيد المراجعة', color: 'warning' as const },
   approved: { label: 'موافق عليه', color: 'success' as const },
   rejected: { label: 'مرفوض', color: 'error' as const },
-  under_review: { label: 'قيد التدقيق', color: 'secondary' as const },
+  under_review: { label: 'قيد التدقيق', color: 'info' as const },
 };
 
 export default function InsurancePage() {
@@ -114,15 +114,15 @@ export default function InsurancePage() {
   const getBlockStatus = (claim: InsuranceClaim) => {
     if (claim.isBlocked) {
       return (
-        <div className='flex items-center gap-2 text-primary-error'>
-          <span className='h-2 w-2 rounded-full bg-primary-error'></span>
+        <div className='flex items-center gap-2 text-default-error'>
+          <span className='h-2 w-2 rounded-full bg-default-error'></span>
           <span className='text-sm font-medium'>محظور</span>
         </div>
       );
     }
     return (
-      <div className='flex items-center gap-2 text-primary-success'>
-        <span className='h-2 w-2 rounded-full bg-primary-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>نشط</span>
       </div>
     );
@@ -131,8 +131,8 @@ export default function InsurancePage() {
   const getOutstandingBalance = (claim: InsuranceClaim) => {
     if (claim.hasOutstandingBalance) {
       return (
-        <div className='flex items-center gap-2 text-primary-primary'>
-          <span className='h-2 w-2 rounded-full bg-primary-primary'></span>
+        <div className='flex items-center gap-2 text-default-default'>
+          <span className='h-2 w-2 rounded-full bg-default-default'></span>
           <span className='text-sm font-medium'>
             رصيد مستحق: {claim.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -140,8 +140,8 @@ export default function InsurancePage() {
       );
     }
     return (
-      <div className='flex items-center gap-2 text-primary-success'>
-        <span className='h-2 w-2 rounded-full bg-primary-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -149,9 +149,9 @@ export default function InsurancePage() {
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary-primary)] mx-auto mb-4'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto mb-4'></div>
           <p className='text-gray-600'>جاري تحميل مطالبات التأمين...</p>
         </div>
       </div>
@@ -160,13 +160,13 @@ export default function InsurancePage() {
 
   if (error) {
     return (
-      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className='px-4 py-2 bg-[var(--primary-primary)] text-white rounded-lg hover:bg-[var(--primary-primary-dark)]'
+            className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
           </button>
@@ -176,9 +176,9 @@ export default function InsurancePage() {
   }
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -190,7 +190,7 @@ export default function InsurancePage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-primary text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   إدارة المطالبات التأمينية
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -202,7 +202,7 @@ export default function InsurancePage() {
               <Button variant='outline' size='sm'>
                 تصدير التقرير
               </Button>
-              <Button variant='primary' size='sm'>
+              <Button variant='default' size='sm'>
                 إضافة مطالبة جديدة
               </Button>
             </div>
@@ -214,7 +214,7 @@ export default function InsurancePage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <Card className='p-6 text-center'>
-            <div className='text-primary mb-2 text-3xl font-bold'>
+            <div className='text-default mb-2 text-3xl font-bold'>
               {claims.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -222,7 +222,7 @@ export default function InsurancePage() {
             </div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {claims.filter(c => c.status === 'approved').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -236,7 +236,7 @@ export default function InsurancePage() {
             <div className='text-gray-600 dark:text-gray-300'>قيد المراجعة</div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-error'>
+            <div className='mb-2 text-3xl font-bold text-default-error'>
               {claims.filter(c => c.isBlocked).length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -248,28 +248,28 @@ export default function InsurancePage() {
         {/* Filters */}
         <div className='mb-6 flex flex-wrap gap-3'>
           <Button
-            variant={filter === 'all' ? 'primary' : 'outline'}
+            variant={filter === 'all' ? 'default' : 'outline'}
             size='sm'
             onClick={() => setFilter('all')}
           >
             جميع المطالبات
           </Button>
           <Button
-            variant={filter === 'pending' ? 'primary' : 'outline'}
+            variant={filter === 'pending' ? 'default' : 'outline'}
             size='sm'
             onClick={() => setFilter('pending')}
           >
             قيد المراجعة
           </Button>
           <Button
-            variant={filter === 'approved' ? 'primary' : 'outline'}
+            variant={filter === 'approved' ? 'default' : 'outline'}
             size='sm'
             onClick={() => setFilter('approved')}
           >
             موافق عليها
           </Button>
           <Button
-            variant={filter === 'rejected' ? 'primary' : 'outline'}
+            variant={filter === 'rejected' ? 'default' : 'outline'}
             size='sm'
             onClick={() => setFilter('rejected')}
           >
@@ -326,7 +326,7 @@ export default function InsurancePage() {
                   <span className='text-sm text-gray-600 dark:text-gray-300'>
                     المبلغ:
                   </span>
-                  <span className='text-primary text-sm font-bold'>
+                  <span className='text-default text-sm font-bold'>
                     {claim.amount.toLocaleString()} ريال
                   </span>
                 </div>
@@ -341,7 +341,7 @@ export default function InsurancePage() {
                 <Button variant='outline' size='sm' className='flex-1'>
                   عرض التفاصيل
                 </Button>
-                <Button variant='primary' size='sm' className='flex-1'>
+                <Button variant='default' size='sm' className='flex-1'>
                   تحديث
                 </Button>
               </div>
@@ -373,7 +373,7 @@ export default function InsurancePage() {
             <p className='mb-4 text-gray-600 dark:text-gray-300'>
               لا توجد مطالبات تأمينية تطابق الفلتر المحدد
             </p>
-            <Button variant='primary'>إضافة مطالبة جديدة</Button>
+            <Button variant='default'>إضافة مطالبة جديدة</Button>
           </Card>
         )}
       </main>
@@ -438,7 +438,7 @@ export default function InsurancePage() {
                     <label className='text-sm text-gray-600 dark:text-gray-300'>
                       المبلغ
                     </label>
-                    <p className='text-primary text-lg font-bold'>
+                    <p className='text-default text-lg font-bold'>
                       {selectedClaim.amount.toLocaleString()} ريال
                     </p>
                   </div>
@@ -477,7 +477,7 @@ export default function InsurancePage() {
                     <label className='text-sm text-gray-600 dark:text-gray-300'>
                       سبب الرفض
                     </label>
-                    <p className='font-medium text-primary-error'>
+                    <p className='font-medium text-default-error'>
                       {selectedClaim.rejectionReason}
                     </p>
                   </div>
@@ -505,7 +505,7 @@ export default function InsurancePage() {
                 <Button variant='outline' className='flex-1'>
                   طباعة
                 </Button>
-                <Button variant='primary' className='flex-1'>
+                <Button variant='default' className='flex-1'>
                   تحديث الحالة
                 </Button>
               </div>

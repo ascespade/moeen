@@ -49,7 +49,7 @@ export default function ColorPalettePage() {
   return (
     <div className='min-h-screen bg-background text-foreground'>
       {/* Header */}
-      <div className='bg-gradient-to-r from-[var(--primary-primary)] to-[var(--primary-secondary)] py-20'>
+      <div className='bg-gradient-to-r from-[var(--default-default)] to-[var(--default-info)] py-20'>
         <div className='container-app text-center'>
           <h1 className='text-5xl font-bold text-white mb-6'>لوحة الألوان</h1>
           <p className='text-xl text-white/90 max-w-3xl mx-auto'>
@@ -97,7 +97,7 @@ export default function ColorPalettePage() {
       </div>
 
       {/* Usage Guidelines */}
-      <div className='py-20 bg-[var(--primary-surface)]'>
+      <div className='py-20 bg-[var(--default-surface)]'>
         <div className='container-app'>
           <div className='text-center mb-16'>
             <h2 className='text-4xl font-bold text-foreground mb-4'>
@@ -115,15 +115,15 @@ export default function ColorPalettePage() {
               </h3>
               <ul className='space-y-3 text-muted-foreground'>
                 <li className='flex items-center gap-2'>
-                  <div className='w-4 h-4 rounded bg-[var(--primary-primary)]'></div>
+                  <div className='w-4 h-4 rounded bg-[var(--default-default)]'></div>
                   <span>استخدم البرتقالي للأزرار والروابط الرئيسية</span>
                 </li>
                 <li className='flex items-center gap-2'>
-                  <div className='w-4 h-4 rounded bg-[var(--primary-secondary)]'></div>
+                  <div className='w-4 h-4 rounded bg-[var(--default-info)]'></div>
                   <span>استخدم الأخضر للحالات الإيجابية</span>
                 </li>
                 <li className='flex items-center gap-2'>
-                  <div className='w-4 h-4 rounded bg-[var(--primary-accent)]'></div>
+                  <div className='w-4 h-4 rounded bg-[var(--default-accent)]'></div>
                   <span>استخدم الأزرق للمعلومات المهمة</span>
                 </li>
               </ul>
@@ -172,8 +172,8 @@ export default function ColorPalettePage() {
               <div className='bg-gray-100 dark:bg-gray-800 p-4 rounded-lg'>
                 <code className='text-sm text-gray-800 dark:text-gray-200'>
                   {`/* استخدام الألوان في CSS */
-.btn-primary {
-  background-color: var(--primary-primary);
+.btn-default {
+  background-color: var(--default-default);
   color: white;
 }
 

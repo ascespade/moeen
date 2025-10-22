@@ -282,13 +282,13 @@ const SecurityPage: React.FC = () => {
   const getEventIcon = (type: string) => {
     switch (type) {
       case 'login':
-        return <CheckCircle className='w-4 h-4 text-primary-success' />;
+        return <CheckCircle className='w-4 h-4 text-default-success' />;
       case 'logout':
         return <XCircle className='w-4 h-4 text-gray-500' />;
       case 'failed_login':
-        return <AlertTriangle className='w-4 h-4 text-primary-error' />;
+        return <AlertTriangle className='w-4 h-4 text-default-error' />;
       case 'password_change':
-        return <Key className='w-4 h-4 text-primary-primary' />;
+        return <Key className='w-4 h-4 text-default-default' />;
       case 'data_access':
         return <Database className='w-4 h-4 text-purple-500' />;
       default:
@@ -301,7 +301,7 @@ const SecurityPage: React.FC = () => {
       low: {
         label: 'منخفض',
         variant: 'default' as const,
-        color: 'text-primary-success',
+        color: 'text-default-success',
       },
       medium: {
         label: 'متوسط',
@@ -311,12 +311,12 @@ const SecurityPage: React.FC = () => {
       high: {
         label: 'عالي',
         variant: 'default' as const,
-        color: 'text-primary-primary',
+        color: 'text-default-default',
       },
       critical: {
         label: 'حرج',
         variant: 'error' as const,
-        color: 'text-primary-error',
+        color: 'text-default-error',
       },
     };
 
@@ -366,9 +366,9 @@ const SecurityPage: React.FC = () => {
       device.includes('macOS') ||
       device.includes('Linux')
     ) {
-      return <Monitor className='w-4 h-4 text-primary-primary' />;
+      return <Monitor className='w-4 h-4 text-default-default' />;
     } else if (device.includes('Android') || device.includes('iOS')) {
-      return <Smartphone className='w-4 h-4 text-primary-success' />;
+      return <Smartphone className='w-4 h-4 text-default-success' />;
     } else {
       return <Globe className='w-4 h-4 text-gray-500' />;
     }
@@ -565,7 +565,7 @@ const SecurityPage: React.FC = () => {
 
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
       ) : (
         <>
@@ -748,7 +748,7 @@ const SecurityPage: React.FC = () => {
                       <div className='flex items-start justify-between'>
                         <div className='flex items-start gap-4'>
                           <div className='p-2 bg-white rounded-full'>
-                            <AlertTriangle className='w-4 h-4 text-primary-error' />
+                            <AlertTriangle className='w-4 h-4 text-default-error' />
                           </div>
                           <div className='flex-1'>
                             <div className='flex items-center gap-2 mb-2'>

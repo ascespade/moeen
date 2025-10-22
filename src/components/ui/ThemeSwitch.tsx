@@ -72,7 +72,7 @@ export function ThemeSwitch({
       >
         <CurrentIcon className={iconSizes[size]} />
         {showLabel && (
-          <span className='mr-2 hidden sm:inline text-[var(--text-primary)]'>
+          <span className='mr-2 hidden sm:inline text-[var(--text-default)]'>
             {currentTheme?.label || 'Theme'}
           </span>
         )}
@@ -84,7 +84,7 @@ export function ThemeSwitch({
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
         <Sun
-          className={`${iconSizes[size]} ${isLight ? 'text-[var(--primary-primary)]' : 'text-[var(--text-tertiary)]'}`}
+          className={`${iconSizes[size]} ${isLight ? 'text-[var(--default-default)]' : 'text-[var(--text-tertiary)]'}`}
         />
         <button
           onClick={() => {
@@ -92,10 +92,10 @@ export function ThemeSwitch({
             else if (theme === 'dark') setTheme('system');
             else setTheme('light');
           }}
-          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary-primary)] focus:ring-offset-2 ${
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--default-default)] focus:ring-offset-2 ${
             isDark
-              ? 'bg-[var(--primary-primary)]'
-              : 'bg-[var(--border-primary)]'
+              ? 'bg-[var(--default-default)]'
+              : 'bg-[var(--border-default)]'
           }`}
         >
           <span
@@ -105,7 +105,7 @@ export function ThemeSwitch({
           />
         </button>
         <Moon
-          className={`${iconSizes[size]} ${isDark ? 'text-[var(--primary-accent)]' : 'text-[var(--text-tertiary)]'}`}
+          className={`${iconSizes[size]} ${isDark ? 'text-[var(--default-accent)]' : 'text-[var(--text-tertiary)]'}`}
         />
       </div>
     );
@@ -132,7 +132,7 @@ export function ThemeSwitch({
           />
 
           {/* Dropdown */}
-          <Card className='absolute top-full right-0 mt-2 w-48 z-20 shadow-lg border border-[var(--border-primary)] bg-[var(--panel)]'>
+          <Card className='absolute top-full right-0 mt-2 w-48 z-20 shadow-lg border border-[var(--border-default)] bg-[var(--panel)]'>
             <div className='p-2'>
               {themes.map(themeOption => {
                 const Icon = themeOption.icon;
@@ -147,8 +147,8 @@ export function ThemeSwitch({
                     }}
                     className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors hover:bg-[var(--surface-hover)] ${
                       isSelected
-                        ? 'bg-[var(--primary-primary)]/10 text-[var(--primary-primary)]'
-                        : 'text-[var(--text-primary)]'
+                        ? 'bg-[var(--default-default)]/10 text-[var(--default-default)]'
+                        : 'text-[var(--text-default)]'
                     }`}
                   >
                     <div className='flex items-center space-x-3'>
@@ -161,7 +161,7 @@ export function ThemeSwitch({
                       </div>
                     </div>
                     {isSelected && (
-                      <Check className='h-4 w-4 text-[var(--primary-primary)]' />
+                      <Check className='h-4 w-4 text-[var(--default-default)]' />
                     )}
                   </button>
                 );

@@ -194,15 +194,15 @@ const FlowsManagementPage: React.FC = () => {
   const getStepIcon = (type: string) => {
     switch (type) {
       case 'question':
-        return <MessageCircle className='w-4 h-4 text-primary-primary' />;
+        return <MessageCircle className='w-4 h-4 text-default-default' />;
       case 'information':
-        return <Bot className='w-4 h-4 text-primary-success' />;
+        return <Bot className='w-4 h-4 text-default-success' />;
       case 'action':
-        return <Zap className='w-4 h-4 text-primary-warning' />;
+        return <Zap className='w-4 h-4 text-default-warning' />;
       case 'slack_notify':
         return <Settings className='w-4 h-4 text-purple-500' />;
       case 'whatsapp_send':
-        return <MessageCircle className='w-4 h-4 text-primary-success' />;
+        return <MessageCircle className='w-4 h-4 text-default-success' />;
       default:
         return <ArrowRight className='w-4 h-4 text-gray-500' />;
     }
@@ -233,7 +233,7 @@ const FlowsManagementPage: React.FC = () => {
           </div>
           <Button
             onClick={() => setShowFlowEditor(true)}
-            className='bg-[var(--primary-primary)] hover:brightness-95'
+            className='bg-[var(--default-default)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             إنشاء Flow جديد
@@ -254,7 +254,7 @@ const FlowsManagementPage: React.FC = () => {
       {/* Flows List */}
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
       ) : filteredFlows.length === 0 ? (
         <Card>
@@ -266,7 +266,7 @@ const FlowsManagementPage: React.FC = () => {
             <p className='text-gray-600 mb-4'>ابدأ بإنشاء أول Flow للشات بوت</p>
             <Button
               onClick={() => setShowFlowEditor(true)}
-              className='bg-[var(--primary-primary)] hover:brightness-95'
+              className='bg-[var(--default-default)] hover:brightness-95'
             >
               إنشاء Flow جديد
             </Button>
@@ -306,8 +306,8 @@ const FlowsManagementPage: React.FC = () => {
                       onClick={() => handleToggleFlow(flow.id)}
                       className={
                         flow.isActive
-                          ? 'text-primary-error'
-                          : 'text-primary-success'
+                          ? 'text-default-error'
+                          : 'text-default-success'
                       }
                     >
                       {flow.isActive ? (
@@ -327,7 +327,7 @@ const FlowsManagementPage: React.FC = () => {
                       variant='outline'
                       size='sm'
                       onClick={() => handleDeleteFlow(flow.id)}
-                      className='text-primary-error hover:text-red-700'
+                      className='text-default-error hover:text-red-700'
                     >
                       <Trash2 className='w-4 h-4' />
                     </Button>

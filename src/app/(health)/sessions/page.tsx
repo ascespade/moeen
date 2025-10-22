@@ -109,9 +109,9 @@ export default function SessionsPage() {
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary-primary)] mx-auto mb-4'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto mb-4'></div>
           <p className='text-gray-600'>جاري تحميل الجلسات...</p>
         </div>
       </div>
@@ -120,13 +120,13 @@ export default function SessionsPage() {
 
   if (error) {
     return (
-      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className='px-4 py-2 bg-[var(--primary-primary)] text-white rounded-lg hover:bg-[var(--primary-primary-dark)]'
+            className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
           </button>
@@ -136,12 +136,12 @@ export default function SessionsPage() {
   }
 
   return (
-    <div className='min-h-screen bg-[var(--primary-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       <main className='container-app py-8'>
         {/* Page Header */}
         <div className='mb-8 flex items-center justify-between'>
           <div>
-            <h1 className='text-primary text-3xl font-bold'>إدارة الجلسات</h1>
+            <h1 className='text-default text-3xl font-bold'>إدارة الجلسات</h1>
             <p className='text-gray-600 dark:text-gray-300'>
               جلسات اليوم العلاجية
             </p>
@@ -161,13 +161,13 @@ export default function SessionsPage() {
             <div className='flex rounded-lg border border-gray-300'>
               <button
                 onClick={() => setViewMode('cards')}
-                className={`px-3 py-2 text-sm ${viewMode === 'cards' ? 'bg-[var(--primary-primary)] text-white' : 'text-gray-600'}`}
+                className={`px-3 py-2 text-sm ${viewMode === 'cards' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 بطاقات
               </button>
               <button
                 onClick={() => setViewMode('table')}
-                className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--primary-primary)] text-white' : 'text-gray-600'}`}
+                className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 جدول
               </button>
@@ -177,7 +177,7 @@ export default function SessionsPage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {sessions.filter(s => s.status === 'upcoming').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>جلسات قادمة</div>
@@ -189,7 +189,7 @@ export default function SessionsPage() {
             <div className='text-gray-600 dark:text-gray-300'>جلسات جارية</div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-primary-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {sessions.filter(s => s.status === 'completed').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>جلسات مكتملة</div>
@@ -255,12 +255,12 @@ export default function SessionsPage() {
 
                 <div className='flex gap-2'>
                   {session.status === 'upcoming' && (
-                    <button className='btn-primary flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
+                    <button className='btn-default flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                       بدء الجلسة
                     </button>
                   )}
                   {session.status === 'in-progress' && (
-                    <button className='flex-1 rounded-lg bg-primary-success py-2 text-sm text-white transition-colors hover:bg-green-700'>
+                    <button className='flex-1 rounded-lg bg-default-success py-2 text-sm text-white transition-colors hover:bg-green-700'>
                       إنهاء الجلسة
                     </button>
                   )}
@@ -338,12 +338,12 @@ export default function SessionsPage() {
                       <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                         <div className='flex gap-2'>
                           {session.status === 'upcoming' && (
-                            <button className='text-[var(--primary-primary)] hover:text-[var(--primary-primary-hover)]'>
+                            <button className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'>
                               بدء
                             </button>
                           )}
                           {session.status === 'in-progress' && (
-                            <button className='text-primary-success hover:text-green-700'>
+                            <button className='text-default-success hover:text-green-700'>
                               إنهاء
                             </button>
                           )}

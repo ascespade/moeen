@@ -36,48 +36,48 @@ export default function DesignSystemDemo() {
           Buttons - الأزرار
         </h2>
         <div className='ds-grid ds-grid-cols-2 md:ds-grid-cols-3 lg:ds-grid-cols-6 ds-gap-4'>
-          <CTAButton variant='primary' size='sm'>
+          <CTAButton variant='default' size='sm'>
             Primary
           </CTAButton>
-          <CTAButton variant='secondary' size='sm'>
+          <CTAButton variant='info' size='sm'>
             Secondary
           </CTAButton>
           <CTAButton variant='outline' size='sm'>
             Outline
           </CTAButton>
-          <CTAButton variant='secondary' size='sm'>
+          <CTAButton variant='info' size='sm'>
             Ghost
           </CTAButton>
-          <CTAButton variant='secondary' size='sm'>
+          <CTAButton variant='info' size='sm'>
             Danger
           </CTAButton>
-          <CTAButton variant='primary' size='sm'>
+          <CTAButton variant='default' size='sm'>
             Success
           </CTAButton>
         </div>
 
         <div className='ds-flex ds-justify-center ds-gap-4 mt-6'>
-          <CTAButton variant='primary' size='sm'>
+          <CTAButton variant='default' size='sm'>
             XS
           </CTAButton>
-          <CTAButton variant='primary' size='sm'>
+          <CTAButton variant='default' size='sm'>
             SM
           </CTAButton>
-          <CTAButton variant='primary' size='md'>
+          <CTAButton variant='default' size='md'>
             MD
           </CTAButton>
-          <CTAButton variant='primary' size='lg'>
+          <CTAButton variant='default' size='lg'>
             LG
           </CTAButton>
-          <CTAButton variant='primary' size='lg'>
+          <CTAButton variant='default' size='lg'>
             XL
           </CTAButton>
         </div>
 
         <div className='ds-flex ds-justify-center ds-gap-4 mt-6'>
-          <CTAButton variant='primary'>Loading</CTAButton>
-          <CTAButton variant='primary'>Disabled</CTAButton>
-          <CTAButton variant='primary'>Full Width</CTAButton>
+          <CTAButton variant='default'>Loading</CTAButton>
+          <CTAButton variant='default'>Disabled</CTAButton>
+          <CTAButton variant='default'>Full Width</CTAButton>
         </div>
       </section>
 
@@ -144,15 +144,15 @@ export default function DesignSystemDemo() {
         </h2>
         <div className='ds-grid ds-grid-cols-2 md:ds-grid-cols-4 lg:ds-grid-cols-6 ds-gap-4'>
           <div className='ds-card ds-card-sm text-center'>
-            <div className='w-full h-16 bg-primary-primary rounded-lg mb-2'></div>
+            <div className='w-full h-16 bg-default-default rounded-lg mb-2'></div>
             <p className='text-sm font-medium'>Primary</p>
           </div>
           <div className='ds-card ds-card-sm text-center'>
-            <div className='w-full h-16 bg-primary-secondary rounded-lg mb-2'></div>
+            <div className='w-full h-16 bg-default-info rounded-lg mb-2'></div>
             <p className='text-sm font-medium'>Secondary</p>
           </div>
           <div className='ds-card ds-card-sm text-center'>
-            <div className='w-full h-16 bg-primary-accent rounded-lg mb-2'></div>
+            <div className='w-full h-16 bg-default-accent rounded-lg mb-2'></div>
             <p className='text-sm font-medium'>Accent</p>
           </div>
           <div className='ds-card ds-card-sm text-center'>
@@ -188,8 +188,8 @@ export default function DesignSystemDemo() {
               typography settings and how text flows naturally in the design
               system.
             </p>
-            <p className='text-sm text-text-secondary'>
-              This is small text used for captions, labels, and secondary
+            <p className='text-sm text-text-info'>
+              This is small text used for captions, labels, and info
               information.
             </p>
             <p className='text-xs text-text-muted'>
@@ -208,23 +208,23 @@ export default function DesignSystemDemo() {
           <div className='ds-card-content'>
             <div className='space-y-4'>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-4 h-4 bg-primary-primary rounded'></div>
+                <div className='w-4 h-4 bg-default-default rounded'></div>
                 <span>4px - Extra Small</span>
               </div>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-8 h-8 bg-primary-primary rounded'></div>
+                <div className='w-8 h-8 bg-default-default rounded'></div>
                 <span>8px - Small</span>
               </div>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-12 h-12 bg-primary-primary rounded'></div>
+                <div className='w-12 h-12 bg-default-default rounded'></div>
                 <span>12px - Medium</span>
               </div>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-16 h-16 bg-primary-primary rounded'></div>
+                <div className='w-16 h-16 bg-default-default rounded'></div>
                 <span>16px - Large</span>
               </div>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-24 h-24 bg-primary-primary rounded'></div>
+                <div className='w-24 h-24 bg-default-default rounded'></div>
                 <span>24px - Extra Large</span>
               </div>
             </div>
@@ -236,11 +236,11 @@ export default function DesignSystemDemo() {
       <footer className='ds-card ds-card-elevated ds-card-lg text-center'>
         <div className='ds-card-content'>
           <h3 className='text-xl font-semibold mb-2'>Dynamic Design System</h3>
-          <p className='text-text-secondary mb-4'>
+          <p className='text-text-info mb-4'>
             نظام تصميم مركزي شامل يدعم التخصيص الديناميكي والاستجابة والوصولية
           </p>
           <div className='ds-flex ds-justify-center ds-gap-4'>
-            <CTAButton variant='primary' size='sm'>
+            <CTAButton variant='default' size='sm'>
               Get Started
             </CTAButton>
             <CTAButton variant='outline' size='sm'>

@@ -76,7 +76,7 @@ export default function Sidebar() {
       >
         <div className='h-14 flex items-center px-4 border-b border-gray-200 dark:border-gray-800'>
           <div className='inline-flex items-center gap-3'>
-            <div className='h-8 w-8 rounded-lg bg-primary text-white grid place-items-center'>
+            <div className='h-8 w-8 rounded-lg bg-default text-white grid place-items-center'>
               م
             </div>
             <span className='text-lg font-bold text-gray-900 dark:text-white'>
@@ -94,8 +94,8 @@ export default function Sidebar() {
                 href={item.href}
                 className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
                   active
-                    ? 'bg-primary text-white border-transparent'
-                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--primary-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
+                    ? 'bg-default text-white border-transparent'
+                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--default-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
                 }`}
                 data-hs-overlay='#app-sidebar'
               >
@@ -111,7 +111,7 @@ export default function Sidebar() {
       <aside className='hidden lg:block w-64 shrink-0 border-e border-gray-200 dark:border-gray-800 min-h-dvh p-4 grid grid-rows-[auto_1fr_auto] bg-white dark:bg-gray-900'>
         <div className='mb-4'>
           <div className='flex items-center gap-3 mb-1'>
-            <div className='h-8 w-8 rounded-lg bg-primary text-white grid place-items-center'>
+            <div className='h-8 w-8 rounded-lg bg-default text-white grid place-items-center'>
               م
             </div>
             <span className='text-xl font-bold text-gray-900 dark:text-white'>
@@ -132,8 +132,8 @@ export default function Sidebar() {
                 href={item.href}
                 className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
                   active
-                    ? 'bg-primary text-white border-transparent'
-                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--primary-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
+                    ? 'bg-default text-white border-transparent'
+                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--default-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
                 }`}
               >
                 <span>{item.icon}</span>
@@ -143,7 +143,7 @@ export default function Sidebar() {
           })}
         </nav>
         <div className='flex items-center gap-3 pt-6 border-t border-gray-200 dark:border-gray-800 mt-6'>
-          <div className='h-10 w-10 rounded-full bg-primary text-white grid place-items-center'>
+          <div className='h-10 w-10 rounded-full bg-default text-white grid place-items-center'>
             م
           </div>
           <div className='text-sm'>

@@ -130,7 +130,7 @@ export default function StaffDashboard() {
           <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
             <Card className='p-6'>
               <div className='flex items-center'>
-                <UserPlus className='h-8 w-8 text-primary-primary mr-4' />
+                <UserPlus className='h-8 w-8 text-default-default mr-4' />
                 <div>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {t('staff.dashboard.today_registrations')}
@@ -144,7 +144,7 @@ export default function StaffDashboard() {
 
             <Card className='p-6'>
               <div className='flex items-center'>
-                <CreditCard className='h-8 w-8 text-primary-success mr-4' />
+                <CreditCard className='h-8 w-8 text-default-success mr-4' />
                 <div>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {t('staff.dashboard.pending_payments')}
@@ -158,7 +158,7 @@ export default function StaffDashboard() {
 
             <Card className='p-6'>
               <div className='flex items-center'>
-                <FileText className='h-8 w-8 text-primary-primary mr-4' />
+                <FileText className='h-8 w-8 text-default-default mr-4' />
                 <div>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {t('staff.dashboard.pending_claims')}
@@ -208,7 +208,7 @@ export default function StaffDashboard() {
                           className='flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg'
                         >
                           <div className='flex items-center'>
-                            <CreditCard className='h-5 w-5 text-primary-success mr-3' />
+                            <CreditCard className='h-5 w-5 text-default-success mr-3' />
                             <div>
                               <p className='font-medium text-gray-900 dark:text-white'>
                                 {payment.patientName}
@@ -219,7 +219,7 @@ export default function StaffDashboard() {
                             </div>
                           </div>
                           <div className='flex items-center space-x-2'>
-                            <Badge variant='secondary'>
+                            <Badge variant='info'>
                               {t('payment.status.pending')}
                             </Badge>
                             <Button
@@ -253,7 +253,7 @@ export default function StaffDashboard() {
                           className='flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg'
                         >
                           <div className='flex items-center'>
-                            <FileText className='h-5 w-5 text-primary-primary mr-3' />
+                            <FileText className='h-5 w-5 text-default-default mr-3' />
                             <div>
                               <p className='font-medium text-gray-900 dark:text-white'>
                                 {claim.patientName}
@@ -264,7 +264,7 @@ export default function StaffDashboard() {
                             </div>
                           </div>
                           <div className='flex items-center space-x-2'>
-                            <Badge variant='secondary'>
+                            <Badge variant='info'>
                               {t(`claim.status.${claim.status}`)}
                             </Badge>
                             <Button
@@ -327,7 +327,7 @@ export default function StaffDashboard() {
                         className='flex items-start space-x-3 p-3 bg-surface dark:bg-gray-800 rounded-lg'
                       >
                         <div className='flex-shrink-0'>
-                          <div className='w-2 h-2 bg-primary-primary rounded-full mt-2'></div>
+                          <div className='w-2 h-2 bg-default-default rounded-full mt-2'></div>
                         </div>
                         <div className='flex-1 min-w-0'>
                           <p className='text-sm text-gray-900 dark:text-white'>

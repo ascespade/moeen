@@ -72,7 +72,7 @@ export default function ResetPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div className='flex min-h-screen items-center justify-center bg-[var(--primary-surface)] p-4'>
+      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
         <div className='card w-full max-w-md p-8 text-center'>
           <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -86,7 +86,7 @@ export default function ResetPasswordPage() {
           </p>
           <Link
             href={ROUTES.LOGIN}
-            className='btn-primary inline-block rounded-lg px-6 py-3 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
+            className='btn-default inline-block rounded-lg px-6 py-3 text-white transition-colors hover:bg-[var(--default-default-hover)]'
           >
             تسجيل الدخول
           </Link>
@@ -96,7 +96,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-[var(--primary-surface)] p-4'>
+    <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
       <div className='w-full max-w-md'>
         {/* Logo */}
         <div className='mb-8 text-center'>
@@ -108,7 +108,7 @@ export default function ResetPasswordPage() {
               height={50}
               className='rounded-lg'
             />
-            <h1 className='text-primary text-3xl font-bold'>مُعين</h1>
+            <h1 className='text-default text-3xl font-bold'>مُعين</h1>
           </div>
           <h2 className='mb-2 text-2xl font-semibold text-gray-900 dark:text-white'>
             إعادة تعيين كلمة المرور
@@ -141,14 +141,14 @@ export default function ResetPasswordPage() {
                 name='password'
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)] ${
+                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)] ${
                   errors.password ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder='أدخل كلمة المرور الجديدة'
                 disabled={isLoading}
               />
               {errors.password && (
-                <p className='mt-1 text-sm text-primary-error'>
+                <p className='mt-1 text-sm text-default-error'>
                   {errors.password}
                 </p>
               )}
@@ -171,14 +171,14 @@ export default function ResetPasswordPage() {
                 name='confirmPassword'
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)] ${
+                className={`w-full rounded-lg border px-4 py-3 transition-colors focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)] ${
                   errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
                 }`}
                 placeholder='أعد إدخال كلمة المرور الجديدة'
                 disabled={isLoading}
               />
               {errors.confirmPassword && (
-                <p className='mt-1 text-sm text-primary-error'>
+                <p className='mt-1 text-sm text-default-error'>
                   {errors.confirmPassword}
                 </p>
               )}
@@ -200,7 +200,7 @@ export default function ResetPasswordPage() {
             <button
               type='submit'
               disabled={isLoading}
-              className='btn-primary w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--primary-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50'
+              className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50'
             >
               {isLoading ? (
                 <div className='flex items-center justify-center gap-2'>
@@ -219,7 +219,7 @@ export default function ResetPasswordPage() {
               تذكرت كلمة المرور؟{' '}
               <Link
                 href={ROUTES.LOGIN}
-                className='font-semibold text-[var(--primary-primary)] hover:underline'
+                className='font-semibold text-[var(--default-default)] hover:underline'
               >
                 تسجيل الدخول
               </Link>

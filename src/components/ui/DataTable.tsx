@@ -39,7 +39,7 @@ export function DataTable<T extends Record<string, unknown>>({
     );
 
   return (
-    <div className='border border-primary-border rounded-xl overflow-hidden'>
+    <div className='border border-default-border rounded-xl overflow-hidden'>
       <table className='min-w-full text-sm'>
         <thead className='bg-surface dark:bg-gray-800'>
           <tr>
@@ -47,7 +47,7 @@ export function DataTable<T extends Record<string, unknown>>({
               <th key={String(c.key)} className='px-4 py-3 text-start'>
                 <button
                   onClick={() => toggleSort(c.key)}
-                  className='flex items-center gap-1 hover:text-primary-primary'
+                  className='flex items-center gap-1 hover:text-default-default'
                 >
                   {c.header}
                   {sort?.key === c.key && (sort.dir === 'asc' ? '↑' : '↓')}
@@ -60,7 +60,7 @@ export function DataTable<T extends Record<string, unknown>>({
           {pageData.map((row, i) => (
             <tr
               key={i}
-              className='border-t border-primary-border hover:bg-surface dark:hover:bg-gray-800'
+              className='border-t border-default-border hover:bg-surface dark:hover:bg-gray-800'
             >
               {columns.map(c => (
                 <td key={String(c.key)} className='px-4 py-3'>

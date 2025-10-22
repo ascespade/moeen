@@ -4,7 +4,7 @@ import React from 'react';
 
 interface CTAButtonProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'default' | 'info' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
   onClick?: () => void;
@@ -12,7 +12,7 @@ interface CTAButtonProps {
 
 export default function CTAButton({
   children,
-  variant = 'primary',
+  variant = 'default',
   size = 'md',
   className = '',
   onClick,
@@ -21,9 +21,9 @@ export default function CTAButton({
     'font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-200';
 
   const variantClasses = {
-    primary:
+    default:
       'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-indigo-700',
-    secondary:
+    info:
       'bg-white text-blue-600 border-2 border-blue-200 hover:bg-blue-50 hover:border-blue-300 shadow-md hover:shadow-lg',
     outline:
       'bg-transparent text-blue-600 border-2 border-blue-500 hover:bg-blue-500 hover:text-white shadow-md hover:shadow-lg',

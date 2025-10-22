@@ -249,8 +249,8 @@ export default function DynamicDoctorsList({
                 {/* المعلومات الأساسية */}
                 <div className='space-y-2'>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='secondary'>{doctor.specialization}</Badge>
-                    <Badge variant={doctor.is_active ? 'primary' : 'secondary'}>
+                    <Badge variant='info'>{doctor.specialization}</Badge>
+                    <Badge variant={doctor.is_active ? 'default' : 'info'}>
                       {doctor.is_active ? 'نشط' : 'غير نشط'}
                     </Badge>
                   </div>
@@ -275,7 +275,7 @@ export default function DynamicDoctorsList({
                       <Phone className='h-4 w-4 text-muted-foreground' />
                       <a
                         href={`tel:${doctor.phone}`}
-                        className='text-sm text-primary hover:underline'
+                        className='text-sm text-default hover:underline'
                       >
                         {doctor.phone}
                       </a>
@@ -287,7 +287,7 @@ export default function DynamicDoctorsList({
                       <Mail className='h-4 w-4 text-muted-foreground' />
                       <a
                         href={`mailto:${doctor.email}`}
-                        className='text-sm text-primary hover:underline'
+                        className='text-sm text-default hover:underline'
                       >
                         {doctor.email}
                       </a>
@@ -321,14 +321,14 @@ export default function DynamicDoctorsList({
                       {doctor.qualifications.slice(0, 3).map((qual, index) => (
                         <Badge
                           key={index}
-                          variant='secondary'
+                          variant='info'
                           className='text-xs'
                         >
                           {qual}
                         </Badge>
                       ))}
                       {doctor.qualifications.length > 3 && (
-                        <Badge variant='secondary' className='text-xs'>
+                        <Badge variant='info' className='text-xs'>
                           +{doctor.qualifications.length - 3} أخرى
                         </Badge>
                       )}
@@ -344,7 +344,7 @@ export default function DynamicDoctorsList({
                       {doctor.languages.map((lang, index) => (
                         <Badge
                           key={index}
-                          variant='secondary'
+                          variant='info'
                           className='text-xs'
                         >
                           {lang}
