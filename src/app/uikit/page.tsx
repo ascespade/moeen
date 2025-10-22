@@ -1,6 +1,6 @@
 export default function UIKitPage() {
   return (
-    <main className='min-h-screen bg-[var(--brand-surface)]'>
+    <main className='min-h-screen bg-[var(--primary-surface)]'>
       <div className='container-app py-6'>
         <div className='grid gap-6'>
           <h1 className='text-2xl font-semibold text-[var(--foreground)]'>
@@ -12,13 +12,13 @@ export default function UIKitPage() {
               Buttons
             </div>
             <div className='flex flex-wrap gap-2'>
-              <button className='btn btn-brand'>Primary</button>
+              <button className='btn btn-primary'>Primary</button>
               <button className='btn btn-secondary'>Secondary</button>
               <button className='btn btn-outline'>Ghost</button>
               <button
                 className='btn btn-outline'
                 style={{
-                  backgroundColor: 'var(--brand-warning)',
+                  backgroundColor: 'var(--primary-warning)',
                   color: 'white',
                 }}
               >
@@ -27,7 +27,7 @@ export default function UIKitPage() {
               <button
                 className='btn btn-outline'
                 style={{
-                  backgroundColor: 'var(--brand-error)',
+                  backgroundColor: 'var(--primary-error)',
                   color: 'white',
                 }}
               >

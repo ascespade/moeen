@@ -188,11 +188,11 @@ const IntegrationsPage: React.FC = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'active':
-        return <CheckCircle className='w-4 h-4 text-brand-success' />;
+        return <CheckCircle className='w-4 h-4 text-primary-success' />;
       case 'error':
-        return <XCircle className='w-4 h-4 text-brand-error' />;
+        return <XCircle className='w-4 h-4 text-primary-error' />;
       case 'pending':
-        return <AlertCircle className='w-4 h-4 text-brand-warning' />;
+        return <AlertCircle className='w-4 h-4 text-primary-warning' />;
       default:
         return <XCircle className='w-4 h-4 text-gray-500' />;
     }
@@ -201,15 +201,15 @@ const IntegrationsPage: React.FC = () => {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'api':
-        return <Globe className='w-4 h-4 text-brand-primary' />;
+        return <Globe className='w-4 h-4 text-primary-primary' />;
       case 'webhook':
         return <Plug className='w-4 h-4 text-purple-500' />;
       case 'oauth':
-        return <Key className='w-4 h-4 text-brand-success' />;
+        return <Key className='w-4 h-4 text-primary-success' />;
       case 'sms':
-        return <Phone className='w-4 h-4 text-brand-primary' />;
+        return <Phone className='w-4 h-4 text-primary-primary' />;
       case 'email':
-        return <Mail className='w-4 h-4 text-brand-error' />;
+        return <Mail className='w-4 h-4 text-primary-error' />;
       case 'calendar':
         return <Calendar className='w-4 h-4 text-indigo-500' />;
       default:
@@ -260,7 +260,7 @@ const IntegrationsPage: React.FC = () => {
                   <span>الحالة:</span>
                   <Badge
                     variant={
-                      integration.status === 'active' ? 'primary' : 'secondary'
+                      integration.status === 'active' ? 'default' : 'info'
                     }
                   >
                     {integration.status === 'active' ? 'نشط' : 'غير نشط'}
@@ -279,8 +279,8 @@ const IntegrationsPage: React.FC = () => {
                   <span
                     className={
                       integration.health_score > 80
-                        ? 'text-brand-success'
-                        : 'text-brand-error'
+                        ? 'text-primary-success'
+                        : 'text-primary-error'
                     }
                   >
                     {integration.health_score}%

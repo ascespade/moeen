@@ -1,6 +1,6 @@
 /**
  * Design System Hooks - خطافات نظام التصميم
- * 
+ *
  * React hooks for design system
  * خطافات React لنظام التصميم
  */
@@ -27,7 +27,9 @@ export function useTheme() {
       setTheme(savedTheme);
     } else {
       // Check system preference
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
       setTheme(prefersDark ? 'dark' : 'light');
     }
     setIsLoading(false);
@@ -39,7 +41,7 @@ export function useTheme() {
 
     const root = document.documentElement;
     const themeVariables = generateThemeVariables(theme);
-    
+
     Object.entries(themeVariables).forEach(([key, value]) => {
       root.style.setProperty(key, value);
     });
@@ -49,7 +51,7 @@ export function useTheme() {
   }, [theme, isLoading]);
 
   const toggleTheme = useCallback(() => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   }, []);
 
   const setLightTheme = useCallback(() => {
@@ -85,7 +87,10 @@ export function useLanguage() {
 
   // Load language from localStorage on mount
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as 'ar' | 'en' | null;
+    const savedLanguage = localStorage.getItem('language') as
+      | 'ar'
+      | 'en'
+      | null;
     if (savedLanguage) {
       setLanguage(savedLanguage);
     } else {
@@ -107,7 +112,7 @@ export function useLanguage() {
   }, [language, isLoading]);
 
   const toggleLanguage = useCallback(() => {
-    setLanguage(prev => prev === 'ar' ? 'en' : 'ar');
+    setLanguage(prev => (prev === 'ar' ? 'en' : 'ar'));
   }, []);
 
   const setArabic = useCallback(() => {
@@ -140,7 +145,9 @@ export function useLanguage() {
  * خطاف الاستجابة لإدارة نقاط التوقف
  */
 export function useResponsive() {
-  const [breakpoint, setBreakpoint] = useState<'sm' | 'md' | 'lg' | 'xl' | '2xl'>('sm');
+  const [breakpoint, setBreakpoint] = useState<
+    'sm' | 'md' | 'lg' | 'xl' | '2xl'
+  >('sm');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -170,7 +177,8 @@ export function useResponsive() {
     isLoading,
     isMobile: breakpoint === 'sm',
     isTablet: breakpoint === 'md',
-    isDesktop: breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl',
+    isDesktop:
+      breakpoint === 'lg' || breakpoint === 'xl' || breakpoint === '2xl',
     isLarge: breakpoint === 'xl' || breakpoint === '2xl',
     isExtraLarge: breakpoint === '2xl',
   };
@@ -229,7 +237,7 @@ export function useAnimation() {
   const startAnimation = useCallback((duration: number = 300) => {
     setIsAnimating(true);
     setAnimationDuration(duration);
-    
+
     setTimeout(() => {
       setIsAnimating(false);
     }, duration);
@@ -262,11 +270,15 @@ export function useAccessibility() {
 
   useEffect(() => {
     // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
     setReducedMotion(prefersReducedMotion);
 
     // Check for high contrast preference
-    const prefersHighContrast = window.matchMedia('(prefers-contrast: high)').matches;
+    const prefersHighContrast = window.matchMedia(
+      '(prefers-contrast: high)'
+    ).matches;
     setHighContrast(prefersHighContrast);
 
     // Load saved preferences
@@ -276,19 +288,25 @@ export function useAccessibility() {
     }
   }, []);
 
-  const updateFontSize = useCallback((size: 'small' | 'normal' | 'large' | 'extra-large') => {
-    setFontSize(size);
-    localStorage.setItem('fontSize', size);
-    
-    // Apply font size to document
-    const root = document.documentElement;
-    root.setAttribute('data-font-size', size);
-  }, []);
+  const updateFontSize = useCallback(
+    (size: 'small' | 'normal' | 'large' | 'extra-large') => {
+      setFontSize(size);
+      localStorage.setItem('fontSize', size);
+
+      // Apply font size to document
+      const root = document.documentElement;
+      root.setAttribute('data-font-size', size);
+    },
+    []
+  );
 
   const toggleHighContrast = useCallback(() => {
     setHighContrast(prev => {
       const newValue = !prev;
-      document.documentElement.setAttribute('data-high-contrast', newValue.toString());
+      document.documentElement.setAttribute(
+        'data-high-contrast',
+        newValue.toString()
+      );
       return newValue;
     });
   }, []);

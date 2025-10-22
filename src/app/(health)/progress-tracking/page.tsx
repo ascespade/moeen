@@ -167,23 +167,23 @@ const ProgressTrackingPage: React.FC = () => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'الحركة':
-        return <Activity className='w-4 h-4 text-brand-primary' />;
+        return <Activity className='w-4 h-4 text-primary-primary' />;
       case 'التواصل':
-        return <Heart className='w-4 h-4 text-brand-error' />;
+        return <Heart className='w-4 h-4 text-primary-error' />;
       case 'الإدراك':
         return <Brain className='w-4 h-4 text-purple-500' />;
       case 'الاستقلالية':
-        return <Zap className='w-4 h-4 text-brand-warning' />;
+        return <Zap className='w-4 h-4 text-primary-warning' />;
       default:
         return <Target className='w-4 h-4 text-gray-500' />;
     }
   };
 
   const getProgressColor = (percentage: number) => {
-    if (percentage >= 80) return 'bg-brand-success';
-    if (percentage >= 60) return 'bg-brand-warning';
-    if (percentage >= 40) return 'bg-brand-primary';
-    return 'bg-brand-error';
+    if (percentage >= 80) return 'bg-primary-success';
+    if (percentage >= 60) return 'bg-primary-warning';
+    if (percentage >= 40) return 'bg-primary-primary';
+    return 'bg-primary-error';
   };
 
   const filteredGoals = goals.filter(goal => {
@@ -218,7 +218,7 @@ const ProgressTrackingPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/progress-tracking/new')}
-            className='bg-[var(--brand-primary)] hover:brightness-95'
+            className='bg-[var(--primary-primary)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             هدف جديد
@@ -363,7 +363,7 @@ const ProgressTrackingPage: React.FC = () => {
       {/* Content based on active tab */}
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
         </div>
       ) : (
         <>
@@ -382,7 +382,7 @@ const ProgressTrackingPage: React.FC = () => {
                     </p>
                     <Button
                       onClick={() => router.push('/progress-tracking/new')}
-                      className='bg-[var(--brand-primary)] hover:brightness-95'
+                      className='bg-[var(--primary-primary)] hover:brightness-95'
                     >
                       إنشاء هدف جديد
                     </Button>
@@ -451,9 +451,9 @@ const ProgressTrackingPage: React.FC = () => {
                                 <div
                                   className={`w-3 h-3 rounded-full ${
                                     milestone.status === 'completed'
-                                      ? 'bg-brand-success'
+                                      ? 'bg-primary-success'
                                       : milestone.status === 'in_progress'
-                                        ? 'bg-brand-warning'
+                                        ? 'bg-primary-warning'
                                         : 'bg-gray-300'
                                   }`}
                                 ></div>
@@ -519,7 +519,7 @@ const ProgressTrackingPage: React.FC = () => {
                       onClick={() =>
                         router.push('/progress-tracking/assessments/new')
                       }
-                      className='bg-[var(--brand-primary)] hover:brightness-95'
+                      className='bg-[var(--primary-primary)] hover:brightness-95'
                     >
                       إنشاء تقييم جديد
                     </Button>
@@ -546,7 +546,7 @@ const ProgressTrackingPage: React.FC = () => {
                           </p>
                         </div>
                         <div className='text-right'>
-                          <div className='text-2xl font-bold text-brand-primary'>
+                          <div className='text-2xl font-bold text-primary-primary'>
                             {assessment.percentage}%
                           </div>
                           <p className='text-sm text-gray-600'>
@@ -643,7 +643,7 @@ const ProgressTrackingPage: React.FC = () => {
                           </p>
                         </div>
                         <div className='text-right'>
-                          <div className='text-2xl font-bold text-brand-success'>
+                          <div className='text-2xl font-bold text-primary-success'>
                             {report.overall_progress}%
                           </div>
                           <p className='text-sm text-gray-600'>التقدم العام</p>
@@ -652,7 +652,7 @@ const ProgressTrackingPage: React.FC = () => {
 
                       <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-4'>
                         <div className='text-center p-3 bg-surface rounded-lg'>
-                          <div className='text-xl font-bold text-brand-primary'>
+                          <div className='text-xl font-bold text-primary-primary'>
                             {report.goals_achieved}
                           </div>
                           <div className='text-sm text-blue-700'>
@@ -663,7 +663,7 @@ const ProgressTrackingPage: React.FC = () => {
                           </div>
                         </div>
                         <div className='text-center p-3 bg-surface rounded-lg'>
-                          <div className='text-xl font-bold text-brand-success'>
+                          <div className='text-xl font-bold text-primary-success'>
                             {report.sessions_completed}
                           </div>
                           <div className='text-sm text-green-700'>

@@ -78,7 +78,13 @@ export default function DynamicDoctorsList({
 
   useEffect(() => {
     filterDoctors();
-  }, [doctors, searchTerm, selectedSpecialization, selectedLanguage, filterDoctors]);
+  }, [
+    doctors,
+    searchTerm,
+    selectedSpecialization,
+    selectedLanguage,
+    filterDoctors,
+  ]);
 
   const fetchDoctors = async () => {
     try {

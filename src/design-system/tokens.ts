@@ -1,7 +1,7 @@
 /**
  * Design Tokens - Centralized Design System
  * رموز التصميم - نظام التصميم المركزي
- * 
+ *
  * All design tokens for colors, spacing, typography, etc.
  * جميع رموز التصميم للألوان والمسافات والخطوط وغيرها
  */
@@ -14,7 +14,7 @@ export const BRAND_COLORS = {
   // Primary Orange - البرتقالي الأساسي
   primary: {
     50: '#fff7ed',
-    100: '#ffedd5', 
+    100: '#ffedd5',
     200: '#fed7aa',
     300: '#fdba74',
     400: '#fb923c',
@@ -26,7 +26,7 @@ export const BRAND_COLORS = {
     DEFAULT: '#f58220', // CSS variable value
     hover: '#d66f15',
   },
-  
+
   // Secondary Brown - البني الثانوي
   secondary: {
     50: '#fdf8f6',
@@ -82,38 +82,38 @@ export const SPACING = {
   px: '1px',
   0: '0',
   0.5: '0.125rem', // 2px
-  1: '0.25rem',    // 4px
+  1: '0.25rem', // 4px
   1.5: '0.375rem', // 6px
-  2: '0.5rem',     // 8px
+  2: '0.5rem', // 8px
   2.5: '0.625rem', // 10px
-  3: '0.75rem',    // 12px
+  3: '0.75rem', // 12px
   3.5: '0.875rem', // 14px
-  4: '1rem',       // 16px
-  5: '1.25rem',    // 20px
-  6: '1.5rem',     // 24px
-  7: '1.75rem',    // 28px
-  8: '2rem',       // 32px
-  9: '2.25rem',    // 36px
-  10: '2.5rem',    // 40px
-  11: '2.75rem',   // 44px
-  12: '3rem',      // 48px
-  14: '3.5rem',    // 56px
-  16: '4rem',      // 64px
-  20: '5rem',      // 80px
-  24: '6rem',      // 96px
-  28: '7rem',      // 112px
-  32: '8rem',      // 128px
-  36: '9rem',      // 144px
-  40: '10rem',     // 160px
-  44: '11rem',     // 176px
-  48: '12rem',     // 192px
-  52: '13rem',     // 208px
-  56: '14rem',     // 224px
-  60: '15rem',     // 240px
-  64: '16rem',     // 256px
-  72: '18rem',     // 288px
-  80: '20rem',     // 320px
-  96: '24rem',     // 384px
+  4: '1rem', // 16px
+  5: '1.25rem', // 20px
+  6: '1.5rem', // 24px
+  7: '1.75rem', // 28px
+  8: '2rem', // 32px
+  9: '2.25rem', // 36px
+  10: '2.5rem', // 40px
+  11: '2.75rem', // 44px
+  12: '3rem', // 48px
+  14: '3.5rem', // 56px
+  16: '4rem', // 64px
+  20: '5rem', // 80px
+  24: '6rem', // 96px
+  28: '7rem', // 112px
+  32: '8rem', // 128px
+  36: '9rem', // 144px
+  40: '10rem', // 160px
+  44: '11rem', // 176px
+  48: '12rem', // 192px
+  52: '13rem', // 208px
+  56: '14rem', // 224px
+  60: '15rem', // 240px
+  64: '16rem', // 256px
+  72: '18rem', // 288px
+  80: '20rem', // 320px
+  96: '24rem', // 384px
 } as const;
 
 // ========================================
@@ -129,19 +129,19 @@ export const TYPOGRAPHY = {
 
   // Font Sizes
   fontSize: {
-    xs: ['0.75rem', { lineHeight: '1rem' }],      // 12px
-    sm: ['0.875rem', { lineHeight: '1.25rem' }],  // 14px
-    base: ['1rem', { lineHeight: '1.5rem' }],     // 16px
-    lg: ['1.125rem', { lineHeight: '1.75rem' }],  // 18px
-    xl: ['1.25rem', { lineHeight: '1.75rem' }],   // 20px
-    '2xl': ['1.5rem', { lineHeight: '2rem' }],    // 24px
+    xs: ['0.75rem', { lineHeight: '1rem' }], // 12px
+    sm: ['0.875rem', { lineHeight: '1.25rem' }], // 14px
+    base: ['1rem', { lineHeight: '1.5rem' }], // 16px
+    lg: ['1.125rem', { lineHeight: '1.75rem' }], // 18px
+    xl: ['1.25rem', { lineHeight: '1.75rem' }], // 20px
+    '2xl': ['1.5rem', { lineHeight: '2rem' }], // 24px
     '3xl': ['1.875rem', { lineHeight: '2.25rem' }], // 30px
     '4xl': ['2.25rem', { lineHeight: '2.5rem' }], // 36px
-    '5xl': ['3rem', { lineHeight: '1' }],         // 48px
-    '6xl': ['3.75rem', { lineHeight: '1' }],      // 60px
-    '7xl': ['4.5rem', { lineHeight: '1' }],       // 72px
-    '8xl': ['6rem', { lineHeight: '1' }],         // 96px
-    '9xl': ['8rem', { lineHeight: '1' }],         // 128px
+    '5xl': ['3rem', { lineHeight: '1' }], // 48px
+    '6xl': ['3.75rem', { lineHeight: '1' }], // 60px
+    '7xl': ['4.5rem', { lineHeight: '1' }], // 72px
+    '8xl': ['6rem', { lineHeight: '1' }], // 96px
+    '9xl': ['8rem', { lineHeight: '1' }], // 128px
   },
 
   // Font Weights
@@ -184,13 +184,13 @@ export const TYPOGRAPHY = {
 
 export const BORDER_RADIUS = {
   none: '0',
-  sm: '0.125rem',   // 2px
+  sm: '0.125rem', // 2px
   DEFAULT: '0.25rem', // 4px
-  md: '0.375rem',   // 6px
-  lg: '0.5rem',     // 8px
-  xl: '0.75rem',    // 12px
-  '2xl': '1rem',    // 16px
-  '3xl': '1.5rem',  // 24px
+  md: '0.375rem', // 6px
+  lg: '0.5rem', // 8px
+  xl: '0.75rem', // 12px
+  '2xl': '1rem', // 16px
+  '3xl': '1.5rem', // 24px
   full: '9999px',
 } as const;
 
@@ -276,13 +276,13 @@ export const RTL = {
     blockStart: 'block-start',
     blockEnd: 'block-end',
   },
-  
+
   // Direction-specific utilities
   direction: {
     ltr: 'ltr',
     rtl: 'rtl',
   },
-  
+
   // Text alignment
   textAlign: {
     start: 'start',
@@ -303,21 +303,21 @@ export const CSS_VARIABLES = {
   '--brand-success': BRAND_COLORS.status.success,
   '--brand-warning': BRAND_COLORS.status.warning,
   '--brand-error': BRAND_COLORS.status.error,
-  
+
   // Background colors
   '--background': '#ffffff',
   '--foreground': '#0f172a',
   '--brand-surface': BRAND_COLORS.neutral[50],
   '--panel': '#ffffff',
   '--brand-border': BRAND_COLORS.neutral[200],
-  
+
   // Focus ring
   '--focus-ring': BRAND_COLORS.accent.blue,
-  
+
   // Font families
   '--font-family-sans': TYPOGRAPHY.fontFamily.sans.join(', '),
   '--font-family-mono': TYPOGRAPHY.fontFamily.mono.join(', '),
-  
+
   // Spacing scale
   '--space-1': SPACING[1],
   '--space-2': SPACING[2],
@@ -327,24 +327,24 @@ export const CSS_VARIABLES = {
   '--space-8': SPACING[8],
   '--space-12': SPACING[12],
   '--space-16': SPACING[16],
-  
+
   // Border radius
   '--radius-sm': BORDER_RADIUS.sm,
   '--radius-md': BORDER_RADIUS.md,
   '--radius-lg': BORDER_RADIUS.lg,
   '--radius-xl': BORDER_RADIUS.xl,
-  
+
   // Shadows
   '--shadow-sm': SHADOWS.sm,
   '--shadow-md': SHADOWS.md,
   '--shadow-lg': SHADOWS.lg,
   '--shadow-xl': SHADOWS.xl,
-  
+
   // Transitions
   '--transition-fast': `${ANIMATION.duration[150]} ${ANIMATION.easing['in-out']}`,
   '--transition-normal': `${ANIMATION.duration[300]} ${ANIMATION.easing['in-out']}`,
   '--transition-slow': `${ANIMATION.duration[500]} ${ANIMATION.easing['in-out']}`,
-  
+
   // Z-index
   '--z-dropdown': Z_INDEX.dropdown,
   '--z-sticky': Z_INDEX.sticky,

@@ -84,7 +84,7 @@ export function ThemeSwitch({
     return (
       <div className={`flex items-center space-x-2 ${className}`}>
         <Sun
-          className={`${iconSizes[size]} ${isLight ? 'text-[var(--brand-primary)]' : 'text-[var(--text-tertiary)]'}`}
+          className={`${iconSizes[size]} ${isLight ? 'text-[var(--primary-primary)]' : 'text-[var(--text-tertiary)]'}`}
         />
         <button
           onClick={() => {
@@ -92,8 +92,8 @@ export function ThemeSwitch({
             else if (theme === 'dark') setTheme('system');
             else setTheme('light');
           }}
-          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${
-            isDark ? 'bg-[var(--brand-primary)]' : 'bg-[var(--border-primary)]'
+          className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary-primary)] focus:ring-offset-2 ${
+            isDark ? 'bg-[var(--primary-primary)]' : 'bg-[var(--border-primary)]'
           }`}
         >
           <span
@@ -103,7 +103,7 @@ export function ThemeSwitch({
           />
         </button>
         <Moon
-          className={`${iconSizes[size]} ${isDark ? 'text-[var(--brand-accent)]' : 'text-[var(--text-tertiary)]'}`}
+          className={`${iconSizes[size]} ${isDark ? 'text-[var(--primary-accent)]' : 'text-[var(--text-tertiary)]'}`}
         />
       </div>
     );
@@ -145,7 +145,7 @@ export function ThemeSwitch({
                     }}
                     className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors hover:bg-[var(--surface-hover)] ${
                       isSelected
-                        ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'
+                        ? 'bg-[var(--primary-primary)]/10 text-[var(--primary-primary)]'
                         : 'text-[var(--text-primary)]'
                     }`}
                   >
@@ -159,7 +159,7 @@ export function ThemeSwitch({
                       </div>
                     </div>
                     {isSelected && (
-                      <Check className='h-4 w-4 text-[var(--brand-primary)]' />
+                      <Check className='h-4 w-4 text-[var(--primary-primary)]' />
                     )}
                   </button>
                 );

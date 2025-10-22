@@ -326,7 +326,7 @@ const PatientRecords: React.FC = () => {
         <h1 className='text-3xl font-bold text-gray-900'>سجلات المرضى</h1>
         <Button
           onClick={() => setShowAddPatient(true)}
-          className='bg-[var(--brand-primary)] hover:brightness-95'
+          className='bg-[var(--primary-primary)] hover:brightness-95'
         >
           <Plus className='w-4 h-4 mr-2' />
           إضافة مريض جديد
@@ -793,7 +793,7 @@ const PatientRecords: React.FC = () => {
               </Button>
               <Button
                 onClick={handleAddPatient}
-                className='bg-[var(--brand-primary)] hover:brightness-95'
+                className='bg-[var(--primary-primary)] hover:brightness-95'
               >
                 إضافة المريض
               </Button>

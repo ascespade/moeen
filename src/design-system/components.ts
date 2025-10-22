@@ -1,11 +1,17 @@
 /**
  * Design System Components - مكونات نظام التصميم
- * 
+ *
  * Centralized component styles and variants
  * أنماط المكونات المركزية والمتغيرات
  */
 
-import { BRAND_COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from './tokens';
+import {
+  BRAND_COLORS,
+  SPACING,
+  TYPOGRAPHY,
+  BORDER_RADIUS,
+  SHADOWS,
+} from './tokens';
 
 // ========================================
 // BUTTON COMPONENTS - مكونات الأزرار
@@ -15,7 +21,8 @@ export const BUTTON_VARIANTS = {
   // Primary Button - الزر الأساسي
   primary: {
     base: 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
-    colors: 'bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-hover)] focus:ring-[var(--brand-primary)]',
+    colors:
+      'bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-hover)] focus:ring-[var(--brand-primary)]',
     sizes: {
       sm: 'px-3 py-1.5 text-sm',
       md: 'px-4 py-2 text-base',
@@ -23,11 +30,12 @@ export const BUTTON_VARIANTS = {
       xl: 'px-8 py-4 text-xl',
     },
   },
-  
+
   // Secondary Button - الزر الثانوي
   secondary: {
     base: 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
-    colors: 'bg-[var(--brand-secondary)] text-white hover:bg-opacity-90 focus:ring-[var(--brand-secondary)]',
+    colors:
+      'bg-[var(--brand-secondary)] text-white hover:bg-opacity-90 focus:ring-[var(--brand-secondary)]',
     sizes: {
       sm: 'px-3 py-1.5 text-sm',
       md: 'px-4 py-2 text-base',
@@ -35,11 +43,12 @@ export const BUTTON_VARIANTS = {
       xl: 'px-8 py-4 text-xl',
     },
   },
-  
+
   // Outline Button - الزر المحدد
   outline: {
     base: 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
-    colors: 'border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-white focus:ring-[var(--brand-primary)]',
+    colors:
+      'border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-white focus:ring-[var(--brand-primary)]',
     sizes: {
       sm: 'px-3 py-1.5 text-sm',
       md: 'px-4 py-2 text-base',
@@ -47,11 +56,12 @@ export const BUTTON_VARIANTS = {
       xl: 'px-8 py-4 text-xl',
     },
   },
-  
+
   // Ghost Button - الزر الشفاف
   ghost: {
     base: 'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
-    colors: 'text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:bg-opacity-10 focus:ring-[var(--brand-primary)]',
+    colors:
+      'text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:bg-opacity-10 focus:ring-[var(--brand-primary)]',
     sizes: {
       sm: 'px-3 py-1.5 text-sm',
       md: 'px-4 py-2 text-base',
@@ -71,19 +81,19 @@ export const CARD_VARIANTS = {
     base: 'bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700',
     padding: 'p-6',
   },
-  
+
   // Elevated Card - البطاقة المرتفعة
   elevated: {
     base: 'bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700',
     padding: 'p-6',
   },
-  
+
   // Outlined Card - البطاقة المحددة
   outlined: {
     base: 'bg-white dark:bg-gray-800 rounded-xl border-2 border-[var(--brand-primary)]',
     padding: 'p-6',
   },
-  
+
   // Glass Card - البطاقة الزجاجية
   glass: {
     base: 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50',
@@ -100,12 +110,12 @@ export const INPUT_VARIANTS = {
   default: {
     base: 'w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-all duration-200',
   },
-  
+
   // Error Input - حقل الإدخال مع خطأ
   error: {
     base: 'w-full px-4 py-3 rounded-lg border border-red-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-200',
   },
-  
+
   // Success Input - حقل الإدخال مع نجاح
   success: {
     base: 'w-full px-4 py-3 rounded-lg border border-green-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200',
@@ -122,25 +132,26 @@ export const BADGE_VARIANTS = {
     base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
     colors: 'bg-[var(--brand-primary)] text-white',
   },
-  
+
   // Success Badge - شارة النجاح
   success: {
     base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
     colors: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
   },
-  
+
   // Warning Badge - شارة التحذير
   warning: {
     base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
-    colors: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+    colors:
+      'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
   },
-  
+
   // Error Badge - شارة الخطأ
   error: {
     base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
     colors: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
   },
-  
+
   // Info Badge - شارة المعلومات
   info: {
     base: 'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
@@ -157,12 +168,12 @@ export const FORM_VARIANTS = {
   label: {
     base: 'block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2',
   },
-  
+
   // Form Error - خطأ النموذج
   error: {
     base: 'mt-1 text-sm text-red-600 dark:text-red-400',
   },
-  
+
   // Form Help - مساعدة النموذج
   help: {
     base: 'mt-1 text-sm text-gray-500 dark:text-gray-400',
@@ -185,7 +196,7 @@ export const LAYOUT_VARIANTS = {
       full: 'max-w-full',
     },
   },
-  
+
   // Grid - الشبكة
   grid: {
     base: 'grid gap-6',
@@ -196,7 +207,7 @@ export const LAYOUT_VARIANTS = {
       4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4',
     },
   },
-  
+
   // Flex - المرونة
   flex: {
     base: 'flex',
@@ -235,7 +246,7 @@ export const STATUS_VARIANTS = {
       xl: 'h-12 w-12',
     },
   },
-  
+
   // Status Dot - نقطة الحالة
   statusDot: {
     base: 'rounded-full',
@@ -268,7 +279,7 @@ export const UTILITY_CLASSES = {
     info: 'text-blue-600',
     muted: 'text-gray-500',
   },
-  
+
   // Background Colors - ألوان الخلفية
   background: {
     primary: 'bg-[var(--brand-primary)]',
@@ -279,7 +290,7 @@ export const UTILITY_CLASSES = {
     info: 'bg-blue-100',
     muted: 'bg-gray-100',
   },
-  
+
   // Border Colors - ألوان الحدود
   border: {
     primary: 'border-[var(--brand-primary)]',
@@ -290,7 +301,7 @@ export const UTILITY_CLASSES = {
     info: 'border-blue-500',
     muted: 'border-gray-300',
   },
-  
+
   // Shadows - الظلال
   shadow: {
     sm: 'shadow-sm',
@@ -299,7 +310,7 @@ export const UTILITY_CLASSES = {
     xl: 'shadow-xl',
     none: 'shadow-none',
   },
-  
+
   // Rounded Corners - الزوايا المدورة
   rounded: {
     none: 'rounded-none',

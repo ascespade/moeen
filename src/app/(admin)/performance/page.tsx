@@ -138,11 +138,11 @@ const PerformancePage: React.FC = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'good':
-        return <CheckCircle className='w-4 h-4 text-brand-success' />;
+        return <CheckCircle className='w-4 h-4 text-primary-success' />;
       case 'warning':
-        return <AlertTriangle className='w-4 h-4 text-brand-warning' />;
+        return <AlertTriangle className='w-4 h-4 text-primary-warning' />;
       case 'critical':
-        return <AlertTriangle className='w-4 h-4 text-brand-error' />;
+        return <AlertTriangle className='w-4 h-4 text-primary-error' />;
       default:
         return <Activity className='w-4 h-4 text-gray-500' />;
     }
@@ -151,9 +151,9 @@ const PerformancePage: React.FC = () => {
   const getTrendIcon = (trend: string) => {
     switch (trend) {
       case 'up':
-        return <TrendingUp className='w-4 h-4 text-brand-error' />;
+        return <TrendingUp className='w-4 h-4 text-primary-error' />;
       case 'down':
-        return <TrendingDown className='w-4 h-4 text-brand-success' />;
+        return <TrendingDown className='w-4 h-4 text-primary-success' />;
       default:
         return <Activity className='w-4 h-4 text-gray-500' />;
     }
@@ -162,11 +162,11 @@ const PerformancePage: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'good':
-        return 'text-brand-success';
+        return 'text-primary-success';
       case 'warning':
         return 'text-yellow-600';
       case 'critical':
-        return 'text-brand-error';
+        return 'text-primary-error';
       default:
         return 'text-gray-600';
     }
@@ -203,7 +203,7 @@ const PerformancePage: React.FC = () => {
               </div>
               <div className='w-full bg-gray-200 rounded-full h-2 mt-2'>
                 <div
-                  className='bg-brand-primary h-2 rounded-full'
+                  className='bg-primary-primary h-2 rounded-full'
                   style={{ width: `${systemHealth.cpu_usage}%` }}
                 ></div>
               </div>
@@ -221,7 +221,7 @@ const PerformancePage: React.FC = () => {
               </div>
               <div className='w-full bg-gray-200 rounded-full h-2 mt-2'>
                 <div
-                  className='bg-brand-success h-2 rounded-full'
+                  className='bg-primary-success h-2 rounded-full'
                   style={{ width: `${systemHealth.memory_usage}%` }}
                 ></div>
               </div>
@@ -285,10 +285,10 @@ const PerformancePage: React.FC = () => {
                 <div
                   className={`h-2 rounded-full ${
                     metric.status === 'good'
-                      ? 'bg-brand-success'
+                      ? 'bg-primary-success'
                       : metric.status === 'warning'
-                        ? 'bg-brand-warning'
-                        : 'bg-brand-error'
+                        ? 'bg-primary-warning'
+                        : 'bg-primary-error'
                   }`}
                   style={{
                     width: `${Math.min((metric.value / metric.threshold) * 100, 100)}%`,
@@ -346,7 +346,7 @@ const PerformancePage: React.FC = () => {
               <div className='space-y-4'>
                 <div className='flex justify-between'>
                   <span className='text-sm font-medium'>حالة الخادم:</span>
-                  <Badge variant='primary'>نشط</Badge>
+                  <Badge variant='default'>نشط</Badge>
                 </div>
                 <div className='flex justify-between'>
                   <span className='text-sm font-medium'>آخر تحديث:</span>

@@ -56,7 +56,7 @@ export default function InvoicesPage() {
     return (
       <div className='container-app py-8'>
         <div className='card p-12 text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary-primary)] mx-auto'></div>
           <p className='mt-4'>جاري التحميل...</p>
         </div>
       </div>
@@ -74,7 +74,7 @@ export default function InvoicesPage() {
             إدارة الفواتير والإيصالات
           </p>
         </div>
-        <button className='btn btn-brand'>+ فاتورة جديدة</button>
+        <button className='btn btn-primary'>+ فاتورة جديدة</button>
       </div>
 
       {/* Stats */}
@@ -182,7 +182,7 @@ export default function InvoicesPage() {
                   <td className='px-6 py-4'>
                     <button
                       onClick={() => generateInvoicePDF(payment)}
-                      className='text-sm text-[var(--brand-primary)] hover:underline'
+                      className='text-sm text-[var(--primary-primary)] hover:underline'
                     >
                       📄 فاتورة
                     </button>

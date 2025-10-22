@@ -125,7 +125,7 @@ export default function PatientIEPPage() {
     return (
       <div className='container-app py-8'>
         <div className='card p-12 text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary-primary)] mx-auto'></div>
           <p className='mt-4 text-gray-600 dark:text-gray-400'>
             جاري التحميل...
           </p>
@@ -185,7 +185,7 @@ export default function PatientIEPPage() {
           <p className='text-gray-600 dark:text-gray-400 mb-6'>
             يجب على الأخصائي إنشاء خطة IEP للطفل
           </p>
-          <button className='btn btn-brand'>إنشاء خطة IEP جديدة</button>
+          <button className='btn btn-primary'>إنشاء خطة IEP جديدة</button>
         </div>
       ) : (
         <>
@@ -225,7 +225,7 @@ export default function PatientIEPPage() {
                 <p className='text-sm text-gray-600 dark:text-gray-400'>
                   التقدم الإجمالي
                 </p>
-                <p className='font-semibold text-[var(--brand-primary)]'>
+                <p className='font-semibold text-[var(--primary-primary)]'>
                   {goals.length > 0
                     ? Math.round(
                         goals.reduce((sum, g) => sum + g.progress, 0) /
@@ -288,13 +288,13 @@ export default function PatientIEPPage() {
                         <span className='text-sm text-gray-600 dark:text-gray-400'>
                           التقدم
                         </span>
-                        <span className='text-sm font-bold text-[var(--brand-primary)]'>
+                        <span className='text-sm font-bold text-[var(--primary-primary)]'>
                           {goal.progress}%
                         </span>
                       </div>
                       <div className='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
                         <div
-                          className='bg-[var(--brand-primary)] h-2 rounded-full transition-all'
+                          className='bg-[var(--primary-primary)] h-2 rounded-full transition-all'
                           style={{ width: `${goal.progress}%` }}
                         />
                       </div>

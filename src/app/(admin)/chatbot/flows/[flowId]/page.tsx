@@ -112,15 +112,15 @@ export default function FlowBuilderPage({
   const getNodeColor = (type: Node['type']) => {
     switch (type) {
       case 'start':
-        return 'bg-brand-success';
+        return 'bg-primary-success';
       case 'message':
-        return 'bg-brand-primary';
+        return 'bg-primary-primary';
       case 'condition':
-        return 'bg-brand-warning';
+        return 'bg-primary-warning';
       case 'action':
         return 'bg-surface0';
       case 'end':
-        return 'bg-brand-error';
+        return 'bg-primary-error';
       default:
         return 'bg-surface0';
     }
@@ -144,9 +144,9 @@ export default function FlowBuilderPage({
   };
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
+    <div className='min-h-screen bg-[var(--primary-surface)]'>
       {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-4'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -174,7 +174,7 @@ export default function FlowBuilderPage({
               </button>
               <button
                 onClick={() => setShowPublishModal(true)}
-                className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                className='btn-primary rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
               >
                 نشر التدفق
               </button>
@@ -216,7 +216,7 @@ export default function FlowBuilderPage({
                   key={node.id}
                   className={`absolute w-48 cursor-pointer rounded-lg p-4 shadow-lg transition-all hover:shadow-xl ${
                     selectedNode?.id === node.id
-                      ? 'ring-2 ring-[var(--brand-primary)]'
+                      ? 'ring-2 ring-[var(--primary-primary)]'
                       : ''
                   }`}
                   style={{
@@ -322,7 +322,7 @@ export default function FlowBuilderPage({
 
         {/* Sidebar */}
         {selectedNode && (
-          <div className='border-brand w-80 border-l bg-white p-6 dark:bg-gray-900'>
+          <div className='border-primary w-80 border-l bg-white p-6 dark:bg-gray-900'>
             <h3 className='mb-4 text-lg font-semibold'>تحرير العقدة</h3>
 
             <div className='space-y-4'>
@@ -332,7 +332,7 @@ export default function FlowBuilderPage({
                 </label>
                 <select
                   value={selectedNode.type}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
                 >
                   <option value='start'>بداية</option>
                   <option value='message'>رسالة</option>
@@ -349,7 +349,7 @@ export default function FlowBuilderPage({
                 <input
                   type='text'
                   value={selectedNode.data.label}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
                 />
               </div>
 
@@ -361,7 +361,7 @@ export default function FlowBuilderPage({
                   <textarea
                     rows={4}
                     value={selectedNode.data.content || ''}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
                     placeholder='أدخل نص الرسالة...'
                   />
                 </div>
@@ -375,7 +375,7 @@ export default function FlowBuilderPage({
                   <input
                     type='text'
                     value={selectedNode.data.condition || ''}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
                     placeholder="user_input == '1'"
                   />
                 </div>
@@ -388,7 +388,7 @@ export default function FlowBuilderPage({
                   </label>
                   <select
                     value={selectedNode.data.action || ''}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
                   >
                     <option value=''>اختر إجراء</option>
                     <option value='redirect_to_appointment'>حجز موعد</option>
@@ -400,7 +400,7 @@ export default function FlowBuilderPage({
               )}
 
               <div className='pt-4'>
-                <button className='btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                <button className='btn-primary w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
                   حفظ التغييرات
                 </button>
               </div>
@@ -443,7 +443,7 @@ export default function FlowBuilderPage({
                 </button>
                 <button
                   onClick={() => setShowPublishModal(false)}
-                  className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                  className='btn-primary flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
                 >
                   نشر التدفق
                 </button>
@@ -471,7 +471,7 @@ export default function FlowBuilderPage({
               <div className='h-64 overflow-y-auto rounded-lg bg-surface p-4 dark:bg-gray-800'>
                 <div className='space-y-3'>
                   <div className='flex justify-end'>
-                    <div className='max-w-xs rounded-lg bg-[var(--brand-primary)] p-3 text-white'>
+                    <div className='max-w-xs rounded-lg bg-[var(--primary-primary)] p-3 text-white'>
                       مرحباً، أريد حجز موعد
                     </div>
                   </div>
@@ -488,7 +488,7 @@ export default function FlowBuilderPage({
                     </div>
                   </div>
                   <div className='flex justify-end'>
-                    <div className='max-w-xs rounded-lg bg-[var(--brand-primary)] p-3 text-white'>
+                    <div className='max-w-xs rounded-lg bg-[var(--primary-primary)] p-3 text-white'>
                       1
                     </div>
                   </div>
@@ -504,9 +504,9 @@ export default function FlowBuilderPage({
                 <input
                   type='text'
                   placeholder='اكتب رسالة للاختبار...'
-                  className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
                 />
-                <button className='btn-brand rounded-lg px-4 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                <button className='btn-primary rounded-lg px-4 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
                   إرسال
                 </button>
               </div>
@@ -518,7 +518,7 @@ export default function FlowBuilderPage({
                 >
                   إغلاق
                 </button>
-                <button className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                <button className='btn-primary flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
                   إعادة تشغيل الاختبار
                 </button>
               </div>

@@ -105,7 +105,7 @@ export default function DoctorDashboard() {
           <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
             <Card className='p-6'>
               <div className='flex items-center'>
-                <Calendar className='h-8 w-8 text-brand-primary mr-4' />
+                <Calendar className='h-8 w-8 text-primary-primary mr-4' />
                 <div>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {t('doctor.dashboard.today_appointments')}
@@ -119,7 +119,7 @@ export default function DoctorDashboard() {
 
             <Card className='p-6'>
               <div className='flex items-center'>
-                <Users className='h-8 w-8 text-brand-success mr-4' />
+                <Users className='h-8 w-8 text-primary-success mr-4' />
                 <div>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {t('doctor.dashboard.total_patients')}
@@ -133,7 +133,7 @@ export default function DoctorDashboard() {
 
             <Card className='p-6'>
               <div className='flex items-center'>
-                <Clock className='h-8 w-8 text-brand-primary mr-4' />
+                <Clock className='h-8 w-8 text-primary-primary mr-4' />
                 <div>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {t('doctor.dashboard.pending_appointments')}
@@ -183,7 +183,7 @@ export default function DoctorDashboard() {
                         <div className='flex items-center'>
                           <div className='flex-shrink-0'>
                             <div className='w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center'>
-                              <Stethoscope className='h-5 w-5 text-brand-primary' />
+                              <Stethoscope className='h-5 w-5 text-primary-primary' />
                             </div>
                           </div>
                           <div className='ml-4'>
@@ -199,10 +199,10 @@ export default function DoctorDashboard() {
                           <Badge
                             variant={
                               appointment.status === 'completed'
-                                ? 'primary'
+                                ? 'default'
                                 : appointment.status === 'in_progress'
-                                  ? 'secondary'
-                                  : 'secondary'
+                                ? 'info'
+                                : 'info'
                             }
                           >
                             {t(`appointment.status.${appointment.status}`)}

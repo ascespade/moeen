@@ -214,14 +214,14 @@ const AnalyticsPage: React.FC = () => {
   };
 
   const getGrowthIcon = (rate: number) => {
-    if (rate > 0) return <TrendingUp className='w-4 h-4 text-brand-success' />;
-    if (rate < 0) return <TrendingDown className='w-4 h-4 text-brand-error' />;
+    if (rate > 0) return <TrendingUp className='w-4 h-4 text-primary-success' />;
+    if (rate < 0) return <TrendingDown className='w-4 h-4 text-primary-error' />;
     return <Activity className='w-4 h-4 text-gray-500' />;
   };
 
   const getGrowthColor = (rate: number) => {
-    if (rate > 0) return 'text-brand-success';
-    if (rate < 0) return 'text-brand-error';
+    if (rate > 0) return 'text-primary-success';
+    if (rate < 0) return 'text-primary-error';
     return 'text-gray-600';
   };
 
@@ -311,7 +311,7 @@ const AnalyticsPage: React.FC = () => {
 
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
         </div>
       ) : analyticsData ? (
         <>
@@ -485,7 +485,7 @@ const AnalyticsPage: React.FC = () => {
                             <div className='flex items-center gap-2'>
                               <div className='w-32 bg-gray-200 rounded-full h-2'>
                                 <div
-                                  className='bg-[var(--brand-primary)] h-2 rounded-full'
+                                  className='bg-[var(--primary-primary)] h-2 rounded-full'
                                   style={{
                                     width: `${(item.count / analyticsData.overview.totalPatients) * 100}%`,
                                   }}
@@ -521,7 +521,7 @@ const AnalyticsPage: React.FC = () => {
                             <div className='flex items-center gap-2'>
                               <div className='w-32 bg-gray-200 rounded-full h-2'>
                                 <div
-                                  className='bg-brand-success h-2 rounded-full'
+                                  className='bg-primary-success h-2 rounded-full'
                                   style={{
                                     width: `${(item.count / analyticsData.overview.totalPatients) * 100}%`,
                                   }}
@@ -686,7 +686,7 @@ const AnalyticsPage: React.FC = () => {
                     <CardTitle className='text-sm'>معدل عدم الحضور</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className='text-2xl font-bold text-brand-error'>
+                    <div className='text-2xl font-bold text-primary-error'>
                       {analyticsData.appointmentAnalytics.noShowRate}%
                     </div>
                   </CardContent>
@@ -710,7 +710,7 @@ const AnalyticsPage: React.FC = () => {
                     <CardTitle className='text-sm'>معدل الإنجاز</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className='text-2xl font-bold text-brand-success'>
+                    <div className='text-2xl font-bold text-primary-success'>
                       {Math.round(
                         (analyticsData.overview.completedAppointments /
                           analyticsData.overview.totalAppointments) *
@@ -736,7 +736,7 @@ const AnalyticsPage: React.FC = () => {
             </p>
             <Button
               onClick={loadAnalyticsData}
-              className='bg-[var(--brand-primary)] hover:brightness-95'
+              className='bg-[var(--primary-primary)] hover:brightness-95'
             >
               تحميل البيانات
             </Button>

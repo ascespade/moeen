@@ -282,13 +282,13 @@ const SecurityPage: React.FC = () => {
   const getEventIcon = (type: string) => {
     switch (type) {
       case 'login':
-        return <CheckCircle className='w-4 h-4 text-brand-success' />;
+        return <CheckCircle className='w-4 h-4 text-primary-success' />;
       case 'logout':
         return <XCircle className='w-4 h-4 text-gray-500' />;
       case 'failed_login':
-        return <AlertTriangle className='w-4 h-4 text-brand-error' />;
+        return <AlertTriangle className='w-4 h-4 text-primary-error' />;
       case 'password_change':
-        return <Key className='w-4 h-4 text-brand-primary' />;
+        return <Key className='w-4 h-4 text-primary-primary' />;
       case 'data_access':
         return <Database className='w-4 h-4 text-purple-500' />;
       default:
@@ -300,29 +300,29 @@ const SecurityPage: React.FC = () => {
     const riskMap = {
       low: {
         label: 'منخفض',
-        variant: 'primary' as const,
-        color: 'text-brand-success',
+        variant: 'default' as const,
+        color: 'text-primary-success',
       },
       medium: {
         label: 'متوسط',
-        variant: 'secondary' as const,
+        variant: 'info' as const,
         color: 'text-yellow-600',
       },
       high: {
         label: 'عالي',
-        variant: 'primary' as const,
-        color: 'text-brand-primary',
+        variant: 'default' as const,
+        color: 'text-primary-primary',
       },
       critical: {
         label: 'حرج',
         variant: 'error' as const,
-        color: 'text-brand-error',
+        color: 'text-primary-error',
       },
     };
 
     const riskInfo = riskMap[level as keyof typeof riskMap] || {
       label: level,
-      variant: 'primary' as const,
+      variant: 'default' as const,
       color: 'text-gray-600',
     };
     return <Badge variant={riskInfo.variant}>{riskInfo.label}</Badge>;
@@ -330,32 +330,32 @@ const SecurityPage: React.FC = () => {
 
   const getSeverityBadge = (severity: string) => {
     const severityMap = {
-      low: { label: 'منخفض', variant: 'primary' as const },
-      medium: { label: 'متوسط', variant: 'secondary' as const },
-      high: { label: 'عالي', variant: 'primary' as const },
+      low: { label: 'منخفض', variant: 'default' as const },
+      medium: { label: 'متوسط', variant: 'info' as const },
+      high: { label: 'عالي', variant: 'default' as const },
       critical: { label: 'حرج', variant: 'error' as const },
     };
 
     const severityInfo = severityMap[severity as keyof typeof severityMap] || {
       label: severity,
-      variant: 'primary' as const,
+      variant: 'default' as const,
     };
     return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;
   };
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      success: { label: 'نجح', variant: 'primary' as const },
+      success: { label: 'نجح', variant: 'default' as const },
       failed: { label: 'فشل', variant: 'error' as const },
       blocked: { label: 'محظور', variant: 'error' as const },
-      new: { label: 'جديد', variant: 'primary' as const },
-      investigating: { label: 'قيد التحقيق', variant: 'secondary' as const },
-      resolved: { label: 'محلول', variant: 'primary' as const },
+      new: { label: 'جديد', variant: 'default' as const },
+      investigating: { label: 'قيد التحقيق', variant: 'info' as const },
+      resolved: { label: 'محلول', variant: 'default' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'primary' as const,
+      variant: 'default' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -366,9 +366,9 @@ const SecurityPage: React.FC = () => {
       device.includes('macOS') ||
       device.includes('Linux')
     ) {
-      return <Monitor className='w-4 h-4 text-brand-primary' />;
+      return <Monitor className='w-4 h-4 text-primary-primary' />;
     } else if (device.includes('Android') || device.includes('iOS')) {
-      return <Smartphone className='w-4 h-4 text-brand-success' />;
+      return <Smartphone className='w-4 h-4 text-primary-success' />;
     } else {
       return <Globe className='w-4 h-4 text-gray-500' />;
     }
@@ -565,7 +565,7 @@ const SecurityPage: React.FC = () => {
 
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
         </div>
       ) : (
         <>
@@ -710,7 +710,7 @@ const SecurityPage: React.FC = () => {
                         <div className='flex items-center gap-2'>
                           <Badge
                             variant={
-                              session.is_active ? 'primary' : 'secondary'
+                              session.is_active ? 'default' : 'info'
                             }
                           >
                             {session.is_active ? 'نشط' : 'غير نشط'}
@@ -750,7 +750,7 @@ const SecurityPage: React.FC = () => {
                       <div className='flex items-start justify-between'>
                         <div className='flex items-start gap-4'>
                           <div className='p-2 bg-white rounded-full'>
-                            <AlertTriangle className='w-4 h-4 text-brand-error' />
+                            <AlertTriangle className='w-4 h-4 text-primary-error' />
                           </div>
                           <div className='flex-1'>
                             <div className='flex items-center gap-2 mb-2'>
@@ -821,12 +821,12 @@ const SecurityPage: React.FC = () => {
                             </h3>
                             <Badge
                               variant={
-                                policy.is_active ? 'primary' : 'secondary'
+                                policy.is_active ? 'default' : 'info'
                               }
                             >
                               {policy.is_active ? 'نشط' : 'غير نشط'}
                             </Badge>
-                            <Badge variant='secondary'>{policy.category}</Badge>
+                            <Badge variant='info'>{policy.category}</Badge>
                           </div>
                           <p className='text-gray-700 mb-4'>
                             {policy.description}

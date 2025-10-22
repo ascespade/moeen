@@ -37,7 +37,7 @@ export default function DynamicContactInfo() {
             value: '+966 50 123 4567',
             icon: '📞',
             link: 'tel:+966501234567',
-            color: 'bg-[var(--brand-primary)]',
+            color: 'bg-[var(--primary-primary)]',
           },
           {
             id: 2,
@@ -46,7 +46,7 @@ export default function DynamicContactInfo() {
             value: 'info@moeen.com',
             icon: '📧',
             link: 'mailto:info@moeen.com',
-            color: 'bg-[var(--brand-secondary)]',
+            color: 'bg-[var(--primary-secondary)]',
           },
           {
             id: 3,
@@ -55,7 +55,7 @@ export default function DynamicContactInfo() {
             value: 'الرياض، المملكة العربية السعودية',
             icon: '📍',
             link: '/contact',
-            color: 'bg-[var(--brand-accent)]',
+            color: 'bg-[var(--primary-accent)]',
           },
         ]);
       }
@@ -70,7 +70,7 @@ export default function DynamicContactInfo() {
           value: '+966 50 123 4567',
           icon: '📞',
           link: 'tel:+966501234567',
-          color: 'bg-[var(--brand-primary)]',
+          color: 'bg-[var(--primary-primary)]',
         },
         {
           id: 2,
@@ -79,7 +79,7 @@ export default function DynamicContactInfo() {
           value: 'info@moeen.com',
           icon: '📧',
           link: 'mailto:info@moeen.com',
-          color: 'bg-[var(--brand-secondary)]',
+          color: 'bg-[var(--primary-secondary)]',
         },
         {
           id: 3,
@@ -88,7 +88,7 @@ export default function DynamicContactInfo() {
           value: 'الرياض، المملكة العربية السعودية',
           icon: '📍',
           link: '/contact',
-          color: 'bg-[var(--brand-accent)]',
+          color: 'bg-[var(--primary-accent)]',
         },
       ]);
     } finally {

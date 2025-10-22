@@ -19,7 +19,7 @@ export default function ReviewCenterPage() {
   );
 
   return (
-    <main className='min-h-screen bg-[var(--brand-surface)]'>
+    <main className='min-h-screen bg-[var(--primary-surface)]'>
       <div className='container-app py-6'>
         <div className='grid gap-4'>
           <div className='grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 items-center'>
@@ -36,7 +36,7 @@ export default function ReviewCenterPage() {
 
           <div className='overflow-x-auto card'>
             <table className='w-full text-sm'>
-              <thead className='bg-[var(--brand-surface)]'>
+              <thead className='bg-[var(--primary-surface)]'>
                 <tr>
                   <th className='text-start p-3 text-[var(--foreground)]'>
                     رسالة المستخدم
@@ -56,7 +56,7 @@ export default function ReviewCenterPage() {
                 {filtered.map(r => (
                   <tr
                     key={r.id}
-                    className='border-t border-[var(--brand-border)]'
+                    className='border-t border-[var(--primary-border)]'
                   >
                     <td className='p-3 text-[var(--foreground)]'>{r.user}</td>
                     <td className='p-3 text-[var(--foreground)]'>

@@ -144,15 +144,15 @@ export default function DesignSystemDemo() {
         </h2>
         <div className='ds-grid ds-grid-cols-2 md:ds-grid-cols-4 lg:ds-grid-cols-6 ds-gap-4'>
           <div className='ds-card ds-card-sm text-center'>
-            <div className='w-full h-16 bg-brand-primary rounded-lg mb-2'></div>
+            <div className='w-full h-16 bg-primary-primary rounded-lg mb-2'></div>
             <p className='text-sm font-medium'>Primary</p>
           </div>
           <div className='ds-card ds-card-sm text-center'>
-            <div className='w-full h-16 bg-brand-secondary rounded-lg mb-2'></div>
+            <div className='w-full h-16 bg-primary-secondary rounded-lg mb-2'></div>
             <p className='text-sm font-medium'>Secondary</p>
           </div>
           <div className='ds-card ds-card-sm text-center'>
-            <div className='w-full h-16 bg-brand-accent rounded-lg mb-2'></div>
+            <div className='w-full h-16 bg-primary-accent rounded-lg mb-2'></div>
             <p className='text-sm font-medium'>Accent</p>
           </div>
           <div className='ds-card ds-card-sm text-center'>
@@ -208,23 +208,23 @@ export default function DesignSystemDemo() {
           <div className='ds-card-content'>
             <div className='space-y-4'>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-4 h-4 bg-brand-primary rounded'></div>
+                <div className='w-4 h-4 bg-primary-primary rounded'></div>
                 <span>4px - Extra Small</span>
               </div>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-8 h-8 bg-brand-primary rounded'></div>
+                <div className='w-8 h-8 bg-primary-primary rounded'></div>
                 <span>8px - Small</span>
               </div>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-12 h-12 bg-brand-primary rounded'></div>
+                <div className='w-12 h-12 bg-primary-primary rounded'></div>
                 <span>12px - Medium</span>
               </div>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-16 h-16 bg-brand-primary rounded'></div>
+                <div className='w-16 h-16 bg-primary-primary rounded'></div>
                 <span>16px - Large</span>
               </div>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-24 h-24 bg-brand-primary rounded'></div>
+                <div className='w-24 h-24 bg-primary-primary rounded'></div>
                 <span>24px - Extra Large</span>
               </div>
             </div>

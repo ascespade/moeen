@@ -175,15 +175,15 @@ const ContactsPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      lead: { label: 'عميل محتمل', variant: 'secondary' as const },
-      prospect: { label: 'عميل واعد', variant: 'primary' as const },
-      customer: { label: 'عميل', variant: 'primary' as const },
+      lead: { label: 'عميل محتمل', variant: 'info' as const },
+      prospect: { label: 'عميل واعد', variant: 'default' as const },
+      customer: { label: 'عميل', variant: 'default' as const },
       inactive: { label: 'غير نشط', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'secondary' as const,
+      variant: 'info' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -191,13 +191,13 @@ const ContactsPage: React.FC = () => {
   const getActivityIcon = (type: string) => {
     switch (type) {
       case 'call':
-        return <Phone className='w-4 h-4 text-brand-primary' />;
+        return <Phone className='w-4 h-4 text-primary-primary' />;
       case 'email':
-        return <Mail className='w-4 h-4 text-brand-success' />;
+        return <Mail className='w-4 h-4 text-primary-success' />;
       case 'meeting':
         return <Calendar className='w-4 h-4 text-purple-500' />;
       case 'note':
-        return <MessageCircle className='w-4 h-4 text-brand-primary' />;
+        return <MessageCircle className='w-4 h-4 text-primary-primary' />;
       default:
         return <Activity className='w-4 h-4 text-gray-500' />;
     }
@@ -243,7 +243,7 @@ const ContactsPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/crm/contacts/new')}
-            className='bg-[var(--brand-primary)] hover:brightness-95'
+            className='bg-[var(--primary-primary)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             إضافة جهة اتصال
@@ -367,7 +367,7 @@ const ContactsPage: React.FC = () => {
             <CardContent>
               {loading ? (
                 <div className='flex justify-center items-center h-64'>
-                  <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+                  <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
                 </div>
               ) : filteredContacts.length === 0 ? (
                 <div className='text-center py-12'>
@@ -380,7 +380,7 @@ const ContactsPage: React.FC = () => {
                   </p>
                   <Button
                     onClick={() => router.push('/crm/contacts/new')}
-                    className='bg-[var(--brand-primary)] hover:brightness-95'
+                    className='bg-[var(--primary-primary)] hover:brightness-95'
                   >
                     إضافة جهة اتصال
                   </Button>
@@ -392,7 +392,7 @@ const ContactsPage: React.FC = () => {
                       key={contact.id}
                       className={`p-4 border rounded-lg cursor-pointer transition-colors ${
                         selectedContact?.id === contact.id
-                          ? 'border-[var(--brand-primary)] bg-surface'
+                          ? 'border-[var(--primary-primary)] bg-surface'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                       onClick={() => setSelectedContact(contact)}
@@ -438,7 +438,7 @@ const ContactsPage: React.FC = () => {
                           {contact.tags.map((tag, index) => (
                             <Badge
                               key={index}
-                              variant='secondary'
+                              variant='info'
                               className='text-xs'
                             >
                               {tag}

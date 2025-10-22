@@ -1,25 +1,31 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import DynamicContactInfo from '@/components/dynamic-contact-info';
 import DynamicStats from '@/components/dynamic-stats';
 import DynamicServices from '@/components/dynamic-services';
-import { 
-  Calendar, 
-  Users, 
-  Heart, 
-  Shield, 
-  Clock, 
+import {
+  Calendar,
+  Users,
+  Heart,
+  Shield,
+  Clock,
   Star,
   ArrowRight,
   CheckCircle,
   Phone,
   Mail,
   MapPin,
-  MessageCircle
+  MessageCircle,
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -28,19 +34,19 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className='relative min-h-screen flex items-center justify-center overflow-hidden'>
         {/* Background Elements */}
-        <div className='absolute inset-0 bg-gradient-to-br from-background via-background to-[var(--brand-primary)]/5'></div>
-        <div className='absolute top-20 left-20 w-72 h-72 bg-[var(--brand-primary)]/10 rounded-full blur-3xl'></div>
-        <div className='absolute bottom-20 right-20 w-96 h-96 bg-[var(--brand-secondary)]/10 rounded-full blur-3xl'></div>
+        <div className='absolute inset-0 bg-gradient-to-br from-background via-background to-[var(--primary-primary)]/5'></div>
+        <div className='absolute top-20 left-20 w-72 h-72 bg-[var(--primary-primary)]/10 rounded-full blur-3xl'></div>
+        <div className='absolute bottom-20 right-20 w-96 h-96 bg-[var(--primary-secondary)]/10 rounded-full blur-3xl'></div>
 
         <div className='container-app relative z-10'>
           <div className='text-center max-w-4xl mx-auto'>
-            <Badge variant="info" className="mb-4 text-sm">
+            <Badge variant='info' className='mb-4 text-sm'>
               🏥 مركز طبي متخصص
             </Badge>
             <h1 className='text-5xl md:text-7xl font-bold text-foreground mb-6'>
               مركز الهمم للرعاية الصحية
             </h1>
-            <h2 className='text-2xl md:text-3xl text-[var(--brand-primary)] mb-6'>
+            <h2 className='text-2xl md:text-3xl text-[var(--primary-primary)] mb-6'>
               رعاية شاملة لذوي الاحتياجات الخاصة
             </h2>
             <p className='text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto'>
@@ -48,16 +54,19 @@ export default function HomePage() {
               الاحتياجات الخاصة مع أحدث التقنيات الطبية
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <Button asChild size="lg" className="btn-brand">
-                <Link href='/appointments' data-testid="book-appointment-button">
-                  <Calendar className="w-5 h-5 mr-2" />
+              <Button asChild size='lg' className='btn-primary'>
+                <Link
+                  href='/appointments'
+                  data-testid='book-appointment-button'
+                >
+                  <Calendar className='w-5 h-5 mr-2' />
                   احجز موعدك الآن
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href='/features' data-testid="learn-more-button">
+              <Button asChild variant='outline' size='lg'>
+                <Link href='/features' data-testid='learn-more-button'>
                   تعرف على المزيد
-                  <ArrowRight className="w-5 h-5 mr-2" />
+                  <ArrowRight className='w-5 h-5 mr-2' />
                 </Link>
               </Button>
             </div>
@@ -66,15 +75,15 @@ export default function HomePage() {
 
         {/* Slide Indicators */}
         <div className='absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2'>
-          <button className='w-3 h-3 rounded-full bg-[var(--brand-primary)]' />
+          <button className='w-3 h-3 rounded-full bg-[var(--primary-primary)]' />
         </div>
       </section>
 
       {/* Services Section */}
-      <section id='services' className='py-20 bg-[var(--brand-surface)]'>
+      <section id='services' className='py-20 bg-[var(--primary-surface)]'>
         <div className='container-app'>
           <div className='text-center mb-16'>
-            <Badge variant="success" className="mb-4">
+            <Badge variant='success' className='mb-4'>
               خدماتنا
             </Badge>
             <h2 className='text-4xl font-bold text-foreground mb-4'>
@@ -93,7 +102,7 @@ export default function HomePage() {
       <section className='py-20'>
         <div className='container-app'>
           <div className='text-center mb-16'>
-            <Badge variant="warning" className="mb-4">
+            <Badge variant='warning' className='mb-4'>
               المميزات
             </Badge>
             <h2 className='text-4xl font-bold text-foreground mb-4'>
@@ -105,10 +114,10 @@ export default function HomePage() {
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            <Card className="text-center hover:shadow-lg transition-shadow">
+            <Card className='text-center hover:shadow-lg transition-shadow'>
               <CardHeader>
-                <div className="w-16 h-16 bg-[var(--brand-primary)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Heart className="w-8 h-8 text-[var(--brand-primary)]" />
+                <div className='w-16 h-16 bg-[var(--primary-primary)]/10 rounded-full flex items-center justify-center mx-auto mb-4'>
+                  <Heart className='w-8 h-8 text-[var(--primary-primary)]' />
                 </div>
                 <CardTitle>رعاية متخصصة</CardTitle>
                 <CardDescription>
@@ -116,27 +125,27 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="text-left space-y-2">
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                <ul className='text-left space-y-2'>
+                  <li className='flex items-center'>
+                    <CheckCircle className='w-4 h-4 text-green-500 mr-2' />
                     علاج طبيعي متقدم
                   </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  <li className='flex items-center'>
+                    <CheckCircle className='w-4 h-4 text-green-500 mr-2' />
                     علاج وظيفي شامل
                   </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  <li className='flex items-center'>
+                    <CheckCircle className='w-4 h-4 text-green-500 mr-2' />
                     برامج تأهيلية مخصصة
                   </li>
                 </ul>
               </CardContent>
             </Card>
 
-            <Card className="text-center hover:shadow-lg transition-shadow">
+            <Card className='text-center hover:shadow-lg transition-shadow'>
               <CardHeader>
-                <div className="w-16 h-16 bg-[var(--brand-secondary)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Shield className="w-8 h-8 text-[var(--brand-secondary)]" />
+                <div className='w-16 h-16 bg-[var(--primary-secondary)]/10 rounded-full flex items-center justify-center mx-auto mb-4'>
+                  <Shield className='w-8 h-8 text-[var(--primary-secondary)]' />
                 </div>
                 <CardTitle>تقنيات حديثة</CardTitle>
                 <CardDescription>
@@ -144,27 +153,27 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="text-left space-y-2">
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                <ul className='text-left space-y-2'>
+                  <li className='flex items-center'>
+                    <CheckCircle className='w-4 h-4 text-green-500 mr-2' />
                     أجهزة تشخيص متقدمة
                   </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  <li className='flex items-center'>
+                    <CheckCircle className='w-4 h-4 text-green-500 mr-2' />
                     برامج تأهيل ذكية
                   </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  <li className='flex items-center'>
+                    <CheckCircle className='w-4 h-4 text-green-500 mr-2' />
                     متابعة إلكترونية
                   </li>
                 </ul>
               </CardContent>
             </Card>
 
-            <Card className="text-center hover:shadow-lg transition-shadow">
+            <Card className='text-center hover:shadow-lg transition-shadow'>
               <CardHeader>
-                <div className="w-16 h-16 bg-[var(--brand-accent)]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-[var(--brand-accent)]" />
+                <div className='w-16 h-16 bg-[var(--primary-accent)]/10 rounded-full flex items-center justify-center mx-auto mb-4'>
+                  <Users className='w-8 h-8 text-[var(--primary-accent)]' />
                 </div>
                 <CardTitle>فريق متكامل</CardTitle>
                 <CardDescription>
@@ -172,17 +181,17 @@ export default function HomePage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ul className="text-left space-y-2">
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                <ul className='text-left space-y-2'>
+                  <li className='flex items-center'>
+                    <CheckCircle className='w-4 h-4 text-green-500 mr-2' />
                     أطباء متخصصون
                   </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  <li className='flex items-center'>
+                    <CheckCircle className='w-4 h-4 text-green-500 mr-2' />
                     معالجون مؤهلون
                   </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-green-500 mr-2" />
+                  <li className='flex items-center'>
+                    <CheckCircle className='w-4 h-4 text-green-500 mr-2' />
                     دعم نفسي واجتماعي
                   </li>
                 </ul>
@@ -193,7 +202,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className='py-20 bg-[var(--brand-surface)]'>
+      <section className='py-20 bg-[var(--primary-surface)]'>
         <div className='container-app'>
           <DynamicStats />
         </div>
@@ -203,7 +212,7 @@ export default function HomePage() {
       <section className='py-20'>
         <div className='container-app'>
           <div className='text-center mb-16'>
-            <Badge variant="info" className="mb-4">
+            <Badge variant='info' className='mb-4'>
               آراء العملاء
             </Badge>
             <h2 className='text-4xl font-bold text-foreground mb-4'>
@@ -215,67 +224,85 @@ export default function HomePage() {
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="flex items-center mb-4">
+            <Card className='hover:shadow-lg transition-shadow'>
+              <CardContent className='pt-6'>
+                <div className='flex items-center mb-4'>
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    <Star
+                      key={i}
+                      className='w-5 h-5 text-yellow-400 fill-current'
+                    />
                   ))}
                 </div>
-                <p className="text-muted-foreground mb-4">
-                  &quot;مركز الهمم غير حياة ابني تماماً. الفريق الطبي متخصص جداً والخدمات ممتازة.&quot;
+                <p className='text-muted-foreground mb-4'>
+                  &quot;مركز الهمم غير حياة ابني تماماً. الفريق الطبي متخصص جداً
+                  والخدمات ممتازة.&quot;
                 </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-[var(--brand-primary)]/10 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-[var(--brand-primary)] font-bold">أ</span>
+                <div className='flex items-center'>
+                  <div className='w-10 h-10 bg-[var(--primary-primary)]/10 rounded-full flex items-center justify-center mr-3'>
+                    <span className='text-[var(--primary-primary)] font-bold'>
+                      أ
+                    </span>
                   </div>
                   <div>
-                    <p className="font-semibold">أم أحمد</p>
-                    <p className="text-sm text-muted-foreground">والدة مريض</p>
+                    <p className='font-semibold'>أم أحمد</p>
+                    <p className='text-sm text-muted-foreground'>والدة مريض</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="flex items-center mb-4">
+            <Card className='hover:shadow-lg transition-shadow'>
+              <CardContent className='pt-6'>
+                <div className='flex items-center mb-4'>
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    <Star
+                      key={i}
+                      className='w-5 h-5 text-yellow-400 fill-current'
+                    />
                   ))}
                 </div>
-                <p className="text-muted-foreground mb-4">
-                  &quot;التقنيات الحديثة والرعاية المتميزة جعلت ابنتي تتحسن بشكل ملحوظ.&quot;
+                <p className='text-muted-foreground mb-4'>
+                  &quot;التقنيات الحديثة والرعاية المتميزة جعلت ابنتي تتحسن بشكل
+                  ملحوظ.&quot;
                 </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-[var(--brand-secondary)]/10 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-[var(--brand-secondary)] font-bold">س</span>
+                <div className='flex items-center'>
+                  <div className='w-10 h-10 bg-[var(--primary-secondary)]/10 rounded-full flex items-center justify-center mr-3'>
+                    <span className='text-[var(--primary-secondary)] font-bold'>
+                      س
+                    </span>
                   </div>
                   <div>
-                    <p className="font-semibold">سارة محمد</p>
-                    <p className="text-sm text-muted-foreground">والدة مريضة</p>
+                    <p className='font-semibold'>سارة محمد</p>
+                    <p className='text-sm text-muted-foreground'>والدة مريضة</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow">
-              <CardContent className="pt-6">
-                <div className="flex items-center mb-4">
+            <Card className='hover:shadow-lg transition-shadow'>
+              <CardContent className='pt-6'>
+                <div className='flex items-center mb-4'>
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-current" />
+                    <Star
+                      key={i}
+                      className='w-5 h-5 text-yellow-400 fill-current'
+                    />
                   ))}
                 </div>
-                <p className="text-muted-foreground mb-4">
-                  &quot;فريق العمل محترف جداً والمركز مجهز بأحدث الأجهزة. أنصح به بشدة.&quot;
+                <p className='text-muted-foreground mb-4'>
+                  &quot;فريق العمل محترف جداً والمركز مجهز بأحدث الأجهزة. أنصح
+                  به بشدة.&quot;
                 </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-[var(--brand-accent)]/10 rounded-full flex items-center justify-center mr-3">
-                    <span className="text-[var(--brand-accent)] font-bold">خ</span>
+                <div className='flex items-center'>
+                  <div className='w-10 h-10 bg-[var(--primary-accent)]/10 rounded-full flex items-center justify-center mr-3'>
+                    <span className='text-[var(--primary-accent)] font-bold'>
+                      خ
+                    </span>
                   </div>
                   <div>
-                    <p className="font-semibold">خالد العتيبي</p>
-                    <p className="text-sm text-muted-foreground">والد مريض</p>
+                    <p className='font-semibold'>خالد العتيبي</p>
+                    <p className='text-sm text-muted-foreground'>والد مريض</p>
                   </div>
                 </div>
               </CardContent>
@@ -285,7 +312,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className='py-20 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)]'>
+      <section className='py-20 bg-gradient-to-r from-[var(--primary-primary)] to-[var(--primary-secondary)]'>
         <div className='container-app text-center'>
           <h2 className='text-4xl font-bold text-white mb-4'>
             ابدأ رحلتك معنا اليوم
@@ -296,22 +323,22 @@ export default function HomePage() {
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
             <Button
               asChild
-              size="lg"
-              className="bg-white text-[var(--brand-primary)] hover:bg-gray-100"
+              size='lg'
+              className='bg-white text-[var(--primary-primary)] hover:bg-gray-100'
             >
-              <Link href='/register' data-testid="create-account-button">
-                <Users className="w-5 h-5 mr-2" />
+              <Link href='/register' data-testid='create-account-button'>
+                <Users className='w-5 h-5 mr-2' />
                 إنشاء حساب مجاني
               </Link>
             </Button>
             <Button
               asChild
-              variant="outline"
-              size="lg"
-              className="border-white text-white hover:bg-white hover:text-[var(--brand-primary)]"
+              variant='outline'
+              size='lg'
+              className='border-white text-white hover:bg-white hover:text-[var(--primary-primary)]'
             >
-              <Link href='/contact' data-testid="contact-us-button">
-                <MessageCircle className="w-5 h-5 mr-2" />
+              <Link href='/contact' data-testid='contact-us-button'>
+                <MessageCircle className='w-5 h-5 mr-2' />
                 تواصل معنا
               </Link>
             </Button>
@@ -324,7 +351,7 @@ export default function HomePage() {
         <div className='container-app'>
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>
             <div>
-              <Badge variant="default" className="mb-4">
+              <Badge variant='default' className='mb-4'>
                 عن المركز
               </Badge>
               <h2 className='text-4xl font-bold text-foreground mb-6'>
@@ -332,36 +359,36 @@ export default function HomePage() {
               </h2>
               <p className='text-lg text-muted-foreground mb-6'>
                 مركز الهمم هو مركز طبي متخصص في رعاية ذوي الاحتياجات الخاصة،
-                نقدم خدمات شاملة تشمل العلاج الطبيعي والوظيفي والنطق والسمع
-                مع أحدث التقنيات الطبية.
+                نقدم خدمات شاملة تشمل العلاج الطبيعي والوظيفي والنطق والسمع مع
+                أحدث التقنيات الطبية.
               </p>
               <p className='text-lg text-muted-foreground mb-8'>
                 مع أكثر من 1000 مريض نشط و 98% معدل رضا، نحن نثق في قدرتنا على
                 تحسين جودة الحياة لذوي الاحتياجات الخاصة.
               </p>
-              <Button asChild size="lg" className="btn-brand">
-                <Link href='/about' data-testid="learn-about-button">
+              <Button asChild size='lg' className='btn-primary'>
+                <Link href='/about' data-testid='learn-about-button'>
                   تعرف على المزيد
-                  <ArrowRight className="w-5 h-5 mr-2" />
+                  <ArrowRight className='w-5 h-5 mr-2' />
                 </Link>
               </Button>
             </div>
             <div className='relative'>
-              <div className='aspect-square bg-gradient-to-br from-[var(--brand-primary)]/20 to-[var(--brand-secondary)]/20 rounded-2xl flex items-center justify-center'>
+              <div className='aspect-square bg-gradient-to-br from-[var(--primary-primary)]/20 to-[var(--primary-secondary)]/20 rounded-2xl flex items-center justify-center'>
                 <div className='text-8xl'>🏥</div>
               </div>
-              <div className="absolute -top-4 -right-4 w-24 h-24 bg-[var(--brand-primary)]/20 rounded-full blur-xl"></div>
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-[var(--brand-secondary)]/20 rounded-full blur-xl"></div>
+              <div className='absolute -top-4 -right-4 w-24 h-24 bg-[var(--primary-primary)]/20 rounded-full blur-xl'></div>
+              <div className='absolute -bottom-4 -left-4 w-32 h-32 bg-[var(--primary-secondary)]/20 rounded-full blur-xl'></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Contact Section - Dynamic */}
-      <section className='py-20 bg-[var(--brand-surface)]'>
+      <section className='py-20 bg-[var(--primary-surface)]'>
         <div className='container-app'>
           <div className='text-center mb-16'>
-            <Badge variant="success" className="mb-4">
+            <Badge variant='success' className='mb-4'>
               تواصل معنا
             </Badge>
             <h2 className='text-4xl font-bold text-foreground mb-4'>

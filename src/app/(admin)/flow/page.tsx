@@ -1,6 +1,6 @@
 export default function FlowBuilderPage() {
   return (
-    <main className='min-h-screen bg-[var(--brand-surface)]'>
+    <main className='min-h-screen bg-[var(--primary-surface)]'>
       <div className='container-app py-6'>
         <div className='grid gap-4 lg:grid-cols-[280px_1fr_320px]'>
           <aside className='card p-4 grid gap-3'>

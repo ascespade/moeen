@@ -1,11 +1,17 @@
 /**
  * Design System Utilities - أدوات نظام التصميم
- * 
+ *
  * Utility functions for design system
  * وظائف مساعدة لنظام التصميم
  */
 
-import { BRAND_COLORS, SPACING, TYPOGRAPHY, BORDER_RADIUS, SHADOWS } from './tokens';
+import {
+  BRAND_COLORS,
+  SPACING,
+  TYPOGRAPHY,
+  BORDER_RADIUS,
+  SHADOWS,
+} from './tokens';
 
 // ========================================
 // COLOR UTILITIES - أدوات الألوان
@@ -31,7 +37,10 @@ export function getColorWithOpacity(color: string, opacity: number): string {
  * Get brand color by name
  * الحصول على لون العلامة التجارية بالاسم
  */
-export function getBrandColor(colorName: keyof typeof BRAND_COLORS, shade?: string): string {
+export function getBrandColor(
+  colorName: keyof typeof BRAND_COLORS,
+  shade?: string
+): string {
   const color = BRAND_COLORS[colorName];
   if (typeof color === 'object' && shade && shade in color) {
     return (color as any)[shade];
@@ -74,7 +83,9 @@ export function getResponsiveSpacing(
  * Get font family
  * الحصول على عائلة الخط
  */
-export function getFontFamily(family: keyof typeof TYPOGRAPHY.fontFamily): string {
+export function getFontFamily(
+  family: keyof typeof TYPOGRAPHY.fontFamily
+): string {
   return TYPOGRAPHY.fontFamily[family].join(', ');
 }
 
@@ -113,7 +124,10 @@ export function generateCSSVariables(): Record<string, string> {
  * Apply CSS variables to element
  * تطبيق متغيرات CSS على العنصر
  */
-export function applyCSSVariables(element: HTMLElement, variables: Record<string, string>): void {
+export function applyCSSVariables(
+  element: HTMLElement,
+  variables: Record<string, string>
+): void {
   Object.entries(variables).forEach(([key, value]) => {
     element.style.setProperty(key, value);
   });
@@ -144,7 +158,9 @@ export function getResponsiveClass(
  * Get breakpoint value
  * الحصول على قيمة نقطة التوقف
  */
-export function getBreakpoint(breakpoint: 'sm' | 'md' | 'lg' | 'xl' | '2xl'): string {
+export function getBreakpoint(
+  breakpoint: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+): string {
   const breakpoints = {
     sm: '640px',
     md: '768px',
@@ -171,7 +187,9 @@ export function getRTLClass(ltrClass: string, rtlClass: string): string {
  * Get logical property
  * الحصول على الخاصية المنطقية
  */
-export function getLogicalProperty(property: 'start' | 'end' | 'block-start' | 'block-end'): string {
+export function getLogicalProperty(
+  property: 'start' | 'end' | 'block-start' | 'block-end'
+): string {
   const properties = {
     start: 'inline-start',
     end: 'inline-end',
@@ -199,14 +217,14 @@ export function getTransitionClass(
     normal: '300ms',
     slow: '500ms',
   };
-  
+
   const easings = {
     linear: 'linear',
     in: 'cubic-bezier(0.4, 0, 1, 1)',
     out: 'cubic-bezier(0, 0, 0.2, 1)',
     'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
   };
-  
+
   return `transition-${property} duration-${durations[duration]} ease-${easing}`;
 }
 
@@ -223,7 +241,7 @@ export function isValidColor(color: string): boolean {
   if (color.startsWith('#')) {
     return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color);
   }
-  
+
   // Check if it's a valid CSS color
   const div = document.createElement('div');
   div.style.color = color;
@@ -258,9 +276,11 @@ export function getThemeAwareColor(
  * Generate theme CSS variables
  * إنشاء متغيرات CSS للثيم
  */
-export function generateThemeVariables(theme: 'light' | 'dark'): Record<string, string> {
+export function generateThemeVariables(
+  theme: 'light' | 'dark'
+): Record<string, string> {
   const baseVariables = generateCSSVariables();
-  
+
   if (theme === 'dark') {
     return {
       ...baseVariables,
@@ -271,7 +291,7 @@ export function generateThemeVariables(theme: 'light' | 'dark'): Record<string, 
       '--brand-border': '#1f2937',
     };
   }
-  
+
   return {
     ...baseVariables,
     '--background': '#ffffff',

@@ -152,7 +152,7 @@ export default function BookSessionPage() {
               <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full font-bold ${
                   step >= s.num
-                    ? 'bg-[var(--brand-primary)] text-white'
+                    ? 'bg-[var(--primary-primary)] text-white'
                     : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
                 }`}
               >
@@ -171,7 +171,7 @@ export default function BookSessionPage() {
                 <div
                   className={`flex-1 h-1 mx-4 rounded ${
                     step > s.num
-                      ? 'bg-[var(--brand-primary)]'
+                      ? 'bg-[var(--primary-primary)]'
                       : 'bg-gray-200 dark:bg-gray-700'
                   }`}
                 />
@@ -241,7 +241,7 @@ export default function BookSessionPage() {
               }}
               min={today}
               max={maxDateStr}
-              className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--brand-primary)] text-lg'
+              className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--primary-primary)] text-lg'
             />
             <p className='text-sm text-gray-500 dark:text-gray-400 mt-4'>
               ساعات العمل: الأحد - الخميس، 7 صباحاً - 7 مساءً
@@ -347,7 +347,7 @@ export default function BookSessionPage() {
                     <span className='text-gray-600 dark:text-gray-400'>
                       التكلفة
                     </span>
-                    <span className='text-2xl font-bold text-[var(--brand-primary)]'>
+                    <span className='text-2xl font-bold text-[var(--primary-primary)]'>
                       {selectedSessionType.price} ريال
                     </span>
                   </div>
@@ -370,7 +370,7 @@ export default function BookSessionPage() {
                     type='text'
                     value={patientName}
                     onChange={e => setPatientName(e.target.value)}
-                    className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--primary-primary)]'
                     placeholder='أدخل اسم الطفل'
                     required
                   />
@@ -384,7 +384,7 @@ export default function BookSessionPage() {
                     value={notes}
                     onChange={e => setNotes(e.target.value)}
                     rows={3}
-                    className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--primary-primary)]'
                     placeholder='أي ملاحظات إضافية...'
                   />
                 </div>
@@ -399,7 +399,7 @@ export default function BookSessionPage() {
                   type='button'
                   onClick={handleBookSession}
                   disabled={loading || !patientName.trim()}
-                  className='btn btn-brand w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed'
+                  className='btn btn-primary w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed'
                 >
                   {loading ? (
                     <span className='flex items-center justify-center gap-2'>

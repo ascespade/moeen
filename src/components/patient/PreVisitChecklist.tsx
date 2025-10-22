@@ -124,11 +124,11 @@ export default function PreVisitChecklist({
   const getCategoryColor = (category: string) => {
     switch (category) {
       case 'documents':
-        return 'text-brand-primary bg-blue-100 dark:bg-blue-900/20';
+        return 'text-primary-primary bg-blue-100 dark:bg-blue-900/20';
       case 'payment':
-        return 'text-brand-success bg-green-100 dark:bg-green-900/20';
+        return 'text-primary-success bg-green-100 dark:bg-green-900/20';
       case 'health':
-        return 'text-brand-error bg-red-100 dark:bg-red-900/20';
+        return 'text-primary-error bg-red-100 dark:bg-red-900/20';
       case 'appointment':
         return 'text-purple-600 bg-purple-100 dark:bg-purple-900/20';
       default:
@@ -193,7 +193,7 @@ export default function PreVisitChecklist({
           </div>
           <div className='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
             <div
-              className='bg-brand-primary h-2 rounded-full transition-all duration-300'
+              className='bg-primary-primary h-2 rounded-full transition-all duration-300'
               style={{ width: `${(completedItems / totalItems) * 100}%` }}
             />
           </div>
@@ -244,7 +244,7 @@ export default function PreVisitChecklist({
                           </Badge>
                         )}
                         {item.completed && (
-                          <CheckCircle className='h-4 w-4 text-brand-success' />
+                          <CheckCircle className='h-4 w-4 text-primary-success' />
                         )}
                       </div>
                     </div>
@@ -269,7 +269,7 @@ export default function PreVisitChecklist({
               {completedRequiredItems}/{requiredItems.length}
             </p>
             {!allRequiredCompleted && (
-              <p className='text-sm text-brand-primary dark:text-orange-400 mt-1'>
+              <p className='text-sm text-primary-primary dark:text-orange-400 mt-1'>
                 {t('patient.checklist.required_warning')}
               </p>
             )}

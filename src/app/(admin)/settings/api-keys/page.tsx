@@ -335,7 +335,7 @@ const APIKeysSettingsPage: React.FC = () => {
         <div className='flex items-center justify-between'>
           <div>
             <h1 className='text-3xl font-bold text-gray-900 flex items-center gap-3'>
-              <Key className='w-8 h-8 text-brand-primary' />
+              <Key className='w-8 h-8 text-primary-primary' />
               إدارة مفاتيح API
             </h1>
             <p className='text-gray-600 mt-2'>
@@ -361,7 +361,7 @@ const APIKeysSettingsPage: React.FC = () => {
       </div>
 
       {/* Security Notice */}
-      <Card className='mb-6 border-brand-warning bg-amber-50'>
+      <Card className='mb-6 border-primary-warning bg-amber-50'>
         <CardContent className='p-4'>
           <div className='flex items-start gap-3'>
             <Shield className='w-5 h-5 text-amber-600 mt-0.5' />
@@ -419,10 +419,10 @@ const APIKeysSettingsPage: React.FC = () => {
                         <Badge
                           variant={
                             keyConfig.status === 'active'
-                              ? 'primary'
+                              ? 'default'
                               : keyConfig.status === 'invalid'
-                                ? 'secondary'
-                                : 'secondary'
+                                ? 'error'
+                                : 'info'
                           }
                         >
                           {keyConfig.status === 'active' && '✅ نشط'}

@@ -195,9 +195,9 @@ const TrainingPage: React.FC = () => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'المهارات الحياتية':
-        return <BookOpen className='w-4 h-4 text-brand-primary' />;
+        return <BookOpen className='w-4 h-4 text-primary-primary' />;
       case 'التأهيل المهني':
-        return <GraduationCap className='w-4 h-4 text-brand-success' />;
+        return <GraduationCap className='w-4 h-4 text-primary-success' />;
       case 'التكنولوجيا':
         return <Award className='w-4 h-4 text-purple-500' />;
       default:
@@ -236,7 +236,7 @@ const TrainingPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/training/new')}
-            className='bg-[var(--brand-primary)] hover:brightness-95'
+            className='bg-[var(--primary-primary)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             برنامج تدريبي جديد
@@ -352,7 +352,7 @@ const TrainingPage: React.FC = () => {
       <div className='space-y-6'>
         {loading ? (
           <div className='flex justify-center items-center h-64'>
-            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
           </div>
         ) : filteredPrograms.length === 0 ? (
           <Card>
@@ -366,7 +366,7 @@ const TrainingPage: React.FC = () => {
               </p>
               <Button
                 onClick={() => router.push('/training/new')}
-                className='bg-[var(--brand-primary)] hover:brightness-95'
+                className='bg-[var(--primary-primary)] hover:brightness-95'
               >
                 إنشاء برنامج جديد
               </Button>
@@ -471,7 +471,7 @@ const TrainingPage: React.FC = () => {
                   </div>
                   <div className='w-full bg-gray-200 rounded-full h-2'>
                     <div
-                      className='bg-[var(--brand-primary)] h-2 rounded-full transition-all duration-300'
+                      className='bg-[var(--primary-primary)] h-2 rounded-full transition-all duration-300'
                       style={{
                         width: `${(program.current_participants / program.max_participants) * 100}%`,
                       }}

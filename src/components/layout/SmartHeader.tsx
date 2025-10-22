@@ -186,7 +186,7 @@ export default function SmartHeader() {
               height={50}
               className='rounded-lg'
             />
-            <h1 className='text-brand text-2xl font-bold'>مُعين</h1>
+            <h1 className='text-primary text-2xl font-bold'>مُعين</h1>
           </div>
 
           {/* Desktop Navigation */}
@@ -209,7 +209,7 @@ export default function SmartHeader() {
                 <Link href={ROUTES.LOGIN} className='btn btn-outline'>
                   {t('nav.login', 'تسجيل الدخول')}
                 </Link>
-                <Link href={ROUTES.REGISTER} className='btn btn-brand'>
+                <Link href={ROUTES.REGISTER} className='btn btn-primary'>
                   {t('nav.register', 'إنشاء حساب')}
                 </Link>
               </>

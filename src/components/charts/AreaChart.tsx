@@ -1,6 +1,6 @@
 /**
  * Area Chart Component - مكون الرسم البياني المساحي
- * RTL-compatible area chart with brand colors and theme support
+ * RTL-compatible area chart with primary colors and theme support
  */
 
 'use client';
@@ -54,7 +54,7 @@ export const AreaChart: React.FC<AreaChartProps> = ({
       : [
           {
             dataKey,
-            color: 'var(--brand-primary)',
+            color: 'var(--primary-primary)',
             name: 'Value',
           },
         ];

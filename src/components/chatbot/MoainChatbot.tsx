@@ -359,7 +359,7 @@ const MoainChatbot: React.FC = () => {
         <CardHeader className='pb-3'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-3'>
-              <div className='w-10 h-10 bg-[var(--brand-primary)] rounded-full flex items-center justify-center'>
+              <div className='w-10 h-10 bg-[var(--primary-primary)] rounded-full flex items-center justify-center'>
                 <Bot className='w-6 h-6 text-white' />
               </div>
               <div>
@@ -398,13 +398,13 @@ const MoainChatbot: React.FC = () => {
               <div
                 className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                   message.type === 'user'
-                    ? 'bg-[var(--brand-primary)] text-white'
+                    ? 'bg-[var(--primary-primary)] text-white'
                     : 'bg-white border shadow-sm'
                 }`}
               >
                 <div className='flex items-start gap-2'>
                   {message.type === 'bot' && (
-                    <Bot className='w-4 h-4 mt-1 text-[var(--brand-primary)]' />
+                    <Bot className='w-4 h-4 mt-1 text-[var(--primary-primary)]' />
                   )}
                   {message.type === 'user' && (
                     <User className='w-4 h-4 mt-1 text-white' />
@@ -424,7 +424,7 @@ const MoainChatbot: React.FC = () => {
             <div className='flex justify-start'>
               <div className='bg-white border shadow-sm rounded-lg px-4 py-2'>
                 <div className='flex items-center gap-2'>
-                  <Bot className='w-4 h-4 text-[var(--brand-primary)]' />
+                  <Bot className='w-4 h-4 text-[var(--primary-primary)]' />
                   <div className='flex gap-1'>
                     <div className='w-2 h-2 bg-gray-400 rounded-full animate-bounce'></div>
                     <div
@@ -527,7 +527,7 @@ const MoainChatbot: React.FC = () => {
             <Button
               onClick={() => handleSendMessage()}
               disabled={!inputMessage.trim() || isTyping}
-              className='bg-[var(--brand-primary)] hover:brightness-95'
+              className='bg-[var(--primary-primary)] hover:brightness-95'
             >
               <Send className='w-4 h-4' />
             </Button>

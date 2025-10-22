@@ -41,7 +41,7 @@ export default function VerifyEmailPage() {
         <div className='rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'>
           <div className='text-center'>
             <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900'>
-              <Mail className='h-8 w-8 text-brand-primary dark:text-blue-400' />
+              <Mail className='h-8 w-8 text-primary-primary dark:text-blue-400' />
             </div>
 
             <h2 className='mb-2 text-lg font-semibold text-gray-900 dark:text-white'>
@@ -67,7 +67,7 @@ export default function VerifyEmailPage() {
               <button
                 onClick={handleResend}
                 disabled={isResending || isResent}
-                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-4 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50'
+                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--primary-primary)] px-4 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50'
               >
                 {isResending ? (
                   <>
@@ -89,7 +89,7 @@ export default function VerifyEmailPage() {
 
               <Link
                 href='/login'
-                className='block w-full py-2 text-center text-sm text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]'
+                className='block w-full py-2 text-center text-sm text-[var(--primary-primary)] hover:text-[var(--primary-primary-hover)]'
               >
                 العودة لتسجيل الدخول
               </Link>
@@ -102,7 +102,7 @@ export default function VerifyEmailPage() {
             إذا واجهت مشاكل، يرجى{' '}
             <Link
               href='/contact'
-              className='text-[var(--brand-primary)] hover:underline'
+              className='text-[var(--primary-primary)] hover:underline'
             >
               التواصل معنا
             </Link>

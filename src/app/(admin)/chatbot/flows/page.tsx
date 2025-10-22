@@ -106,9 +106,9 @@ export default function ChatbotFlowsPage() {
   });
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
+    <div className='min-h-screen bg-[var(--primary-surface)]'>
       {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -120,7 +120,7 @@ export default function ChatbotFlowsPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-brand text-2xl font-bold'>
+                <h1 className='text-primary text-2xl font-bold'>
                   تدفقات الشات بوت
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -131,7 +131,7 @@ export default function ChatbotFlowsPage() {
             <div className='flex items-center gap-3'>
               <button
                 onClick={() => setShowCreateModal(true)}
-                className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                className='btn-primary rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
               >
                 إنشاء تدفق
               </button>
@@ -144,7 +144,7 @@ export default function ChatbotFlowsPage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-primary'>
+            <div className='mb-2 text-3xl font-bold text-primary-primary'>
               {mockFlows.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -152,7 +152,7 @@ export default function ChatbotFlowsPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-success'>
+            <div className='mb-2 text-3xl font-bold text-primary-success'>
               {mockFlows.filter(f => f.status === 'published').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>منشورة</div>
@@ -185,7 +185,7 @@ export default function ChatbotFlowsPage() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder='ابحث في التدفقات...'
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
               />
             </div>
 
@@ -196,7 +196,7 @@ export default function ChatbotFlowsPage() {
               <select
                 value={selectedStatus}
                 onChange={e => setSelectedStatus(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
               >
                 <option value='all'>جميع الحالات</option>
                 <option value='draft'>مسودة</option>
@@ -212,7 +212,7 @@ export default function ChatbotFlowsPage() {
               <select
                 value={selectedTag}
                 onChange={e => setSelectedTag(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
               >
                 <option value='all'>جميع الأوسمة</option>
                 {allTags.map(tag => (
@@ -224,7 +224,7 @@ export default function ChatbotFlowsPage() {
             </div>
 
             <div className='flex items-end'>
-              <button className='btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+              <button className='btn-primary w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'>
                 تطبيق الفلاتر
               </button>
             </div>
@@ -287,7 +287,7 @@ export default function ChatbotFlowsPage() {
               <div className='flex gap-2'>
                 <Link
                   href={ROUTES.CHATBOT.FLOW(flow.id)}
-                  className='btn-brand flex-1 rounded-lg py-2 text-center text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                  className='btn-primary flex-1 rounded-lg py-2 text-center text-sm text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
                 >
                   فتح المحرر
                 </Link>
@@ -339,7 +339,7 @@ export default function ChatbotFlowsPage() {
                 </label>
                 <input
                   type='text'
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
                   placeholder='مثال: استقبال المرضى'
                 />
               </div>
@@ -350,7 +350,7 @@ export default function ChatbotFlowsPage() {
                 </label>
                 <textarea
                   rows={3}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
                   placeholder='وصف مختصر للتدفق...'
                 />
               </div>
@@ -361,7 +361,7 @@ export default function ChatbotFlowsPage() {
                 </label>
                 <input
                   type='text'
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'
                   placeholder='ترحيب، استقبال (مفصولة بفواصل)'
                 />
               </div>
@@ -370,7 +370,7 @@ export default function ChatbotFlowsPage() {
                 <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                   القالب
                 </label>
-                <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--primary-primary)]'>
                   <option value=''>بدون قالب</option>
                   <option value='welcome'>ترحيب</option>
                   <option value='appointment'>حجز مواعيد</option>
@@ -388,7 +388,7 @@ export default function ChatbotFlowsPage() {
                 </button>
                 <button
                   type='submit'
-                  className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                  className='btn-primary flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
                 >
                   إنشاء التدفق
                 </button>

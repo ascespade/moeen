@@ -7,7 +7,7 @@ export default function GuidelinesPage() {
         <div className='font-medium'>Brand Colors</div>
         <div className='grid grid-cols-2 sm:grid-cols-4 gap-3'>
           <div className='rounded-lg border p-3'>
-            <div className='h-10 rounded bg-brand mb-2' />
+            <div className='h-10 rounded bg-primary mb-2' />
             <div className='text-sm'>Primary</div>
           </div>
           <div className='rounded-lg border p-3'>
@@ -15,7 +15,7 @@ export default function GuidelinesPage() {
             <div className='text-sm'>Accent</div>
           </div>
           <div className='rounded-lg border p-3'>
-            <div className='h-10 rounded bg-brand-success mb-2' />
+            <div className='h-10 rounded bg-primary-success mb-2' />
             <div className='text-sm'>Success</div>
           </div>
           <div className='rounded-lg border p-3'>
@@ -52,11 +52,11 @@ export default function GuidelinesPage() {
       <section className='grid gap-3'>
         <div className='font-medium'>Interaction States</div>
         <div className='flex flex-wrap gap-2'>
-          <button className='h-10 px-4 rounded-md btn-brand'>Default</button>
-          <button className='h-10 px-4 rounded-md btn-brand' disabled>
+          <button className='h-10 px-4 rounded-md btn-primary'>Default</button>
+          <button className='h-10 px-4 rounded-md btn-primary' disabled>
             Disabled
           </button>
-          <button className='h-10 px-4 rounded-md border focus:outline-none focus:ring-2 focus:ring-brand-primary'>
+          <button className='h-10 px-4 rounded-md border focus:outline-none focus:ring-2 focus:ring-primary-primary'>
             Focus
           </button>
         </div>

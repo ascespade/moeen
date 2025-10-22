@@ -148,9 +148,9 @@ export default function AdminDashboard() {
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-[var(--brand-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
         <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto mb-4'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary-primary)] mx-auto mb-4'></div>
           <p className='text-gray-600'>جاري تحميل البيانات...</p>
         </div>
       </div>
@@ -159,11 +159,11 @@ export default function AdminDashboard() {
 
   if (error) {
     return (
-      <div className='min-h-screen bg-[var(--brand-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 mb-4'>خطأ في تحميل البيانات: {error}</p>
-          <Button onClick={fetchDashboardData} variant='brand'>
+          <Button onClick={fetchDashboardData} variant='primary'>
             إعادة المحاولة
           </Button>
         </div>
@@ -173,7 +173,7 @@ export default function AdminDashboard() {
 
   if (!dashboardData) {
     return (
-      <div className='min-h-screen bg-[var(--brand-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--primary-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <p className='text-gray-600'>لا توجد بيانات لعرضها</p>
         </div>
@@ -184,9 +184,9 @@ export default function AdminDashboard() {
   const stats = dashboardData.statistics;
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
+    <div className='min-h-screen bg-[var(--primary-surface)]'>
       {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-primary sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -198,7 +198,7 @@ export default function AdminDashboard() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-brand text-2xl font-bold'>
+                <h1 className='text-primary text-2xl font-bold'>
                   لوحة تحكم الإدارة
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
               <Button variant='outline' size='sm'>
                 تصدير التقرير
               </Button>
-              <Button variant='brand' size='sm'>
+              <Button variant='primary' size='sm'>
                 إعدادات
               </Button>
             </div>
@@ -235,7 +235,7 @@ export default function AdminDashboard() {
         {/* Main Stats Grid */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
           <Card className='p-6 text-center'>
-            <div className='text-brand mb-2 text-3xl font-bold'>
+            <div className='text-primary mb-2 text-3xl font-bold'>
               {stats.totalPatients.toLocaleString()}
             </div>
             <div className='mb-2 text-gray-600 dark:text-gray-300'>
@@ -454,7 +454,7 @@ export default function AdminDashboard() {
                   </div>
                   <div className='grid grid-cols-3 gap-4 text-sm'>
                     <div className='text-center'>
-                      <div className='text-brand font-semibold'>
+                      <div className='text-primary font-semibold'>
                         {staff.todayHours}س
                       </div>
                       <div className='text-gray-600 dark:text-gray-300'>

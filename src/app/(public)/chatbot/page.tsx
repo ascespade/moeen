@@ -207,7 +207,7 @@ const HealthcareChatbot: React.FC = () => {
       <div className='fixed bottom-4 right-4 z-50'>
         <Button
           onClick={() => setIsMinimized(false)}
-          className='h-14 w-14 rounded-full bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] shadow-lg hover:shadow-xl'
+          className='h-14 w-14 rounded-full bg-gradient-to-r from-[var(--primary-primary)] to-[var(--primary-secondary)] shadow-lg hover:shadow-xl'
         >
           <MessageCircle className='h-6 w-6 text-white' />
         </Button>
@@ -218,7 +218,7 @@ const HealthcareChatbot: React.FC = () => {
   return (
     <div className='fixed bottom-4 right-4 z-50 w-96 h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden'>
       {/* Header */}
-      <div className='bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] p-4 text-white'>
+      <div className='bg-gradient-to-r from-[var(--primary-primary)] to-[var(--primary-secondary)] p-4 text-white'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-3'>
             <div className='h-10 w-10 rounded-full bg-white/20 flex items-center justify-center'>
@@ -257,7 +257,7 @@ const HealthcareChatbot: React.FC = () => {
               <div
                 className={`max-w-[80%] rounded-2xl px-4 py-2 ${
                   message.type === 'user'
-                    ? 'bg-[var(--brand-primary)] text-white'
+                    ? 'bg-[var(--primary-primary)] text-white'
                     : 'bg-surface text-gray-900'
                 }`}
               >

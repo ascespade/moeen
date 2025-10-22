@@ -1,6 +1,6 @@
 /**
  * Design System Types - أنواع نظام التصميم
- * 
+ *
  * TypeScript types for design system
  * أنواع TypeScript لنظام التصميم
  */
@@ -10,7 +10,19 @@
 // ========================================
 
 export type BrandColor = keyof typeof import('./tokens').BRAND_COLORS;
-export type ColorShade = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | 'DEFAULT' | 'hover';
+export type ColorShade =
+  | '50'
+  | '100'
+  | '200'
+  | '300'
+  | '400'
+  | '500'
+  | '600'
+  | '700'
+  | '800'
+  | '900'
+  | 'DEFAULT'
+  | 'hover';
 
 // ========================================
 // COMPONENT TYPES - أنواع المكونات
@@ -75,7 +87,8 @@ export type AccessibilityLevel = 'basic' | 'enhanced' | 'maximum';
 // ========================================
 
 export type SpacingScale = keyof typeof import('./tokens').SPACING;
-export type TypographyScale = keyof typeof import('./tokens').TYPOGRAPHY.fontSize;
+export type TypographyScale =
+  keyof typeof import('./tokens').TYPOGRAPHY.fontSize;
 export type BorderRadiusScale = keyof typeof import('./tokens').BORDER_RADIUS;
 export type ShadowScale = keyof typeof import('./tokens').SHADOWS;
 
@@ -215,7 +228,10 @@ export interface ThemeVariables extends CSSVariables {
 // ========================================
 
 export type ColorWithOpacity = (color: string, opacity: number) => string;
-export type GetBrandColor = (colorName: BrandColor, shade?: ColorShade) => string;
+export type GetBrandColor = (
+  colorName: BrandColor,
+  shade?: ColorShade
+) => string;
 export type GetSpacing = (size: SpacingScale) => string;
 export type GetResponsiveSpacing = (
   mobile: SpacingScale,

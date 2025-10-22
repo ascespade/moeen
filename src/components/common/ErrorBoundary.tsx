@@ -109,7 +109,7 @@ function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
       <Card className='max-w-md w-full p-8 text-center'>
         <div className='flex justify-center mb-6'>
           <div className='w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center'>
-            <AlertTriangle className='h-8 w-8 text-brand-error' />
+            <AlertTriangle className='h-8 w-8 text-primary-error' />
           </div>
         </div>
 
@@ -126,7 +126,7 @@ function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
             <summary className='cursor-pointer text-sm text-gray-500 dark:text-gray-400 mb-2'>
               {t('error.boundary.technical_details')}
             </summary>
-            <pre className='text-xs text-brand-error dark:text-red-400 bg-surface dark:bg-red-900/20 p-3 rounded overflow-auto'>
+            <pre className='text-xs text-primary-error dark:text-red-400 bg-surface dark:bg-red-900/20 p-3 rounded overflow-auto'>
               {error.message}
               {error.stack && `\n\n${error.stack}`}
             </pre>

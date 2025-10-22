@@ -219,47 +219,47 @@ const NotificationsPage: React.FC = () => {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'appointment':
-        return <Calendar className='w-4 h-4 text-brand-primary' />;
+        return <Calendar className='w-4 h-4 text-primary-primary' />;
       case 'reminder':
-        return <Clock className='w-4 h-4 text-brand-primary' />;
+        return <Clock className='w-4 h-4 text-primary-primary' />;
       case 'success':
-        return <CheckCircle className='w-4 h-4 text-brand-success' />;
+        return <CheckCircle className='w-4 h-4 text-primary-success' />;
       case 'warning':
-        return <AlertCircle className='w-4 h-4 text-brand-warning' />;
+        return <AlertCircle className='w-4 h-4 text-primary-warning' />;
       case 'error':
-        return <AlertCircle className='w-4 h-4 text-brand-error' />;
+        return <AlertCircle className='w-4 h-4 text-primary-error' />;
       case 'system':
         return <Settings className='w-4 h-4 text-gray-500' />;
       default:
-        return <Info className='w-4 h-4 text-brand-primary' />;
+        return <Info className='w-4 h-4 text-primary-primary' />;
     }
   };
 
   const getPriorityBadge = (priority: string) => {
     const priorityMap = {
-      low: { label: 'منخفض', variant: 'secondary' as const },
-      medium: { label: 'متوسط', variant: 'primary' as const },
-      high: { label: 'عالي', variant: 'primary' as const },
+      low: { label: 'منخفض', variant: 'info' as const },
+      medium: { label: 'متوسط', variant: 'default' as const },
+      high: { label: 'عالي', variant: 'default' as const },
       urgent: { label: 'عاجل', variant: 'error' as const },
     };
 
     const priorityInfo = priorityMap[priority as keyof typeof priorityMap] || {
       label: priority,
-      variant: 'primary' as const,
+      variant: 'default' as const,
     };
     return <Badge variant={priorityInfo.variant}>{priorityInfo.label}</Badge>;
   };
 
   const getStatusBadge = (status: string) => {
     const statusMap = {
-      unread: { label: 'غير مقروء', variant: 'primary' as const },
-      read: { label: 'مقروء', variant: 'secondary' as const },
-      archived: { label: 'مؤرشف', variant: 'secondary' as const },
+      unread: { label: 'غير مقروء', variant: 'default' as const },
+      read: { label: 'مقروء', variant: 'info' as const },
+      archived: { label: 'مؤرشف', variant: 'info' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: 'primary' as const,
+      variant: 'default' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
@@ -332,7 +332,7 @@ const NotificationsPage: React.FC = () => {
             </Button>
             <Button
               onClick={() => setShowCompose(true)}
-              className='bg-[var(--brand-primary)] hover:brightness-95'
+              className='bg-[var(--primary-primary)] hover:brightness-95'
             >
               <Plus className='w-4 h-4 mr-2' />
               إرسال إشعار
@@ -345,7 +345,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className='p-4'>
               <div className='flex items-center gap-2'>
-                <Bell className='w-5 h-5 text-brand-primary' />
+                <Bell className='w-5 h-5 text-primary-primary' />
                 <div>
                   <div className='text-2xl font-bold'>
                     {notifications.length}
@@ -359,7 +359,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className='p-4'>
               <div className='flex items-center gap-2'>
-                <BellRing className='w-5 h-5 text-brand-primary' />
+                <BellRing className='w-5 h-5 text-primary-primary' />
                 <div>
                   <div className='text-2xl font-bold'>{unreadCount}</div>
                   <div className='text-sm text-gray-600'>غير مقروء</div>
@@ -371,7 +371,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className='p-4'>
               <div className='flex items-center gap-2'>
-                <Calendar className='w-5 h-5 text-brand-success' />
+                <Calendar className='w-5 h-5 text-primary-success' />
                 <div>
                   <div className='text-2xl font-bold'>
                     {notifications.filter(n => n.type === 'appointment').length}
@@ -448,7 +448,7 @@ const NotificationsPage: React.FC = () => {
 
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
         </div>
       ) : (
         <div className='space-y-4'>
@@ -557,7 +557,7 @@ const NotificationsPage: React.FC = () => {
                   <div className='flex items-center justify-between mb-2'>
                     <h4 className='font-semibold'>{template.name}</h4>
                     <Badge
-                      variant={template.is_active ? 'primary' : 'secondary'}
+                      variant={template.is_active ? 'default' : 'info'}
                     >
                       {template.is_active ? 'نشط' : 'غير نشط'}
                     </Badge>
@@ -567,8 +567,8 @@ const NotificationsPage: React.FC = () => {
                     {template.message}
                   </p>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='secondary'>{template.type}</Badge>
-                    <Badge variant='secondary'>{template.category}</Badge>
+                    <Badge variant='info'>{template.type}</Badge>
+                    <Badge variant='info'>{template.category}</Badge>
                     <span className='text-xs text-gray-500'>
                       متغيرات: {template.variables.join(', ')}
                     </span>

@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div className='flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4'>
+      <div className='flex min-h-screen items-center justify-center bg-[var(--primary-surface)] p-4'>
         <div className='card w-full max-w-md p-8 text-center'>
           <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -69,7 +69,7 @@ export default function ForgotPasswordPage() {
           <div className='space-y-3'>
             <Link
               href={ROUTES.LOGIN}
-              className='btn-brand inline-block w-full rounded-lg px-6 py-3 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+              className='btn-primary inline-block w-full rounded-lg px-6 py-3 text-white transition-colors hover:bg-[var(--primary-primary-hover)]'
             >
               العودة لتسجيل الدخول
             </Link>
@@ -89,7 +89,7 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-[var(--brand-surface)] p-4'>
+    <div className='flex min-h-screen items-center justify-center bg-[var(--primary-surface)] p-4'>
       <div className='w-full max-w-md'>
         {/* Logo */}
         <div className='mb-8 text-center'>
@@ -101,7 +101,7 @@ export default function ForgotPasswordPage() {
               height={50}
               className='rounded-lg'
             />
-            <h1 className='text-brand text-3xl font-bold'>مُعين</h1>
+            <h1 className='text-primary text-3xl font-bold'>مُعين</h1>
           </div>
           <h2 className='mb-2 text-2xl font-semibold text-gray-900 dark:text-white'>
             نسيان كلمة المرور
@@ -147,7 +147,7 @@ export default function ForgotPasswordPage() {
             <button
               type='submit'
               disabled={isLoading}
-              className='btn btn-brand btn-lg w-full'
+              className='btn btn-primary btn-lg w-full'
             >
               {isLoading ? (
                 <>
@@ -166,7 +166,7 @@ export default function ForgotPasswordPage() {
               تذكرت كلمة المرور؟{' '}
               <Link
                 href={ROUTES.LOGIN}
-                className='text-brand font-semibold hover:underline'
+                className='text-primary font-semibold hover:underline'
               >
                 تسجيل الدخول
               </Link>
@@ -183,7 +183,7 @@ export default function ForgotPasswordPage() {
                 setEmail('');
                 setError('');
               }}
-              className='text-[var(--brand-primary)] hover:underline'
+              className='text-[var(--primary-primary)] hover:underline'
             >
               حاول مرة أخرى
             </button>

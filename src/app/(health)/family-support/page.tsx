@@ -248,13 +248,13 @@ const FamilySupportPage: React.FC = () => {
   const getResourceIcon = (type: string) => {
     switch (type) {
       case 'document':
-        return <FileText className='w-4 h-4 text-brand-primary' />;
+        return <FileText className='w-4 h-4 text-primary-primary' />;
       case 'video':
-        return <Video className='w-4 h-4 text-brand-error' />;
+        return <Video className='w-4 h-4 text-primary-error' />;
       case 'link':
-        return <BookOpen className='w-4 h-4 text-brand-success' />;
+        return <BookOpen className='w-4 h-4 text-primary-success' />;
       case 'guide':
-        return <Lightbulb className='w-4 h-4 text-brand-warning' />;
+        return <Lightbulb className='w-4 h-4 text-primary-warning' />;
       default:
         return <FileText className='w-4 h-4 text-gray-500' />;
     }
@@ -264,10 +264,10 @@ const FamilySupportPage: React.FC = () => {
     switch (relationship) {
       case 'أم':
       case 'أب':
-        return <Heart className='w-4 h-4 text-brand-error' />;
+        return <Heart className='w-4 h-4 text-primary-error' />;
       case 'أخ':
       case 'أخت':
-        return <Users className='w-4 h-4 text-brand-primary' />;
+        return <Users className='w-4 h-4 text-primary-primary' />;
       case 'جد':
       case 'جدة':
         return <Shield className='w-4 h-4 text-purple-500' />;
@@ -318,7 +318,7 @@ const FamilySupportPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/family-support/new')}
-            className='bg-[var(--brand-primary)] hover:brightness-95'
+            className='bg-[var(--primary-primary)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             إضافة عضو أسرة
@@ -430,7 +430,7 @@ const FamilySupportPage: React.FC = () => {
       {/* Content based on active tab */}
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary-primary)]'></div>
         </div>
       ) : (
         <>
@@ -449,7 +449,7 @@ const FamilySupportPage: React.FC = () => {
                     </p>
                     <Button
                       onClick={() => router.push('/family-support/new')}
-                      className='bg-[var(--brand-primary)] hover:brightness-95'
+                      className='bg-[var(--primary-primary)] hover:brightness-95'
                     >
                       إضافة عضو أسرة
                     </Button>
@@ -472,7 +472,7 @@ const FamilySupportPage: React.FC = () => {
                               height={48}
                               className='rounded-full'
                             />
-                            <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-brand-primary rounded-full border-2 border-white flex items-center justify-center'>
+                            <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-primary-primary rounded-full border-2 border-white flex items-center justify-center'>
                               {getRelationshipIcon(member.relationship)}
                             </div>
                           </div>
@@ -572,7 +572,7 @@ const FamilySupportPage: React.FC = () => {
                       onClick={() =>
                         router.push('/family-support/sessions/new')
                       }
-                      className='bg-[var(--brand-primary)] hover:brightness-95'
+                      className='bg-[var(--primary-primary)] hover:brightness-95'
                     >
                       جدولة جلسة دعم
                     </Button>
@@ -712,7 +712,7 @@ const FamilySupportPage: React.FC = () => {
                       onClick={() =>
                         router.push('/family-support/resources/new')
                       }
-                      className='bg-[var(--brand-primary)] hover:brightness-95'
+                      className='bg-[var(--primary-primary)] hover:brightness-95'
                     >
                       إضافة مورد جديد
                     </Button>

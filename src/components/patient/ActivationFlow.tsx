@@ -146,7 +146,7 @@ export default function ActivationFlow({
           </div>
           <div className='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
             <div
-              className='bg-brand-primary h-2 rounded-full transition-all duration-300'
+              className='bg-primary-primary h-2 rounded-full transition-all duration-300'
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
@@ -168,9 +168,9 @@ export default function ActivationFlow({
           >
             <div className='flex-shrink-0 mr-4'>
               {step.completed ? (
-                <CheckCircle className='h-6 w-6 text-brand-success' />
+                <CheckCircle className='h-6 w-6 text-primary-success' />
               ) : index === currentStep ? (
-                <Clock className='h-6 w-6 text-brand-primary' />
+                <Clock className='h-6 w-6 text-primary-primary' />
               ) : (
                 <AlertCircle className='h-6 w-6 text-gray-400' />
               )}
