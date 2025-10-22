@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -78,7 +78,7 @@ export default function DynamicDoctorsList({
 
   useEffect(() => {
     filterDoctors();
-  }, [doctors, searchTerm, selectedSpecialization, selectedLanguage]);
+  }, [doctors, searchTerm, selectedSpecialization, selectedLanguage, filterDoctors]);
 
   const fetchDoctors = async () => {
     try {
@@ -103,7 +103,7 @@ export default function DynamicDoctorsList({
     }
   };
 
-  const filterDoctors = () => {
+  const filterDoctors = useCallback(() => {
     let filtered = doctors.filter(doctor => {
       const matchesSearch =
         doctor.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -132,7 +132,7 @@ export default function DynamicDoctorsList({
     }
 
     setFilteredDoctors(filtered);
-  };
+  }, [doctors, searchTerm, selectedSpecialization, selectedLanguage, maxItems]);
 
   // الحصول على التخصصات الفريدة
   const specializations = Array.from(

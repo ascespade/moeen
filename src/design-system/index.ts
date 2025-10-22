@@ -1,18 +1,21 @@
 /**
- * Centralized Design System
- * نظام التصميم المركزي
- *
- * This file exports all design system components, tokens, and utilities
- * to ensure consistency across the entire application.
+ * Design System - نظام التصميم
+ * 
+ * Centralized design system exports
+ * صادرات نظام التصميم المركزي
  */
 
-// Types
-export * from './types';
+// Export all design tokens
+export * from './tokens';
 
-// Re-export from core theme system
-export {
-  useTheme,
-  useThemeAware,
-  useDesignTokens,
-  useThemeColors,
-} from '@/core/theme';
+// Export all component variants
+export * from './components';
+
+// Export utility functions
+export * from './utils';
+
+// Export hooks
+export * from './hooks';
+
+// Export types
+export * from './types';
