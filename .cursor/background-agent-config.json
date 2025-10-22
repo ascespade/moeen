@@ -1,0 +1,56 @@
+{
+  "backgroundAgent": {
+    "enabled": true,
+    "autoStart": true,
+    "maxConcurrentTasks": 3,
+    "taskTimeout": 300000,
+    "retryAttempts": 3,
+    "logLevel": "info",
+    "tasks": [
+      {
+        "name": "Auto-Fix TypeScript Errors",
+        "command": "npm run lint --fix",
+        "trigger": "onFileSave",
+        "enabled": true
+      },
+      {
+        "name": "Auto-Fix ESLint Issues",
+        "command": "npm run lint --fix",
+        "trigger": "onFileSave",
+        "enabled": true
+      },
+      {
+        "name": "Auto-Format Code",
+        "command": "npm run format",
+        "trigger": "onFileSave",
+        "enabled": true
+      },
+      {
+        "name": "Type Check",
+        "command": "npx tsc --noEmit",
+        "trigger": "onFileSave",
+        "enabled": true
+      },
+      {
+        "name": "Build Check",
+        "command": "npm run build",
+        "trigger": "onPush",
+        "enabled": true
+      }
+    ],
+    "monitoring": {
+      "watchFiles": [
+        "src/**/*.ts",
+        "src/**/*.tsx",
+        "src/**/*.js",
+        "src/**/*.jsx"
+      ],
+      "excludeFiles": ["node_modules/**", ".next/**", "dist/**"]
+    },
+    "notifications": {
+      "onSuccess": true,
+      "onError": true,
+      "onWarning": true
+    }
+  }
+}
