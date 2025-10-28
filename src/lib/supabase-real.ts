@@ -7,8 +7,8 @@ const supabaseUrl =
 const supabaseAnonKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
 const supabaseServiceKey =
-  process.env.SUPABASE_SERVICE_ROLE_KEY || 
-  process.env.SUPABASE_SERVICE_ROLE || 
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.SUPABASE_SERVICE_ROLE ||
   'placeholder-service-key';
 
 // Client for client-side operations

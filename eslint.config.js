@@ -81,7 +81,10 @@ export default [
       'prefer-template': 'error',
       'react/react-in-jsx-scope': 'off', // Not needed in Next.js 13+
       'react/jsx-uses-react': 'off', // Not needed in Next.js 13+
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/no-explicit-any': 'warn',
     },
   },

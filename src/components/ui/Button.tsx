@@ -3,7 +3,13 @@ import { cn } from '@/lib/utils';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+  variant?:
+    | 'default'
+    | 'primary'
+    | 'secondary'
+    | 'outline'
+    | 'ghost'
+    | 'destructive';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   loading?: boolean;
   asChild?: boolean;
@@ -57,10 +63,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
 
     // If asChild is true, we need to wrap the child with className
-    if (asChild && typeof children === 'object' && children !== null && 'props' in children) {
+    if (
+      asChild &&
+      typeof children === 'object' &&
+      children !== null &&
+      'props' in children
+    ) {
       return React.cloneElement(children as React.ReactElement, {
         ...props,
-        className: cn(computedClasses, (children as React.ReactElement).props?.className),
+        className: cn(
+          computedClasses,
+          (children as React.ReactElement).props?.className
+        ),
         disabled: disabled || loading,
       });
     }
