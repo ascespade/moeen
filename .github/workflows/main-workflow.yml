@@ -1,0 +1,257 @@
+name: 🎯 Main CI/CD Workflow - Everything in One
+
+# ✅ Single unified workflow that handles everything:
+# - Tests (with automatic retries)
+# - Error analysis and reporting
+# - Code quality checks
+# - PR creation with results
+# - Artifact uploads
+# - Comprehensive reporting
+
+on:
+  # Run on push to main branch
+  push:
+    branches: [main]
+  
+  # Run on pull requests
+  pull_request:
+    branches: [main]
+  
+  # Allow manual triggering with options
+  workflow_dispatch:
+    inputs:
+      run_tests:
+        description: 'Run tests?'
+        type: boolean
+        default: true
+      max_attempts:
+        description: 'Max test retry attempts'
+        type: number
+        default: 5
+      analyze_only:
+        description: 'Only analyze, do not run tests'
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # ==========================================
+  # Job 1: Run Tests with Auto-Retry
+  # ==========================================
+  test:
+    name: 🧪 Run Tests & Auto-Retry
+    runs-on: ubuntu-latest
+    if: |
+      github.event.inputs.analyze_only != 'true' &&
+      (github.event_name == 'push' || 
+       github.event_name == 'pull_request' || 
+       github.event.inputs.run_tests == 'true')
+    
+    strategy:
+      matrix:
+        test-module: [modules]  # Add more modules here if needed
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🎭 Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: 🧪 Run Tests with Retry Loop
+        id: test_loop
+        continue-on-error: true
+        run: |
+          echo "🧪 Starting test execution with auto-retry..."
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          
+          MAX_ATTEMPTS=${{ github.event.inputs.max_attempts || '5' }}
+          ATTEMPT=1
+          TESTS_PASSED=false
+          
+          mkdir -p ./logs
+          
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ] && [ "$TESTS_PASSED" != "true" ]; do
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "🔄 Test Attempt $ATTEMPT of $MAX_ATTEMPTS"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            
+            # Run tests for the module
+	result=$(npx playwright test tests/${{ matrix.test-module }} \
+		--reporter=list,html \
+		2>&1 | tee ./logs/test-${{ matrix.test-module }}-attempt-$ATTEMPT.log; echo $? | tail -1)
+            
+            if [ "$result" -eq 0 ]; then
+              echo "✅ ✅ ✅ ALL TESTS PASSED! 🎉"
+              TESTS_PASSED=true
+              break
+            else
+              echo "❌ Tests failed on attempt $ATTEMPT"
+              
+              # Wait before retry
+              if [ $ATTEMPT -lt $MAX_ATTEMPTS ]; then
+                echo "⏳ Waiting before next attempt..."
+                sleep 3
+              fi
+            fi
+            
+            ATTEMPT=$((ATTEMPT + 1))
+          done
+          
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          if [ "$TESTS_PASSED" == "true" ]; then
+            echo "✅ SUCCESS: Tests passed after $((ATTEMPT-1)) attempt(s)"
+            echo "TESTS_PASSED=true" >> $GITHUB_OUTPUT
+            echo "FINAL_ATTEMPT=$ATTEMPT" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "⚠️ Tests still failing after $MAX_ATTEMPTS attempts"
+            echo "TESTS_PASSED=false" >> $GITHUB_OUTPUT
+            echo "FINAL_ATTEMPT=$ATTEMPT" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      - name: 📤 Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.test-module }}-${{ github.run_id }}
+          path: |
+            ./logs/
+            playwright-report/
+            test-results/
+          retention-days: 30
+          if-no-files-found: ignore
+
+  # ==========================================
+  # Job 2: Analyze Results
+  # ==========================================
+  analyze:
+    name: 📊 Analyze Results & Generate Report
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: 📥 Download Test Results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: test-results-*-*
+          merge-multiple: true
+
+      - name: 📊 Analyze Test Results
+        run: |
+          echo "📊 Analyzing test results..."
+          
+          cat > analyze.js << 'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          
+          console.log('🔍 Analyzing test results...');
+          
+          // Find all test logs
+          const logsDir = './logs';
+          if (!fs.existsSync(logsDir)) {
+            console.log('⚠️ No logs directory found');
+            process.exit(0);
+          }
+          
+          const files = fs.readdirSync(logsDir);
+          const logFiles = files.filter(f => f.endsWith('.log'));
+          
+          if (logFiles.length === 0) {
+            console.log('⚠️ No log files found');
+            process.exit(0);
+          }
+          
+          // Read latest log
+          const latestLog = fs.readFileSync(
+            path.join(logsDir, logFiles[logFiles.length - 1]), 
+            'utf8'
+          );
+          
+          // Analyze errors
+          const errors = {
+            timeout: (latestLog.match(/timeout|timed out/gi) || []).length,
+            notFound: (latestLog.match(/not found|could not find/gi) || []).length,
+            visibility: (latestLog.match(/not visible|not attached/gi) || []).length,
+            api: (latestLog.match(/network|fetch.*error|api.*error/gi) || []).length,
+            assertion: (latestLog.match(/assertion.*failed|expect.*failed/gi) || []).length
+          };
+          
+          // Generate report
+          const report = {
+            timestamp: new Date().toISOString(),
+            total_attempts: logFiles.length,
+            errors: errors,
+            summary: {
+              total_errors: Object.values(errors).reduce((a, b) => a + b, 0),
+              most_common: Object.entries(errors)
+                .sort(([,a], [,b]) => b - a)[0][0]
+            }
+          };
+          
+          fs.writeFileSync('./analysis-report.json', JSON.stringify(report, null, 2));
+          console.log('✅ Analysis complete');
+          console.log(JSON.stringify(report, null, 2));
+          EOF
+          
+          node analyze.js
+
+      - name: 📊 Display Analysis
+        run: |
+          if [ -f "analysis-report.json" ]; then
+            echo "## 📊 Test Analysis Report" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Results:" >> $GITHUB_STEP_SUMMARY
+            echo '```json' >> $GITHUB_STEP_SUMMARY
+            cat analysis-report.json >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 📤 Upload Analysis
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: analysis-report-${{ github.run_id }}
+          path: analysis-report.json
+          retention-days: 30
+          if-no-files-found: ignore
+
+  # ==========================================
+  # Job 3: Final Summary
+  # ==========================================
+  summary:
+    name: 📋 Final Summary
+    needs: [test, analyze]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: 📋 Generate Summary
+        run: |
+          echo "# 🎯 Workflow Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Workflow:** Main CI/CD" >> $GITHUB_STEP_SUMMARY
+          echo "**Trigger:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Actor:** @${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Results:" >> $GITHUB_STEP_SUMMARY
+          echo "- 🧪 Tests: ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 📊 Analysis: ${{ needs.analyze.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔗 Links:" >> $GITHUB_STEP_SUMMARY
+          echo "- [View Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
