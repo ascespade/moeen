@@ -50,7 +50,7 @@ const DynamicStats = memo(function DynamicStats() {
       // Only fetch once
       if (hasFetched) return;
       setHasFetched(true);
-      
+
       try {
         const response = await fetch('/api/dynamic-data?type=stats');
         const data = await response.json();

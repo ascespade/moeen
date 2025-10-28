@@ -70,14 +70,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       children !== null &&
       'props' in children
     ) {
-      return React.cloneElement(
-        children as React.ReactElement,
-        {
-          ...props,
-          className: cn(computedClasses, (children as React.ReactElement).props?.className),
-          disabled: disabled || loading,
-        }
-      );
+      return React.cloneElement(children as React.ReactElement, {
+        ...props,
+        className: cn(
+          computedClasses,
+          (children as React.ReactElement).props?.className
+        ),
+        disabled: disabled || loading,
+      });
     }
 
     return (

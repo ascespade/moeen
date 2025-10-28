@@ -24,7 +24,7 @@ export function ThemeSwitcher({
     setMounted(true);
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme as 'light' | 'dark');
-    
+
     // Apply saved theme
     if (savedTheme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -36,14 +36,14 @@ export function ThemeSwitcher({
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
-    
+
     // Toggle dark class on html
     if (newTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-    
+
     // Store preference
     if (typeof window !== 'undefined') {
       localStorage.setItem('theme', newTheme);
@@ -53,7 +53,9 @@ export function ThemeSwitcher({
   // Prevent hydration mismatch
   if (!mounted) {
     return (
-      <div className={`h-9 w-9 rounded-full border border-[var(--brand-border)] ${className}`} />
+      <div
+        className={`h-9 w-9 rounded-full border border-[var(--brand-border)] ${className}`}
+      />
     );
   }
 
@@ -76,7 +78,9 @@ export function ThemeSwitcher({
         <button
           className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2`}
           onClick={toggleTheme}
-          aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+          aria-label={
+            theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+          }
         >
           {theme === 'light' ? (
             <Sun className='h-5 w-5 text-[var(--brand-warning)]' />
@@ -92,7 +96,9 @@ export function ThemeSwitcher({
     <button
       className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${className}`}
       onClick={toggleTheme}
-      aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+      aria-label={
+        theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'
+      }
     >
       {theme === 'light' ? (
         <Sun className='h-5 w-5 text-[var(--brand-warning)]' />

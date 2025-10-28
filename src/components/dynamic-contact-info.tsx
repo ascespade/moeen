@@ -52,7 +52,7 @@ const DynamicContactInfo = memo(function DynamicContactInfo() {
       // Only fetch once
       if (hasFetched) return;
       setHasFetched(true);
-      
+
       try {
         const response = await fetch('/api/dynamic-data?type=contact');
         const data = await response.json();

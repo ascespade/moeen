@@ -71,7 +71,7 @@ const DynamicServices = memo(function DynamicServices() {
       // Only fetch once
       if (hasFetched) return;
       setHasFetched(true);
-      
+
       try {
         const response = await fetch('/api/dynamic-data?type=services');
         const data = await response.json();

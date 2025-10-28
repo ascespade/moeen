@@ -5,14 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { ScrollArea } from '@/components/ui/ScrollArea';
-import {
-    Bot,
-    Brain,
-    Clock,
-    Send,
-    Settings,
-    User
-} from 'lucide-react';
+import { Bot, Brain, Clock, Send, Settings, User } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface ChatMessage {

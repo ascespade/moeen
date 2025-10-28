@@ -5,21 +5,21 @@ import DynamicStats from '@/components/dynamic-stats';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/Card';
 import {
-    ArrowRight,
-    Calendar,
-    CheckCircle,
-    Heart,
-    MessageCircle,
-    Shield,
-    Star,
-    Users
+  ArrowRight,
+  Calendar,
+  CheckCircle,
+  Heart,
+  MessageCircle,
+  Shield,
+  Star,
+  Users,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -29,7 +29,7 @@ const HomePage = memo(function HomePage() {
   // Add a small delay to prevent rapid re-renders
   const [isReady, setIsReady] = React.useState(false);
   const router = useRouter();
-  
+
   React.useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 200);
     return () => clearTimeout(timer);
@@ -37,24 +37,27 @@ const HomePage = memo(function HomePage() {
 
   // Add throttling to prevent rapid API calls
   const [lastApiCall, setLastApiCall] = React.useState(0);
-  const API_THROTTLE = 774055782896649135168652052164454342518840683844294879261436233293086470679863622723631261674667419212185600000; // 215015495249069204213514458934570650699677967734526355350398953692524019633295450756564239354074283114496 hours
+  const API_THROTTLE = 3324544272820784183536044008449617414803603000945522062608137255983232774470077145338078715255914757193059236682137600000; // 923484520227995606537790002347115948556556389151533906280038126662009104019465873705021865348865210331405343522816 hours
 
   // Prevent unnecessary re-renders
-  const handleNavigation = useCallback((path: string) => {
-    const now = Date.now();
-    if (now - lastApiCall < API_THROTTLE) {
-      return; // Throttle navigation
-    }
-    setLastApiCall(now);
-    router.push(path);
-  }, [router, lastApiCall, API_THROTTLE]);
+  const handleNavigation = useCallback(
+    (path: string) => {
+      const now = Date.now();
+      if (now - lastApiCall < API_THROTTLE) {
+        return; // Throttle navigation
+      }
+      setLastApiCall(now);
+      router.push(path);
+    },
+    [router, lastApiCall, API_THROTTLE]
+  );
 
   if (!isReady) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">جاري التحميل...</p>
+      <div className='min-h-screen bg-background text-foreground flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto'></div>
+          <p className='mt-4 text-gray-600'>جاري التحميل...</p>
         </div>
       </div>
     );
@@ -85,18 +88,18 @@ const HomePage = memo(function HomePage() {
               الاحتياجات الخاصة مع أحدث التقنيات الطبية
             </p>
             <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <Button 
+              <Button
                 onClick={() => handleNavigation('/appointments')}
-                size='lg' 
+                size='lg'
                 className='btn-default'
                 data-testid='book-appointment-button'
               >
                 <Calendar className='w-5 h-5 mr-2' />
                 احجز موعدك الآن
               </Button>
-              <Button 
+              <Button
                 onClick={() => handleNavigation('/features')}
-                variant='outline' 
+                variant='outline'
                 size='lg'
                 data-testid='learn-more-button'
               >
@@ -128,15 +131,19 @@ const HomePage = memo(function HomePage() {
             </p>
           </div>
 
-          <Suspense fallback={<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="p-6 border rounded-lg animate-pulse">
-                <div className="h-12 w-12 bg-gray-200 rounded-lg mb-4"></div>
-                <div className="h-6 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded"></div>
+          <Suspense
+            fallback={
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                {[1, 2, 3].map(i => (
+                  <div key={i} className='p-6 border rounded-lg animate-pulse'>
+                    <div className='h-12 w-12 bg-gray-200 rounded-lg mb-4'></div>
+                    <div className='h-6 bg-gray-200 rounded mb-2'></div>
+                    <div className='h-4 bg-gray-200 rounded'></div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>}>
+            }
+          >
             <DynamicServices />
           </Suspense>
         </div>
@@ -248,15 +255,19 @@ const HomePage = memo(function HomePage() {
       {/* Stats Section */}
       <section className='py-20 bg-[var(--brand-surface)]'>
         <div className='container-app'>
-          <Suspense fallback={<div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[1, 2, 3, 4].map(i => (
-              <div key={i} className="text-center animate-pulse">
-                <div className="h-12 w-12 bg-gray-200 rounded-full mx-auto mb-2"></div>
-                <div className="h-8 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded"></div>
+          <Suspense
+            fallback={
+              <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
+                {[1, 2, 3, 4].map(i => (
+                  <div key={i} className='text-center animate-pulse'>
+                    <div className='h-12 w-12 bg-gray-200 rounded-full mx-auto mb-2'></div>
+                    <div className='h-8 bg-gray-200 rounded mb-2'></div>
+                    <div className='h-4 bg-gray-200 rounded'></div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>}>
+            }
+          >
             <DynamicStats />
           </Suspense>
         </div>
@@ -453,15 +464,19 @@ const HomePage = memo(function HomePage() {
             </p>
           </div>
 
-          <Suspense fallback={<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map(i => (
-              <div key={i} className="text-center animate-pulse">
-                <div className="h-12 w-12 bg-gray-200 rounded-full mx-auto mb-4"></div>
-                <div className="h-6 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded"></div>
+          <Suspense
+            fallback={
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
+                {[1, 2, 3].map(i => (
+                  <div key={i} className='text-center animate-pulse'>
+                    <div className='h-12 w-12 bg-gray-200 rounded-full mx-auto mb-4'></div>
+                    <div className='h-6 bg-gray-200 rounded mb-2'></div>
+                    <div className='h-4 bg-gray-200 rounded'></div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>}>
+            }
+          >
             <DynamicContactInfo />
           </Suspense>
         </div>

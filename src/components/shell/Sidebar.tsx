@@ -1,12 +1,12 @@
 'use client';
 import { useT } from '@/components/providers/I18nProvider';
 import {
-    LayoutDashboard,
-    MessagesSquare,
-    Settings,
-    ShieldCheck,
-    Users,
-    Workflow,
+  LayoutDashboard,
+  MessagesSquare,
+  Settings,
+  ShieldCheck,
+  Users,
+  Workflow,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

@@ -29,11 +29,14 @@ export default function LanguageSwitcher({
   const toggleLanguage = () => {
     const newLanguage = language === 'ar' ? 'en' : 'ar';
     setLanguage(newLanguage);
-    
+
     // Update HTML attributes
     document.documentElement.setAttribute('lang', newLanguage);
-    document.documentElement.setAttribute('dir', newLanguage === 'ar' ? 'rtl' : 'ltr');
-    
+    document.documentElement.setAttribute(
+      'dir',
+      newLanguage === 'ar' ? 'rtl' : 'ltr'
+    );
+
     // Store preference
     if (typeof window !== 'undefined') {
       localStorage.setItem('language', newLanguage);
@@ -43,7 +46,9 @@ export default function LanguageSwitcher({
   // Prevent hydration mismatch
   if (!mounted) {
     return (
-      <div className={`h-9 w-9 rounded-full border border-[var(--brand-border)] ${className}`} />
+      <div
+        className={`h-9 w-9 rounded-full border border-[var(--brand-border)] ${className}`}
+      />
     );
   }
 
@@ -66,7 +71,9 @@ export default function LanguageSwitcher({
         <button
           className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2`}
           onClick={toggleLanguage}
-          aria-label={language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
+          aria-label={
+            language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'
+          }
         >
           <Languages className='h-5 w-5 text-[var(--brand-info)]' />
         </button>
@@ -78,7 +85,9 @@ export default function LanguageSwitcher({
     <button
       className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${className}`}
       onClick={toggleLanguage}
-      aria-label={language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
+      aria-label={
+        language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'
+      }
     >
       <Languages className='h-5 w-5 text-[var(--brand-info)]' />
       {showLabel && (
