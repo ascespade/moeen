@@ -22,14 +22,6 @@ import {
   TableRow,
 } from '@/components/ui/Table';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/DropdownMenu';
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -45,45 +37,187 @@ import {
   SelectValue,
 } from '@/components/ui/Select';
 import {
-  Users,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
+import {
+  User,
   Plus,
   Search,
   Filter,
   MoreHorizontal,
   Edit,
   Trash2,
-  UserCheck,
-  UserX,
+  Eye,
+  Copy,
+  Users,
+  Settings,
+  Activity,
+  TrendingUp,
+  BarChart3,
+  PieChart,
+  Target,
+  Zap,
+  Globe,
+  Database,
   Mail,
   Phone,
-  Calendar,
-  Shield,
-  Eye,
+  Smile,
+  Frown,
+  Meh,
+  Heart,
+  Star,
+  Flag,
+  Archive,
   Download,
   Upload,
   RefreshCw,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Calendar,
+  Clock,
+  Shield,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Lock,
+  Unlock,
+  Key,
+  Crown,
+  Award,
+  Trophy,
+  Medal,
+  Gauge,
+  Speedometer,
+  Timer,
+  Stopwatch,
+  Play,
+  Pause,
+  Square,
+  RotateCcw,
+  RotateCw,
+  SkipForward,
+  SkipBack,
+  FastForward,
+  Rewind,
+  Volume2,
+  VolumeX,
+  Mic,
+  Video,
+  PhoneCall,
+  Smartphone,
+  Monitor,
+  Tablet,
+  Wifi,
+  WifiOff,
+  Signal,
+  Battery,
+  Cpu,
+  HardDrive,
+  MemoryStick,
+  Server,
+  Cloud,
+  Sun,
+  Moon,
+  Sunrise,
+  Sunset,
+  UserCheck,
+  UserX,
+  UserPlus,
+  UserMinus,
+  UserCog,
+  UserEdit,
+  UserShield,
+  UserLock,
+  UserUnlock,
+  UserKey,
+  UserCrown,
+  UserAward,
+  UserTrophy,
+  UserMedal,
+  UserGauge,
+  UserSpeedometer,
+  UserTimer,
+  UserStopwatch,
+  UserPlay,
+  UserPause,
+  UserSquare,
+  UserRotateCcw,
+  UserRotateCw,
+  UserSkipForward,
+  UserSkipBack,
+  UserFastForward,
+  UserRewind,
+  UserVolume2,
+  UserVolumeX,
+  UserMic,
+  UserVideo,
+  UserPhoneCall,
+  UserSmartphone,
+  UserMonitor,
+  UserTablet,
+  UserWifi,
+  UserWifiOff,
+  UserSignal,
+  UserBattery,
+  UserCpu,
+  UserHardDrive,
+  UserMemoryStick,
+  UserServer,
+  UserCloud,
+  UserSun,
+  UserMoon,
+  UserSunrise,
+  UserSunset
 } from 'lucide-react';
 
 interface User {
   id: string;
-  name: string;
+  username: string;
   email: string;
-  role: string;
-  status: 'active' | 'inactive' | 'pending';
-  lastLogin: string;
-  createdAt: string;
-  avatar?: string;
+  firstName: string;
+  lastName: string;
+  displayName: string;
   phone?: string;
+  avatar?: string;
+  role: string;
+  roleDisplayName: string;
+  status: 'active' | 'inactive' | 'suspended' | 'pending';
+  isVerified: boolean;
+  lastLoginAt?: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  createdByName: string;
   department?: string;
+  position?: string;
   permissions: string[];
+  preferences: {
+    language: string;
+    theme: string;
+    notifications: boolean;
+    emailNotifications: boolean;
+    smsNotifications: boolean;
+  };
+  statistics: {
+    totalLogins: number;
+    lastActivity: string;
+    sessionsCount: number;
+    averageSessionDuration: number;
+  };
+  tags?: string[];
+  notes?: string;
 }
 
 export default function UsersPage() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
@@ -91,70 +225,234 @@ export default function UsersPage() {
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isUserDialogOpen, setIsUserDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   // Mock data
   useEffect(() => {
     const mockUsers: User[] = [
       {
         id: '1',
-        name: 'أحمد محمد العلي',
-        email: 'ahmed.ali@hemam.com',
-        role: 'admin',
-        status: 'active',
-        lastLogin: '2024-01-15T10:30:00Z',
-        createdAt: '2023-06-15T08:00:00Z',
+        username: 'admin',
+        email: 'admin@hemam.com',
+        firstName: 'أحمد',
+        lastName: 'التقني',
+        displayName: 'أحمد التقني',
         phone: '+966501234567',
-        department: 'الإدارة',
-        permissions: ['*']
+        avatar: '/avatars/admin.jpg',
+        role: 'admin',
+        roleDisplayName: 'مدير النظام',
+        status: 'active',
+        isVerified: true,
+        lastLoginAt: '2024-01-15T14:30:00Z',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-15T14:30:00Z',
+        createdBy: 'system',
+        createdByName: 'النظام',
+        department: 'التقنية',
+        position: 'مدير النظام',
+        permissions: ['users:view', 'users:create', 'users:edit', 'users:delete', 'roles:view', 'roles:create', 'roles:edit', 'roles:delete'],
+        preferences: {
+          language: 'ar',
+          theme: 'light',
+          notifications: true,
+          emailNotifications: true,
+          smsNotifications: false
+        },
+        statistics: {
+          totalLogins: 156,
+          lastActivity: '2024-01-15T14:30:00Z',
+          sessionsCount: 45,
+          averageSessionDuration: 120
+        },
+        tags: ['مدير', 'نظام', 'تقني'],
+        notes: 'المدير الرئيسي للنظام'
       },
       {
         id: '2',
-        name: 'فاطمة أحمد السعد',
-        email: 'fatima.saad@hemam.com',
-        role: 'doctor',
-        status: 'active',
-        lastLogin: '2024-01-15T09:15:00Z',
-        createdAt: '2023-07-20T08:00:00Z',
+        username: 'dr.fatima',
+        email: 'fatima.ahmed@hemam.com',
+        firstName: 'فاطمة',
+        lastName: 'أحمد العلي',
+        displayName: 'د. فاطمة أحمد العلي',
         phone: '+966502345678',
+        avatar: '/avatars/dr-fatima.jpg',
+        role: 'doctor',
+        roleDisplayName: 'طبيب',
+        status: 'active',
+        isVerified: true,
+        lastLoginAt: '2024-01-15T13:45:00Z',
+        createdAt: '2024-01-02T09:00:00Z',
+        updatedAt: '2024-01-15T13:45:00Z',
+        createdBy: 'admin1',
+        createdByName: 'أحمد التقني',
         department: 'الطب العام',
-        permissions: ['patients:view', 'appointments:manage', 'sessions:manage']
+        position: 'طبيب استشاري',
+        permissions: ['patients:view', 'patients:create', 'patients:edit', 'appointments:view', 'appointments:create', 'appointments:edit'],
+        preferences: {
+          language: 'ar',
+          theme: 'light',
+          notifications: true,
+          emailNotifications: true,
+          smsNotifications: true
+        },
+        statistics: {
+          totalLogins: 89,
+          lastActivity: '2024-01-15T13:45:00Z',
+          sessionsCount: 32,
+          averageSessionDuration: 95
+        },
+        tags: ['طبيب', 'استشاري', 'طب عام'],
+        notes: 'طبيب استشاري في الطب العام'
       },
       {
         id: '3',
-        name: 'محمد عبدالله القحطاني',
-        email: 'mohammed.qhtani@hemam.com',
-        role: 'nurse',
-        status: 'active',
-        lastLogin: '2024-01-15T08:45:00Z',
-        createdAt: '2023-08-10T08:00:00Z',
+        username: 'nurse.sara',
+        email: 'sara.nurse@hemam.com',
+        firstName: 'سارة',
+        lastName: 'أحمد السعد',
+        displayName: 'سارة أحمد السعد',
         phone: '+966503456789',
+        avatar: '/avatars/nurse-sara.jpg',
+        role: 'nurse',
+        roleDisplayName: 'ممرض',
+        status: 'active',
+        isVerified: true,
+        lastLoginAt: '2024-01-15T12:20:00Z',
+        createdAt: '2024-01-03T10:00:00Z',
+        updatedAt: '2024-01-15T12:20:00Z',
+        createdBy: 'admin1',
+        createdByName: 'أحمد التقني',
         department: 'التمريض',
-        permissions: ['patients:view', 'appointments:view']
+        position: 'ممرض أول',
+        permissions: ['patients:view', 'patients:edit', 'appointments:view', 'appointments:edit'],
+        preferences: {
+          language: 'ar',
+          theme: 'dark',
+          notifications: true,
+          emailNotifications: true,
+          smsNotifications: true
+        },
+        statistics: {
+          totalLogins: 67,
+          lastActivity: '2024-01-15T12:20:00Z',
+          sessionsCount: 28,
+          averageSessionDuration: 75
+        },
+        tags: ['ممرض', 'تمريض', 'أول'],
+        notes: 'ممرض أول في قسم التمريض'
       },
       {
         id: '4',
-        name: 'نورا سعد المطيري',
-        email: 'nora.mutairi@hemam.com',
-        role: 'staff',
-        status: 'inactive',
-        lastLogin: '2024-01-10T16:20:00Z',
-        createdAt: '2023-09-05T08:00:00Z',
+        username: 'reception.ahmed',
+        email: 'ahmed.reception@hemam.com',
+        firstName: 'أحمد',
+        lastName: 'محمد القحطاني',
+        displayName: 'أحمد محمد القحطاني',
         phone: '+966504567890',
+        avatar: '/avatars/reception-ahmed.jpg',
+        role: 'receptionist',
+        roleDisplayName: 'موظف استقبال',
+        status: 'active',
+        isVerified: true,
+        lastLoginAt: '2024-01-15T11:15:00Z',
+        createdAt: '2024-01-04T08:00:00Z',
+        updatedAt: '2024-01-15T11:15:00Z',
+        createdBy: 'admin1',
+        createdByName: 'أحمد التقني',
         department: 'الاستقبال',
-        permissions: ['appointments:view', 'appointments:create']
+        position: 'موظف استقبال',
+        permissions: ['patients:view', 'patients:create', 'patients:edit', 'appointments:view', 'appointments:create', 'appointments:edit', 'appointments:delete'],
+        preferences: {
+          language: 'ar',
+          theme: 'light',
+          notifications: true,
+          emailNotifications: true,
+          smsNotifications: false
+        },
+        statistics: {
+          totalLogins: 45,
+          lastActivity: '2024-01-15T11:15:00Z',
+          sessionsCount: 18,
+          averageSessionDuration: 180
+        },
+        tags: ['استقبال', 'إداري', 'موظف'],
+        notes: 'موظف استقبال في القسم الإداري'
       },
       {
         id: '5',
-        name: 'خالد فيصل الشمري',
-        email: 'khalid.shamri@hemam.com',
-        role: 'manager',
-        status: 'pending',
-        lastLogin: '2024-01-14T14:30:00Z',
-        createdAt: '2024-01-01T08:00:00Z',
+        username: 'finance.nora',
+        email: 'nora.finance@hemam.com',
+        firstName: 'نورا',
+        lastName: 'سعد المطيري',
+        displayName: 'نورا سعد المطيري',
         phone: '+966505678901',
-        department: 'إدارة العمليات',
-        permissions: ['users:view', 'patients:view', 'appointments:manage']
+        avatar: '/avatars/finance-nora.jpg',
+        role: 'finance_manager',
+        roleDisplayName: 'مدير مالي',
+        status: 'active',
+        isVerified: true,
+        lastLoginAt: '2024-01-15T10:30:00Z',
+        createdAt: '2024-01-10T09:00:00Z',
+        updatedAt: '2024-01-15T10:30:00Z',
+        createdBy: 'admin1',
+        createdByName: 'أحمد التقني',
+        department: 'المالية',
+        position: 'مدير مالي',
+        permissions: ['payments:view', 'payments:create', 'payments:edit', 'payments:delete', 'reports:view', 'reports:create'],
+        preferences: {
+          language: 'ar',
+          theme: 'light',
+          notifications: true,
+          emailNotifications: true,
+          smsNotifications: false
+        },
+        statistics: {
+          totalLogins: 34,
+          lastActivity: '2024-01-15T10:30:00Z',
+          sessionsCount: 15,
+          averageSessionDuration: 110
+        },
+        tags: ['مالي', 'مدير', 'إدارة'],
+        notes: 'مدير الشؤون المالية'
+      },
+      {
+        id: '6',
+        username: 'patient.ahmed',
+        email: 'ahmed.patient@email.com',
+        firstName: 'أحمد',
+        lastName: 'محمد العلي',
+        displayName: 'أحمد محمد العلي',
+        phone: '+966506789012',
+        avatar: '/avatars/patient-ahmed.jpg',
+        role: 'patient',
+        roleDisplayName: 'مريض',
+        status: 'active',
+        isVerified: true,
+        lastLoginAt: '2024-01-15T09:45:00Z',
+        createdAt: '2024-01-05T14:00:00Z',
+        updatedAt: '2024-01-15T09:45:00Z',
+        createdBy: 'reception1',
+        createdByName: 'أحمد القحطاني',
+        department: 'المرضى',
+        position: 'مريض',
+        permissions: ['patients:view_own', 'appointments:view_own', 'appointments:create_own', 'medical_records:view_own'],
+        preferences: {
+          language: 'ar',
+          theme: 'light',
+          notifications: true,
+          emailNotifications: true,
+          smsNotifications: true
+        },
+        statistics: {
+          totalLogins: 23,
+          lastActivity: '2024-01-15T09:45:00Z',
+          sessionsCount: 12,
+          averageSessionDuration: 45
+        },
+        tags: ['مريض', 'عام', 'مستخدم'],
+        notes: 'مريض مسجل في النظام'
       }
     ];
 
@@ -164,49 +462,75 @@ export default function UsersPage() {
   }, []);
 
   const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = user.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         user.lastName.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole = roleFilter === 'all' || user.role === roleFilter;
     const matchesStatus = statusFilter === 'all' || user.status === statusFilter;
     
     return matchesSearch && matchesRole && matchesStatus;
   });
 
-  const getRoleBadge = (role: string) => {
-    const roleConfig = {
-      admin: { label: 'مدير', variant: 'destructive' as const },
-      manager: { label: 'مدير قسم', variant: 'default' as const },
-      doctor: { label: 'طبيب', variant: 'secondary' as const },
-      nurse: { label: 'ممرض', variant: 'outline' as const },
-      staff: { label: 'موظف', variant: 'outline' as const },
-      supervisor: { label: 'مشرف', variant: 'secondary' as const },
-      agent: { label: 'وكيل', variant: 'outline' as const },
-      patient: { label: 'مريض', variant: 'outline' as const }
-    };
-    
-    const config = roleConfig[role as keyof typeof roleConfig] || { label: role, variant: 'outline' as const };
-    return <Badge variant={config.variant}>{config.label}</Badge>;
-  };
-
   const getStatusBadge = (status: string) => {
     const statusConfig = {
       active: { label: 'نشط', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-      inactive: { label: 'غير نشط', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' },
-      pending: { label: 'في الانتظار', variant: 'outline' as const, className: 'bg-yellow-100 text-yellow-800' }
+      inactive: { label: 'غير نشط', variant: 'outline' as const, className: 'bg-gray-100 text-gray-800' },
+      suspended: { label: 'معلق', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' },
+      pending: { label: 'في الانتظار', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' }
     };
     
-    const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: 'outline' as const, className: '' };
+    const config = statusConfig[status as keyof typeof statusConfig] || 
+                  { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
+  };
+
+  const getRoleBadge = (role: string) => {
+    const roleConfig = {
+      admin: { label: 'مدير', icon: <Crown className="h-3 w-3" />, className: 'bg-red-100 text-red-800' },
+      doctor: { label: 'طبيب', icon: <User className="h-3 w-3" />, className: 'bg-blue-100 text-blue-800' },
+      nurse: { label: 'ممرض', icon: <User className="h-3 w-3" />, className: 'bg-green-100 text-green-800' },
+      receptionist: { label: 'استقبال', icon: <User className="h-3 w-3" />, className: 'bg-yellow-100 text-yellow-800' },
+      finance_manager: { label: 'مدير مالي', icon: <TrendingUp className="h-3 w-3" />, className: 'bg-cyan-100 text-cyan-800' },
+      patient: { label: 'مريض', icon: <User className="h-3 w-3" />, className: 'bg-purple-100 text-purple-800' }
+    };
+    
+    const config = roleConfig[role as keyof typeof roleConfig] || 
+                  { label: role, icon: null, className: '' };
+    return (
+      <Badge variant="outline" className={config.className}>
+        <span className="flex items-center gap-1">
+          {config.icon}
+          {config.label}
+        </span>
+      </Badge>
+    );
   };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric',
+      day: 'numeric'
+    });
+  };
+
+  const formatTime = (dateString: string) => {
+    return new Date(dateString).toLocaleTimeString('ar-SA', {
       hour: '2-digit',
       minute: '2-digit'
     });
+  };
+
+  const handleViewUser = (user: User) => {
+    setSelectedUser(user);
+    setIsUserDialogOpen(true);
+  };
+
+  const handleEditUser = (user: User) => {
+    setSelectedUser(user);
+    setIsEditDialogOpen(true);
   };
 
   if (loading) {
@@ -228,72 +552,17 @@ export default function UsersPage() {
           <div>
             <h1 className="text-3xl font-bold">إدارة المستخدمين</h1>
             <p className="text-muted-foreground">
-              إدارة المستخدمين والأدوار والصلاحيات
+              إدارة وتنظيم مستخدمي النظام وصلاحياتهم
             </p>
           </div>
           <div className="flex items-center gap-4">
-            {hasPermission('users:create') && (
-              <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button>
-                    <Plus className="h-4 w-4 mr-2" />
-                    إضافة مستخدم
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>إضافة مستخدم جديد</DialogTitle>
-                    <DialogDescription>
-                      قم بملء البيانات المطلوبة لإضافة مستخدم جديد
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-sm font-medium">الاسم</label>
-                        <Input placeholder="الاسم الكامل" />
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">البريد الإلكتروني</label>
-                        <Input placeholder="example@hemam.com" type="email" />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-sm font-medium">الدور</label>
-                        <Select>
-                          <SelectTrigger>
-                            <SelectValue placeholder="اختر الدور" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="admin">مدير</SelectItem>
-                            <SelectItem value="manager">مدير قسم</SelectItem>
-                            <SelectItem value="doctor">طبيب</SelectItem>
-                            <SelectItem value="nurse">ممرض</SelectItem>
-                            <SelectItem value="staff">موظف</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <label className="text-sm font-medium">رقم الهاتف</label>
-                        <Input placeholder="+966501234567" />
-                      </div>
-                    </div>
-                    <div className="flex justify-end gap-2">
-                      <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
-                        إلغاء
-                      </Button>
-                      <Button onClick={() => setIsCreateDialogOpen(false)}>
-                        إضافة المستخدم
-                      </Button>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            )}
             <Button variant="outline">
               <Download className="h-4 w-4 mr-2" />
               تصدير
+            </Button>
+            <Button onClick={() => setIsCreateDialogOpen(true)}>
+              <Plus className="h-4 w-4 mr-2" />
+              مستخدم جديد
             </Button>
           </div>
         </div>
@@ -308,14 +577,14 @@ export default function UsersPage() {
             <CardContent>
               <div className="text-2xl font-bold">{users.length}</div>
               <p className="text-xs text-muted-foreground">
-                +2 من الشهر الماضي
+                مستخدمين مسجلين
               </p>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">المستخدمون النشطون</CardTitle>
+              <CardTitle className="text-sm font-medium">نشط</CardTitle>
               <UserCheck className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
@@ -330,30 +599,30 @@ export default function UsersPage() {
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">الأطباء</CardTitle>
+              <CardTitle className="text-sm font-medium">موثق</CardTitle>
               <Shield className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {users.filter(u => u.role === 'doctor').length}
+                {users.filter(u => u.isVerified).length}
               </div>
               <p className="text-xs text-muted-foreground">
-                من أصل {users.length} مستخدم
+                مستخدمين موثقين
               </p>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">في الانتظار</CardTitle>
-              <UserX className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">آخر نشاط</CardTitle>
+              <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {users.filter(u => u.status === 'pending').length}
+                {users.filter(u => u.lastLoginAt && new Date(u.lastLoginAt) > new Date(Date.now() - 24 * 60 * 60 * 1000)).length}
               </div>
               <p className="text-xs text-muted-foreground">
-                يحتاجون موافقة
+                نشط خلال 24 ساعة
               </p>
             </CardContent>
           </Card>
@@ -367,7 +636,7 @@ export default function UsersPage() {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="البحث بالاسم أو البريد الإلكتروني..."
+                    placeholder="البحث في المستخدمين..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10"
@@ -382,10 +651,11 @@ export default function UsersPage() {
                   <SelectContent>
                     <SelectItem value="all">جميع الأدوار</SelectItem>
                     <SelectItem value="admin">مدير</SelectItem>
-                    <SelectItem value="manager">مدير قسم</SelectItem>
                     <SelectItem value="doctor">طبيب</SelectItem>
                     <SelectItem value="nurse">ممرض</SelectItem>
-                    <SelectItem value="staff">موظف</SelectItem>
+                    <SelectItem value="receptionist">استقبال</SelectItem>
+                    <SelectItem value="finance_manager">مدير مالي</SelectItem>
+                    <SelectItem value="patient">مريض</SelectItem>
                   </SelectContent>
                 </Select>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
@@ -396,6 +666,7 @@ export default function UsersPage() {
                     <SelectItem value="all">جميع الحالات</SelectItem>
                     <SelectItem value="active">نشط</SelectItem>
                     <SelectItem value="inactive">غير نشط</SelectItem>
+                    <SelectItem value="suspended">معلق</SelectItem>
                     <SelectItem value="pending">في الانتظار</SelectItem>
                   </SelectContent>
                 </Select>
@@ -434,10 +705,11 @@ export default function UsersPage() {
                     />
                   </TableHead>
                   <TableHead>المستخدم</TableHead>
+                  <TableHead>البريد الإلكتروني</TableHead>
                   <TableHead>الدور</TableHead>
                   <TableHead>الحالة</TableHead>
+                  <TableHead>القسم</TableHead>
                   <TableHead>آخر تسجيل دخول</TableHead>
-                  <TableHead>تاريخ الإنشاء</TableHead>
                   <TableHead className="text-right">الإجراءات</TableHead>
                 </TableRow>
               </TableHeader>
@@ -460,17 +732,23 @@ export default function UsersPage() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-full bg-primary text-primary-foreground grid place-items-center">
-                          {user.name.charAt(0)}
+                        <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground grid place-items-center text-sm">
+                          {user.displayName.charAt(0)}
                         </div>
                         <div>
-                          <div className="font-medium">{user.name}</div>
-                          <div className="text-sm text-muted-foreground">{user.email}</div>
-                          {user.phone && (
-                            <div className="text-xs text-muted-foreground">{user.phone}</div>
-                          )}
+                          <div className="font-medium flex items-center gap-2">
+                            {user.displayName}
+                            {user.isVerified && <Shield className="h-3 w-3 text-green-500" />}
+                          </div>
+                          <div className="text-sm text-muted-foreground">@{user.username}</div>
                         </div>
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-sm">{user.email}</div>
+                      {user.phone && (
+                        <div className="text-xs text-muted-foreground">{user.phone}</div>
+                      )}
                     </TableCell>
                     <TableCell>
                       {getRoleBadge(user.role)}
@@ -480,13 +758,21 @@ export default function UsersPage() {
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        {formatDate(user.lastLogin)}
+                        {user.department || '-'}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {user.position || '-'}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-sm">
-                        {formatDate(user.createdAt)}
-                      </div>
+                      {user.lastLoginAt ? (
+                        <div>
+                          <div className="text-sm">{formatDate(user.lastLoginAt)}</div>
+                          <div className="text-xs text-muted-foreground">{formatTime(user.lastLoginAt)}</div>
+                        </div>
+                      ) : (
+                        <div className="text-sm text-muted-foreground">لم يسجل دخول</div>
+                      )}
                     </TableCell>
                     <TableCell className="text-right">
                       <DropdownMenu>
@@ -497,33 +783,40 @@ export default function UsersPage() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>الإجراءات</DropdownMenuLabel>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleViewUser(user)}>
                             <Eye className="h-4 w-4 mr-2" />
                             عرض التفاصيل
                           </DropdownMenuItem>
-                          {hasPermission('users:edit') && (
-                            <DropdownMenuItem>
-                              <Edit className="h-4 w-4 mr-2" />
-                              تعديل
-                            </DropdownMenuItem>
-                          )}
+                          <DropdownMenuItem onClick={() => handleEditUser(user)}>
+                            <Edit className="h-4 w-4 mr-2" />
+                            تعديل
+                          </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <Mail className="h-4 w-4 mr-2" />
-                            إرسال رسالة
+                            <Copy className="h-4 w-4 mr-2" />
+                            نسخ
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          {hasPermission('users:activate') && (
-                            <DropdownMenuItem>
-                              <UserCheck className="h-4 w-4 mr-2" />
-                              تفعيل/إلغاء تفعيل
-                            </DropdownMenuItem>
-                          )}
-                          {hasPermission('users:delete') && (
-                            <DropdownMenuItem className="text-destructive">
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              حذف
-                            </DropdownMenuItem>
-                          )}
+                          <DropdownMenuItem>
+                            <Shield className="h-4 w-4 mr-2" />
+                            إدارة الصلاحيات
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Key className="h-4 w-4 mr-2" />
+                            إعادة تعيين كلمة المرور
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <UserCog className="h-4 w-4 mr-2" />
+                            إعدادات المستخدم
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem>
+                            <UserX className="h-4 w-4 mr-2" />
+                            {user.status === 'active' ? 'تعطيل' : 'تفعيل'}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-destructive">
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            حذف
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
@@ -571,6 +864,86 @@ export default function UsersPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* User Detail Dialog */}
+        <Dialog open={isUserDialogOpen} onOpenChange={setIsUserDialogOpen}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>
+                {selectedUser?.displayName}
+              </DialogTitle>
+              <DialogDescription>
+                تفاصيل المستخدم
+              </DialogDescription>
+            </DialogHeader>
+            
+            {selectedUser && (
+              <div className="space-y-4">
+                {/* User Info */}
+                <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
+                  <div>
+                    <div className="text-sm font-medium">الدور</div>
+                    <div>{getRoleBadge(selectedUser.role)}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium">الحالة</div>
+                    <div>{getStatusBadge(selectedUser.status)}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium">البريد الإلكتروني</div>
+                    <div className="text-sm">{selectedUser.email}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium">الهاتف</div>
+                    <div className="text-sm">{selectedUser.phone || '-'}</div>
+                  </div>
+                </div>
+
+                {/* Department & Position */}
+                <div>
+                  <div className="text-sm font-medium mb-2">المعلومات الوظيفية</div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>القسم: {selectedUser.department || '-'}</div>
+                    <div>المنصب: {selectedUser.position || '-'}</div>
+                  </div>
+                </div>
+
+                {/* Statistics */}
+                <div>
+                  <div className="text-sm font-medium mb-2">الإحصائيات</div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>إجمالي تسجيلات الدخول: {selectedUser.statistics.totalLogins}</div>
+                    <div>عدد الجلسات: {selectedUser.statistics.sessionsCount}</div>
+                    <div>متوسط مدة الجلسة: {selectedUser.statistics.averageSessionDuration} دقيقة</div>
+                    <div>آخر نشاط: {formatDate(selectedUser.statistics.lastActivity)}</div>
+                  </div>
+                </div>
+
+                {/* Preferences */}
+                <div>
+                  <div className="text-sm font-medium mb-2">التفضيلات</div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>اللغة: {selectedUser.preferences.language === 'ar' ? 'العربية' : 'English'}</div>
+                    <div>السمة: {selectedUser.preferences.theme === 'light' ? 'فاتحة' : 'داكنة'}</div>
+                    <div>الإشعارات: {selectedUser.preferences.notifications ? 'مفعلة' : 'معطلة'}</div>
+                    <div>إشعارات البريد: {selectedUser.preferences.emailNotifications ? 'مفعلة' : 'معطلة'}</div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-end gap-2 pt-4 border-t">
+                  <Button variant="outline" onClick={() => setIsUserDialogOpen(false)}>
+                    إغلاق
+                  </Button>
+                  <Button onClick={() => handleEditUser(selectedUser)}>
+                    <Edit className="h-4 w-4 mr-2" />
+                    تعديل
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
