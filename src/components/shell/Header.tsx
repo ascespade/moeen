@@ -181,7 +181,7 @@ export default function Header() {
                         key={i}
                         className='rounded border border-gray-200 dark:border-gray-700 p-2 flex items-center gap-2 text-gray-800 dark:text-gray-100'
                       >
-                        ℹ️ {t('header.notification', { number: i + 1 })}
+                        ℹ️ {t('header.notification').replace('{number}', (i + 1).toString())}
                       </div>
                     ))}
                     <button

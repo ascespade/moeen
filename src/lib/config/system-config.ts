@@ -15,34 +15,40 @@ export interface SystemConfig {
       capabilities: string[];
       dynamic_flows: boolean;
       learns_from_interactions: boolean;
+      purpose?: string;
     };
     ai_agent: {
       enabled: boolean;
       per_user_role: boolean;
       scope_restriction: string;
       capabilities: string[];
+      purpose?: string;
     };
     flow_studio: {
       enabled: boolean;
       purpose: string;
       access: string;
       features: string[];
+      capabilities?: string[];
     };
     voice_bot: {
       enabled: boolean;
       purpose: string;
       integrations: string[];
       features: string[];
+      capabilities?: string[];
     };
     emotion_analytics: {
       enabled: boolean;
       purpose: string;
       dashboard_access: string[];
       metrics: string[];
+      capabilities?: string[];
     };
     early_diagnosis: {
       enabled: boolean;
       purpose: string;
+      capabilities?: string[];
     };
   };
   security: {
@@ -105,35 +111,41 @@ export const defaultSystemConfig: SystemConfig = {
       integrations: ["WhatsApp", "System notifications"],
       capabilities: ["Create appointments", "Send reminders", "Answer queries", "Suggest actions", "Track emotional state"],
       dynamic_flows: true,
-      learns_from_interactions: true
+      learns_from_interactions: true,
+      purpose: "AI-powered patient assistance and appointment management"
     },
     ai_agent: {
       enabled: true,
       per_user_role: true,
       scope_restriction: "Center operations only",
-      capabilities: ["Assist patients", "Assist staff", "Assist admin"]
+      capabilities: ["Assist patients", "Assist staff", "Assist admin"],
+      purpose: "Intelligent assistant for healthcare operations"
     },
     flow_studio: {
       enabled: true,
       purpose: "Create/modify chatbot and AI agent flows without code",
       access: "Admin panel",
-      features: ["Visual editor", "Trigger-action mapping", "Scenario simulation"]
+      features: ["Visual editor", "Trigger-action mapping", "Scenario simulation"],
+      capabilities: ["Visual flow design", "Logic configuration", "Testing environment"]
     },
     voice_bot: {
       enabled: true,
       purpose: "Assist patients via voice interaction",
       integrations: ["WhatsApp voice", "Web microphone"],
-      features: ["Speech-to-text", "Text-to-speech", "Tone adjustment", "Real-time language detection"]
+      features: ["Speech-to-text", "Text-to-speech", "Tone adjustment", "Real-time language detection"],
+      capabilities: ["Voice recognition", "Natural language processing", "Multi-language support"]
     },
     emotion_analytics: {
       enabled: true,
       purpose: "Monitor emotional/behavioral signals for specialists",
       dashboard_access: ["doctor", "psychologist", "admin"],
-      metrics: ["Emotional stability", "Interaction sentiment", "Response changes", "AI intervention alerts"]
+      metrics: ["Emotional stability", "Interaction sentiment", "Response changes", "AI intervention alerts"],
+      capabilities: ["Sentiment analysis", "Behavioral tracking", "Alert generation"]
     },
     early_diagnosis: { 
       enabled: true, 
-      purpose: "Assist in early detection of medical conditions" 
+      purpose: "Assist in early detection of medical conditions",
+      capabilities: ["Symptom analysis", "Risk assessment", "Recommendation engine"]
     }
   },
   security: {

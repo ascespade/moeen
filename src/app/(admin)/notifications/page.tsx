@@ -1,586 +1,822 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { useT } from '@/components/providers/I18nProvider';
+import { usePermissions } from '@/hooks/usePermissions';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/Dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/Select';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
+import {
   Bell,
-  BellRing,
-  CheckCircle,
-  AlertCircle,
-  Info,
-  Calendar,
-  Users,
-  MessageCircle,
-  Phone,
-  Mail,
-  Clock,
-  Filter,
-  Search,
-  MoreVertical,
-  Eye,
-  Trash2,
-  Archive,
-  Star,
-  Settings,
-  Send,
   Plus,
+  Search,
+  Filter,
+  MoreHorizontal,
+  Edit,
+  Trash2,
+  Eye,
+  Send,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  Download,
+  Upload,
+  RefreshCw,
+  ChevronLeft,
+  ChevronRight,
+  MessageSquare,
+  Mail,
+  Phone,
+  Calendar,
+  Clock,
+  User,
+  Users,
+  Settings,
+  Shield,
+  Activity,
+  TrendingUp,
+  BarChart3,
+  PieChart,
+  Target,
+  Zap,
+  Globe,
+  Database,
+  FileText,
+  Image,
+  Paperclip,
+  Smile,
+  Frown,
+  Meh,
+  Heart,
+  Star,
+  Flag,
+  Archive,
+  Copy,
+  Share,
+  ExternalLink
 } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
 
 interface Notification {
   id: string;
   title: string;
   message: string;
-  type:
-    | 'secondary'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'appointment'
-    | 'reminder'
-    | 'system';
+  type: 'info' | 'success' | 'warning' | 'error' | 'urgent';
+  category: 'appointment' | 'payment' | 'system' | 'security' | 'marketing' | 'general';
   priority: 'low' | 'medium' | 'high' | 'urgent';
-  status: 'unread' | 'read' | 'archived';
-  category: string;
-  recipient_id: string;
-  recipient_name: string;
-  sender_id: string;
-  sender_name: string;
-  created_at: string;
-  read_at?: string;
-  action_url?: string;
-  action_text?: string;
+  status: 'draft' | 'scheduled' | 'sent' | 'delivered' | 'failed' | 'cancelled';
+  targetAudience: 'all' | 'patients' | 'doctors' | 'staff' | 'specific';
+  targetUsers?: string[];
+  channels: ('email' | 'sms' | 'push' | 'in_app')[];
+  scheduledAt?: string;
+  sentAt?: string;
+  deliveredAt?: string;
+  readAt?: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  createdByName: string;
+  readCount: number;
+  totalSent: number;
+  deliveryRate: number;
+  clickRate: number;
+  isActive: boolean;
+  isRecurring: boolean;
+  recurringPattern?: string;
+  attachments?: {
+    name: string;
+    url: string;
+    type: string;
+    size: number;
+  }[];
   metadata?: {
-    patient_id?: string;
-    appointment_id?: string;
-    therapy_session_id?: string;
+    templateId?: string;
+    campaignId?: string;
+    tags?: string[];
+    customFields?: Record<string, any>;
   };
 }
 
-interface NotificationTemplate {
-  id: string;
-  name: string;
-  title: string;
-  message: string;
-  type: string;
-  category: string;
-  variables: string[];
-  is_active: boolean;
-  created_at: string;
-}
-
-const NotificationsPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
-  const router = useRouter();
+export default function NotificationsPage() {
+  const { t } = useT();
+  const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [templates, setTemplates] = useState<NotificationTemplate[]>([]);
+  const [selectedNotification, setSelectedNotification] = useState<Notification | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState<string>('all');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
-  const [filterPriority, setFilterPriority] = useState<string>('all');
-  const [selectedNotification, setSelectedNotification] =
-    useState<Notification | null>(null);
-  const [showTemplates, setShowTemplates] = useState(false);
-  const [showCompose, setShowCompose] = useState(false);
+  const [typeFilter, setTypeFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [selectedNotifications, setSelectedNotifications] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isNotificationDialogOpen, setIsNotificationDialogOpen] = useState(false);
 
+  // Mock data
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-      return;
-    }
-    loadNotifications();
-  }, [isAuthenticated, router]);
+    const mockNotifications: Notification[] = [
+      {
+        id: '1',
+        title: 'تذكير بموعد طبي',
+        message: 'لديك موعد مع د. فاطمة أحمد غداً في الساعة 10:00 صباحاً',
+        type: 'info',
+        category: 'appointment',
+        priority: 'high',
+        status: 'sent',
+        targetAudience: 'patients',
+        channels: ['email', 'sms', 'push'],
+        scheduledAt: '2024-01-15T08:00:00Z',
+        sentAt: '2024-01-15T08:00:00Z',
+        deliveredAt: '2024-01-15T08:05:00Z',
+        readAt: '2024-01-15T08:10:00Z',
+        createdAt: '2024-01-15T07:30:00Z',
+        updatedAt: '2024-01-15T08:10:00Z',
+        createdBy: 'system',
+        createdByName: 'النظام التلقائي',
+        readCount: 1,
+        totalSent: 1,
+        deliveryRate: 100,
+        clickRate: 100,
+        isActive: true,
+        isRecurring: false,
+        metadata: {
+          templateId: 'appointment_reminder',
+          tags: ['موعد', 'تذكير']
+        }
+      },
+      {
+        id: '2',
+        title: 'تحديث النظام',
+        message: 'سيتم تحديث النظام يوم الجمعة من الساعة 2:00 إلى 4:00 صباحاً',
+        type: 'warning',
+        category: 'system',
+        priority: 'medium',
+        status: 'scheduled',
+        targetAudience: 'all',
+        channels: ['email', 'in_app'],
+        scheduledAt: '2024-01-19T02:00:00Z',
+        createdAt: '2024-01-15T10:00:00Z',
+        updatedAt: '2024-01-15T10:00:00Z',
+        createdBy: 'admin1',
+        createdByName: 'أحمد التقني',
+        readCount: 0,
+        totalSent: 0,
+        deliveryRate: 0,
+        clickRate: 0,
+        isActive: true,
+        isRecurring: false,
+        metadata: {
+          templateId: 'system_update',
+          tags: ['نظام', 'تحديث']
+        }
+      },
+      {
+        id: '3',
+        title: 'استلام دفعة',
+        message: 'تم استلام دفعة بقيمة 500 ريال من المريض أحمد محمد',
+        type: 'success',
+        category: 'payment',
+        priority: 'low',
+        status: 'delivered',
+        targetAudience: 'staff',
+        channels: ['email', 'in_app'],
+        sentAt: '2024-01-15T11:30:00Z',
+        deliveredAt: '2024-01-15T11:30:00Z',
+        readAt: '2024-01-15T11:35:00Z',
+        createdAt: '2024-01-15T11:30:00Z',
+        updatedAt: '2024-01-15T11:35:00Z',
+        createdBy: 'system',
+        createdByName: 'النظام التلقائي',
+        readCount: 1,
+        totalSent: 1,
+        deliveryRate: 100,
+        clickRate: 0,
+        isActive: true,
+        isRecurring: false,
+        metadata: {
+          templateId: 'payment_received',
+          tags: ['دفعة', 'مالية']
+        }
+      },
+      {
+        id: '4',
+        title: 'تنبيه أمني',
+        message: 'تم اكتشاف محاولة تسجيل دخول غير مصرح بها',
+        type: 'error',
+        category: 'security',
+        priority: 'urgent',
+        status: 'sent',
+        targetAudience: 'staff',
+        channels: ['email', 'sms', 'push'],
+        sentAt: '2024-01-15T12:00:00Z',
+        deliveredAt: '2024-01-15T12:00:00Z',
+        readAt: '2024-01-15T12:05:00Z',
+        createdAt: '2024-01-15T12:00:00Z',
+        updatedAt: '2024-01-15T12:05:00Z',
+        createdBy: 'system',
+        createdByName: 'النظام التلقائي',
+        readCount: 1,
+        totalSent: 1,
+        deliveryRate: 100,
+        clickRate: 0,
+        isActive: true,
+        isRecurring: false,
+        metadata: {
+          templateId: 'security_alert',
+          tags: ['أمن', 'تنبيه']
+        }
+      },
+      {
+        id: '5',
+        title: 'عرض خاص',
+        message: 'احصل على خصم 20% على جميع الخدمات الطبية هذا الأسبوع',
+        type: 'info',
+        category: 'marketing',
+        priority: 'medium',
+        status: 'draft',
+        targetAudience: 'patients',
+        channels: ['email', 'push'],
+        createdAt: '2024-01-15T13:00:00Z',
+        updatedAt: '2024-01-15T13:00:00Z',
+        createdBy: 'marketing1',
+        createdByName: 'سارة التسويق',
+        readCount: 0,
+        totalSent: 0,
+        deliveryRate: 0,
+        clickRate: 0,
+        isActive: true,
+        isRecurring: false,
+        metadata: {
+          templateId: 'marketing_offer',
+          tags: ['تسويق', 'عرض']
+        }
+      }
+    ];
 
-  const loadNotifications = async () => {
-    try {
-      setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockNotifications: Notification[] = [
-        {
-          id: '1',
-          title: 'موعد جديد مجدول',
-          message: 'تم جدولة موعد جديد للمريض أحمد محمد في 15 يناير 2024',
-          type: 'appointment',
-          priority: 'medium',
-          status: 'unread',
-          category: 'المواعيد',
-          recipient_id: 'user-1',
-          recipient_name: 'د. فاطمة العلي',
-          sender_id: 'system',
-          sender_name: 'النظام',
-          created_at: '2024-01-15T10:00:00Z',
-          action_url: '/appointments/123',
-          action_text: 'عرض الموعد',
-          metadata: {
-            patient_id: 'pat-1',
-            appointment_id: 'apt-123',
-          },
-        },
-        {
-          id: '2',
-          title: 'تذكير بجلسة علاج',
-          message:
-            'تذكير: جلسة العلاج الطبيعي للمريض سارة أحمد في الساعة 2:00 مساءً',
-          type: 'reminder',
-          priority: 'high',
-          status: 'read',
-          category: 'التذكيرات',
-          recipient_id: 'user-2',
-          recipient_name: 'أ. محمد السعد',
-          sender_id: 'system',
-          sender_name: 'النظام',
-          created_at: '2024-01-15T09:30:00Z',
-          read_at: '2024-01-15T09:35:00Z',
-          action_url: '/therapy/sessions/456',
-          action_text: 'عرض الجلسة',
-          metadata: {
-            patient_id: 'pat-2',
-            therapy_session_id: 'ts-456',
-          },
-        },
-        {
-          id: '3',
-          title: 'تحديث حالة المريض',
-          message: "تم تحديث حالة المريض نورا الزهراني إلى 'مكتمل العلاج'",
-          type: 'success',
-          priority: 'medium',
-          status: 'unread',
-          category: 'تحديثات الحالة',
-          recipient_id: 'user-1',
-          recipient_name: 'د. فاطمة العلي',
-          sender_id: 'user-3',
-          sender_name: 'أ. أحمد المحمد',
-          created_at: '2024-01-15T08:45:00Z',
-          action_url: '/patients/pat-3',
-          action_text: 'عرض المريض',
-          metadata: {
-            patient_id: 'pat-3',
-          },
-        },
-        {
-          id: '4',
-          title: 'تنبيه نظام',
-          message: 'تم إجراء نسخة احتياطية من قاعدة البيانات بنجاح',
-          type: 'system',
-          priority: 'low',
-          status: 'read',
-          category: 'النظام',
-          recipient_id: 'admin-1',
-          recipient_name: 'مدير النظام',
-          sender_id: 'system',
-          sender_name: 'النظام',
-          created_at: '2024-01-15T06:00:00Z',
-          read_at: '2024-01-15T06:05:00Z',
-        },
-      ];
+    setNotifications(mockNotifications);
+    setTotalPages(Math.ceil(mockNotifications.length / 10));
+    setLoading(false);
+  }, []);
 
-      const mockTemplates: NotificationTemplate[] = [
-        {
-          id: '1',
-          name: 'تذكير الموعد',
-          title: 'تذكير بموعدك',
-          message:
-            'عزيزي {patient_name}، نذكرك بموعدك في {appointment_date} في الساعة {appointment_time}',
-          type: 'reminder',
-          category: 'المواعيد',
-          variables: ['patient_name', 'appointment_date', 'appointment_time'],
-          is_active: true,
-          created_at: '2024-01-01T00:00:00Z',
-        },
-        {
-          id: '2',
-          name: 'تأكيد الموعد',
-          title: 'تأكيد حجز الموعد',
-          message:
-            'تم تأكيد حجز موعدك في {appointment_date} مع {therapist_name}',
-          type: 'success',
-          category: 'المواعيد',
-          variables: ['appointment_date', 'therapist_name'],
-          is_active: true,
-          created_at: '2024-01-01T00:00:00Z',
-        },
-      ];
+  const filteredNotifications = notifications.filter(notification => {
+    const matchesSearch = notification.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         notification.message.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesType = typeFilter === 'all' || notification.type === typeFilter;
+    const matchesStatus = statusFilter === 'all' || notification.status === statusFilter;
+    const matchesCategory = categoryFilter === 'all' || notification.category === categoryFilter;
+    
+    return matchesSearch && matchesType && matchesStatus && matchesCategory;
+  });
 
-      setNotifications(mockNotifications);
-      setTemplates(mockTemplates);
-    } catch (error) {
-      setError('فشل في تحميل الإشعارات');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'appointment':
-        return <Calendar className='w-4 h-4 text-default-default' />;
-      case 'reminder':
-        return <Clock className='w-4 h-4 text-default-default' />;
-      case 'success':
-        return <CheckCircle className='w-4 h-4 text-default-success' />;
-      case 'warning':
-        return <AlertCircle className='w-4 h-4 text-default-warning' />;
-      case 'error':
-        return <AlertCircle className='w-4 h-4 text-default-error' />;
-      case 'system':
-        return <Settings className='w-4 h-4 text-gray-500' />;
-      default:
-        return <Info className='w-4 h-4 text-default-default' />;
-    }
-  };
-
-  const getPriorityBadge = (priority: string) => {
-    const priorityMap = {
-      low: { label: 'منخفض', variant: 'secondary' as const },
-      medium: { label: 'متوسط', variant: 'primary' as const },
-      high: { label: 'عالي', variant: 'primary' as const },
-      urgent: { label: 'عاجل', variant: 'error' as const },
+  const getTypeBadge = (type: string) => {
+    const typeConfig = {
+      info: { label: 'معلومات', variant: 'default' as const, className: 'bg-blue-100 text-blue-800' },
+      success: { label: 'نجاح', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
+      warning: { label: 'تحذير', variant: 'outline' as const, className: 'bg-yellow-100 text-yellow-800' },
+      error: { label: 'خطأ', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' },
+      urgent: { label: 'عاجل', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' }
     };
-
-    const priorityInfo = priorityMap[priority as keyof typeof priorityMap] || {
-      label: priority,
-      variant: 'primary' as const,
-    };
-    return <Badge variant={priorityInfo.variant}>{priorityInfo.label}</Badge>;
+    
+    const config = typeConfig[type as keyof typeof typeConfig] || 
+                  { label: type, variant: 'outline' as const, className: '' };
+    return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
 
   const getStatusBadge = (status: string) => {
-    const statusMap = {
-      unread: { label: 'غير مقروء', variant: 'primary' as const },
-      read: { label: 'مقروء', variant: 'secondary' as const },
-      archived: { label: 'مؤرشف', variant: 'secondary' as const },
+    const statusConfig = {
+      draft: { label: 'مسودة', variant: 'outline' as const, className: 'bg-gray-100 text-gray-800' },
+      scheduled: { label: 'مجدول', variant: 'secondary' as const, className: 'bg-blue-100 text-blue-800' },
+      sent: { label: 'مرسل', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
+      delivered: { label: 'تم التسليم', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
+      failed: { label: 'فشل', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' },
+      cancelled: { label: 'ملغي', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' }
     };
-
-    const statusInfo = statusMap[status as keyof typeof statusMap] || {
-      label: status,
-      variant: 'primary' as const,
-    };
-    return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
+    
+    const config = statusConfig[status as keyof typeof statusConfig] || 
+                  { label: status, variant: 'outline' as const, className: '' };
+    return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
 
-  const markAsRead = (notificationId: string) => {
-    setNotifications(prev =>
-      prev.map(notif =>
-        notif.id === notificationId
-          ? {
-              ...notif,
-              status: 'read' as const,
-              read_at: new Date().toISOString(),
-            }
-          : notif
-      )
+  const getCategoryBadge = (category: string) => {
+    const categoryConfig = {
+      appointment: { label: 'موعد', icon: <Calendar className="h-3 w-3" />, className: 'bg-blue-100 text-blue-800' },
+      payment: { label: 'دفعة', icon: <TrendingUp className="h-3 w-3" />, className: 'bg-green-100 text-green-800' },
+      system: { label: 'نظام', icon: <Settings className="h-3 w-3" />, className: 'bg-purple-100 text-purple-800' },
+      security: { label: 'أمن', icon: <Shield className="h-3 w-3" />, className: 'bg-red-100 text-red-800' },
+      marketing: { label: 'تسويق', icon: <Target className="h-3 w-3" />, className: 'bg-orange-100 text-orange-800' },
+      general: { label: 'عام', icon: <Bell className="h-3 w-3" />, className: 'bg-gray-100 text-gray-800' }
+    };
+    
+    const config = categoryConfig[category as keyof typeof categoryConfig] || 
+                  { label: category, icon: null, className: '' };
+    return (
+      <Badge variant="outline" className={config.className}>
+        <span className="flex items-center gap-1">
+          {config.icon}
+          {config.label}
+        </span>
+      </Badge>
     );
   };
 
-  const markAsArchived = (notificationId: string) => {
-    setNotifications(prev =>
-      prev.map(notif =>
-        notif.id === notificationId
-          ? { ...notif, status: 'archived' as const }
-          : notif
-      )
+  const getPriorityBadge = (priority: string) => {
+    const priorityConfig = {
+      low: { label: 'منخفض', variant: 'outline' as const, className: 'bg-gray-100 text-gray-800' },
+      medium: { label: 'متوسط', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
+      high: { label: 'عالي', variant: 'default' as const, className: 'bg-orange-100 text-orange-800' },
+      urgent: { label: 'عاجل', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' }
+    };
+    
+    const config = priorityConfig[priority as keyof typeof priorityConfig] || 
+                  { label: priority, variant: 'outline' as const, className: '' };
+    return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
+  };
+
+  const getChannelBadge = (channels: string[]) => {
+    const channelConfig = {
+      email: { label: 'بريد', icon: <Mail className="h-3 w-3" />, className: 'bg-blue-100 text-blue-800' },
+      sms: { label: 'رسالة', icon: <MessageSquare className="h-3 w-3" />, className: 'bg-green-100 text-green-800' },
+      push: { label: 'تنبيه', icon: <Bell className="h-3 w-3" />, className: 'bg-purple-100 text-purple-800' },
+      in_app: { label: 'داخلي', icon: <Activity className="h-3 w-3" />, className: 'bg-gray-100 text-gray-800' }
+    };
+    
+    return (
+      <div className="flex gap-1">
+        {channels.map(channel => {
+          const config = channelConfig[channel as keyof typeof channelConfig] || 
+                        { label: channel, icon: null, className: '' };
+          return (
+            <Badge key={channel} variant="outline" className={config.className}>
+              <span className="flex items-center gap-1">
+                {config.icon}
+                {config.label}
+              </span>
+            </Badge>
+          );
+        })}
+      </div>
     );
   };
 
-  const filteredNotifications = notifications.filter(notification => {
-    const matchesSearch =
-      notification.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      notification.message.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      notification.recipient_name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('ar-SA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
 
-    const matchesType =
-      filterType === 'all' || notification.type === filterType;
-    const matchesStatus =
-      filterStatus === 'all' || notification.status === filterStatus;
-    const matchesPriority =
-      filterPriority === 'all' || notification.priority === filterPriority;
+  const formatTime = (dateString: string) => {
+    return new Date(dateString).toLocaleTimeString('ar-SA', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
 
-    return matchesSearch && matchesType && matchesStatus && matchesPriority;
-  });
+  const handleViewNotification = (notification: Notification) => {
+    setSelectedNotification(notification);
+    setIsNotificationDialogOpen(true);
+  };
 
-  const unreadCount = notifications.filter(n => n.status === 'unread').length;
-
-  if (!isAuthenticated) {
-    return null;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p>جاري تحميل الإشعارات...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className='container mx-auto px-4 py-8' dir='rtl'>
-      {/* Header */}
-      <div className='mb-8'>
-        <div className='flex items-center justify-between mb-4'>
+    <div className="min-h-screen bg-background">
+      <div className="container-app py-6">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className='text-3xl font-bold text-gray-900'>مركز الإشعارات</h1>
-            <p className='text-gray-600 mt-2'>إدارة الإشعارات والتذكيرات</p>
+            <h1 className="text-3xl font-bold">إدارة الإشعارات</h1>
+            <p className="text-muted-foreground">
+              إدارة وإرسال الإشعارات للعملاء والموظفين
+            </p>
           </div>
-          <div className='flex gap-2'>
-            <Button
-              onClick={() => setShowTemplates(!showTemplates)}
-              variant='outline'
-              size='sm'
-            >
-              <Settings className='w-4 h-4 mr-2' />
-              القوالب
+          <div className="flex items-center gap-4">
+            <Button variant="outline">
+              <Download className="h-4 w-4 mr-2" />
+              تصدير
             </Button>
-            <Button
-              onClick={() => setShowCompose(true)}
-              className='bg-[var(--default-default)] hover:brightness-95'
-            >
-              <Plus className='w-4 h-4 mr-2' />
-              إرسال إشعار
+            <Button>
+              <Plus className="h-4 w-4 mr-2" />
+              إشعار جديد
             </Button>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className='grid grid-cols-1 md:grid-cols-4 gap-4 mb-6'>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
-            <CardContent className='p-4'>
-              <div className='flex items-center gap-2'>
-                <Bell className='w-5 h-5 text-default-default' />
-                <div>
-                  <div className='text-2xl font-bold'>
-                    {notifications.length}
-                  </div>
-                  <div className='text-sm text-gray-600'>إجمالي الإشعارات</div>
-                </div>
-              </div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">إجمالي الإشعارات</CardTitle>
+              <Bell className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{notifications.length}</div>
+              <p className="text-xs text-muted-foreground">
+                +12 من الأسبوع الماضي
+              </p>
             </CardContent>
           </Card>
-
+          
           <Card>
-            <CardContent className='p-4'>
-              <div className='flex items-center gap-2'>
-                <BellRing className='w-5 h-5 text-default-default' />
-                <div>
-                  <div className='text-2xl font-bold'>{unreadCount}</div>
-                  <div className='text-sm text-gray-600'>غير مقروء</div>
-                </div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">المرسلة</CardTitle>
+              <Send className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {notifications.filter(n => n.status === 'sent' || n.status === 'delivered').length}
               </div>
+              <p className="text-xs text-muted-foreground">
+                {Math.round((notifications.filter(n => n.status === 'sent' || n.status === 'delivered').length / notifications.length) * 100)}% من الإجمالي
+              </p>
             </CardContent>
           </Card>
-
+          
           <Card>
-            <CardContent className='p-4'>
-              <div className='flex items-center gap-2'>
-                <Calendar className='w-5 h-5 text-default-success' />
-                <div>
-                  <div className='text-2xl font-bold'>
-                    {notifications.filter(n => n.type === 'appointment').length}
-                  </div>
-                  <div className='text-sm text-gray-600'>مواعيد</div>
-                </div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">معدل التسليم</CardTitle>
+              <CheckCircle className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {Math.round(notifications.reduce((sum, n) => sum + n.deliveryRate, 0) / notifications.length)}%
               </div>
+              <p className="text-xs text-muted-foreground">
+                متوسط معدل التسليم
+              </p>
             </CardContent>
           </Card>
-
+          
           <Card>
-            <CardContent className='p-4'>
-              <div className='flex items-center gap-2'>
-                <Clock className='w-5 h-5 text-purple-500' />
-                <div>
-                  <div className='text-2xl font-bold'>
-                    {notifications.filter(n => n.type === 'reminder').length}
-                  </div>
-                  <div className='text-sm text-gray-600'>تذكيرات</div>
-                </div>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">معدل القراءة</CardTitle>
+              <Eye className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {Math.round(notifications.reduce((sum, n) => sum + n.clickRate, 0) / notifications.length)}%
               </div>
+              <p className="text-xs text-muted-foreground">
+                متوسط معدل القراءة
+              </p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Search and Filters */}
-        <div className='flex flex-col md:flex-row gap-4 mb-6'>
-          <div className='flex-1'>
-            <Input
-              placeholder='البحث في الإشعارات...'
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className='pr-10'
-            />
-          </div>
-          <div className='flex gap-2'>
-            <select
-              value={filterType}
-              onChange={e => setFilterType(e.target.value)}
-              className='px-3 py-2 border border-gray-300 rounded-md text-sm'
-            >
-              <option value='all'>جميع الأنواع</option>
-              <option value='appointment'>المواعيد</option>
-              <option value='reminder'>التذكيرات</option>
-              <option value='success'>نجاح</option>
-              <option value='warning'>تحذير</option>
-              <option value='error'>خطأ</option>
-              <option value='system'>النظام</option>
-            </select>
-            <select
-              value={filterStatus}
-              onChange={e => setFilterStatus(e.target.value)}
-              className='px-3 py-2 border border-gray-300 rounded-md text-sm'
-            >
-              <option value='all'>جميع الحالات</option>
-              <option value='unread'>غير مقروء</option>
-              <option value='read'>مقروء</option>
-              <option value='archived'>مؤرشف</option>
-            </select>
-            <select
-              value={filterPriority}
-              onChange={e => setFilterPriority(e.target.value)}
-              className='px-3 py-2 border border-gray-300 rounded-md text-sm'
-            >
-              <option value='all'>جميع الأولويات</option>
-              <option value='urgent'>عاجل</option>
-              <option value='high'>عالي</option>
-              <option value='medium'>متوسط</option>
-              <option value='low'>منخفض</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {loading ? (
-        <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
-        </div>
-      ) : (
-        <div className='space-y-4'>
-          {filteredNotifications.length === 0 ? (
-            <Card>
-              <CardContent className='p-12 text-center'>
-                <Bell className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-                <h3 className='text-lg font-semibold text-gray-900 mb-2'>
-                  لا توجد إشعارات
-                </h3>
-                <p className='text-gray-600 mb-4'>
-                  ستظهر الإشعارات هنا عند توفرها
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            filteredNotifications.map(notification => (
-              <Card
-                key={notification.id}
-                className={`cursor-pointer transition-colors ${
-                  notification.status === 'unread'
-                    ? 'border-l-4 border-l-blue-500 bg-surface'
-                    : 'hover:bg-surface'
-                }`}
-                onClick={() => {
-                  setSelectedNotification(notification);
-                  if (notification.status === 'unread') {
-                    markAsRead(notification.id);
-                  }
-                }}
-              >
-                <CardContent className='p-6'>
-                  <div className='flex items-start justify-between'>
-                    <div className='flex items-start gap-4'>
-                      <div className='p-2 bg-white rounded-full'>
-                        {getTypeIcon(notification.type)}
-                      </div>
-                      <div className='flex-1'>
-                        <div className='flex items-center gap-2 mb-2'>
-                          <h3 className='text-lg font-semibold'>
-                            {notification.title}
-                          </h3>
-                          {notification.status === 'unread' && (
-                            <div className='w-2 h-2 bg-surface0 rounded-full'></div>
-                          )}
-                        </div>
-                        <p className='text-gray-700 mb-3'>
-                          {notification.message}
-                        </p>
-                        <div className='flex items-center gap-4 text-sm text-gray-600'>
-                          <span>من: {notification.sender_name}</span>
-                          <span>إلى: {notification.recipient_name}</span>
-                          <span>
-                            {new Date(
-                              notification.created_at
-                            ).toLocaleDateString('ar-SA')}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='flex items-center gap-2'>
-                      {getPriorityBadge(notification.priority)}
-                      {getStatusBadge(notification.status)}
-                      <Button
-                        variant='outline'
-                        size='sm'
-                        onClick={() => {
-                          markAsArchived(notification.id);
-                        }}
-                      >
-                        <Archive className='w-4 h-4' />
-                      </Button>
-                    </div>
-                  </div>
-
-                  {notification.action_url && (
-                    <div className='mt-4 pt-4 border-t'>
-                      <Button
-                        variant='outline'
-                        size='sm'
-                        onClick={() => {
-                          router.push(notification.action_url!);
-                        }}
-                      >
-                        {notification.action_text || 'عرض التفاصيل'}
-                      </Button>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))
-          )}
-        </div>
-      )}
-
-      {/* Templates Section */}
-      {showTemplates && (
-        <Card className='mt-8'>
-          <CardHeader>
-            <CardTitle>قوالب الإشعارات</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className='space-y-4'>
-              {templates.map(template => (
-                <div key={template.id} className='p-4 border rounded-lg'>
-                  <div className='flex items-center justify-between mb-2'>
-                    <h4 className='font-semibold'>{template.name}</h4>
-                    <Badge
-                      variant={template.is_active ? 'primary' : 'secondary'}
-                    >
-                      {template.is_active ? 'نشط' : 'غير نشط'}
-                    </Badge>
-                  </div>
-                  <p className='text-sm text-gray-600 mb-2'>{template.title}</p>
-                  <p className='text-sm text-gray-700 mb-3'>
-                    {template.message}
-                  </p>
-                  <div className='flex items-center gap-2'>
-                    <Badge variant='secondary'>{template.type}</Badge>
-                    <Badge variant='secondary'>{template.category}</Badge>
-                    <span className='text-xs text-gray-500'>
-                      متغيرات: {template.variables.join(', ')}
-                    </span>
-                  </div>
+        {/* Filters */}
+        <Card className="mb-6">
+          <CardContent className="pt-6">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="البحث في الإشعارات..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
                 </div>
-              ))}
+              </div>
+              <div className="flex gap-2">
+                <Select value={typeFilter} onValueChange={setTypeFilter}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue placeholder="النوع" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">جميع الأنواع</SelectItem>
+                    <SelectItem value="info">معلومات</SelectItem>
+                    <SelectItem value="success">نجاح</SelectItem>
+                    <SelectItem value="warning">تحذير</SelectItem>
+                    <SelectItem value="error">خطأ</SelectItem>
+                    <SelectItem value="urgent">عاجل</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue placeholder="الحالة" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">جميع الحالات</SelectItem>
+                    <SelectItem value="draft">مسودة</SelectItem>
+                    <SelectItem value="scheduled">مجدول</SelectItem>
+                    <SelectItem value="sent">مرسل</SelectItem>
+                    <SelectItem value="delivered">تم التسليم</SelectItem>
+                    <SelectItem value="failed">فشل</SelectItem>
+                    <SelectItem value="cancelled">ملغي</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue placeholder="الفئة" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">جميع الفئات</SelectItem>
+                    <SelectItem value="appointment">موعد</SelectItem>
+                    <SelectItem value="payment">دفعة</SelectItem>
+                    <SelectItem value="system">نظام</SelectItem>
+                    <SelectItem value="security">أمن</SelectItem>
+                    <SelectItem value="marketing">تسويق</SelectItem>
+                    <SelectItem value="general">عام</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline">
+                  <Filter className="h-4 w-4 mr-2" />
+                  فلتر
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
-      )}
+
+        {/* Notifications Table */}
+        <Card>
+          <CardHeader>
+            <CardTitle>قائمة الإشعارات</CardTitle>
+            <CardDescription>
+              عرض وإدارة جميع الإشعارات المرسلة والمجدولة
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-12">
+                    <input
+                      type="checkbox"
+                      className="rounded border-gray-300"
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedNotifications(filteredNotifications.map(n => n.id));
+                        } else {
+                          setSelectedNotifications([]);
+                        }
+                      }}
+                    />
+                  </TableHead>
+                  <TableHead>العنوان</TableHead>
+                  <TableHead>النوع</TableHead>
+                  <TableHead>الفئة</TableHead>
+                  <TableHead>الحالة</TableHead>
+                  <TableHead>الأولوية</TableHead>
+                  <TableHead>القنوات</TableHead>
+                  <TableHead>الإحصائيات</TableHead>
+                  <TableHead className="text-right">الإجراءات</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredNotifications.map((notification) => (
+                  <TableRow key={notification.id}>
+                    <TableCell>
+                      <input
+                        type="checkbox"
+                        className="rounded border-gray-300"
+                        checked={selectedNotifications.includes(notification.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedNotifications([...selectedNotifications, notification.id]);
+                          } else {
+                            setSelectedNotifications(selectedNotifications.filter(id => id !== notification.id));
+                          }
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <div>
+                        <div className="font-medium">{notification.title}</div>
+                        <div className="text-sm text-muted-foreground truncate max-w-48">
+                          {notification.message}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          بواسطة: {notification.createdByName}
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      {getTypeBadge(notification.type)}
+                    </TableCell>
+                    <TableCell>
+                      {getCategoryBadge(notification.category)}
+                    </TableCell>
+                    <TableCell>
+                      {getStatusBadge(notification.status)}
+                    </TableCell>
+                    <TableCell>
+                      {getPriorityBadge(notification.priority)}
+                    </TableCell>
+                    <TableCell>
+                      {getChannelBadge(notification.channels)}
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-sm">
+                        <div>التسليم: {notification.deliveryRate}%</div>
+                        <div>القراءة: {notification.clickRate}%</div>
+                        <div>المرسل: {notification.totalSent}</div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>الإجراءات</DropdownMenuLabel>
+                          <DropdownMenuItem onClick={() => handleViewNotification(notification)}>
+                            <Eye className="h-4 w-4 mr-2" />
+                            عرض التفاصيل
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Edit className="h-4 w-4 mr-2" />
+                            تعديل
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Send className="h-4 w-4 mr-2" />
+                            إرسال
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Copy className="h-4 w-4 mr-2" />
+                            نسخ
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem>
+                            <Archive className="h-4 w-4 mr-2" />
+                            أرشفة
+                          </DropdownMenuItem>
+                          <DropdownMenuItem className="text-destructive">
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            حذف
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+
+            {/* Pagination */}
+            <div className="flex items-center justify-between mt-6">
+              <div className="text-sm text-muted-foreground">
+                عرض {filteredNotifications.length} من {notifications.length} إشعار
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  disabled={currentPage === 1}
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                    <Button
+                      key={page}
+                      variant={currentPage === page ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setCurrentPage(page)}
+                      className="w-8 h-8 p-0"
+                    >
+                      {page}
+                    </Button>
+                  ))}
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage === totalPages}
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Notification Detail Dialog */}
+        <Dialog open={isNotificationDialogOpen} onOpenChange={setIsNotificationDialogOpen}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>
+                {selectedNotification?.title}
+              </DialogTitle>
+              <DialogDescription>
+                تفاصيل الإشعار
+              </DialogDescription>
+            </DialogHeader>
+            
+            {selectedNotification && (
+              <div className="space-y-4">
+                {/* Notification Info */}
+                <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
+                  <div>
+                    <div className="text-sm font-medium">النوع</div>
+                    <div>{getTypeBadge(selectedNotification.type)}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium">الفئة</div>
+                    <div>{getCategoryBadge(selectedNotification.category)}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium">الحالة</div>
+                    <div>{getStatusBadge(selectedNotification.status)}</div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium">الأولوية</div>
+                    <div>{getPriorityBadge(selectedNotification.priority)}</div>
+                  </div>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <div className="text-sm font-medium mb-2">الرسالة</div>
+                  <div className="p-4 bg-muted rounded-lg">
+                    {selectedNotification.message}
+                  </div>
+                </div>
+
+                {/* Channels */}
+                <div>
+                  <div className="text-sm font-medium mb-2">القنوات</div>
+                  <div>{getChannelBadge(selectedNotification.channels)}</div>
+                </div>
+
+                {/* Statistics */}
+                <div>
+                  <div className="text-sm font-medium mb-2">الإحصائيات</div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>معدل التسليم: {selectedNotification.deliveryRate}%</div>
+                    <div>معدل القراءة: {selectedNotification.clickRate}%</div>
+                    <div>إجمالي المرسل: {selectedNotification.totalSent}</div>
+                    <div>عدد القراءات: {selectedNotification.readCount}</div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-end gap-2 pt-4 border-t">
+                  <Button variant="outline" onClick={() => setIsNotificationDialogOpen(false)}>
+                    إغلاق
+                  </Button>
+                  <Button>
+                    <Edit className="h-4 w-4 mr-2" />
+                    تعديل
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
-};
-
-export default NotificationsPage;
+}

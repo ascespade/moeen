@@ -1,289 +1,509 @@
 'use client';
-import { useState } from 'react';
 
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import { useT } from '@/components/providers/I18nProvider';
+import { usePermissions } from '@/hooks/usePermissions';
+import { ROLES, PERMISSIONS } from '@/lib/permissions';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Input } from '@/components/ui/Input';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/Table';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/Dialog';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/Select';
+import { Checkbox } from '@/components/ui/Checkbox';
+import {
+  Shield,
+  Plus,
+  Edit,
+  Trash2,
+  Users,
+  Key,
+  Search,
+  Filter,
+  RefreshCw,
+  ChevronDown,
+  ChevronRight,
+  Eye,
+  Copy,
+  Save
+} from 'lucide-react';
 
-interface Role {
+interface RoleWithUsers {
   id: string;
   name: string;
   description: string;
   permissions: string[];
+  level: number;
   userCount: number;
-  createdAt: string;
+  isSystem: boolean;
 }
 
-const mockRoles: Role[] = [
-  {
-    id: '1',
-    name: 'مدير النظام',
-    description: 'صلاحيات كاملة لإدارة النظام',
-    permissions: ['users', 'settings', 'reports', 'analytics', 'roles'],
-    userCount: 2,
-    createdAt: '2024-01-01',
-  },
-  {
-    id: '2',
-    name: 'مدير الرعاية الصحية',
-    description: 'إدارة وحدة الرعاية الصحية',
-    permissions: ['patients', 'appointments', 'sessions', 'claims'],
-    userCount: 5,
-    createdAt: '2024-01-01',
-  },
-  {
-    id: '3',
-    name: 'طبيب',
-    description: 'إدارة المرضى والمواعيد',
-    permissions: ['patients', 'appointments', 'sessions'],
-    userCount: 12,
-    createdAt: '2024-01-01',
-  },
-  {
-    id: '4',
-    name: 'ممرض',
-    description: 'إدارة الجلسات والمرضى',
-    permissions: ['sessions', 'patients'],
-    userCount: 8,
-    createdAt: '2024-01-01',
-  },
-];
-
-const allPermissions = [
-  { id: 'users', name: 'إدارة المستخدمين' },
-  { id: 'settings', name: 'الإعدادات' },
-  { id: 'reports', name: 'التقارير' },
-  { id: 'analytics', name: 'التحليلات' },
-  { id: 'roles', name: 'إدارة الأدوار' },
-  { id: 'patients', name: 'إدارة المرضى' },
-  { id: 'appointments', name: 'إدارة المواعيد' },
-  { id: 'sessions', name: 'إدارة الجلسات' },
-  { id: 'claims', name: 'إدارة المطالبات' },
-  { id: 'contacts', name: 'إدارة جهات الاتصال' },
-  { id: 'leads', name: 'إدارة العملاء المحتملين' },
-  { id: 'deals', name: 'إدارة الصفقات' },
-  { id: 'activities', name: 'إدارة الأنشطة' },
-  { id: 'chatbot', name: 'إدارة الشات بوت' },
-  { id: 'templates', name: 'إدارة القوالب' },
-];
-
 export default function RolesPage() {
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [editingRole, setEditingRole] = useState<Role | null>(null);
+  const { t } = useT();
+  const { hasPermission } = usePermissions({ userRole: 'admin' });
+  const [roles, setRoles] = useState<RoleWithUsers[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState<RoleWithUsers | null>(null);
+  const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set());
+
+  // Mock data with user counts
+  useEffect(() => {
+    const mockRoles: RoleWithUsers[] = [
+      {
+        ...ROLES.admin,
+        userCount: 3,
+        isSystem: true
+      },
+      {
+        ...ROLES.manager,
+        userCount: 5,
+        isSystem: true
+      },
+      {
+        ...ROLES.supervisor,
+        userCount: 8,
+        isSystem: true
+      },
+      {
+        ...ROLES.doctor,
+        userCount: 25,
+        isSystem: true
+      },
+      {
+        ...ROLES.nurse,
+        userCount: 15,
+        isSystem: true
+      },
+      {
+        ...ROLES.staff,
+        userCount: 12,
+        isSystem: true
+      },
+      {
+        ...ROLES.agent,
+        userCount: 6,
+        isSystem: true
+      },
+      {
+        ...ROLES.patient,
+        userCount: 1247,
+        isSystem: true
+      },
+      {
+        ...ROLES.demo,
+        userCount: 1,
+        isSystem: true
+      }
+    ];
+
+    setRoles(mockRoles);
+    setLoading(false);
+  }, []);
+
+  const filteredRoles = roles.filter(role =>
+    role.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    role.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const getPermissionCategories = () => {
+    const categories = new Set<string>();
+    Object.values(PERMISSIONS).forEach(permission => {
+      categories.add(permission.category);
+    });
+    return Array.from(categories).sort();
+  };
+
+  const getPermissionsByCategory = (category: string) => {
+    return Object.values(PERMISSIONS).filter(permission => permission.category === category);
+  };
+
+  const getRoleBadge = (level: number) => {
+    if (level >= 80) return <Badge variant="destructive">عالي</Badge>;
+    if (level >= 60) return <Badge variant="default">متوسط</Badge>;
+    if (level >= 40) return <Badge variant="secondary">منخفض</Badge>;
+    return <Badge variant="outline">محدود</Badge>;
+  };
+
+  const toggleRoleExpansion = (roleId: string) => {
+    const newExpanded = new Set(expandedRoles);
+    if (newExpanded.has(roleId)) {
+      newExpanded.delete(roleId);
+    } else {
+      newExpanded.add(roleId);
+    }
+    setExpandedRoles(newExpanded);
+  };
+
+  const handleEditRole = (role: RoleWithUsers) => {
+    setSelectedRole(role);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleCreateRole = () => {
+    setSelectedRole(null);
+    setIsCreateDialogOpen(true);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" />
+          <p>جاري تحميل الأدوار...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className='min-h-screen bg-[var(--default-surface)]'>
-      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
-        <div className='container-app py-6'>
-          <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-4'>
-              <Image
-                src='/logo.png'
-                alt='مُعين'
-                width={50}
-                height={50}
-                className='rounded-lg'
+    <div className="min-h-screen bg-background">
+      <div className="container-app py-6">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold">إدارة الأدوار</h1>
+            <p className="text-muted-foreground">
+              إدارة أدوار المستخدمين والصلاحيات
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            {hasPermission('roles:create') && (
+              <Button onClick={handleCreateRole}>
+                <Plus className="h-4 w-4 mr-2" />
+                إضافة دور
+              </Button>
+            )}
+            <Button variant="outline">
+              <Copy className="h-4 w-4 mr-2" />
+              نسخ الأدوار
+            </Button>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">إجمالي الأدوار</CardTitle>
+              <Shield className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{roles.length}</div>
+              <p className="text-xs text-muted-foreground">
+                {roles.filter(r => !r.isSystem).length} مخصص
+              </p>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">المستخدمون النشطون</CardTitle>
+              <Users className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {roles.reduce((sum, role) => sum + role.userCount, 0)}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                عبر جميع الأدوار
+              </p>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">الصلاحيات</CardTitle>
+              <Key className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{Object.keys(PERMISSIONS).length}</div>
+              <p className="text-xs text-muted-foreground">
+                إجمالي الصلاحيات المتاحة
+              </p>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">الفئات</CardTitle>
+              <Filter className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{getPermissionCategories().length}</div>
+              <p className="text-xs text-muted-foreground">
+                فئات الصلاحيات
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Search */}
+        <Card className="mb-6">
+          <CardContent className="pt-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="البحث في الأدوار..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
               />
-              <div>
-                <h1 className='text-default text-2xl font-bold'>
-                  إدارة الأدوار والصلاحيات
-                </h1>
-                <p className='text-gray-600 dark:text-gray-300'>
-                  تحديد صلاحيات المستخدمين
-                </p>
-              </div>
             </div>
-            <button
-              onClick={() => setShowCreateModal(true)}
-              className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
-            >
-              إضافة دور
-            </button>
-          </div>
-        </div>
-      </header>
+          </CardContent>
+        </Card>
 
-      <main className='container-app py-8'>
-        <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
-          <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-default-default'>
-              {mockRoles.length}
-            </div>
-            <div className='text-gray-600 dark:text-gray-300'>
-              إجمالي الأدوار
-            </div>
-          </div>
-          <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-default-success'>
-              {mockRoles.reduce((sum, r) => sum + r.userCount, 0)}
-            </div>
-            <div className='text-gray-600 dark:text-gray-300'>
-              إجمالي المستخدمين
-            </div>
-          </div>
-          <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-purple-600'>
-              {allPermissions.length}
-            </div>
-            <div className='text-gray-600 dark:text-gray-300'>
-              الصلاحيات المتاحة
-            </div>
-          </div>
-          <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-default-default'>
-              4
-            </div>
-            <div className='text-gray-600 dark:text-gray-300'>أدوار نشطة</div>
-          </div>
-        </div>
-
-        <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
-          <div className='lg:col-span-2'>
-            <div className='card p-6'>
-              <h2 className='mb-6 text-xl font-semibold'>الأدوار</h2>
-              <div className='space-y-4'>
-                {mockRoles.map(role => (
-                  <div
-                    key={role.id}
-                    className='rounded-lg border border-gray-200 p-4 dark:border-gray-700'
-                  >
-                    <div className='mb-3 flex items-center justify-between'>
-                      <div>
-                        <h3 className='font-semibold text-gray-900 dark:text-white'>
-                          {role.name}
-                        </h3>
-                        <p className='text-sm text-gray-600 dark:text-gray-300'>
-                          {role.description}
-                        </p>
-                      </div>
-                      <div className='flex items-center gap-2'>
-                        <span className='text-sm text-gray-500'>
-                          {role.userCount} مستخدم
-                        </span>
-                        <button
-                          onClick={() => setEditingRole(role)}
-                          className='rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface'
-                        >
-                          تعديل
-                        </button>
+        {/* Roles List */}
+        <div className="space-y-4">
+          {filteredRoles.map((role) => (
+            <Card key={role.id}>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-lg bg-primary text-primary-foreground grid place-items-center">
+                      <Shield className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <CardTitle className="flex items-center gap-2">
+                        {role.name}
+                        {role.isSystem && (
+                          <Badge variant="outline" className="text-xs">نظام</Badge>
+                        )}
+                      </CardTitle>
+                      <CardDescription>{role.description}</CardDescription>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-sm font-medium">{role.userCount} مستخدم</div>
+                      <div className="text-xs text-muted-foreground">
+                        {role.permissions.length} صلاحية
                       </div>
                     </div>
-                    <div className='flex flex-wrap gap-2'>
-                      {role.permissions.map(permission => {
-                        const perm = allPermissions.find(
-                          p => p.id === permission
-                        );
-                        return perm ? (
-                          <span
-                            key={permission}
-                            className='rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800'
+                    <div className="flex items-center gap-2">
+                      {getRoleBadge(role.level)}
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleRoleExpansion(role.id)}
+                      >
+                        {expandedRoles.has(role.id) ? (
+                          <ChevronDown className="h-4 w-4" />
+                        ) : (
+                          <ChevronRight className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+              
+              {expandedRoles.has(role.id) && (
+                <CardContent>
+                  <div className="space-y-6">
+                    {/* Permissions by Category */}
+                    <div>
+                      <h4 className="font-medium mb-4">الصلاحيات</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {getPermissionCategories().map(category => {
+                          const categoryPermissions = getPermissionsByCategory(category);
+                          const roleHasCategoryPermissions = categoryPermissions.some(permission => 
+                            role.permissions.includes(permission.id)
+                          );
+                          
+                          if (!roleHasCategoryPermissions) return null;
+                          
+                          return (
+                            <div key={category} className="space-y-2">
+                              <h5 className="font-medium text-sm text-muted-foreground">
+                                {category}
+                              </h5>
+                              <div className="space-y-1">
+                                {categoryPermissions
+                                  .filter(permission => role.permissions.includes(permission.id))
+                                  .map(permission => (
+                                    <div key={permission.id} className="flex items-center gap-2 text-sm">
+                                      <div className="h-2 w-2 rounded-full bg-green-500" />
+                                      <span>{permission.name}</span>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    
+                    {/* Actions */}
+                    <div className="flex items-center justify-between pt-4 border-t">
+                      <div className="text-sm text-muted-foreground">
+                        مستوى الصلاحية: {role.level}/100
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button variant="outline" size="sm">
+                          <Eye className="h-4 w-4 mr-2" />
+                          عرض التفاصيل
+                        </Button>
+                        {hasPermission('roles:edit') && (
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleEditRole(role)}
                           >
-                            {perm.name}
-                          </span>
-                        ) : null;
-                      })}
+                            <Edit className="h-4 w-4 mr-2" />
+                            تعديل
+                          </Button>
+                        )}
+                        {hasPermission('roles:delete') && !role.isSystem && (
+                          <Button variant="outline" size="sm" className="text-destructive">
+                            <Trash2 className="h-4 w-4 mr-2" />
+                            حذف
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className='lg:col-span-1'>
-            <div className='card p-6'>
-              <h2 className='mb-6 text-xl font-semibold'>جميع الصلاحيات</h2>
-              <div className='space-y-2'>
-                {allPermissions.map(permission => (
-                  <div
-                    key={permission.id}
-                    className='flex items-center gap-2 rounded-lg bg-surface p-2 dark:bg-gray-800'
-                  >
-                    <input
-                      type='checkbox'
-                      className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                    />
-                    <span className='text-sm text-gray-700 dark:text-gray-300'>
-                      {permission.name}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+                </CardContent>
+              )}
+            </Card>
+          ))}
         </div>
-      </main>
 
-      {showCreateModal && (
-        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4'>
-          <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
-            <div className='mb-6 flex items-center justify-between'>
-              <h3 className='text-xl font-semibold'>إضافة دور جديد</h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className='text-gray-400 hover:text-gray-600'
-              >
-                ✕
-              </button>
-            </div>
-            <form className='space-y-4'>
+        {/* Create/Edit Role Dialog */}
+        <Dialog open={isCreateDialogOpen || isEditDialogOpen} onOpenChange={(open) => {
+          if (!open) {
+            setIsCreateDialogOpen(false);
+            setIsEditDialogOpen(false);
+            setSelectedRole(null);
+          }
+        }}>
+          <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>
+                {selectedRole ? 'تعديل الدور' : 'إضافة دور جديد'}
+              </DialogTitle>
+              <DialogDescription>
+                {selectedRole 
+                  ? 'قم بتعديل معلومات الدور والصلاحيات'
+                  : 'قم بإنشاء دور جديد مع الصلاحيات المناسبة'
+                }
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="space-y-6">
+              {/* Basic Info */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">اسم الدور</label>
+                  <Input 
+                    placeholder="مثال: مدير المبيعات" 
+                    defaultValue={selectedRole?.name || ''}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">مستوى الصلاحية</label>
+                  <Select defaultValue={selectedRole?.level?.toString() || '50'}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="10">10 - محدود</SelectItem>
+                      <SelectItem value="20">20 - أساسي</SelectItem>
+                      <SelectItem value="40">40 - متوسط</SelectItem>
+                      <SelectItem value="60">60 - متقدم</SelectItem>
+                      <SelectItem value="80">80 - إداري</SelectItem>
+                      <SelectItem value="100">100 - مدير عام</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              
               <div>
-                <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
-                  اسم الدور
-                </label>
-                <input
-                  type='text'
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                  placeholder='أدخل اسم الدور'
+                <label className="text-sm font-medium">وصف الدور</label>
+                <Input 
+                  placeholder="وصف مختصر للدور ومسؤولياته" 
+                  defaultValue={selectedRole?.description || ''}
                 />
               </div>
+
+              {/* Permissions */}
               <div>
-                <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
-                  الوصف
-                </label>
-                <textarea
-                  rows={3}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                  placeholder='أدخل وصف الدور'
-                ></textarea>
-              </div>
-              <div>
-                <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
-                  الصلاحيات
-                </label>
-                <div className='grid max-h-48 grid-cols-2 gap-2 overflow-y-auto'>
-                  {allPermissions.map(permission => (
-                    <div
-                      key={permission.id}
-                      className='flex items-center gap-2 rounded-lg border border-gray-200 p-2'
-                    >
-                      <input
-                        type='checkbox'
-                        className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      />
-                      <span className='text-sm text-gray-700 dark:text-gray-300'>
-                        {permission.name}
-                      </span>
+                <h4 className="font-medium mb-4">الصلاحيات</h4>
+                <div className="space-y-4">
+                  {getPermissionCategories().map(category => (
+                    <div key={category} className="border rounded-lg p-4">
+                      <h5 className="font-medium mb-3">{category}</h5>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {getPermissionsByCategory(category).map(permission => (
+                          <div key={permission.id} className="flex items-center space-x-2">
+                            <Checkbox 
+                              id={permission.id}
+                              defaultChecked={selectedRole?.permissions.includes(permission.id) || false}
+                            />
+                            <label 
+                              htmlFor={permission.id}
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            >
+                              {permission.name}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div className='flex gap-3 pt-4'>
-                <button
-                  type='button'
-                  onClick={() => setShowCreateModal(false)}
-                  className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
+
+              {/* Actions */}
+              <div className="flex justify-end gap-2 pt-4 border-t">
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setIsCreateDialogOpen(false);
+                    setIsEditDialogOpen(false);
+                    setSelectedRole(null);
+                  }}
                 >
                   إلغاء
-                </button>
-                <button
-                  type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
-                >
-                  إضافة الدور
-                </button>
+                </Button>
+                <Button>
+                  <Save className="h-4 w-4 mr-2" />
+                  {selectedRole ? 'حفظ التغييرات' : 'إنشاء الدور'}
+                </Button>
               </div>
-            </form>
-          </div>
-        </div>
-      )}
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 }

@@ -150,7 +150,7 @@ export default function SystemConfigPanel() {
                   </div>
                 )}
 
-                {featureConfig.integrations && (
+                {'integrations' in featureConfig && featureConfig.integrations && (
                   <div className="space-y-2 mt-4">
                     <h4 className="text-sm font-medium text-gray-900 dark:text-white">
                       {t('admin.integrations')}:

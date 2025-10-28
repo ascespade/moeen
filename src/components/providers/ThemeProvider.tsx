@@ -26,41 +26,61 @@ export function ThemeProvider({
   children,
   initialSettings,
 }: ThemeProviderProps) {
-  const [themeManager] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return new ThemeManager(initialSettings);
+  const [settings, setSettings] = useState<ThemeSettings>(() => {
+    const saved = ThemeManager.getSettings();
+    if (initialSettings) {
+      return { ...saved, ...initialSettings };
     }
-    return null;
+    return saved;
   });
-  const [settings, setSettings] = useState<ThemeSettings>(
-    themeManager?.getSettings() ||
-      ({
-        mode: 'light',
-        customColors: {},
-        typographyScale: 'medium',
-        rtl: false,
-      } as ThemeSettings)
-  );
 
   useEffect(() => {
-    if (themeManager) {
-      const unsubscribe = themeManager.subscribe(setSettings);
-      return unsubscribe;
+    // Apply initial settings if provided
+    if (initialSettings) {
+      ThemeManager.updateSettings(initialSettings);
+      setSettings(prev => ({ ...prev, ...initialSettings }));
     }
-    return undefined;
-  }, [themeManager]);
+  }, [initialSettings]);
 
-  const contextValue: ThemeContextType = {
+  useEffect(() => {
+    // Subscribe to theme changes
+    const unsubscribe = ThemeManager.subscribe((newSettings) => {
+      setSettings(newSettings);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  const updateSettings = (updates: Partial<ThemeSettings>) => {
+    const newSettings = ThemeManager.updateSettings(updates);
+    setSettings(newSettings);
+  };
+
+  const setMode = (mode: ThemeMode) => {
+    ThemeManager.setMode(mode);
+    setSettings(prev => ({ ...prev, mode }));
+  };
+
+  const toggleRTL = () => {
+    ThemeManager.toggleRTL();
+    setSettings(prev => ({ ...prev, rtl: !prev.rtl }));
+  };
+
+  const reset = () => {
+    const defaultSettings = ThemeManager.reset();
+    setSettings(defaultSettings);
+  };
+
+  const value: ThemeContextType = {
     settings,
-    updateSettings:
-      themeManager?.updateSettings.bind(themeManager) || (() => {}),
-    setMode: themeManager?.setMode.bind(themeManager) || (() => {}),
-    toggleRTL: themeManager?.toggleRTL.bind(themeManager) || (() => {}),
-    reset: themeManager?.reset.bind(themeManager) || (() => {}),
+    updateSettings,
+    setMode,
+    toggleRTL,
+    reset,
   };
 
   return (
-    <ThemeContext.Provider value={contextValue}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
@@ -73,5 +93,3 @@ export function useTheme() {
   }
   return context;
 }
-
-export default ThemeProvider;

@@ -19,7 +19,7 @@ export default function ThemeToggle({
     if (settings.mode === 'light') {
       setMode('dark');
     } else if (settings.mode === 'dark') {
-      setMode('auto');
+      setMode('system');
     } else {
       setMode('light');
     }
@@ -59,7 +59,7 @@ export default function ThemeToggle({
             />
           </svg>
         );
-      case 'auto':
+      case 'system':
         return (
           <svg
             className='w-5 h-5'
@@ -86,7 +86,7 @@ export default function ThemeToggle({
         return 'Light';
       case 'dark':
         return 'Dark';
-      case 'auto':
+      case 'system':
         return 'Auto';
       default:
         return 'Theme';
@@ -101,7 +101,7 @@ export default function ThemeToggle({
         'flex items-center gap-2',
         className
       )}
-      title={`Switch to ${settings.mode === 'light' ? 'dark' : settings.mode === 'dark' ? 'auto' : 'light'} theme`}
+      title={`Switch to ${settings.mode === 'light' ? 'dark' : settings.mode === 'dark' ? 'system' : 'light'} theme`}
     >
       {getIcon()}
       {showLabel && <span>{getLabel()}</span>}

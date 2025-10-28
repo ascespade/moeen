@@ -2,7 +2,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Languages } from 'lucide-react';
 import { useI18n } from '@/hooks/useI18n';
-import { dynamicThemeManager } from '@/lib/dynamic-theme-manager';
+import { DynamicThemeManager } from '@/lib/dynamic-theme-manager';
 
 interface LanguageSwitcherProps {
   className?: string;
@@ -25,7 +25,7 @@ export default function LanguageSwitcher({
   const loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      const preferences = await dynamicThemeManager.getUserPreferences();
+      const preferences = DynamicThemeManager.loadConfig();
       setLanguage(preferences.language);
     } catch (error) {
     } finally {
@@ -35,7 +35,8 @@ export default function LanguageSwitcher({
 
   // Function to apply language to document
   const applyLanguage = useCallback(() => {
-    dynamicThemeManager.applyLanguage(language);
+    // Apply language changes
+    DynamicThemeManager.updateConfig({ language });
   }, [language]);
 
   // Load user preferences from database on mount
@@ -58,7 +59,8 @@ export default function LanguageSwitcher({
 
     try {
       // Save to database
-      await dynamicThemeManager.updateUserPreferences('current_user', {
+      // Update user preferences
+      DynamicThemeManager.updateConfig({
         language: newLanguage,
       });
       // Reload page to apply translations

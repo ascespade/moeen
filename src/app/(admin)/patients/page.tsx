@@ -22,14 +22,6 @@ import {
   TableRow,
 } from '@/components/ui/Table';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/DropdownMenu';
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -45,6 +37,14 @@ import {
   SelectValue,
 } from '@/components/ui/Select';
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
+import {
   Users,
   Plus,
   Search,
@@ -52,141 +52,197 @@ import {
   MoreHorizontal,
   Edit,
   Trash2,
-  UserCheck,
-  UserX,
-  Mail,
-  Phone,
-  Calendar,
-  Shield,
   Eye,
+  Phone,
+  Mail,
+  Calendar,
+  FileText,
+  Heart,
+  Activity,
   Download,
   Upload,
   RefreshCw,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  UserCheck,
+  UserX,
+  Clock,
+  AlertTriangle
 } from 'lucide-react';
 
-interface User {
+interface Patient {
   id: string;
   name: string;
   email: string;
-  role: string;
+  phone: string;
+  nationalId: string;
+  dateOfBirth: string;
+  gender: 'male' | 'female';
   status: 'active' | 'inactive' | 'pending';
-  lastLogin: string;
+  lastVisit: string;
   createdAt: string;
   avatar?: string;
-  phone?: string;
-  department?: string;
-  permissions: string[];
+  address?: string;
+  emergencyContact?: string;
+  medicalHistory?: string[];
+  allergies?: string[];
+  currentMedications?: string[];
+  insuranceProvider?: string;
+  insuranceNumber?: string;
+  bloodType?: string;
+  height?: number;
+  weight?: number;
+  bmi?: number;
 }
 
-export default function UsersPage() {
+export default function PatientsPage() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
-  const [users, setUsers] = useState<User[]>([]);
+  const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [roleFilter, setRoleFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [genderFilter, setGenderFilter] = useState('all');
+  const [selectedPatients, setSelectedPatients] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
   // Mock data
   useEffect(() => {
-    const mockUsers: User[] = [
+    const mockPatients: Patient[] = [
       {
         id: '1',
         name: 'أحمد محمد العلي',
-        email: 'ahmed.ali@hemam.com',
-        role: 'admin',
-        status: 'active',
-        lastLogin: '2024-01-15T10:30:00Z',
-        createdAt: '2023-06-15T08:00:00Z',
+        email: 'ahmed.ali@email.com',
         phone: '+966501234567',
-        department: 'الإدارة',
-        permissions: ['*']
+        nationalId: '1234567890',
+        dateOfBirth: '1985-03-15',
+        gender: 'male',
+        status: 'active',
+        lastVisit: '2024-01-15T10:30:00Z',
+        createdAt: '2023-06-15T08:00:00Z',
+        address: 'الرياض، حي النخيل',
+        emergencyContact: '+966501234568',
+        medicalHistory: ['ضغط الدم', 'السكري'],
+        allergies: ['البنسلين'],
+        currentMedications: ['ميتفورمين', 'لوسارتان'],
+        insuranceProvider: 'شركة التأمين الوطنية',
+        insuranceNumber: 'INS123456789',
+        bloodType: 'O+',
+        height: 175,
+        weight: 80,
+        bmi: 26.1
       },
       {
         id: '2',
         name: 'فاطمة أحمد السعد',
-        email: 'fatima.saad@hemam.com',
-        role: 'doctor',
-        status: 'active',
-        lastLogin: '2024-01-15T09:15:00Z',
-        createdAt: '2023-07-20T08:00:00Z',
+        email: 'fatima.saad@email.com',
         phone: '+966502345678',
-        department: 'الطب العام',
-        permissions: ['patients:view', 'appointments:manage', 'sessions:manage']
+        nationalId: '2345678901',
+        dateOfBirth: '1990-07-22',
+        gender: 'female',
+        status: 'active',
+        lastVisit: '2024-01-14T14:20:00Z',
+        createdAt: '2023-07-20T08:00:00Z',
+        address: 'جدة، حي الروضة',
+        emergencyContact: '+966502345679',
+        medicalHistory: ['الربو'],
+        allergies: ['الغبار'],
+        currentMedications: ['فينتولين'],
+        insuranceProvider: 'شركة التأمين التعاوني',
+        insuranceNumber: 'INS234567890',
+        bloodType: 'A+',
+        height: 160,
+        weight: 55,
+        bmi: 21.5
       },
       {
         id: '3',
         name: 'محمد عبدالله القحطاني',
-        email: 'mohammed.qhtani@hemam.com',
-        role: 'nurse',
-        status: 'active',
-        lastLogin: '2024-01-15T08:45:00Z',
-        createdAt: '2023-08-10T08:00:00Z',
+        email: 'mohammed.qhtani@email.com',
         phone: '+966503456789',
-        department: 'التمريض',
-        permissions: ['patients:view', 'appointments:view']
+        nationalId: '3456789012',
+        dateOfBirth: '1978-11-08',
+        gender: 'male',
+        status: 'inactive',
+        lastVisit: '2023-12-20T09:15:00Z',
+        createdAt: '2023-08-10T08:00:00Z',
+        address: 'الدمام، حي الفيصلية',
+        emergencyContact: '+966503456790',
+        medicalHistory: ['أمراض القلب'],
+        allergies: ['المأكولات البحرية'],
+        currentMedications: ['أتورفاستاتين', 'أسبرين'],
+        insuranceProvider: 'شركة التأمين الأهلية',
+        insuranceNumber: 'INS345678901',
+        bloodType: 'B+',
+        height: 180,
+        weight: 90,
+        bmi: 27.8
       },
       {
         id: '4',
         name: 'نورا سعد المطيري',
-        email: 'nora.mutairi@hemam.com',
-        role: 'staff',
-        status: 'inactive',
-        lastLogin: '2024-01-10T16:20:00Z',
-        createdAt: '2023-09-05T08:00:00Z',
+        email: 'nora.mutairi@email.com',
         phone: '+966504567890',
-        department: 'الاستقبال',
-        permissions: ['appointments:view', 'appointments:create']
+        nationalId: '4567890123',
+        dateOfBirth: '1995-05-12',
+        gender: 'female',
+        status: 'pending',
+        lastVisit: '2024-01-10T16:45:00Z',
+        createdAt: '2024-01-01T08:00:00Z',
+        address: 'الرياض، حي العليا',
+        emergencyContact: '+966504567891',
+        medicalHistory: [],
+        allergies: [],
+        currentMedications: [],
+        insuranceProvider: 'شركة التأمين الوطنية',
+        insuranceNumber: 'INS456789012',
+        bloodType: 'AB+',
+        height: 165,
+        weight: 60,
+        bmi: 22.0
       },
       {
         id: '5',
         name: 'خالد فيصل الشمري',
-        email: 'khalid.shamri@hemam.com',
-        role: 'manager',
-        status: 'pending',
-        lastLogin: '2024-01-14T14:30:00Z',
-        createdAt: '2024-01-01T08:00:00Z',
+        email: 'khalid.shamri@email.com',
         phone: '+966505678901',
-        department: 'إدارة العمليات',
-        permissions: ['users:view', 'patients:view', 'appointments:manage']
+        nationalId: '5678901234',
+        dateOfBirth: '1982-09-30',
+        gender: 'male',
+        status: 'active',
+        lastVisit: '2024-01-13T11:30:00Z',
+        createdAt: '2023-09-15T08:00:00Z',
+        address: 'الطائف، حي الشهداء',
+        emergencyContact: '+966505678902',
+        medicalHistory: ['الربو', 'الحساسية'],
+        allergies: ['حبوب اللقاح', 'الغبار'],
+        currentMedications: ['مونتيلوكاست', 'لوراتادين'],
+        insuranceProvider: 'شركة التأمين التعاوني',
+        insuranceNumber: 'INS567890123',
+        bloodType: 'O-',
+        height: 170,
+        weight: 75,
+        bmi: 25.9
       }
     ];
 
-    setUsers(mockUsers);
-    setTotalPages(Math.ceil(mockUsers.length / 10));
+    setPatients(mockPatients);
+    setTotalPages(Math.ceil(mockPatients.length / 10));
     setLoading(false);
   }, []);
 
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = roleFilter === 'all' || user.role === roleFilter;
-    const matchesStatus = statusFilter === 'all' || user.status === statusFilter;
+  const filteredPatients = patients.filter(patient => {
+    const matchesSearch = patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         patient.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         patient.phone.includes(searchTerm) ||
+                         patient.nationalId.includes(searchTerm);
+    const matchesStatus = statusFilter === 'all' || patient.status === statusFilter;
+    const matchesGender = genderFilter === 'all' || patient.gender === genderFilter;
     
-    return matchesSearch && matchesRole && matchesStatus;
+    return matchesSearch && matchesStatus && matchesGender;
   });
-
-  const getRoleBadge = (role: string) => {
-    const roleConfig = {
-      admin: { label: 'مدير', variant: 'destructive' as const },
-      manager: { label: 'مدير قسم', variant: 'default' as const },
-      doctor: { label: 'طبيب', variant: 'secondary' as const },
-      nurse: { label: 'ممرض', variant: 'outline' as const },
-      staff: { label: 'موظف', variant: 'outline' as const },
-      supervisor: { label: 'مشرف', variant: 'secondary' as const },
-      agent: { label: 'وكيل', variant: 'outline' as const },
-      patient: { label: 'مريض', variant: 'outline' as const }
-    };
-    
-    const config = roleConfig[role as keyof typeof roleConfig] || { label: role, variant: 'outline' as const };
-    return <Badge variant={config.variant}>{config.label}</Badge>;
-  };
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
@@ -199,14 +255,31 @@ export default function UsersPage() {
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
 
+  const getGenderBadge = (gender: string) => {
+    return gender === 'male' ? (
+      <Badge variant="outline" className="bg-blue-100 text-blue-800">ذكر</Badge>
+    ) : (
+      <Badge variant="outline" className="bg-pink-100 text-pink-800">أنثى</Badge>
+    );
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+      day: 'numeric'
     });
+  };
+
+  const calculateAge = (dateOfBirth: string) => {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
   };
 
   if (loading) {
@@ -214,7 +287,7 @@ export default function UsersPage() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" />
-          <p>جاري تحميل المستخدمين...</p>
+          <p>جاري تحميل المرضى...</p>
         </div>
       </div>
     );
@@ -226,57 +299,64 @@ export default function UsersPage() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold">إدارة المستخدمين</h1>
+            <h1 className="text-3xl font-bold">إدارة المرضى</h1>
             <p className="text-muted-foreground">
-              إدارة المستخدمين والأدوار والصلاحيات
+              إدارة ملفات المرضى والسجلات الطبية
             </p>
           </div>
           <div className="flex items-center gap-4">
-            {hasPermission('users:create') && (
+            {hasPermission('patients:create') && (
               <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
                 <DialogTrigger asChild>
                   <Button>
                     <Plus className="h-4 w-4 mr-2" />
-                    إضافة مستخدم
+                    إضافة مريض
                   </Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="max-w-2xl">
                   <DialogHeader>
-                    <DialogTitle>إضافة مستخدم جديد</DialogTitle>
+                    <DialogTitle>إضافة مريض جديد</DialogTitle>
                     <DialogDescription>
-                      قم بملء البيانات المطلوبة لإضافة مستخدم جديد
+                      قم بملء البيانات المطلوبة لإضافة مريض جديد
                     </DialogDescription>
                   </DialogHeader>
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="text-sm font-medium">الاسم</label>
+                        <label className="text-sm font-medium">الاسم الكامل</label>
                         <Input placeholder="الاسم الكامل" />
                       </div>
                       <div>
-                        <label className="text-sm font-medium">البريد الإلكتروني</label>
-                        <Input placeholder="example@hemam.com" type="email" />
+                        <label className="text-sm font-medium">رقم الهوية</label>
+                        <Input placeholder="1234567890" />
                       </div>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="text-sm font-medium">الدور</label>
-                        <Select>
-                          <SelectTrigger>
-                            <SelectValue placeholder="اختر الدور" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="admin">مدير</SelectItem>
-                            <SelectItem value="manager">مدير قسم</SelectItem>
-                            <SelectItem value="doctor">طبيب</SelectItem>
-                            <SelectItem value="nurse">ممرض</SelectItem>
-                            <SelectItem value="staff">موظف</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <label className="text-sm font-medium">البريد الإلكتروني</label>
+                        <Input placeholder="example@email.com" type="email" />
                       </div>
                       <div>
                         <label className="text-sm font-medium">رقم الهاتف</label>
                         <Input placeholder="+966501234567" />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-sm font-medium">تاريخ الميلاد</label>
+                        <Input type="date" />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium">الجنس</label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder="اختر الجنس" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="male">ذكر</SelectItem>
+                            <SelectItem value="female">أنثى</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
                     <div className="flex justify-end gap-2">
@@ -284,7 +364,7 @@ export default function UsersPage() {
                         إلغاء
                       </Button>
                       <Button onClick={() => setIsCreateDialogOpen(false)}>
-                        إضافة المستخدم
+                        إضافة المريض
                       </Button>
                     </div>
                   </div>
@@ -302,43 +382,41 @@ export default function UsersPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">إجمالي المستخدمين</CardTitle>
+              <CardTitle className="text-sm font-medium">إجمالي المرضى</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{users.length}</div>
+              <div className="text-2xl font-bold">{patients.length}</div>
               <p className="text-xs text-muted-foreground">
-                +2 من الشهر الماضي
+                +12 من الشهر الماضي
               </p>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">المستخدمون النشطون</CardTitle>
+              <CardTitle className="text-sm font-medium">المرضى النشطون</CardTitle>
               <UserCheck className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {users.filter(u => u.status === 'active').length}
+                {patients.filter(p => p.status === 'active').length}
               </div>
               <p className="text-xs text-muted-foreground">
-                {Math.round((users.filter(u => u.status === 'active').length / users.length) * 100)}% من الإجمالي
+                {Math.round((patients.filter(p => p.status === 'active').length / patients.length) * 100)}% من الإجمالي
               </p>
             </CardContent>
           </Card>
           
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">الأطباء</CardTitle>
-              <Shield className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">الزيارات اليوم</CardTitle>
+              <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                {users.filter(u => u.role === 'doctor').length}
-              </div>
+              <div className="text-2xl font-bold">23</div>
               <p className="text-xs text-muted-foreground">
-                من أصل {users.length} مستخدم
+                مواعيد مجدولة
               </p>
             </CardContent>
           </Card>
@@ -346,14 +424,14 @@ export default function UsersPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">في الانتظار</CardTitle>
-              <UserX className="h-4 w-4 text-muted-foreground" />
+              <Clock className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {users.filter(u => u.status === 'pending').length}
+                {patients.filter(p => p.status === 'pending').length}
               </div>
               <p className="text-xs text-muted-foreground">
-                يحتاجون موافقة
+                يحتاجون مراجعة
               </p>
             </CardContent>
           </Card>
@@ -367,7 +445,7 @@ export default function UsersPage() {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
-                    placeholder="البحث بالاسم أو البريد الإلكتروني..."
+                    placeholder="البحث بالاسم أو الهوية أو الهاتف..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10"
@@ -375,19 +453,6 @@ export default function UsersPage() {
                 </div>
               </div>
               <div className="flex gap-2">
-                <Select value={roleFilter} onValueChange={setRoleFilter}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="الدور" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">جميع الأدوار</SelectItem>
-                    <SelectItem value="admin">مدير</SelectItem>
-                    <SelectItem value="manager">مدير قسم</SelectItem>
-                    <SelectItem value="doctor">طبيب</SelectItem>
-                    <SelectItem value="nurse">ممرض</SelectItem>
-                    <SelectItem value="staff">موظف</SelectItem>
-                  </SelectContent>
-                </Select>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
                   <SelectTrigger className="w-40">
                     <SelectValue placeholder="الحالة" />
@@ -399,6 +464,16 @@ export default function UsersPage() {
                     <SelectItem value="pending">في الانتظار</SelectItem>
                   </SelectContent>
                 </Select>
+                <Select value={genderFilter} onValueChange={setGenderFilter}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue placeholder="الجنس" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">جميع الأجناس</SelectItem>
+                    <SelectItem value="male">ذكر</SelectItem>
+                    <SelectItem value="female">أنثى</SelectItem>
+                  </SelectContent>
+                </Select>
                 <Button variant="outline">
                   <Filter className="h-4 w-4 mr-2" />
                   فلتر
@@ -408,12 +483,12 @@ export default function UsersPage() {
           </CardContent>
         </Card>
 
-        {/* Users Table */}
+        {/* Patients Table */}
         <Card>
           <CardHeader>
-            <CardTitle>قائمة المستخدمين</CardTitle>
+            <CardTitle>قائمة المرضى</CardTitle>
             <CardDescription>
-              عرض وإدارة جميع مستخدمي النظام
+              عرض وإدارة جميع مرضى المركز
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -426,34 +501,35 @@ export default function UsersPage() {
                       className="rounded border-gray-300"
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedUsers(filteredUsers.map(u => u.id));
+                          setSelectedPatients(filteredPatients.map(p => p.id));
                         } else {
-                          setSelectedUsers([]);
+                          setSelectedPatients([]);
                         }
                       }}
                     />
                   </TableHead>
-                  <TableHead>المستخدم</TableHead>
-                  <TableHead>الدور</TableHead>
+                  <TableHead>المريض</TableHead>
+                  <TableHead>العمر</TableHead>
+                  <TableHead>الجنس</TableHead>
                   <TableHead>الحالة</TableHead>
-                  <TableHead>آخر تسجيل دخول</TableHead>
-                  <TableHead>تاريخ الإنشاء</TableHead>
+                  <TableHead>آخر زيارة</TableHead>
+                  <TableHead>مؤشر كتلة الجسم</TableHead>
                   <TableHead className="text-right">الإجراءات</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredUsers.map((user) => (
-                  <TableRow key={user.id}>
+                {filteredPatients.map((patient) => (
+                  <TableRow key={patient.id}>
                     <TableCell>
                       <input
                         type="checkbox"
                         className="rounded border-gray-300"
-                        checked={selectedUsers.includes(user.id)}
+                        checked={selectedPatients.includes(patient.id)}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setSelectedUsers([...selectedUsers, user.id]);
+                            setSelectedPatients([...selectedPatients, patient.id]);
                           } else {
-                            setSelectedUsers(selectedUsers.filter(id => id !== user.id));
+                            setSelectedPatients(selectedPatients.filter(id => id !== patient.id));
                           }
                         }}
                       />
@@ -461,31 +537,52 @@ export default function UsersPage() {
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <div className="h-10 w-10 rounded-full bg-primary text-primary-foreground grid place-items-center">
-                          {user.name.charAt(0)}
+                          {patient.name.charAt(0)}
                         </div>
                         <div>
-                          <div className="font-medium">{user.name}</div>
-                          <div className="text-sm text-muted-foreground">{user.email}</div>
-                          {user.phone && (
-                            <div className="text-xs text-muted-foreground">{user.phone}</div>
-                          )}
+                          <div className="font-medium">{patient.name}</div>
+                          <div className="text-sm text-muted-foreground">{patient.nationalId}</div>
+                          <div className="text-xs text-muted-foreground flex items-center gap-1">
+                            <Phone className="h-3 w-3" />
+                            {patient.phone}
+                          </div>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      {getRoleBadge(user.role)}
+                      <div className="text-sm">
+                        {calculateAge(patient.dateOfBirth)} سنة
+                      </div>
                     </TableCell>
                     <TableCell>
-                      {getStatusBadge(user.status)}
+                      {getGenderBadge(patient.gender)}
+                    </TableCell>
+                    <TableCell>
+                      {getStatusBadge(patient.status)}
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        {formatDate(user.lastLogin)}
+                        {formatDate(patient.lastVisit)}
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        {formatDate(user.createdAt)}
+                        {patient.bmi ? (
+                          <div className="flex items-center gap-1">
+                            <span>{patient.bmi.toFixed(1)}</span>
+                            {patient.bmi < 18.5 ? (
+                              <Badge variant="outline" className="text-xs bg-blue-100 text-blue-800">نحيف</Badge>
+                            ) : patient.bmi < 25 ? (
+                              <Badge variant="outline" className="text-xs bg-green-100 text-green-800">طبيعي</Badge>
+                            ) : patient.bmi < 30 ? (
+                              <Badge variant="outline" className="text-xs bg-yellow-100 text-yellow-800">زائد</Badge>
+                            ) : (
+                              <Badge variant="outline" className="text-xs bg-red-100 text-red-800">سمنة</Badge>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-muted-foreground">غير محدد</span>
+                        )}
                       </div>
                     </TableCell>
                     <TableCell className="text-right">
@@ -499,30 +596,41 @@ export default function UsersPage() {
                           <DropdownMenuLabel>الإجراءات</DropdownMenuLabel>
                           <DropdownMenuItem>
                             <Eye className="h-4 w-4 mr-2" />
-                            عرض التفاصيل
+                            عرض الملف
                           </DropdownMenuItem>
-                          {hasPermission('users:edit') && (
+                          {hasPermission('patients:edit') && (
                             <DropdownMenuItem>
                               <Edit className="h-4 w-4 mr-2" />
                               تعديل
                             </DropdownMenuItem>
                           )}
+                          {hasPermission('patients:medical_records') && (
+                            <DropdownMenuItem>
+                              <FileText className="h-4 w-4 mr-2" />
+                              السجل الطبي
+                            </DropdownMenuItem>
+                          )}
+                          <DropdownMenuItem>
+                            <Calendar className="h-4 w-4 mr-2" />
+                            حجز موعد
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem>
+                            <Phone className="h-4 w-4 mr-2" />
+                            اتصال
+                          </DropdownMenuItem>
                           <DropdownMenuItem>
                             <Mail className="h-4 w-4 mr-2" />
                             إرسال رسالة
                           </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          {hasPermission('users:activate') && (
-                            <DropdownMenuItem>
-                              <UserCheck className="h-4 w-4 mr-2" />
-                              تفعيل/إلغاء تفعيل
-                            </DropdownMenuItem>
-                          )}
-                          {hasPermission('users:delete') && (
-                            <DropdownMenuItem className="text-destructive">
-                              <Trash2 className="h-4 w-4 mr-2" />
-                              حذف
-                            </DropdownMenuItem>
+                          {hasPermission('patients:delete') && (
+                            <>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">
+                                <Trash2 className="h-4 w-4 mr-2" />
+                                حذف
+                              </DropdownMenuItem>
+                            </>
                           )}
                         </DropdownMenuContent>
                       </DropdownMenu>
@@ -535,7 +643,7 @@ export default function UsersPage() {
             {/* Pagination */}
             <div className="flex items-center justify-between mt-6">
               <div className="text-sm text-muted-foreground">
-                عرض {filteredUsers.length} من {users.length} مستخدم
+                عرض {filteredPatients.length} من {patients.length} مريض
               </div>
               <div className="flex items-center gap-2">
                 <Button
