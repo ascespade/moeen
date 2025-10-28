@@ -51,13 +51,6 @@
     "src/scripts",
     "src/lib/security-enhanced.ts",
     "src/lib/websocket-server.ts",
-    "src/lib/database.ts",
-    "src/lib/real-time-notifications.ts",
-    "src/lib/supabase-real.ts",
-    "src/lib/supabase.ts",
-    "src/lib/supabase/client.ts",
-    "src/lib/supabaseClient.ts",
-    "src/lib/translations-manager.ts",
     "src/middleware.prod.ts"
   ]
 }

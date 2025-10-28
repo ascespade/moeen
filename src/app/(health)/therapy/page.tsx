@@ -1,34 +1,27 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
-import {
-  Activity,
-  Calendar,
-  Clock,
-  User,
-  Target,
-  TrendingUp,
-  FileText,
-  Video,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit,
-  Eye,
-  CheckCircle,
-  AlertCircle,
-  Heart,
-  Brain,
-  Zap,
-} from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
+import {
+    Activity,
+    Brain,
+    Calendar,
+    Clock,
+    Edit,
+    Eye,
+    Heart,
+    MoreVertical,
+    Plus,
+    Target,
+    TrendingUp,
+    Zap
+} from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 interface TherapySession {
   id: string;
@@ -94,57 +87,77 @@ const TherapyPage: React.FC = () => {
   const loadTherapyData = async () => {
     try {
       setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockSessions: TherapySession[] = [
-        {
-          id: '1',
-          patient_id: 'pat-1',
-          therapist_id: 'ther-1',
-          session_date: '2024-01-15',
-          session_time: '10:00',
-          duration: 60,
-          therapy_type: 'العلاج الطبيعي',
-          status: 'completed',
-          goals: ['تحسين الحركة', 'تقوية العضلات'],
-          activities: ['تمارين الحركة', 'العلاج المائي'],
-          progress_notes: 'تحسن ملحوظ في نطاق الحركة',
-          next_session_goals: ['زيادة مدة التمارين', 'تمارين التوازن'],
-          created_at: '2024-01-15T10:00:00Z',
-          updated_at: '2024-01-15T11:00:00Z',
-          public_id: 'TH-001',
-          patients: {
-            first_name: 'أحمد',
-            last_name: 'محمد',
-            age: 8,
-            condition: 'شلل دماغي',
-            avatar: '/logo.png',
-          },
-          therapists: {
-            first_name: 'د. فاطمة',
-            last_name: 'العلي',
-            specialty: 'العلاج الطبيعي للأطفال',
-            avatar: '/logo.png',
-          },
-        },
-      ];
+      setError(null);
+      
+      const { createClient } = await import('@/lib/supabase/client');
+      const supabase = createClient();
+      
+      // Load therapy sessions with patient and user data
+      const { data: sessionsData, error: sessionsError } = await supabase
+        .from('therapy_sessions')
+        .select('*, patients(first_name, last_name, date_of_birth, medical_history), users(name)')
+        .order('session_date', { ascending: false });
+      
+      if (sessionsError) throw sessionsError;
+      
+      const transformedSessions = (sessionsData || []).map((session: any) => ({
+        id: session.id,
+        patient_id: session.patient_id,
+        therapist_id: session.therapist_id,
+        session_date: session.session_date,
+        session_time: session.session_time || '10:00',
+        duration: session.duration || 60,
+        therapy_type: session.therapy_type || 'علاج',
+        status: session.status || 'scheduled',
+        goals: Array.isArray(session.goals) ? session.goals : [],
+        activities: Array.isArray(session.activities) ? session.activities : [],
+        progress_notes: session.progress_notes || '',
+        next_session_goals: Array.isArray(session.next_session_goals) ? session.next_session_goals : [],
+        created_at: session.created_at,
+        updated_at: session.updated_at || session.created_at,
+        public_id: session.public_id || session.id,
+        patients: session.patients ? {
+          first_name: session.patients.first_name,
+          last_name: session.patients.last_name,
+          age: session.patients.date_of_birth ? 
+            Math.floor((new Date().getTime() - new Date(session.patients.date_of_birth).getTime()) / (1000 * 60 * 60 * 24 * 365)) : 0,
+          condition: session.patients.medical_history || '',
+          avatar: '/logo.png',
+        } : undefined,
+        therapists: session.users ? {
+          first_name: session.users.name || '',
+          last_name: '',
+          specialty: 'معالج',
+          avatar: '/logo.png',
+        } : undefined,
+      }));
 
-      const mockGoals: TherapyGoal[] = [
-        {
-          id: '1',
-          patient_id: 'pat-1',
-          goal_title: 'تحسين المشي',
-          description: 'القدرة على المشي لمسافة 10 أمتار بدون مساعدة',
-          target_date: '2024-03-15',
-          progress_percentage: 65,
-          status: 'active',
-          created_at: '2024-01-01T00:00:00Z',
-        },
-      ];
+      // Load therapy goals
+      const { data: goalsData, error: goalsError } = await supabase
+        .from('therapy_goals')
+        .select('*, therapy_sessions(patient_id)')
+        .order('created_at', { ascending: false });
+      
+      if (goalsError) throw goalsError;
+      
+      const transformedGoals = (goalsData || []).map((goal: any) => ({
+        id: goal.id,
+        patient_id: goal.therapy_sessions?.patient_id || '',
+        goal_title: goal.goal_title || '',
+        description: goal.description || '',
+        target_date: goal.target_date || '',
+        progress_percentage: goal.progress_percentage || 0,
+        status: (goal.status || 'active') as 'active' | 'completed' | 'paused',
+        created_at: goal.created_at,
+      }));
 
-      setSessions(mockSessions);
-      setGoals(mockGoals);
+      setSessions(transformedSessions);
+      setGoals(transformedGoals);
     } catch (error) {
+      console.error('Failed to load therapy data:', error);
       setError('فشل في تحميل بيانات العلاج');
+      setSessions([]);
+      setGoals([]);
     } finally {
       setLoading(false);
     }

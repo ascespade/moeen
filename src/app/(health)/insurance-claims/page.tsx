@@ -1,91 +1,86 @@
 'use client';
-import { useState } from 'react';
-import { ROUTES } from '@/constants/routes';
+import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 interface InsuranceClaim {
   id: string;
-  patientName: string;
-  patientId: string;
-  claimNumber: string;
+  patient_name?: string;
+  patient_id: string;
+  claim_number: string;
   amount: number;
   status: 'pending' | 'approved' | 'rejected' | 'under-review';
-  submissionDate: string;
-  reviewDate?: string;
-  insuranceProvider: string;
-  treatmentType: string;
-  description: string;
-  attachments: string[];
+  submission_date: string;
+  review_date?: string;
+  insurance_provider?: string;
+  treatment_type?: string;
+  description?: string;
+  attachments?: string[];
   reviewer?: string;
   notes?: string;
 }
 
-const mockClaims: InsuranceClaim[] = [
-  {
-    id: '1',
-    patientName: 'أحمد العتيبي',
-    patientId: '1',
-    claimNumber: 'CLM-2024-001',
-    amount: 1500,
-    status: 'approved',
-    submissionDate: '2024-01-10',
-    reviewDate: '2024-01-12',
-    insuranceProvider: 'التأمين التعاوني',
-    treatmentType: 'علاج طبيعي',
-    description: 'جلسات علاج طبيعي للظهر - 5 جلسات',
-    attachments: ['تقرير طبي', 'فاتورة العلاج'],
-    reviewer: 'د. محمد العتيبي',
-    notes: 'تمت الموافقة على المطالبة بالكامل',
-  },
-  {
-    id: '2',
-    patientName: 'فاطمة السعيد',
-    patientId: '2',
-    claimNumber: 'CLM-2024-002',
-    amount: 800,
-    status: 'under-review',
-    submissionDate: '2024-01-12',
-    insuranceProvider: 'الراجحي للتأمين',
-    treatmentType: 'أشعة',
-    description: 'أشعة سينية للعمود الفقري',
-    attachments: ['طلب الأشعة', 'تقرير الأشعة'],
-  },
-  {
-    id: '3',
-    patientName: 'خالد القحطاني',
-    patientId: '3',
-    claimNumber: 'CLM-2024-003',
-    amount: 2000,
-    status: 'rejected',
-    submissionDate: '2024-01-08',
-    reviewDate: '2024-01-10',
-    insuranceProvider: 'التحالف الوطني',
-    treatmentType: 'علاج نفسي',
-    description: 'جلسات علاج نفسي - 10 جلسات',
-    attachments: ['تقرير نفسي', 'خطة العلاج'],
-    reviewer: 'د. نورا محمد',
-    notes: 'المطالبة مرفوضة - العلاج غير مشمول بالتأمين',
-  },
-  {
-    id: '4',
-    patientName: 'نورا السعد',
-    patientId: '4',
-    claimNumber: 'CLM-2024-004',
-    amount: 1200,
-    status: 'pending',
-    submissionDate: '2024-01-15',
-    insuranceProvider: 'التأمين التعاوني',
-    treatmentType: 'علاج وظيفي',
-    description: 'جلسات علاج وظيفي - 6 جلسات',
-    attachments: ['تقرير طبي', 'خطة العلاج'],
-  },
-];
-
 export default function InsuranceClaimsPage() {
+  const [claims, setClaims] = useState<InsuranceClaim[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState<string | null>(null);
+
+  useEffect(() => {
+    loadClaims();
+  }, [selectedStatus]);
+
+  const loadClaims = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const supabase = createClient();
+      
+      let query = supabase
+        .from('insurance_claims')
+        .select('*, patients(first_name, last_name)')
+        .order('created_at', { ascending: false });
+
+      if (selectedStatus !== 'all') {
+        query = query.eq('status', selectedStatus);
+      }
+
+      const { data, error: queryError } = await query;
+
+      if (queryError) throw queryError;
+
+      // Transform data to match interface
+      const transformedClaims = (data || []).map((claim: any) => ({
+        id: claim.id,
+        patient_name: claim.patient_name || 
+          (claim.patients ? `${claim.patients.first_name} ${claim.patients.last_name}` : 'Unknown'),
+        patient_id: claim.patient_id,
+        claim_number: claim.claim_number,
+        amount: claim.amount,
+        status: claim.status,
+        submission_date: claim.created_at || claim.submission_date,
+        review_date: claim.review_date,
+        insurance_provider: claim.insurance_provider,
+        treatment_type: claim.treatment_type,
+        description: claim.description,
+        attachments: claim.attachments || [],
+        reviewer: claim.reviewer,
+        notes: claim.notes,
+      }));
+
+      setClaims(transformedClaims);
+    } catch (err) {
+      console.error('Failed to load claims:', err);
+      setError('Failed to load insurance claims');
+      // Fallback to empty array
+      setClaims([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getStatusColor = (status: InsuranceClaim['status']) => {
     switch (status) {
@@ -117,19 +112,46 @@ export default function InsuranceClaimsPage() {
     }
   };
 
-  const filteredClaims = mockClaims.filter(claim => {
+  const filteredClaims = claims.filter(claim => {
     const matchesSearch =
-      claim.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      claim.claimNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      claim.insuranceProvider.toLowerCase().includes(searchTerm.toLowerCase());
+      claim.patient_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      claim.claim_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      claim.insurance_provider?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus =
       selectedStatus === 'all' || claim.status === selectedStatus;
     return matchesSearch && matchesStatus;
   });
 
   const selectedClaim = showDetailsModal
-    ? mockClaims.find(c => c.id === showDetailsModal)
+    ? claims.find(c => c.id === showDetailsModal)
     : null;
+
+  if (loading) {
+    return (
+      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
+        <div className='text-center'>
+          <div className='mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]' />
+          <p className='text-gray-600 dark:text-gray-400'>جاري تحميل البيانات...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
+        <div className='text-center'>
+          <p className='mb-4 text-lg font-semibold text-red-600'>{error}</p>
+          <button
+            onClick={() => loadClaims()}
+            className='rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
+          >
+            إعادة المحاولة
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='min-h-screen bg-[var(--default-surface)]'>
@@ -275,20 +297,20 @@ export default function InsuranceClaimsPage() {
                   >
                     <td className='whitespace-nowrap px-6 py-4'>
                       <div className='text-sm font-medium text-gray-900 dark:text-white'>
-                        {claim.claimNumber}
+                        {claim.claim_number}
                       </div>
                     </td>
                     <td className='whitespace-nowrap px-6 py-4'>
                       <div className='text-sm text-gray-900 dark:text-white'>
-                        {claim.patientName}
+                        {claim.patient_name}
                       </div>
                       <div className='text-sm text-gray-500'>
-                        {claim.treatmentType}
+                        {claim.treatment_type}
                       </div>
                     </td>
                     <td className='whitespace-nowrap px-6 py-4'>
                       <div className='text-sm text-gray-600 dark:text-gray-300'>
-                        {claim.insuranceProvider}
+                        {claim.insurance_provider}
                       </div>
                     </td>
                     <td className='whitespace-nowrap px-6 py-4'>
@@ -305,7 +327,7 @@ export default function InsuranceClaimsPage() {
                     </td>
                     <td className='whitespace-nowrap px-6 py-4'>
                       <div className='text-sm text-gray-600 dark:text-gray-300'>
-                        {claim.submissionDate}
+                        {claim.submission_date}
                       </div>
                     </td>
                     <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
@@ -480,7 +502,7 @@ export default function InsuranceClaimsPage() {
                       رقم المطالبة:
                     </span>
                     <span className='font-medium'>
-                      {selectedClaim.claimNumber}
+                      {selectedClaim.claim_number}
                     </span>
                   </div>
                   <div className='flex justify-between'>
@@ -488,7 +510,7 @@ export default function InsuranceClaimsPage() {
                       المريض:
                     </span>
                     <span className='font-medium'>
-                      {selectedClaim.patientName}
+                      {selectedClaim.patient_name}
                     </span>
                   </div>
                   <div className='flex justify-between'>
@@ -496,7 +518,7 @@ export default function InsuranceClaimsPage() {
                       شركة التأمين:
                     </span>
                     <span className='font-medium'>
-                      {selectedClaim.insuranceProvider}
+                      {selectedClaim.insurance_provider}
                     </span>
                   </div>
                   <div className='flex justify-between'>
@@ -504,7 +526,7 @@ export default function InsuranceClaimsPage() {
                       نوع العلاج:
                     </span>
                     <span className='font-medium'>
-                      {selectedClaim.treatmentType}
+                      {selectedClaim.treatment_type}
                     </span>
                   </div>
                   <div className='flex justify-between'>
@@ -536,16 +558,16 @@ export default function InsuranceClaimsPage() {
                       تاريخ الإرسال:
                     </span>
                     <span className='font-medium'>
-                      {selectedClaim.submissionDate}
+                      {selectedClaim.submission_date}
                     </span>
                   </div>
-                  {selectedClaim.reviewDate && (
+                  {selectedClaim.review_date && (
                     <div className='flex justify-between'>
                       <span className='text-gray-600 dark:text-gray-300'>
                         تاريخ المراجعة:
                       </span>
                       <span className='font-medium'>
-                        {selectedClaim.reviewDate}
+                        {selectedClaim.review_date}
                       </span>
                     </div>
                   )}

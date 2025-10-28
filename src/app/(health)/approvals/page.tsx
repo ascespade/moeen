@@ -1,9 +1,10 @@
 'use client';
-import { useState } from 'react';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
+import { createClient } from '@/lib/supabase/client';
+import { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -163,18 +164,75 @@ const priorityConfig = {
 };
 
 export default function ApprovalsPage() {
-  const [selectedApproval, setSelectedApproval] = useState<Approval | null>(
-    null
-  );
+  const [approvals, setApprovals] = useState<Approval[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedApproval, setSelectedApproval] = useState<Approval | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState<
-    'all' | 'pending' | 'approved' | 'rejected'
-  >('all');
-  const [typeFilter, setTypeFilter] = useState<'all' | Approval['requestType']>(
-    'all'
-  );
+  const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
+  const [typeFilter, setTypeFilter] = useState<'all' | Approval['requestType']>('all');
 
-  const filteredApprovals = mockApprovals.filter(approval => {
+  useEffect(() => {
+    loadApprovals();
+  }, [filter]);
+
+  const loadApprovals = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const supabase = createClient();
+      
+      let query = supabase
+        .from('approvals')
+        .select('*, patients(first_name, last_name, public_id)')
+        .order('created_at', { ascending: false });
+
+      if (filter !== 'all') {
+        query = query.eq('status', filter);
+      }
+
+      const { data, error: queryError } = await query;
+
+      if (queryError) throw queryError;
+
+      // Transform data to match interface - using snake_case to camelCase
+      const transformedApprovals = (data || []).map((approval: any) => ({
+        id: approval.id,
+        patientName: approval.patients ? 
+          `${approval.patients.first_name} ${approval.patients.last_name}` : 'Unknown',
+        patientId: approval.patient_id,
+        requestType: approval.request_type,
+        requestTitle: approval.request_title,
+        description: approval.description,
+        requestedBy: approval.requested_by,
+        requestedDate: approval.requested_date || approval.created_at,
+        status: approval.status,
+        approvedBy: approval.approved_by,
+        approvedDate: approval.approved_date,
+        rejectionReason: approval.rejection_reason,
+        priority: approval.priority,
+        estimatedCost: parseFloat(approval.estimated_cost || 0),
+        insuranceCoverage: parseFloat(approval.insurance_coverage || 0),
+        patientContribution: parseFloat(approval.patient_contribution || 0),
+        isBlocked: approval.is_blocked || false,
+        blockReason: approval.block_reason,
+        hasOutstandingBalance: approval.has_outstanding_balance || false,
+        outstandingAmount: parseFloat(approval.outstanding_amount || 0),
+        attachments: Array.isArray(approval.attachments) ? approval.attachments : [],
+        notes: approval.notes,
+      }));
+
+      setApprovals(transformedApprovals);
+    } catch (err) {
+      console.error('Failed to load approvals:', err);
+      setError('Failed to load approvals');
+      setApprovals([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredApprovals = approvals.filter(approval => {
     const matchesSearch =
       approval.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       approval.patientId.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -186,6 +244,61 @@ export default function ApprovalsPage() {
 
     return matchesSearch && matchesStatus && matchesType;
   });
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto"></div>
+          <p className="mt-4 text-lg text-gray-600">جاري تحميل الموافقات...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">خطأ في التحميل</h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <Button onClick={loadApprovals} variant="primary">
+            إعادة المحاولة
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (filteredApprovals.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="text-gray-400 text-6xl mb-4">📋</div>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">لا توجد موافقات</h2>
+          <p className="text-gray-600 mb-4">
+            {searchTerm || filter !== 'all' || typeFilter !== 'all'
+              ? 'لم يتم العثور على موافقات تطابق معايير البحث'
+              : 'لم يتم إنشاء أي موافقات بعد'}
+          </p>
+          {searchTerm || filter !== 'all' || typeFilter !== 'all' ? (
+            <Button onClick={() => {
+              setSearchTerm('');
+              setFilter('all');
+              setTypeFilter('all');
+            }} variant="secondary">
+              مسح الفلاتر
+            </Button>
+          ) : (
+            <Button onClick={() => setShowCreateModal(true)} variant="primary">
+              إنشاء موافقة جديدة
+            </Button>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   const getRequestTypeBadge = (type: Approval['requestType']) => {
     const config = requestTypeConfig[type];

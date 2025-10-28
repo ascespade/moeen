@@ -1,38 +1,34 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
-import {
-  Heart,
-  Calendar,
-  Clock,
-  User,
-  Users,
-  MessageCircle,
-  FileText,
-  Video,
-  Plus,
-  Search,
-  Filter,
-  MoreVertical,
-  Edit,
-  Eye,
-  CheckCircle,
-  AlertCircle,
-  Phone,
-  Mail,
-  MapPin,
-  Star,
-  BookOpen,
-  Shield,
-  Lightbulb,
-} from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
+import {
+    BookOpen,
+    Calendar,
+    Clock,
+    Edit,
+    Eye,
+    FileText,
+    Heart,
+    Lightbulb,
+    Mail,
+    MapPin,
+    MessageCircle,
+    MoreVertical,
+    Phone,
+    Plus,
+    Shield,
+    Star,
+    User,
+    Users,
+    Video
+} from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 interface FamilyMember {
   id: string;
@@ -121,111 +117,109 @@ const FamilySupportPage: React.FC = () => {
   const loadFamilySupportData = async () => {
     try {
       setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockFamilyMembers: FamilyMember[] = [
-        {
-          id: '1',
-          patient_id: 'pat-1',
-          first_name: 'فاطمة',
-          last_name: 'محمد',
-          relationship: 'أم',
-          phone: '0501234567',
-          email: 'fatima@example.com',
-          address: 'جدة، المملكة العربية السعودية',
-          emergency_contact: true,
-          default_caregiver: true,
-          notes: 'متابعة يومية للطفل',
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-15T00:00:00Z',
-          patients: {
-            first_name: 'أحمد',
-            last_name: 'محمد',
-            age: 8,
-            condition: 'شلل دماغي',
-            avatar: '/logo.png',
-          },
-        },
-        {
-          id: '2',
-          patient_id: 'pat-1',
-          first_name: 'عبدالله',
-          last_name: 'محمد',
-          relationship: 'أب',
-          phone: '0507654321',
-          email: 'abdullah@example.com',
-          emergency_contact: false,
-          default_caregiver: false,
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-15T00:00:00Z',
-          patients: {
-            first_name: 'أحمد',
-            last_name: 'محمد',
-            age: 8,
-            condition: 'شلل دماغي',
-            avatar: '/logo.png',
-          },
-        },
-      ];
+      setError(null);
+      
+      const { createClient } = await import('@/lib/supabase/client');
+      const supabase = createClient();
+      
+      // Load family members with patient data
+      const { data: familyMembersData, error: familyError } = await supabase
+        .from('family_members')
+        .select('*, patients(first_name, last_name, date_of_birth, gender)')
+        .order('created_at', { ascending: false });
+      
+      if (familyError) throw familyError;
+      
+      // Transform family members
+      const transformedFamilyMembers = (familyMembersData || []).map((member: any) => ({
+        id: member.id,
+        patient_id: member.patient_id,
+        first_name: member.name ? member.name.split(' ')[0] : member.name || 'Unknown',
+        last_name: member.name ? member.name.split(' ').slice(1).join(' ') : '',
+        relationship: member.relationship || 'آخر',
+        phone: member.phone || '',
+        email: member.email,
+        emergency_contact: member.is_primary_contact || false,
+        default_caregiver: member.is_primary_contact || false,
+        notes: member.notes,
+        created_at: member.created_at,
+        updated_at: member.updated_at,
+        patients: member.patients ? {
+          first_name: member.patients.first_name,
+          last_name: member.patients.last_name,
+          age: member.patients.date_of_birth ? 
+            Math.floor((new Date().getTime() - new Date(member.patients.date_of_birth).getTime()) / (1000 * 60 * 60 * 24 * 365)) : 0,
+          condition: member.patients.medical_history || '',
+          avatar: '/logo.png',
+        } : undefined,
+      }));
 
-      const mockSupportSessions: SupportSession[] = [
-        {
-          id: '1',
-          family_member_id: '1',
-          counselor_id: 'coun-1',
-          session_date: '2024-01-15',
-          session_time: '14:00',
-          duration: 60,
-          session_type: 'استشارة نفسية',
-          status: 'completed',
-          topics_discussed: ['التعامل مع التوتر', 'استراتيجيات الدعم'],
-          recommendations: ['جلسات أسبوعية', 'قراءة مواد تعليمية'],
-          follow_up_notes: 'تحسن ملحوظ في التعامل مع الموقف',
-          created_at: '2024-01-15T14:00:00Z',
-          updated_at: '2024-01-15T15:00:00Z',
-          family_members: {
-            first_name: 'فاطمة',
-            last_name: 'محمد',
-            relationship: 'أم',
-            phone: '0501234567',
-          },
-          counselors: {
-            first_name: 'د. نورا',
-            last_name: 'السعد',
-            specialty: 'الاستشارة النفسية للأسر',
-            avatar: '/logo.png',
-          },
-        },
-      ];
+      // Load support sessions
+      const { data: sessionsData, error: sessionsError } = await supabase
+        .from('support_sessions')
+        .select('*, patients(first_name, last_name), users(name)')
+        .order('session_date', { ascending: false })
+        .order('session_time', { ascending: false });
+      
+      if (sessionsError) throw sessionsError;
+      
+      const transformedSessions = (sessionsData || []).map((session: any) => ({
+        id: session.id,
+        family_member_id: session.patient_id,
+        counselor_id: session.facilitator_id || '',
+        session_date: session.session_date,
+        session_time: session.session_time || '10:00',
+        duration: session.duration_minutes || 60,
+        session_type: session.session_type || 'استشارة',
+        status: session.status || 'scheduled',
+        topics_discussed: [],
+        recommendations: [],
+        follow_up_notes: session.notes || '',
+        created_at: session.created_at,
+        updated_at: session.created_at,
+        family_members: session.patients ? {
+          first_name: session.patients.first_name,
+          last_name: session.patients.last_name,
+          relationship: 'أسرة',
+          phone: '',
+        } : undefined,
+        counselors: session.users ? {
+          first_name: session.users.name || '',
+          last_name: '',
+          specialty: 'استشارة',
+          avatar: '/logo.png',
+        } : undefined,
+      }));
 
-      const mockResources: Resource[] = [
-        {
-          id: '1',
-          title: 'دليل دعم الأسر',
-          description: 'دليل شامل لدعم أسر ذوي الاحتياجات الخاصة',
-          category: 'التعليم',
-          type: 'document',
-          file_path: '/resources/family-guide.pdf',
-          tags: ['دعم', 'أسرة', 'تعليم'],
-          created_at: '2024-01-01T00:00:00Z',
-        },
-        {
-          id: '2',
-          title: 'فيديو: استراتيجيات التعامل مع التوتر',
-          description:
-            'فيديو تعليمي حول كيفية التعامل مع التوتر في رعاية الطفل',
-          category: 'الصحة النفسية',
-          type: 'video',
-          url: 'https://example.com/video1',
-          tags: ['توتر', 'صحة نفسية', 'فيديو'],
-          created_at: '2024-01-05T00:00:00Z',
-        },
-      ];
+      // Load resources
+      const { data: resourcesData, error: resourcesError } = await supabase
+        .from('resources')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (resourcesError) throw resourcesError;
+      
+      const transformedResources = (resourcesData || []).map((resource: any) => ({
+        id: resource.id,
+        title: resource.resource_title || '',
+        description: resource.description || '',
+        category: resource.category || 'عام',
+        type: (resource.resource_type || 'document') as 'document' | 'video' | 'link' | 'guide',
+        url: resource.url,
+        file_path: resource.file_path,
+        tags: Array.isArray(resource.tags) ? resource.tags : [],
+        created_at: resource.created_at,
+      }));
 
-      setFamilyMembers(mockFamilyMembers);
-      setSupportSessions(mockSupportSessions);
-      setResources(mockResources);
+      setFamilyMembers(transformedFamilyMembers);
+      setSupportSessions(transformedSessions);
+      setResources(transformedResources);
     } catch (error) {
+      console.error('Failed to load family support data:', error);
       setError('فشل في تحميل بيانات دعم الأسر');
+      setFamilyMembers([]);
+      setSupportSessions([]);
+      setResources([]);
     } finally {
       setLoading(false);
     }
