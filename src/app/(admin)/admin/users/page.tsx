@@ -1,179 +1,74 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
 import { useT } from '@/components/providers/I18nProvider';
-import { usePermissions } from '@/hooks/usePermissions';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/Table';
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/Card';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle
 } from '@/components/ui/Dialog';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu';
+import { Input } from '@/components/ui/Input';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from '@/components/ui/Select';
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/DropdownMenu';
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from '@/components/ui/Table';
+import { usePermissions } from '@/hooks/usePermissions';
 import {
-  User,
-  Plus,
-  Search,
-  Filter,
-  MoreHorizontal,
-  Edit,
-  Trash2,
-  Eye,
-  Copy,
-  Users,
-  Settings,
-  Activity,
-  TrendingUp,
-  BarChart3,
-  PieChart,
-  Target,
-  Zap,
-  Globe,
-  Database,
-  Mail,
-  Phone,
-  Smile,
-  Frown,
-  Meh,
-  Heart,
-  Star,
-  Flag,
-  Archive,
-  Download,
-  Upload,
-  RefreshCw,
-  ChevronLeft,
-  ChevronRight,
-  Calendar,
-  Clock,
-  Shield,
-  CheckCircle,
-  XCircle,
-  AlertTriangle,
-  Lock,
-  Unlock,
-  Key,
-  Crown,
-  Award,
-  Trophy,
-  Medal,
-  Gauge,
-  Speedometer,
-  Timer,
-  Stopwatch,
-  Play,
-  Pause,
-  Square,
-  RotateCcw,
-  RotateCw,
-  SkipForward,
-  SkipBack,
-  FastForward,
-  Rewind,
-  Volume2,
-  VolumeX,
-  Mic,
-  Video,
-  PhoneCall,
-  Smartphone,
-  Monitor,
-  Tablet,
-  Wifi,
-  WifiOff,
-  Signal,
-  Battery,
-  Cpu,
-  HardDrive,
-  MemoryStick,
-  Server,
-  Cloud,
-  Sun,
-  Moon,
-  Sunrise,
-  Sunset,
-  UserCheck,
-  UserX,
-  UserPlus,
-  UserMinus,
-  UserCog,
-  UserEdit,
-  UserShield,
-  UserLock,
-  UserUnlock,
-  UserKey,
-  UserCrown,
-  UserAward,
-  UserTrophy,
-  UserMedal,
-  UserGauge,
-  UserSpeedometer,
-  UserTimer,
-  UserStopwatch,
-  UserPlay,
-  UserPause,
-  UserSquare,
-  UserRotateCcw,
-  UserRotateCw,
-  UserSkipForward,
-  UserSkipBack,
-  UserFastForward,
-  UserRewind,
-  UserVolume2,
-  UserVolumeX,
-  UserMic,
-  UserVideo,
-  UserPhoneCall,
-  UserSmartphone,
-  UserMonitor,
-  UserTablet,
-  UserWifi,
-  UserWifiOff,
-  UserSignal,
-  UserBattery,
-  UserCpu,
-  UserHardDrive,
-  UserMemoryStick,
-  UserServer,
-  UserCloud,
-  UserSun,
-  UserMoon,
-  UserSunrise,
-  UserSunset
+    Activity,
+    Award,
+    ChevronLeft,
+    ChevronRight,
+    Copy,
+    Crown,
+    Download,
+    Edit,
+    Eye,
+    Filter,
+    Key,
+    MoreHorizontal,
+    PhoneCall,
+    Plus,
+    RefreshCw,
+    Search,
+    Shield,
+    Trash2,
+    TrendingUp,
+    User,
+    UserCheck,
+    UserCog,
+    Users,
+    UserX
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface User {
   id: string;
@@ -352,8 +247,8 @@ export default function UsersPage() {
         displayName: 'أحمد محمد القحطاني',
         phone: '+966504567890',
         avatar: '/avatars/reception-ahmed.jpg',
-        role: 'receptionist',
-        roleDisplayName: 'موظف استقبال',
+        role: 'staff',
+        roleDisplayName: 'موظف',
         status: 'active',
         isVerified: true,
         lastLoginAt: '2024-01-15T11:15:00Z',
@@ -389,8 +284,8 @@ export default function UsersPage() {
         displayName: 'نورا سعد المطيري',
         phone: '+966505678901',
         avatar: '/avatars/finance-nora.jpg',
-        role: 'finance_manager',
-        roleDisplayName: 'مدير مالي',
+        role: 'manager',
+        roleDisplayName: 'مدير',
         status: 'active',
         isVerified: true,
         lastLoginAt: '2024-01-15T10:30:00Z',
@@ -488,12 +383,15 @@ export default function UsersPage() {
 
   const getRoleBadge = (role: string) => {
     const roleConfig = {
-      admin: { label: 'مدير', icon: <Crown className="h-3 w-3" />, className: 'bg-red-100 text-red-800' },
+      admin: { label: 'مدير النظام', icon: <Crown className="h-3 w-3" />, className: 'bg-red-100 text-red-800' },
+      manager: { label: 'مدير', icon: <TrendingUp className="h-3 w-3" />, className: 'bg-cyan-100 text-cyan-800' },
+      supervisor: { label: 'مشرف', icon: <Award className="h-3 w-3" />, className: 'bg-orange-100 text-orange-800' },
       doctor: { label: 'طبيب', icon: <User className="h-3 w-3" />, className: 'bg-blue-100 text-blue-800' },
       nurse: { label: 'ممرض', icon: <User className="h-3 w-3" />, className: 'bg-green-100 text-green-800' },
-      receptionist: { label: 'استقبال', icon: <User className="h-3 w-3" />, className: 'bg-yellow-100 text-yellow-800' },
-      finance_manager: { label: 'مدير مالي', icon: <TrendingUp className="h-3 w-3" />, className: 'bg-cyan-100 text-cyan-800' },
-      patient: { label: 'مريض', icon: <User className="h-3 w-3" />, className: 'bg-purple-100 text-purple-800' }
+      staff: { label: 'موظف', icon: <User className="h-3 w-3" />, className: 'bg-yellow-100 text-yellow-800' },
+      agent: { label: 'وكيل', icon: <PhoneCall className="h-3 w-3" />, className: 'bg-indigo-100 text-indigo-800' },
+      patient: { label: 'مريض', icon: <User className="h-3 w-3" />, className: 'bg-purple-100 text-purple-800' },
+      demo: { label: 'تجريبي', icon: <Eye className="h-3 w-3" />, className: 'bg-gray-100 text-gray-800' }
     };
     
     const config = roleConfig[role as keyof typeof roleConfig] || 
@@ -650,12 +548,15 @@ export default function UsersPage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">جميع الأدوار</SelectItem>
-                    <SelectItem value="admin">مدير</SelectItem>
+                    <SelectItem value="admin">مدير النظام</SelectItem>
+                    <SelectItem value="manager">مدير</SelectItem>
+                    <SelectItem value="supervisor">مشرف</SelectItem>
                     <SelectItem value="doctor">طبيب</SelectItem>
                     <SelectItem value="nurse">ممرض</SelectItem>
-                    <SelectItem value="receptionist">استقبال</SelectItem>
-                    <SelectItem value="finance_manager">مدير مالي</SelectItem>
+                    <SelectItem value="staff">موظف</SelectItem>
+                    <SelectItem value="agent">وكيل</SelectItem>
                     <SelectItem value="patient">مريض</SelectItem>
+                    <SelectItem value="demo">تجريبي</SelectItem>
                   </SelectContent>
                 </Select>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>

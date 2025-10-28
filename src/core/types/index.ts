@@ -3,6 +3,9 @@
  * Centralized type definitions for the entire application
  */
 
+// Import canonical UserRole type from the single source of truth
+import type { UserRole } from '@/constants/roles';
+
 // Base Entity Types
 export interface BaseEntity {
   id: string;
@@ -39,7 +42,8 @@ export interface UserPreferences {
   privacy: PrivacySettings;
 }
 
-export type UserRole = 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin';
+// Re-export UserRole for convenience
+export type { UserRole };
 
 // Patient Types
 export interface Patient extends BaseEntity {

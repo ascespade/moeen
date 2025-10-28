@@ -15,7 +15,7 @@ export interface ThemeSettings {
 export interface ThemeConfig extends ThemeSettings {}
 
 export const defaultThemeConfig: ThemeConfig = {
-  mode: 'system',
+  mode: 'light',
   primaryColor: '#3b82f6',
   secondaryColor: '#64748b',
   accentColor: '#f59e0b',

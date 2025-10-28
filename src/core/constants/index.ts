@@ -3,6 +3,9 @@
  * Centralized application constants
  */
 
+// Import canonical roles from the single source of truth
+import { USER_ROLES as CANONICAL_ROLES } from '@/constants/roles';
+
 // API Endpoints
 export const API_ENDPOINTS = {
   // Authentication
@@ -90,14 +93,9 @@ export const API_ENDPOINTS = {
   },
 } as const;
 
-// User Roles
-export const USER_ROLES = {
-  PATIENT: 'patient',
-  DOCTOR: 'doctor',
-  STAFF: 'staff',
-  SUPERVISOR: 'supervisor',
-  ADMIN: 'admin',
-} as const;
+// User Roles - Re-export from canonical source for backward compatibility
+// All new code should import directly from @/constants/roles
+export const USER_ROLES = CANONICAL_ROLES;
 
 // Appointment Status
 export const APPOINTMENT_STATUS = {

@@ -1,4 +1,6 @@
 import { BaseEntity } from './common';
+// Import canonical UserRole type from the single source of truth
+import type { UserRole } from '@/constants/roles';
 
 // Authentication types
 export interface User extends BaseEntity {
@@ -11,16 +13,6 @@ export interface User extends BaseEntity {
   login_count: number;
 }
 
-export type UserRole =
-  | 'admin'
-  | 'doctor'
-  | 'nurse'
-  | 'staff'
-  | 'supervisor'
-  | 'patient'
-  | 'agent'
-  | 'manager'
-  | 'demo';
 export type UserStatus = 'active' | 'inactive' | 'suspended' | 'pending';
 
 export interface LoginRequest {

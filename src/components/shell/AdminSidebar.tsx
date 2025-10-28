@@ -1,64 +1,47 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
 import { cn } from '@/lib/utils';
 import {
-  LayoutDashboard,
-  Users,
-  UserCheck,
-  Stethoscope,
-  Calendar,
-  MessageSquare,
-  Bot,
-  Workflow,
-  BarChart3,
-  FileText,
-  Settings,
-  Shield,
-  Bell,
-  Mail,
-  CreditCard,
-  Database,
-  Zap,
-  Eye,
-  UserCog,
-  Activity,
-  TrendingUp,
-  PieChart,
-  Building2,
-  Phone,
-  ClipboardList,
-  BookOpen,
-  Headphones,
-  Globe,
-  Lock,
-  Search,
-  Filter,
-  ChevronDown,
-  ChevronRight,
-  Home,
-  Heart,
-  Brain,
-  Target,
-  Briefcase,
-  Star,
-  Clock,
-  CheckCircle,
-  AlertTriangle,
-  Info,
-  Plus,
-  Edit,
-  Trash2,
-  Download,
-  Upload,
-  RefreshCw,
-  MoreHorizontal,
-  Key
+    Activity,
+    BarChart3,
+    Bell,
+    BookOpen,
+    Bot,
+    Brain,
+    Building2,
+    Calendar,
+    ChevronDown,
+    ChevronRight,
+    ClipboardList,
+    CreditCard,
+    Database,
+    Edit,
+    Eye,
+    FileText,
+    Globe,
+    Heart,
+    Key,
+    LayoutDashboard,
+    Lock,
+    Mail,
+    MessageSquare,
+    Phone,
+    PieChart,
+    Settings,
+    Shield,
+    Stethoscope,
+    Target,
+    TrendingUp,
+    UserCheck,
+    UserCog,
+    Users,
+    Workflow,
+    Zap
 } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 
 interface SidebarItem {
   id: string;
@@ -81,6 +64,7 @@ interface SidebarSection {
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { t } = useT();
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['dashboard', 'healthcare', 'crm', 'ai']));
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
@@ -507,7 +491,7 @@ export default function AdminSidebar() {
             if (hasChildren) {
               toggleItem(item.id);
             } else if (item.href) {
-              // Navigate to the page
+              router.push(item.href);
             }
           }}
         >

@@ -1,13 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { authorize } from '@/lib/auth/authorize';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Role-based route protection
 const roleRoutes = {
   '/patient': ['patient'],
-  '/doctor': ['doctor'],
-  '/staff': ['staff', 'supervisor', 'admin'],
-  '/supervisor': ['supervisor', 'admin'],
-  '/admin': ['admin'],
+  '/doctor': ['doctor', 'therapist'], // therapist is treated as doctor role
+  '/staff': ['staff', 'nurse', 'supervisor', 'manager', 'admin'],
+  '/supervisor': ['supervisor', 'manager', 'admin'],
+  '/admin': ['admin'], // Admin only
+  '/agent': ['agent', 'staff', 'supervisor', 'manager', 'admin'], // Agent access routes
 };
 
 export async function authMiddleware(request: NextRequest) {

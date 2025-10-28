@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -45,12 +45,16 @@ export async function GET(request: NextRequest) {
 
 function getPositionTitle(role: string): string {
   const titles: Record<string, string> = {
+    admin: 'مدير النظام',
+    manager: 'مدير',
+    supervisor: 'مشرف',
     doctor: 'طبيب',
-    therapist: 'معالج',
-    staff: 'موظف',
-    admin: 'مدير',
+    therapist: 'معالج', // Alias for doctor
     nurse: 'ممرض',
-    receptionist: 'موظف استقبال',
+    staff: 'موظف',
+    agent: 'وكيل',
+    patient: 'مريض',
+    demo: 'تجريبي',
   };
 
   return titles[role] || 'موظف';
