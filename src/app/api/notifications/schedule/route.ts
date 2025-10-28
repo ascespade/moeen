@@ -243,7 +243,8 @@ async function __generateNotificationContent(
     payment_confirmation: {
       title: 'تأكيد الدفع',
       message:
-        customMessage || `تم تأكيد دفعتك بقيمة ${(templateData as any)?.amount} ريال`,
+        customMessage ||
+        `تم تأكيد دفعتك بقيمة ${(templateData as any)?.amount} ريال`,
     },
     insurance_claim_update: {
       title: 'تحديث مطالبة التأمين',
@@ -262,7 +263,9 @@ async function __generateNotificationContent(
     general_announcement: {
       title: (templateData as any)?.title || 'إعلان عام',
       message:
-        customMessage || (templateData as any)?.message || 'إعلان من المركز الطبي',
+        customMessage ||
+        (templateData as any)?.message ||
+        'إعلان من المركز الطبي',
     },
   };
 

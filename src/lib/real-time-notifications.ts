@@ -249,8 +249,7 @@ export class RealTimeNotificationSystem {
     this.notifications.set(notificationId, notification);
 
     // Send to crisis team
-    const crisisTeamContacts =
-      this.emergencyContacts.get('medical_team') || [];
+    const crisisTeamContacts = this.emergencyContacts.get('medical_team') || [];
     for (const contact of crisisTeamContacts) {
       await this.sendSMS(contact, notification.title, notification.message);
     }

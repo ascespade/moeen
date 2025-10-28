@@ -113,7 +113,9 @@ export function ThemeSwitcher({
   // ========================================
 
   const renderIconOnly = () => {
-    const currentOption = themeOptions.find(option => option.value === (theme as any));
+    const currentOption = themeOptions.find(
+      option => option.value === (theme as any)
+    );
     const IconComponent = currentOption?.icon || Sun;
 
     return (
@@ -154,12 +156,16 @@ export function ThemeSwitcher({
         >
           {themeOptions.find(option => option.value === (theme as any))?.icon &&
             React.createElement(
-              themeOptions.find(option => option.value === (theme as any))?.icon || Sun,
+              themeOptions.find(option => option.value === (theme as any))
+                ?.icon || Sun,
               { className: sizeConfig[size].icon }
             )}
           {showLabel && variant !== 'icon-only' && (
             <span className={sizeConfig[size].label}>
-              {themeOptions.find(option => option.value === (theme as any))?.label}
+              {
+                themeOptions.find(option => option.value === (theme as any))
+                  ?.label
+              }
             </span>
           )}
         </button>

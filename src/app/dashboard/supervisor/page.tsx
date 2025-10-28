@@ -227,8 +227,8 @@ export default function SupervisorDashboard() {
                               staff.efficiency >= 80
                                 ? 'primary'
                                 : staff.efficiency >= 60
-                                ? 'secondary'
-                                : 'error'
+                                  ? 'secondary'
+                                  : 'error'
                             }
                           >
                             {staff.efficiency >= 80

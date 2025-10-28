@@ -1,11 +1,13 @@
 # 🗄️ Database Migrations
 
 ## 📋 Migration Overview
+
 This directory contains all database migration files for the Moeen Medical Center system. Migrations are organized chronologically and by module functionality.
 
 ## 📁 Migration Structure
 
 ### Core System Migrations (001-005)
+
 - `001_create_roles_users.sql` - User roles and authentication system
 - `002_patients_doctors_appointments.sql` - Core medical entities
 - `003_insurance_payments_claims.sql` - Financial and insurance system
@@ -13,6 +15,7 @@ This directory contains all database migration files for the Moeen Medical Cente
 - `005_reports_metrics.sql` - Reporting and analytics
 
 ### Module Enhancements (040-052)
+
 - `040_appointments_module_enhancement.sql` - Enhanced appointment system
 - `041_appointments_triggers_functions.sql` - Appointment triggers and functions
 - `042_medical_records_enhancement.sql` - Enhanced medical records
@@ -30,21 +33,25 @@ This directory contains all database migration files for the Moeen Medical Cente
 ## 🚀 Running Migrations
 
 ### Apply All Migrations
+
 ```bash
 npm run migrate
 ```
 
 ### Apply Specific Migration
+
 ```bash
 npm run migrate:single <migration_number>
 ```
 
 ### Rollback Migration
+
 ```bash
 npm run migrate:rollback <migration_number>
 ```
 
 ### Check Migration Status
+
 ```bash
 npm run migrate:status
 ```
@@ -52,6 +59,7 @@ npm run migrate:status
 ## 📊 Database Schema Overview
 
 ### Core Tables
+
 - `users` - User accounts and profiles
 - `roles` - User roles and permissions
 - `patients` - Patient information
@@ -65,6 +73,7 @@ npm run migrate:status
 - `settings` - System configuration
 
 ### Advanced Tables
+
 - `crm_contacts` - CRM contact management
 - `crm_deals` - Sales and deal tracking
 - `crm_activities` - Activity logging
@@ -79,6 +88,7 @@ npm run migrate:status
 ## 🔧 Migration Guidelines
 
 ### Creating New Migrations
+
 1. Use sequential numbering (053, 054, etc.)
 2. Include descriptive names
 3. Add proper comments
@@ -86,16 +96,19 @@ npm run migrate:status
 5. Include rollback procedures
 
 ### Migration Naming Convention
+
 ```
 {number}_{module}_{description}.sql
 ```
 
 Examples:
+
 - `053_user_preferences.sql`
 - `054_advanced_analytics.sql`
 - `055_mobile_app_support.sql`
 
 ## ⚠️ Important Notes
+
 - Always backup database before running migrations
 - Test migrations in development environment first
 - Never modify existing migration files
@@ -103,6 +116,7 @@ Examples:
 - Document any breaking changes
 
 ## 📈 Migration Status
+
 - **Total Migrations**: 18
 - **Applied**: 18
 - **Pending**: 0
@@ -110,4 +124,5 @@ Examples:
 - **Last Updated**: October 2024
 
 ---
-*For technical support, refer to the developer guide or contact the database team.*
+
+_For technical support, refer to the developer guide or contact the database team._

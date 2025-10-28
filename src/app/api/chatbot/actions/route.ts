@@ -52,10 +52,7 @@ export async function POST(_request: NextRequest) {
     const body = await _request.json();
 
     // Validate input
-    const validation = await ValidationHelper.validateAsync(
-      actionSchema,
-      body
-    );
+    const validation = await ValidationHelper.validateAsync(actionSchema, body);
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.message },

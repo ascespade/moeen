@@ -5,17 +5,23 @@ const path = require('path');
 function fixImports(filePath) {
   try {
     let content = fs.readFileSync(filePath, 'utf8');
-    
+
     // Fix UI component imports - convert to lowercase
-    content = content.replace(/@\/components\/ui\/([A-Z][a-zA-Z]*)/g, (match, component) => {
-      return `@/components/ui/${component.toLowerCase()}`;
-    });
-    
+    content = content.replace(
+      /@\/components\/ui\/([A-Z][a-zA-Z]*)/g,
+      (match, component) => {
+        return `@/components/ui/${component.toLowerCase()}`;
+      }
+    );
+
     // Fix other common imports
-    content = content.replace(/@\/components\/([A-Z][a-zA-Z]*)/g, (match, component) => {
-      return `@/components/${component.toLowerCase()}`;
-    });
-    
+    content = content.replace(
+      /@\/components\/([A-Z][a-zA-Z]*)/g,
+      (match, component) => {
+        return `@/components/${component.toLowerCase()}`;
+      }
+    );
+
     fs.writeFileSync(filePath, content);
     console.log(`Fixed: ${filePath}`);
   } catch (error) {
@@ -26,12 +32,16 @@ function fixImports(filePath) {
 // Function to recursively find and fix all TypeScript/TSX files
 function fixAllFiles(dir) {
   const files = fs.readdirSync(dir);
-  
+
   files.forEach(file => {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
-    
-    if (stat.isDirectory() && !file.startsWith('.') && file !== 'node_modules') {
+
+    if (
+      stat.isDirectory() &&
+      !file.startsWith('.') &&
+      file !== 'node_modules'
+    ) {
       fixAllFiles(filePath);
     } else if (file.endsWith('.tsx') || file.endsWith('.ts')) {
       fixImports(filePath);

@@ -92,14 +92,11 @@ export default function StaffDashboard() {
 
   const handleSubmitClaim = async (claimId: string) => {
     try {
-      const response = await fetch(
-        `/api/insurance/claims/${claimId}/submit`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status: 'submitted' }),
-        }
-      );
+      const response = await fetch(`/api/insurance/claims/${claimId}/submit`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'submitted' }),
+      });
 
       if (response.ok) {
         // Refresh data

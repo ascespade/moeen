@@ -16,9 +16,7 @@ import React, {
   ReactNode,
 } from 'react';
 
-import {
-  Theme,
-} from '@/lib/centralized-theme';
+import { Theme } from '@/lib/centralized-theme';
 
 // ========================================
 // CONTEXT TYPES - أنواع السياق
