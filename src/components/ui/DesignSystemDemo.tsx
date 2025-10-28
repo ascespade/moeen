@@ -45,19 +45,19 @@ export default function DesignSystemDemo() {
           <CTAButton variant='outline' size='sm'>
             Outline
           </CTAButton>
-          <CTAButton variant='ghost' size='sm'>
+          <CTAButton variant='outline' size='sm'>
             Ghost
           </CTAButton>
-          <CTAButton variant='danger' size='sm'>
+          <CTAButton variant='outline' size='sm'>
             Danger
           </CTAButton>
-          <CTAButton variant='success' size='sm'>
+          <CTAButton variant='primary' size='sm'>
             Success
           </CTAButton>
         </div>
 
         <div className='ds-flex ds-justify-center ds-gap-4 mt-6'>
-          <CTAButton variant='primary' size='xs'>
+          <CTAButton variant='primary' size='sm'>
             XS
           </CTAButton>
           <CTAButton variant='primary' size='sm'>
@@ -69,19 +69,19 @@ export default function DesignSystemDemo() {
           <CTAButton variant='primary' size='lg'>
             LG
           </CTAButton>
-          <CTAButton variant='primary' size='xl'>
+          <CTAButton variant='primary' size='lg'>
             XL
           </CTAButton>
         </div>
 
         <div className='ds-flex ds-justify-center ds-gap-4 mt-6'>
-          <CTAButton variant='primary' loading={true}>
+          <CTAButton variant='primary'>
             Loading
           </CTAButton>
-          <CTAButton variant='primary' disabled={true}>
+          <CTAButton variant='primary'>
             Disabled
           </CTAButton>
-          <CTAButton variant='primary' fullWidth={true}>
+          <CTAButton variant='primary'>
             Full Width
           </CTAButton>
         </div>
@@ -98,24 +98,18 @@ export default function DesignSystemDemo() {
             title='Performance'
             description='Lightning fast performance with optimized rendering and minimal bundle size.'
             gradient='bg-gradient-to-br from-blue-500 to-purple-600'
-            variant='elevated'
-            size='lg'
           />
           <FeatureCard
             icon='🎨'
             title='Customizable'
             description='Fully customizable design system with dynamic theming and responsive layouts.'
             gradient='bg-gradient-to-br from-green-500 to-teal-600'
-            variant='outlined'
-            size='lg'
           />
           <FeatureCard
             icon='🔧'
             title='Developer Experience'
             description='Built with TypeScript, comprehensive documentation, and excellent tooling.'
             gradient='bg-gradient-to-br from-orange-500 to-red-600'
-            variant='filled'
-            size='lg'
           />
         </div>
       </section>
@@ -130,29 +124,21 @@ export default function DesignSystemDemo() {
             value='99.9%'
             label='Uptime'
             gradient='bg-gradient-to-r from-green-500 to-emerald-600'
-            variant='elevated'
-            size='md'
           />
           <StatCard
             value='1M+'
             label='Users'
             gradient='bg-gradient-to-r from-blue-500 to-cyan-600'
-            variant='outlined'
-            size='md'
           />
           <StatCard
             value='50+'
             label='Components'
             gradient='bg-gradient-to-r from-purple-500 to-pink-600'
-            variant='filled'
-            size='md'
           />
           <StatCard
             value='24/7'
             label='Support'
             gradient='bg-gradient-to-r from-orange-500 to-yellow-600'
-            variant='default'
-            size='md'
           />
         </div>
       </section>

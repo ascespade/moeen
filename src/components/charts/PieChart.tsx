@@ -15,7 +15,7 @@ import {
   Legend,
 } from 'recharts';
 
-import { _useTheme } from '@/context/ThemeContext';
+import { useTheme } from '@/context/ThemeContext';
 
 interface PieChartProps {
   data: Array<{
@@ -45,7 +45,7 @@ export const PieChart: React.FC<PieChartProps> = ({
   const { isDark } = useTheme();
 
   // Brand colors for default coloring
-  const __brandColors = [
+  const brandColors = [
     'var(--brand-primary)',
     'var(--brand-secondary)',
     'var(--brand-accent)',
@@ -56,12 +56,12 @@ export const PieChart: React.FC<PieChartProps> = ({
   ];
 
   // Add colors to data if not provided
-  const __dataWithColors = data.map((item, index) => ({
+  const dataWithColors = data.map((item, index) => ({
     ...item,
     color: item.color || brandColors[index % brandColors.length],
   }));
 
-  const __isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+  const isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
   return (
     <div className={`w-full ${className}`} style={{ height }}>
@@ -74,8 +74,8 @@ export const PieChart: React.FC<PieChartProps> = ({
             labelLine={false}
             label={
               labelKey
-                ? ({ name, percent }) =>
-                    `${name} ${(percent * 100).toFixed(0)}%`
+                ? ({ name, percent }: any) =>
+                    `${name} ${((percent as number) * 100).toFixed(0)}%`
                 : false
             }
             outerRadius={outerRadius}

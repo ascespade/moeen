@@ -1,10 +1,10 @@
 import dynamic from 'next/dynamic';
-import { _Suspense } from 'react';
+import { Suspense } from 'react';
 
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 // Lazy load heavy components
-export const __LazyCalendar = dynamic(
+export const LazyCalendar = dynamic(
   () => import('@/components/appointments/AppointmentManager'),
   {
     loading: () => <LoadingSpinner />,
@@ -12,7 +12,7 @@ export const __LazyCalendar = dynamic(
   }
 );
 
-export const __LazyChart = dynamic(
+export const LazyChart = dynamic(
   () => import('@/components/dashboard/Charts'),
   {
     loading: () => <LoadingSpinner />,
@@ -20,7 +20,7 @@ export const __LazyChart = dynamic(
   }
 );
 
-export const __LazyFlowBuilder = dynamic(
+export const LazyFlowBuilder = dynamic(
   () => import('@/components/chatbot/MoainChatbot'),
   {
     loading: () => <LoadingSpinner />,
@@ -28,7 +28,7 @@ export const __LazyFlowBuilder = dynamic(
   }
 );
 
-export const __LazyDataTable = dynamic(
+export const LazyDataTable = dynamic(
   () => import('@/components/shared/DataTable'),
   {
     loading: () => <div className='h-64 bg-gray-100 animate-pulse rounded' />,
@@ -36,13 +36,13 @@ export const __LazyDataTable = dynamic(
   }
 );
 
-export const __LazyModal = dynamic(() => import('@/components/shared/Modal'), {
+export const LazyModal = dynamic(() => import('@/components/shared/Modal'), {
   loading: () => null,
   ssr: false,
 });
 
 // Suspense wrapper for better loading states
-export function __SuspenseWrapper({
+export function SuspenseWrapper({
   children,
   fallback = <LoadingSpinner />,
   className = '',
@@ -58,7 +58,7 @@ export function __SuspenseWrapper({
   );
 }
 
-const __LazyComponents = {
+const LazyComponents = {
   LazyCalendar,
   LazyChart,
   LazyFlowBuilder,

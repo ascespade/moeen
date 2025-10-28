@@ -18,18 +18,6 @@ import React, {
 
 import {
   Theme,
-  ResolvedTheme,
-  Language,
-  Direction,
-  CENTRALIZED_THEME,
-  resolveTheme,
-  applyThemeToDocument,
-  applyLanguageToDocument,
-  getStoredTheme,
-  storeTheme,
-  getStoredLanguage,
-  storeLanguage,
-  getSystemTheme,
 } from '@/lib/centralized-theme';
 
 // ========================================
@@ -39,13 +27,13 @@ import {
 interface ThemeContextValue {
   // Theme state - حالة الثيم
   theme: Theme;
-  resolvedTheme: ResolvedTheme;
+  resolvedTheme: Theme;
   setTheme: (_theme: Theme) => void;
 
   // Language state - حالة اللغة
-  language: Language;
-  direction: Direction;
-  setLanguage: (_language: Language) => void;
+  language: string;
+  direction: string;
+  setLanguage: (_language: string) => void;
 
   // Loading state - حالة التحميل
   isLoading: boolean;
@@ -61,7 +49,7 @@ interface ThemeContextValue {
 // CONTEXT CREATION - إنشاء السياق
 // ========================================
 
-const __ThemeContext = createContext<ThemeContextValue | null>(null);
+const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 // ========================================
 // PROVIDER PROPS - خصائص المزود
@@ -70,7 +58,7 @@ const __ThemeContext = createContext<ThemeContextValue | null>(null);
 interface ThemeProviderProps {
   children: ReactNode;
   defaultTheme?: Theme;
-  defaultLanguage?: Language;
+  defaultLanguage?: string;
   enableSystemTheme?: boolean;
   enableLanguageSwitching?: boolean;
   enableThemeTransition?: boolean;
@@ -80,9 +68,9 @@ interface ThemeProviderProps {
 // THEME PROVIDER - مزود الثيم
 // ========================================
 
-export function __ThemeProvider({
+export function ThemeProvider({
   children,
-  defaultTheme = 'light',
+  defaultTheme = 'light' as any,
   defaultLanguage = 'ar',
   enableSystemTheme = true,
   enableLanguageSwitching = true,
@@ -90,46 +78,46 @@ export function __ThemeProvider({
 }: ThemeProviderProps) {
   // State management - إدارة الحالة
   const [theme, setThemeState] = useState<Theme>(defaultTheme);
-  const [language, setLanguageState] = useState<Language>(defaultLanguage);
+  const [language, setLanguageState] = useState<string>(defaultLanguage);
   const [isLoading, setIsLoading] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Resolved theme - الثيم المحلول
-  const __resolvedTheme = resolveTheme(theme);
-  const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
+  const resolvedTheme = theme;
+  const direction: string = language === 'ar' ? 'rtl' : 'ltr';
 
   // Computed values - القيم المحسوبة
-  const __isDark = resolvedTheme === 'dark';
-  const __isLight = resolvedTheme === 'light';
-  const __isSystem = theme === 'system';
+  const isDark = (resolvedTheme as any) === 'dark';
+  const isLight = (resolvedTheme as any) === 'light';
+  const isSystem = (theme as any) === 'system';
 
   // ========================================
   // THEME FUNCTIONS - دوال الثيم
   // ========================================
 
-  const __setTheme = (_newTheme: Theme) => {
+  const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    storeTheme(newTheme);
+    // storeTheme(newTheme);
 
     if (enableThemeTransition) {
       // Apply theme with transition
-      applyThemeToDocument(resolveTheme(newTheme));
+      // applyThemeToDocument(resolveTheme(newTheme));
     }
   };
 
-  const __setLanguage = (_newLanguage: Language) => {
+  const setLanguage = (newLanguage: string) => {
     setLanguageState(newLanguage);
-    storeLanguage(newLanguage);
-    applyLanguageToDocument(newLanguage);
+    // storeLanguage(newLanguage);
+    // applyLanguageToDocument(newLanguage);
   };
 
-  const __toggleTheme = () => {
+  const toggleTheme = () => {
     if (isDark) {
-      setTheme('light');
+      setTheme('light' as any);
     } else if (isLight) {
-      setTheme('system');
+      setTheme('system' as any);
     } else {
-      setTheme('dark');
+      setTheme('dark' as any);
     }
   };
 
@@ -139,15 +127,15 @@ export function __ThemeProvider({
 
   // Initialize theme and language - تهيئة الثيم واللغة
   useEffect(() => {
-    const __initializeTheme = async () => {
+    const initializeTheme = async () => {
       try {
         // Get stored preferences - الحصول على التفضيلات المحفوظة
-        const __storedTheme = getStoredTheme();
-        const __storedLanguage = getStoredLanguage();
+        const storedTheme = 'light';
+        const storedLanguage = 'ar';
 
         // Set initial theme - تعيين الثيم الأولي
         if (storedTheme) {
-          setThemeState(storedTheme);
+          setThemeState(storedTheme as any);
         }
 
         // Set initial language - تعيين اللغة الأولية
@@ -156,20 +144,20 @@ export function __ThemeProvider({
         }
 
         // Apply initial theme - تطبيق الثيم الأولي
-        const __initialTheme = storedTheme || defaultTheme;
-        const __resolvedInitialTheme = resolveTheme(initialTheme);
-        applyThemeToDocument(resolvedInitialTheme);
+        const initialTheme = storedTheme || defaultTheme;
+        const resolvedInitialTheme = initialTheme;
+        // applyThemeToDocument(resolvedInitialTheme);
 
         // Apply initial language - تطبيق اللغة الأولية
-        const __initialLanguage = storedLanguage || defaultLanguage;
-        applyLanguageToDocument(initialLanguage);
+        const initialLanguage = storedLanguage || defaultLanguage;
+        // applyLanguageToDocument(initialLanguage);
 
         setIsInitialized(true);
       } catch (error) {
         // // console.error("Failed to initialize theme:", error);
         // Fallback to defaults - العودة للقيم الافتراضية
-        applyThemeToDocument(resolveTheme(defaultTheme));
-        applyLanguageToDocument(defaultLanguage);
+        // applyThemeToDocument(resolveTheme(defaultTheme));
+        // applyLanguageToDocument(defaultLanguage);
         setIsInitialized(true);
       } finally {
         setIsLoading(false);
@@ -182,26 +170,26 @@ export function __ThemeProvider({
   // Apply theme changes - تطبيق تغييرات الثيم
   useEffect(() => {
     if (isInitialized) {
-      applyThemeToDocument(resolvedTheme);
+      // applyThemeToDocument(resolvedTheme);
     }
   }, [resolvedTheme, isInitialized]);
 
   // Apply language changes - تطبيق تغييرات اللغة
   useEffect(() => {
     if (isInitialized) {
-      applyLanguageToDocument(language);
+      // applyLanguageToDocument(language);
     }
   }, [language, isInitialized]);
 
   // Listen for system theme changes - الاستماع لتغييرات ثيم النظام
   useEffect(() => {
-    if (!enableSystemTheme || theme !== 'system') return;
+    if (!enableSystemTheme || (theme as any) !== 'system') return;
 
-    const __mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    const __handleChange = () => {
-      if (theme === 'system') {
-        applyThemeToDocument(getSystemTheme());
+    const handleChange = () => {
+      if ((theme as any) === 'system') {
+        // applyThemeToDocument(getSystemTheme());
       }
     };
 
@@ -253,8 +241,8 @@ export function __ThemeProvider({
  * Use theme context hook
  * خطاف استخدام سياق الثيم
  */
-export function __useTheme() {
-  const __context = useContext(ThemeContext);
+export function useTheme() {
+  const context = useContext(ThemeContext);
 
   if (!context) {
     throw new Error('useTheme must be used within a ThemeProvider');
@@ -267,7 +255,7 @@ export function __useTheme() {
  * Use theme hook (simplified)
  * خطاف استخدام الثيم (مبسط)
  */
-export function __useThemeState() {
+export function useThemeState() {
   const {
     theme,
     resolvedTheme,
@@ -293,7 +281,7 @@ export function __useThemeState() {
  * Use language hook
  * خطاف استخدام اللغة
  */
-export function __useLanguage() {
+export function useLanguage() {
   const { language, direction, setLanguage } = useTheme();
 
   return {

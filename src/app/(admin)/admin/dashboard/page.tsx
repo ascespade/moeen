@@ -1,10 +1,10 @@
 'use client';
 import Image from 'next/image';
-import { _useState } from 'react';
+import { useState } from 'react';
 
-import { _Badge } from '@/components/ui/Badge';
-import { _Button } from '@/components/ui/Button';
-import { _Card } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 
 interface DashboardStats {
   totalPatients: number;
@@ -173,7 +173,7 @@ const mockStaffWorkHours: StaffWorkHours[] = [
   },
 ];
 
-const __activityTypeConfig = {
+const activityTypeConfig = {
   appointment: { icon: '📅', color: 'blue', bg: 'bg-blue-50' },
   claim: { icon: '📋', color: 'green', bg: 'bg-green-50' },
   patient: { icon: '👤', color: 'red', bg: 'bg-red-50' },
@@ -181,20 +181,20 @@ const __activityTypeConfig = {
   payment: { icon: '💰', color: 'green', bg: 'bg-green-50' },
 } as const;
 
-const __statusConfig = {
+const statusConfig = {
   success: { color: 'text-green-600', bg: 'bg-green-50' },
   warning: { color: 'text-yellow-600', bg: 'bg-yellow-50' },
   error: { color: 'text-red-600', bg: 'bg-red-50' },
   info: { color: 'text-orange-600', bg: 'bg-orange-50' },
 };
 
-export default function __AdminDashboard() {
+export default function AdminDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState<
     'today' | 'week' | 'month' | 'year'
   >('month');
 
-  const __getActivityIcon = (_type: RecentActivity['type']) => {
-    const __config = activityTypeConfig[type];
+  const getActivityIcon = (type: RecentActivity['type']) => {
+    const config = activityTypeConfig[type];
     return (
       <div
         className={`h-8 w-8 rounded-full ${config.bg} flex items-center justify-center text-sm`}
@@ -204,12 +204,12 @@ export default function __AdminDashboard() {
     );
   };
 
-  const __getStatusColor = (_status: RecentActivity['status']) => {
-    const __config = statusConfig[status];
+  const getStatusColor = (_status: RecentActivity['status']) => {
+    const config = statusConfig[status];
     return `${config.color} ${config.bg}`;
   };
 
-  const __getOnDutyStatus = (_staff: StaffWorkHours) => {
+  const getOnDutyStatus = (staff: StaffWorkHours) => {
     if (staff.isOnDuty) {
       return (
         <div className='flex items-center gap-2 text-green-600'>

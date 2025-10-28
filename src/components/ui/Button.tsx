@@ -73,10 +73,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ...props,
         className: cn(
           computedClasses,
-          (children as React.ReactElement).props?.className
+          (children as any).props?.className
         ),
         disabled: disabled || loading,
-      });
+      } as any);
     }
 
     return (

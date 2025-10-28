@@ -1,6 +1,6 @@
-import { _ImageIcon } from 'lucide-react';
+import { ImageIcon } from 'lucide-react';
 import Image from 'next/image';
-import { _useState } from 'react';
+import { useState } from 'react';
 
 interface OptimizedImageProps {
   src: string;
@@ -17,7 +17,7 @@ interface OptimizedImageProps {
   style?: React.CSSProperties;
 }
 
-export function __OptimizedImage({
+export function OptimizedImage({
   src,
   alt,
   width,
@@ -48,7 +48,7 @@ export function __OptimizedImage({
     );
   }
 
-  const __imageProps = {
+  const imageProps = {
     src,
     alt,
     priority,
@@ -84,7 +84,7 @@ export function __OptimizedImage({
 }
 
 // Preset configurations for common use cases
-export const __ImagePresets = {
+export const ImagePresets = {
   avatar: {
     width: 40,
     height: 40,
@@ -119,19 +119,19 @@ export const __ImagePresets = {
 };
 
 // Convenience components for common use cases
-export function __AvatarImage(
+export function AvatarImage(
   props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>
 ) {
   return <OptimizedImage {...ImagePresets.avatar} {...props} />;
 }
 
-export function __ThumbnailImage(
+export function ThumbnailImage(
   props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>
 ) {
   return <OptimizedImage {...ImagePresets.thumbnail} {...props} />;
 }
 
-export function __HeroImage(
+export function HeroImage(
   props: Omit<
     OptimizedImageProps,
     'width' | 'height' | 'className' | 'quality' | 'priority'
@@ -140,13 +140,13 @@ export function __HeroImage(
   return <OptimizedImage {...ImagePresets.hero} {...props} />;
 }
 
-export function __CardImage(
+export function CardImage(
   props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>
 ) {
   return <OptimizedImage {...ImagePresets.card} {...props} />;
 }
 
-export function __GalleryImage(
+export function GalleryImage(
   props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>
 ) {
   return <OptimizedImage {...ImagePresets.gallery} {...props} />;

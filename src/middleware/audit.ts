@@ -3,13 +3,13 @@
  * Implements request/response logging and monitoring
  */
 
-import { _NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { _logger } from '@/lib/logger';
+import { logger } from '@/lib/logger';
 
-export function __auditMiddleware(_request: NextRequest) {
-  const __startTime = Date.now();
-  const __requestId = crypto.randomUUID();
+export function __auditMiddleware(request: NextRequest) {
+  const startTime = Date.now();
+  const requestId = crypto.randomUUID();
 
   // Log request
   logger.info('Request started', {
@@ -20,7 +20,7 @@ export function __auditMiddleware(_request: NextRequest) {
     ip: request.headers.get('x-forwarded-for') || request.ip,
   });
 
-  const __response = NextResponse.next();
+  const response = NextResponse.next();
 
   // Add request ID to response headers
   response.headers.set('X-Request-ID', requestId);
@@ -31,8 +31,8 @@ export function __auditMiddleware(_request: NextRequest) {
   return response;
 }
 
-export function __auditErrorMiddleware(_error: Error, request: NextRequest) {
-  const __requestId = request.headers.get('x-request-id') || 'unknown';
+export function __auditErrorMiddleware(error: Error, request: NextRequest) {
+  const requestId = request.headers.get('x-request-id') || 'unknown';
 
   logger.error('Request failed', {
     requestId,

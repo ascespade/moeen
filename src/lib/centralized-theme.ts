@@ -168,17 +168,17 @@ export const darkTheme: Theme = {
   },
 };
 
-export const __themes = {
+export const themes = {
   light: lightTheme,
   dark: darkTheme,
 };
 
-export function __getTheme(_name: keyof typeof themes): Theme {
+export function __getTheme(name: keyof typeof themes): Theme {
   return themes[name] || lightTheme;
 }
 
-export function __applyTheme(_theme: Theme): void {
-  const __root = document.documentElement;
+export function __applyTheme(theme: Theme): void {
+  const root = document.documentElement;
 
   // Apply CSS custom properties
   Object.entries(theme.colors).forEach(([key, value]) => {
@@ -224,12 +224,12 @@ export function __getStoredTheme(): keyof typeof themes | null {
   return null;
 }
 
-export function __setStoredTheme(_theme: keyof typeof themes): void {
+export function __setStoredTheme(theme: keyof typeof themes): void {
   if (typeof window !== 'undefined') {
     localStorage.setItem('theme', theme);
   }
 }
 
 export function __getInitialTheme(): keyof typeof themes {
-  return getStoredTheme() || getSystemTheme();
+  return __getStoredTheme() || __getSystemTheme();
 }

@@ -393,7 +393,7 @@ const APIKeysSettingsPage: React.FC = () => {
             <CardContent>
               <div className='space-y-4'>
                 {keys.map(keyConfig => {
-                  const Icon = keyConfig.icon;
+                  const Sun = keyConfig.icon;
                   const isVisible = visibleKeys.has(keyConfig.id);
                   const displayValue = isVisible
                     ? keyConfig.key_value
@@ -406,7 +406,7 @@ const APIKeysSettingsPage: React.FC = () => {
                     >
                       <div className='flex items-center justify-between'>
                         <div className='flex items-center gap-3'>
-                          <Icon className='w-5 h-5 text-gray-600' />
+                          <Sun className='w-5 h-5 text-gray-600' />
                           <div>
                             <h4 className='font-semibold text-gray-900'>
                               {keyConfig.name}

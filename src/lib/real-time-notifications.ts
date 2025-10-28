@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
-import { _Server } from 'socket.io';
+import { Server } from 'socket.io';
 // Real-time Notifications System
-import { _Server } from 'socket.io';
+import { Server } from 'socket.io';
 
 export interface NotificationConfig {
   email: {
@@ -101,7 +101,7 @@ export class RealTimeNotificationSystem {
 
   // Emergency Alert System
   async handleEmergencyAlert(_alert: EmergencyAlert) {
-    const __notificationId = this.generateNotificationId();
+    const notificationId = this.generateNotificationId();
 
     const notification: Notification = {
       id: notificationId,
@@ -163,7 +163,7 @@ export class RealTimeNotificationSystem {
     _patientId: string,
     appointmentData: unknown
   ) {
-    const __notificationId = this.generateNotificationId();
+    const notificationId = this.generateNotificationId();
 
     const notification: Notification = {
       id: notificationId,
@@ -201,7 +201,7 @@ export class RealTimeNotificationSystem {
 
   // Reminder Notifications
   async sendReminderNotification(_patientId: string, reminderData: unknown) {
-    const __notificationId = this.generateNotificationId();
+    const notificationId = this.generateNotificationId();
 
     const notification: Notification = {
       id: notificationId,
@@ -232,7 +232,7 @@ export class RealTimeNotificationSystem {
 
   // Crisis Intervention Notifications
   async sendCrisisNotification(_patientId: string, crisisData: unknown) {
-    const __notificationId = this.generateNotificationId();
+    const notificationId = this.generateNotificationId();
 
     const notification: Notification = {
       id: notificationId,
@@ -249,7 +249,7 @@ export class RealTimeNotificationSystem {
     this.notifications.set(notificationId, notification);
 
     // Send to crisis team
-    const __crisisTeamContacts =
+    const crisisTeamContacts =
       this.emergencyContacts.get('medical_team') || [];
     for (const contact of crisisTeamContacts) {
       await this.sendSMS(contact, notification.title, notification.message);
@@ -287,7 +287,7 @@ export class RealTimeNotificationSystem {
     data?: unknown
   ) {
     try {
-      const __mailOptions = {
+      const mailOptions = {
         from: 'noreply@alhemam.sa',
         to,
         subject,
@@ -363,7 +363,7 @@ export class RealTimeNotificationSystem {
 
   // Analytics
   getNotificationStats() {
-    const __notifications = Array.from(this.notifications.values());
+    const notifications = Array.from(this.notifications.values());
     return {
       total: notifications.length,
       sent: notifications.filter(n => n.sent).length,

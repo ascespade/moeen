@@ -3,9 +3,9 @@
  * Test all API endpoints for functionality
  */
 
-import { _NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function __GET(_request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ||
@@ -32,7 +32,7 @@ export async function __GET(_request: NextRequest) {
     };
 
     // Test endpoints
-    const __endpoints = [
+    const endpoints = [
       { name: 'Health Check', url: '/api/test/health', method: 'GET' },
       {
         name: 'Dashboard Metrics',
@@ -67,14 +67,14 @@ export async function __GET(_request: NextRequest) {
       testResults.totalTests++;
 
       try {
-        const __response = await fetch(`${baseUrl}${endpoint.url}`, {
+        const response = await fetch(`${baseUrl}${endpoint.url}`, {
           method: endpoint.method,
           headers: {
             'Content-Type': 'application/json',
           },
         });
 
-        const __result = {
+        const result = {
           name: endpoint.name,
           url: endpoint.url,
           method: endpoint.method,
@@ -106,7 +106,7 @@ export async function __GET(_request: NextRequest) {
     }
 
     // Calculate success rate
-    const __successRate = (testResults.passed / testResults.totalTests) * 100;
+    const successRate = (testResults.passed / testResults.totalTests) * 100;
 
     return NextResponse.json({
       ...testResults,

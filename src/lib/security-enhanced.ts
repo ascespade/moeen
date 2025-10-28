@@ -1,18 +1,18 @@
-import { _NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { _createHash, randomBytes } from 'crypto';
 import { _realDB } from './supabase-real';
 // Enhanced Security System for Hemam Center
-import { _NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
 // Rate limiting store
-const __rateLimitStore = new Map<
+const rateLimitStore = new Map<
   string,
   { count: number; resetTime: number }
 >();
 
 // Security headers
-export const __securityHeaders = {
+export const securityHeaders = {
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
   'X-XSS-Protection': '1; mode=block',
@@ -34,9 +34,9 @@ export class EnhancedRateLimiter {
   }
 
   isRateLimited(_identifier: string): boolean {
-    const __now = Date.now();
-    const __key = identifier;
-    const __record = rateLimitStore.get(key);
+    const now = Date.now();
+    const key = identifier;
+    const record = rateLimitStore.get(key);
 
     if (!record || now > record.resetTime) {
       rateLimitStore.set(key, { count: 1, resetTime: now + this.windowMs });
@@ -52,13 +52,13 @@ export class EnhancedRateLimiter {
   }
 
   getRemainingRequests(_identifier: string): number {
-    const __record = rateLimitStore.get(identifier);
+    const record = rateLimitStore.get(identifier);
     if (!record) return this.maxRequests;
     return Math.max(0, this.maxRequests - record.count);
   }
 
   getResetTime(_identifier: string): number {
-    const __record = rateLimitStore.get(identifier);
+    const record = rateLimitStore.get(identifier);
     return record?.resetTime || Date.now() + this.windowMs;
   }
 }
@@ -68,9 +68,9 @@ export class EnhancedCSRFProtection {
   private static tokens = new Map<string, { token: string; expires: number }>();
 
   static generateToken(): string {
-    const __token = randomBytes(32).toString('hex');
-    const __expires = Date.now() + 60 * 60 * 1000; // 1 hour
-    const __id = randomBytes(16).toString('hex');
+    const token = randomBytes(32).toString('hex');
+    const expires = Date.now() + 60 * 60 * 1000; // 1 hour
+    const id = randomBytes(16).toString('hex');
 
     this.tokens.set(id, { token, expires });
 
@@ -90,7 +90,7 @@ export class EnhancedCSRFProtection {
     const [id, token] = providedToken.split(':');
     if (!id || !token) return false;
 
-    const __stored = this.tokens.get(id);
+    const stored = this.tokens.get(id);
     if (!stored) return false;
 
     if (Date.now() > stored.expires) {
@@ -147,13 +147,13 @@ export class InputSanitizer {
 export class AuditLogger {
   static async log(_request: NextRequest, action: string, details?: unknown) {
     try {
-      const __userAgent = request.headers.get('user-agent') || '';
+      const userAgent = request.headers.get('user-agent') || '';
       const ipAddress =
         request.headers.get('x-forwarded-for') ||
         request.headers.get('x-real-ip') ||
         'unknown';
 
-      const __userId = request.headers.get('x-user-id') || undefined;
+      const userId = request.headers.get('x-user-id') || undefined;
 
       await realDB.logAudit({
         ...(userId ? { user_id: userId } : {}),
@@ -177,18 +177,18 @@ export class EnhancedAuthMiddleware {
     error?: string;
   }> {
     try {
-      const __token = request.cookies.get('auth-token')?.value;
+      const token = request.cookies.get('auth-token')?.value;
 
       if (!token) {
         return { success: false, error: 'No authentication token' };
       }
 
-      const __jwtSecret = process.env.JWT_SECRET;
+      const jwtSecret = process.env.JWT_SECRET;
       if (!jwtSecret) {
         throw new Error('JWT_SECRET not configured');
       }
 
-      const __decoded = jwt.verify(token, jwtSecret) as {
+      const decoded = jwt.verify(token, jwtSecret) as {
         userId: string;
         email: string;
         role: string;
@@ -202,7 +202,7 @@ export class EnhancedAuthMiddleware {
       }
 
       // Get user from database
-      const __user = (await realDB.getUser(decoded.userId)) as any;
+      const user = (await realDB.getUser(decoded.userId)) as any;
       if (!user || !user.is_active) {
         return { success: false, error: 'User not found or inactive' };
       }
@@ -221,7 +221,7 @@ export class EnhancedAuthMiddleware {
     user?: unknown;
     error?: string;
   }> {
-    const __auth = await this.authenticate(request);
+    const auth = await this.authenticate(request);
 
     if (!auth.success) {
       return auth;
@@ -237,7 +237,7 @@ export class EnhancedAuthMiddleware {
 
 // Enhanced Security Middleware
 export function __enhancedSecurityMiddleware(_request: NextRequest) {
-  const __response = NextResponse.next();
+  const response = NextResponse.next();
 
   // Apply security headers
   Object.entries(securityHeaders).forEach(([key, value]) => {
@@ -245,7 +245,7 @@ export function __enhancedSecurityMiddleware(_request: NextRequest) {
   });
 
   // Rate limiting
-  const __rateLimiter = new EnhancedRateLimiter();
+  const rateLimiter = new EnhancedRateLimiter();
   const identifier =
     request.headers.get('x-forwarded-for') ||
     request.headers.get('x-real-ip') ||
@@ -290,14 +290,14 @@ export function __secureAPI(
   return async (_request: NextRequest, ...args: unknown[]) => {
     try {
       // Apply security middleware
-      const __securityResponse = enhancedSecurityMiddleware(request);
+      const securityResponse = enhancedSecurityMiddleware(request);
       if (securityResponse.status !== 200) {
         return securityResponse;
       }
 
       // Authentication check
       if (options.requireAuth) {
-        const __auth = await EnhancedAuthMiddleware.authorize(
+        const auth = await EnhancedAuthMiddleware.authorize(
           request,
           options.requiredRole
         );
@@ -323,7 +323,7 @@ export function __secureAPI(
         options.csrfProtection &&
         ['POST', 'PUT', 'DELETE', 'PATCH'].includes(request.method)
       ) {
-        const __csrfToken = request.headers.get('x-csrf-token');
+        const csrfToken = request.headers.get('x-csrf-token');
         if (!csrfToken || !EnhancedCSRFProtection.validateToken(csrfToken)) {
           return NextResponse.json(
             {
@@ -343,12 +343,12 @@ export function __secureAPI(
       });
 
       // Call the original handler
-      const __result = await handler(request, ...args);
+      const result = await handler(request, ...args);
 
       return result;
     } catch (error) {
       // Log the error
-      const __err = error as unknown as { message?: string; stack?: string };
+      const err = error as unknown as { message?: string; stack?: string };
       await AuditLogger.log(request, 'SECURITY_ERROR', {
         error: err?.message,
         stack: err?.stack,
@@ -365,17 +365,17 @@ export function __secureAPI(
 // Data Validation
 export class DataValidator {
   static validateEmail(_email: string): boolean {
-    const __emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
   static validatePhone(_phone: string): boolean {
-    const __phoneRegex = /^(\+966|966)[0-9]{9}$/;
+    const phoneRegex = /^(\+966|966)[0-9]{9}$/;
     return phoneRegex.test(phone);
   }
 
   static validateNationalId(_nationalId: string): boolean {
-    const __nationalIdRegex = /^[0-9]{10}$/;
+    const nationalIdRegex = /^[0-9]{10}$/;
     return nationalIdRegex.test(nationalId);
   }
 
@@ -386,7 +386,7 @@ export class DataValidator {
     valid: boolean;
     missing: string[];
   } {
-    const __missing = requiredFields.filter(field => !data[field]);
+    const missing = requiredFields.filter(field => !data[field]);
     return {
       valid: missing.length === 0,
       missing,

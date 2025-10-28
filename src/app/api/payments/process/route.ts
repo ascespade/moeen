@@ -3,33 +3,33 @@
  * Process payments with Stripe and Moyasar integration
  */
 
-import { _NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { _z } from 'zod';
+import { z } from 'zod';
 
-import { _ErrorHandler } from '@/core/errors';
-import { _ValidationHelper } from '@/core/validation';
-import { _authorize, requireRole } from '@/lib/auth/authorize';
-import { _createClient } from '@/lib/supabase/server';
+import { ErrorHandler } from '@/core/errors';
+import { ValidationHelper } from '@/core/validation';
+import { authorize, requireRole } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
 
-const __paymentSchema = z.object({
+const paymentSchema = z.object({
   appointmentId: z.string().uuid('Invalid appointment ID'),
   amount: z.number().positive('Amount must be positive'),
   currency: z.string().default('SAR'),
   method: z.enum(['stripe', 'moyasar', 'cash', 'bank_transfer']),
-  paymentData: z.record(z.any()).optional(),
+  paymentData: z.record(z.string(), z.any()).optional(),
   description: z.string().optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
-const __stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16',
 });
 
-export async function __POST(_request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     // Authorize user
-    const { user: authUser, error: authError } = await authorize(request);
+    const { user: authUser, error: authError } = await authorize(_request);
     if (
       authError ||
       !authUser ||
@@ -38,11 +38,11 @@ export async function __POST(_request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const __supabase = createClient();
-    const __body = await request.json();
+    const supabase = await createClient();
+    const body = await _request.json();
 
     // Validate input
-    const __validation = await ValidationHelper.validateAsync(
+    const validation = await ValidationHelper.validateAsync(
       paymentSchema,
       body
     );
@@ -62,7 +62,7 @@ export async function __POST(_request: NextRequest) {
       description,
       metadata,
     } = validation.data;
-    const __currencyCode = currency || 'SAR';
+    const currencyCode = currency || 'SAR';
 
     // Verify appointment exists and get details
     const { data: appointment, error: appointmentError } = await supabase
@@ -100,7 +100,7 @@ export async function __POST(_request: NextRequest) {
     let paymentResult;
     switch (method) {
       case 'stripe':
-        paymentResult = await processStripePayment(
+        paymentResult = await __processStripePayment(
           amount,
           currencyCode,
           paymentData,
@@ -108,7 +108,7 @@ export async function __POST(_request: NextRequest) {
         );
         break;
       case 'moyasar':
-        paymentResult = await processMoyasarPayment(
+        paymentResult = await __processMoyasarPayment(
           amount,
           currencyCode,
           paymentData,
@@ -116,14 +116,14 @@ export async function __POST(_request: NextRequest) {
         );
         break;
       case 'cash':
-        paymentResult = await processCashPayment(
+        paymentResult = await __processCashPayment(
           amount,
           currencyCode,
           appointment
         );
         break;
       case 'bank_transfer':
-        paymentResult = await processBankTransfer(
+        paymentResult = await __processBankTransfer(
           amount,
           currencyCode,
           appointment
@@ -157,8 +157,8 @@ export async function __POST(_request: NextRequest) {
         description: description || `Payment for appointment ${appointmentId}`,
         metadata: {
           ...metadata,
-          patientId: appointment.patientId,
-          doctorId: appointment.doctorId,
+          patientId: (appointment as any).patientId,
+          doctorId: (appointment as any).doctorId,
         },
         processedBy: authUser.id,
       })
@@ -193,7 +193,7 @@ export async function __POST(_request: NextRequest) {
     });
 
     // Send payment confirmation
-    await sendPaymentConfirmation(payment.id, appointment);
+    await __sendPaymentConfirmation(payment.id, appointment);
 
     return NextResponse.json({
       success: true,
@@ -212,16 +212,16 @@ async function __processStripePayment(
   appointment: unknown
 ) {
   try {
-    const __paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100), // Convert to cents
       currency: currency.toLowerCase(),
-      description: `Payment for appointment ${appointment.id}`,
+      description: `Payment for appointment ${(appointment as any).id}`,
       metadata: {
-        appointmentId: appointment.id,
-        patientId: appointment.patientId,
-        doctorId: appointment.doctorId,
+        appointmentId: (appointment as any).id,
+        patientId: (appointment as any).patientId,
+        doctorId: (appointment as any).doctorId,
       },
-      ...paymentData,
+      ...(paymentData || {}),
     });
 
     return {
@@ -249,7 +249,7 @@ async function __processMoyasarPayment(
 ) {
   try {
     // Moyasar API integration
-    const __moyasarResponse = await fetch(
+    const moyasarResponse = await fetch(
       'https://api.moyasar.com/v1/payments',
       {
         method: 'POST',
@@ -260,18 +260,18 @@ async function __processMoyasarPayment(
         body: JSON.stringify({
           amount: Math.round(amount * 100), // Convert to halalas
           currency: currency,
-          description: `Payment for appointment ${appointment.id}`,
+          description: `Payment for appointment ${(appointment as any).id}`,
           metadata: {
-            appointmentId: appointment.id,
-            patientId: appointment.patientId,
-            doctorId: appointment.doctorId,
+            appointmentId: (appointment as any).id,
+            patientId: (appointment as any).patientId,
+            doctorId: (appointment as any).doctorId,
           },
-          ...paymentData,
+          ...(paymentData || {}),
         }),
       }
     );
 
-    const __result = await moyasarResponse.json();
+    const result = await moyasarResponse.json();
 
     if (!moyasarResponse.ok) {
       return {

@@ -4,41 +4,41 @@
  */
 
 // Basic utility functions
-export const __formatDate = (_date: Date | string) =>
+export const formatDate = (date: Date | string) =>
   new Date(date).toLocaleDateString('ar-SA');
-export const __formatTime = (_date: Date | string) =>
+export const formatTime = (date: Date | string) =>
   new Date(date).toLocaleTimeString('ar-SA');
-export const __formatCurrency = (_amount: number) =>
+export const formatCurrency = (amount: number) =>
   `${amount.toLocaleString('ar-SA')} ريال`;
-export const __formatPhone = (_phone: string) =>
+export const formatPhone = (phone: string) =>
   phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-export const __formatNationalId = (_id: string) =>
+export const formatNationalId = (id: string) =>
   id.replace(/(\d{1})(\d{4})(\d{5})(\d{1})/, '$1-$2-$3-$4');
 
 // Validation utilities
-export const __isValidEmail = (_email: string) =>
+export const isValidEmail = (email: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-export const __isValidPhone = (_phone: string) =>
+export const isValidPhone = (phone: string) =>
   /^[\+]?[1-9][\d]{0,15}$/.test(phone.replace(/\s/g, ''));
-export const __isValidNationalId = (_id: string) => /^[1-2]\d{9}$/.test(id);
+export const isValidNationalId = (id: string) => /^[1-2]\d{9}$/.test(id);
 
 // String utilities
-export const __capitalize = (_str: string) =>
+export const capitalize = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
-export const __truncate = (_str: string, length: number) =>
+export const truncate = (str: string, length: number) =>
   str.length > length ? str.substring(0, length) + '...' : str;
-export const __slugify = (_str: string) =>
+export const slugify = (str: string) =>
   str
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
 
 // Array utilities
-export const __unique = <T>(_arr: T[]) => [...new Set(arr)];
-export const __groupBy = <T>(_arr: T[], key: keyof T) => {
+export const unique = <T>(arr: T[]) => [...new Set(arr)];
+export const groupBy = <T>(arr: T[], key: keyof T) => {
   return arr.reduce(
     (groups, item) => {
-      const __group = String(item[key]);
+      const group = String(item[key]);
       groups[group] = groups[group] || [];
       groups[group].push(item);
       return groups;
@@ -48,7 +48,7 @@ export const __groupBy = <T>(_arr: T[], key: keyof T) => {
 };
 
 // Object utilities
-export const __pick = <T, K extends keyof T>(_obj: T, keys: K[]) => {
+export const pick = <T, K extends keyof T>(obj: T, keys: K[]) => {
   return keys.reduce(
     (result, key) => {
       result[key] = obj[key];
@@ -58,8 +58,8 @@ export const __pick = <T, K extends keyof T>(_obj: T, keys: K[]) => {
   );
 };
 
-export const __omit = <T, K extends keyof T>(_obj: T, keys: K[]) => {
-  const __result = { ...obj };
+export const omit = <T, K extends keyof T>(obj: T, keys: K[]) => {
+  const result = { ...obj };
   keys.forEach(key => delete result[key]);
   return result;
 };

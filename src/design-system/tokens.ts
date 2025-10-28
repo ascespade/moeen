@@ -3,7 +3,7 @@
  * Design tokens for consistent styling across the application
  */
 
-export const __tokens = {
+export const tokens = {
   colors: {
     primary: {
       50: '#eff6ff',

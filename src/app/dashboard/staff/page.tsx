@@ -10,15 +10,15 @@ import {
   AlertCircle,
   Upload,
 } from 'lucide-react';
-import { _useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { _useT } from '@/components/providers/I18nProvider';
-import { _Badge } from '@/components/ui/Badge';
-import { _Button } from '@/components/ui/Button';
-import { _Card } from '@/components/ui/Card';
-import { _useTheme } from '@/context/ThemeContext';
+import { useT } from '@/components/providers/I18nProvider';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { useTheme } from '@/context/ThemeContext';
 
 interface StaffData {
   id: string;
@@ -52,18 +52,18 @@ interface StaffData {
   }>;
 }
 
-export default function __StaffDashboard() {
+export default function StaffDashboard() {
   const { t } = useT();
   const { theme } = useTheme();
   const [staffData, setStaffData] = useState<StaffData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const __fetchStaffData = async () => {
+    const fetchStaffData = async () => {
       try {
-        const __response = await fetch('/api/staff/me');
+        const response = await fetch('/api/staff/me');
         if (response.ok) {
-          const __data = await response.json();
+          const data = await response.json();
           setStaffData(data);
         }
       } catch (error) {
@@ -75,9 +75,9 @@ export default function __StaffDashboard() {
     fetchStaffData();
   }, []);
 
-  const __handleProcessPayment = async (_paymentId: string) => {
+  const handleProcessPayment = async (paymentId: string) => {
     try {
-      const __response = await fetch(`/api/payments/${paymentId}/process`, {
+      const response = await fetch(`/api/payments/${paymentId}/process`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: 'completed' }),
@@ -90,9 +90,9 @@ export default function __StaffDashboard() {
     } catch (error) {}
   };
 
-  const __handleSubmitClaim = async (_claimId: string) => {
+  const handleSubmitClaim = async (claimId: string) => {
     try {
-      const __response = await fetch(
+      const response = await fetch(
         `/api/insurance/claims/${claimId}/submit`,
         {
           method: 'PATCH',
@@ -111,7 +111,7 @@ export default function __StaffDashboard() {
   if (isLoading) {
     return (
       <div className='flex items-center justify-center min-h-screen'>
-        <LoadingSpinner size='lg' />
+        <LoadingSpinner />
       </div>
     );
   }

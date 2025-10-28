@@ -3,15 +3,15 @@
  * Schedule and manage notifications with templates and multi-channel support
  */
 
-import { _NextRequest, NextResponse } from 'next/server';
-import { _z } from 'zod';
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 
-import { _ErrorHandler } from '@/core/errors';
-import { _ValidationHelper } from '@/core/validation';
-import { _authorize, requireRole } from '@/lib/auth/authorize';
-import { _createClient } from '@/lib/supabase/server';
+import { ErrorHandler } from '@/core/errors';
+import { ValidationHelper } from '@/core/validation';
+import { authorize, requireRole } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
 
-const __scheduleSchema = z.object({
+const scheduleSchema = z.object({
   type: z.enum([
     'appointment_confirmation',
     'appointment_reminder',
@@ -25,25 +25,25 @@ const __scheduleSchema = z.object({
   recipientType: z.enum(['patient', 'doctor', 'staff']),
   channels: z.array(z.enum(['email', 'sms', 'push', 'in_app'])).min(1),
   scheduledAt: z.string().datetime().optional(),
-  templateData: z.record(z.any()).optional(),
+  templateData: z.record(z.string(), z.any()).optional(),
   customMessage: z.string().optional(),
   priority: z.enum(['low', 'normal', 'high', 'urgent']).default('normal'),
   expiresAt: z.string().datetime().optional(),
 });
 
-export async function __POST(_request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     // Authorize user
-    const { user: authUser, error: authError } = await authorize(request);
+    const { user: authUser, error: authError } = await authorize(_request);
     if (authError || !authUser || !requireRole(['staff', 'admin'])(authUser)) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const __supabase = createClient();
-    const __body = await request.json();
+    const supabase = await createClient();
+    const body = await _request.json();
 
     // Validate input
-    const __validation = await ValidationHelper.validateAsync(
+    const validation = await ValidationHelper.validateAsync(
       scheduleSchema,
       body
     );
@@ -67,7 +67,7 @@ export async function __POST(_request: NextRequest) {
     } = validation.data;
 
     // Get recipient information
-    const __recipient = await getRecipientInfo(recipientId, recipientType);
+    const recipient = await __getRecipientInfo(recipientId, recipientType);
     if (!recipient) {
       return NextResponse.json(
         { error: 'Recipient not found' },
@@ -76,7 +76,7 @@ export async function __POST(_request: NextRequest) {
     }
 
     // Generate notification content
-    const __content = await generateNotificationContent(
+    const content = await __generateNotificationContent(
       type,
       templateData,
       customMessage || '',
@@ -112,7 +112,7 @@ export async function __POST(_request: NextRequest) {
 
     // Process notification immediately if not scheduled
     if (!scheduledAt) {
-      await processNotification(notification.id);
+      await __processNotification(notification.id);
     }
 
     // Create audit log
@@ -139,13 +139,13 @@ export async function __POST(_request: NextRequest) {
   }
 }
 
-export async function __GET(_request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
-    const __supabase = createClient();
-    const { searchParams } = new URL(request.url);
-    const __status = searchParams.get('status');
-    const __type = searchParams.get('type');
-    const __recipientId = searchParams.get('recipientId');
+    const supabase = await createClient();
+    const { searchParams } = new URL(_request.url);
+    const status = searchParams.get('status');
+    const type = searchParams.get('type');
+    const recipientId = searchParams.get('recipientId');
 
     let query = supabase
       .from('notifications')
@@ -187,7 +187,7 @@ export async function __GET(_request: NextRequest) {
 }
 
 async function __getRecipientInfo(_recipientId: string, recipientType: string) {
-  const __supabase = createClient();
+  const supabase = await createClient();
 
   let table = '';
   switch (recipientType) {
@@ -215,7 +215,7 @@ async function __getRecipientInfo(_recipientId: string, recipientType: string) {
       ${recipientType === 'patient' ? 'userId' : 'id'}
     `
     )
-    .eq('id', recipientId)
+    .eq('id', _recipientId)
     .single();
 
   return error ? null : data;
@@ -227,29 +227,29 @@ async function __generateNotificationContent(
   customMessage: string,
   recipient: unknown
 ) {
-  const __templates = {
+  const templates = {
     appointment_confirmation: {
       title: 'تأكيد الموعد',
       message:
         customMessage ||
-        `تم تأكيد موعدك في ${templateData?.date} مع ${templateData?.doctorName}`,
+        `تم تأكيد موعدك في ${(templateData as any)?.date} مع ${(templateData as any)?.doctorName}`,
     },
     appointment_reminder: {
       title: 'تذكير بالموعد',
       message:
         customMessage ||
-        `تذكير: لديك موعد غداً في ${templateData?.time} مع ${templateData?.doctorName}`,
+        `تذكير: لديك موعد غداً في ${(templateData as any)?.time} مع ${(templateData as any)?.doctorName}`,
     },
     payment_confirmation: {
       title: 'تأكيد الدفع',
       message:
-        customMessage || `تم تأكيد دفعتك بقيمة ${templateData?.amount} ريال`,
+        customMessage || `تم تأكيد دفعتك بقيمة ${(templateData as any)?.amount} ريال`,
     },
     insurance_claim_update: {
       title: 'تحديث مطالبة التأمين',
       message:
         customMessage ||
-        `تم تحديث حالة مطالبة التأمين إلى: ${templateData?.status}`,
+        `تم تحديث حالة مطالبة التأمين إلى: ${(templateData as any)?.status}`,
     },
     lab_result_ready: {
       title: 'نتائج المختبر جاهزة',
@@ -260,9 +260,9 @@ async function __generateNotificationContent(
       message: customMessage || `وصفتك الطبية جاهزة للاستلام`,
     },
     general_announcement: {
-      title: templateData?.title || 'إعلان عام',
+      title: (templateData as any)?.title || 'إعلان عام',
       message:
-        customMessage || templateData?.message || 'إعلان من المركز الطبي',
+        customMessage || (templateData as any)?.message || 'إعلان من المركز الطبي',
     },
   };
 

@@ -1,7 +1,7 @@
 import Header from '@/components/shell/Header';
 import Sidebar from '@/components/shell/Sidebar';
 
-export default function __HealthLayout({
+export default function HealthLayout({
   children,
 }: {
   children: React.ReactNode;

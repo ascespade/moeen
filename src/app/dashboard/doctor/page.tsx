@@ -9,15 +9,15 @@ import {
   AlertCircle,
   Stethoscope,
 } from 'lucide-react';
-import { _useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { _useT } from '@/components/providers/I18nProvider';
-import { _Badge } from '@/components/ui/Badge';
-import { _Button } from '@/components/ui/Button';
-import { _Card } from '@/components/ui/Card';
-import { _useTheme } from '@/context/ThemeContext';
+import { useT } from '@/components/providers/I18nProvider';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { useTheme } from '@/context/ThemeContext';
 
 interface DoctorData {
   id: string;
@@ -42,18 +42,18 @@ interface DoctorData {
   };
 }
 
-export default function __DoctorDashboard() {
+export default function DoctorDashboard() {
   const { t } = useT();
   const { theme } = useTheme();
   const [doctorData, setDoctorData] = useState<DoctorData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const __fetchDoctorData = async () => {
+    const fetchDoctorData = async () => {
       try {
-        const __response = await fetch('/api/doctors/me');
+        const response = await fetch('/api/doctors/me');
         if (response.ok) {
-          const __data = await response.json();
+          const data = await response.json();
           setDoctorData(data);
         }
       } catch (error) {
@@ -65,9 +65,9 @@ export default function __DoctorDashboard() {
     fetchDoctorData();
   }, []);
 
-  const __handleStartAppointment = async (_appointmentId: string) => {
+  const handleStartAppointment = async (appointmentId: string) => {
     try {
-      const __response = await fetch(
+      const response = await fetch(
         `/api/appointments/${appointmentId}/start`,
         {
           method: 'PATCH',
@@ -86,7 +86,7 @@ export default function __DoctorDashboard() {
   if (isLoading) {
     return (
       <div className='flex items-center justify-center min-h-screen'>
-        <LoadingSpinner size='lg' />
+        <LoadingSpinner />
       </div>
     );
   }

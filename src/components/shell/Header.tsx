@@ -9,7 +9,7 @@ import Link from 'next/link';
 
 export default function Header() {
   const { theme, isLoading: themeLoading } = useTheme();
-  const { language, isLoading: languageLoading, isRTL } = useLanguage();
+  const { language, isLoading: languageLoading, direction } = useLanguage();
   const [notif, setNotif] = useState(3);
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);

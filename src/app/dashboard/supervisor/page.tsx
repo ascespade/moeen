@@ -10,15 +10,15 @@ import {
   BarChart3,
   Settings,
 } from 'lucide-react';
-import { _useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { _useT } from '@/components/providers/I18nProvider';
-import { _Badge } from '@/components/ui/Badge';
-import { _Button } from '@/components/ui/Button';
-import { _Card } from '@/components/ui/Card';
-import { _useTheme } from '@/context/ThemeContext';
+import { useT } from '@/components/providers/I18nProvider';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { useTheme } from '@/context/ThemeContext';
 
 interface SupervisorData {
   id: string;
@@ -53,7 +53,7 @@ interface SupervisorData {
   }>;
 }
 
-export default function __SupervisorDashboard() {
+export default function SupervisorDashboard() {
   const { t } = useT();
   const { theme } = useTheme();
   const [supervisorData, setSupervisorData] = useState<SupervisorData | null>(
@@ -62,11 +62,11 @@ export default function __SupervisorDashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const __fetchSupervisorData = async () => {
+    const fetchSupervisorData = async () => {
       try {
-        const __response = await fetch('/api/supervisor/me');
+        const response = await fetch('/api/supervisor/me');
         if (response.ok) {
-          const __data = await response.json();
+          const data = await response.json();
           setSupervisorData(data);
         }
       } catch (error) {
@@ -78,9 +78,9 @@ export default function __SupervisorDashboard() {
     fetchSupervisorData();
   }, []);
 
-  const __handleGenerateReport = async (_reportType: string) => {
+  const handleGenerateReport = async (reportType: string) => {
     try {
-      const __response = await fetch('/api/reports/generate', {
+      const response = await fetch('/api/reports/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: reportType }),
@@ -96,7 +96,7 @@ export default function __SupervisorDashboard() {
   if (isLoading) {
     return (
       <div className='flex items-center justify-center min-h-screen'>
-        <LoadingSpinner size='lg' />
+        <LoadingSpinner />
       </div>
     );
   }
@@ -227,8 +227,8 @@ export default function __SupervisorDashboard() {
                               staff.efficiency >= 80
                                 ? 'primary'
                                 : staff.efficiency >= 60
-                                  ? 'secondary'
-                                  : 'destructive'
+                                ? 'secondary'
+                                : 'error'
                             }
                           >
                             {staff.efficiency >= 80

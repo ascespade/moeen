@@ -9,7 +9,7 @@ interface AccessibleButtonProps
   size?: 'sm' | 'md' | 'lg';
 }
 
-export function __AccessibleButton({
+export function AccessibleButton({
   children,
   description,
   keyboardAction = false,
@@ -21,7 +21,7 @@ export function __AccessibleButton({
   const baseClasses =
     'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
 
-  const __variantClasses = {
+  const variantClasses = {
     primary:
       'bg-[var(--brand-primary)] text-white hover:brightness-95 focus:ring-2',
     secondary:
@@ -30,7 +30,7 @@ export function __AccessibleButton({
     ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
   };
 
-  const __sizeClasses = {
+  const sizeClasses = {
     sm: 'px-3 py-1.5 text-sm',
     md: 'px-4 py-2 text-sm',
     lg: 'px-6 py-3 text-base',

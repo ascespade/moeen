@@ -1,17 +1,17 @@
-import { _NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { _authorize } from '@/lib/auth/authorize';
+import { authorize } from '@/lib/auth/authorize';
 
-export async function __GET(_request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
-    const { user, error } = await authorize(request);
+    const { user, error } = await authorize(_request);
 
     if (error || !user) {
       return NextResponse.json({ error }, { status: 401 });
     }
 
     // Mock doctor data for testing
-    const __doctorData = {
+    const doctorData = {
       id: user.id,
       fullName: 'د. أحمد محمد',
       speciality: 'العلاج الطبيعي',

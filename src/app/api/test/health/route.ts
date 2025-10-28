@@ -3,13 +3,13 @@
  * Comprehensive API testing and validation
  */
 
-import { _NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { _createClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
 
-export async function __GET(_request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
-    const __supabase = createClient();
+    const supabase = await createClient();
     const healthChecks: {
       timestamp: string;
       status: string;
@@ -76,7 +76,7 @@ export async function __GET(_request: NextRequest) {
     }
 
     // Overall status
-    const __hasErrors = healthChecks.errors.length > 0;
+    const hasErrors = healthChecks.errors.length > 0;
     healthChecks.status = hasErrors ? 'unhealthy' : 'healthy';
 
     return NextResponse.json(healthChecks, {

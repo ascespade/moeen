@@ -9,15 +9,15 @@ import {
   CheckCircle,
   AlertCircle,
 } from 'lucide-react';
-import { _useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { _useT } from '@/components/providers/I18nProvider';
-import { _Badge } from '@/components/ui/Badge';
-import { _Button } from '@/components/ui/Button';
-import { _Card } from '@/components/ui/Card';
-import { _useTheme } from '@/context/ThemeContext';
+import { useT } from '@/components/providers/I18nProvider';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
+import { useTheme } from '@/context/ThemeContext';
 
 interface PatientData {
   id: string;
@@ -46,18 +46,18 @@ interface PatientData {
   };
 }
 
-export default function __PatientDashboard() {
+export default function PatientDashboard() {
   const { t } = useT();
   const { theme } = useTheme();
   const [patientData, setPatientData] = useState<PatientData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const __fetchPatientData = async () => {
+    const fetchPatientData = async () => {
       try {
-        const __response = await fetch('/api/patients/me');
+        const response = await fetch('/api/patients/me');
         if (response.ok) {
-          const __data = await response.json();
+          const data = await response.json();
           setPatientData(data);
         }
       } catch (error) {
@@ -72,7 +72,7 @@ export default function __PatientDashboard() {
   if (isLoading) {
     return (
       <div className='flex items-center justify-center min-h-screen'>
-        <LoadingSpinner size='lg' />
+        <LoadingSpinner />
       </div>
     );
   }

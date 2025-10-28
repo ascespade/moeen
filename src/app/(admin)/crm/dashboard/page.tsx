@@ -18,19 +18,19 @@ import {
   Activity,
 } from 'lucide-react';
 import Image from 'next/image';
-import { _useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
-import { _Badge } from '@/components/ui/Badge';
-import { _Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
 import {
-  _Card,
+  Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from '@/components/ui/Card';
-import { _Input } from '@/components/ui/Input';
-import { _useAuth } from '@/hooks/useAuth';
+import { Input } from '@/components/ui/Input';
+import { useAuth } from '@/hooks/useAuth';
 
 interface Appointment {
   id: string;
@@ -69,7 +69,7 @@ interface DashboardStats {
 
 const CRMDashboard: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
-  const __router = useRouter();
+  const router = useRouter();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [stats, setStats] = useState<DashboardStats>({
     totalAppointments: 0,
@@ -92,21 +92,21 @@ const CRMDashboard: React.FC = () => {
     loadDashboardData();
   }, [isAuthenticated, router]);
 
-  const __loadDashboardData = async () => {
+  const loadDashboardData = async () => {
     try {
       setLoading(true);
 
       // جلب المواعيد
-      const __appointmentsResponse = await fetch('/api/appointments');
-      const __appointmentsData = await appointmentsResponse.json();
+      const appointmentsResponse = await fetch('/api/appointments');
+      const appointmentsData = await appointmentsResponse.json();
 
       if (appointmentsData.success) {
         setAppointments(appointmentsData.appointments || []);
       }
 
       // جلب الإحصائيات
-      const __statsResponse = await fetch('/api/crm/stats');
-      const __statsData = await statsResponse.json();
+      const statsResponse = await fetch('/api/crm/stats');
+      const statsData = await statsResponse.json();
 
       if (statsData.success) {
         setStats(statsData.stats);
@@ -117,12 +117,12 @@ const CRMDashboard: React.FC = () => {
     }
   };
 
-  const __handleStatusUpdate = async (
+  const handleStatusUpdate = async (
     appointmentId: string,
     newStatus: string
   ) => {
     try {
-      const __response = await fetch(`/api/appointments/${appointmentId}`, {
+      const response = await fetch(`/api/appointments/${appointmentId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ const CRMDashboard: React.FC = () => {
         }),
       });
 
-      const __data = await response.json();
+      const data = await response.json();
 
       if (data.success) {
         loadDashboardData(); // إعادة تحميل البيانات
@@ -144,8 +144,8 @@ const CRMDashboard: React.FC = () => {
     }
   };
 
-  const __getStatusBadge = (_status: string) => {
-    const __statusConfig = {
+  const getStatusBadge = (_status: string) => {
+    const statusConfig = {
       scheduled: {
         label: 'مجدول',
         variant: 'primary' as const,
@@ -173,20 +173,20 @@ const CRMDashboard: React.FC = () => {
       },
     };
 
-    const __config = statusConfig[status as keyof typeof statusConfig] || {
+    const config = statusConfig[status as keyof typeof statusConfig] || {
       label: status,
       variant: 'outline' as const,
       color: 'bg-gray-100 text-gray-800',
     };
 
     return (
-      <Badge variant={config.variant} className={config.color}>
+      <Badge variant={config.variant as any} className={config.color}>
         {config.label}
       </Badge>
     );
   };
 
-  const __getFilteredAppointments = () => {
+  const getFilteredAppointments = () => {
     let filtered = appointments;
 
     // فلترة حسب البحث
@@ -219,13 +219,13 @@ const CRMDashboard: React.FC = () => {
     }
 
     // فلترة حسب التاريخ
-    const __today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
     if (dateFilter === 'today') {
       filtered = filtered.filter(
         appointment => appointment.appointment_date === today
       );
     } else if (dateFilter === 'week') {
-      const __weekAgo = new Date();
+      const weekAgo = new Date();
       weekAgo.setDate(weekAgo.getDate() - 7);
       filtered = filtered.filter(
         appointment => new Date(appointment.appointment_date) >= weekAgo
@@ -235,7 +235,7 @@ const CRMDashboard: React.FC = () => {
     return filtered;
   };
 
-  const __filteredAppointments = getFilteredAppointments();
+  const filteredAppointments = getFilteredAppointments();
 
   if (!isAuthenticated) {
     return null;

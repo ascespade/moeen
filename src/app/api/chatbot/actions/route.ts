@@ -3,16 +3,16 @@
  * Enhanced chatbot with appointment booking, notification sending, and reminder actions
  */
 
-import { _NextRequest, NextResponse } from 'next/server';
-import { _z } from 'zod';
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 
-import { _ErrorHandler } from '@/core/errors';
-import { _ValidationHelper } from '@/core/validation';
-import { _authorize, requireRole } from '@/lib/auth/authorize';
-import { _createClient } from '@/lib/supabase/server';
-// import { _FlowManager, IntentAnalyzer, ActionExecutor } from '@/lib/conversation-flows';
+import { ErrorHandler } from '@/core/errors';
+import { ValidationHelper } from '@/core/validation';
+import { authorize, requireRole } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
+// import { FlowManager, IntentAnalyzer, ActionExecutor } from '@/lib/conversation-flows';
 
-const __actionSchema = z.object({
+const actionSchema = z.object({
   action: z.enum([
     'create_appointment',
     'send_notification',
@@ -30,16 +30,16 @@ const __actionSchema = z.object({
     'update_payment_status',
     'create_insurance_claim',
   ]),
-  parameters: z.record(z.any()),
-  context: z.record(z.any()).optional(),
+  parameters: z.record(z.string(), z.any()),
+  context: z.record(z.string(), z.any()).optional(),
   userId: z.string().uuid('Invalid user ID'),
   conversationId: z.string().optional(),
 });
 
-export async function __POST(_request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     // Authorize user
-    const { user: authUser, error: authError } = await authorize(request);
+    const { user: authUser, error: authError } = await authorize(_request);
     if (
       authError ||
       !authUser ||
@@ -48,11 +48,11 @@ export async function __POST(_request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const __supabase = createClient();
-    const __body = await request.json();
+    const supabase = await createClient();
+    const body = await _request.json();
 
     // Validate input
-    const __validation = await ValidationHelper.validateAsync(
+    const validation = await ValidationHelper.validateAsync(
       actionSchema,
       body
     );
@@ -67,16 +67,16 @@ export async function __POST(_request: NextRequest) {
       validation.data;
 
     // Initialize chatbot components - temporarily disabled
-    // const __intentAnalyzer = new IntentAnalyzer();
-    // const __actionExecutor = new ActionExecutor(supabase);
-    // const __flowManager = new FlowManager(intentAnalyzer, actionExecutor);
+    // const intentAnalyzer = new IntentAnalyzer();
+    // const actionExecutor = new ActionExecutor(supabase);
+    // const flowManager = new FlowManager(intentAnalyzer, actionExecutor);
 
     // Execute the action - temporarily disabled
-    const __result = {
+    const result = {
       success: true,
       data: { message: 'Chatbot actions temporarily disabled' },
     };
-    // const __result = await flowManager.executeAction(action, parameters, {
+    // const result = await flowManager.executeAction(action, parameters, {
     //   userId: authUser.id,
     //   userRole: authUser.role,
     //   conversationId,
@@ -104,10 +104,10 @@ export async function __POST(_request: NextRequest) {
   }
 }
 
-export async function __GET(_request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Authorize user
-    const { user: authUser, error: authError } = await authorize(request);
+    const { user: authUser, error: authError } = await authorize(_request);
     if (
       authError ||
       !authUser ||
@@ -116,12 +116,12 @@ export async function __GET(_request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const __supabase = createClient();
-    const { searchParams } = new URL(request.url);
-    const __conversationId = searchParams.get('conversationId');
-    const __action = searchParams.get('action');
-    const __page = parseInt(searchParams.get('page') || '1');
-    const __limit = parseInt(searchParams.get('limit') || '20');
+    const supabase = await createClient();
+    const { searchParams } = new URL(_request.url);
+    const conversationId = searchParams.get('conversationId');
+    const action = searchParams.get('action');
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
 
     let query = supabase
       .from('chatbot_actions')
@@ -359,8 +359,8 @@ export class EnhancedActionExecutor extends ActionExecutor {
       const { doctorId, date, duration = 30 } = parameters;
       
       // This would integrate with the availability API
-      const __response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/appointments/availability?doctorId=${doctorId}&date=${date}&duration=${duration}`);
-      const __data = await response.json();
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/appointments/availability?doctorId=${doctorId}&date=${date}&duration=${duration}`);
+      const data = await response.json();
 
       if (!response.ok) {
         return {
