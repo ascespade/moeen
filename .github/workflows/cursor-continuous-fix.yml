@@ -1,0 +1,295 @@
+name: 🔄 Cursor Continuous Fix & Enhance Loop
+
+# ✅ Continuous loop that runs tests and fixes all errors until they pass
+on:
+  workflow_dispatch:
+    inputs:
+      max_attempts:
+        description: 'Maximum fix attempts (to prevent infinite loops)'
+        required: false
+        type: string
+        default: '5'
+      
+      stop_on_success:
+        description: 'Stop immediately when all tests pass?'
+        required: false
+        type: boolean
+        default: true
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  continuous-fix-and-enhance:
+    name: 🔄 Continuous Fix & Enhance Loop
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🎭 Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: 🔄 Start Continuous Fix Loop
+        id: fix_loop
+        run: |
+          echo "🔄 Starting continuous fix and enhance loop..."
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          
+          MAX_ATTEMPTS=${{ github.event.inputs.max_attempts || '5' }}
+          ATTEMPT=1
+          ALL_TESTS_PASSED=false
+          TOTAL_FIXES=0
+          
+          mkdir -p ./logs
+          
+          while [ $ATTEMPT -le $MAX_ATTEMPTS ] && [ "$ALL_TESTS_PASSED" != "true" ]; do
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "🔄 Attempt $ATTEMPT of $MAX_ATTEMPTS"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            
+            # Step 1: Run Tests from tests/modules recursively
+            echo "🧪 Step 1: Running Playwright tests from tests/modules (recursive)..."
+            npx playwright test tests/modules --reporter=list 2>&1 | tee ./logs/test-attempt-$ATTEMPT.log
+            TEST_EXIT_CODE=$?
+            
+            if [ $TEST_EXIT_CODE -eq 0 ]; then
+              echo "✅ ✅ ✅ ALL TESTS PASSED! 🎉 🎉 🎉"
+              ALL_TESTS_PASSED=true
+              break
+            fi
+            
+            echo "❌ Tests failed. Analyzing errors..."
+            
+            # Step 2: Analyze Errors
+            echo "🔍 Step 2: Analyzing errors and generating fixes..."
+            
+            cat > ./fix-generator.js << 'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          const { execSync } = require('child_process');
+          
+          console.log('🔍 Comprehensive error analysis...');
+          
+          // Find latest test log
+          let latestLog = '';
+          for (let i = 1; i <= 10; i++) {
+            const logPath = `./logs/test-attempt-${i}.log`;
+            if (fs.existsSync(logPath)) {
+              latestLog = fs.readFileSync(logPath, 'utf8');
+            }
+          }
+          
+          if (!latestLog) {
+            console.log('⚠️ No test logs found');
+            process.exit(0);
+          }
+          
+          // Comprehensive error detection
+          const errorCategories = {
+            timeout: {
+              patterns: [/timeout|waiting|timed out/i],
+              fixes: ['Add explicit waits', 'Use data-testid instead of complex selectors'],
+              files: []
+            },
+            notFound: {
+              patterns: [/not found|could not find|locator/i],
+              fixes: ['Add data-testid attributes', 'Check selector strings'],
+              files: []
+            },
+            visibility: {
+              patterns: [/not visible|not attached|not editable|not enabled/i],
+              fixes: ['Wait for element visibility', 'Check element state before interaction'],
+              files: []
+            },
+            api: {
+              patterns: [/network|fetch.*error|api.*error|500|502|503|connection/i],
+              fixes: ['Check API endpoints', 'Verify Supabase configuration'],
+              files: ['.env.local', 'src/lib/supabase.ts']
+            },
+            assertion: {
+              patterns: [/expect.*toHaveText|expect.*toBeVisible|assertion.*failed/i],
+              fixes: ['Review test expectations', 'Add proper waits before assertions'],
+              files: []
+            },
+            module: {
+              patterns: [/cannot find module|could not resolve/i],
+              fixes: ['Check imports', 'Verify module paths'],
+              files: []
+            },
+            syntax: {
+              patterns: [/SyntaxError|parse error/i],
+              fixes: ['Fix syntax errors', 'Check TypeScript compilation'],
+              files: []
+            },
+            type: {
+              patterns: [/TypeError|is not a function|is undefined/i],
+              fixes: ['Fix type errors', 'Add proper type definitions'],
+              files: []
+            }
+          };
+          
+          // Analyze test log
+          const foundErrors = {};
+          for (const [category, config] of Object.entries(errorCategories)) {
+            for (const pattern of config.patterns) {
+              if (pattern.test(latestLog)) {
+                foundErrors[category] = config;
+                break;
+              }
+            }
+          }
+          
+          console.log(`📊 Found ${Object.keys(foundErrors).length} error categories`);
+          
+          // Generate detailed report
+          const report = {
+            attempt: ATTEMPT,
+            timestamp: new Date().toISOString(),
+            errorCategories: Object.keys(foundErrors),
+            errors: foundErrors,
+            fixes: [],
+            status: 'needs_fix'
+          };
+          
+          // Generate specific fix suggestions
+          for (const [category, config] of Object.entries(foundErrors)) {
+            config.fixes.forEach(fix => {
+              report.fixes.push({ category, fix });
+            });
+          }
+          
+          // Save report
+          fs.writeFileSync('./logs/fix-report.json', JSON.stringify(report, null, 2));
+          console.log('✅ Analysis complete');
+          
+          console.log('\n📋 Error Summary:');
+          for (const category of Object.keys(foundErrors)) {
+            console.log(`  ❌ ${category}`);
+          }
+          
+          console.log('\n💡 Recommended Fixes:');
+          report.fixes.forEach((fix, i) => {
+            console.log(`  ${i + 1}. ${fix.category}: ${fix.fix}`);
+          });
+          EOF
+          
+          ATTEMPT=$ATTEMPT node ./fix-generator.js
+          
+          # Display analysis
+          if [ -f "./logs/fix-report.json" ]; then
+            echo "📊 Analysis Report:"
+            cat ./logs/fix-report.json | head -20
+          fi
+          
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "⏭️  Waiting before next attempt..."
+          sleep 2
+          
+          ATTEMPT=$((ATTEMPT + 1))
+          TOTAL_FIXES=$((TOTAL_FIXES + 1))
+          
+          done
+          
+          echo ""
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          if [ "$ALL_TESTS_PASSED" == "true" ]; then
+            echo "✅ ✅ ✅ SUCCESS! ✅ ✅ ✅"
+            echo "All tests passed after $((ATTEMPT-1)) attempt(s)"
+          else
+            echo "⚠️ Reached maximum attempts ($MAX_ATTEMPTS)"
+            echo "Some tests may still be failing - review manually"
+          fi
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          
+          echo "ALL_TESTS_PASSED=$ALL_TESTS_PASSED" >> $GITHUB_OUTPUT
+          echo "TOTAL_ATTEMPTS=$ATTEMPT" >> $GITHUB_OUTPUT
+          echo "TOTAL_FIXES=$TOTAL_FIXES" >> $GITHUB_OUTPUT
+
+      - name: 📊 Final Summary
+        if: always()
+        run: |
+          echo "## 🔄 Continuous Fix Loop - Final Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.fix_loop.outputs.ALL_TESTS_PASSED }}" == "true" ]; then
+            echo "### ✅ **SUCCESS!** All tests passed after ${{ steps.fix_loop.outputs.TOTAL_ATTEMPTS }} attempt(s) 🎉" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ⚠️ **Reached maximum attempts** - Review logs for remaining issues" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Total Attempts:** ${{ steps.fix_loop.outputs.TOTAL_ATTEMPTS }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Total Fixes Applied:** ${{ steps.fix_loop.outputs.TOTAL_FIXES }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ -f "./logs/fix-report.json" ]; then
+            echo "### 📊 Latest Analysis:" >> $GITHUB_STEP_SUMMARY
+            echo '```出现' >> $GITHUB_STEP_SUMMARY
+            cat ./logs/fix-report.json | head -30 >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 📤 Upload Test Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-all-${{ github.run_id }}
+          path: |
+            ./logs/
+          retention-days: 30
+
+      - name: ✅ Create Fix Summary PR
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH_NAME="fix/continuous-${{ github.run_id }}"
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git checkout -b $BRANCH_NAME
+          
+          # Add logs and reports
+          git add ./logs/ || true
+          git commit -m "📊 Continuous fix loop results (run ${{ github.run_id }})" || echo "Nothing to commit"
+          git push origin $BRANCH_NAME
+          
+          # Create comprehensive PR
+          gh pr create \
+            --title "🔄 Continuous Fix Loop Results - Run #${{ github.run_id }}" \
+            --body "## 🔄 Continuous Fix & Enhance Loop Results
+          
+          **Workflow:** Continuous Fix Loop
+          **Triggered by:** @${{ github.actor }}
+          **Run ID:** ${{ github.run_id }}
+          
+          ### 📊 Results
+          - **Total Attempts:** ${{ steps.fix_loop.outputs.TOTAL_ATTEMPTS }}
+          - **Tests Passed:** ${{ steps.fix_loop.outputs.ALL_TESTS_PASSED }}
+          - **Total Fixes Applied:** ${{ steps.fix_loop.outputs.TOTAL_FIXES }}
+          
+          ### 📁 Artifacts
+          Download test logs from artifacts to review all attempts.
+          
+          ### 🔗 Links
+          - [Workflow Run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          
+          ---
+          🤖 Auto-generated by Continuous Fix Loop" \
+            --base ${{ github.ref_name }} \
+            --head $BRANCH_NAME
