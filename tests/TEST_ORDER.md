@@ -107,16 +107,18 @@
 ## 🏃 كيفية تشغيل الاختبارات
 
 ### Option 1: تشغيل الـ Cumulative Suite (الموصى به)
+
 ```bash
 npx playwright test tests/modules/cumulative-test-suite.spec.ts --headed
 ```
 
 ### Option 2: تشغيل حسب Module
+
 ```bash
 # Patients
 npx playwright test tests/modules/patients/
 
-# Appointments  
+# Appointments
 npx playwright test tests/modules/appointments/
 
 # Insurance
@@ -124,6 +126,7 @@ npx playwright test tests/modules/insurance/
 ```
 
 ### Option 3: تشغيل جميع الاختبارات
+
 ```bash
 npx playwright test tests/modules/ --headed
 ```

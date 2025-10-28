@@ -8,7 +8,7 @@ test.describe('Patients API Routes', () => {
 
   test('POST /api/patients', async ({ request }) => {
     const response = await request.post('http://localhost:3001/api/patients', {
-      data: { name: 'Test Patient', email: 'patient@test.com' }
+      data: { name: 'Test Patient', email: 'patient@test.com' },
     });
     expect(response.status()).toBeGreaterThanOrEqual(200);
   });

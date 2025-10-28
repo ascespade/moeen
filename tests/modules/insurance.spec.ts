@@ -4,7 +4,7 @@ test.describe('Insurance Module Tests', () => {
   test('should access insurance claims page', async ({ page }) => {
     await page.goto('http://localhost:3001');
     await page.waitForLoadState('networkidle');
-    
+
     // Try to navigate to insurance page
     const url = page.url();
     expect(url).toContain('localhost:3001');

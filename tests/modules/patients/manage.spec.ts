@@ -4,7 +4,7 @@ test.describe('Patients Management Tests', () => {
   test('should view patients list', async ({ page }) => {
     await page.goto('http://localhost:3001');
     await page.waitForLoadState('networkidle');
-    
+
     expect(true).toBe(true);
   });
 

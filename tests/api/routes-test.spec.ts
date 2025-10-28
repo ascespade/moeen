@@ -7,7 +7,9 @@ test.describe('API Routes Tests', () => {
   });
 
   test('should test dashboard API', async ({ request }) => {
-    const response = await request.get('http://localhost:3001/api/dashboard/metrics');
+    const response = await request.get(
+      'http://localhost:3001/api/dashboard/metrics'
+    );
     expect(response.status()).toBeGreaterThanOrEqual(200);
   });
 
@@ -22,12 +24,16 @@ test.describe('API Routes Tests', () => {
   });
 
   test('should test appointments API', async ({ request }) => {
-    const response = await request.get('http://localhost:3001/api/appointments');
+    const response = await request.get(
+      'http://localhost:3001/api/appointments'
+    );
     expect(response.status()).toBeGreaterThanOrEqual(200);
   });
 
   test('should test chatbot API', async ({ request }) => {
-    const response = await request.get('http://localhost:3001/api/chatbot/config');
+    const response = await request.get(
+      'http://localhost:3001/api/chatbot/config'
+    );
     expect(response.status()).toBeGreaterThanOrEqual(200);
   });
 
@@ -37,7 +43,9 @@ test.describe('API Routes Tests', () => {
   });
 
   test('should test notifications API', async ({ request }) => {
-    const response = await request.get('http://localhost:3001/api/notifications');
+    const response = await request.get(
+      'http://localhost:3001/api/notifications'
+    );
     expect(response.status()).toBeGreaterThanOrEqual(200);
   });
 });

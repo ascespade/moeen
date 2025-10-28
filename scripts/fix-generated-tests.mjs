@@ -18,8 +18,10 @@ function fixTestFile(filePath) {
   let modified = false;
 
   // Check if file has the problematic pattern without the fix
-  if (content.includes('const supabase = createClient(supabaseUrl, supabaseKey);')) {
-    if (!content.includes("if (!supabaseUrl || !supabaseKey) {")) {
+  if (
+    content.includes('const supabase = createClient(supabaseUrl, supabaseKey);')
+  ) {
+    if (!content.includes('if (!supabaseUrl || !supabaseKey) {')) {
       // Add the fix before the createClient line
       const insertFix = `if (!supabaseUrl || !supabaseKey) {
   test.skip('Supabase credentials not provided');
@@ -31,7 +33,7 @@ function fixTestFile(filePath) {
         'const supabase = createClient(supabaseUrl, supabaseKey);',
         `${insertFix}const supabase = createClient(supabaseUrl, supabaseKey);`
       );
-      
+
       modified = true;
     }
   }
@@ -77,4 +79,6 @@ testFiles.forEach(file => {
   }
 });
 
-console.log(`\n✨ Done! Fixed ${fixedCount} files, skipped ${skippedCount} files`);
+console.log(
+  `\n✨ Done! Fixed ${fixedCount} files, skipped ${skippedCount} files`
+);

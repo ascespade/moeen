@@ -18,6 +18,7 @@ export default [
         ecmaFeatures: {
           jsx: true,
         },
+        project: './tsconfig.json',
       },
     },
     languageOptions: {

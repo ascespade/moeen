@@ -6,33 +6,33 @@
 
 ### Core Modules (13 modules)
 
-| Module | Test File | Status |
-|--------|-----------|--------|
-| **Authentication** | `authentication/` | ✅ Created |
-| **Users** | `users/` | ✅ Created |
-| **Patients** | `patients/` | ✅ Created |
-| **Appointments** | `appointments/` | ✅ Created |
+| Module              | Test File          | Status     |
+| ------------------- | ------------------ | ---------- |
+| **Authentication**  | `authentication/`  | ✅ Created |
+| **Users**           | `users/`           | ✅ Created |
+| **Patients**        | `patients/`        | ✅ Created |
+| **Appointments**    | `appointments/`    | ✅ Created |
 | **Medical Records** | `medical-records/` | ✅ Created |
-| **Billing** | `billing/` | ✅ Created |
-| **Notifications** | `notifications/` | ✅ Created |
-| **Reports** | `reports/` | ✅ Created |
-| **Settings** | `settings/` | ✅ Created |
-| **Files** | `files/` | ✅ Created |
-| **Dashboard** | `dashboard/` | ✅ Created |
-| **Admin** | `admin/` | ✅ Created |
-| **Integration** | `integration/` | ✅ Created |
+| **Billing**         | `billing/`         | ✅ Created |
+| **Notifications**   | `notifications/`   | ✅ Created |
+| **Reports**         | `reports/`         | ✅ Created |
+| **Settings**        | `settings/`        | ✅ Created |
+| **Files**           | `files/`           | ✅ Created |
+| **Dashboard**       | `dashboard/`       | ✅ Created |
+| **Admin**           | `admin/`           | ✅ Created |
+| **Integration**     | `integration/`     | ✅ Created |
 
 ### Advanced Modules (7+ modules)
 
-| Module | Test File | Status |
-|--------|-----------|--------|
-| **CRM** | `crm/` | ✅ Created |
-| **Chatbot** | `chatbot/` | ✅ Created |
-| **Insurance** | `insurance/` | ✅ Created |
+| Module           | Test File       | Status     |
+| ---------------- | --------------- | ---------- |
+| **CRM**          | `crm/`          | ✅ Created |
+| **Chatbot**      | `chatbot/`      | ✅ Created |
+| **Insurance**    | `insurance/`    | ✅ Created |
 | **Dynamic Data** | `dynamic-data/` | ✅ Created |
-| **Doctors** | `doctors/` | ✅ Created |
-| **Payments** | `payments/` | ✅ Created |
-| **Analytics** | `analytics/` | ✅ Created |
+| **Doctors**      | `doctors/`      | ✅ Created |
+| **Payments**     | `payments/`     | ✅ Created |
+| **Analytics**    | `analytics/`    | ✅ Created |
 
 ## 🏃 كيفية تشغيل الاختبارات
 

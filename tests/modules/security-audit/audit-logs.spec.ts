@@ -9,7 +9,7 @@ test.describe('Security & Audit Tests', () => {
   test('should track user activities', async ({ page }) => {
     await page.goto('http://localhost:3001');
     await page.waitForLoadState('networkidle');
-    
+
     expect(true).toBe(true);
   });
 });

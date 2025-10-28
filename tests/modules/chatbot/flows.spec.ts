@@ -4,7 +4,7 @@ test.describe('Chatbot Flows Tests', () => {
   test('should create new flow', async ({ page }) => {
     await page.goto('http://localhost:3001');
     await page.waitForLoadState('networkidle');
-    
+
     expect(true).toBe(true);
   });
 

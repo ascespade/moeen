@@ -6,11 +6,10 @@ import { test, expect } from '@playwright/test';
  */
 
 test.describe('Database Integration Tests - All Modules', () => {
-  
   test('Tables should be accessible', async () => {
     // This test verifies that all major tables exist
     // In a real test, we would use MCP to query the database
-    
+
     expect(true).toBe(true); // Placeholder
   });
 
@@ -21,7 +20,7 @@ test.describe('Database Integration Tests - All Modules', () => {
     });
 
     test('patients table structure', async () => {
-      // Test patients table  
+      // Test patients table
       expect(true).toBe(true);
     });
 

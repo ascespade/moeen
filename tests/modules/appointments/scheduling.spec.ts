@@ -4,7 +4,7 @@ test.describe('Appointment Scheduling Tests', () => {
   test('should book appointment', async ({ page }) => {
     await page.goto('http://localhost:3001');
     await page.waitForLoadState('networkidle');
-    
+
     expect(true).toBe(true);
   });
 

@@ -4,7 +4,7 @@ test.describe('Medical Records Tests', () => {
   test('should create medical record', async ({ page }) => {
     await page.goto('http://localhost:3001');
     await page.waitForLoadState('networkidle');
-    
+
     expect(true).toBe(true);
   });
 

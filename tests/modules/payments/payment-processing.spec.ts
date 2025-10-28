@@ -4,7 +4,7 @@ test.describe('Payment Processing Tests', () => {
   test('should process payment', async ({ page }) => {
     await page.goto('http://localhost:3001');
     await page.waitForLoadState('networkidle');
-    
+
     expect(true).toBe(true);
   });
 
