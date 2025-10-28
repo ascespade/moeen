@@ -457,7 +457,7 @@ export class SaudiMinistryHealthIntegration {
     return {
       success: true,
       data: {
-        sehaId: 'SEHA_' + Math.random().toString(36).substr(2, 9),
+        sehaId: `SEHA_${Math.random().toString(36).substr(2, 9)}`,
         nationalId: data?.nationalId || '1234567890',
         fullName: 'أحمد محمد الأحمد',
         fullNameEn: 'Ahmed Mohammed Al-Ahmad',
@@ -502,7 +502,7 @@ export class SaudiMinistryHealthIntegration {
     return {
       success: true,
       data: {
-        shoonId: 'SHOON_' + Math.random().toString(36).substr(2, 9),
+        shoonId: `SHOON_${Math.random().toString(36).substr(2, 9)}`,
         nationalId: data?.nationalId || '1234567890',
         patientData: {
           name: 'أحمد محمد الأحمد',
@@ -523,7 +523,7 @@ export class SaudiMinistryHealthIntegration {
     return {
       success: true,
       data: {
-        tatmanId: 'TATMAN_' + Math.random().toString(36).substr(2, 9),
+        tatmanId: `TATMAN_${Math.random().toString(36).substr(2, 9)}`,
         nationalId: data?.nationalId || '1234567890',
         provider: 'التعاونية',
         policyNumber: 'POL123456789',

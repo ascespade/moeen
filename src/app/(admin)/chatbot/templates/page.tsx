@@ -141,9 +141,9 @@ export default function ChatbotTemplatesPage() {
   });
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -155,7 +155,7 @@ export default function ChatbotTemplatesPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-brand text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   قوالب الشات بوت
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -166,7 +166,7 @@ export default function ChatbotTemplatesPage() {
             <div className='flex items-center gap-3'>
               <button
                 onClick={() => setShowCreateModal(true)}
-                className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إنشاء قالب
               </button>
@@ -179,7 +179,7 @@ export default function ChatbotTemplatesPage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockTemplates.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -187,7 +187,7 @@ export default function ChatbotTemplatesPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockTemplates.filter(t => t.status === 'approved').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>موافق عليها</div>
@@ -223,7 +223,7 @@ export default function ChatbotTemplatesPage() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder='ابحث في القوالب...'
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
             </div>
 
@@ -234,7 +234,7 @@ export default function ChatbotTemplatesPage() {
               <select
                 value={selectedCategory}
                 onChange={e => setSelectedCategory(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع التصنيفات</option>
                 {allCategories.map(category => (
@@ -252,7 +252,7 @@ export default function ChatbotTemplatesPage() {
               <select
                 value={selectedLanguage}
                 onChange={e => setSelectedLanguage(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع اللغات</option>
                 {allLanguages.map(language => (
@@ -270,7 +270,7 @@ export default function ChatbotTemplatesPage() {
               <select
                 value={selectedStatus}
                 onChange={e => setSelectedStatus(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع الحالات</option>
                 <option value='draft'>مسودة</option>
@@ -280,7 +280,7 @@ export default function ChatbotTemplatesPage() {
             </div>
 
             <div className='flex items-end'>
-              <button className='btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 تطبيق الفلاتر
               </button>
             </div>
@@ -363,7 +363,7 @@ export default function ChatbotTemplatesPage() {
                       <div className='flex gap-2'>
                         <button
                           onClick={() => setShowPreviewModal(template)}
-                          className='text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]'
+                          className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
                         >
                           معاينة
                         </button>
@@ -373,7 +373,7 @@ export default function ChatbotTemplatesPage() {
                         >
                           تعديل
                         </Link>
-                        <button className='text-brand-success hover:text-green-700'>
+                        <button className='text-default-success hover:text-green-700'>
                           نسخ
                         </button>
                       </div>
@@ -423,7 +423,7 @@ export default function ChatbotTemplatesPage() {
                   </label>
                   <input
                     type='text'
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='مثال: ترحيب المرضى'
                   />
                 </div>
@@ -431,7 +431,7 @@ export default function ChatbotTemplatesPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     التصنيف
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value=''>اختر التصنيف</option>
                     <option value='ترحيب'>ترحيب</option>
                     <option value='مواعيد'>مواعيد</option>
@@ -447,7 +447,7 @@ export default function ChatbotTemplatesPage() {
                 </label>
                 <textarea
                   rows={2}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='وصف مختصر للقالب...'
                 />
               </div>
@@ -457,7 +457,7 @@ export default function ChatbotTemplatesPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     اللغة
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value='العربية'>العربية</option>
                     <option value='English'>English</option>
                   </select>
@@ -468,7 +468,7 @@ export default function ChatbotTemplatesPage() {
                   </label>
                   <input
                     type='text'
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='اسم المريض، اسم المركز (مفصولة بفواصل)'
                   />
                 </div>
@@ -480,7 +480,7 @@ export default function ChatbotTemplatesPage() {
                 </label>
                 <textarea
                   rows={4}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='اكتب محتوى القالب هنا... استخدم {{اسم المتغير}} للمتغيرات'
                 />
               </div>
@@ -495,7 +495,7 @@ export default function ChatbotTemplatesPage() {
                 </button>
                 <button
                   type='submit'
-                  className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   إنشاء القالب
                 </button>
@@ -555,7 +555,7 @@ export default function ChatbotTemplatesPage() {
                 >
                   إغلاق
                 </button>
-                <button className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                   استخدام القالب
                 </button>
               </div>

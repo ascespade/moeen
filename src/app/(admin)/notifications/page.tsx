@@ -36,7 +36,7 @@ interface Notification {
   title: string;
   message: string;
   type:
-    | 'info'
+    | 'secondary'
     | 'success'
     | 'warning'
     | 'error'
@@ -219,19 +219,19 @@ const NotificationsPage: React.FC = () => {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'appointment':
-        return <Calendar className='w-4 h-4 text-brand-primary' />;
+        return <Calendar className='w-4 h-4 text-default-default' />;
       case 'reminder':
-        return <Clock className='w-4 h-4 text-brand-primary' />;
+        return <Clock className='w-4 h-4 text-default-default' />;
       case 'success':
-        return <CheckCircle className='w-4 h-4 text-brand-success' />;
+        return <CheckCircle className='w-4 h-4 text-default-success' />;
       case 'warning':
-        return <AlertCircle className='w-4 h-4 text-brand-warning' />;
+        return <AlertCircle className='w-4 h-4 text-default-warning' />;
       case 'error':
-        return <AlertCircle className='w-4 h-4 text-brand-error' />;
+        return <AlertCircle className='w-4 h-4 text-default-error' />;
       case 'system':
         return <Settings className='w-4 h-4 text-gray-500' />;
       default:
-        return <Info className='w-4 h-4 text-brand-primary' />;
+        return <Info className='w-4 h-4 text-default-default' />;
     }
   };
 
@@ -240,7 +240,7 @@ const NotificationsPage: React.FC = () => {
       low: { label: 'منخفض', variant: 'secondary' as const },
       medium: { label: 'متوسط', variant: 'primary' as const },
       high: { label: 'عالي', variant: 'primary' as const },
-      urgent: { label: 'عاجل', variant: 'destructive' as const },
+      urgent: { label: 'عاجل', variant: 'error' as const },
     };
 
     const priorityInfo = priorityMap[priority as keyof typeof priorityMap] || {
@@ -254,7 +254,7 @@ const NotificationsPage: React.FC = () => {
     const statusMap = {
       unread: { label: 'غير مقروء', variant: 'primary' as const },
       read: { label: 'مقروء', variant: 'secondary' as const },
-      archived: { label: 'مؤرشف', variant: 'outline' as const },
+      archived: { label: 'مؤرشف', variant: 'secondary' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
@@ -332,7 +332,7 @@ const NotificationsPage: React.FC = () => {
             </Button>
             <Button
               onClick={() => setShowCompose(true)}
-              className='bg-[var(--brand-primary)] hover:brightness-95'
+              className='bg-[var(--default-default)] hover:brightness-95'
             >
               <Plus className='w-4 h-4 mr-2' />
               إرسال إشعار
@@ -345,7 +345,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className='p-4'>
               <div className='flex items-center gap-2'>
-                <Bell className='w-5 h-5 text-brand-primary' />
+                <Bell className='w-5 h-5 text-default-default' />
                 <div>
                   <div className='text-2xl font-bold'>
                     {notifications.length}
@@ -359,7 +359,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className='p-4'>
               <div className='flex items-center gap-2'>
-                <BellRing className='w-5 h-5 text-brand-primary' />
+                <BellRing className='w-5 h-5 text-default-default' />
                 <div>
                   <div className='text-2xl font-bold'>{unreadCount}</div>
                   <div className='text-sm text-gray-600'>غير مقروء</div>
@@ -371,7 +371,7 @@ const NotificationsPage: React.FC = () => {
           <Card>
             <CardContent className='p-4'>
               <div className='flex items-center gap-2'>
-                <Calendar className='w-5 h-5 text-brand-success' />
+                <Calendar className='w-5 h-5 text-default-success' />
                 <div>
                   <div className='text-2xl font-bold'>
                     {notifications.filter(n => n.type === 'appointment').length}
@@ -448,7 +448,7 @@ const NotificationsPage: React.FC = () => {
 
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
       ) : (
         <div className='space-y-4'>
@@ -515,8 +515,7 @@ const NotificationsPage: React.FC = () => {
                       <Button
                         variant='outline'
                         size='sm'
-                        onClick={e => {
-                          e.stopPropagation();
+                        onClick={() => {
                           markAsArchived(notification.id);
                         }}
                       >
@@ -530,8 +529,7 @@ const NotificationsPage: React.FC = () => {
                       <Button
                         variant='outline'
                         size='sm'
-                        onClick={e => {
-                          e.stopPropagation();
+                        onClick={() => {
                           router.push(notification.action_url!);
                         }}
                       >
@@ -569,8 +567,8 @@ const NotificationsPage: React.FC = () => {
                     {template.message}
                   </p>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='outline'>{template.type}</Badge>
-                    <Badge variant='outline'>{template.category}</Badge>
+                    <Badge variant='secondary'>{template.type}</Badge>
+                    <Badge variant='secondary'>{template.category}</Badge>
                     <span className='text-xs text-gray-500'>
                       متغيرات: {template.variables.join(', ')}
                     </span>

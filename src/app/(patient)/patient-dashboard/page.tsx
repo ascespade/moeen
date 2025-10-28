@@ -94,7 +94,7 @@ export default function PatientDashboard() {
           {!patientData?.activated && (
             <Card className='mb-6 border-orange-200 bg-surface dark:bg-orange-900/20'>
               <div className='flex items-center p-4'>
-                <AlertCircle className='h-6 w-6 text-brand-primary mr-3' />
+                <AlertCircle className='h-6 w-6 text-default-default mr-3' />
                 <div>
                   <h3 className='font-semibold text-orange-800 dark:text-orange-200'>
                     {t('patient.activation.required')}
@@ -111,7 +111,7 @@ export default function PatientDashboard() {
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8'>
             <Card className='p-6 hover:shadow-lg transition-shadow'>
               <div className='flex items-center'>
-                <CalendarDays className='h-8 w-8 text-brand-primary mr-4' />
+                <CalendarDays className='h-8 w-8 text-default-default mr-4' />
                 <div>
                   <h3 className='font-semibold text-gray-900 dark:text-white'>
                     {t('patient.actions.book_appointment')}
@@ -128,7 +128,7 @@ export default function PatientDashboard() {
 
             <Card className='p-6 hover:shadow-lg transition-shadow'>
               <div className='flex items-center'>
-                <FileText className='h-8 w-8 text-brand-success mr-4' />
+                <FileText className='h-8 w-8 text-default-success mr-4' />
                 <div>
                   <h3 className='font-semibold text-gray-900 dark:text-white'>
                     {t('patient.actions.view_file')}
@@ -196,7 +196,7 @@ export default function PatientDashboard() {
                   <div className='space-y-4'>
                     <div className='flex items-center justify-between p-4 bg-surface dark:bg-blue-900/20 rounded-lg'>
                       <div className='flex items-center'>
-                        <Clock className='h-5 w-5 text-brand-primary mr-3' />
+                        <Clock className='h-5 w-5 text-default-default mr-3' />
                         <div>
                           <p className='font-medium text-gray-900 dark:text-white'>
                             {patientData.nextAppointment.date}
@@ -207,7 +207,7 @@ export default function PatientDashboard() {
                           </p>
                         </div>
                       </div>
-                      <Badge variant='outline'>
+                      <Badge variant='secondary'>
                         {patientData.nextAppointment.status}
                       </Badge>
                     </div>
@@ -255,7 +255,7 @@ export default function PatientDashboard() {
                     <span className='text-sm text-gray-600 dark:text-gray-400'>
                       {t('patient.dashboard.insurance_status')}
                     </span>
-                    <Badge variant='outline'>
+                    <Badge variant='secondary'>
                       {patientData?.insuranceStatus?.status ||
                         t('common.unknown')}
                     </Badge>

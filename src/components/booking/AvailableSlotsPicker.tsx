@@ -75,7 +75,7 @@ export default function AvailableSlotsPicker({
   if (loading) {
     return (
       <div className='text-center py-12'>
-        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto'></div>
+        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
         <p className='mt-4 text-gray-600 dark:text-gray-400'>
           جاري تحميل المواعيد المتاحة...
         </p>
@@ -142,8 +142,8 @@ export default function AvailableSlotsPicker({
                 className={`p-3 rounded-lg border-2 transition-all text-center ${
                   selectedSlot?.startTime === slot.startTime &&
                   selectedSlot?.therapistId === slot.therapistId
-                    ? 'border-[var(--brand-primary)] bg-[var(--brand-primary)]/10 font-bold'
-                    : 'border-gray-200 dark:border-gray-700 hover:border-[var(--brand-primary)] hover:bg-[var(--brand-primary)]/5'
+                    ? 'border-[var(--default-default)] bg-[var(--default-default)]/10 font-bold'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-[var(--default-default)] hover:bg-[var(--default-default)]/5'
                 }`}
               >
                 <div className='text-sm font-semibold text-gray-900 dark:text-white'>

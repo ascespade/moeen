@@ -100,7 +100,7 @@ export default function FAQPage() {
   return (
     <div className='min-h-screen bg-background text-foreground'>
       {/* Header */}
-      <div className='bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] py-20'>
+      <div className='bg-gradient-to-r from-[var(--default-default)] to-[var(--default-info)] py-20'>
         <div className='container-app text-center'>
           <h1 className='text-5xl font-bold text-white mb-6'>
             الأسئلة الشائعة
@@ -112,13 +112,13 @@ export default function FAQPage() {
       </div>
 
       {/* Category Filter */}
-      <div className='py-12 bg-[var(--brand-surface)]'>
+      <div className='py-12 bg-[var(--default-surface)]'>
         <div className='container-app'>
           <div className='flex flex-wrap justify-center gap-4'>
             <Button
               onClick={() => setSelectedCategory('all')}
               className={`btn ${
-                selectedCategory === 'all' ? 'btn-brand' : 'btn-ghost'
+                selectedCategory === 'all' ? 'btn-default' : 'btn-ghost'
               }`}
             >
               جميع الأسئلة
@@ -128,7 +128,7 @@ export default function FAQPage() {
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
                 className={`btn ${
-                  selectedCategory === category.id ? 'btn-brand' : 'btn-ghost'
+                  selectedCategory === category.id ? 'btn-default' : 'btn-ghost'
                 }`}
               >
                 <span className='mr-2'>{category.icon}</span>
@@ -153,10 +153,10 @@ export default function FAQPage() {
                     {faq.question}
                   </h3>
                   <div className='flex items-center gap-2'>
-                    <Badge className='badge-secondary'>
+                    <Badge className='badge-info'>
                       {faqCategories.find(cat => cat.id === faq.category)?.name}
                     </Badge>
-                    <span className='text-2xl text-[var(--brand-primary)]'>
+                    <span className='text-2xl text-[var(--default-default)]'>
                       {openFAQ === faq.id ? '−' : '+'}
                     </span>
                   </div>
@@ -176,7 +176,7 @@ export default function FAQPage() {
       </div>
 
       {/* Contact Support */}
-      <div className='py-20 bg-[var(--brand-surface)]'>
+      <div className='py-20 bg-[var(--default-surface)]'>
         <div className='container-app text-center'>
           <h2 className='text-4xl font-bold text-foreground mb-6'>
             لم تجد إجابتك؟
@@ -186,7 +186,7 @@ export default function FAQPage() {
             عليك خلال 24 ساعة
           </p>
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            <Button className='btn-brand btn-lg'>تواصل مع الدعم</Button>
+            <Button className='btn-default btn-lg'>تواصل مع الدعم</Button>
             <Button className='btn-outline btn-lg'>جدولة مكالمة</Button>
           </div>
         </div>

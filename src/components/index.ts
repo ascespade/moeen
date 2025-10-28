@@ -19,7 +19,7 @@ export * from './common';
 // LAYOUT COMPONENTS - مكونات التخطيط
 // ============================================
 export { default as Sidebar } from './shell/Sidebar';
-export { default as HeaderSimple } from './shell/HeaderSimple';
+// export { default as HeaderSimple } from './shell/HeaderSimple'; // Moved to isolated_files
 export { default as GlobalHeader } from './layout/GlobalHeader';
 export { default as SmartHeader } from './layout/SmartHeader';
 

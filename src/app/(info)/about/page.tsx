@@ -65,7 +65,7 @@ export default function AboutPage() {
               />
               <span
                 className='text-xl font-bold'
-                style={{ color: 'var(--brand-primary)' }}
+                style={{ color: 'var(--default-default)' }}
               >
                 مُعين
               </span>
@@ -73,19 +73,19 @@ export default function AboutPage() {
             <nav className='hidden items-center gap-6 md:flex'>
               <Link
                 href='/'
-                className='text-gray-600 hover:text-[var(--brand-primary)] dark:text-gray-400'
+                className='text-gray-600 hover:text-[var(--default-default)] dark:text-gray-400'
               >
                 الرئيسية
               </Link>
               <Link
                 href='/about'
-                className='font-medium text-[var(--brand-primary)]'
+                className='font-medium text-[var(--default-default)]'
               >
                 من نحن
               </Link>
               <Link
                 href='/contact'
-                className='text-gray-600 hover:text-[var(--brand-primary)] dark:text-gray-400'
+                className='text-gray-600 hover:text-[var(--default-default)] dark:text-gray-400'
               >
                 تواصل
               </Link>
@@ -95,7 +95,7 @@ export default function AboutPage() {
       </header>
 
       {/* Hero Section */}
-      <section className='bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-secondary)] py-20 text-white'>
+      <section className='bg-gradient-to-br from-[var(--default-default)] to-[var(--default-info)] py-20 text-white'>
         <div className='mx-auto max-w-screen-xl px-4 text-center'>
           <h1 className='mb-6 text-4xl font-bold md:text-6xl'>من نحن</h1>
           <p className='mb-8 text-xl opacity-90 md:text-2xl'>
@@ -114,7 +114,7 @@ export default function AboutPage() {
           <div className='grid grid-cols-2 gap-8 md:grid-cols-4'>
             {stats.map((stat, index) => (
               <div key={index} className='text-center'>
-                <div className='mb-2 text-3xl font-bold text-[var(--brand-primary)] md:text-4xl'>
+                <div className='mb-2 text-3xl font-bold text-[var(--default-default)] md:text-4xl'>
                   {stat.number}
                 </div>
                 <div className='text-gray-600 dark:text-gray-400'>
@@ -145,7 +145,7 @@ export default function AboutPage() {
                 key={index}
                 className='rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800'
               >
-                <div className='mb-4 text-[var(--brand-primary)]'>
+                <div className='mb-4 text-[var(--default-default)]'>
                   {feature.icon}
                 </div>
                 <h3 className='mb-3 text-xl font-semibold text-gray-900 dark:text-white'>
@@ -174,19 +174,19 @@ export default function AboutPage() {
               </p>
               <div className='space-y-4'>
                 <div className='flex items-start gap-3'>
-                  <div className='mt-2 h-2 w-2 rounded-full bg-[var(--brand-primary)]'></div>
+                  <div className='mt-2 h-2 w-2 rounded-full bg-[var(--default-default)]'></div>
                   <p className='text-gray-600 dark:text-gray-400'>
                     توفير منصة آمنة وموثوقة للتواصل بين جميع فئات المجتمع
                   </p>
                 </div>
                 <div className='flex items-start gap-3'>
-                  <div className='mt-2 h-2 w-2 rounded-full bg-[var(--brand-primary)]'></div>
+                  <div className='mt-2 h-2 w-2 rounded-full bg-[var(--default-default)]'></div>
                   <p className='text-gray-600 dark:text-gray-400'>
                     تسهيل عملية التطوع والتبرع وطلب المساعدة
                   </p>
                 </div>
                 <div className='flex items-start gap-3'>
-                  <div className='mt-2 h-2 w-2 rounded-full bg-[var(--brand-primary)]'></div>
+                  <div className='mt-2 h-2 w-2 rounded-full bg-[var(--default-default)]'></div>
                   <p className='text-gray-600 dark:text-gray-400'>
                     بناء مجتمع متضامن ومتعاون يساعد الجميع على تحقيق أهدافهم
                   </p>
@@ -207,7 +207,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className='bg-[var(--brand-primary)] py-20 text-white'>
+      <section className='bg-[var(--default-default)] py-20 text-white'>
         <div className='mx-auto max-w-screen-xl px-4 text-center'>
           <h2 className='mb-6 text-3xl font-bold md:text-4xl'>
             انضم إلينا اليوم
@@ -218,13 +218,13 @@ export default function AboutPage() {
           <div className='flex flex-col justify-center gap-4 sm:flex-row'>
             <Link
               href='/register'
-              className='rounded-lg bg-white px-8 py-3 font-semibold text-[var(--brand-primary)] transition-colors hover:bg-surface'
+              className='rounded-lg bg-white px-8 py-3 font-semibold text-[var(--default-default)] transition-colors hover:bg-surface'
             >
               انضم الآن
             </Link>
             <Link
               href='/contact'
-              className='rounded-lg border-2 border-white px-8 py-3 font-semibold text-white transition-colors hover:bg-white hover:text-[var(--brand-primary)]'
+              className='rounded-lg border-2 border-white px-8 py-3 font-semibold text-white transition-colors hover:bg-white hover:text-[var(--default-default)]'
             >
               تواصل معنا
             </Link>

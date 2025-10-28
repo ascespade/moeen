@@ -1,6 +1,6 @@
 /**
  * Bar Chart Component - مكون الرسم البياني العمودي
- * RTL-compatible bar chart with brand colors and theme support
+ * RTL-compatible bar chart with default colors and theme support
  */
 
 'use client';
@@ -55,8 +55,8 @@ export const BarChart: React.FC<BarChartProps> = ({
       ? bars
       : [
           {
-            dataKey: dataKey,
-            color: 'var(--brand-primary)',
+            dataKey,
+            color: 'var(--default-default)',
             name: 'Value',
           },
         ];

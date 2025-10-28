@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
       ipAddress,
       userAgent,
       status: 'success',
-      severity: 'info',
+      severity: 'secondary',
       metadata: {
         doctorId,
         scheduledAt,

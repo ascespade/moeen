@@ -107,7 +107,7 @@ export default function TherapistSchedulesPage() {
       alert('تم إضافة الجدول بنجاح!');
     } catch (error: any) {
       logger.error('Error adding schedule', error);
-      alert('خطأ: ' + (error.message || 'فشل في إضافة الجدول'));
+      alert(`خطأ: ${error.message || 'فشل في إضافة الجدول'}`);
     } finally {
       setSaving(false);
     }
@@ -193,7 +193,7 @@ export default function TherapistSchedulesPage() {
 
       {loading ? (
         <div className='card p-12 text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
           <p className='mt-4 text-gray-600 dark:text-gray-400'>
             جاري التحميل...
           </p>

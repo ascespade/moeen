@@ -136,8 +136,8 @@ const MoainChatbot: React.FC = () => {
           message: messageToSend,
           userId: 'current-user', // سيتم ربطه بالمستخدم المسجل
           conversationId: 'current-conversation',
-          currentFlow: currentFlow,
-          currentStep: currentStep,
+          currentFlow,
+          currentStep,
         }),
       });
 
@@ -359,7 +359,7 @@ const MoainChatbot: React.FC = () => {
         <CardHeader className='pb-3'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-3'>
-              <div className='w-10 h-10 bg-[var(--brand-primary)] rounded-full flex items-center justify-center'>
+              <div className='w-10 h-10 bg-[var(--default-default)] rounded-full flex items-center justify-center'>
                 <Bot className='w-6 h-6 text-white' />
               </div>
               <div>
@@ -369,7 +369,7 @@ const MoainChatbot: React.FC = () => {
             </div>
             <div className='flex items-center gap-2'>
               <Badge
-                variant={learningMode ? 'primary' : 'outline'}
+                variant={learningMode ? 'primary' : 'secondary'}
                 className='flex items-center gap-1'
               >
                 <Brain className='w-3 h-3' />
@@ -398,13 +398,13 @@ const MoainChatbot: React.FC = () => {
               <div
                 className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                   message.type === 'user'
-                    ? 'bg-[var(--brand-primary)] text-white'
+                    ? 'bg-[var(--default-default)] text-white'
                     : 'bg-white border shadow-sm'
                 }`}
               >
                 <div className='flex items-start gap-2'>
                   {message.type === 'bot' && (
-                    <Bot className='w-4 h-4 mt-1 text-[var(--brand-primary)]' />
+                    <Bot className='w-4 h-4 mt-1 text-[var(--default-default)]' />
                   )}
                   {message.type === 'user' && (
                     <User className='w-4 h-4 mt-1 text-white' />
@@ -424,7 +424,7 @@ const MoainChatbot: React.FC = () => {
             <div className='flex justify-start'>
               <div className='bg-white border shadow-sm rounded-lg px-4 py-2'>
                 <div className='flex items-center gap-2'>
-                  <Bot className='w-4 h-4 text-[var(--brand-primary)]' />
+                  <Bot className='w-4 h-4 text-[var(--default-default)]' />
                   <div className='flex gap-1'>
                     <div className='w-2 h-2 bg-gray-400 rounded-full animate-bounce'></div>
                     <div
@@ -464,7 +464,7 @@ const MoainChatbot: React.FC = () => {
                         {appointment.specialty}
                       </p>
                     </div>
-                    <Badge variant='outline'>{appointment.date}</Badge>
+                    <Badge variant='secondary'>{appointment.date}</Badge>
                   </div>
                   <div className='flex flex-wrap gap-2'>
                     {appointment.availableSlots.map(time => (
@@ -527,7 +527,7 @@ const MoainChatbot: React.FC = () => {
             <Button
               onClick={() => handleSendMessage()}
               disabled={!inputMessage.trim() || isTyping}
-              className='bg-[var(--brand-primary)] hover:brightness-95'
+              className='bg-[var(--default-default)] hover:brightness-95'
             >
               <Send className='w-4 h-4' />
             </Button>

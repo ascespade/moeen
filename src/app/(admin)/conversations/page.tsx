@@ -108,7 +108,7 @@ export default function ConversationsPage() {
   }, [conversations, query, statusFilter]);
 
   return (
-    <main className='min-h-screen bg-[var(--brand-surface)]'>
+    <main className='min-h-screen bg-[var(--default-surface)]'>
       <div className='container-app py-6'>
         <div className='grid gap-4 grid-cols-1 lg:grid-cols-[320px_1fr_320px]'>
           <aside className='card p-4 grid gap-3'>
@@ -154,7 +154,7 @@ export default function ConversationsPage() {
                 {filtered.map(c => (
                   <button
                     key={c.id}
-                    className={`text-start card card-interactive p-3 ${c.id === activeId ? 'bg-[var(--brand-primary)] text-white' : ''}`}
+                    className={`text-start card card-interactive p-3 ${c.id === activeId ? 'bg-[var(--default-default)] text-white' : ''}`}
                     onClick={() => setActiveId(c.id)}
                   >
                     <div className='font-medium'>{c.title}</div>
@@ -170,7 +170,7 @@ export default function ConversationsPage() {
               {active?.messages.map(m => (
                 <div
                   key={m.id}
-                  className={`max-w-[85%] rounded-lg p-3 ${m.from === 'customer' ? 'bg-surface' : m.from === 'agent' ? 'bg-[var(--brand-accent)]/10' : 'bg-[var(--brand-success)]/10'}`}
+                  className={`max-w-[85%] rounded-lg p-3 ${m.from === 'customer' ? 'bg-surface' : m.from === 'agent' ? 'bg-[var(--default-accent)]/10' : 'bg-[var(--default-success)]/10'}`}
                 >
                   <div className='text-xs text-gray-500 mb-1'>
                     {m.from} • {new Date(m.ts).toLocaleTimeString()}
@@ -192,7 +192,7 @@ export default function ConversationsPage() {
                 <button className='btn btn-outline btn-sm' onClick={aiReply}>
                   رد ذكي
                 </button>
-                <button className='btn btn-brand btn-sm' onClick={send}>
+                <button className='btn btn-default btn-sm' onClick={send}>
                   إرسال
                 </button>
               </div>

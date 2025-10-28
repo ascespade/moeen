@@ -3,7 +3,7 @@
  * Replaces console.log with structured logging
  */
 
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+type LogLevel = 'debug' | 'secondary' | 'warn' | 'error';
 
 interface LogEntry {
   timestamp: string;
@@ -36,7 +36,7 @@ class Logger {
    * Log informational messages
    */
   info(message: string, data?: any, context?: string): void {
-    this.log('info', message, data, context);
+    this.log('secondary', message, data, context);
   }
 
   /**
@@ -105,7 +105,7 @@ class Logger {
         // eslint-disable-next-line no-console
         console.debug(fullMessage, entry.data);
         break;
-      case 'info':
+      case 'secondary':
         // eslint-disable-next-line no-console
         console.info(fullMessage, entry.data);
         break;
@@ -125,7 +125,7 @@ class Logger {
    */
   private async sendToLoggingService(entry: LogEntry): Promise<void> {
     // Only send errors and warns to external service
-    if (entry.level === 'debug' || entry.level === 'info') {
+    if (entry.level === 'debug' || entry.level === 'secondary') {
       return;
     }
 

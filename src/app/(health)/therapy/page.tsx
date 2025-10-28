@@ -155,7 +155,7 @@ const TherapyPage: React.FC = () => {
       scheduled: { label: 'مجدولة', variant: 'primary' as const },
       in_progress: { label: 'جارية', variant: 'secondary' as const },
       completed: { label: 'مكتملة', variant: 'primary' as const },
-      cancelled: { label: 'ملغية', variant: 'destructive' as const },
+      cancelled: { label: 'ملغية', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
@@ -168,11 +168,11 @@ const TherapyPage: React.FC = () => {
   const getTherapyTypeIcon = (type: string) => {
     switch (type) {
       case 'العلاج الطبيعي':
-        return <Activity className='w-4 h-4 text-brand-primary' />;
+        return <Activity className='w-4 h-4 text-default-default' />;
       case 'العلاج الوظيفي':
-        return <Target className='w-4 h-4 text-brand-success' />;
+        return <Target className='w-4 h-4 text-default-success' />;
       case 'علاج النطق':
-        return <Heart className='w-4 h-4 text-brand-error' />;
+        return <Heart className='w-4 h-4 text-default-error' />;
       case 'العلاج النفسي':
         return <Brain className='w-4 h-4 text-purple-500' />;
       default:
@@ -217,7 +217,7 @@ const TherapyPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/therapy/new')}
-            className='bg-[var(--brand-primary)] hover:brightness-95'
+            className='bg-[var(--default-default)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             جلسة علاج جديدة
@@ -338,7 +338,7 @@ const TherapyPage: React.FC = () => {
       <div className='space-y-6'>
         {loading ? (
           <div className='flex justify-center items-center h-64'>
-            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
           </div>
         ) : filteredSessions.length === 0 ? (
           <Card>
@@ -350,7 +350,7 @@ const TherapyPage: React.FC = () => {
               <p className='text-gray-600 mb-4'>ابدأ بإنشاء جلسة علاج جديدة</p>
               <Button
                 onClick={() => router.push('/therapy/new')}
-                className='bg-[var(--brand-primary)] hover:brightness-95'
+                className='bg-[var(--default-default)] hover:brightness-95'
               >
                 إنشاء جلسة جديدة
               </Button>
@@ -373,7 +373,7 @@ const TherapyPage: React.FC = () => {
                         height={48}
                         className='rounded-full'
                       />
-                      <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-brand-success rounded-full border-2 border-white'></div>
+                      <div className='absolute -bottom-1 -right-1 w-4 h-4 bg-default-success rounded-full border-2 border-white'></div>
                     </div>
                     <div>
                       <h3 className='text-lg font-semibold'>
@@ -417,7 +417,11 @@ const TherapyPage: React.FC = () => {
                   <h4 className='text-sm font-semibold mb-2'>أهداف الجلسة:</h4>
                   <div className='flex flex-wrap gap-2'>
                     {session.goals.map((goal, index) => (
-                      <Badge key={index} variant='outline' className='text-xs'>
+                      <Badge
+                        key={index}
+                        variant='secondary'
+                        className='text-xs'
+                      >
                         {goal}
                       </Badge>
                     ))}

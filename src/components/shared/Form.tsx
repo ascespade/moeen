@@ -19,11 +19,11 @@ export function FormField({
     <div className={`space-y-2 ${className}`}>
       <label className='block text-sm font-medium text-gray-700 dark:text-gray-300'>
         {label}
-        {required && <span className='mr-1 text-brand-error'>*</span>}
+        {required && <span className='mr-1 text-default-error'>*</span>}
       </label>
       {children}
       {error && (
-        <p className='text-sm text-brand-error dark:text-red-400'>{error}</p>
+        <p className='text-sm text-default-error dark:text-red-400'>{error}</p>
       )}
     </div>
   );

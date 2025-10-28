@@ -88,7 +88,7 @@ const AppointmentManager: React.FC = () => {
 
   const loadAppointments = async () => {
     // محاكاة تحميل المواعيد من قاعدة البيانات
-    const mockAppointments: Appointment[] = [
+    const appointments: Appointment[] = [
       {
         id: '1',
         patientName: 'أحمد محمد',
@@ -120,11 +120,11 @@ const AppointmentManager: React.FC = () => {
         updatedAt: '2024-01-11T10:30:00Z',
       },
     ];
-    setAppointments(mockAppointments);
+    setAppointments(appointments);
   };
 
   const loadDoctors = async () => {
-    const mockDoctors: Doctor[] = [
+    const doctors: Doctor[] = [
       {
         id: '1',
         name: 'د. سارة أحمد',
@@ -147,7 +147,7 @@ const AppointmentManager: React.FC = () => {
         maxPatientsPerDay: 12,
       },
     ];
-    setDoctors(mockDoctors);
+    setDoctors(doctors);
   };
 
   const handleAddAppointment = async () => {
@@ -255,7 +255,7 @@ const AppointmentManager: React.FC = () => {
         <h1 className='text-3xl font-bold text-gray-900'>إدارة المواعيد</h1>
         <Button
           onClick={() => setShowAddForm(true)}
-          className='bg-[var(--brand-primary)] hover:brightness-95'
+          className='bg-[var(--default-default)] hover:brightness-95'
         >
           <Plus className='w-4 h-4 mr-2' />
           إضافة موعد جديد
@@ -329,7 +329,7 @@ const AppointmentManager: React.FC = () => {
                         {appointment.specialNeeds.map((need, index) => (
                           <Badge
                             key={index}
-                            variant='outline'
+                            variant='secondary'
                             className='text-xs'
                           >
                             {need}
@@ -359,7 +359,7 @@ const AppointmentManager: React.FC = () => {
                     variant='outline'
                     size='sm'
                     onClick={() => handleDeleteAppointment(appointment.id)}
-                    className='text-brand-error hover:text-red-700'
+                    className='text-default-error hover:text-red-700'
                   >
                     <Trash2 className='w-4 h-4' />
                   </Button>
@@ -531,7 +531,7 @@ const AppointmentManager: React.FC = () => {
               </Button>
               <Button
                 onClick={handleAddAppointment}
-                className='bg-[var(--brand-primary)] hover:brightness-95'
+                className='bg-[var(--default-default)] hover:brightness-95'
               >
                 إضافة الموعد
               </Button>

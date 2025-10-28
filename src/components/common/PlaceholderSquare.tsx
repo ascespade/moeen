@@ -35,7 +35,7 @@ export default function PlaceholderSquare({
           )}
           {docsLink && (
             <a
-              className='mt-3 inline-block text-sm text-[var(--brand-primary)] hover:underline'
+              className='mt-3 inline-block text-sm text-[var(--default-default)] hover:underline'
               href={docsLink}
               target='_blank'
               rel='noreferrer'

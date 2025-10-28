@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 
 import { createClient } from '@/lib/supabase/client';
+import { realDB } from '@/lib/supabase-real';
 
 import Image from 'next/image';
 
@@ -191,7 +192,7 @@ export default function PatientsPage() {
       active: {
         label: 'نشط',
         variant: 'primary' as const,
-        color: 'text-brand-success',
+        color: 'text-default-success',
       },
       inactive: {
         label: 'غير نشط',
@@ -200,8 +201,8 @@ export default function PatientsPage() {
       },
       blocked: {
         label: 'محظور',
-        variant: 'destructive' as const,
-        color: 'text-brand-error',
+        variant: 'error' as const,
+        color: 'text-default-error',
       },
     };
 
@@ -218,7 +219,7 @@ export default function PatientsPage() {
       mild: {
         label: 'خفيف',
         variant: 'primary' as const,
-        color: 'text-brand-success',
+        color: 'text-default-success',
       },
       moderate: {
         label: 'متوسط',
@@ -227,8 +228,8 @@ export default function PatientsPage() {
       },
       severe: {
         label: 'شديد',
-        variant: 'destructive' as const,
-        color: 'text-brand-error',
+        variant: 'error' as const,
+        color: 'text-default-error',
       },
     };
 
@@ -241,15 +242,15 @@ export default function PatientsPage() {
   };
 
   const getProgressColor = (percentage: number) => {
-    if (percentage >= 80) return 'bg-brand-success';
-    if (percentage >= 60) return 'bg-brand-warning';
-    if (percentage >= 40) return 'bg-brand-primary';
-    return 'bg-brand-error';
+    if (percentage >= 80) return 'bg-default-success';
+    if (percentage >= 60) return 'bg-default-warning';
+    if (percentage >= 40) return 'bg-default-default';
+    return 'bg-default-error';
   };
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-[var(--brand-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto'></div>
           <p className='mt-4 text-gray-600'>جاري تحميل بيانات المرضى...</p>
@@ -260,9 +261,9 @@ export default function PatientsPage() {
 
   if (error) {
     return (
-      <div className='min-h-screen bg-[var(--brand-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
-          <div className='text-brand-error text-xl mb-4'>⚠️</div>
+          <div className='text-default-error text-xl mb-4'>⚠️</div>
           <p className='text-gray-600'>{error}</p>
           <button
             onClick={() => window.location.reload()}
@@ -276,9 +277,9 @@ export default function PatientsPage() {
   }
 
   return (
-    <main className='min-h-screen bg-[var(--brand-surface)]'>
+    <main className='min-h-screen bg-[var(--default-surface)]'>
       {/* Page Header */}
-      <div className='bg-white dark:bg-gray-900 border-b border-[var(--brand-border)]'>
+      <div className='bg-white dark:bg-gray-900 border-b border-[var(--default-border)]'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div>
@@ -288,7 +289,7 @@ export default function PatientsPage() {
               </p>
             </div>
             <Link
-              href={ROUTES.HEALTH.PATIENTS + '/new'}
+              href={`${ROUTES.HEALTH.PATIENTS}/new`}
               className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors'
             >
               إضافة مريض جديد
@@ -311,7 +312,7 @@ export default function PatientsPage() {
                 placeholder='البحث بالاسم، الهاتف، أو البريد الإلكتروني...'
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
-                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent'
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-default-default focus:border-transparent'
               />
             </div>
 
@@ -323,7 +324,7 @@ export default function PatientsPage() {
               <select
                 value={filterStatus}
                 onChange={e => setFilterStatus(e.target.value as any)}
-                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:border-transparent'
+                className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-default-default focus:border-transparent'
               >
                 <option value='all'>جميع الحالات</option>
                 <option value='active'>نشط</option>
@@ -346,7 +347,7 @@ export default function PatientsPage() {
                 <div className='flex items-start justify-between mb-4'>
                   <div className='flex items-center space-x-3'>
                     <div className='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center'>
-                      <span className='text-brand-primary font-semibold text-lg'>
+                      <span className='text-default-default font-semibold text-lg'>
                         {patient.first_name.charAt(0)}
                       </span>
                     </div>
@@ -383,13 +384,13 @@ export default function PatientsPage() {
                 {/* Stats */}
                 <div className='grid grid-cols-2 gap-4 mb-4'>
                   <div className='text-center'>
-                    <div className='text-lg font-semibold text-brand-primary'>
+                    <div className='text-lg font-semibold text-default-default'>
                       {patient.totalSessions}
                     </div>
                     <div className='text-xs text-gray-500'>الجلسات</div>
                   </div>
                   <div className='text-center'>
-                    <div className='text-lg font-semibold text-brand-success'>
+                    <div className='text-lg font-semibold text-default-success'>
                       {patient.lastVisit === 'لم يتم تحديد موعد' ? '0' : '1'}
                     </div>
                     <div className='text-xs text-gray-500'>آخر زيارة</div>
@@ -406,7 +407,7 @@ export default function PatientsPage() {
                   </Link>
                   <Link
                     href={`${ROUTES.HEALTH.APPOINTMENTS}?patient=${patient.public_id}`}
-                    className='flex-1 bg-brand-success text-white text-center py-2 px-3 rounded-lg hover:bg-green-700 transition-colors text-sm'
+                    className='flex-1 bg-default-success text-white text-center py-2 px-3 rounded-lg hover:bg-green-700 transition-colors text-sm'
                   >
                     حجز موعد
                   </Link>

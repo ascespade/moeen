@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
         password,
         email_confirm: true,
         user_metadata: {
-          name: name,
+          name,
         },
       });
 
@@ -140,8 +140,8 @@ export async function POST(request: NextRequest) {
       .from('users')
       .insert({
         id: authData.user.id,
-        email: email,
-        name: name,
+        email,
+        name,
         role: 'agent', // Default role
         status: 'active',
         is_active: true,
@@ -204,7 +204,7 @@ export async function POST(request: NextRequest) {
         ip_address: ipAddress,
         user_agent: userAgent,
         status: 'success',
-        severity: 'info',
+        severity: 'secondary',
         new_values: {
           email,
           name,
@@ -228,7 +228,7 @@ export async function POST(request: NextRequest) {
         data: {
           id: authData.user.id,
           email: authData.user.email,
-          name: name,
+          name,
         },
       },
       { status: 201 }

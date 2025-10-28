@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Card } from '@/components/ui/Card';
 
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 
 import { ROUTES } from '@/constants/routes';
+import { realDB } from '@/lib/supabase-real';
 
 import Image from 'next/image';
 
@@ -28,72 +29,18 @@ interface InsuranceClaim {
   outstandingAmount?: number;
 }
 
-const mockClaims: InsuranceClaim[] = [
-  {
-    id: '1',
-    patientName: 'أحمد محمد العتيبي',
-    patientId: 'P001',
-    claimNumber: 'IC-2024-001',
-    insuranceCompany: 'شركة التعاونية للتأمين',
-    serviceType: 'علاج طبيعي',
-    amount: 1500,
-    status: 'approved',
-    submissionDate: '2024-01-15',
-    approvalDate: '2024-01-18',
-    isBlocked: false,
-    hasOutstandingBalance: false,
-  },
-  {
-    id: '2',
-    patientName: 'فاطمة عبدالله السعيد',
-    patientId: 'P002',
-    claimNumber: 'IC-2024-002',
-    insuranceCompany: 'شركة الأهلي للتأمين',
-    serviceType: 'علاج نفسي',
-    amount: 2000,
-    status: 'pending',
-    submissionDate: '2024-01-20',
-    isBlocked: false,
-    hasOutstandingBalance: false,
-  },
-  {
-    id: '3',
-    patientName: 'محمد سالم القحطاني',
-    patientId: 'P003',
-    claimNumber: 'IC-2024-003',
-    insuranceCompany: 'شركة سابك للتأمين',
-    serviceType: 'علاج وظيفي',
-    amount: 1200,
-    status: 'rejected',
-    submissionDate: '2024-01-18',
-    rejectionReason: 'عدم اكتمال الوثائق المطلوبة',
-    isBlocked: true,
-    hasOutstandingBalance: true,
-    outstandingAmount: 1200,
-  },
-  {
-    id: '4',
-    patientName: 'نورا أحمد الزهراني',
-    patientId: 'P004',
-    claimNumber: 'IC-2024-004',
-    insuranceCompany: 'شركة الراجحي للتأمين',
-    serviceType: 'علاج طبيعي',
-    amount: 1800,
-    status: 'under_review',
-    submissionDate: '2024-01-22',
-    isBlocked: false,
-    hasOutstandingBalance: false,
-  },
-];
-
+// Mock data removed - using real database
 const statusConfig = {
   pending: { label: 'قيد المراجعة', color: 'warning' as const },
   approved: { label: 'موافق عليه', color: 'success' as const },
   rejected: { label: 'مرفوض', color: 'error' as const },
-  under_review: { label: 'قيد التدقيق', color: 'info' as const },
+  under_review: { label: 'قيد التدقيق', color: 'secondary' as const },
 };
 
 export default function InsurancePage() {
+  const [claims, setClaims] = useState<InsuranceClaim[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedClaim, setSelectedClaim] = useState<InsuranceClaim | null>(
     null
   );
@@ -101,7 +48,57 @@ export default function InsurancePage() {
     'all' | 'pending' | 'approved' | 'rejected'
   >('all');
 
-  const filteredClaims = mockClaims.filter(
+  // Load insurance claims from database
+  useEffect(() => {
+    const loadClaims = async () => {
+      try {
+        setLoading(true);
+        // Get all insurance claims
+        const claimsData = await realDB.getInsuranceClaims(''); // Get all claims for now
+
+        // Transform data to match our interface
+        const transformedClaims: InsuranceClaim[] = claimsData.map(
+          (claim: any) => ({
+            id: claim.id,
+            patientName: claim.patients?.users?.name || 'غير محدد',
+            patientId: claim.patient_id,
+            claimNumber: claim.claim_number || 'غير محدد',
+            insuranceCompany: claim.insurance_provider || 'غير محدد',
+            serviceType: claim.service_code || 'خدمة طبية',
+            amount: claim.amount || 0,
+            status:
+              claim.status === 'approved'
+                ? 'approved'
+                : claim.status === 'rejected'
+                  ? 'rejected'
+                  : claim.status === 'pending'
+                    ? 'pending'
+                    : 'under_review',
+            submissionDate:
+              claim.submitted_at ||
+              claim.created_at ||
+              new Date().toISOString().split('T')[0],
+            approvalDate: claim.approved_at,
+            rejectionReason: claim.rejection_reason,
+            isBlocked: claim.status === 'rejected',
+            hasOutstandingBalance: claim.status === 'rejected',
+            outstandingAmount: claim.status === 'rejected' ? claim.amount : 0,
+          })
+        );
+
+        setClaims(transformedClaims);
+      } catch (err) {
+        setError('فشل في تحميل بيانات مطالبات التأمين');
+        console.error('Error loading insurance claims:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadClaims();
+  }, []);
+
+  const filteredClaims = claims.filter(
     claim => filter === 'all' || claim.status === filter
   );
 
@@ -117,15 +114,15 @@ export default function InsurancePage() {
   const getBlockStatus = (claim: InsuranceClaim) => {
     if (claim.isBlocked) {
       return (
-        <div className='flex items-center gap-2 text-brand-error'>
-          <span className='h-2 w-2 rounded-full bg-brand-error'></span>
+        <div className='flex items-center gap-2 text-default-error'>
+          <span className='h-2 w-2 rounded-full bg-default-error'></span>
           <span className='text-sm font-medium'>محظور</span>
         </div>
       );
     }
     return (
-      <div className='flex items-center gap-2 text-brand-success'>
-        <span className='h-2 w-2 rounded-full bg-brand-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>نشط</span>
       </div>
     );
@@ -134,8 +131,8 @@ export default function InsurancePage() {
   const getOutstandingBalance = (claim: InsuranceClaim) => {
     if (claim.hasOutstandingBalance) {
       return (
-        <div className='flex items-center gap-2 text-brand-primary'>
-          <span className='h-2 w-2 rounded-full bg-brand-primary'></span>
+        <div className='flex items-center gap-2 text-default-default'>
+          <span className='h-2 w-2 rounded-full bg-default-default'></span>
           <span className='text-sm font-medium'>
             رصيد مستحق: {claim.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -143,17 +140,45 @@ export default function InsurancePage() {
       );
     }
     return (
-      <div className='flex items-center gap-2 text-brand-success'>
-        <span className='h-2 w-2 rounded-full bg-brand-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>لا يوجد رصيد مستحق</span>
       </div>
     );
   };
 
+  if (loading) {
+    return (
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto mb-4'></div>
+          <p className='text-gray-600'>جاري تحميل مطالبات التأمين...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='text-red-500 text-6xl mb-4'>⚠️</div>
+          <p className='text-red-600 text-lg mb-4'>{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
+          >
+            إعادة المحاولة
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -165,7 +190,7 @@ export default function InsurancePage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-brand text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   إدارة المطالبات التأمينية
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -189,16 +214,16 @@ export default function InsurancePage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <Card className='p-6 text-center'>
-            <div className='text-brand mb-2 text-3xl font-bold'>
-              {mockClaims.length}
+            <div className='text-default mb-2 text-3xl font-bold'>
+              {claims.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
               إجمالي المطالبات
             </div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-success'>
-              {mockClaims.filter(c => c.status === 'approved').length}
+            <div className='mb-2 text-3xl font-bold text-default-success'>
+              {claims.filter(c => c.status === 'approved').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
               مطالبات موافق عليها
@@ -206,13 +231,13 @@ export default function InsurancePage() {
           </Card>
           <Card className='p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-yellow-600'>
-              {mockClaims.filter(c => c.status === 'pending').length}
+              {claims.filter(c => c.status === 'pending').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>قيد المراجعة</div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-error'>
-              {mockClaims.filter(c => c.isBlocked).length}
+            <div className='mb-2 text-3xl font-bold text-default-error'>
+              {claims.filter(c => c.isBlocked).length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
               مطالبات محظورة
@@ -301,7 +326,7 @@ export default function InsurancePage() {
                   <span className='text-sm text-gray-600 dark:text-gray-300'>
                     المبلغ:
                   </span>
-                  <span className='text-brand text-sm font-bold'>
+                  <span className='text-default text-sm font-bold'>
                     {claim.amount.toLocaleString()} ريال
                   </span>
                 </div>
@@ -413,7 +438,7 @@ export default function InsurancePage() {
                     <label className='text-sm text-gray-600 dark:text-gray-300'>
                       المبلغ
                     </label>
-                    <p className='text-brand text-lg font-bold'>
+                    <p className='text-default text-lg font-bold'>
                       {selectedClaim.amount.toLocaleString()} ريال
                     </p>
                   </div>
@@ -452,7 +477,7 @@ export default function InsurancePage() {
                     <label className='text-sm text-gray-600 dark:text-gray-300'>
                       سبب الرفض
                     </label>
-                    <p className='font-medium text-brand-error'>
+                    <p className='font-medium text-default-error'>
                       {selectedClaim.rejectionReason}
                     </p>
                   </div>

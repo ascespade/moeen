@@ -9,8 +9,8 @@ export default function SettingsPage() {
   >('general');
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center gap-4'>
             <Image
@@ -21,7 +21,7 @@ export default function SettingsPage() {
               className='rounded-lg'
             />
             <div>
-              <h1 className='text-brand text-2xl font-bold'>الإعدادات</h1>
+              <h1 className='text-default text-2xl font-bold'>الإعدادات</h1>
               <p className='text-gray-600 dark:text-gray-300'>
                 إدارة إعدادات النظام
               </p>
@@ -46,7 +46,7 @@ export default function SettingsPage() {
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-right transition-colors ${
                     activeTab === tab.id
-                      ? 'bg-[var(--brand-primary)] text-white'
+                      ? 'bg-[var(--default-default)] text-white'
                       : 'text-gray-700 hover:bg-surface dark:text-gray-300 dark:hover:bg-gray-800'
                   }`}
                 >
@@ -72,7 +72,7 @@ export default function SettingsPage() {
                       <input
                         type='text'
                         defaultValue='مركز الهمم للرعاية الصحية المتخصصة'
-                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       />
                     </div>
                     <div>
@@ -82,7 +82,7 @@ export default function SettingsPage() {
                       <input
                         type='email'
                         defaultValue='info@moeen.com'
-                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       />
                     </div>
                     <div>
@@ -92,7 +92,7 @@ export default function SettingsPage() {
                       <input
                         type='tel'
                         defaultValue='+966501234567'
-                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       />
                     </div>
                     <div>
@@ -102,14 +102,14 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         defaultValue='الرياض، المملكة العربية السعودية'
-                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       ></textarea>
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         المنطقة الزمنية
                       </label>
-                      <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                      <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                         <option value='Asia/Riyadh'>الرياض (GMT+3)</option>
                         <option value='Asia/Dubai'>دبي (GMT+4)</option>
                         <option value='Europe/London'>لندن (GMT+0)</option>
@@ -119,7 +119,7 @@ export default function SettingsPage() {
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         اللغة
                       </label>
-                      <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                      <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                         <option value='ar'>العربية</option>
                         <option value='en'>English</option>
                       </select>
@@ -140,7 +140,7 @@ export default function SettingsPage() {
                         <input
                           type='password'
                           defaultValue='AIzaSyB...'
-                          className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                          className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         />
                         <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'>
                           تحديث
@@ -155,7 +155,7 @@ export default function SettingsPage() {
                         <input
                           type='password'
                           defaultValue='sk-...'
-                          className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                          className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         />
                         <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'>
                           تحديث
@@ -170,7 +170,7 @@ export default function SettingsPage() {
                         <input
                           type='password'
                           defaultValue='EAA...'
-                          className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                          className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         />
                         <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'>
                           تحديث
@@ -263,7 +263,7 @@ export default function SettingsPage() {
                       <input
                         type='checkbox'
                         defaultChecked
-                        className='h-4 w-4 rounded border-gray-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]'
+                        className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                       />
                     </div>
                     <div className='flex items-center justify-between'>
@@ -276,7 +276,7 @@ export default function SettingsPage() {
                       <input
                         type='checkbox'
                         defaultChecked
-                        className='h-4 w-4 rounded border-gray-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]'
+                        className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                       />
                     </div>
                     <div className='flex items-center justify-between'>
@@ -289,7 +289,7 @@ export default function SettingsPage() {
                       <input
                         type='checkbox'
                         defaultChecked
-                        className='h-4 w-4 rounded border-gray-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]'
+                        className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                       />
                     </div>
                     <div className='flex items-center justify-between'>
@@ -301,7 +301,7 @@ export default function SettingsPage() {
                       </div>
                       <input
                         type='checkbox'
-                        className='h-4 w-4 rounded border-gray-300 text-[var(--brand-primary)] focus:ring-[var(--brand-primary)]'
+                        className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                       />
                     </div>
                   </div>
@@ -321,7 +321,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         defaultValue='مرحباً {{اسم المريض}}، أهلاً وسهلاً بك في {{اسم المركز}}!'
-                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       ></textarea>
                     </div>
                     <div>
@@ -331,7 +331,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         defaultValue='تم تأكيد موعدك {{اسم المريض}} مع {{اسم الطبيب}} في {{التاريخ}} الساعة {{الوقت}}'
-                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       ></textarea>
                     </div>
                     <div>
@@ -341,7 +341,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         defaultValue='تذكير: لديك موعد غداً {{اسم المريض}} في {{التاريخ}} الساعة {{الوقت}}'
-                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       ></textarea>
                     </div>
                   </div>
@@ -349,7 +349,7 @@ export default function SettingsPage() {
               )}
 
               <div className='mt-8 flex justify-end border-t border-gray-200 pt-6 dark:border-gray-700'>
-                <button className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                   حفظ التغييرات
                 </button>
               </div>

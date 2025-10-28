@@ -611,6 +611,233 @@ export class RealSupabaseManager {
     }
   }
 
+  // Training Programs
+  async getTrainingPrograms() {
+    const { data, error } = await admin
+      .from('training_programs')
+      .select(
+        `
+        id,
+        title,
+        description,
+        category,
+        level,
+        duration_weeks,
+        max_participants,
+        current_participants,
+        instructor_id,
+        start_date,
+        end_date,
+        status,
+        prerequisites,
+        created_at
+      `
+      )
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      return [];
+    }
+    return data || [];
+  }
+
+  async getTrainingProgress(patientId?: string) {
+    let query = admin
+      .from('training_progress')
+      .select(
+        `
+        id,
+        patient_id,
+        program_id,
+        status,
+        progress_percentage,
+        started_at,
+        completed_at,
+        last_activity_at,
+        training_programs!inner(title, category)
+      `
+      )
+      .order('started_at', { ascending: false });
+
+    if (patientId) {
+      query = query.eq('patient_id', patientId);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      return [];
+    }
+    return data || [];
+  }
+
+  // Progress Tracking
+  async getProgressGoals(patientId?: string) {
+    let query = admin
+      .from('progress_goals')
+      .select(
+        `
+        id,
+        patient_id,
+        title,
+        description,
+        category,
+        target_value,
+        current_value,
+        unit,
+        target_date,
+        status,
+        created_at,
+        updated_at
+      `
+      )
+      .order('created_at', { ascending: false });
+
+    if (patientId) {
+      query = query.eq('patient_id', patientId);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      return [];
+    }
+    return data || [];
+  }
+
+  async getAssessments(patientId?: string) {
+    let query = admin
+      .from('assessments')
+      .select(
+        `
+        id,
+        patient_id,
+        type,
+        title,
+        score,
+        max_score,
+        status,
+        completed_at,
+        created_at
+      `
+      )
+      .order('created_at', { ascending: false });
+
+    if (patientId) {
+      query = query.eq('patient_id', patientId);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      return [];
+    }
+    return data || [];
+  }
+
+  async getProgressReports(patientId?: string) {
+    let query = admin
+      .from('progress_reports')
+      .select(
+        `
+        id,
+        patient_id,
+        report_date,
+        summary,
+        achievements,
+        challenges,
+        recommendations,
+        next_steps,
+        created_at
+      `
+      )
+      .order('report_date', { ascending: false });
+
+    if (patientId) {
+      query = query.eq('patient_id', patientId);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      return [];
+    }
+    return data || [];
+  }
+
+  // User management
+  async getUserByEmail(email: string) {
+    const { data, error } = await admin
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
+
+    if (error) {
+      return null;
+    }
+    return data;
+  }
+
+  async getUserById(id: string) {
+    const { data, error } = await admin
+      .from('users')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      return null;
+    }
+    return data;
+  }
+
+  // Translations
+  async getTranslations() {
+    const { data, error } = await admin
+      .from('translations')
+      .select('*')
+      .order('key', { ascending: true });
+
+    if (error) {
+      return [];
+    }
+    return data || [];
+  }
+
+  async createTranslation(translationData: {
+    key: string;
+    ar: string;
+    en: string;
+    context?: string;
+    module?: string;
+  }) {
+    const { data, error } = await admin
+      .from('translations')
+      .insert([translationData])
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to create translation: ${error.message}`);
+    }
+    return data;
+  }
+
+  async updateTranslation(key: string, updates: any) {
+    const { data, error } = await admin
+      .from('translations')
+      .update(updates)
+      .eq('key', key)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to update translation: ${error.message}`);
+    }
+    return data;
+  }
+
   // Audit Logging
   async logAudit(auditData: {
     user_id?: string;

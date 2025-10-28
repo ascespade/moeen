@@ -10,8 +10,8 @@ const features = [
     description:
       'نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية مع تذكيرات تلقائية',
     icon: '📅',
-    color: 'text-[var(--brand-accent)]',
-    bgColor: 'bg-[var(--brand-accent)]/10',
+    color: 'text-[var(--default-accent)]',
+    bgColor: 'bg-[var(--default-accent)]/10',
     benefits: ['حجز تلقائي', 'تذكيرات ذكية', 'إدارة الجدولة'],
   },
   {
@@ -19,8 +19,8 @@ const features = [
     title: 'إدارة المرضى الشاملة',
     description: 'ملفات مرضى متكاملة مع سجل طبي مفصل وتتبع التقدم العلاجي',
     icon: '👤',
-    color: 'text-[var(--brand-success)]',
-    bgColor: 'bg-[var(--brand-success)]/10',
+    color: 'text-[var(--default-success)]',
+    bgColor: 'bg-[var(--default-success)]/10',
     benefits: ['ملفات رقمية', 'سجل طبي', 'تتبع التقدم'],
   },
   {
@@ -38,8 +38,8 @@ const features = [
     title: 'الشات بوت الذكي',
     description: 'مساعد ذكي للرد على استفسارات المرضى وتقديم المعلومات الطبية',
     icon: '🤖',
-    color: 'text-[var(--brand-primary)]',
-    bgColor: 'bg-[var(--brand-primary)]/10',
+    color: 'text-[var(--default-default)]',
+    bgColor: 'bg-[var(--default-default)]/10',
     benefits: ['رد فوري', 'معلومات طبية', 'دعم 24/7'],
   },
   {
@@ -47,8 +47,8 @@ const features = [
     title: 'إدارة الموظفين',
     description: 'تتبع ساعات العمل والأداء للموظفين مع نظام حضور وانصراف ذكي',
     icon: '👨‍⚕️',
-    color: 'text-[var(--brand-error)]',
-    bgColor: 'bg-[var(--brand-error)]/10',
+    color: 'text-[var(--default-error)]',
+    bgColor: 'bg-[var(--default-error)]/10',
     benefits: ['تتبع الحضور', 'تقييم الأداء', 'إدارة الرواتب'],
   },
   {
@@ -66,7 +66,7 @@ export default function FeaturesPage() {
   return (
     <div className='min-h-screen bg-background text-foreground'>
       {/* Header */}
-      <div className='bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] py-20'>
+      <div className='bg-gradient-to-r from-[var(--default-default)] to-[var(--default-info)] py-20'>
         <div className='container-app text-center'>
           <h1 className='text-5xl font-bold text-white mb-6'>
             مميزات منصة مُعين
@@ -104,12 +104,12 @@ export default function FeaturesPage() {
                       key={index}
                       className='flex items-center gap-2 text-sm text-gray-600'
                     >
-                      <span className='text-[var(--brand-primary)]'>✓</span>
+                      <span className='text-[var(--default-default)]'>✓</span>
                       <span>{benefit}</span>
                     </div>
                   ))}
                 </div>
-                <Button className='btn-brand mt-6 w-full'>
+                <Button className='btn-default mt-6 w-full'>
                   تعرف على المزيد
                 </Button>
               </Card>
@@ -119,7 +119,7 @@ export default function FeaturesPage() {
       </div>
 
       {/* CTA Section */}
-      <div className='py-20 bg-[var(--brand-surface)]'>
+      <div className='py-20 bg-[var(--default-surface)]'>
         <div className='container-app text-center'>
           <h2 className='text-4xl font-bold text-foreground mb-6'>
             جاهز للبدء؟
@@ -128,7 +128,9 @@ export default function FeaturesPage() {
             انضم إلى آلاف المراكز الصحية التي تثق في منصة مُعين لإدارة عملياتها
           </p>
           <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-            <Button className='btn-brand btn-lg'>ابدأ التجربة المجانية</Button>
+            <Button className='btn-default btn-lg'>
+              ابدأ التجربة المجانية
+            </Button>
             <Button className='btn-outline btn-lg'>تواصل معنا</Button>
           </div>
         </div>

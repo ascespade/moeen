@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+'use client';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/components/ui/Select';
 import {
   Stethoscope,
   Star,
@@ -71,38 +72,7 @@ export default function DynamicDoctorsList({
     useState<string>('all');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('all');
 
-  useEffect(() => {
-    fetchDoctors();
-  }, []);
-
-  useEffect(() => {
-    filterDoctors();
-  }, [doctors, searchTerm, selectedSpecialization, selectedLanguage]);
-
-  const fetchDoctors = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const response = await fetch(
-        '/api/dynamic-data/doctors?include_users=true'
-      );
-      const data = await response.json();
-
-      if (data.doctors) {
-        setDoctors(data.doctors);
-      } else {
-        setError('لم يتم العثور على أطباء في قاعدة البيانات');
-      }
-    } catch (err) {
-      setError('فشل في تحميل قائمة الأطباء');
-      console.error('Error fetching doctors:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const filterDoctors = () => {
+  const filterDoctors = useCallback(() => {
     let filtered = doctors.filter(doctor => {
       const matchesSearch =
         doctor.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -131,6 +101,37 @@ export default function DynamicDoctorsList({
     }
 
     setFilteredDoctors(filtered);
+  }, [doctors, searchTerm, selectedSpecialization, selectedLanguage, maxItems]);
+
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
+
+  useEffect(() => {
+    filterDoctors();
+  }, [filterDoctors]);
+
+  const fetchDoctors = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(
+        '/api/dynamic-data/doctors?include_users=true'
+      );
+      const data = await response.json();
+
+      if (data.doctors) {
+        setDoctors(data.doctors);
+      } else {
+        setError('لم يتم العثور على أطباء في قاعدة البيانات');
+      }
+    } catch (err) {
+      setError('فشل في تحميل قائمة الأطباء');
+      console.error('Error fetching doctors:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // الحصول على التخصصات الفريدة
@@ -242,8 +243,8 @@ export default function DynamicDoctorsList({
                 {/* المعلومات الأساسية */}
                 <div className='space-y-2'>
                   <div className='flex items-center gap-2'>
-                    <Badge variant='outline'>{doctor.specialization}</Badge>
-                    <Badge variant={doctor.is_active ? 'default' : 'secondary'}>
+                    <Badge variant='secondary'>{doctor.specialization}</Badge>
+                    <Badge variant={doctor.is_active ? 'primary' : 'secondary'}>
                       {doctor.is_active ? 'نشط' : 'غير نشط'}
                     </Badge>
                   </div>
@@ -268,7 +269,7 @@ export default function DynamicDoctorsList({
                       <Phone className='h-4 w-4 text-muted-foreground' />
                       <a
                         href={`tel:${doctor.phone}`}
-                        className='text-sm text-primary hover:underline'
+                        className='text-sm text-default hover:underline'
                       >
                         {doctor.phone}
                       </a>
@@ -280,7 +281,7 @@ export default function DynamicDoctorsList({
                       <Mail className='h-4 w-4 text-muted-foreground' />
                       <a
                         href={`mailto:${doctor.email}`}
-                        className='text-sm text-primary hover:underline'
+                        className='text-sm text-default hover:underline'
                       >
                         {doctor.email}
                       </a>
@@ -321,7 +322,7 @@ export default function DynamicDoctorsList({
                         </Badge>
                       ))}
                       {doctor.qualifications.length > 3 && (
-                        <Badge variant='outline' className='text-xs'>
+                        <Badge variant='secondary' className='text-xs'>
                           +{doctor.qualifications.length - 3} أخرى
                         </Badge>
                       )}
@@ -337,7 +338,7 @@ export default function DynamicDoctorsList({
                       {doctor.languages.map((lang, index) => (
                         <Badge
                           key={index}
-                          variant='outline'
+                          variant='secondary'
                           className='text-xs'
                         >
                           {lang}

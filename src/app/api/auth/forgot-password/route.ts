@@ -102,9 +102,9 @@ export async function POST(request: NextRequest) {
           ip_address: ipAddress,
           user_agent: userAgent,
           status: 'success',
-          severity: 'info',
+          severity: 'secondary',
           metadata: {
-            email: email,
+            email,
             requested_at: new Date().toISOString(),
             reset_method: 'email',
           },
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
           status: 'failed',
           severity: 'warning',
           metadata: {
-            email: email,
+            email,
             reason: 'Email not found',
           },
           duration_ms: Date.now() - startTime,

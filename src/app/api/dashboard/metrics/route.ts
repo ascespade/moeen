@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
         'logs',
         'dashboard_refactor.log'
       );
-      fs.appendFileSync(logFile, errorMessage + '\n');
+      fs.appendFileSync(logFile, `${errorMessage}\n`);
     } catch (logError) {
       // Ignore logging errors
     }

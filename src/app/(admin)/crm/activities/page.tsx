@@ -131,11 +131,11 @@ export default function CRMActivitiesPage() {
   const getPriorityColor = (priority: Activity['priority']) => {
     switch (priority) {
       case 'high':
-        return 'text-brand-error';
+        return 'text-default-error';
       case 'medium':
         return 'text-yellow-600';
       case 'low':
-        return 'text-brand-success';
+        return 'text-default-success';
       default:
         return 'text-gray-600';
     }
@@ -167,8 +167,8 @@ export default function CRMActivitiesPage() {
   });
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -180,7 +180,9 @@ export default function CRMActivitiesPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-brand text-2xl font-bold'>إدارة الأنشطة</h1>
+                <h1 className='text-default text-2xl font-bold'>
+                  إدارة الأنشطة
+                </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
                   تتبع المهام والاجتماعات والمكالمات
                 </p>
@@ -190,20 +192,20 @@ export default function CRMActivitiesPage() {
               <div className='flex rounded-lg border border-gray-300'>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`px-3 py-2 text-sm ${viewMode === 'list' ? 'bg-[var(--brand-primary)] text-white' : 'text-gray-600'}`}
+                  className={`px-3 py-2 text-sm ${viewMode === 'list' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   قائمة
                 </button>
                 <button
                   onClick={() => setViewMode('calendar')}
-                  className={`px-3 py-2 text-sm ${viewMode === 'calendar' ? 'bg-[var(--brand-primary)] text-white' : 'text-gray-600'}`}
+                  className={`px-3 py-2 text-sm ${viewMode === 'calendar' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   تقويم
                 </button>
               </div>
               <button
                 onClick={() => setShowCreateModal(true)}
-                className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة نشاط
               </button>
@@ -215,7 +217,7 @@ export default function CRMActivitiesPage() {
       <main className='container-app py-8'>
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockActivities.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -223,7 +225,7 @@ export default function CRMActivitiesPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockActivities.filter(a => a.status === 'completed').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>مكتملة</div>
@@ -235,7 +237,7 @@ export default function CRMActivitiesPage() {
             <div className='text-gray-600 dark:text-gray-300'>معلقة</div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-error'>
+            <div className='mb-2 text-3xl font-bold text-default-error'>
               {mockActivities.filter(a => a.priority === 'high').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>أولوية عالية</div>
@@ -253,7 +255,7 @@ export default function CRMActivitiesPage() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder='ابحث في الأنشطة...'
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
             </div>
             <div>
@@ -263,7 +265,7 @@ export default function CRMActivitiesPage() {
               <select
                 value={selectedType}
                 onChange={e => setSelectedType(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع الأنواع</option>
                 <option value='call'>مكالمة</option>
@@ -280,7 +282,7 @@ export default function CRMActivitiesPage() {
               <select
                 value={selectedStatus}
                 onChange={e => setSelectedStatus(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع الحالات</option>
                 <option value='pending'>معلق</option>
@@ -289,7 +291,7 @@ export default function CRMActivitiesPage() {
               </select>
             </div>
             <div className='flex items-end'>
-              <button className='btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 تطبيق الفلاتر
               </button>
             </div>
@@ -331,14 +333,14 @@ export default function CRMActivitiesPage() {
                     </div>
                   </div>
                   <div className='flex gap-2'>
-                    <button className='rounded bg-[var(--brand-primary)] px-3 py-1 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                    <button className='rounded bg-[var(--default-default)] px-3 py-1 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                       عرض
                     </button>
                     <button className='rounded border border-gray-300 px-3 py-1 text-sm text-gray-700 transition-colors hover:bg-surface'>
                       تعديل
                     </button>
                     {activity.status === 'pending' && (
-                      <button className='rounded bg-brand-success px-3 py-1 text-sm text-white transition-colors hover:bg-green-700'>
+                      <button className='rounded bg-default-success px-3 py-1 text-sm text-white transition-colors hover:bg-green-700'>
                         إكمال
                       </button>
                     )}
@@ -395,7 +397,7 @@ export default function CRMActivitiesPage() {
                 </label>
                 <input
                   type='text'
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل عنوان النشاط'
                 />
               </div>
@@ -405,7 +407,7 @@ export default function CRMActivitiesPage() {
                 </label>
                 <textarea
                   rows={3}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل وصف النشاط'
                 ></textarea>
               </div>
@@ -414,7 +416,7 @@ export default function CRMActivitiesPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     النوع
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value='call'>مكالمة</option>
                     <option value='meeting'>اجتماع</option>
                     <option value='email'>بريد إلكتروني</option>
@@ -426,7 +428,7 @@ export default function CRMActivitiesPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     الأولوية
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value='low'>منخفض</option>
                     <option value='medium'>متوسط</option>
                     <option value='high'>عالي</option>
@@ -438,7 +440,7 @@ export default function CRMActivitiesPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     جهة الاتصال
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value=''>اختر جهة الاتصال</option>
                     <option value='1'>أحمد العتيبي</option>
                     <option value='2'>فاطمة السعيد</option>
@@ -451,7 +453,7 @@ export default function CRMActivitiesPage() {
                   </label>
                   <input
                     type='date'
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
               </div>
@@ -465,7 +467,7 @@ export default function CRMActivitiesPage() {
                 </button>
                 <button
                   type='submit'
-                  className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   إضافة النشاط
                 </button>

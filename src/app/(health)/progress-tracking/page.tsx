@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
+import { realDB } from '@/lib/supabase-real';
 import {
   TrendingUp,
   Calendar,
@@ -132,99 +133,17 @@ const ProgressTrackingPage: React.FC = () => {
   const loadProgressData = async () => {
     try {
       setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockGoals: ProgressGoal[] = [
-        {
-          id: '1',
-          patient_id: 'pat-1',
-          goal_title: 'تحسين المشي',
-          description: 'القدرة على المشي لمسافة 10 أمتار بدون مساعدة',
-          category: 'الحركة',
-          target_date: '2024-03-15',
-          progress_percentage: 65,
-          status: 'active',
-          milestones: [
-            {
-              id: '1',
-              goal_id: '1',
-              title: 'الوقوف بدون مساعدة',
-              description: 'القدرة على الوقوف لمدة 30 ثانية',
-              target_date: '2024-02-01',
-              completed_date: '2024-01-25',
-              status: 'completed',
-              progress_percentage: 100,
-              notes: 'تم إنجاز الهدف بنجاح',
-            },
-            {
-              id: '2',
-              goal_id: '1',
-              title: 'المشي بمساعدة',
-              description: 'المشي لمسافة 5 أمتار بمساعدة شخص',
-              target_date: '2024-02-15',
-              status: 'in_progress',
-              progress_percentage: 80,
-              notes: 'تحسن ملحوظ في التوازن',
-            },
-          ],
-          created_at: '2024-01-01T00:00:00Z',
-          updated_at: '2024-01-20T00:00:00Z',
-          patients: {
-            first_name: 'أحمد',
-            last_name: 'محمد',
-            age: 8,
-            condition: 'شلل دماغي',
-            avatar: '/logo.png',
-          },
-        },
-      ];
+      // Load real data from database
+      const goalsData = await realDB.getProgressGoals();
+      const assessmentsData = await realDB.getAssessments();
+      const reportsData = await realDB.getProgressReports();
 
-      const mockAssessments: Assessment[] = [
-        {
-          id: '1',
-          patient_id: 'pat-1',
-          assessor_id: 'ass-1',
-          assessment_date: '2024-01-15',
-          assessment_type: 'تقييم شامل',
-          category: 'الحركة',
-          score: 75,
-          max_score: 100,
-          percentage: 75,
-          notes: 'تحسن ملحوظ في نطاق الحركة والقوة',
-          recommendations: ['زيادة مدة التمارين', 'إضافة تمارين التوازن'],
-          next_assessment_date: '2024-02-15',
-          created_at: '2024-01-15T00:00:00Z',
-          assessors: {
-            first_name: 'د. فاطمة',
-            last_name: 'العلي',
-            specialty: 'العلاج الطبيعي',
-            avatar: '/logo.png',
-          },
-        },
-      ];
-
-      const mockReports: ProgressReport[] = [
-        {
-          id: '1',
-          patient_id: 'pat-1',
-          report_date: '2024-01-31',
-          period_start: '2024-01-01',
-          period_end: '2024-01-31',
-          overall_progress: 70,
-          goals_achieved: 2,
-          total_goals: 5,
-          sessions_completed: 12,
-          total_sessions: 16,
-          recommendations: ['متابعة التمارين اليومية', 'زيادة مدة الجلسات'],
-          next_review_date: '2024-02-28',
-          created_at: '2024-01-31T00:00:00Z',
-        },
-      ];
-
-      setGoals(mockGoals);
-      setAssessments(mockAssessments);
-      setReports(mockReports);
+      setGoals(goalsData);
+      setAssessments(assessmentsData);
+      setReports(reportsData);
     } catch (error) {
       setError('فشل في تحميل بيانات تتبع التقدم');
+      console.error('Error loading progress data:', error);
     } finally {
       setLoading(false);
     }
@@ -235,7 +154,7 @@ const ProgressTrackingPage: React.FC = () => {
       active: { label: 'نشط', variant: 'primary' as const },
       completed: { label: 'مكتمل', variant: 'primary' as const },
       paused: { label: 'متوقف', variant: 'secondary' as const },
-      cancelled: { label: 'ملغي', variant: 'destructive' as const },
+      cancelled: { label: 'ملغي', variant: 'error' as const },
     };
 
     const statusInfo = statusMap[status as keyof typeof statusMap] || {
@@ -248,23 +167,23 @@ const ProgressTrackingPage: React.FC = () => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'الحركة':
-        return <Activity className='w-4 h-4 text-brand-primary' />;
+        return <Activity className='w-4 h-4 text-default-default' />;
       case 'التواصل':
-        return <Heart className='w-4 h-4 text-brand-error' />;
+        return <Heart className='w-4 h-4 text-default-error' />;
       case 'الإدراك':
         return <Brain className='w-4 h-4 text-purple-500' />;
       case 'الاستقلالية':
-        return <Zap className='w-4 h-4 text-brand-warning' />;
+        return <Zap className='w-4 h-4 text-default-warning' />;
       default:
         return <Target className='w-4 h-4 text-gray-500' />;
     }
   };
 
   const getProgressColor = (percentage: number) => {
-    if (percentage >= 80) return 'bg-brand-success';
-    if (percentage >= 60) return 'bg-brand-warning';
-    if (percentage >= 40) return 'bg-brand-primary';
-    return 'bg-brand-error';
+    if (percentage >= 80) return 'bg-default-success';
+    if (percentage >= 60) return 'bg-default-warning';
+    if (percentage >= 40) return 'bg-default-default';
+    return 'bg-default-error';
   };
 
   const filteredGoals = goals.filter(goal => {
@@ -299,7 +218,7 @@ const ProgressTrackingPage: React.FC = () => {
           </div>
           <Button
             onClick={() => router.push('/progress-tracking/new')}
-            className='bg-[var(--brand-primary)] hover:brightness-95'
+            className='bg-[var(--default-default)] hover:brightness-95'
           >
             <Plus className='w-4 h-4 mr-2' />
             هدف جديد
@@ -444,7 +363,7 @@ const ProgressTrackingPage: React.FC = () => {
       {/* Content based on active tab */}
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
       ) : (
         <>
@@ -463,7 +382,7 @@ const ProgressTrackingPage: React.FC = () => {
                     </p>
                     <Button
                       onClick={() => router.push('/progress-tracking/new')}
-                      className='bg-[var(--brand-primary)] hover:brightness-95'
+                      className='bg-[var(--default-default)] hover:brightness-95'
                     >
                       إنشاء هدف جديد
                     </Button>
@@ -532,9 +451,9 @@ const ProgressTrackingPage: React.FC = () => {
                                 <div
                                   className={`w-3 h-3 rounded-full ${
                                     milestone.status === 'completed'
-                                      ? 'bg-brand-success'
+                                      ? 'bg-default-success'
                                       : milestone.status === 'in_progress'
-                                        ? 'bg-brand-warning'
+                                        ? 'bg-default-warning'
                                         : 'bg-gray-300'
                                   }`}
                                 ></div>
@@ -600,7 +519,7 @@ const ProgressTrackingPage: React.FC = () => {
                       onClick={() =>
                         router.push('/progress-tracking/assessments/new')
                       }
-                      className='bg-[var(--brand-primary)] hover:brightness-95'
+                      className='bg-[var(--default-default)] hover:brightness-95'
                     >
                       إنشاء تقييم جديد
                     </Button>
@@ -627,7 +546,7 @@ const ProgressTrackingPage: React.FC = () => {
                           </p>
                         </div>
                         <div className='text-right'>
-                          <div className='text-2xl font-bold text-brand-primary'>
+                          <div className='text-2xl font-bold text-default-default'>
                             {assessment.percentage}%
                           </div>
                           <p className='text-sm text-gray-600'>
@@ -653,7 +572,7 @@ const ProgressTrackingPage: React.FC = () => {
                           {assessment.recommendations.map((rec, index) => (
                             <Badge
                               key={index}
-                              variant='outline'
+                              variant='secondary'
                               className='text-xs'
                             >
                               {rec}
@@ -724,7 +643,7 @@ const ProgressTrackingPage: React.FC = () => {
                           </p>
                         </div>
                         <div className='text-right'>
-                          <div className='text-2xl font-bold text-brand-success'>
+                          <div className='text-2xl font-bold text-default-success'>
                             {report.overall_progress}%
                           </div>
                           <p className='text-sm text-gray-600'>التقدم العام</p>
@@ -733,7 +652,7 @@ const ProgressTrackingPage: React.FC = () => {
 
                       <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-4'>
                         <div className='text-center p-3 bg-surface rounded-lg'>
-                          <div className='text-xl font-bold text-brand-primary'>
+                          <div className='text-xl font-bold text-default-default'>
                             {report.goals_achieved}
                           </div>
                           <div className='text-sm text-blue-700'>
@@ -744,7 +663,7 @@ const ProgressTrackingPage: React.FC = () => {
                           </div>
                         </div>
                         <div className='text-center p-3 bg-surface rounded-lg'>
-                          <div className='text-xl font-bold text-brand-success'>
+                          <div className='text-xl font-bold text-default-success'>
                             {report.sessions_completed}
                           </div>
                           <div className='text-sm text-green-700'>

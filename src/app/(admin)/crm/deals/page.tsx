@@ -124,8 +124,8 @@ export default function CRMDealsPage() {
   ];
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -137,7 +137,9 @@ export default function CRMDealsPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-brand text-2xl font-bold'>إدارة الصفقات</h1>
+                <h1 className='text-default text-2xl font-bold'>
+                  إدارة الصفقات
+                </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
                   تتبع وإدارة صفقات المبيعات
                 </p>
@@ -147,20 +149,20 @@ export default function CRMDealsPage() {
               <div className='flex rounded-lg border border-gray-300'>
                 <button
                   onClick={() => setViewMode('table')}
-                  className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--brand-primary)] text-white' : 'text-gray-600'}`}
+                  className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   جدول
                 </button>
                 <button
                   onClick={() => setViewMode('kanban')}
-                  className={`px-3 py-2 text-sm ${viewMode === 'kanban' ? 'bg-[var(--brand-primary)] text-white' : 'text-gray-600'}`}
+                  className={`px-3 py-2 text-sm ${viewMode === 'kanban' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   كانبان
                 </button>
               </div>
               <button
                 onClick={() => setShowCreateModal(true)}
-                className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة صفقة
               </button>
@@ -172,7 +174,7 @@ export default function CRMDealsPage() {
       <main className='container-app py-8'>
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockDeals.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -180,7 +182,7 @@ export default function CRMDealsPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockDeals.filter(d => d.stage === 'closed-won').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>مكتملة</div>
@@ -195,7 +197,7 @@ export default function CRMDealsPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {Math.round(
                 mockDeals.reduce((sum, d) => sum + d.probability, 0) /
                   mockDeals.length
@@ -219,7 +221,7 @@ export default function CRMDealsPage() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder='ابحث في الصفقات...'
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
             </div>
             <div>
@@ -229,7 +231,7 @@ export default function CRMDealsPage() {
               <select
                 value={selectedStage}
                 onChange={e => setSelectedStage(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع المراحل</option>
                 <option value='prospecting'>استكشاف</option>
@@ -241,7 +243,7 @@ export default function CRMDealsPage() {
               </select>
             </div>
             <div className='flex items-end'>
-              <button className='btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 تطبيق الفلاتر
               </button>
             </div>
@@ -297,7 +299,7 @@ export default function CRMDealsPage() {
                           </div>
                         </div>
                         <div className='mt-3 flex gap-1'>
-                          <button className='flex-1 rounded bg-[var(--brand-primary)] px-2 py-1 text-xs text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                          <button className='flex-1 rounded bg-[var(--default-default)] px-2 py-1 text-xs text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                             عرض
                           </button>
                           <button className='rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-surface'>
@@ -387,7 +389,7 @@ export default function CRMDealsPage() {
                       </td>
                       <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                         <div className='flex gap-2'>
-                          <button className='text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)]'>
+                          <button className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'>
                             عرض
                           </button>
                           <button className='text-gray-600 hover:text-gray-900'>
@@ -437,7 +439,7 @@ export default function CRMDealsPage() {
                 </label>
                 <input
                   type='text'
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل عنوان الصفقة'
                 />
               </div>
@@ -448,7 +450,7 @@ export default function CRMDealsPage() {
                   </label>
                   <input
                     type='number'
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0'
                   />
                 </div>
@@ -460,7 +462,7 @@ export default function CRMDealsPage() {
                     type='number'
                     min='0'
                     max='100'
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0-100'
                   />
                 </div>
@@ -470,7 +472,7 @@ export default function CRMDealsPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     المرحلة
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value='prospecting'>استكشاف</option>
                     <option value='qualification'>تأهيل</option>
                     <option value='proposal'>عرض</option>
@@ -483,7 +485,7 @@ export default function CRMDealsPage() {
                   </label>
                   <input
                     type='date'
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
               </div>
@@ -497,7 +499,7 @@ export default function CRMDealsPage() {
                 </button>
                 <button
                   type='submit'
-                  className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   إضافة الصفقة
                 </button>

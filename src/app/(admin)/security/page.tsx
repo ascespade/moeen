@@ -282,13 +282,13 @@ const SecurityPage: React.FC = () => {
   const getEventIcon = (type: string) => {
     switch (type) {
       case 'login':
-        return <CheckCircle className='w-4 h-4 text-brand-success' />;
+        return <CheckCircle className='w-4 h-4 text-default-success' />;
       case 'logout':
         return <XCircle className='w-4 h-4 text-gray-500' />;
       case 'failed_login':
-        return <AlertTriangle className='w-4 h-4 text-brand-error' />;
+        return <AlertTriangle className='w-4 h-4 text-default-error' />;
       case 'password_change':
-        return <Key className='w-4 h-4 text-brand-primary' />;
+        return <Key className='w-4 h-4 text-default-default' />;
       case 'data_access':
         return <Database className='w-4 h-4 text-purple-500' />;
       default:
@@ -301,7 +301,7 @@ const SecurityPage: React.FC = () => {
       low: {
         label: 'منخفض',
         variant: 'primary' as const,
-        color: 'text-brand-success',
+        color: 'text-default-success',
       },
       medium: {
         label: 'متوسط',
@@ -311,12 +311,12 @@ const SecurityPage: React.FC = () => {
       high: {
         label: 'عالي',
         variant: 'primary' as const,
-        color: 'text-brand-primary',
+        color: 'text-default-default',
       },
       critical: {
         label: 'حرج',
-        variant: 'destructive' as const,
-        color: 'text-brand-error',
+        variant: 'error' as const,
+        color: 'text-default-error',
       },
     };
 
@@ -333,7 +333,7 @@ const SecurityPage: React.FC = () => {
       low: { label: 'منخفض', variant: 'primary' as const },
       medium: { label: 'متوسط', variant: 'secondary' as const },
       high: { label: 'عالي', variant: 'primary' as const },
-      critical: { label: 'حرج', variant: 'destructive' as const },
+      critical: { label: 'حرج', variant: 'error' as const },
     };
 
     const severityInfo = severityMap[severity as keyof typeof severityMap] || {
@@ -346,8 +346,8 @@ const SecurityPage: React.FC = () => {
   const getStatusBadge = (status: string) => {
     const statusMap = {
       success: { label: 'نجح', variant: 'primary' as const },
-      failed: { label: 'فشل', variant: 'destructive' as const },
-      blocked: { label: 'محظور', variant: 'destructive' as const },
+      failed: { label: 'فشل', variant: 'error' as const },
+      blocked: { label: 'محظور', variant: 'error' as const },
       new: { label: 'جديد', variant: 'primary' as const },
       investigating: { label: 'قيد التحقيق', variant: 'secondary' as const },
       resolved: { label: 'محلول', variant: 'primary' as const },
@@ -366,9 +366,9 @@ const SecurityPage: React.FC = () => {
       device.includes('macOS') ||
       device.includes('Linux')
     ) {
-      return <Monitor className='w-4 h-4 text-brand-primary' />;
+      return <Monitor className='w-4 h-4 text-default-default' />;
     } else if (device.includes('Android') || device.includes('iOS')) {
-      return <Smartphone className='w-4 h-4 text-brand-success' />;
+      return <Smartphone className='w-4 h-4 text-default-success' />;
     } else {
       return <Globe className='w-4 h-4 text-gray-500' />;
     }
@@ -565,7 +565,7 @@ const SecurityPage: React.FC = () => {
 
       {loading ? (
         <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]'></div>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
       ) : (
         <>
@@ -750,7 +750,7 @@ const SecurityPage: React.FC = () => {
                       <div className='flex items-start justify-between'>
                         <div className='flex items-start gap-4'>
                           <div className='p-2 bg-white rounded-full'>
-                            <AlertTriangle className='w-4 h-4 text-brand-error' />
+                            <AlertTriangle className='w-4 h-4 text-default-error' />
                           </div>
                           <div className='flex-1'>
                             <div className='flex items-center gap-2 mb-2'>
@@ -826,7 +826,7 @@ const SecurityPage: React.FC = () => {
                             >
                               {policy.is_active ? 'نشط' : 'غير نشط'}
                             </Badge>
-                            <Badge variant='outline'>{policy.category}</Badge>
+                            <Badge variant='secondary'>{policy.category}</Badge>
                           </div>
                           <p className='text-gray-700 mb-4'>
                             {policy.description}

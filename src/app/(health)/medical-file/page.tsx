@@ -1,9 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
+import { realDB } from '@/lib/supabase-real';
 import Image from 'next/image';
 
 interface MedicalRecord {
@@ -41,141 +42,7 @@ interface MedicalRecord {
   }[];
 }
 
-const mockRecords: MedicalRecord[] = [
-  {
-    id: '1',
-    patientName: 'أحمد محمد العتيبي',
-    patientId: 'P001',
-    dateOfBirth: '1985-03-15',
-    gender: 'male',
-    phone: '+966501234567',
-    email: 'ahmed.altibi@example.com',
-    address: 'جدة، حي الروضة',
-    emergencyContact: 'فاطمة العتيبي',
-    emergencyPhone: '+966501234568',
-    medicalHistory: ['إصابة في العمود الفقري', 'التهاب المفاصل'],
-    allergies: ['البنسلين'],
-    currentMedications: ['مسكنات الألم', 'مضادات الالتهاب'],
-    lastVisit: '2024-01-20',
-    nextAppointment: '2024-01-27',
-    isBlocked: false,
-    hasOutstandingBalance: false,
-    insuranceStatus: 'active',
-    insuranceCompany: 'شركة التعاونية للتأمين',
-    insuranceNumber: 'INS-001-2024',
-    treatmentPlan: [
-      {
-        id: 'TP001',
-        type: 'علاج طبيعي',
-        sessions: 20,
-        completedSessions: 12,
-        status: 'active',
-        startDate: '2024-01-01',
-        therapist: 'د. سارة أحمد',
-      },
-    ],
-  },
-  {
-    id: '2',
-    patientName: 'فاطمة عبدالله السعيد',
-    patientId: 'P002',
-    dateOfBirth: '1990-07-22',
-    gender: 'female',
-    phone: '+966501234569',
-    email: 'fatima.alsaeed@example.com',
-    address: 'الرياض، حي النرجس',
-    emergencyContact: 'عبدالله السعيد',
-    emergencyPhone: '+966501234570',
-    medicalHistory: ['اضطراب القلق', 'الاكتئاب'],
-    allergies: [],
-    currentMedications: ['مضادات الاكتئاب'],
-    lastVisit: '2024-01-18',
-    nextAppointment: '2024-01-25',
-    isBlocked: false,
-    hasOutstandingBalance: false,
-    insuranceStatus: 'active',
-    insuranceCompany: 'شركة الأهلي للتأمين',
-    insuranceNumber: 'INS-002-2024',
-    treatmentPlan: [
-      {
-        id: 'TP002',
-        type: 'علاج نفسي',
-        sessions: 15,
-        completedSessions: 8,
-        status: 'active',
-        startDate: '2024-01-05',
-        therapist: 'د. محمد حسن',
-      },
-    ],
-  },
-  {
-    id: '3',
-    patientName: 'محمد سالم القحطاني',
-    patientId: 'P003',
-    dateOfBirth: '1978-12-10',
-    gender: 'male',
-    phone: '+966501234571',
-    email: 'mohammed.qahtani@example.com',
-    address: 'الدمام، حي الفيصلية',
-    emergencyContact: 'سالم القحطاني',
-    emergencyPhone: '+966501234572',
-    medicalHistory: ['سكتة دماغية', 'شلل نصفي'],
-    allergies: ['الأسبرين'],
-    currentMedications: ['مضادات التجلط', 'مرخيات العضلات'],
-    lastVisit: '2024-01-15',
-    isBlocked: true,
-    blockReason: 'عدم سداد الرسوم المستحقة',
-    hasOutstandingBalance: true,
-    outstandingAmount: 2500,
-    insuranceStatus: 'rejected',
-    treatmentPlan: [
-      {
-        id: 'TP003',
-        type: 'علاج وظيفي',
-        sessions: 30,
-        completedSessions: 5,
-        status: 'paused',
-        startDate: '2023-12-01',
-        endDate: '2024-01-15',
-        therapist: 'د. نورا محمد',
-      },
-    ],
-  },
-  {
-    id: '4',
-    patientName: 'نورا أحمد الزهراني',
-    patientId: 'P004',
-    dateOfBirth: '1995-05-08',
-    gender: 'female',
-    phone: '+966501234573',
-    email: 'nora.alzahrani@example.com',
-    address: 'مكة المكرمة، حي العزيزية',
-    emergencyContact: 'أحمد الزهراني',
-    emergencyPhone: '+966501234574',
-    medicalHistory: ['إصابة في الركبة', 'التهاب الأوتار'],
-    allergies: ['المورفين'],
-    currentMedications: ['مسكنات الألم الموضعية'],
-    lastVisit: '2024-01-22',
-    nextAppointment: '2024-01-29',
-    isBlocked: false,
-    hasOutstandingBalance: false,
-    insuranceStatus: 'pending',
-    insuranceCompany: 'شركة الراجحي للتأمين',
-    insuranceNumber: 'INS-004-2024',
-    treatmentPlan: [
-      {
-        id: 'TP004',
-        type: 'علاج طبيعي',
-        sessions: 12,
-        completedSessions: 3,
-        status: 'active',
-        startDate: '2024-01-15',
-        therapist: 'د. خالد العتيبي',
-      },
-    ],
-  },
-];
-
+// Mock data removed - using real database
 const insuranceStatusConfig = {
   active: { label: 'نشط', color: 'success' as const },
   expired: { label: 'منتهي الصلاحية', color: 'error' as const },
@@ -185,12 +52,15 @@ const insuranceStatusConfig = {
 
 const treatmentStatusConfig = {
   active: { label: 'نشط', color: 'success' as const },
-  completed: { label: 'مكتمل', color: 'info' as const },
+  completed: { label: 'مكتمل', color: 'secondary' as const },
   paused: { label: 'متوقف', color: 'warning' as const },
   cancelled: { label: 'ملغي', color: 'error' as const },
 };
 
 export default function MedicalFilePage() {
+  const [records, setRecords] = useState<MedicalRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedRecord, setSelectedRecord] = useState<MedicalRecord | null>(
     null
   );
@@ -199,7 +69,56 @@ export default function MedicalFilePage() {
     'all' | 'active' | 'blocked' | 'outstanding'
   >('all');
 
-  const filteredRecords = mockRecords.filter(record => {
+  // Load medical records from database
+  useEffect(() => {
+    const loadRecords = async () => {
+      try {
+        setLoading(true);
+        // Get all patients with their medical information
+        const patientsData = await realDB.searchUsers('', 'patient');
+
+        // Transform data to match our interface
+        const transformedRecords: MedicalRecord[] = patientsData.map(
+          (patient: any) => ({
+            id: patient.id,
+            patientName: patient.name || 'غير محدد',
+            patientId: patient.national_id || patient.id,
+            dateOfBirth: patient.date_of_birth || 'غير محدد',
+            gender: patient.gender || 'male',
+            phone: patient.phone || 'غير محدد',
+            email: patient.email || 'غير محدد',
+            address: patient.address || 'غير محدد',
+            emergencyContact: patient.emergency_contact || 'غير محدد',
+            emergencyPhone: patient.emergency_contact_phone || 'غير محدد',
+            medicalHistory: patient.medical_history || [],
+            allergies: patient.allergies || [],
+            currentMedications: patient.medications || [],
+            lastVisit: patient.last_visit || 'غير محدد',
+            nextAppointment: patient.next_appointment,
+            isBlocked: patient.is_blocked || false,
+            blockReason: patient.block_reason,
+            hasOutstandingBalance: patient.has_outstanding_balance || false,
+            outstandingAmount: patient.outstanding_amount || 0,
+            insuranceStatus: patient.insurance_status || 'pending',
+            insuranceCompany: patient.insurance_provider,
+            insuranceNumber: patient.insurance_number,
+            treatmentPlan: patient.treatment_plans || [],
+          })
+        );
+
+        setRecords(transformedRecords);
+      } catch (err) {
+        setError('فشل في تحميل الملفات الطبية');
+        console.error('Error loading medical records:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadRecords();
+  }, []);
+
+  const filteredRecords = records.filter(record => {
     const matchesSearch =
       record.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       record.patientId.toLowerCase().includes(searchTerm.toLowerCase());
@@ -241,8 +160,8 @@ export default function MedicalFilePage() {
   const getBlockStatus = (record: MedicalRecord) => {
     if (record.isBlocked) {
       return (
-        <div className='flex items-center gap-2 text-brand-error'>
-          <span className='h-2 w-2 rounded-full bg-brand-error'></span>
+        <div className='flex items-center gap-2 text-default-error'>
+          <span className='h-2 w-2 rounded-full bg-default-error'></span>
           <span className='text-sm font-medium'>محظور</span>
           {record.blockReason && (
             <span className='text-xs text-gray-500'>
@@ -253,8 +172,8 @@ export default function MedicalFilePage() {
       );
     }
     return (
-      <div className='flex items-center gap-2 text-brand-success'>
-        <span className='h-2 w-2 rounded-full bg-brand-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>نشط</span>
       </div>
     );
@@ -263,8 +182,8 @@ export default function MedicalFilePage() {
   const getOutstandingBalance = (record: MedicalRecord) => {
     if (record.hasOutstandingBalance) {
       return (
-        <div className='flex items-center gap-2 text-brand-primary'>
-          <span className='h-2 w-2 rounded-full bg-brand-primary'></span>
+        <div className='flex items-center gap-2 text-default-default'>
+          <span className='h-2 w-2 rounded-full bg-default-default'></span>
           <span className='text-sm font-medium'>
             رصيد مستحق: {record.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -272,8 +191,8 @@ export default function MedicalFilePage() {
       );
     }
     return (
-      <div className='flex items-center gap-2 text-brand-success'>
-        <span className='h-2 w-2 rounded-full bg-brand-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -293,10 +212,38 @@ export default function MedicalFilePage() {
     return age;
   };
 
+  if (loading) {
+    return (
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto mb-4'></div>
+          <p className='text-gray-600'>جاري تحميل الملفات الطبية...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='text-red-500 text-6xl mb-4'>⚠️</div>
+          <p className='text-red-600 text-lg mb-4'>{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
+          >
+            إعادة المحاولة
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -308,7 +255,7 @@ export default function MedicalFilePage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-brand text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   الملفات الطبية
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -332,32 +279,31 @@ export default function MedicalFilePage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <Card className='p-6 text-center'>
-            <div className='text-brand mb-2 text-3xl font-bold'>
-              {mockRecords.length}
+            <div className='text-default mb-2 text-3xl font-bold'>
+              {records.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
               إجمالي الملفات
             </div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {
-                mockRecords.filter(
-                  r => !r.isBlocked && !r.hasOutstandingBalance
-                ).length
+                records.filter(r => !r.isBlocked && !r.hasOutstandingBalance)
+                  .length
               }
             </div>
             <div className='text-gray-600 dark:text-gray-300'>ملفات نشطة</div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-error'>
-              {mockRecords.filter(r => r.isBlocked).length}
+            <div className='mb-2 text-3xl font-bold text-default-error'>
+              {records.filter(r => r.isBlocked).length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>ملفات محظورة</div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-primary'>
-              {mockRecords.filter(r => r.hasOutstandingBalance).length}
+            <div className='mb-2 text-3xl font-bold text-default-default'>
+              {records.filter(r => r.hasOutstandingBalance).length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>رصيد مستحق</div>
           </Card>
@@ -457,7 +403,7 @@ export default function MedicalFilePage() {
                     <span className='text-sm text-gray-600 dark:text-gray-300'>
                       الموعد القادم:
                     </span>
-                    <span className='text-brand text-sm font-medium'>
+                    <span className='text-default text-sm font-medium'>
                       {record.nextAppointment}
                     </span>
                   </div>
@@ -705,7 +651,7 @@ export default function MedicalFilePage() {
                             (condition, index) => (
                               <Badge
                                 key={index}
-                                variant='outline'
+                                variant='secondary'
                                 className='text-xs'
                               >
                                 {condition}
@@ -723,7 +669,7 @@ export default function MedicalFilePage() {
                             selectedRecord.allergies.map((allergy, index) => (
                               <Badge
                                 key={index}
-                                variant='destructive'
+                                variant='error'
                                 className='text-xs'
                               >
                                 {allergy}
@@ -745,7 +691,7 @@ export default function MedicalFilePage() {
                             (medication, index) => (
                               <Badge
                                 key={index}
-                                variant='info'
+                                variant='secondary'
                                 className='text-xs'
                               >
                                 {medication}

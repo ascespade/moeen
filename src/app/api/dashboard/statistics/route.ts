@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: data,
+      data,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: data,
+      data,
       message: 'Dashboard statistics refreshed successfully',
       timestamp: new Date().toISOString(),
     });

@@ -68,7 +68,7 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
           onClick={() => onSelect(type)}
           className={`card p-6 text-right transition-all hover:shadow-lg ${
             selectedId === type.id
-              ? 'ring-2 ring-[var(--brand-primary)] bg-[var(--brand-primary)]/5'
+              ? 'ring-2 ring-[var(--default-default)] bg-[var(--default-default)]/5'
               : ''
           }`}
         >
@@ -88,7 +88,7 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
             <span className='text-gray-600 dark:text-gray-400'>
               ⏱️ {type.duration} دقيقة
             </span>
-            <span className='font-bold text-[var(--brand-primary)]'>
+            <span className='font-bold text-[var(--default-default)]'>
               {type.price} ريال
             </span>
           </div>

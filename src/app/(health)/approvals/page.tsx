@@ -141,7 +141,7 @@ const mockApprovals: Approval[] = [
 ];
 
 const requestTypeConfig = {
-  treatment: { label: 'علاج', color: 'info' as const, icon: '🏥' },
+  treatment: { label: 'علاج', color: 'secondary' as const, icon: '🏥' },
   medication: { label: 'دواء', color: 'warning' as const, icon: '💊' },
   procedure: { label: 'إجراء', color: 'error' as const, icon: '⚕️' },
   referral: { label: 'إحالة', color: 'success' as const, icon: '👨‍⚕️' },
@@ -152,11 +152,11 @@ const statusConfig = {
   pending: { label: 'قيد المراجعة', color: 'warning' as const },
   approved: { label: 'موافق عليه', color: 'success' as const },
   rejected: { label: 'مرفوض', color: 'error' as const },
-  under_review: { label: 'قيد التدقيق', color: 'info' as const },
+  under_review: { label: 'قيد التدقيق', color: 'secondary' as const },
 };
 
 const priorityConfig = {
-  low: { label: 'منخفض', color: 'info' as const },
+  low: { label: 'منخفض', color: 'secondary' as const },
   medium: { label: 'متوسط', color: 'warning' as const },
   high: { label: 'عالي', color: 'error' as const },
   urgent: { label: 'عاجل', color: 'error' as const },
@@ -218,8 +218,8 @@ export default function ApprovalsPage() {
   const getBlockStatus = (approval: Approval) => {
     if (approval.isBlocked) {
       return (
-        <div className='flex items-center gap-2 text-brand-error'>
-          <span className='h-2 w-2 rounded-full bg-brand-error'></span>
+        <div className='flex items-center gap-2 text-default-error'>
+          <span className='h-2 w-2 rounded-full bg-default-error'></span>
           <span className='text-sm font-medium'>محظور</span>
           {approval.blockReason && (
             <span className='text-xs text-gray-500'>
@@ -230,8 +230,8 @@ export default function ApprovalsPage() {
       );
     }
     return (
-      <div className='flex items-center gap-2 text-brand-success'>
-        <span className='h-2 w-2 rounded-full bg-brand-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>نشط</span>
       </div>
     );
@@ -240,8 +240,8 @@ export default function ApprovalsPage() {
   const getOutstandingBalance = (approval: Approval) => {
     if (approval.hasOutstandingBalance) {
       return (
-        <div className='flex items-center gap-2 text-brand-primary'>
-          <span className='h-2 w-2 rounded-full bg-brand-primary'></span>
+        <div className='flex items-center gap-2 text-default-default'>
+          <span className='h-2 w-2 rounded-full bg-default-default'></span>
           <span className='text-sm font-medium'>
             رصيد مستحق: {approval.outstandingAmount?.toLocaleString()} ريال
           </span>
@@ -249,8 +249,8 @@ export default function ApprovalsPage() {
       );
     }
     return (
-      <div className='flex items-center gap-2 text-brand-success'>
-        <span className='h-2 w-2 rounded-full bg-brand-success'></span>
+      <div className='flex items-center gap-2 text-default-success'>
+        <span className='h-2 w-2 rounded-full bg-default-success'></span>
         <span className='text-sm font-medium'>لا يوجد رصيد مستحق</span>
       </div>
     );
@@ -270,7 +270,7 @@ export default function ApprovalsPage() {
           </span>
         </div>
         {approval.insuranceCoverage && (
-          <div className='flex justify-between text-brand-success'>
+          <div className='flex justify-between text-default-success'>
             <span>التغطية التأمينية:</span>
             <span className='font-medium'>
               -{approval.insuranceCoverage.toLocaleString()} ريال
@@ -278,7 +278,7 @@ export default function ApprovalsPage() {
           </div>
         )}
         {approval.patientContribution && (
-          <div className='text-brand flex justify-between'>
+          <div className='text-default flex justify-between'>
             <span>مساهمة المريض:</span>
             <span className='font-bold'>
               {approval.patientContribution.toLocaleString()} ريال
@@ -290,9 +290,9 @@ export default function ApprovalsPage() {
   };
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -304,7 +304,7 @@ export default function ApprovalsPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-brand text-2xl font-bold'>
+                <h1 className='text-default text-2xl font-bold'>
                   إدارة الموافقات
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
@@ -328,7 +328,7 @@ export default function ApprovalsPage() {
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <Card className='p-6 text-center'>
-            <div className='text-brand mb-2 text-3xl font-bold'>
+            <div className='text-default mb-2 text-3xl font-bold'>
               {mockApprovals.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -342,13 +342,13 @@ export default function ApprovalsPage() {
             <div className='text-gray-600 dark:text-gray-300'>قيد المراجعة</div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockApprovals.filter(a => a.status === 'approved').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>موافق عليها</div>
           </Card>
           <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-error'>
+            <div className='mb-2 text-3xl font-bold text-default-error'>
               {mockApprovals.filter(a => a.status === 'rejected').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>مرفوضة</div>
@@ -627,7 +627,11 @@ export default function ApprovalsPage() {
                   <h4 className='mb-3 font-semibold'>المرفقات</h4>
                   <div className='flex flex-wrap gap-2'>
                     {selectedApproval.attachments.map((attachment, index) => (
-                      <Badge key={index} variant='outline' className='text-sm'>
+                      <Badge
+                        key={index}
+                        variant='secondary'
+                        className='text-sm'
+                      >
                         📎 {attachment}
                       </Badge>
                     ))}
@@ -665,7 +669,7 @@ export default function ApprovalsPage() {
                   selectedApproval.rejectionReason && (
                     <div>
                       <h4 className='mb-3 font-semibold'>سبب الرفض</h4>
-                      <p className='rounded-lg bg-surface p-4 text-brand-error dark:bg-red-900/20'>
+                      <p className='rounded-lg bg-surface p-4 text-default-error dark:bg-red-900/20'>
                         {selectedApproval.rejectionReason}
                       </p>
                     </div>
@@ -711,7 +715,7 @@ export default function ApprovalsPage() {
                 </Button>
                 {selectedApproval.status === 'pending' && (
                   <>
-                    <Button variant='destructive' className='flex-1'>
+                    <Button variant='outline' className='flex-1'>
                       رفض
                     </Button>
                     <Button variant='primary' className='flex-1'>

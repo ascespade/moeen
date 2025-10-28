@@ -1,16 +1,17 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+} from '@/components/ui/Select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import {
   RefreshCw,
   Users,
@@ -275,14 +276,12 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
                     {contact.phone}
                   </p>
                   <Badge
-                    variant={
-                      contact.type === 'medical' ? 'destructive' : 'secondary'
-                    }
+                    variant={contact.type === 'medical' ? 'error' : 'secondary'}
                   >
                     {contact.type}
                   </Badge>
                   {contact.is_available_24_7 && (
-                    <Badge variant='outline' className='ml-2'>
+                    <Badge variant='secondary' className='ml-2'>
                       24/7
                     </Badge>
                   )}
@@ -360,12 +359,12 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
                     </p>
                     <div className='flex items-center gap-2'>
                       <Badge
-                        variant={doctor.is_active ? 'default' : 'secondary'}
+                        variant={doctor.is_active ? 'primary' : 'secondary'}
                       >
                         {doctor.is_active ? 'نشط' : 'غير نشط'}
                       </Badge>
                       {doctor.rating > 0 && (
-                        <Badge variant='outline'>
+                        <Badge variant='secondary'>
                           ⭐ {doctor.rating} ({doctor.total_reviews})
                         </Badge>
                       )}
@@ -512,11 +511,11 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
                     </p>
                     <div className='flex items-center gap-2'>
                       <Badge
-                        variant={member.is_active ? 'default' : 'secondary'}
+                        variant={member.is_active ? 'primary' : 'secondary'}
                       >
                         {member.is_active ? 'نشط' : 'غير نشط'}
                       </Badge>
-                      <Badge variant='outline'>{member.role}</Badge>
+                      <Badge variant='secondary'>{member.role}</Badge>
                     </div>
                     {member.last_login && (
                       <p className='text-xs text-muted-foreground'>

@@ -10,7 +10,7 @@
 
 // Base UI Components
 export { Button } from './Button';
-export type { ButtonProps } from './Button';
+// export type { ButtonProps } from './Button';
 
 export {
   Card,
@@ -20,12 +20,12 @@ export {
   CardTitle,
   CardDescription,
 } from './Card';
-export type {
-  CardProps,
-  CardHeaderProps,
-  CardContentProps,
-  CardFooterProps,
-} from './Card';
+// export type {
+//   CardProps,
+//   CardHeaderProps,
+//   CardContentProps,
+//   CardFooterProps,
+// } from './Card';
 
 export { Input } from './Input';
 export { Label } from './Label';

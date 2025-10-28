@@ -32,13 +32,14 @@ export function ThemeProvider({
     }
     return null;
   });
-  const [settings, setSettings] = useState(
-    themeManager?.getSettings() || {
-      mode: 'light',
-      customColors: {},
-      typographyScale: 'medium',
-      rtl: false,
-    }
+  const [settings, setSettings] = useState<ThemeSettings>(
+    themeManager?.getSettings() ||
+      ({
+        mode: 'light',
+        customColors: {},
+        typographyScale: 'medium',
+        rtl: false,
+      } as ThemeSettings)
   );
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export function ThemeProvider({
       const unsubscribe = themeManager.subscribe(setSettings);
       return unsubscribe;
     }
+    return undefined;
   }, [themeManager]);
 
   const contextValue: ThemeContextType = {

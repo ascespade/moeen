@@ -1,6 +1,6 @@
 /**
  * Line Chart Component - مكون الرسم البياني الخطي
- * RTL-compatible line chart with brand colors and theme support
+ * RTL-compatible line chart with default colors and theme support
  */
 
 'use client';
@@ -56,8 +56,8 @@ export const LineChart: React.FC<LineChartProps> = ({
       ? lines
       : [
           {
-            dataKey: dataKey,
-            color: 'var(--brand-primary)',
+            dataKey,
+            color: 'var(--default-default)',
             name: 'Value',
             strokeWidth: 2,
           },

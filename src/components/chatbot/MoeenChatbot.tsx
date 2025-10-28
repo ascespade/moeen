@@ -191,7 +191,7 @@ export default function MoeenChatbot({
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed ${positionClasses} z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-purple-600 text-white shadow-2xl transition-all hover:scale-110 hover:shadow-3xl ${
+        className={`fixed ${positionClasses} z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[var(--default-default)] to-purple-600 text-white shadow-2xl transition-all hover:scale-110 hover:shadow-3xl ${
           isOpen ? 'rotate-90' : ''
         }`}
         aria-label='فتح مساعد معين'
@@ -235,7 +235,7 @@ export default function MoeenChatbot({
           className={`fixed ${positionClasses} z-40 mb-20 h-[600px] w-[400px] overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-800 flex flex-col`}
         >
           {/* Header */}
-          <div className='bg-gradient-to-r from-[var(--brand-primary)] to-purple-600 p-4 text-white'>
+          <div className='bg-gradient-to-r from-[var(--default-default)] to-purple-600 p-4 text-white'>
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-3'>
                 <div className='h-12 w-12 rounded-full bg-white/20 flex items-center justify-center text-2xl backdrop-blur'>
@@ -263,7 +263,7 @@ export default function MoeenChatbot({
                 <div
                   className={`max-w-[80%] rounded-2xl px-4 py-3 ${
                     message.role === 'user'
-                      ? 'bg-[var(--brand-primary)] text-white'
+                      ? 'bg-[var(--default-default)] text-white'
                       : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-md'
                   }`}
                 >
@@ -318,7 +318,7 @@ export default function MoeenChatbot({
                   <button
                     key={action.id}
                     onClick={() => handleQuickAction(action.action)}
-                    className='rounded-lg bg-gray-100 dark:bg-gray-700 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 transition-all hover:bg-[var(--brand-primary)] hover:text-white'
+                    className='rounded-lg bg-gray-100 dark:bg-gray-700 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 transition-all hover:bg-[var(--default-default)] hover:text-white'
                   >
                     {action.text}
                   </button>
@@ -336,13 +336,13 @@ export default function MoeenChatbot({
                 onChange={e => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder='اكتب رسالتك هنا...'
-                className='flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-white focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20'
+                className='flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-white focus:border-[var(--default-default)] focus:outline-none focus:ring-2 focus:ring-[var(--default-default)]/20'
                 disabled={isLoading}
               />
               <button
                 onClick={() => handleSendMessage()}
                 disabled={isLoading || !input.trim()}
-                className='rounded-lg bg-[var(--brand-primary)] px-4 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed'
+                className='rounded-lg bg-[var(--default-default)] px-4 py-3 text-white transition-all hover:bg-[var(--default-default-hover)] disabled:opacity-50 disabled:cursor-not-allowed'
                 aria-label='إرسال'
               >
                 <svg

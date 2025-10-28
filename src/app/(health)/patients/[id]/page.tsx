@@ -1,8 +1,9 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
+import { realDB } from '@/lib/supabase-real';
 
 interface Patient {
   id: string;
@@ -38,83 +39,63 @@ interface Document {
   size: string;
 }
 
-const mockPatient: Patient = {
-  id: '1',
-  name: 'أحمد العتيبي',
-  phone: '0501234567',
-  email: 'ahmed@example.com',
-  age: 35,
-  gender: 'male',
-  status: 'active',
-  insuranceProvider: 'التأمين التعاوني',
-  notes: 'مريض يعاني من آلام الظهر المزمنة',
-  address: 'الرياض، حي النرجس',
-  emergencyContact: '0509876543 - فاطمة العتيبي',
-  medicalHistory: ['جراحة في العمود الفقري 2020', 'كسر في الساق 2018'],
-  allergies: ['البنسلين', 'الأسبرين'],
-};
-
-const mockSessions: Session[] = [
-  {
-    id: '1',
-    date: '2024-01-15',
-    doctor: 'د. سارة أحمد',
-    type: 'علاج طبيعي',
-    duration: 60,
-    status: 'completed',
-    notes: 'جلسة علاج طبيعي للظهر - تحسن ملحوظ',
-  },
-  {
-    id: '2',
-    date: '2024-01-10',
-    doctor: 'د. سارة أحمد',
-    type: 'علاج طبيعي',
-    duration: 60,
-    status: 'completed',
-    notes: 'تمارين تقوية عضلات الظهر',
-  },
-  {
-    id: '3',
-    date: '2024-01-20',
-    doctor: 'د. سارة أحمد',
-    type: 'علاج طبيعي',
-    duration: 60,
-    status: 'upcoming',
-  },
-];
-
-const mockDocuments: Document[] = [
-  {
-    id: '1',
-    name: 'تقرير الأشعة السينية',
-    type: 'PDF',
-    uploadDate: '2024-01-10',
-    size: '2.3 MB',
-  },
-  {
-    id: '2',
-    name: 'تحليل الدم',
-    type: 'PDF',
-    uploadDate: '2024-01-08',
-    size: '1.1 MB',
-  },
-  {
-    id: '3',
-    name: 'صورة الأشعة المقطعية',
-    type: 'JPG',
-    uploadDate: '2024-01-05',
-    size: '5.7 MB',
-  },
-];
-
+// Mock data removed - using real database
 export default function PatientDetailsPage({
   params,
 }: {
   params: { id: string };
 }) {
+  const [patient, setPatient] = useState<Patient | null>(null);
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [documents, setDocuments] = useState<Document[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<
-    'info' | 'sessions' | 'documents' | 'relatives' | 'claims'
-  >('info');
+    'secondary' | 'sessions' | 'documents' | 'relatives' | 'claims'
+  >('secondary');
+
+  // Load patient data from database
+  useEffect(() => {
+    const loadPatientData = async () => {
+      try {
+        setLoading(true);
+
+        // Load patient data
+        const patientData = await realDB.getPatient(params.id);
+        setPatient(patientData);
+
+        // Load sessions data
+        const sessionsData = await realDB.getSessions(params.id);
+        const transformedSessions: Session[] = sessionsData.map(
+          (session: any) => ({
+            id: session.id,
+            date: session.session_date,
+            doctor: session.doctors?.users?.name || 'غير محدد',
+            type: session.type || 'علاج',
+            duration: session.duration_minutes || 60,
+            status:
+              session.status === 'completed'
+                ? 'completed'
+                : session.status === 'cancelled'
+                  ? 'cancelled'
+                  : 'upcoming',
+            notes: session.notes || '',
+          })
+        );
+        setSessions(transformedSessions);
+
+        // Load documents data (placeholder - would need document management API)
+        setDocuments([]);
+      } catch (err) {
+        setError('فشل في تحميل بيانات المريض');
+        console.error('Error loading patient data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPatientData();
+  }, [params.id]);
   const [showEditModal, setShowEditModal] = useState(false);
 
   const getStatusColor = (status: Patient['status']) => {
@@ -169,10 +150,40 @@ export default function PatientDetailsPage({
     }
   };
 
+  if (loading) {
+    return (
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto mb-4'></div>
+          <p className='text-gray-600'>جاري تحميل بيانات المريض...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !patient) {
+    return (
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+        <div className='text-center'>
+          <div className='text-red-500 text-6xl mb-4'>⚠️</div>
+          <p className='text-red-600 text-lg mb-4'>
+            {error || 'لم يتم العثور على المريض'}
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
+          >
+            إعادة المحاولة
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -182,12 +193,12 @@ export default function PatientDetailsPage({
               >
                 ← العودة
               </Link>
-              <div className='flex h-16 w-16 items-center justify-center rounded-full bg-[var(--brand-primary)] text-xl font-semibold text-white'>
-                {mockPatient.name.charAt(0)}
+              <div className='flex h-16 w-16 items-center justify-center rounded-full bg-[var(--default-default)] text-xl font-semibold text-white'>
+                {patient?.name?.charAt(0) || '?'}
               </div>
               <div>
                 <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>
-                  {mockPatient.name}
+                  {patient?.name || 'غير محدد'}
                 </h1>
                 <p className='text-gray-600 dark:text-gray-300'>ملف المريض</p>
               </div>
@@ -199,7 +210,7 @@ export default function PatientDetailsPage({
               >
                 تعديل البيانات
               </button>
-              <button className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 حجز موعد
               </button>
             </div>
@@ -212,24 +223,24 @@ export default function PatientDetailsPage({
         <div className='card mb-8 p-6'>
           <div className='grid grid-cols-1 gap-6 md:grid-cols-4'>
             <div className='text-center'>
-              <div className='mb-2 text-3xl font-bold text-[var(--brand-primary)]'>
-                {mockSessions.length}
+              <div className='mb-2 text-3xl font-bold text-[var(--default-default)]'>
+                {sessions.length}
               </div>
               <div className='text-gray-600 dark:text-gray-300'>
                 إجمالي الجلسات
               </div>
             </div>
             <div className='text-center'>
-              <div className='mb-2 text-3xl font-bold text-brand-success'>
-                {mockSessions.filter(s => s.status === 'completed').length}
+              <div className='mb-2 text-3xl font-bold text-default-success'>
+                {sessions.filter(s => s.status === 'completed').length}
               </div>
               <div className='text-gray-600 dark:text-gray-300'>
                 جلسات مكتملة
               </div>
             </div>
             <div className='text-center'>
-              <div className='mb-2 text-3xl font-bold text-brand-primary'>
-                {mockDocuments.length}
+              <div className='mb-2 text-3xl font-bold text-default-default'>
+                {documents.length}
               </div>
               <div className='text-gray-600 dark:text-gray-300'>الوثائق</div>
             </div>
@@ -245,7 +256,7 @@ export default function PatientDetailsPage({
           <div className='border-b border-gray-200 dark:border-gray-700'>
             <nav className='flex space-x-8'>
               {[
-                { id: 'info', label: 'البيانات الشخصية' },
+                { id: 'secondary', label: 'البيانات الشخصية' },
                 { id: 'sessions', label: 'سجل الجلسات' },
                 { id: 'documents', label: 'الوثائق' },
                 { id: 'relatives', label: 'الأقارب' },
@@ -256,7 +267,7 @@ export default function PatientDetailsPage({
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`border-b-2 px-1 py-4 text-sm font-medium ${
                     activeTab === tab.id
-                      ? 'border-[var(--brand-primary)] text-[var(--brand-primary)]'
+                      ? 'border-[var(--default-default)] text-[var(--default-default)]'
                       : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                   }`}
                 >
@@ -268,7 +279,7 @@ export default function PatientDetailsPage({
 
           <div className='p-6'>
             {/* Personal Info Tab */}
-            {activeTab === 'info' && (
+            {activeTab === 'secondary' && (
               <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
                 <div>
                   <h3 className='mb-4 text-lg font-semibold'>
@@ -279,34 +290,34 @@ export default function PatientDetailsPage({
                       <span className='text-gray-600 dark:text-gray-300'>
                         الاسم:
                       </span>
-                      <span className='font-medium'>{mockPatient.name}</span>
+                      <span className='font-medium'>{patient.name}</span>
                     </div>
                     <div className='flex justify-between'>
                       <span className='text-gray-600 dark:text-gray-300'>
                         الهاتف:
                       </span>
-                      <span className='font-medium'>{mockPatient.phone}</span>
+                      <span className='font-medium'>{patient.phone}</span>
                     </div>
                     <div className='flex justify-between'>
                       <span className='text-gray-600 dark:text-gray-300'>
                         البريد الإلكتروني:
                       </span>
                       <span className='font-medium'>
-                        {mockPatient.email || 'غير محدد'}
+                        {patient.email || 'غير محدد'}
                       </span>
                     </div>
                     <div className='flex justify-between'>
                       <span className='text-gray-600 dark:text-gray-300'>
                         العمر:
                       </span>
-                      <span className='font-medium'>{mockPatient.age} سنة</span>
+                      <span className='font-medium'>{patient.age} سنة</span>
                     </div>
                     <div className='flex justify-between'>
                       <span className='text-gray-600 dark:text-gray-300'>
                         الجنس:
                       </span>
                       <span className='font-medium'>
-                        {mockPatient.gender === 'male' ? 'ذكر' : 'أنثى'}
+                        {patient.gender === 'male' ? 'ذكر' : 'أنثى'}
                       </span>
                     </div>
                     <div className='flex justify-between'>
@@ -314,9 +325,9 @@ export default function PatientDetailsPage({
                         الحالة:
                       </span>
                       <span
-                        className={`rounded-full px-2 py-1 text-xs ${getStatusColor(mockPatient.status)}`}
+                        className={`rounded-full px-2 py-1 text-xs ${getStatusColor(patient.status)}`}
                       >
-                        {getStatusText(mockPatient.status)}
+                        {getStatusText(patient.status)}
                       </span>
                     </div>
                   </div>
@@ -330,7 +341,7 @@ export default function PatientDetailsPage({
                         العنوان:
                       </span>
                       <span className='font-medium'>
-                        {mockPatient.address || 'غير محدد'}
+                        {patient.address || 'غير محدد'}
                       </span>
                     </div>
                     <div>
@@ -338,7 +349,7 @@ export default function PatientDetailsPage({
                         جهة الاتصال في الطوارئ:
                       </span>
                       <span className='font-medium'>
-                        {mockPatient.emergencyContact || 'غير محدد'}
+                        {patient.emergencyContact || 'غير محدد'}
                       </span>
                     </div>
                     <div>
@@ -346,7 +357,7 @@ export default function PatientDetailsPage({
                         شركة التأمين:
                       </span>
                       <span className='font-medium'>
-                        {mockPatient.insuranceProvider || 'بدون تأمين'}
+                        {patient.insuranceProvider || 'بدون تأمين'}
                       </span>
                     </div>
                     <div>
@@ -354,7 +365,7 @@ export default function PatientDetailsPage({
                         ملاحظات:
                       </span>
                       <span className='font-medium'>
-                        {mockPatient.notes || 'لا توجد ملاحظات'}
+                        {patient.notes || 'لا توجد ملاحظات'}
                       </span>
                     </div>
                   </div>
@@ -367,7 +378,7 @@ export default function PatientDetailsPage({
                     <div>
                       <h4 className='mb-2 font-medium'>الأمراض السابقة:</h4>
                       <ul className='space-y-1'>
-                        {mockPatient.medicalHistory?.map((item, index) => (
+                        {patient.medicalHistory?.map((item, index) => (
                           <li
                             key={index}
                             className='text-sm text-gray-600 dark:text-gray-300'
@@ -384,7 +395,7 @@ export default function PatientDetailsPage({
                     <div>
                       <h4 className='mb-2 font-medium'>الحساسية:</h4>
                       <ul className='space-y-1'>
-                        {mockPatient.allergies?.map((item, index) => (
+                        {patient.allergies?.map((item, index) => (
                           <li
                             key={index}
                             className='text-sm text-gray-600 dark:text-gray-300'
@@ -408,12 +419,12 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>سجل الجلسات</h3>
-                  <button className='btn-brand rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                     إضافة جلسة
                   </button>
                 </div>
                 <div className='space-y-4'>
-                  {mockSessions.map(session => (
+                  {sessions.map(session => (
                     <div
                       key={session.id}
                       className='rounded-lg border border-gray-200 p-4 dark:border-gray-700'
@@ -451,19 +462,19 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>الوثائق</h3>
-                  <button className='btn-brand rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                     رفع وثيقة
                   </button>
                 </div>
                 <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
-                  {mockDocuments.map(doc => (
+                  {documents.map(doc => (
                     <div
                       key={doc.id}
                       className='hover:shadow-soft rounded-lg border border-gray-200 p-4 transition-shadow dark:border-gray-700'
                     >
                       <div className='mb-2 flex items-center gap-3'>
                         <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-red-100'>
-                          <span className='font-semibold text-brand-error'>
+                          <span className='font-semibold text-default-error'>
                             PDF
                           </span>
                         </div>
@@ -477,7 +488,7 @@ export default function PatientDetailsPage({
                       <div className='flex items-center justify-between text-xs text-gray-500'>
                         <span>{doc.uploadDate}</span>
                         <div className='flex gap-2'>
-                          <button className='text-[var(--brand-primary)] hover:underline'>
+                          <button className='text-[var(--default-default)] hover:underline'>
                             عرض
                           </button>
                           <button className='text-gray-500 hover:underline'>
@@ -496,7 +507,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>الأقارب</h3>
-                  <button className='btn-brand rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                     إضافة قريب
                   </button>
                 </div>
@@ -514,7 +525,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>المطالبات التأمينية</h3>
-                  <button className='btn-brand rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                     إضافة مطالبة
                   </button>
                 </div>
@@ -582,8 +593,8 @@ export default function PatientDetailsPage({
                   </label>
                   <input
                     type='text'
-                    defaultValue={mockPatient.name}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    defaultValue={patient.name}
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
                 <div>
@@ -592,8 +603,8 @@ export default function PatientDetailsPage({
                   </label>
                   <input
                     type='tel'
-                    defaultValue={mockPatient.phone}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    defaultValue={patient.phone}
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
               </div>
@@ -605,8 +616,8 @@ export default function PatientDetailsPage({
                   </label>
                   <input
                     type='email'
-                    defaultValue={mockPatient.email}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    defaultValue={patient.email}
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
                 <div>
@@ -615,8 +626,8 @@ export default function PatientDetailsPage({
                   </label>
                   <input
                     type='number'
-                    defaultValue={mockPatient.age}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    defaultValue={patient.age}
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   />
                 </div>
               </div>
@@ -627,8 +638,8 @@ export default function PatientDetailsPage({
                     الجنس
                   </label>
                   <select
-                    defaultValue={mockPatient.gender}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    defaultValue={patient.gender}
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   >
                     <option value='male'>ذكر</option>
                     <option value='female'>أنثى</option>
@@ -639,8 +650,8 @@ export default function PatientDetailsPage({
                     الحالة
                   </label>
                   <select
-                    defaultValue={mockPatient.status}
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    defaultValue={patient.status}
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   >
                     <option value='active'>نشط</option>
                     <option value='inactive'>غير نشط</option>
@@ -655,8 +666,8 @@ export default function PatientDetailsPage({
                 </label>
                 <textarea
                   rows={3}
-                  defaultValue={mockPatient.notes}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  defaultValue={patient.notes}
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                 />
               </div>
 
@@ -670,7 +681,7 @@ export default function PatientDetailsPage({
                 </button>
                 <button
                   type='submit'
-                  className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   حفظ التغييرات
                 </button>

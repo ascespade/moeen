@@ -139,8 +139,8 @@ export default function MessagesPage() {
   });
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -152,7 +152,9 @@ export default function MessagesPage() {
                 className='rounded-lg'
               />
               <div>
-                <h1 className='text-brand text-2xl font-bold'>إدارة الرسائل</h1>
+                <h1 className='text-default text-2xl font-bold'>
+                  إدارة الرسائل
+                </h1>
                 <p className='text-gray-600 dark:text-gray-300'>
                   تتبع وإدارة الرسائل المرسلة
                 </p>
@@ -160,7 +162,7 @@ export default function MessagesPage() {
             </div>
             <button
               onClick={() => setShowCreateModal(true)}
-              className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+              className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
             >
               إرسال رسالة
             </button>
@@ -171,7 +173,7 @@ export default function MessagesPage() {
       <main className='container-app py-8'>
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-primary'>
+            <div className='mb-2 text-3xl font-bold text-default-default'>
               {mockMessages.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -179,7 +181,7 @@ export default function MessagesPage() {
             </div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-success'>
+            <div className='mb-2 text-3xl font-bold text-default-success'>
               {mockMessages.filter(m => m.status === 'delivered').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>تم التسليم</div>
@@ -191,7 +193,7 @@ export default function MessagesPage() {
             <div className='text-gray-600 dark:text-gray-300'>مقروءة</div>
           </div>
           <div className='card p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-brand-error'>
+            <div className='mb-2 text-3xl font-bold text-default-error'>
               {mockMessages.filter(m => m.status === 'failed').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>فشل</div>
@@ -207,7 +209,7 @@ export default function MessagesPage() {
               <select
                 value={filter}
                 onChange={e => setFilter(e.target.value as any)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع الحالات</option>
                 <option value='sent'>مرسل</option>
@@ -223,7 +225,7 @@ export default function MessagesPage() {
               <select
                 value={channelFilter}
                 onChange={e => setChannelFilter(e.target.value)}
-                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               >
                 <option value='all'>جميع القنوات</option>
                 <option value='whatsapp'>واتساب</option>
@@ -233,7 +235,7 @@ export default function MessagesPage() {
               </select>
             </div>
             <div className='flex items-end'>
-              <button className='btn-brand w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                 تطبيق الفلاتر
               </button>
             </div>
@@ -285,7 +287,7 @@ export default function MessagesPage() {
                       {message.createdAt}
                     </span>
                     <div className='flex gap-2'>
-                      <button className='rounded bg-[var(--brand-primary)] px-3 py-1 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                      <button className='rounded bg-[var(--default-default)] px-3 py-1 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                         عرض
                       </button>
                       <button className='rounded border border-gray-300 px-3 py-1 text-sm text-gray-700 transition-colors hover:bg-surface'>
@@ -337,7 +339,7 @@ export default function MessagesPage() {
                   </label>
                   <input
                     type='text'
-                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                    className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='اسم المستقبل'
                   />
                 </div>
@@ -345,7 +347,7 @@ export default function MessagesPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     القناة
                   </label>
-                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'>
+                  <select className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'>
                     <option value='whatsapp'>واتساب</option>
                     <option value='telegram'>تيليجرام</option>
                     <option value='facebook'>فيسبوك</option>
@@ -359,7 +361,7 @@ export default function MessagesPage() {
                 </label>
                 <input
                   type='text'
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='موضوع الرسالة'
                 />
               </div>
@@ -369,7 +371,7 @@ export default function MessagesPage() {
                 </label>
                 <textarea
                   rows={4}
-                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='محتوى الرسالة'
                 ></textarea>
               </div>
@@ -383,7 +385,7 @@ export default function MessagesPage() {
                 </button>
                 <button
                   type='submit'
-                  className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   إرسال الرسالة
                 </button>

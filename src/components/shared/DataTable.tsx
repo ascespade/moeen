@@ -54,7 +54,7 @@ export function DataTable({
                       : 'none'
                 }
                 tabIndex={0}
-                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-[var(--brand-surface)] focus:bg-[var(--brand-surface)] focus:outline-none focus:ring-2'
+                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-[var(--default-surface)] focus:bg-[var(--default-surface)] focus:outline-none focus:ring-2'
                 onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();

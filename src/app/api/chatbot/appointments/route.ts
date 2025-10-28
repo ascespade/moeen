@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
       if (createError) {
         console.error('Patient creation error:', createError);
         return NextResponse.json(
-          { error: 'Failed to create patient: ' + createError.message },
+          { error: `Failed to create patient: ${createError.message}` },
           { status: 500 }
         );
       }
@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
     if (appointmentError) {
       console.error('Appointment creation error:', appointmentError);
       return NextResponse.json(
-        { error: 'Failed to create appointment: ' + appointmentError.message },
+        { error: `Failed to create appointment: ${appointmentError.message}` },
         { status: 500 }
       );
     }

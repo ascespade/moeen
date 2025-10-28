@@ -109,7 +109,7 @@ async function logMissingTranslationKeys(
       await supabase.from('missing_translations').insert(
         missingKeys.map(key => ({
           language: requestedLang,
-          key: key,
+          key,
         }))
       );
     }

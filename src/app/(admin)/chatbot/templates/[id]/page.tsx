@@ -91,9 +91,9 @@ export default function TemplateEditorPage({
   };
 
   return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
             <div className='flex items-center gap-4'>
@@ -126,7 +126,7 @@ export default function TemplateEditorPage({
               {isEditing && (
                 <button
                   onClick={handleSave}
-                  className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                  className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   حفظ
                 </button>
@@ -199,7 +199,7 @@ export default function TemplateEditorPage({
                     {isEditing && (
                       <button
                         onClick={() => handleVariableRemove(variable)}
-                        className='text-sm text-brand-error hover:text-red-700'
+                        className='text-sm text-default-error hover:text-red-700'
                       >
                         حذف
                       </button>
@@ -212,7 +212,7 @@ export default function TemplateEditorPage({
                     <input
                       type='text'
                       placeholder='إضافة متغير جديد'
-                      className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                      className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       onKeyPress={e => {
                         if (e.key === 'Enter') {
                           handleVariableAdd(e.currentTarget.value);
@@ -230,7 +230,7 @@ export default function TemplateEditorPage({
                           input.value = '';
                         }
                       }}
-                      className='rounded-lg bg-[var(--brand-primary)] px-3 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                      className='rounded-lg bg-[var(--default-default)] px-3 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'
                     >
                       إضافة
                     </button>
@@ -270,7 +270,7 @@ export default function TemplateEditorPage({
                           name: e.target.value,
                         }))
                       }
-                      className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                      className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     />
                   </div>
 
@@ -287,7 +287,7 @@ export default function TemplateEditorPage({
                           description: e.target.value,
                         }))
                       }
-                      className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                      className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     />
                   </div>
 
@@ -299,7 +299,7 @@ export default function TemplateEditorPage({
                       rows={8}
                       value={template.content}
                       onChange={e => handleContentChange(e.target.value)}
-                      className='w-full rounded-lg border border-gray-300 px-3 py-2 font-mono focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                      className='w-full rounded-lg border border-gray-300 px-3 py-2 font-mono focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       placeholder='اكتب محتوى القالب هنا... استخدم {{اسم المتغير}} للمتغيرات'
                     />
                     <p className='mt-1 text-xs text-gray-500'>
@@ -344,7 +344,7 @@ export default function TemplateEditorPage({
                 {isEditing && (
                   <button
                     onClick={handleSave}
-                    className='btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
+                    className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                   >
                     حفظ التغييرات
                   </button>
@@ -394,7 +394,7 @@ export default function TemplateEditorPage({
                             [variable]: e.target.value,
                           }))
                         }
-                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]'
+                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         placeholder={`أدخل قيمة ${variable}`}
                       />
                     </div>
@@ -409,7 +409,7 @@ export default function TemplateEditorPage({
                 >
                   إغلاق
                 </button>
-                <button className='btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'>
+                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                   استخدام القالب
                 </button>
               </div>

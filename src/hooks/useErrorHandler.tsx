@@ -24,7 +24,7 @@ export function useErrorHandler() {
       } = options;
 
       let errorMessage = fallbackMessage;
-      let errorCode = 'UNKNOWN_ERROR';
+      const errorCode = 'UNKNOWN_ERROR';
 
       // Extract error information
       if (error instanceof Error) {

@@ -65,7 +65,7 @@ export default function ProtectedRoute({
       fallback || (
         <div className='flex items-center justify-center min-h-screen'>
           <div className='text-center'>
-            <h1 className='text-2xl font-bold text-brand-error mb-4'>
+            <h1 className='text-2xl font-bold text-default-error mb-4'>
               {t('auth.unauthorized')}
             </h1>
             <p className='text-gray-600 mb-4'>
@@ -73,7 +73,7 @@ export default function ProtectedRoute({
             </p>
             <button
               onClick={() => router.push('/login')}
-              className='px-4 py-2 bg-brand-primary text-white rounded hover:bg-blue-700'
+              className='px-4 py-2 bg-default-default text-white rounded hover:bg-blue-700'
             >
               {t('auth.back_to_login')}
             </button>

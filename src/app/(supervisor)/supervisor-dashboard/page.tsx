@@ -39,7 +39,7 @@ interface SupervisorData {
   };
   alerts: Array<{
     id: string;
-    type: 'warning' | 'error' | 'info';
+    type: 'warning' | 'error' | 'secondary';
     message: string;
     timestamp: string;
   }>;
@@ -118,7 +118,7 @@ export default function SupervisorDashboard() {
           <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
             <Card className='p-6'>
               <div className='flex items-center'>
-                <Users className='h-8 w-8 text-brand-primary mr-4' />
+                <Users className='h-8 w-8 text-default-default mr-4' />
                 <div>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {t('supervisor.dashboard.total_patients')}
@@ -132,7 +132,7 @@ export default function SupervisorDashboard() {
 
             <Card className='p-6'>
               <div className='flex items-center'>
-                <Clock className='h-8 w-8 text-brand-success mr-4' />
+                <Clock className='h-8 w-8 text-default-success mr-4' />
                 <div>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {t('supervisor.dashboard.total_appointments')}
@@ -160,7 +160,7 @@ export default function SupervisorDashboard() {
 
             <Card className='p-6'>
               <div className='flex items-center'>
-                <FileText className='h-8 w-8 text-brand-primary mr-4' />
+                <FileText className='h-8 w-8 text-default-default mr-4' />
                 <div>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
                     {t('supervisor.dashboard.claims_processed')}
@@ -192,7 +192,7 @@ export default function SupervisorDashboard() {
                         <div className='flex items-center'>
                           <div className='flex-shrink-0'>
                             <div className='w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center'>
-                              <Users className='h-5 w-5 text-brand-primary' />
+                              <Users className='h-5 w-5 text-default-default' />
                             </div>
                           </div>
                           <div className='ml-4'>
@@ -227,7 +227,7 @@ export default function SupervisorDashboard() {
                                 ? 'primary'
                                 : staff.efficiency >= 60
                                   ? 'secondary'
-                                  : 'destructive'
+                                  : 'error'
                             }
                           >
                             {staff.efficiency >= 80
@@ -271,10 +271,10 @@ export default function SupervisorDashboard() {
                         <AlertTriangle
                           className={`h-4 w-4 mt-0.5 mr-3 ${
                             alert.type === 'error'
-                              ? 'text-brand-error'
+                              ? 'text-default-error'
                               : alert.type === 'warning'
                                 ? 'text-yellow-600'
-                                : 'text-brand-primary'
+                                : 'text-default-default'
                           }`}
                         />
                         <div className='flex-1'>
@@ -341,7 +341,7 @@ export default function SupervisorDashboard() {
                             <span className='text-gray-600 dark:text-gray-400'>
                               {report.name}
                             </span>
-                            <Badge variant='outline'>
+                            <Badge variant='secondary'>
                               {t(`report.status.${report.status}`)}
                             </Badge>
                           </div>

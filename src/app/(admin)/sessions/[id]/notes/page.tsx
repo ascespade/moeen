@@ -158,7 +158,7 @@ export default function SessionNotesPage() {
       router.push('/admin/appointments');
     } catch (error: any) {
       logger.error('Error saving session notes', error);
-      alert('خطأ: ' + (error.message || 'فشل في حفظ الملاحظات'));
+      alert(`خطأ: ${error.message || 'فشل في حفظ الملاحظات'}`);
     } finally {
       setSaving(false);
     }
@@ -168,7 +168,7 @@ export default function SessionNotesPage() {
     return (
       <div className='container-app py-8'>
         <div className='card p-12 text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--brand-primary)] mx-auto'></div>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
           <p className='mt-4 text-gray-600 dark:text-gray-400'>
             جاري التحميل...
           </p>
@@ -241,7 +241,7 @@ export default function SessionNotesPage() {
               value={notes}
               onChange={e => setNotes(e.target.value)}
               rows={6}
-              className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--brand-primary)]'
+              className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)]'
               placeholder='ملخص الجلسة، ما تم إنجازه، استجابة الطفل...'
               required
             />
@@ -311,7 +311,7 @@ export default function SessionNotesPage() {
                             />
                             <div className='flex justify-between text-sm text-gray-600 dark:text-gray-400'>
                               <span>0%</span>
-                              <span className='font-bold text-[var(--brand-primary)]'>
+                              <span className='font-bold text-[var(--default-default)]'>
                                 {goalProgress[goal.id] || goal.current_progress}
                                 %
                               </span>
@@ -336,7 +336,7 @@ export default function SessionNotesPage() {
               value={homeRecommendations}
               onChange={e => setHomeRecommendations(e.target.value)}
               rows={4}
-              className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--brand-primary)]'
+              className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)]'
               placeholder='نصائح وتمارين يمكن للأسرة القيام بها في المنزل...'
             />
           </div>
@@ -350,7 +350,7 @@ export default function SessionNotesPage() {
               value={nextSessionFocus}
               onChange={e => setNextSessionFocus(e.target.value)}
               rows={3}
-              className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--brand-primary)]'
+              className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)]'
               placeholder='ما سنركز عليه في الجلسة القادمة...'
             />
           </div>
@@ -408,7 +408,7 @@ export default function SessionNotesPage() {
             <button
               onClick={handleSaveNotes}
               disabled={saving || !notes.trim()}
-              className='btn btn-brand w-full py-4 text-lg disabled:opacity-50'
+              className='btn btn-default w-full py-4 text-lg disabled:opacity-50'
             >
               {saving ? (
                 <span className='flex items-center justify-center gap-2'>
