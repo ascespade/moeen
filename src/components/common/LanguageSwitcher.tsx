@@ -1,25 +1,34 @@
 'use client';
-import { useEffect, useState, useCallback } from 'react';
+
 import { Languages } from 'lucide-react';
+import { useEffect, useState, useCallback } from 'react';
 import { useI18n } from '@/hooks/useI18n';
 import { DynamicThemeManager } from '@/lib/dynamic-theme-manager';
 
 interface LanguageSwitcherProps {
-  className?: string;
+  variant?: 'button' | 'dropdown';
   showLabel?: boolean;
   size?: 'sm' | 'md' | 'lg';
-  variant?: 'button' | 'dropdown';
+  className?: string;
 }
 
 export default function LanguageSwitcher({
-  className = '',
+  variant = 'button',
   showLabel = true,
   size = 'md',
-  variant = 'button',
+  className = '',
 }: LanguageSwitcherProps) {
   const [language, setLanguage] = useState<'ar' | 'en'>('ar');
+  const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { t } = useI18n(language);
+
+  // Only run on client-side
+  useEffect(() => {
+    setMounted(true);
+    const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+    setLanguage(currentLang as 'ar' | 'en');
+  }, []);
 
   // Function to load user preferences from database
   const loadUserPreferences = async () => {
@@ -40,26 +49,37 @@ export default function LanguageSwitcher({
   }, [language]);
 
   // Load user preferences from database on mount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    loadUserPreferences();
-  }, []);
+    if (mounted) {
+      loadUserPreferences();
+    }
+  }, [mounted]);
 
   // Apply language changes
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && mounted) {
       applyLanguage();
     }
-  }, [language, isLoading, applyLanguage]);
+  }, [language, isLoading, applyLanguage, mounted]);
 
-  // Toggle language function - reload page to apply translations
   const toggleLanguage = async () => {
     const newLanguage = language === 'ar' ? 'en' : 'ar';
     setLanguage(newLanguage);
 
+    // Update HTML attributes
+    document.documentElement.setAttribute('lang', newLanguage);
+    document.documentElement.setAttribute(
+      'dir',
+      newLanguage === 'ar' ? 'rtl' : 'ltr'
+    );
+
+    // Store preference
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', newLanguage);
+    }
+
     try {
       // Save to database
-      // Update user preferences
       DynamicThemeManager.updateConfig({
         language: newLanguage,
       });
@@ -68,17 +88,32 @@ export default function LanguageSwitcher({
     } catch (error) {}
   };
 
-  // Size classes
-  const sizeClasses = {
-    sm: 'h-8 px-2',
-    md: 'h-9 px-3',
-    lg: 'h-10 px-4',
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div
+        className={`h-9 w-9 rounded-full border border-[var(--brand-border)] ${className}`}
+      />
+    );
+  }
+
+  const getSizeClasses = () => {
+    switch (size) {
+      case 'sm':
+        return 'h-8 w-8';
+      case 'lg':
+        return 'h-12 w-12';
+      default:
+        return 'h-9 w-9';
+    }
   };
+
+  const sizeClasses = getSizeClasses();
 
   const iconSizes = {
     sm: 'h-4 w-4',
-    md: 'h-4 w-4',
-    lg: 'h-5 w-5',
+    md: 'h-5 w-5',
+    lg: 'h-6 w-6',
   };
 
   const textSizes = {
@@ -89,9 +124,9 @@ export default function LanguageSwitcher({
 
   if (variant === 'dropdown') {
     return (
-      <div className={`relative ${className}`}>
+      <div className={`hs-dropdown relative ${className}`}>
         <select
-          className={`inline-flex items-center gap-2 rounded-md border border-gray-200 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 ${sizeClasses[size]} ${textSizes[size]}`}
+          className={`inline-flex items-center gap-2 rounded-md border border-gray-200 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 ${sizeClasses} ${textSizes[size]}`}
           value={language}
           onChange={e => {
             setLanguage(e.target.value as 'ar' | 'en');
@@ -109,20 +144,22 @@ export default function LanguageSwitcher({
 
   return (
     <button
-      className={`inline-flex items-center gap-2 rounded-md border border-gray-200 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50 ${sizeClasses[size]} ${className}`}
+      className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${className}`}
       onClick={toggleLanguage}
       disabled={isLoading}
-      title={language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
+      aria-label={
+        language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'
+      }
     >
       {isLoading ? (
         <div
           className={`animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 ${iconSizes[size]}`}
         ></div>
       ) : (
-        <Languages className={iconSizes[size]} />
+        <Languages className={`${iconSizes[size]} text-[var(--brand-info)]`} />
       )}
       {showLabel && (
-        <span className={`hidden sm:inline ${textSizes[size]}`}>
+        <span className={`ml-2 ${textSizes[size]} font-medium hidden sm:inline`}>
           {language === 'ar' ? 'العربية' : 'English'}
         </span>
       )}
