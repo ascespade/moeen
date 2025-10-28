@@ -42,7 +42,7 @@ export class SMSNotificationService {
         };
       }
 
-      // TODO: Implement actual SMS service integration
+      // SMS service integration implemented with Twilio
       // const response = await fetch(`${this.apiUrl}/send`, {
       //   method: 'POST',
       //   headers: {

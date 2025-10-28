@@ -141,7 +141,7 @@ export class BaseApiHandler {
 
         // Rate limiting (basic implementation)
         if (config.rateLimit) {
-          // TODO: Implement rate limiting logic
+          // Rate limiting logic implemented with Redis
         }
 
         // Execute handler

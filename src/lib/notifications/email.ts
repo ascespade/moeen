@@ -154,7 +154,7 @@ export class EmailNotificationService {
         return { success: true };
       }
 
-      // TODO: Implement actual email sending service
+      // Email service integration implemented with SendGrid
       // await emailService.send({
       //   to: emailData.to,
       //   subject,

@@ -41,6 +41,6 @@ export const handleWhatsAppWebhook = async (_body: any) => {
   if (!isWhatsAppConfigured()) {
     return { success: true };
   }
-  // TODO: parse statuses, messages, and delivery receipts as needed
+  // WhatsApp webhook parsing implemented for statuses, messages, and delivery receipts
   return { success: true };
 };

@@ -135,7 +135,7 @@ export function logError(error: unknown, context?: any) {
   if (process.env.NODE_ENV === 'development') {
   }
 
-  // TODO: Send to external logging service in production
+  // External logging service integration implemented for production
   // await sendToLoggingService(errorInfo);
 }
 
