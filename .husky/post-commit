@@ -1,7 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-echo "🔍 Post-commit cleanup running..."
-npx eslint . --ext .ts,.tsx,.js,.jsx --fix --quiet || true
-npx prettier --write . --loglevel silent
-echo "🧹 Project cleaned."

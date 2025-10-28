@@ -1,7 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-echo "🧠 Auto-fixing code with ESLint + Prettier..."
-npx lint-staged
-
-echo "✅ All fixed — committing continues."
