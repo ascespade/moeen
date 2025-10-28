@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -74,7 +74,7 @@ export async function GET(request: NextRequest) {
           value: 'info@moeen.com',
           icon: '📧',
           link: 'mailto:info@moeen.com',
-          color: 'bg-[var(--brand-secondary)]',
+          color: 'bg-[var(--brand-primary)]',
         },
         {
           id: 3,

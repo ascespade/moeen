@@ -1,300 +1,111 @@
-/**
- * THEME SWITCHER - مبدل الثيم
- * ===========================
- *
- * Component for switching between light, dark, and system themes
- * مكون للتبديل بين الثيمات الفاتحة والمظلمة ونظام
- */
-
 'use client';
 
-import { Sun, Moon, Monitor } from 'lucide-react';
-import React from 'react';
-
-import { useTheme } from '@/context/ThemeContext';
-// import { COMPONENT_CLASSES } from '@/lib/centralized-theme';
-
-// ========================================
-// COMPONENT PROPS - خصائص المكون
-// ========================================
+import { Moon, Sun } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface ThemeSwitcherProps {
-  className?: string;
+  variant?: 'button' | 'dropdown';
   showLabel?: boolean;
   size?: 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'minimal' | 'icon-only';
-  showSystemOption?: boolean;
+  className?: string;
 }
-
-// ========================================
-// THEME SWITCHER COMPONENT - مكون مبدل الثيم
-// ========================================
 
 export function ThemeSwitcher({
-  className = '',
-  showLabel = true,
+  variant = 'button',
+  showLabel = false,
   size = 'md',
-  variant = 'default',
-  showSystemOption = true,
+  className = '',
 }: ThemeSwitcherProps) {
-  const { theme, setTheme, isDark, isLight, isSystem } = useTheme();
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [mounted, setMounted] = useState(false);
 
-  // ========================================
-  // THEME OPTIONS - خيارات الثيم
-  // ========================================
+  // Only run on client-side
+  useEffect(() => {
+    setMounted(true);
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme as 'light' | 'dark');
+    
+    // Apply saved theme
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, []);
 
-  const themeOptions = [
-    {
-      value: 'light' as const,
-      label: 'فاتح',
-      icon: Sun,
-      description: 'الثيم الفاتح',
-    },
-    {
-      value: 'dark' as const,
-      label: 'مظلم',
-      icon: Moon,
-      description: 'الثيم المظلم',
-    },
-    ...(showSystemOption
-      ? [
-          {
-            value: 'system' as const,
-            label: 'نظام',
-            icon: Monitor,
-            description: 'يتبع إعدادات النظام',
-          },
-        ]
-      : []),
-  ];
-
-  // ========================================
-  // SIZE CONFIGURATIONS - تكوينات الحجم
-  // ========================================
-
-  const sizeConfig = {
-    sm: {
-      button: 'p-2 text-sm',
-      icon: 'w-4 h-4',
-      label: 'text-xs',
-    },
-    md: {
-      button: 'p-3 text-base',
-      icon: 'w-5 h-5',
-      label: 'text-sm',
-    },
-    lg: {
-      button: 'p-4 text-lg',
-      icon: 'w-6 h-6',
-      label: 'text-base',
-    },
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    
+    // Toggle dark class on html
+    if (newTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    
+    // Store preference
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', newTheme);
+    }
   };
 
-  // ========================================
-  // VARIANT CONFIGURATIONS - تكوينات المتغير
-  // ========================================
-
-  const variantConfig = {
-    default: 'bg-panel border border-brand-border hover:bg-brand-surface',
-    minimal: 'bg-transparent hover:bg-brand-surface',
-    'icon-only': 'bg-transparent hover:bg-brand-surface',
-  };
-
-  // ========================================
-  // HANDLERS - المعالجات
-  // ========================================
-
-  const handleThemeChange = (newTheme: 'light' | 'dark' | 'system') => {
-    setTheme(newTheme as any);
-  };
-
-  // ========================================
-  // RENDER FUNCTIONS - دوال العرض
-  // ========================================
-
-  const renderIconOnly = () => {
-    const currentOption = themeOptions.find(
-      option => option.value === (theme as any)
-    );
-    const IconComponent = currentOption?.icon || Sun;
-
+  // Prevent hydration mismatch
+  if (!mounted) {
     return (
-      <button
-        onClick={() => {
-          const currentIndex = themeOptions.findIndex(
-            option => option.value === (theme as any)
-          );
-          const nextIndex = (currentIndex + 1) % themeOptions.length;
-          handleThemeChange(themeOptions[nextIndex]?.value || 'light');
-        }}
-        className={`
-          px-3 py-2 rounded-md text-sm font-medium transition-colors
-          ${variantConfig[variant]}
-          ${sizeConfig[size].button}
-          ${className}
-        `}
-        title={currentOption?.description}
-        aria-label={`تغيير الثيم إلى ${currentOption?.label}`}
-      >
-        <Sun className={sizeConfig[size].icon} />
-      </button>
+      <div className={`h-9 w-9 rounded-full border border-[var(--brand-border)] ${className}`} />
     );
+  }
+
+  const getSizeClasses = () => {
+    switch (size) {
+      case 'sm':
+        return 'h-8 w-8';
+      case 'lg':
+        return 'h-12 w-12';
+      default:
+        return 'h-9 w-9';
+    }
   };
 
-  const renderDropdown = () => {
+  const sizeClasses = getSizeClasses();
+
+  if (variant === 'dropdown') {
     return (
-      <div className='relative group'>
+      <div className={`hs-dropdown relative ${className}`}>
         <button
-          className={`
-            px-3 py-2 rounded-md text-sm font-medium transition-colors
-            ${variantConfig[variant]}
-            ${sizeConfig[size].button}
-            ${className}
-            flex items-center gap-2
-          `}
-          aria-label='اختيار الثيم'
+          className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2`}
+          onClick={toggleTheme}
+          aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
         >
-          {themeOptions.find(option => option.value === (theme as any))?.icon &&
-            React.createElement(
-              themeOptions.find(option => option.value === (theme as any))
-                ?.icon || Sun,
-              { className: sizeConfig[size].icon }
-            )}
-          {showLabel && variant !== 'icon-only' && (
-            <span className={sizeConfig[size].label}>
-              {
-                themeOptions.find(option => option.value === (theme as any))
-                  ?.label
-              }
-            </span>
+          {theme === 'light' ? (
+            <Sun className='h-5 w-5 text-[var(--brand-warning)]' />
+          ) : (
+            <Moon className='h-5 w-5 text-[var(--brand-accent)]' />
           )}
         </button>
-
-        {/* Dropdown Menu - قائمة منسدلة */}
-        <div className='absolute top-full left-0 mt-1 bg-panel border border-brand-border rounded-md shadow-lg z-dropdown opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[120px]'>
-          {themeOptions.map(option => {
-            const Sun = option.icon;
-            const isActive = (theme as any) === option.value;
-
-            return (
-              <button
-                key={option.value}
-                onClick={() => handleThemeChange(option.value)}
-                className={`
-                  w-full px-3 py-2 text-left text-sm hover:bg-brand-surface transition-colors duration-150 flex items-center gap-2
-                  ${isActive ? 'bg-brand-primary/10 text-brand-primary' : 'text-foreground'}
-                `}
-              >
-                <Sun className='w-4 h-4' />
-                <span>{option.label}</span>
-              </button>
-            );
-          })}
-        </div>
       </div>
     );
-  };
-
-  const renderButtonGroup = () => {
-    return (
-      <div className='flex items-center gap-1 bg-brand-surface rounded-md p-1'>
-        {themeOptions.map(option => {
-          const Sun = option.icon;
-          const isActive = (theme as any) === option.value;
-
-          return (
-            <button
-              key={option.value}
-              onClick={() => handleThemeChange(option.value)}
-              className={`
-                px-3 py-2 rounded-md text-sm font-medium transition-colors
-                ${sizeConfig[size].button}
-                ${
-                  isActive
-                    ? 'bg-brand-primary text-white shadow-md'
-                    : 'bg-transparent text-foreground hover:bg-brand-surface'
-                }
-                rounded-md transition-all duration-150
-              `}
-              title={option.description}
-              aria-label={option.description}
-            >
-              <Sun className={sizeConfig[size].icon} />
-              {showLabel && variant !== 'icon-only' && (
-                <span className={sizeConfig[size].label}>{option.label}</span>
-              )}
-            </button>
-          );
-        })}
-      </div>
-    );
-  };
-
-  // ========================================
-  // RENDER - العرض
-  // ========================================
-
-  if (variant === 'icon-only') {
-    return renderIconOnly();
   }
-
-  if (variant === 'minimal') {
-    return renderDropdown();
-  }
-
-  return renderButtonGroup();
-}
-
-// ========================================
-// THEME TOGGLE COMPONENT - مكون تبديل الثيم
-// ========================================
-
-export function ThemeToggle({
-  className = '',
-  size = 'md',
-}: {
-  className?: string;
-  size?: 'sm' | 'md' | 'lg';
-}) {
-  const { toggleTheme, isDark } = useTheme();
-
-  const sizeConfig = {
-    sm: 'w-8 h-4 text-xs',
-    md: 'w-12 h-6 text-sm',
-    lg: 'w-16 h-8 text-base',
-  };
 
   return (
     <button
+      className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${className}`}
       onClick={toggleTheme}
-      className={`
-        px-3 py-2 rounded-md text-sm font-medium transition-colors
-        ${sizeConfig[size]}
-        ${isDark ? 'bg-brand-primary' : 'bg-brand-border'}
-        relative rounded-full transition-all duration-300
-        ${className}
-      `}
-      aria-label={isDark ? 'تبديل إلى الثيم الفاتح' : 'تبديل إلى الثيم المظلم'}
+      aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
     >
-      <div
-        className={`
-          absolute top-0.5 left-0.5 w-1/2 h-[calc(100%-4px)] bg-white rounded-full
-          transition-transform duration-300 flex items-center justify-center
-          ${isDark ? 'translate-x-full' : 'translate-x-0'}
-        `}
-      >
-        {isDark ? (
-          <Moon className='w-3 h-3 text-brand-primary' />
-        ) : (
-          <Sun className='w-3 h-3 text-brand-primary' />
-        )}
-      </div>
+      {theme === 'light' ? (
+        <Sun className='h-5 w-5 text-[var(--brand-warning)]' />
+      ) : (
+        <Moon className='h-5 w-5 text-[var(--brand-accent)]' />
+      )}
+      {showLabel && (
+        <span className='ml-2 text-sm font-medium'>
+          {theme === 'light' ? 'فاتح' : 'داكن'}
+        </span>
+      )}
     </button>
   );
 }
-
-// ========================================
-// EXPORTS - التصدير
-// ========================================
 
 export default ThemeSwitcher;

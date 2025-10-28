@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { memo, useEffect, useState } from 'react';
 
 interface ContactInfo {
   id: number;
@@ -12,89 +12,66 @@ interface ContactInfo {
   color: string;
 }
 
-export default function DynamicContactInfo() {
+const defaultContactInfo: ContactInfo[] = [
+  {
+    id: 1,
+    type: 'phone',
+    title: 'اتصال مباشر',
+    value: '+966 50 123 4567',
+    icon: '📞',
+    link: 'tel:+966501234567',
+    color: 'bg-[var(--brand-primary)]',
+  },
+  {
+    id: 2,
+    type: 'email',
+    title: 'البريد الإلكتروني',
+    value: 'info@moeen.com',
+    icon: '📧',
+    link: 'mailto:info@moeen.com',
+    color: 'bg-[var(--brand-info)]',
+  },
+  {
+    id: 3,
+    type: 'location',
+    title: 'الموقع',
+    value: 'الرياض، المملكة العربية السعودية',
+    icon: '📍',
+    link: '/contact',
+    color: 'bg-[var(--brand-accent)]',
+  },
+];
+
+const DynamicContactInfo = memo(function DynamicContactInfo() {
   const [contactInfo, setContactInfo] = useState<ContactInfo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
-    fetchContactInfo();
-  }, []);
+    const fetchContactInfo = async () => {
+      // Only fetch once
+      if (hasFetched) return;
+      setHasFetched(true);
+      
+      try {
+        const response = await fetch('/api/dynamic-data?type=contact');
+        const data = await response.json();
 
-  const fetchContactInfo = async () => {
-    try {
-      const response = await fetch('/api/dynamic-data?type=contact');
-      const data = await response.json();
-
-      if (data.contact_info && Array.isArray(data.contact_info)) {
-        setContactInfo(data.contact_info);
-      } else {
-        // استخدام البيانات الافتراضية
-        setContactInfo([
-          {
-            id: 1,
-            type: 'phone',
-            title: 'اتصال مباشر',
-            value: '+966 50 123 4567',
-            icon: '📞',
-            link: 'tel:+966501234567',
-            color: 'bg-[var(--default-default)]',
-          },
-          {
-            id: 2,
-            type: 'email',
-            title: 'البريد الإلكتروني',
-            value: 'info@moeen.com',
-            icon: '📧',
-            link: 'mailto:info@moeen.com',
-            color: 'bg-[var(--default-info)]',
-          },
-          {
-            id: 3,
-            type: 'location',
-            title: 'الموقع',
-            value: 'الرياض، المملكة العربية السعودية',
-            icon: '📍',
-            link: '/contact',
-            color: 'bg-[var(--default-accent)]',
-          },
-        ]);
+        if (data.contact_info && Array.isArray(data.contact_info)) {
+          setContactInfo(data.contact_info);
+        } else {
+          setContactInfo(defaultContactInfo);
+        }
+      } catch (error) {
+        console.error('Error fetching contact info:', error);
+        setContactInfo(defaultContactInfo);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching contact info:', error);
-      // استخدام البيانات الافتراضية في حالة الخطأ
-      setContactInfo([
-        {
-          id: 1,
-          type: 'phone',
-          title: 'اتصال مباشر',
-          value: '+966 50 123 4567',
-          icon: '📞',
-          link: 'tel:+966501234567',
-          color: 'bg-[var(--default-default)]',
-        },
-        {
-          id: 2,
-          type: 'email',
-          title: 'البريد الإلكتروني',
-          value: 'info@moeen.com',
-          icon: '📧',
-          link: 'mailto:info@moeen.com',
-          color: 'bg-[var(--default-info)]',
-        },
-        {
-          id: 3,
-          type: 'location',
-          title: 'الموقع',
-          value: 'الرياض، المملكة العربية السعودية',
-          icon: '📍',
-          link: '/contact',
-          color: 'bg-[var(--default-accent)]',
-        },
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchContactInfo();
+  }, [hasFetched]);
 
   if (loading) {
     return (
@@ -135,4 +112,6 @@ export default function DynamicContactInfo() {
       ))}
     </div>
   );
-}
+});
+
+export default DynamicContactInfo;

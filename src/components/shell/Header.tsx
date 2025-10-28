@@ -1,11 +1,9 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { Sun, Moon, Languages } from 'lucide-react';
-import { useT } from '@/components/providers/I18nProvider';
-import { useTheme, useLanguage } from '@/design-system/hooks';
-import ThemeSwitcher from '@/components/ThemeSwitcher';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import Link from 'next/link';
+import { useT } from '@/components/providers/I18nProvider';
+import ThemeSwitcher from '@/components/ThemeSwitcher';
+import { useLanguage, useTheme } from '@/design-system/hooks';
+import { useEffect, useState } from 'react';
 
 export default function Header() {
   const { theme, isLoading: themeLoading } = useTheme();
@@ -32,7 +30,7 @@ export default function Header() {
         <div className='h-14 grid grid-cols-[auto_1fr_auto] items-center gap-3'>
           <button
             type='button'
-            className='lg:hidden inline-flex items-center justify-center h-9 w-9 rounded-md border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-[var(--default-surface)] dark:hover:bg-gray-800 focus:outline-none focus:ring-2'
+            className='lg:hidden inline-flex items-center justify-center h-9 w-9 rounded-md border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 focus:outline-none focus:ring-2'
             aria-label='فتح القائمة'
             data-hs-overlay='#app-sidebar'
           >
@@ -56,7 +54,7 @@ export default function Header() {
                   className='py-2 pe-10 ps-3 block w-full border border-gray-200 dark:border-gray-700 rounded-md text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-900 focus:ring-1'
                   placeholder='ابحث في النظام...'
                   aria-label='بحث'
-                  style={{ outlineColor: 'var(--default-default)' }}
+                  style={{ outlineColor: 'var(--brand-primary)' }}
                 />
                 <div className='absolute inset-y-0 end-0 flex items-center pe-2 text-gray-400'>
                   ⌘K
@@ -74,8 +72,8 @@ export default function Header() {
 
             <div className='hs-dropdown [--trigger:hover] relative inline-flex'>
               <button
-                className='relative h-9 w-9 rounded-full border border-[var(--default-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2'
-                style={{ outlineColor: 'var(--default-default)' }}
+                className='relative h-9 w-9 rounded-full border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2'
+                style={{ outlineColor: 'var(--brand-primary)' }}
                 aria-haspopup='menu'
                 aria-expanded='false'
               >
@@ -87,7 +85,7 @@ export default function Header() {
                 )}
               </button>
               <div
-                className='hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-64 bg-white dark:bg-gray-900 shadow-md rounded-lg p-2 border border-[var(--default-border)] dark:border-gray-700'
+                className='hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-64 bg-white dark:bg-gray-900 shadow-md rounded-lg p-2 border border-[var(--brand-border)] dark:border-gray-700'
                 role='menu'
               >
                 <div className='mb-2 font-medium px-2 text-gray-800 dark:text-gray-100'>
@@ -118,8 +116,8 @@ export default function Header() {
 
             <div className='hs-dropdown relative inline-flex'>
               <button
-                className='h-9 w-9 rounded-full bg-[var(--default-surface)] dark:bg-gray-700 focus:outline-none focus:ring-2'
-                style={{ outlineColor: 'var(--default-default)' }}
+                className='h-9 w-9 rounded-full bg-[var(--brand-surface)] dark:bg-gray-700 focus:outline-none focus:ring-2'
+                style={{ outlineColor: 'var(--brand-primary)' }}
                 aria-haspopup='menu'
                 aria-expanded='false'
               />

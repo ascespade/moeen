@@ -25,6 +25,7 @@
   --brand-success: #009688; /* Green - Success states */
   --brand-warning: #f59e0b; /* Yellow - Warning states */
   --brand-error: #ef4444; /* Red - Error states */
+  --brand-info: #0ea5e9; /* Sky blue - Info states */
 
   /* Background Colors */
   --background: #fff; /* Main background */
@@ -82,9 +83,15 @@
   --transition-normal: 300ms ease-in-out;
   --transition-slow: 500ms ease-in-out;
 
-  /* Typography */
-  --font-family-sans: 'Cairo', 'Inter', system-ui, sans-serif;
-  --font-family-mono: 'Fira Code', monaco, consolas, monospace;
+  /* Typography - Optimized for Arabic & English */
+  --font-family-sans: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', system-ui, sans-serif;
+  --font-family-mono: 'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+  
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   /* Z-Index Scale */
   --z-dropdown: 1000;
@@ -111,6 +118,7 @@
     --brand-success: #00b39b; /* Lighter green for dark mode */
     --brand-warning: #fbbf24; /* Lighter yellow for dark mode */
     --brand-error: #f87171; /* Lighter red for dark mode */
+    --brand-info: #38bdf8; /* Lighter sky blue for dark mode */
     --brand-border: #1f2937; /* Dark border */
     --brand-surface: #0d1117; /* Dark surface */
     --panel: #111827; /* Dark panel */
@@ -154,9 +162,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-family-sans);
-  font-feature-settings:
-    'kern' 1,
-    'liga' 1,
+  font-weight: var(--font-weight-normal);
+  font-feature-settings: 'kern' 1, 'liga' 1,
     'calt' 1;
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
@@ -837,3 +844,183 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ========================================
+   ACCESSIBILITY STYLES
+   ======================================== */
+
+/* Screen Reader Only Content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus Indicators */
+.focus-indicators *:focus {
+  outline: 3px solid var(--brand-accent) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3) !important;
+}
+
+.focused {
+  outline: 3px solid var(--brand-accent) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3) !important;
+}
+
+/* Skip Links */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Keyboard Navigation */
+.keyboard-navigation button:focus,
+.keyboard-navigation [role='button']:focus,
+.keyboard-navigation input:focus,
+.keyboard-navigation a:focus {
+  outline: 3px solid var(--brand-accent) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3) !important;
+}
+
+/* Error Messages */
+.error-message {
+  color: var(--brand-error);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Success Messages */
+.success-message {
+  color: var(--brand-success);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Button States for Accessibility */
+button:disabled,
+[role='button']:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:disabled:focus {
+  outline: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  * {
+    background: transparent !important;
+    color: black !important;
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+/* Color utilities */
+.text-primary { color: var(--brand-primary); }
+.bg-primary { background-color: var(--brand-primary); }
+.border-primary { border-color: var(--brand-primary); }
+
+.text-accent { color: var(--brand-accent); }
+.bg-accent { background-color: var(--brand-accent); }
+.border-accent { border-color: var(--brand-accent); }
+
+.text-success { color: var(--brand-success); }
+.bg-success { background-color: var(--brand-success); }
+.border-success { border-color: var(--brand-success); }
+
+.text-error { color: var(--brand-error); }
+.bg-error { background-color: var(--brand-error); }
+.border-error { border-color: var(--brand-error); }
+
+.text-warning { color: var(--brand-warning); }
+.bg-warning { background-color: var(--brand-warning); }
+.border-warning { border-color: var(--brand-warning); }
+
+.text-info { color: var(--brand-info); }
+.bg-info { background-color: var(--brand-info); }
+.border-info { border-color: var(--brand-info); }
+
+/* Text colors */
+.text-foreground { color: var(--foreground); }
+.text-muted { color: var(--foreground); opacity: 0.7; }
+
+/* Background utilities */
+.bg-surface { background-color: var(--brand-surface); }
+.bg-panel { background-color: var(--panel); }
+.bg-background { background-color: var(--background); }
+
+/* Border utilities */
+.border-default { border-color: var(--brand-border); }
+.border-brand { border-color: var(--brand-border); }
+
+/* Interactive states */
+.hover-primary:hover { background-color: var(--brand-primary-hover); }
+.hover-accent:hover { background-color: var(--brand-accent); }
+.hover-success:hover { background-color: var(--brand-success); }
+.hover-error:hover { background-color: var(--brand-error); }
+
+/* Focus states */
+.focus-primary:focus { 
+  outline: 2px solid var(--brand-primary); 
+  outline-offset: 2px; 
+}
+.focus-accent:focus { 
+  outline: 2px solid var(--brand-accent); 
+  outline-offset: 2px; 
+}
+
+/* Font utilities */
+.font-sans { font-family: var(--font-family-sans); }
+.font-mono { font-family: var(--font-family-mono); }
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }

@@ -1,5 +1,5 @@
 'use client';
-import { RefreshCw, Home, Bug, AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Bug, Home, RefreshCw } from 'lucide-react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -51,7 +51,7 @@ export default function GlobalError({
           <div className='flex flex-col sm:flex-row gap-4 justify-center mb-8'>
             <button
               onClick={() => reset()}
-              className='inline-flex items-center justify-center gap-2 bg-[var(--default-default)] text-white px-6 py-3 rounded-lg hover:bg-[var(--default-default-hover)] transition-colors'
+              className='inline-flex items-center justify-center gap-2 bg-[var(--brand-primary)] text-white px-6 py-3 rounded-lg hover:bg-[var(--brand-primary-hover)] transition-colors'
             >
               <RefreshCw className='w-5 h-5' />
               إعادة المحاولة
@@ -75,7 +75,7 @@ export default function GlobalError({
                 href='/contact'
                 className='flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors'
               >
-                <Bug className='w-5 h-5 text-[var(--default-default)]' />
+                <Bug className='w-5 h-5 text-[var(--brand-primary)]' />
                 <span className='text-gray-700 dark:text-gray-300'>
                   الإبلاغ عن المشكلة
                 </span>
@@ -84,7 +84,7 @@ export default function GlobalError({
                 href='/faq'
                 className='flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors'
               >
-                <AlertTriangle className='w-5 h-5 text-[var(--default-default)]' />
+                <AlertTriangle className='w-5 h-5 text-[var(--brand-primary)]' />
                 <span className='text-gray-700 dark:text-gray-300'>
                   الحصول على المساعدة
                 </span>

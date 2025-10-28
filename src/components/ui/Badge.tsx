@@ -1,5 +1,5 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
+import React from 'react';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?:
@@ -23,8 +23,8 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
     const baseClasses = 'inline-flex items-center rounded-full font-medium';
 
     const variants = {
-      default: 'bg-[var(--default-default)] text-white',
-      primary: 'bg-[var(--default-default)] text-white',
+      default: 'bg-[var(--brand-primary)] text-white',
+      primary: 'bg-[var(--brand-primary)] text-white',
       secondary:
         'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200',
       success:

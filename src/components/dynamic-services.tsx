@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 interface DynamicService {
   id: number;
@@ -10,131 +10,87 @@ interface DynamicService {
   bgColor: string;
 }
 
-export default function DynamicServices() {
+const defaultServices: DynamicService[] = [
+  {
+    id: 1,
+    title: 'إدارة المواعيد',
+    description: 'نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية',
+    icon: '📅',
+    color: 'text-[var(--brand-accent)]',
+    bgColor: 'bg-[var(--brand-accent)]/10',
+  },
+  {
+    id: 2,
+    title: 'إدارة المرضى',
+    description: 'ملفات مرضى شاملة مع سجل طبي مفصل',
+    icon: '👤',
+    color: 'text-[var(--brand-success)]',
+    bgColor: 'bg-[var(--brand-success)]/10',
+  },
+  {
+    id: 3,
+    title: 'المطالبات التأمينية',
+    description: 'إدارة وتتبع المطالبات التأمينية بسهولة',
+    icon: '📋',
+    color: 'text-purple-600',
+    bgColor: 'bg-purple-50',
+  },
+  {
+    id: 4,
+    title: 'الشات بوت الذكي',
+    description: 'مساعد ذكي للرد على استفسارات المرضى',
+    icon: '🤖',
+    color: 'text-[var(--brand-primary)]',
+    bgColor: 'bg-[var(--brand-primary)]/10',
+  },
+  {
+    id: 5,
+    title: 'إدارة الموظفين',
+    description: 'تتبع ساعات العمل والأداء للموظفين',
+    icon: '👨‍⚕️',
+    color: 'text-[var(--brand-error)]',
+    bgColor: 'bg-[var(--brand-error)]/10',
+  },
+  {
+    id: 6,
+    title: 'التقارير والتحليلات',
+    description: 'تقارير شاملة وإحصائيات مفصلة',
+    icon: '📊',
+    color: 'text-[var(--brand-accent)]',
+    bgColor: 'bg-[var(--brand-accent)]/10',
+  },
+];
+
+const DynamicServices = memo(function DynamicServices() {
   const [services, setServices] = useState<DynamicService[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
-    fetchServices();
-  }, []);
+    const fetchServices = async () => {
+      // Only fetch once
+      if (hasFetched) return;
+      setHasFetched(true);
+      
+      try {
+        const response = await fetch('/api/dynamic-data?type=services');
+        const data = await response.json();
 
-  const fetchServices = async () => {
-    try {
-      const response = await fetch('/api/dynamic-data?type=services');
-      const data = await response.json();
-
-      if (data.services && Array.isArray(data.services)) {
-        setServices(data.services);
-      } else {
-        // استخدام البيانات الافتراضية
-        setServices([
-          {
-            id: 1,
-            title: 'إدارة المواعيد',
-            description: 'نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية',
-            icon: '📅',
-            color: 'text-[var(--default-accent)]',
-            bgColor: 'bg-[var(--default-accent)]/10',
-          },
-          {
-            id: 2,
-            title: 'إدارة المرضى',
-            description: 'ملفات مرضى شاملة مع سجل طبي مفصل',
-            icon: '👤',
-            color: 'text-[var(--default-success)]',
-            bgColor: 'bg-[var(--default-success)]/10',
-          },
-          {
-            id: 3,
-            title: 'المطالبات التأمينية',
-            description: 'إدارة وتتبع المطالبات التأمينية بسهولة',
-            icon: '📋',
-            color: 'text-purple-600',
-            bgColor: 'bg-purple-50',
-          },
-          {
-            id: 4,
-            title: 'الشات بوت الذكي',
-            description: 'مساعد ذكي للرد على استفسارات المرضى',
-            icon: '🤖',
-            color: 'text-[var(--default-default)]',
-            bgColor: 'bg-[var(--default-default)]/10',
-          },
-          {
-            id: 5,
-            title: 'إدارة الموظفين',
-            description: 'تتبع ساعات العمل والأداء للموظفين',
-            icon: '👨‍⚕️',
-            color: 'text-[var(--default-error)]',
-            bgColor: 'bg-[var(--default-error)]/10',
-          },
-          {
-            id: 6,
-            title: 'التقارير والتحليلات',
-            description: 'تقارير شاملة وإحصائيات مفصلة',
-            icon: '📊',
-            color: 'text-indigo-600',
-            bgColor: 'bg-indigo-50',
-          },
-        ]);
+        if (data.services && Array.isArray(data.services)) {
+          setServices(data.services);
+        } else {
+          setServices(defaultServices);
+        }
+      } catch (error) {
+        console.error('Error fetching services:', error);
+        setServices(defaultServices);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching services:', error);
-      // استخدام البيانات الافتراضية في حالة الخطأ
-      setServices([
-        {
-          id: 1,
-          title: 'إدارة المواعيد',
-          description: 'نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية',
-          icon: '📅',
-          color: 'text-[var(--default-accent)]',
-          bgColor: 'bg-[var(--default-accent)]/10',
-        },
-        {
-          id: 2,
-          title: 'إدارة المرضى',
-          description: 'ملفات مرضى شاملة مع سجل طبي مفصل',
-          icon: '👤',
-          color: 'text-[var(--default-success)]',
-          bgColor: 'bg-[var(--default-success)]/10',
-        },
-        {
-          id: 3,
-          title: 'المطالبات التأمينية',
-          description: 'إدارة وتتبع المطالبات التأمينية بسهولة',
-          icon: '📋',
-          color: 'text-purple-600',
-          bgColor: 'bg-purple-50',
-        },
-        {
-          id: 4,
-          title: 'الشات بوت الذكي',
-          description: 'مساعد ذكي للرد على استفسارات المرضى',
-          icon: '🤖',
-          color: 'text-[var(--default-default)]',
-          bgColor: 'bg-[var(--default-default)]/10',
-        },
-        {
-          id: 5,
-          title: 'إدارة الموظفين',
-          description: 'تتبع ساعات العمل والأداء للموظفين',
-          icon: '👨‍⚕️',
-          color: 'text-[var(--default-error)]',
-          bgColor: 'bg-[var(--default-error)]/10',
-        },
-        {
-          id: 6,
-          title: 'التقارير والتحليلات',
-          description: 'تقارير شاملة وإحصائيات مفصلة',
-          icon: '📊',
-          color: 'text-indigo-600',
-          bgColor: 'bg-indigo-50',
-        },
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchServices();
+  }, [hasFetched]);
 
   if (loading) {
     return (
@@ -173,4 +129,6 @@ export default function DynamicServices() {
       ))}
     </div>
   );
-}
+});
+
+export default DynamicServices;

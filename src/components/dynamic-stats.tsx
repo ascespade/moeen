@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 interface DynamicStats {
   id: number;
@@ -9,121 +9,97 @@ interface DynamicStats {
   color: string;
 }
 
-export default function DynamicStats() {
+const defaultStats: DynamicStats[] = [
+  {
+    id: 1,
+    value: '1,247',
+    label: 'مريض نشط',
+    icon: '👥',
+    color: 'text-[var(--brand-primary)]',
+  },
+  {
+    id: 2,
+    value: '3,421',
+    label: 'موعد مكتمل',
+    icon: '📅',
+    color: 'text-[var(--brand-primary)]',
+  },
+  {
+    id: 3,
+    value: '98%',
+    label: 'معدل الرضا',
+    icon: '⭐',
+    color: 'text-[var(--brand-primary)]',
+  },
+  {
+    id: 4,
+    value: '24/7',
+    label: 'دعم فني',
+    icon: '🛠️',
+    color: 'text-[var(--brand-primary)]',
+  },
+];
+
+const DynamicStats = memo(function DynamicStats() {
   const [stats, setStats] = useState<DynamicStats[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
-    fetchStats();
-  }, []);
+    const fetchStats = async () => {
+      // Only fetch once
+      if (hasFetched) return;
+      setHasFetched(true);
+      
+      try {
+        const response = await fetch('/api/dynamic-data?type=stats');
+        const data = await response.json();
 
-  const fetchStats = async () => {
-    try {
-      const response = await fetch('/api/dynamic-data?type=stats');
-      const data = await response.json();
-
-      if (data.stats) {
-        const dynamicStats = [
-          {
-            id: 1,
-            value: data.stats.total_patients?.toString() || '0',
-            label: 'مريض نشط',
-            icon: '👥',
-            color: 'text-[var(--default-default)]',
-          },
-          {
-            id: 2,
-            value: data.stats.completed_appointments?.toString() || '0',
-            label: 'موعد مكتمل',
-            icon: '📅',
-            color: 'text-[var(--default-default)]',
-          },
-          {
-            id: 3,
-            value: `${data.stats.satisfaction_rate || 98}%`,
-            label: 'معدل الرضا',
-            icon: '⭐',
-            color: 'text-[var(--default-default)]',
-          },
-          {
-            id: 4,
-            value: data.stats.support_hours || '24/7',
-            label: 'دعم فني',
-            icon: '🛠️',
-            color: 'text-[var(--default-default)]',
-          },
-        ];
-        setStats(dynamicStats);
-      } else {
-        // استخدام البيانات الافتراضية
-        setStats([
-          {
-            id: 1,
-            value: '1,247',
-            label: 'مريض نشط',
-            icon: '👥',
-            color: 'text-[var(--default-default)]',
-          },
-          {
-            id: 2,
-            value: '3,421',
-            label: 'موعد مكتمل',
-            icon: '📅',
-            color: 'text-[var(--default-default)]',
-          },
-          {
-            id: 3,
-            value: '98%',
-            label: 'معدل الرضا',
-            icon: '⭐',
-            color: 'text-[var(--default-default)]',
-          },
-          {
-            id: 4,
-            value: '24/7',
-            label: 'دعم فني',
-            icon: '🛠️',
-            color: 'text-[var(--default-default)]',
-          },
-        ]);
+        if (data.stats) {
+          const dynamicStats = [
+            {
+              id: 1,
+              value: data.stats.total_patients?.toString() || '1,247',
+              label: 'مريض نشط',
+              icon: '👥',
+              color: 'text-[var(--brand-primary)]',
+            },
+            {
+              id: 2,
+              value: data.stats.completed_appointments?.toString() || '3,421',
+              label: 'موعد مكتمل',
+              icon: '📅',
+              color: 'text-[var(--brand-primary)]',
+            },
+            {
+              id: 3,
+              value: `${data.stats.satisfaction_rate || 98}%`,
+              label: 'معدل الرضا',
+              icon: '⭐',
+              color: 'text-[var(--brand-primary)]',
+            },
+            {
+              id: 4,
+              value: data.stats.support_hours || '24/7',
+              label: 'دعم فني',
+              icon: '🛠️',
+              color: 'text-[var(--brand-primary)]',
+            },
+          ];
+          setStats(dynamicStats);
+        } else {
+          setStats(defaultStats);
+        }
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+        setStats(defaultStats);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error fetching stats:', error);
-      // استخدام البيانات الافتراضية في حالة الخطأ
-      setStats([
-        {
-          id: 1,
-          value: '1,247',
-          label: 'مريض نشط',
-          icon: '👥',
-          color: 'text-[var(--default-default)]',
-        },
-        {
-          id: 2,
-          value: '3,421',
-          label: 'موعد مكتمل',
-          icon: '📅',
-          color: 'text-[var(--default-default)]',
-        },
-        {
-          id: 3,
-          value: '98%',
-          label: 'معدل الرضا',
-          icon: '⭐',
-          color: 'text-[var(--default-default)]',
-        },
-        {
-          id: 4,
-          value: '24/7',
-          label: 'دعم فني',
-          icon: '🛠️',
-          color: 'text-[var(--default-default)]',
-        },
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchStats();
+  }, [hasFetched]);
 
   if (loading) {
     return (
@@ -152,4 +128,6 @@ export default function DynamicStats() {
       ))}
     </div>
   );
-}
+});
+
+export default DynamicStats;

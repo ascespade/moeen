@@ -1,15 +1,15 @@
 'use client';
-import { usePathname } from 'next/navigation';
-import {
-  LayoutDashboard,
-  MessagesSquare,
-  Workflow,
-  ShieldCheck,
-  Settings,
-  Users,
-} from 'lucide-react';
 import { useT } from '@/components/providers/I18nProvider';
+import {
+    LayoutDashboard,
+    MessagesSquare,
+    Settings,
+    ShieldCheck,
+    Users,
+    Workflow,
+} from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const adminItems = [
   {
@@ -95,7 +95,7 @@ export default function Sidebar() {
                 className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
                   active
                     ? 'bg-default text-white border-transparent'
-                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--default-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
+                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
                 }`}
                 data-hs-overlay='#app-sidebar'
               >
@@ -133,7 +133,7 @@ export default function Sidebar() {
                 className={`px-3 h-11 rounded-lg inline-flex items-center gap-3 border transition-colors ${
                   active
                     ? 'bg-default text-white border-transparent'
-                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--default-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
+                    : 'border-gray-200 dark:border-gray-800 hover:bg-[var(--brand-surface)] dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200'
                 }`}
               >
                 <span>{item.icon}</span>

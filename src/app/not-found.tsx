@@ -1,8 +1,8 @@
 'use client';
-import { Home, ArrowLeft, Search, HelpCircle } from 'lucide-react';
+import { ArrowLeft, HelpCircle, Home, Search } from 'lucide-react';
 
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function NotFound() {
   return (
@@ -22,7 +22,7 @@ export default function NotFound() {
 
         {/* 404 Content */}
         <div className='bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700'>
-          <div className='text-8xl font-bold text-[var(--default-default)] mb-4'>
+          <div className='text-8xl font-bold text-[var(--brand-primary)] mb-4'>
             404
           </div>
           <h2 className='text-3xl font-bold text-gray-900 dark:text-white mb-4'>
@@ -36,7 +36,7 @@ export default function NotFound() {
           <div className='flex flex-col sm:flex-row gap-4 justify-center mb-8'>
             <Link
               href='/'
-              className='inline-flex items-center justify-center gap-2 bg-[var(--default-default)] text-white px-6 py-3 rounded-lg hover:bg-[var(--default-default-hover)] transition-colors'
+              className='inline-flex items-center justify-center gap-2 bg-[var(--brand-primary)] text-white px-6 py-3 rounded-lg hover:bg-[var(--brand-primary-hover)] transition-colors'
             >
               <Home className='w-5 h-5' />
               العودة للرئيسية
@@ -60,7 +60,7 @@ export default function NotFound() {
                 href='/contact'
                 className='flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors'
               >
-                <HelpCircle className='w-5 h-5 text-[var(--default-default)]' />
+                <HelpCircle className='w-5 h-5 text-[var(--brand-primary)]' />
                 <span className='text-gray-700 dark:text-gray-300'>
                   تواصل معنا
                 </span>
@@ -69,7 +69,7 @@ export default function NotFound() {
                 href='/faq'
                 className='flex items-center gap-3 p-3 rounded-lg hover:bg-surface dark:hover:bg-gray-600 transition-colors'
               >
-                <Search className='w-5 h-5 text-[var(--default-default)]' />
+                <Search className='w-5 h-5 text-[var(--brand-primary)]' />
                 <span className='text-gray-700 dark:text-gray-300'>
                   الأسئلة الشائعة
                 </span>
@@ -85,28 +85,28 @@ export default function NotFound() {
             <div className='flex flex-wrap gap-2 justify-center'>
               <Link
                 href='/about'
-                className='text-sm text-[var(--default-default)] hover:underline'
+                className='text-sm text-[var(--brand-primary)] hover:underline'
               >
                 من نحن
               </Link>
               <span className='text-gray-300'>•</span>
               <Link
                 href='/features'
-                className='text-sm text-[var(--default-default)] hover:underline'
+                className='text-sm text-[var(--brand-primary)] hover:underline'
               >
                 المميزات
               </Link>
               <span className='text-gray-300'>•</span>
               <Link
                 href='/pricing'
-                className='text-sm text-[var(--default-default)] hover:underline'
+                className='text-sm text-[var(--brand-primary)] hover:underline'
               >
                 الأسعار
               </Link>
               <span className='text-gray-300'>•</span>
               <Link
                 href='/contact'
-                className='text-sm text-[var(--default-default)] hover:underline'
+                className='text-sm text-[var(--brand-primary)] hover:underline'
               >
                 تواصل
               </Link>

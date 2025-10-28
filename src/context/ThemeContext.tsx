@@ -8,15 +8,15 @@
 
 'use client';
 
-import React, {
+import {
   createContext,
+  ReactNode,
   useContext,
   useEffect,
   useState,
-  ReactNode,
 } from 'react';
 
-import { Theme } from '@/lib/centralized-theme';
+export type Theme = 'light' | 'dark' | 'system';
 
 // ========================================
 // CONTEXT TYPES - أنواع السياق

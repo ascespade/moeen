@@ -1,5 +1,5 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
+import React from 'react';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'primary' | 'elevated' | 'outlined' | 'glass';
@@ -20,7 +20,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       elevated:
         'bg-white dark:bg-gray-800 shadow-lg border-gray-200 dark:border-gray-700',
       outlined:
-        'bg-white dark:bg-gray-800 border-2 border-[var(--default-default)]',
+        'bg-white dark:bg-gray-800 border-2 border-[var(--brand-primary)]',
       glass:
         'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200/50 dark:border-gray-700/50',
     };
@@ -144,10 +144,7 @@ const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
 CardFooter.displayName = 'CardFooter';
 
 export {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
+    Card, CardContent, CardDescription, CardFooter, CardHeader,
+    CardTitle
 };
+

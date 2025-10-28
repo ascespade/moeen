@@ -1,6 +1,7 @@
 'use client';
-import { useState } from 'react';
+
 import { Languages } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface LanguageSwitcherProps {
   variant?: 'button' | 'dropdown';
@@ -16,16 +17,35 @@ export default function LanguageSwitcher({
   className = '',
 }: LanguageSwitcherProps) {
   const [language, setLanguage] = useState<'ar' | 'en'>('ar');
+  const [mounted, setMounted] = useState(false);
+
+  // Only run on client-side
+  useEffect(() => {
+    setMounted(true);
+    const currentLang = document.documentElement.getAttribute('lang') || 'ar';
+    setLanguage(currentLang as 'ar' | 'en');
+  }, []);
 
   const toggleLanguage = () => {
     const newLanguage = language === 'ar' ? 'en' : 'ar';
     setLanguage(newLanguage);
+    
+    // Update HTML attributes
     document.documentElement.setAttribute('lang', newLanguage);
-    document.documentElement.setAttribute(
-      'dir',
-      newLanguage === 'ar' ? 'rtl' : 'ltr'
-    );
+    document.documentElement.setAttribute('dir', newLanguage === 'ar' ? 'rtl' : 'ltr');
+    
+    // Store preference
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', newLanguage);
+    }
   };
+
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div className={`h-9 w-9 rounded-full border border-[var(--brand-border)] ${className}`} />
+    );
+  }
 
   const getSizeClasses = () => {
     switch (size) {
@@ -44,10 +64,11 @@ export default function LanguageSwitcher({
     return (
       <div className={`hs-dropdown relative ${className}`}>
         <button
-          className={`${sizeClasses} rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors`}
+          className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2`}
           onClick={toggleLanguage}
+          aria-label={language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
         >
-          <Languages className='h-4 w-4' />
+          <Languages className='h-5 w-5 text-[var(--brand-info)]' />
         </button>
       </div>
     );
@@ -55,12 +76,13 @@ export default function LanguageSwitcher({
 
   return (
     <button
-      className={`${sizeClasses} rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${className}`}
+      className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${className}`}
       onClick={toggleLanguage}
+      aria-label={language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
     >
-      <Languages className='h-4 w-4' />
+      <Languages className='h-5 w-5 text-[var(--brand-info)]' />
       {showLabel && (
-        <span className='ml-2 text-sm'>
+        <span className='ml-2 text-sm font-medium'>
           {language === 'ar' ? 'العربية' : 'English'}
         </span>
       )}

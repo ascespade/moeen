@@ -1,5 +1,5 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
+import React from 'react';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -7,6 +7,7 @@ export interface ButtonProps
     | 'default'
     | 'primary'
     | 'secondary'
+    | 'info'
     | 'outline'
     | 'ghost'
     | 'destructive';
@@ -35,16 +36,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variants = {
       default:
-        'bg-[var(--default-default)] text-white hover:bg-[var(--default-default-hover)] focus:ring-[var(--default-default)]',
+        'bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-hover)] focus:ring-[var(--brand-primary)]',
       primary:
-        'bg-[var(--default-default)] text-white hover:bg-[var(--default-default-hover)] focus:ring-[var(--default-default)]',
+        'bg-[var(--brand-primary)] text-white hover:bg-[var(--brand-primary-hover)] focus:ring-[var(--brand-primary)]',
       secondary:
         'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700 focus:ring-gray-500',
-      info: 'bg-[var(--default-info)] text-white hover:bg-opacity-90 focus:ring-[var(--default-info)]',
+      info: 'bg-[var(--brand-info)] text-white hover:bg-opacity-90 focus:ring-[var(--brand-info)]',
       outline:
-        'border-2 border-[var(--default-default)] text-[var(--default-default)] hover:bg-[var(--default-default)] hover:text-white focus:ring-[var(--default-default)]',
+        'border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-white focus:ring-[var(--brand-primary)]',
       ghost:
-        'text-[var(--default-default)] hover:bg-[var(--default-default)] hover:bg-opacity-10 focus:ring-[var(--default-default)]',
+        'text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:bg-opacity-10 focus:ring-[var(--brand-primary)]',
       destructive: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-600',
     };
 
@@ -73,9 +74,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         children as React.ReactElement,
         {
           ...props,
-          className: cn(computedClasses, (children as any).props?.className),
+          className: cn(computedClasses, (children as React.ReactElement).props?.className),
           disabled: disabled || loading,
-        } as any
+        }
       );
     }
 

@@ -1,7 +1,7 @@
 // src/app/layout.tsx
-import type { Metadata } from 'next';
 import I18nProvider from '@/components/providers/I18nProvider';
-import './globals.css';
+import '@/styles/centralized.css';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Ultimate E2E Self-Healing Runner',
@@ -43,7 +43,7 @@ export default function RootLayout({
       <head>
         <link rel='icon' href='/favicon.ico' />
       </head>
-      <body className='antialiased font-inter bg-slate-50 text-slate-900'>
+      <body className='antialiased bg-background text-foreground'>
         <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
