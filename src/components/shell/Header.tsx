@@ -1,7 +1,7 @@
 'use client';
+import ThemeSwitcher from '@/components/common/ThemeSwitcher';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useT } from '@/components/providers/I18nProvider';
-import ThemeSwitcher from '@/components/ThemeSwitcher';
 import { useLanguage, useTheme } from '@/design-system/hooks';
 import { useEffect, useState } from 'react';
 
@@ -51,7 +51,7 @@ export default function Header() {
               <div className='relative'>
                 <input
                   type='search'
-                  className='py-2 pe-10 ps-3 block w-full border border-gray-200 dark:border-gray-700 rounded-md text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-900 focus:ring-1'
+                  className='py-2 pe-10 ps-3 block w-full border border-gray-200 dark:border-gray-700 rounded-md text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-900 focus:ring-1 focus:border-[var(--brand-primary)]'
                   placeholder='ابحث في النظام...'
                   aria-label='بحث'
                   style={{ outlineColor: 'var(--brand-primary)' }}
