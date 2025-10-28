@@ -56,7 +56,8 @@ import {
   Download,
   Upload,
   RefreshCw,
-  MoreHorizontal
+  MoreHorizontal,
+  Key
 } from 'lucide-react';
 
 interface SidebarItem {

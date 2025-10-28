@@ -1,6 +1,6 @@
 'use client';
+import LanguageSwitcher from '@/components/common/LanguageSwitcher';
 import ThemeSwitcher from '@/components/common/ThemeSwitcher';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { useT } from '@/components/providers/I18nProvider';
 import { useLanguage, useTheme } from '@/design-system/hooks';
 import { useSystemConfig } from '@/lib/config/system-config';
