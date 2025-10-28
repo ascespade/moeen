@@ -72,28 +72,31 @@ jobs:
       - name: 🧪 Run Tests with Retry Loop
         id: test_loop
         continue-on-error: true
+        env:
+          MAX_ATTEMPTS: ${{ github.event.inputs.max_attempts || 5 }}
         run: |
           echo "🧪 Starting test execution with auto-retry..."
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           
-          MAX_ATTEMPTS=${{ github.event.inputs.max_attempts || '5' }}
           ATTEMPT=1
           TESTS_PASSED=false
           
           mkdir -p ./logs
           
-          while [ $ATTEMPT -le $MAX_ATTEMPTS ] && [ "$TESTS_PASSED" != "true" ]; do
+          while [ $ATTEMPT -le ${MAX_ATTEMPTS} ] && [ "$TESTS_PASSED" != "true" ]; do
             echo ""
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
             echo "🔄 Test Attempt $ATTEMPT of $MAX_ATTEMPTS"
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
             
             # Run tests for the module
-	result=$(npx playwright test tests/${{ matrix.test-module }} \
-		--reporter=list,html \
-		2>&1 | tee ./logs/test-${{ matrix.test-module }}-attempt-$ATTEMPT.log; echo $? | tail -1)
+            npx playwright test tests/${{ matrix.test-module }} \
+                --reporter=list,html \
+                2>&1 | tee ./logs/test-${{ matrix.test-module }}-attempt-$ATTEMPT.log
             
-            if [ "$result" -eq 0 ]; then
+            TEST_RESULT=$?
+            
+            if [ $TEST_RESULT -eq 0 ]; then
               echo "✅ ✅ ✅ ALL TESTS PASSED! 🎉"
               TESTS_PASSED=true
               break
@@ -101,7 +104,7 @@ jobs:
               echo "❌ Tests failed on attempt $ATTEMPT"
               
               # Wait before retry
-              if [ $ATTEMPT -lt $MAX_ATTEMPTS ]; then
+              if [ $ATTEMPT -lt ${MAX_ATTEMPTS} ]; then
                 echo "⏳ Waiting before next attempt..."
                 sleep 3
               fi
