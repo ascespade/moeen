@@ -1,8 +1,7 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 
@@ -49,26 +48,26 @@ interface StaffWorkHours {
   lastCheckOut?: string;
 }
 
-// TODO: Replace mock with live API once endpoints ready
-const mockStats: DashboardStats = {
-  totalPatients: 1247,
-  activePatients: 1156,
-  blockedPatients: 91,
-  totalAppointments: 3421,
-  completedAppointments: 2987,
-  pendingAppointments: 434,
-  totalRevenue: 2450000,
-  monthlyRevenue: 187500,
-  totalClaims: 892,
-  approvedClaims: 756,
-  pendingClaims: 98,
-  rejectedClaims: 38,
-  totalStaff: 45,
-  activeStaff: 42,
-  onDutyStaff: 28,
-  totalSessions: 15678,
-  completedSessions: 14234,
-  upcomingSessions: 1444,
+// Default stats if API fails
+const defaultStats: DashboardStats = {
+  totalPatients: 0,
+  activePatients: 0,
+  blockedPatients: 0,
+  totalAppointments: 0,
+  completedAppointments: 0,
+  pendingAppointments: 0,
+  totalRevenue: 0,
+  monthlyRevenue: 0,
+  totalClaims: 0,
+  approvedClaims: 0,
+  pendingClaims: 0,
+  rejectedClaims: 0,
+  totalStaff: 0,
+  activeStaff: 0,
+  onDutyStaff: 0,
+  totalSessions: 0,
+  completedSessions: 0,
+  upcomingSessions: 0,
 };
 
 const mockRecentActivities: RecentActivity[] = [
@@ -192,6 +191,50 @@ export default function AdminDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState<
     'today' | 'week' | 'month' | 'year'
   >('month');
+  const [stats, setStats] = useState<DashboardStats>(defaultStats);
+  const [loading, setLoading] = useState(true);
+
+  // Load real data from API
+  useEffect(() => {
+    const loadDashboardData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/dashboard/statistics');
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+          // Map API data to our stats structure
+          setStats({
+            totalPatients: result.data.total_patients || 0,
+            activePatients: result.data.active_patients || 0,
+            blockedPatients: result.data.blocked_patients || 0,
+            totalAppointments: result.data.total_appointments || 0,
+            completedAppointments: result.data.completed_appointments || 0,
+            pendingAppointments: result.data.pending_appointments || 0,
+            totalRevenue: result.data.total_revenue || 0,
+            monthlyRevenue: result.data.monthly_revenue || 0,
+            totalClaims: result.data.total_claims || 0,
+            approvedClaims: result.data.approved_claims || 0,
+            pendingClaims: result.data.pending_claims || 0,
+            rejectedClaims: result.data.rejected_claims || 0,
+            totalStaff: result.data.total_staff || 0,
+            activeStaff: result.data.active_staff || 0,
+            onDutyStaff: result.data.on_duty_staff || 0,
+            totalSessions: result.data.total_sessions || 0,
+            completedSessions: result.data.completed_sessions || 0,
+            upcomingSessions: result.data.upcoming_sessions || 0,
+          });
+        }
+      } catch (error) {
+        console.error('Failed to load dashboard statistics:', error);
+        // Keep default stats on error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDashboardData();
+  }, [selectedPeriod]);
 
   const getActivityIcon = (type: RecentActivity['type']) => {
     const config = activityTypeConfig[type];
@@ -204,7 +247,7 @@ export default function AdminDashboard() {
     );
   };
 
-  const getStatusColor = (_status: RecentActivity['status']) => {
+  const getStatusColor = (status: RecentActivity['status']) => {
     const config = statusConfig[status];
     return `${config.color} ${config.bg}`;
   };
@@ -225,6 +268,18 @@ export default function AdminDashboard() {
       </div>
     );
   };
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className='flex min-h-screen items-center justify-center bg-[var(--brand-surface)]'>
+        <div className='text-center'>
+          <div className='mb-4 h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600 mx-auto'></div>
+          <p className='text-gray-600'>جاري تحميل البيانات...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='min-h-screen bg-[var(--brand-surface)]'>
@@ -276,47 +331,47 @@ export default function AdminDashboard() {
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
           <Card className='p-6 text-center'>
             <div className='text-brand mb-2 text-3xl font-bold'>
-              {mockStats.totalPatients.toLocaleString()}
+              {stats.totalPatients.toLocaleString()}
             </div>
             <div className='mb-2 text-gray-600 dark:text-gray-300'>
               إجمالي المرضى
             </div>
             <div className='text-sm text-green-600'>
-              {mockStats.activePatients} نشط • {mockStats.blockedPatients} محظور
+              {stats.activePatients} نشط • {stats.blockedPatients} محظور
             </div>
           </Card>
           <Card className='p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-green-600'>
-              {mockStats.totalAppointments.toLocaleString()}
+              {stats.totalAppointments.toLocaleString()}
             </div>
             <div className='mb-2 text-gray-600 dark:text-gray-300'>
               إجمالي المواعيد
             </div>
             <div className='text-sm text-blue-600'>
-              {mockStats.completedAppointments} مكتمل •{' '}
-              {mockStats.pendingAppointments} قيد الانتظار
+              {stats.completedAppointments} مكتمل •{' '}
+              {stats.pendingAppointments} قيد الانتظار
             </div>
           </Card>
           <Card className='p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-purple-600'>
-              {mockStats.totalRevenue.toLocaleString()} ريال
+              {stats.totalRevenue.toLocaleString()} ريال
             </div>
             <div className='mb-2 text-gray-600 dark:text-gray-300'>
               إجمالي الإيرادات
             </div>
             <div className='text-sm text-green-600'>
-              {mockStats.monthlyRevenue.toLocaleString()} ريال هذا الشهر
+              {stats.monthlyRevenue.toLocaleString()} ريال هذا الشهر
             </div>
           </Card>
           <Card className='p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-orange-600'>
-              {mockStats.totalStaff}
+              {stats.totalStaff}
             </div>
             <div className='mb-2 text-gray-600 dark:text-gray-300'>
               إجمالي الموظفين
             </div>
             <div className='text-sm text-blue-600'>
-              {mockStats.activeStaff} نشط • {mockStats.onDutyStaff} في الخدمة
+              {stats.activeStaff} نشط • {stats.onDutyStaff} في الخدمة
               الآن
             </div>
           </Card>
@@ -331,14 +386,14 @@ export default function AdminDashboard() {
                 <span className='text-gray-600 dark:text-gray-300'>
                   إجمالي المطالبات:
                 </span>
-                <span className='font-semibold'>{mockStats.totalClaims}</span>
+                <span className='font-semibold'>{stats.totalClaims}</span>
               </div>
               <div className='flex justify-between'>
                 <span className='text-gray-600 dark:text-gray-300'>
                   موافق عليها:
                 </span>
                 <span className='font-semibold text-green-600'>
-                  {mockStats.approvedClaims}
+                  {stats.approvedClaims}
                 </span>
               </div>
               <div className='flex justify-between'>
@@ -346,7 +401,7 @@ export default function AdminDashboard() {
                   قيد المراجعة:
                 </span>
                 <span className='font-semibold text-yellow-600'>
-                  {mockStats.pendingClaims}
+                  {stats.pendingClaims}
                 </span>
               </div>
               <div className='flex justify-between'>
@@ -354,7 +409,7 @@ export default function AdminDashboard() {
                   مرفوضة:
                 </span>
                 <span className='font-semibold text-red-600'>
-                  {mockStats.rejectedClaims}
+                  {stats.rejectedClaims}
                 </span>
               </div>
             </div>
@@ -368,7 +423,7 @@ export default function AdminDashboard() {
                   إجمالي الجلسات:
                 </span>
                 <span className='font-semibold'>
-                  {mockStats.totalSessions.toLocaleString()}
+                  {stats.totalSessions.toLocaleString()}
                 </span>
               </div>
               <div className='flex justify-between'>
@@ -376,13 +431,13 @@ export default function AdminDashboard() {
                   مكتملة:
                 </span>
                 <span className='font-semibold text-green-600'>
-                  {mockStats.completedSessions.toLocaleString()}
+                  {stats.completedSessions.toLocaleString()}
                 </span>
               </div>
               <div className='flex justify-between'>
                 <span className='text-gray-600 dark:text-gray-300'>قادمة:</span>
                 <span className='font-semibold text-blue-600'>
-                  {mockStats.upcomingSessions.toLocaleString()}
+                  {stats.upcomingSessions.toLocaleString()}
                 </span>
               </div>
             </div>
@@ -397,8 +452,8 @@ export default function AdminDashboard() {
                 </span>
                 <span className='font-semibold text-green-600'>
                   {Math.round(
-                    (mockStats.completedAppointments /
-                      mockStats.totalAppointments) *
+                    (stats.completedAppointments /
+                      stats.totalAppointments) *
                       100
                   )}
                   %
@@ -410,7 +465,7 @@ export default function AdminDashboard() {
                 </span>
                 <span className='font-semibold text-green-600'>
                   {Math.round(
-                    (mockStats.approvedClaims / mockStats.totalClaims) * 100
+                    (stats.approvedClaims / stats.totalClaims) * 100
                   )}
                   %
                 </span>
@@ -421,7 +476,7 @@ export default function AdminDashboard() {
                 </span>
                 <span className='font-semibold text-green-600'>
                   {Math.round(
-                    (mockStats.completedSessions / mockStats.totalSessions) *
+                    (stats.completedSessions / stats.totalSessions) *
                       100
                   )}
                   %
