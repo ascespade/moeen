@@ -1,0 +1,385 @@
+name: 🧪 Test → 🔧 Fix → ✨ Enhance
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM
+  workflow_dispatch:  # Manual trigger
+
+env:
+  NODE_VERSION: '18'
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+jobs:
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    outputs:
+      test_failed: ${{ steps.test.outcome == 'failure' }}
+      has_failures: ${{ steps.check_failures.outputs.has_failures }}
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v3
+      
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      
+      - name: 📦 Install dependencies
+        run: npm ci
+      
+      - name: 🎭 Install Playwright
+        run: npx playwright install --with-deps
+      
+      - name: 🧪 Run all tests
+        id: test
+        continue-on-error: true
+        run: |
+          npm run test:unit 2>&1 | tee unit-test.log
+          npm run test:integration 2>&1 | tee integration-test.log
+          npx playwright test 2>&1 | tee e2e-test.log
+      
+      - name: 📊 Check for failures
+        id: check_failures
+        run: |
+          if grep -q "failed" *.log; then
+            echo "has_failures=true" >> $GITHUB_OUTPUT
+            echo "❌ Tests failed"
+          else
+            echo "has_failures=false" >> $GITHUB_OUTPUT
+            echo "✅ All tests passed"
+          fi
+      
+      - name: 📤 Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: |
+            **/*.log
+            test-results/
+            playwright-report/
+            coverage/
+          retention-days: 30
+      
+      - name: 📝 Comment on PR
+        if: github.event_name == 'pull_request' && steps.check_failures.outputs.has_failures == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '❌ Tests failed. Auto-fix agent has been triggered.'
+            })
+
+  fix:
+    name: 🔧 Auto-Fix Failures
+    needs: test
+    if: needs.test.outputs.has_failures == 'true'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: 📥 Download test results
+        uses: actions/download-artifact@v3
+        with:
+          name: test-results
+          path: ./test-results-archive/
+      
+      - name: 🔍 Analyze failures
+        id: analyze
+        run: |
+          echo "Analyzing test failures..."
+          
+          # Count failures by type
+          UNIT_FAILS=$(grep -c "failed" ./test-results-archive/unit-test.log || echo "0")
+          INTEGRATION_FAILS=$(grep -c "failed" ./test-results-archive/integration-test.log || echo "0")
+          E2E_FAILS=$(grep -c "failed" ./test-results-archive/e2e-test.log || echo "0")
+          
+          # Create failure summary
+          cat > failure-summary.md << EOF
+          ## 🔍 Test Failure Analysis
+          
+          **Failure Counts:**
+          - Unit Tests: ${UNIT_FAILS}
+          - Integration Tests: ${INTEGRATION_FAILS}
+          - E2E Tests: ${E2E_FAILS}
+          
+          **Test Logs:**
+          See attached test-results-archive/
+          
+          **Common Patterns:**
+          $(grep -A 2 "Error:" ./test-results-archive/*.log | head -20)
+          EOF
+          
+          cat failure-summary.md
+      
+      - name: 🚀 Install Cursor CLI
+        run: |
+          curl https://cursor.com/install -fsS | bash
+          echo "$HOME/.cursor/bin" >> $GITHUB_PATH
+      
+      - name: 🤖 Trigger Background Agent (API)
+        id: trigger_agent
+        env:
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+        run: |
+          # Read failure summary
+          FAILURE_CONTEXT=$(cat failure-summary.md)
+          
+          # Create comprehensive fix prompt
+          PROMPT=$(cat << 'PROMPT_EOF'
+          🔧 **EMERGENCY FIX MODE: Production Tests Failing**
+          
+          **Situation:** CI pipeline blocked - tests failing on ${{ github.ref_name }}
+          **Commit:** ${{ github.sha }}
+          **Triggered by:** ${{ github.actor }}
+          
+          **Test Failures:**
+          ${FAILURE_CONTEXT}
+          
+          **Your Mission:**
+          1. 🔍 **Analyze:** Review all test logs in test-results-archive/
+          2. 🎯 **Identify:** Find root causes (not just symptoms)
+          3. 🔧 **Fix:** Repair underlying code issues
+          4. ✅ **Validate:** Ensure fixes work
+          
+          **Common Issues in Playwright + Supabase:**
+          - **Flaky tests:** Use data-testid, proper waitFor(), test isolation
+          - **Auth failures:** Check session handling, token refresh
+          - **Race conditions:** Add proper await, check async operations
+          - **Database state:** Verify cleanup between tests
+          - **API timeouts:** Check network mocks, increase timeouts if needed
+          - **Selector issues:** Update to stable selectors
+          
+          **Fix Priority:**
+          1. 🔴 Critical: Auth, data integrity, payment flows
+          2. 🟡 High: Main user journeys
+          3. 🟢 Medium: Edge cases
+          4. ⚪ Low: Visual/cosmetic
+          
+          **STRICT RULES:**
+          ❌ Do NOT skip/disable tests
+          ❌ Do NOT add setTimeout hacks
+          ❌ Do NOT commit/push (CI handles this)
+          ❌ Do NOT modify package.json or workflows
+          ✅ DO fix root causes
+          ✅ DO add defensive coding
+          ✅ DO improve error messages
+          ✅ DO document complex fixes
+          
+          **File Access:**
+          - Read: All files
+          - Write: src/, tests/, e2e/, components/, lib/
+          - Run: npm test commands
+          
+          **Success Criteria:**
+          - All tests pass locally
+          - No new failures introduced
+          - Code quality maintained
+          - Changes are minimal and focused
+          
+          **Deliverables:**
+          - Fixed source code
+          - Updated tests (if requirements changed)
+          - fix-notes.md with explanation
+          PROMPT_EOF
+          )
+          
+          # Trigger agent via API
+          RESPONSE=$(curl -X POST https://api.cursor.com/v0/agents \
+            -H "Authorization: Bearer ${CURSOR_API_KEY}" \
+            -H "Content-Type: application/json" \
+            -d @- << JSON_EOF
+          {
+            "prompt": {
+              "text": "${PROMPT}"
+            },
+            "source": {
+              "repository": "https://github.com/${{ github.repository }}",
+              "ref": "${{ github.ref_name }}"
+            },
+            "model": "claude-sonnet-4",
+            "webhook": "${{ secrets.WEBHOOK_URL }}"
+          }
+          JSON_EOF
+          )
+          
+          # Extract agent ID
+          AGENT_ID=$(echo $RESPONSE | jq -r '.id')
+          echo "agent_id=${AGENT_ID}" >> $GITHUB_OUTPUT
+          echo "🤖 Agent started: ${AGENT_ID}"
+          echo "📊 Monitor: https://cursor.com/dashboard?tab=background-agents"
+      
+      - name: ⏳ Wait for agent completion
+        id: wait_agent
+        env:
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+        run: |
+          AGENT_ID="${{ steps.trigger_agent.outputs.agent_id }}"
+          MAX_WAIT=1800  # 30 minutes
+          ELAPSED=0
+          
+          echo "Waiting for agent ${AGENT_ID}..."
+          
+          while [ $ELAPSED -lt $MAX_WAIT ]; do
+            STATUS=$(curl -s -H "Authorization: Bearer ${CURSOR_API_KEY}" \
+              https://api.cursor.com/v0/agents/${AGENT_ID} | jq -r '.status')
+            
+            echo "[${ELAPSED}s] Status: ${STATUS}"
+            
+            if [ "$STATUS" = "FINISHED" ]; then
+              echo "✅ Agent completed successfully"
+              echo "status=success" >> $GITHUB_OUTPUT
+              break
+            elif [ "$STATUS" = "ERROR" ]; then
+              echo "❌ Agent encountered an error"
+              echo "status=error" >> $GITHUB_OUTPUT
+              break
+            fi
+            
+            sleep 30
+            ELAPSED=$((ELAPSED + 30))
+          done
+          
+          if [ $ELAPSED -ge $MAX_WAIT ]; then
+            echo "⏰ Timeout waiting for agent"
+            echo "status=timeout" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: 📥 Pull agent changes
+        if: steps.wait_agent.outputs.status == 'success'
+        run: |
+          git fetch origin
+          AGENT_BRANCH=$(curl -s -H "Authorization: Bearer ${{ secrets.CURSOR_API_KEY }}" \
+            https://api.cursor.com/v0/agents/${{ steps.trigger_agent.outputs.agent_id }} \
+            | jq -r '.target.branchName')
+          
+          git checkout ${AGENT_BRANCH}
+          git pull origin ${AGENT_BRANCH}
+      
+      - name: 🧪 Verify fixes
+        if: steps.wait_agent.outputs.status == 'success'
+        run: |
+          npm ci
+          npx playwright install --with-deps
+          npm run test:unit
+          npm run test:integration
+          npx playwright test
+      
+      - name: ✅ Create fix PR
+        if: steps.wait_agent.outputs.status == 'success'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          AGENT_ID="${{ steps.trigger_agent.outputs.agent_id }}"
+          SUMMARY=$(curl -s -H "Authorization: Bearer ${{ secrets.CURSOR_API_KEY }}" \
+            https://api.cursor.com/v0/agents/${AGENT_ID} | jq -r '.summary')
+          
+          gh pr create \
+            --title "🤖 Auto-fix: Test failures (run ${{ github.run_id }})" \
+            --body "## 🔧 Automated Fixes
+          
+          **Agent ID:** ${AGENT_ID}
+          **Run:** ${{ github.run_id }}
+          **Summary:** ${SUMMARY}
+          
+          **Changes:**
+          $(git diff --stat origin/${{ github.ref_name }})
+          
+          **Test Results:** ✅ All tests passing
+          
+          **Review Checklist:**
+          - [ ] Changes are focused and minimal
+          - [ ] No unrelated modifications
+          - [ ] Tests pass consistently
+          - [ ] Code quality maintained
+          
+          ---
+          🤖 Generated by Cursor Background Agent
+          📊 [View in Dashboard](https://cursor.com/agents?id=${AGENT_ID})"
+      
+      - name: 📢 Notify on failure
+        if: steps.wait_agent.outputs.status != 'success'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const status = '${{ steps.wait_agent.outputs.status }}';
+            const message = status === 'timeout' 
+              ? '⏰ Auto-fix agent timed out. Manual intervention required.'
+              : '❌ Auto-fix agent encountered an error. Check logs.';
+            
+            if (context.eventName === 'pull_request') {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: message
+              });
+            }
+
+  enhance:
+    name: ✨ Enhance Codebase
+    needs: test
+    if: |
+      (needs.test.outputs.has_failures == 'false' && github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        enhancement:
+          - name: 'coverage'
+            prompt_file: '.cursor/prompts/enhance-coverage.txt'
+            model: 'claude-sonnet-4'
+          - name: 'performance'
+            prompt_file: '.cursor/prompts/enhance-performance.txt'
+            model: 'claude-sonnet-4'
+          - name: 'refactor'
+            prompt_file: '.cursor/prompts/enhance-refactor.txt'
+            model: 'gpt-4o'
+          - name: 'docs'
+            prompt_file: '.cursor/prompts/enhance-docs.txt'
+            model: 'gpt-4o'
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v3
+      
+      - name: 🚀 Trigger Enhancement Agent
+        env:
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+        run: |
+          PROMPT=$(cat ${{ matrix.enhancement.prompt_file }})
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          
+          curl -X POST https://api.cursor.com/v0/agents \
+            -H "Authorization: Bearer ${CURSOR_API_KEY}" \
+            -H "Content-Type: application/json" \
+            -d @- << JSON_EOF
+          {
+            "prompt": {
+              "text": "${PROMPT}"
+            },
+            "source": {
+              "repository": "https://github.com/${{ github.repository }}",
+              "ref": "main"
+            },
+            "model": "${{ matrix.enhancement.model }}",
+            "webhook": "${{ secrets.WEBHOOK_URL }}"
+          }
+          JSON_EOF
