@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-const { Client } = require("pg");
-const { generatePublicId } = require("./cuid-standalone");
+const { Client } = require('pg');
+const { generatePublicId } = require('./cuid-standalone');
 
-const DRY_RUN = process.env.DRY_RUN === "true";
+const DRY_RUN = process.env.DRY_RUN === 'true';
 const BATCH_SIZE = 500;
 
 async function backfillTable(client, tableName, prefix) {
@@ -12,7 +12,7 @@ async function backfillTable(client, tableName, prefix) {
   while (true) {
     const { rows } = await client.query(
       `SELECT id FROM ${tableName} WHERE public_id IS NULL LIMIT $1`,
-      [BATCH_SIZE],
+      [BATCH_SIZE]
     );
 
     if (rows.length === 0) break;
@@ -23,20 +23,20 @@ async function backfillTable(client, tableName, prefix) {
       continue;
     }
 
-    await client.query("BEGIN");
+    await client.query('BEGIN');
     try {
       for (const row of rows) {
         const publicId = generatePublicId(prefix);
         await client.query(
           `UPDATE ${tableName} SET public_id = $1 WHERE id = $2`,
-          [publicId, row.id],
+          [publicId, row.id]
         );
       }
-      await client.query("COMMIT");
+      await client.query('COMMIT');
       totalUpdated += rows.length;
       console.log(`  ✅ Updated ${totalUpdated} total`);
     } catch (error) {
-      await client.query("ROLLBACK");
+      await client.query('ROLLBACK');
       console.error(`  ❌ Error: ${error.message}`);
       throw error;
     }
@@ -46,7 +46,7 @@ async function backfillTable(client, tableName, prefix) {
 }
 
 async function main() {
-  require("dotenv").config();
+  require('dotenv').config();
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const projectId = supabaseUrl?.match(/https:\/\/([^.]+)\.supabase\.co/)?.[1];
@@ -54,25 +54,25 @@ async function main() {
   const client = new Client({
     host: `${projectId}.supabase.co`,
     port: 5432,
-    database: "postgres",
-    user: "postgres",
+    database: 'postgres',
+    user: 'postgres',
     password: process.env.SUPABASE_SERVICE_ROLE,
     ssl: { rejectUnauthorized: false },
   });
 
   await client.connect();
-  console.log("🔗 Connected to database");
+  console.log('🔗 Connected to database');
 
   if (DRY_RUN) {
-    console.log("⚠️  DRY RUN MODE - No changes will be made\n");
+    console.log('⚠️  DRY RUN MODE - No changes will be made\n');
   }
 
   const tables = [
-    { name: "patients", prefix: "pat" },
-    { name: "doctors", prefix: "doc" },
-    { name: "appointments", prefix: "apt" },
-    { name: "sessions", prefix: "ses" },
-    { name: "insurance_claims", prefix: "clm" },
+    { name: 'patients', prefix: 'pat' },
+    { name: 'doctors', prefix: 'doc' },
+    { name: 'appointments', prefix: 'apt' },
+    { name: 'sessions', prefix: 'ses' },
+    { name: 'insurance_claims', prefix: 'clm' },
   ];
 
   for (const table of tables) {
@@ -80,7 +80,7 @@ async function main() {
   }
 
   await client.end();
-  console.log("\n✅ Backfill complete!");
+  console.log('\n✅ Backfill complete!');
 }
 
 main().catch(console.error);

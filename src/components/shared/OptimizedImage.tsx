@@ -1,6 +1,6 @@
-import { _ImageIcon } from "lucide-react";
-import Image from "next/image";
-import { _useState } from "react";
+import { _ImageIcon } from 'lucide-react';
+import Image from 'next/image';
+import { _useState } from 'react';
 
 interface OptimizedImageProps {
   src: string;
@@ -11,7 +11,7 @@ interface OptimizedImageProps {
   className?: string;
   sizes?: string;
   quality?: number;
-  placeholder?: "blur" | "empty";
+  placeholder?: 'blur' | 'empty';
   blurDataURL?: string;
   fill?: boolean;
   style?: React.CSSProperties;
@@ -23,10 +23,10 @@ export function __OptimizedImage({
   width,
   height,
   priority = false,
-  className = "",
+  className = '',
   sizes,
   quality = 75,
-  placeholder = "empty",
+  placeholder = 'empty',
   blurDataURL,
   fill = false,
   style,
@@ -40,9 +40,9 @@ export function __OptimizedImage({
         className={`bg-gray-200 flex items-center justify-center ${className}`}
         style={{ width, height, ...style }}
       >
-        <div className="text-center text-gray-500">
-          <ImageIcon className="w-8 h-8 mx-auto mb-2" />
-          <span className="text-sm">Image failed to load</span>
+        <div className='text-center text-gray-500'>
+          <ImageIcon className='w-8 h-8 mx-auto mb-2' />
+          <span className='text-sm'>Image failed to load</span>
         </div>
       </div>
     );
@@ -61,7 +61,7 @@ export function __OptimizedImage({
       setHasError(true);
     },
     className: `transition-opacity duration-300 ${
-      isLoading ? "opacity-0" : "opacity-100"
+      isLoading ? 'opacity-0' : 'opacity-100'
     } ${className}`,
     style,
     ...(sizes && { sizes }),
@@ -69,16 +69,16 @@ export function __OptimizedImage({
   };
 
   return (
-    <div className={`relative ${fill ? "w-full h-full" : ""}`}>
+    <div className={`relative ${fill ? 'w-full h-full' : ''}`}>
       {isLoading && (
         <div
-          className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center"
+          className='absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center'
           style={fill ? {} : { width, height }}
         >
-          <div className="text-gray-400 text-sm">Loading...</div>
+          <div className='text-gray-400 text-sm'>Loading...</div>
         </div>
       )}
-      <Image {...imageProps} alt={alt || ""} />
+      <Image {...imageProps} alt={alt || ''} />
     </div>
   );
 }
@@ -88,51 +88,45 @@ export const __ImagePresets = {
   avatar: {
     width: 40,
     height: 40,
-    className: "rounded-full",
+    className: 'rounded-full',
     quality: 80,
   },
   thumbnail: {
     width: 150,
     height: 150,
-    className: "rounded-lg",
+    className: 'rounded-lg',
     quality: 75,
   },
   hero: {
     width: 800,
     height: 400,
-    className: "rounded-lg",
+    className: 'rounded-lg',
     quality: 85,
     priority: true,
   },
   card: {
     width: 300,
     height: 200,
-    className: "rounded-md",
+    className: 'rounded-md',
     quality: 75,
   },
   gallery: {
     width: 400,
     height: 300,
-    className: "rounded-lg",
+    className: 'rounded-lg',
     quality: 80,
   },
 };
 
 // Convenience components for common use cases
 export function __AvatarImage(
-  props: Omit<
-    OptimizedImageProps,
-    "width" | "height" | "className" | "quality"
-  >,
+  props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>
 ) {
   return <OptimizedImage {...ImagePresets.avatar} {...props} />;
 }
 
 export function __ThumbnailImage(
-  props: Omit<
-    OptimizedImageProps,
-    "width" | "height" | "className" | "quality"
-  >,
+  props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>
 ) {
   return <OptimizedImage {...ImagePresets.thumbnail} {...props} />;
 }
@@ -140,26 +134,20 @@ export function __ThumbnailImage(
 export function __HeroImage(
   props: Omit<
     OptimizedImageProps,
-    "width" | "height" | "className" | "quality" | "priority"
-  >,
+    'width' | 'height' | 'className' | 'quality' | 'priority'
+  >
 ) {
   return <OptimizedImage {...ImagePresets.hero} {...props} />;
 }
 
 export function __CardImage(
-  props: Omit<
-    OptimizedImageProps,
-    "width" | "height" | "className" | "quality"
-  >,
+  props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>
 ) {
   return <OptimizedImage {...ImagePresets.card} {...props} />;
 }
 
 export function __GalleryImage(
-  props: Omit<
-    OptimizedImageProps,
-    "width" | "height" | "className" | "quality"
-  >,
+  props: Omit<OptimizedImageProps, 'width' | 'height' | 'className' | 'quality'>
 ) {
   return <OptimizedImage {...ImagePresets.gallery} {...props} />;
 }

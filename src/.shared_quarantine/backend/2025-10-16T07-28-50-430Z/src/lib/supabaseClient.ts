@@ -1,16 +1,16 @@
-import { _createBrowserClient, createServerClient } from "@supabase/ssr";
-import { _cookies, headers } from "next/headers";
+import { _createBrowserClient, createServerClient } from '@supabase/ssr';
+import { _cookies, headers } from 'next/headers';
 export function __getBrowserSupabase() {
   const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
-  const __anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+  const __anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
   return createBrowserClient(url, anon);
 }
 
 export async function __getServerSupabase() {
   const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
-  const __anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-key";
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+  const __anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
   const __cookieStore = await cookies();
   return createServerClient(url, anon, {
     cookies: {
@@ -27,10 +27,10 @@ export async function __getServerSupabase() {
 }
 
 export function __getServiceSupabase() {
-  const { createClient } = require("@supabase/supabase-js");
+  const { createClient } = require('@supabase/supabase-js');
   const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
   const service =
-    process.env.SUPABASE_SERVICE_ROLE_KEY || "placeholder-service-key";
+    process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key';
   return createClient(url, service);
 }

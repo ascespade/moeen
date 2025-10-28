@@ -1,9 +1,9 @@
-import { _NextRequest, NextResponse } from "next/server";
-import { _createHash, randomBytes } from "crypto";
-import { _realDB } from "./supabase-real";
+import { _NextRequest, NextResponse } from 'next/server';
+import { _createHash, randomBytes } from 'crypto';
+import { _realDB } from './supabase-real';
 // Enhanced Security System for Hemam Center
-import { _NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import { _NextRequest, NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken';
 
 // Rate limiting store
 const __rateLimitStore = new Map<
@@ -13,13 +13,13 @@ const __rateLimitStore = new Map<
 
 // Security headers
 export const __securityHeaders = {
-  "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "DENY",
-  "X-XSS-Protection": "1; mode=block",
-  "Referrer-Policy": "strict-origin-when-cross-origin",
-  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
-  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-  "Content-Security-Policy":
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'X-XSS-Protection': '1; mode=block',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+  'Content-Security-Policy':
     "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://*.supabase.co;",
 };
 
@@ -68,9 +68,9 @@ export class EnhancedCSRFProtection {
   private static tokens = new Map<string, { token: string; expires: number }>();
 
   static generateToken(): string {
-    const __token = randomBytes(32).toString("hex");
+    const __token = randomBytes(32).toString('hex');
     const __expires = Date.now() + 60 * 60 * 1000; // 1 hour
-    const __id = randomBytes(16).toString("hex");
+    const __id = randomBytes(16).toString('hex');
 
     this.tokens.set(id, { token, expires });
 
@@ -87,7 +87,7 @@ export class EnhancedCSRFProtection {
   static validateToken(_providedToken: string): boolean {
     if (!providedToken) return false;
 
-    const [id, token] = providedToken.split(":");
+    const [id, token] = providedToken.split(':');
     if (!id || !token) return false;
 
     const __stored = this.tokens.get(id);
@@ -105,16 +105,16 @@ export class EnhancedCSRFProtection {
 // Enhanced Session Security
 export class EnhancedSessionSecurity {
   static generateSessionId(): string {
-    return randomBytes(32).toString("hex");
+    return randomBytes(32).toString('hex');
   }
 
   static hashSessionId(_sessionId: string): string {
-    return createHash("sha256").update(sessionId).digest("hex");
+    return createHash('sha256').update(sessionId).digest('hex');
   }
 
   static validateSessionId(
     sessionId: string,
-    hashedSessionId: string,
+    hashedSessionId: string
   ): boolean {
     return this.hashSessionId(sessionId) === hashedSessionId;
   }
@@ -124,14 +124,14 @@ export class EnhancedSessionSecurity {
 export class InputSanitizer {
   static sanitizeString(_input: string): string {
     return input
-      .replace(/[<>]/g, "") // Remove potential HTML tags
-      .replace(/['"]/g, "") // Remove quotes
-      .replace(/[;]/g, "") // Remove semicolons
+      .replace(/[<>]/g, '') // Remove potential HTML tags
+      .replace(/['"]/g, '') // Remove quotes
+      .replace(/[;]/g, '') // Remove semicolons
       .trim();
   }
 
   static sanitizePhoneNumber(_phone: string): string {
-    return phone.replace(/[^\d+]/g, "");
+    return phone.replace(/[^\d+]/g, '');
   }
 
   static sanitizeEmail(_email: string): string {
@@ -139,7 +139,7 @@ export class InputSanitizer {
   }
 
   static sanitizeNationalId(_nationalId: string): string {
-    return nationalId.replace(/[^\d]/g, "");
+    return nationalId.replace(/[^\d]/g, '');
   }
 }
 
@@ -147,13 +147,13 @@ export class InputSanitizer {
 export class AuditLogger {
   static async log(_request: NextRequest, action: string, details?: unknown) {
     try {
-      const __userAgent = request.headers.get("user-agent") || "";
+      const __userAgent = request.headers.get('user-agent') || '';
       const ipAddress =
-        request.headers.get("x-forwarded-for") ||
-        request.headers.get("x-real-ip") ||
-        "unknown";
+        request.headers.get('x-forwarded-for') ||
+        request.headers.get('x-real-ip') ||
+        'unknown';
 
-      const __userId = request.headers.get("x-user-id") || undefined;
+      const __userId = request.headers.get('x-user-id') || undefined;
 
       await realDB.logAudit({
         ...(userId ? { user_id: userId } : {}),
@@ -177,15 +177,15 @@ export class EnhancedAuthMiddleware {
     error?: string;
   }> {
     try {
-      const __token = request.cookies.get("auth-token")?.value;
+      const __token = request.cookies.get('auth-token')?.value;
 
       if (!token) {
-        return { success: false, error: "No authentication token" };
+        return { success: false, error: 'No authentication token' };
       }
 
       const __jwtSecret = process.env.JWT_SECRET;
       if (!jwtSecret) {
-        throw new Error("JWT_SECRET not configured");
+        throw new Error('JWT_SECRET not configured');
       }
 
       const __decoded = jwt.verify(token, jwtSecret) as {
@@ -198,24 +198,24 @@ export class EnhancedAuthMiddleware {
 
       // Check if token is expired
       if (Date.now() >= decoded.exp * 1000) {
-        return { success: false, error: "Token expired" };
+        return { success: false, error: 'Token expired' };
       }
 
       // Get user from database
       const __user = (await realDB.getUser(decoded.userId)) as any;
       if (!user || !user.is_active) {
-        return { success: false, error: "User not found or inactive" };
+        return { success: false, error: 'User not found or inactive' };
       }
 
       return { success: true, user };
     } catch (error) {
-      return { success: false, error: "Invalid token" };
+      return { success: false, error: 'Invalid token' };
     }
   }
 
   static async authorize(
     request: NextRequest,
-    requiredRole?: string,
+    requiredRole?: string
   ): Promise<{
     success: boolean;
     user?: unknown;
@@ -228,7 +228,7 @@ export class EnhancedAuthMiddleware {
     }
 
     if (requiredRole && auth.user?.role !== requiredRole) {
-      return { success: false, error: "Insufficient permissions" };
+      return { success: false, error: 'Insufficient permissions' };
     }
 
     return auth;
@@ -247,31 +247,31 @@ export function __enhancedSecurityMiddleware(_request: NextRequest) {
   // Rate limiting
   const __rateLimiter = new EnhancedRateLimiter();
   const identifier =
-    request.headers.get("x-forwarded-for") ||
-    request.headers.get("x-real-ip") ||
-    "unknown";
+    request.headers.get('x-forwarded-for') ||
+    request.headers.get('x-real-ip') ||
+    'unknown';
 
   if (rateLimiter.isRateLimited(identifier)) {
-    return new NextResponse("Too Many Requests", {
+    return new NextResponse('Too Many Requests', {
       status: 429,
       headers: {
-        "Retry-After": "900",
-        "X-RateLimit-Limit": "100",
-        "X-RateLimit-Remaining": "0",
-        "X-RateLimit-Reset": rateLimiter.getResetTime(identifier).toString(),
+        'Retry-After': '900',
+        'X-RateLimit-Limit': '100',
+        'X-RateLimit-Remaining': '0',
+        'X-RateLimit-Reset': rateLimiter.getResetTime(identifier).toString(),
       },
     });
   }
 
   // Add rate limit headers
-  response.headers.set("X-RateLimit-Limit", "100");
+  response.headers.set('X-RateLimit-Limit', '100');
   response.headers.set(
-    "X-RateLimit-Remaining",
-    rateLimiter.getRemainingRequests(identifier).toString(),
+    'X-RateLimit-Remaining',
+    rateLimiter.getRemainingRequests(identifier).toString()
   );
   response.headers.set(
-    "X-RateLimit-Reset",
-    rateLimiter.getResetTime(identifier).toString(),
+    'X-RateLimit-Reset',
+    rateLimiter.getResetTime(identifier).toString()
   );
 
   return response;
@@ -285,7 +285,7 @@ export function __secureAPI(
     requiredRole?: string;
     rateLimit?: boolean;
     csrfProtection?: boolean;
-  } = {},
+  } = {}
 ) {
   return async (_request: NextRequest, ...args: unknown[]) => {
     try {
@@ -299,45 +299,45 @@ export function __secureAPI(
       if (options.requireAuth) {
         const __auth = await EnhancedAuthMiddleware.authorize(
           request,
-          options.requiredRole,
+          options.requiredRole
         );
         if (!auth.success) {
           return NextResponse.json(
             {
               success: false,
               error: auth.error,
-              code: "AUTHENTICATION_FAILED",
+              code: 'AUTHENTICATION_FAILED',
             },
-            { status: 401 },
+            { status: 401 }
           );
         }
 
         // Add user info to headers for the handler
-        request.headers.set("x-user-id", auth.user.id);
-        request.headers.set("x-user-email", auth.user.email);
-        request.headers.set("x-user-role", auth.user.role);
+        request.headers.set('x-user-id', auth.user.id);
+        request.headers.set('x-user-email', auth.user.email);
+        request.headers.set('x-user-role', auth.user.role);
       }
 
       // CSRF Protection for state-changing methods
       if (
         options.csrfProtection &&
-        ["POST", "PUT", "DELETE", "PATCH"].includes(request.method)
+        ['POST', 'PUT', 'DELETE', 'PATCH'].includes(request.method)
       ) {
-        const __csrfToken = request.headers.get("x-csrf-token");
+        const __csrfToken = request.headers.get('x-csrf-token');
         if (!csrfToken || !EnhancedCSRFProtection.validateToken(csrfToken)) {
           return NextResponse.json(
             {
               success: false,
-              error: "Invalid CSRF token",
-              code: "CSRF_TOKEN_INVALID",
+              error: 'Invalid CSRF token',
+              code: 'CSRF_TOKEN_INVALID',
             },
-            { status: 403 },
+            { status: 403 }
           );
         }
       }
 
       // Log the request
-      await AuditLogger.log(request, "API_REQUEST", {
+      await AuditLogger.log(request, 'API_REQUEST', {
         method: request.method,
         url: request.url,
       });
@@ -349,14 +349,14 @@ export function __secureAPI(
     } catch (error) {
       // Log the error
       const __err = error as unknown as { message?: string; stack?: string };
-      await AuditLogger.log(request, "SECURITY_ERROR", {
+      await AuditLogger.log(request, 'SECURITY_ERROR', {
         error: err?.message,
         stack: err?.stack,
       });
 
       return NextResponse.json(
-        { success: false, error: "Security error", code: "SECURITY_ERROR" },
-        { status: 500 },
+        { success: false, error: 'Security error', code: 'SECURITY_ERROR' },
+        { status: 500 }
       );
     }
   };
@@ -381,12 +381,12 @@ export class DataValidator {
 
   static validateRequired(
     data: unknown,
-    requiredFields: string[],
+    requiredFields: string[]
   ): {
     valid: boolean;
     missing: string[];
   } {
-    const __missing = requiredFields.filter((field) => !data[field]);
+    const __missing = requiredFields.filter(field => !data[field]);
     return {
       valid: missing.length === 0,
       missing,

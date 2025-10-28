@@ -1,13 +1,13 @@
-import { _createClient } from "@supabase/supabase-js";
+import { _createClient } from '@supabase/supabase-js';
 // Real Supabase Integration for Hemam Center
-import type { Database } from "@/types/supabase";
+import type { Database } from '@/types/supabase';
 
 const supabaseUrl =
-  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
 const supabaseAnonKey =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
 const supabaseServiceKey =
-  process.env.SUPABASE_SERVICE_ROLE || "placeholder-service-key";
+  process.env.SUPABASE_SERVICE_ROLE || 'placeholder-service-key';
 
 // Client for client-side operations
 export const __supabase = createClient(supabaseUrl, supabaseAnonKey);
@@ -31,10 +31,10 @@ export class RealSupabaseManager {
     name: string;
     name_en?: string;
     age?: number;
-    gender?: "male" | "female";
+    gender?: 'male' | 'female';
     phone: string;
     email?: string;
-    role: "admin" | "doctor" | "therapist" | "patient" | "family_member";
+    role: 'admin' | 'doctor' | 'therapist' | 'patient' | 'family_member';
     address?: string;
     city?: string;
     emergency_contact?: string;
@@ -47,7 +47,7 @@ export class RealSupabaseManager {
     allergies?: string[];
   }) {
     const { data, error } = await admin
-      .from("users")
+      .from('users')
       .insert([userData])
       .select()
       .single();
@@ -58,9 +58,9 @@ export class RealSupabaseManager {
 
   async getUser(_userId: string) {
     const { data, error } = await admin
-      .from("users")
-      .select("*")
-      .eq("id", userId)
+      .from('users')
+      .select('*')
+      .eq('id', userId)
       .single();
 
     if (error) throw new Error(`Failed to get user: ${error.message}`);
@@ -69,9 +69,9 @@ export class RealSupabaseManager {
 
   async getUserByPhone(_phone: string) {
     const { data, error } = await admin
-      .from("users")
-      .select("*")
-      .eq("phone", phone)
+      .from('users')
+      .select('*')
+      .eq('phone', phone)
       .single();
 
     if (error) throw new Error(`Failed to get user by phone: ${error.message}`);
@@ -80,9 +80,9 @@ export class RealSupabaseManager {
 
   async updateUser(_userId: string, updates: unknown) {
     const { data, error } = await admin
-      .from("users")
+      .from('users')
       .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq("id", userId)
+      .eq('id', userId)
       .select()
       .single();
 
@@ -92,15 +92,15 @@ export class RealSupabaseManager {
 
   async searchUsers(_searchTerm: string, role?: string) {
     let query = supabaseAdmin
-      .from("users")
-      .select("*")
+      .from('users')
+      .select('*')
       .or(
-        `name.ilike.%${searchTerm}%,national_id.ilike.%${searchTerm}%,phone.ilike.%${searchTerm}%`,
+        `name.ilike.%${searchTerm}%,national_id.ilike.%${searchTerm}%,phone.ilike.%${searchTerm}%`
       )
-      .order("created_at", { ascending: false });
+      .order('created_at', { ascending: false });
 
     if (role) {
-      query = query.eq("role", role);
+      query = query.eq('role', role);
     }
 
     const { data, error } = await query;
@@ -121,7 +121,7 @@ export class RealSupabaseManager {
     working_hours?: unknown;
   }) {
     const { data, error } = await admin
-      .from("doctors")
+      .from('doctors')
       .insert([doctorData])
       .select()
       .single();
@@ -132,14 +132,14 @@ export class RealSupabaseManager {
 
   async getDoctor(_doctorId: string) {
     const { data, error } = await admin
-      .from("doctors")
+      .from('doctors')
       .select(
         `
         *,
         users!doctors_id_fkey(*)
-      `,
+      `
       )
-      .eq("id", doctorId)
+      .eq('id', doctorId)
       .single();
 
     if (error) throw new Error(`Failed to get doctor: ${error.message}`);
@@ -148,15 +148,15 @@ export class RealSupabaseManager {
 
   async getDoctorsBySpecialty(_specialty: string) {
     const { data, error } = await admin
-      .from("doctors")
+      .from('doctors')
       .select(
         `
         *,
         users!doctors_id_fkey(*)
-      `,
+      `
       )
-      .eq("specialty", specialty)
-      .eq("is_available", true);
+      .eq('specialty', specialty)
+      .eq('is_available', true);
 
     if (error)
       throw new Error(`Failed to get doctors by specialty: ${error.message}`);
@@ -177,7 +177,7 @@ export class RealSupabaseManager {
     status?: string;
   }) {
     const { data, error } = await admin
-      .from("patients")
+      .from('patients')
       .insert([patientData])
       .select()
       .single();
@@ -188,16 +188,16 @@ export class RealSupabaseManager {
 
   async getPatient(_patientId: string) {
     const { data, error } = await supabaseAdmin
-      .from("patients")
+      .from('patients')
       .select(
         `
         *,
         users!patients_id_fkey(*),
         doctors!patients_assigned_doctor_id_fkey(*),
         family_members(*)
-      `,
+      `
       )
-      .eq("id", patientId)
+      .eq('id', patientId)
       .single();
 
     if (error) throw new Error(`Failed to get patient: ${error.message}`);
@@ -206,14 +206,14 @@ export class RealSupabaseManager {
 
   async getPatientsByDoctor(_doctorId: string) {
     const { data, error } = await supabaseAdmin
-      .from("patients")
+      .from('patients')
       .select(
         `
         *,
         users!patients_id_fkey(*)
-      `,
+      `
       )
-      .eq("assigned_doctor_id", doctorId);
+      .eq('assigned_doctor_id', doctorId);
 
     if (error)
       throw new Error(`Failed to get patients by doctor: ${error.message}`);
@@ -227,14 +227,14 @@ export class RealSupabaseManager {
     appointment_date: string;
     appointment_time: string;
     duration_minutes?: number;
-    type: "assessment" | "treatment" | "follow_up" | "consultation";
+    type: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
     notes?: string;
     insurance_covered?: boolean;
     insurance_approval_number?: string;
     created_by: string;
   }) {
     const { data, error } = await admin
-      .from("appointments")
+      .from('appointments')
       .insert([appointmentData])
       .select(
         `
@@ -247,7 +247,7 @@ export class RealSupabaseManager {
           *,
           users!doctors_id_fkey(*)
         )
-      `,
+      `
       )
       .single();
 
@@ -264,9 +264,9 @@ export class RealSupabaseManager {
       status?: string;
       limit?: number;
       offset?: number;
-    } = {},
+    } = {}
   ) {
-    let query = admin.from("appointments").select(`
+    let query = admin.from('appointments').select(`
         *,
         patients!appointments_patient_id_fkey(
           *,
@@ -278,18 +278,18 @@ export class RealSupabaseManager {
         )
       `);
 
-    if (filters.patientId) query = query.eq("patient_id", filters.patientId);
-    if (filters.doctorId) query = query.eq("doctor_id", filters.doctorId);
-    if (filters.date) query = query.eq("appointment_date", filters.date);
-    if (filters.status) query = query.eq("status", filters.status);
+    if (filters.patientId) query = query.eq('patient_id', filters.patientId);
+    if (filters.doctorId) query = query.eq('doctor_id', filters.doctorId);
+    if (filters.date) query = query.eq('appointment_date', filters.date);
+    if (filters.status) query = query.eq('status', filters.status);
 
-    query = query.order("appointment_date", { ascending: true });
+    query = query.order('appointment_date', { ascending: true });
 
     if (filters.limit) query = query.limit(filters.limit);
     if (filters.offset)
       query = query.range(
         filters.offset,
-        filters.offset + (filters.limit || 10) - 1,
+        filters.offset + (filters.limit || 10) - 1
       );
 
     const { data, error } = await query;
@@ -300,9 +300,9 @@ export class RealSupabaseManager {
 
   async updateAppointment(_appointmentId: string, updates: unknown) {
     const { data, error } = await admin
-      .from("appointments")
+      .from('appointments')
       .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq("id", appointmentId)
+      .eq('id', appointmentId)
       .select()
       .single();
 
@@ -319,13 +319,13 @@ export class RealSupabaseManager {
     session_date: string;
     session_time: string;
     duration_minutes?: number;
-    type: "assessment" | "treatment" | "follow_up" | "consultation";
+    type: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
     notes?: string;
     exercises?: unknown;
     insurance_claim_number?: string;
   }) {
     const { data, error } = await admin
-      .from("sessions")
+      .from('sessions')
       .insert([sessionData])
       .select(
         `
@@ -338,7 +338,7 @@ export class RealSupabaseManager {
           *,
           users!doctors_id_fkey(*)
         )
-      `,
+      `
       )
       .single();
 
@@ -348,7 +348,7 @@ export class RealSupabaseManager {
 
   async getSessions(_patientId: string, limit?: number) {
     let query = admin
-      .from("sessions")
+      .from('sessions')
       .select(
         `
         *,
@@ -356,10 +356,10 @@ export class RealSupabaseManager {
           *,
           users!doctors_id_fkey(*)
         )
-      `,
+      `
       )
-      .eq("patient_id", patientId)
-      .order("session_date", { ascending: false });
+      .eq('patient_id', patientId)
+      .order('session_date', { ascending: false });
 
     if (limit) query = query.limit(limit);
 
@@ -371,9 +371,9 @@ export class RealSupabaseManager {
 
   async updateSession(_sessionId: string, updates: unknown) {
     const { data, error } = await admin
-      .from("sessions")
+      .from('sessions')
       .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq("id", sessionId)
+      .eq('id', sessionId)
       .select()
       .single();
 
@@ -386,20 +386,20 @@ export class RealSupabaseManager {
     patient_id: string;
     session_id?: string;
     message_type:
-      | "text"
-      | "template"
-      | "image"
-      | "document"
-      | "audio"
-      | "video";
+      | 'text'
+      | 'template'
+      | 'image'
+      | 'document'
+      | 'audio'
+      | 'video';
     content: string;
     response?: string;
     sentiment?: string;
-    crisis_level?: "normal" | "urgent" | "crisis";
+    crisis_level?: 'normal' | 'urgent' | 'crisis';
     metadata?: unknown;
   }) {
     const { data, error } = await admin
-      .from("conversations")
+      .from('conversations')
       .insert([conversationData])
       .select()
       .single();
@@ -410,10 +410,10 @@ export class RealSupabaseManager {
 
   async getConversations(_patientId: string, limit?: number) {
     let query = admin
-      .from("conversations")
-      .select("*")
-      .eq("patient_id", patientId)
-      .order("created_at", { ascending: false });
+      .from('conversations')
+      .select('*')
+      .eq('patient_id', patientId)
+      .order('created_at', { ascending: false });
 
     if (limit) query = query.limit(limit);
 
@@ -436,7 +436,7 @@ export class RealSupabaseManager {
     status?: string;
   }) {
     const { data, error } = await admin
-      .from("insurance_claims")
+      .from('insurance_claims')
       .insert([claimData])
       .select()
       .single();
@@ -448,10 +448,10 @@ export class RealSupabaseManager {
 
   async getInsuranceClaims(_patientId: string) {
     const { data, error } = await admin
-      .from("insurance_claims")
-      .select("*")
-      .eq("patient_id", patientId)
-      .order("submitted_at", { ascending: false });
+      .from('insurance_claims')
+      .select('*')
+      .eq('patient_id', patientId)
+      .order('submitted_at', { ascending: false });
 
     if (error)
       throw new Error(`Failed to get insurance claims: ${error.message}`);
@@ -460,9 +460,9 @@ export class RealSupabaseManager {
 
   async updateInsuranceClaim(_claimId: string, updates: unknown) {
     const { data, error } = await admin
-      .from("insurance_claims")
+      .from('insurance_claims')
       .update(updates)
-      .eq("id", claimId)
+      .eq('id', claimId)
       .select()
       .single();
 
@@ -475,13 +475,13 @@ export class RealSupabaseManager {
   async createNotification(_notificationData: {
     user_id: string;
     type: string;
-    priority?: "low" | "medium" | "high" | "critical";
+    priority?: 'low' | 'medium' | 'high' | 'critical';
     title: string;
     message: string;
     data?: unknown;
   }) {
     const { data, error } = await admin
-      .from("notifications")
+      .from('notifications')
       .insert([notificationData])
       .select()
       .single();
@@ -493,12 +493,12 @@ export class RealSupabaseManager {
 
   async getNotifications(_userId: string, unreadOnly?: boolean) {
     let query = admin
-      .from("notifications")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .from('notifications')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
 
-    if (unreadOnly) query = query.eq("is_read", false);
+    if (unreadOnly) query = query.eq('is_read', false);
 
     const { data, error } = await query;
 
@@ -508,9 +508,9 @@ export class RealSupabaseManager {
 
   async markNotificationAsRead(_notificationId: string) {
     const { data, error } = await admin
-      .from("notifications")
+      .from('notifications')
       .update({ is_read: true })
-      .eq("id", notificationId)
+      .eq('id', notificationId)
       .select()
       .single();
 
@@ -522,15 +522,15 @@ export class RealSupabaseManager {
   // Analytics
   async getPatientStats() {
     const { data, error } = await admin
-      .from("users")
-      .select("id, created_at, role")
-      .eq("role", "patient");
+      .from('users')
+      .select('id, created_at, role')
+      .eq('role', 'patient');
 
     if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
 
     const __total = (data as any[]).length;
     const __active = (data as any[]).filter(
-      (_p: unknown) => p.created_at,
+      (_p: unknown) => p.created_at
     ).length;
     const __newLast30Days = (data as any[]).filter((_p: unknown) => {
       const __createdAt = new Date(p.created_at as string);
@@ -544,22 +544,22 @@ export class RealSupabaseManager {
 
   async getAppointmentStats() {
     const { data, error } = await admin
-      .from("appointments")
-      .select("status, appointment_date, created_at");
+      .from('appointments')
+      .select('status, appointment_date, created_at');
 
     if (error)
       throw new Error(`Failed to get appointment stats: ${error.message}`);
 
     const __total = (data as any[]).length;
     const __completed = (data as any[]).filter(
-      (_a: unknown) => a.status === "completed",
+      (_a: unknown) => a.status === 'completed'
     ).length;
     const __cancelled = (data as any[]).filter(
-      (_a: unknown) => a.status === "cancelled",
+      (_a: unknown) => a.status === 'cancelled'
     ).length;
     const __upcoming = (data as any[]).filter((_a: unknown) => {
       const __appointmentDate = new Date(a.appointment_date as string);
-      return appointmentDate >= new Date() && a.status === "scheduled";
+      return appointmentDate >= new Date() && a.status === 'scheduled';
     }).length;
 
     return { total, completed, cancelled, upcoming };
@@ -567,15 +567,15 @@ export class RealSupabaseManager {
 
   async getConversationStats() {
     const { data, error } = await admin
-      .from("conversations")
-      .select("crisis_level, created_at");
+      .from('conversations')
+      .select('crisis_level, created_at');
 
     if (error)
       throw new Error(`Failed to get conversation stats: ${error.message}`);
 
     const __total = (data as any[]).length;
     const __crisis = (data as any[]).filter(
-      (_c: unknown) => c.crisis_level === "crisis",
+      (_c: unknown) => c.crisis_level === 'crisis'
     ).length;
     const __recent = (data as any[]).filter((_c: unknown) => {
       const __createdAt = new Date(c.created_at as string);
@@ -591,21 +591,21 @@ export class RealSupabaseManager {
   async healthCheck() {
     try {
       const { data: _d, error } = await admin
-        .from("users")
-        .select("id")
+        .from('users')
+        .select('id')
         .limit(1);
 
       if (error) throw error;
 
       return {
-        status: "healthy",
+        status: 'healthy',
         connected: true,
         timestamp: new Date().toISOString(),
       };
     } catch (error) {
       const __err = error as Error;
       return {
-        status: "unhealthy",
+        status: 'unhealthy',
         connected: false,
         error: err.message,
         timestamp: new Date().toISOString(),
@@ -625,7 +625,7 @@ export class RealSupabaseManager {
     user_agent?: string;
   }) {
     const { data, error } = await admin
-      .from("audit_logs")
+      .from('audit_logs')
       .insert([auditData])
       .select()
       .single();

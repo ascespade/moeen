@@ -3,13 +3,13 @@
  * Test all API endpoints for functionality
  */
 
-import { _NextRequest, NextResponse } from "next/server";
+import { _NextRequest, NextResponse } from 'next/server';
 
 export async function __GET(_request: NextRequest) {
   try {
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ||
-      "https://socwpqzcalgvpzjwavgh.supabase.co";
+      'https://socwpqzcalgvpzjwavgh.supabase.co';
     const testResults: {
       timestamp: string;
       totalTests: number;
@@ -33,34 +33,34 @@ export async function __GET(_request: NextRequest) {
 
     // Test endpoints
     const __endpoints = [
-      { name: "Health Check", url: "/api/test/health", method: "GET" },
+      { name: 'Health Check', url: '/api/test/health', method: 'GET' },
       {
-        name: "Dashboard Metrics",
-        url: "/api/dashboard/metrics",
-        method: "GET",
+        name: 'Dashboard Metrics',
+        url: '/api/dashboard/metrics',
+        method: 'GET',
       },
-      { name: "Appointments List", url: "/api/appointments", method: "GET" },
-      { name: "Patients List", url: "/api/patients", method: "GET" },
-      { name: "Doctors List", url: "/api/doctors", method: "GET" },
+      { name: 'Appointments List', url: '/api/appointments', method: 'GET' },
+      { name: 'Patients List', url: '/api/patients', method: 'GET' },
+      { name: 'Doctors List', url: '/api/doctors', method: 'GET' },
       {
-        name: "Reports Generate",
-        url: "/api/reports/generate",
-        method: "POST",
-      },
-      {
-        name: "Notifications Schedule",
-        url: "/api/notifications/schedule",
-        method: "GET",
+        name: 'Reports Generate',
+        url: '/api/reports/generate',
+        method: 'POST',
       },
       {
-        name: "Medical Records Upload",
-        url: "/api/medical-records/upload",
-        method: "GET",
+        name: 'Notifications Schedule',
+        url: '/api/notifications/schedule',
+        method: 'GET',
       },
-      { name: "Insurance Claims", url: "/api/insurance/claims", method: "GET" },
-      { name: "Admin Users", url: "/api/admin/users", method: "GET" },
-      { name: "Chatbot Actions", url: "/api/chatbot/actions", method: "GET" },
-      { name: "Patient Journey", url: "/api/patients/journey", method: "POST" },
+      {
+        name: 'Medical Records Upload',
+        url: '/api/medical-records/upload',
+        method: 'GET',
+      },
+      { name: 'Insurance Claims', url: '/api/insurance/claims', method: 'GET' },
+      { name: 'Admin Users', url: '/api/admin/users', method: 'GET' },
+      { name: 'Chatbot Actions', url: '/api/chatbot/actions', method: 'GET' },
+      { name: 'Patient Journey', url: '/api/patients/journey', method: 'POST' },
     ];
 
     for (const endpoint of endpoints) {
@@ -70,7 +70,7 @@ export async function __GET(_request: NextRequest) {
         const __response = await fetch(`${baseUrl}${endpoint.url}`, {
           method: endpoint.method,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         });
 
@@ -85,10 +85,10 @@ export async function __GET(_request: NextRequest) {
 
         if (response.ok) {
           testResults.passed++;
-          result.status = "PASSED" as any;
+          result.status = 'PASSED' as any;
         } else {
           testResults.failed++;
-          result.status = "FAILED" as any;
+          result.status = 'FAILED' as any;
         }
 
         testResults.results.push(result);
@@ -114,18 +114,17 @@ export async function __GET(_request: NextRequest) {
       summary: {
         healthy: testResults.failed === 0,
         needsAttention: testResults.failed > 0,
-        criticalIssues: testResults.results.filter((r) => r.status >= 500)
-          .length,
+        criticalIssues: testResults.results.filter(r => r.status >= 500).length,
       },
     });
   } catch (error) {
     return NextResponse.json(
       {
         timestamp: new Date().toISOString(),
-        status: "error",
+        status: 'error',
         error: error.message,
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

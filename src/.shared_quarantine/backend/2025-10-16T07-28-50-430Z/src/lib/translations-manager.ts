@@ -1,5 +1,5 @@
-import { _cuid } from "./cuid";
-import { _getServerSupabase } from "./supabaseClient";
+import { _cuid } from './cuid';
+import { _getServerSupabase } from './supabaseClient';
 /**
  * Translations Manager
  * Centralized system for managing translations with CUID
@@ -7,7 +7,7 @@ import { _getServerSupabase } from "./supabaseClient";
 
 export interface Translation {
   id: string;
-  locale: "ar" | "en";
+  locale: 'ar' | 'en';
   namespace: string;
   key: string;
   value: string;
@@ -16,7 +16,7 @@ export interface Translation {
 }
 
 export interface TranslationInput {
-  locale: "ar" | "en";
+  locale: 'ar' | 'en';
   namespace: string;
   key: string;
   value: string;
@@ -26,13 +26,13 @@ export interface TranslationInput {
  * Add a single translation to the database
  */
 export async function __addTranslation(
-  translation: TranslationInput,
+  translation: TranslationInput
 ): Promise<Translation> {
   const __supabase = await getServerSupabase();
   const __id = cuid.translation();
 
   const { data, error } = await supabase
-    .from("translations")
+    .from('translations')
     .insert({
       id,
       locale: translation.locale,
@@ -54,11 +54,11 @@ export async function __addTranslation(
  * Add multiple translations at once
  */
 export async function __addMultipleTranslations(
-  translations: TranslationInput[],
+  translations: TranslationInput[]
 ): Promise<Translation[]> {
   const __supabase = await getServerSupabase();
 
-  const __translationsWithIds = translations.map((translation) => ({
+  const __translationsWithIds = translations.map(translation => ({
     id: cuid.translation(),
     locale: translation.locale,
     namespace: translation.namespace,
@@ -67,7 +67,7 @@ export async function __addMultipleTranslations(
   }));
 
   const { data, error } = await supabase
-    .from("translations")
+    .from('translations')
     .insert(translationsWithIds)
     .select();
 
@@ -82,16 +82,16 @@ export async function __addMultipleTranslations(
  * Get translations by locale and namespace
  */
 export async function __getTranslations(
-  locale: "ar" | "en",
-  namespace: string = "common",
+  locale: 'ar' | 'en',
+  namespace: string = 'common'
 ): Promise<Record<string, string>> {
   const __supabase = await getServerSupabase();
 
   const { data, error } = await supabase
-    .from("translations")
-    .select("key, value")
-    .eq("locale", locale)
-    .eq("namespace", namespace);
+    .from('translations')
+    .select('key, value')
+    .eq('locale', locale)
+    .eq('namespace', namespace);
 
   if (error) {
     throw new Error(`Failed to get translations: ${error.message}`);
@@ -110,14 +110,14 @@ export async function __getTranslations(
  */
 export async function __updateTranslation(
   id: string,
-  value: string,
+  value: string
 ): Promise<Translation> {
   const __supabase = await getServerSupabase();
 
   const { data, error } = await supabase
-    .from("translations")
+    .from('translations')
     .update({ value, updated_at: new Date().toISOString() })
-    .eq("id", id)
+    .eq('id', id)
     .select()
     .single();
 
@@ -134,7 +134,7 @@ export async function __updateTranslation(
 export async function __deleteTranslation(_id: string): Promise<void> {
   const __supabase = await getServerSupabase();
 
-  const { error } = await supabase.from("translations").delete().eq("id", id);
+  const { error } = await supabase.from('translations').delete().eq('id', id);
 
   if (error) {
     throw new Error(`Failed to delete translation: ${error.message}`);
@@ -145,11 +145,11 @@ export async function __deleteTranslation(_id: string): Promise<void> {
  * Bulk insert translations with CUID
  */
 export async function __bulkInsertTranslations(
-  translations: TranslationInput[],
+  translations: TranslationInput[]
 ): Promise<void> {
   const __supabase = await getServerSupabase();
 
-  const __translationsWithIds = translations.map((translation) => ({
+  const __translationsWithIds = translations.map(translation => ({
     id: cuid.translation(),
     locale: translation.locale,
     namespace: translation.namespace,
@@ -158,8 +158,8 @@ export async function __bulkInsertTranslations(
   }));
 
   const { error } = await supabase
-    .from("translations")
-    .upsert(translationsWithIds, { onConflict: "locale,namespace,key" });
+    .from('translations')
+    .upsert(translationsWithIds, { onConflict: 'locale,namespace,key' });
 
   if (error) {
     throw new Error(`Failed to bulk insert translations: ${error.message}`);
@@ -170,16 +170,16 @@ export async function __bulkInsertTranslations(
  * Get all translations for a locale
  */
 export async function __getAllTranslationsForLocale(
-  locale: "ar" | "en",
+  locale: 'ar' | 'en'
 ): Promise<Translation[]> {
   const __supabase = await getServerSupabase();
 
   const { data, error } = await supabase
-    .from("translations")
-    .select("*")
-    .eq("locale", locale)
-    .order("namespace", { ascending: true })
-    .order("key", { ascending: true });
+    .from('translations')
+    .select('*')
+    .eq('locale', locale)
+    .order('namespace', { ascending: true })
+    .order('key', { ascending: true });
 
   if (error) {
     throw new Error(`Failed to get translations: ${error.message}`);
@@ -193,17 +193,17 @@ export async function __getAllTranslationsForLocale(
  */
 export async function __searchTranslations(
   query: string,
-  locale?: "ar" | "en",
+  locale?: 'ar' | 'en'
 ): Promise<Translation[]> {
   const __supabase = await getServerSupabase();
 
   let queryBuilder = supabase
-    .from("translations")
-    .select("*")
+    .from('translations')
+    .select('*')
     .or(`key.ilike.%${query}%,value.ilike.%${query}%`);
 
   if (locale) {
-    queryBuilder = queryBuilder.eq("locale", locale);
+    queryBuilder = queryBuilder.eq('locale', locale);
   }
 
   const { data, error } = await queryBuilder;

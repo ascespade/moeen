@@ -1,17 +1,17 @@
 // Logger implementation
 
 interface LogLevel {
-  ERROR: "error";
-  WARN: "warn";
-  INFO: "info";
-  DEBUG: "debug";
+  ERROR: 'error';
+  WARN: 'warn';
+  INFO: 'info';
+  DEBUG: 'debug';
 }
 
 const LOG_LEVELS: LogLevel = {
-  ERROR: "error",
-  WARN: "warn",
-  INFO: "info",
-  DEBUG: "debug",
+  ERROR: 'error',
+  WARN: 'warn',
+  INFO: 'info',
+  DEBUG: 'debug',
 };
 
 interface LogEntry {
@@ -24,13 +24,13 @@ interface LogEntry {
 }
 
 class Logger {
-  private isDevelopment = process.env.NODE_ENV === "development";
-  private isProduction = process.env.NODE_ENV === "production";
+  private isDevelopment = process.env.NODE_ENV === 'development';
+  private isProduction = process.env.NODE_ENV === 'production';
 
   private formatMessage(
     level: string,
     message: string,
-    context?: unknown,
+    context?: unknown
   ): LogEntry {
     return {
       level,
@@ -44,7 +44,7 @@ class Logger {
 
   private shouldLog(_level: string): boolean {
     if (this.isDevelopment) return true;
-    if (this.isProduction) return level !== "debug";
+    if (this.isProduction) return level !== 'debug';
     return true;
   }
 
@@ -55,35 +55,35 @@ class Logger {
 
     // Console logging
     const consoleMethod =
-      level === "error"
-        ? "error"
-        : level === "warn"
-          ? "warn"
-          : level === "info"
-            ? "info"
-            : "log";
+      level === 'error'
+        ? 'error'
+        : level === 'warn'
+          ? 'warn'
+          : level === 'info'
+            ? 'info'
+            : 'log';
 
     console[consoleMethod](
       `[${logEntry.timestamp}] ${level.toUpperCase()}: ${message}`,
-      context || "",
+      context || ''
     );
 
     // Send to external service in production
-    if (this.isProduction && level === "error") {
+    if (this.isProduction && level === 'error') {
       this.sendToExternalService(logEntry);
     }
   }
 
   private async sendToExternalService(_logEntry: LogEntry) {
     try {
-      await fetch("/api/logs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      await fetch('/api/logs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(logEntry),
       });
     } catch (error) {
       // Fallback to console if external service fails
-      logger.error("Failed to send log to external service:", error);
+      logger.error('Failed to send log to external service:', error);
     }
   }
 

@@ -1,5 +1,5 @@
-import { _createServerClient } from "@supabase/ssr";
-import { _cookies } from "next/headers";
+import { _createServerClient } from '@supabase/ssr';
+import { _cookies } from 'next/headers';
 
 export function __createClient() {
   const __cookieStore = cookies();
@@ -15,7 +15,7 @@ export function __createClient() {
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options),
+              cookieStore.set(name, value, options)
             );
           } catch {
             // The `setAll` method was called from a Server Component.
@@ -24,6 +24,6 @@ export function __createClient() {
           }
         },
       },
-    },
+    }
   );
 }

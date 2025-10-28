@@ -1,16 +1,16 @@
-import { _NextRequest, NextResponse } from "next/server";
-import { _realDB } from "./supabase-real";
-import { _createHash } from "crypto";
-import { _extname } from "path";
+import { _NextRequest, NextResponse } from 'next/server';
+import { _realDB } from './supabase-real';
+import { _createHash } from 'crypto';
+import { _extname } from 'path';
 // Comprehensive File Upload and Media Management System for Hemam Center
 
 // File types and configurations
 export const __ALLOWED_FILE_TYPES = {
-  images: ["jpg", "jpeg", "png", "gif", "webp", "svg"],
-  documents: ["pdf", "doc", "docx", "txt", "rtf"],
-  audio: ["mp3", "wav", "ogg", "m4a"],
-  video: ["mp4", "avi", "mov", "wmv", "flv"],
-  medical: ["dcm", "dicom", "nii", "nifti"], // Medical imaging formats
+  images: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'],
+  documents: ['pdf', 'doc', 'docx', 'txt', 'rtf'],
+  audio: ['mp3', 'wav', 'ogg', 'm4a'],
+  video: ['mp4', 'avi', 'mov', 'wmv', 'flv'],
+  medical: ['dcm', 'dicom', 'nii', 'nifti'], // Medical imaging formats
 } as const;
 
 export const __MAX_FILE_SIZES = {
@@ -29,7 +29,7 @@ export interface FileMetadata {
   filePath: string;
   fileSize: number;
   mimeType: string;
-  fileType: "image" | "document" | "audio" | "video" | "medical";
+  fileType: 'image' | 'document' | 'audio' | 'video' | 'medical';
   uploadedBy: string;
   patientId?: string;
   sessionId?: string;
@@ -62,7 +62,7 @@ export class FileUploadHandler {
   validateFile(
     file: File,
     allowedTypes: string[],
-    maxSize: number,
+    maxSize: number
   ): {
     valid: boolean;
     error?: string;
@@ -80,7 +80,7 @@ export class FileUploadHandler {
     if (!allowedTypes.includes(fileExtension)) {
       return {
         valid: false,
-        error: `File type .${fileExtension} is not allowed. Allowed types: ${allowedTypes.join(", ")}`,
+        error: `File type .${fileExtension} is not allowed. Allowed types: ${allowedTypes.join(', ')}`,
       };
     }
 
@@ -99,35 +99,35 @@ export class FileUploadHandler {
   // Get allowed MIME types for file extensions
   private getAllowedMimeTypes(_extensions: string[]): string[] {
     const mimeTypeMap: Record<string, string[]> = {
-      jpg: ["image/jpeg"],
-      jpeg: ["image/jpeg"],
-      png: ["image/png"],
-      gif: ["image/gif"],
-      webp: ["image/webp"],
-      svg: ["image/svg+xml"],
-      pdf: ["application/pdf"],
-      doc: ["application/msword"],
+      jpg: ['image/jpeg'],
+      jpeg: ['image/jpeg'],
+      png: ['image/png'],
+      gif: ['image/gif'],
+      webp: ['image/webp'],
+      svg: ['image/svg+xml'],
+      pdf: ['application/pdf'],
+      doc: ['application/msword'],
       docx: [
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       ],
-      txt: ["text/plain"],
-      rtf: ["application/rtf"],
-      mp3: ["audio/mpeg"],
-      wav: ["audio/wav"],
-      ogg: ["audio/ogg"],
-      m4a: ["audio/mp4"],
-      mp4: ["video/mp4"],
-      avi: ["video/x-msvideo"],
-      mov: ["video/quicktime"],
-      wmv: ["video/x-ms-wmv"],
-      flv: ["video/x-flv"],
-      dcm: ["application/dicom"],
-      dicom: ["application/dicom"],
-      nii: ["application/octet-stream"],
-      nifti: ["application/octet-stream"],
+      txt: ['text/plain'],
+      rtf: ['application/rtf'],
+      mp3: ['audio/mpeg'],
+      wav: ['audio/wav'],
+      ogg: ['audio/ogg'],
+      m4a: ['audio/mp4'],
+      mp4: ['video/mp4'],
+      avi: ['video/x-msvideo'],
+      mov: ['video/quicktime'],
+      wmv: ['video/x-ms-wmv'],
+      flv: ['video/x-flv'],
+      dcm: ['application/dicom'],
+      dicom: ['application/dicom'],
+      nii: ['application/octet-stream'],
+      nifti: ['application/octet-stream'],
     };
 
-    return extensions.flatMap((ext) => mimeTypeMap[ext] || []);
+    return extensions.flatMap(ext => mimeTypeMap[ext] || []);
   }
 
   // Generate unique filename
@@ -135,8 +135,8 @@ export class FileUploadHandler {
     const __timestamp = Date.now();
     const __randomString = Math.random().toString(36).substring(2, 15);
     const __extension = extname(originalName);
-    const __baseName = originalName.replace(extension, "");
-    const __sanitizedBaseName = baseName.replace(/[^a-zA-Z0-9]/g, "_");
+    const __baseName = originalName.replace(extension, '');
+    const __sanitizedBaseName = baseName.replace(/[^a-zA-Z0-9]/g, '_');
 
     return `${userId}_${timestamp}_${randomString}_${sanitizedBaseName}${extension}`;
   }
@@ -144,45 +144,45 @@ export class FileUploadHandler {
   // Calculate file checksum
   async calculateChecksum(_file: File): Promise<string> {
     const __buffer = await file.arrayBuffer();
-    const __hash = createHash("sha256");
+    const __hash = createHash('sha256');
     hash.update(new Uint8Array(buffer));
-    return hash.digest("hex");
+    return hash.digest('hex');
   }
 
   // Determine file type from extension
   getFileType(
-    fileName: string,
-  ): "image" | "document" | "audio" | "video" | "medical" {
+    fileName: string
+  ): 'image' | 'document' | 'audio' | 'video' | 'medical' {
     const __extension = extname(fileName).toLowerCase().slice(1);
 
     if ((ALLOWED_FILE_TYPES.images as unknown as string[]).includes(extension))
-      return "image";
+      return 'image';
     if (
       (ALLOWED_FILE_TYPES.documents as unknown as string[]).includes(extension)
     )
-      return "document";
+      return 'document';
     if ((ALLOWED_FILE_TYPES.audio as unknown as string[]).includes(extension))
-      return "audio";
+      return 'audio';
     if ((ALLOWED_FILE_TYPES.video as unknown as string[]).includes(extension))
-      return "video";
+      return 'video';
     if ((ALLOWED_FILE_TYPES.medical as unknown as string[]).includes(extension))
-      return "medical";
+      return 'medical';
 
-    return "document"; // Default fallback
+    return 'document'; // Default fallback
   }
 
   // Get max file size for file type
   getMaxFileSize(_fileType: string): number {
     switch (fileType) {
-      case "image":
+      case 'image':
         return MAX_FILE_SIZES.images;
-      case "document":
+      case 'document':
         return MAX_FILE_SIZES.documents;
-      case "audio":
+      case 'audio':
         return MAX_FILE_SIZES.audio;
-      case "video":
+      case 'video':
         return MAX_FILE_SIZES.video;
-      case "medical":
+      case 'medical':
         return MAX_FILE_SIZES.medical;
       default:
         return MAX_FILE_SIZES.documents;
@@ -192,15 +192,15 @@ export class FileUploadHandler {
   // Get allowed extensions for file type
   getAllowedExtensions(_fileType: string): string[] {
     switch (fileType) {
-      case "image":
+      case 'image':
         return [...ALLOWED_FILE_TYPES.images];
-      case "document":
+      case 'document':
         return [...ALLOWED_FILE_TYPES.documents];
-      case "audio":
+      case 'audio':
         return [...ALLOWED_FILE_TYPES.audio];
-      case "video":
+      case 'video':
         return [...ALLOWED_FILE_TYPES.video];
-      case "medical":
+      case 'medical':
         return [...ALLOWED_FILE_TYPES.medical];
       default:
         return [...ALLOWED_FILE_TYPES.documents];
@@ -224,7 +224,7 @@ export interface FileStorage {
   }): Promise<FileMetadata[]>;
   updateMetadata(
     fileId: string,
-    updates: Partial<FileMetadata>,
+    updates: Partial<FileMetadata>
   ): Promise<FileMetadata>;
 }
 
@@ -234,13 +234,13 @@ export class LocalFileStorage implements FileStorage {
   private fileHandler: FileUploadHandler;
 
   constructor() {
-    this.uploadDir = process.env.UPLOAD_DIR || "./uploads";
+    this.uploadDir = process.env.UPLOAD_DIR || './uploads';
     this.fileHandler = FileUploadHandler.getInstance();
   }
 
   async upload(
     file: File,
-    metadata: Partial<FileMetadata>,
+    metadata: Partial<FileMetadata>
   ): Promise<FileMetadata> {
     // Validate file
     const __fileType = this.fileHandler.getFileType(file.name);
@@ -250,7 +250,7 @@ export class LocalFileStorage implements FileStorage {
     const __validation = this.fileHandler.validateFile(
       file,
       allowedExtensions,
-      maxSize,
+      maxSize
     );
     if (!validation.valid) {
       throw new Error(validation.error);
@@ -260,7 +260,7 @@ export class LocalFileStorage implements FileStorage {
     const __fileId = `file_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
     const __fileName = this.fileHandler.generateFileName(
       file.name,
-      metadata.uploadedBy || "unknown",
+      metadata.uploadedBy || 'unknown'
     );
     const __filePath = `${this.uploadDir}/${fileName}`;
     const __checksum = await this.fileHandler.calculateChecksum(file);
@@ -273,7 +273,7 @@ export class LocalFileStorage implements FileStorage {
       fileSize: file.size,
       mimeType: file.type,
       fileType,
-      uploadedBy: metadata.uploadedBy || "unknown",
+      uploadedBy: metadata.uploadedBy || 'unknown',
       tags: metadata.tags || [],
       isPublic: metadata.isPublic || false,
       isEncrypted: metadata.isEncrypted || false,
@@ -298,8 +298,8 @@ export class LocalFileStorage implements FileStorage {
 
     // Store metadata in database
     await realDB.logAudit({
-      action: "FILE_UPLOAD",
-      table_name: "file_metadata",
+      action: 'FILE_UPLOAD',
+      table_name: 'file_metadata',
       new_values: fileMetadata,
     });
 
@@ -309,15 +309,15 @@ export class LocalFileStorage implements FileStorage {
   async download(__fileId: string): Promise<Buffer> {
     // In a real implementation, read file from disk
     // For now, return empty buffer
-    return Buffer.from("");
+    return Buffer.from('');
   }
 
   async delete(_fileId: string): Promise<boolean> {
     // In a real implementation, delete file from disk
     // For now, just log the deletion
     await realDB.logAudit({
-      action: "FILE_DELETE",
-      table_name: "file_metadata",
+      action: 'FILE_DELETE',
+      table_name: 'file_metadata',
       record_id: fileId,
     });
 
@@ -345,7 +345,7 @@ export class LocalFileStorage implements FileStorage {
 
   async updateMetadata(
     _fileId: string,
-    _updates: Partial<FileMetadata>,
+    _updates: Partial<FileMetadata>
   ): Promise<FileMetadata> {
     // In a real implementation, update file metadata in database
     // For now, return empty metadata
@@ -355,30 +355,30 @@ export class LocalFileStorage implements FileStorage {
 
 // File upload API handler
 export async function __handleFileUpload(
-  request: NextRequest,
+  request: NextRequest
 ): Promise<NextResponse> {
   try {
     const __formData = await request.formData();
-    const __file = formData.get("file") as File;
-    const __userId = formData.get("userId") as string;
-    const __patientId = formData.get("patientId") as string;
-    const __sessionId = formData.get("sessionId") as string;
-    const __appointmentId = formData.get("appointmentId") as string;
-    const __tags = (formData.get("tags") as string)?.split(",") || [];
-    const __description = formData.get("description") as string;
-    const __isPublic = formData.get("isPublic") === "true";
+    const __file = formData.get('file') as File;
+    const __userId = formData.get('userId') as string;
+    const __patientId = formData.get('patientId') as string;
+    const __sessionId = formData.get('sessionId') as string;
+    const __appointmentId = formData.get('appointmentId') as string;
+    const __tags = (formData.get('tags') as string)?.split(',') || [];
+    const __description = formData.get('description') as string;
+    const __isPublic = formData.get('isPublic') === 'true';
 
     if (!file) {
       return NextResponse.json(
-        { success: false, error: "No file provided" },
-        { status: 400 },
+        { success: false, error: 'No file provided' },
+        { status: 400 }
       );
     }
 
     if (!userId) {
       return NextResponse.json(
-        { success: false, error: "User ID is required" },
-        { status: 400 },
+        { success: false, error: 'User ID is required' },
+        { status: 400 }
       );
     }
 
@@ -409,15 +409,15 @@ export async function __handleFileUpload(
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: "File upload failed" },
-      { status: 500 },
+      { success: false, error: 'File upload failed' },
+      { status: 500 }
     );
   }
 }
 
 // File download API handler
 export async function __handleFileDownload(
-  fileId: string,
+  fileId: string
 ): Promise<NextResponse> {
   try {
     const __storage = new LocalFileStorage();
@@ -425,8 +425,8 @@ export async function __handleFileDownload(
 
     if (!metadata) {
       return NextResponse.json(
-        { success: false, error: "File not found" },
-        { status: 404 },
+        { success: false, error: 'File not found' },
+        { status: 404 }
       );
     }
 
@@ -439,7 +439,7 @@ export async function __handleFileDownload(
     const __fileBuffer = await storage.download(fileId);
     const __arrayBuffer = fileBuffer.buffer.slice(
       fileBuffer.byteOffset,
-      fileBuffer.byteOffset + fileBuffer.byteLength,
+      fileBuffer.byteOffset + fileBuffer.byteLength
     );
 
     // Update download count and last accessed
@@ -450,31 +450,31 @@ export async function __handleFileDownload(
 
     return new NextResponse(arrayBuffer as ArrayBuffer, {
       headers: {
-        "Content-Type": metadata.mimeType,
-        "Content-Disposition": `attachment; filename="${metadata.originalName}"`,
-        "Content-Length": metadata.fileSize.toString(),
+        'Content-Type': metadata.mimeType,
+        'Content-Disposition': `attachment; filename="${metadata.originalName}"`,
+        'Content-Length': metadata.fileSize.toString(),
       },
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: "File download failed" },
-      { status: 500 },
+      { success: false, error: 'File download failed' },
+      { status: 500 }
     );
   }
 }
 
 // File list API handler
 export async function __handleFileList(
-  request: NextRequest,
+  request: NextRequest
 ): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
-    const __userId = searchParams.get("userId");
-    const __patientId = searchParams.get("patientId");
-    const __fileType = searchParams.get("fileType");
-    const __tags = searchParams.get("tags")?.split(",");
-    const __limit = parseInt(searchParams.get("limit") || "20");
-    const __offset = parseInt(searchParams.get("offset") || "0");
+    const __userId = searchParams.get('userId');
+    const __patientId = searchParams.get('patientId');
+    const __fileType = searchParams.get('fileType');
+    const __tags = searchParams.get('tags')?.split(',');
+    const __limit = parseInt(searchParams.get('limit') || '20');
+    const __offset = parseInt(searchParams.get('offset') || '0');
 
     const __storage = new LocalFileStorage();
     const filters: {
@@ -502,8 +502,8 @@ export async function __handleFileList(
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: "Failed to list files" },
-      { status: 500 },
+      { success: false, error: 'Failed to list files' },
+      { status: 500 }
     );
   }
 }

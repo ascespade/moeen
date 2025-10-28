@@ -4,11 +4,11 @@
  */
 
 export enum LogLevel {
-  ERROR = "error",
-  WARN = "warn",
-  INFO = "info",
-  DEBUG = "debug",
-  TRACE = "trace",
+  ERROR = 'error',
+  WARN = 'warn',
+  INFO = 'info',
+  DEBUG = 'debug',
+  TRACE = 'trace',
 }
 
 export interface LogEntry {
@@ -28,7 +28,7 @@ class Logger {
 
   constructor() {
     this.logLevel = (process.env.LOG_LEVEL as LogLevel) || LogLevel.INFO;
-    this.isDevelopment = process.env.NODE_ENV === "development";
+    this.isDevelopment = process.env.NODE_ENV === 'development';
   }
 
   private shouldLog(_level: LogLevel): boolean {
@@ -101,7 +101,7 @@ class Logger {
     }
 
     // In production, this would also write to files or external logging services
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === 'production') {
       this.writeToFile(entry);
     }
   }
@@ -116,7 +116,7 @@ class Logger {
     message: string,
     context?: Record<string, any>,
     error?: Error,
-    metadata?: Record<string, any>,
+    metadata?: Record<string, any>
   ): void {
     this.writeLog({
       timestamp: new Date().toISOString(),
@@ -131,7 +131,7 @@ class Logger {
   warn(
     message: string,
     context?: Record<string, any>,
-    metadata?: Record<string, any>,
+    metadata?: Record<string, any>
   ): void {
     this.writeLog({
       timestamp: new Date().toISOString(),
@@ -145,7 +145,7 @@ class Logger {
   info(
     message: string,
     context?: Record<string, any>,
-    metadata?: Record<string, any>,
+    metadata?: Record<string, any>
   ): void {
     this.writeLog({
       timestamp: new Date().toISOString(),
@@ -159,7 +159,7 @@ class Logger {
   debug(
     message: string,
     context?: Record<string, any>,
-    metadata?: Record<string, any>,
+    metadata?: Record<string, any>
   ): void {
     this.writeLog({
       timestamp: new Date().toISOString(),
@@ -173,7 +173,7 @@ class Logger {
   trace(
     message: string,
     context?: Record<string, any>,
-    metadata?: Record<string, any>,
+    metadata?: Record<string, any>
   ): void {
     this.writeLog({
       timestamp: new Date().toISOString(),
@@ -191,7 +191,7 @@ class Logger {
     statusCode: number,
     responseTime: number,
     userId?: string,
-    requestId?: string,
+    requestId?: string
   ): void {
     this.info(
       `${method} ${url}`,
@@ -204,14 +204,14 @@ class Logger {
       {
         userId,
         requestId,
-      },
+      }
     );
   }
 
   // Database query logging
   logQuery(_query: string, duration: number, rowsAffected?: number): void {
-    this.debug("Database query executed", {
-      query: query.substring(0, 100) + (query.length > 100 ? "..." : ""),
+    this.debug('Database query executed', {
+      query: query.substring(0, 100) + (query.length > 100 ? '...' : ''),
       duration: `${duration}ms`,
       rowsAffected,
     });
@@ -222,7 +222,7 @@ class Logger {
     event: string,
     details: Record<string, any>,
     userId?: string,
-    ip?: string,
+    ip?: string
   ): void {
     this.warn(`Security event: ${event}`, details, {
       userId,
@@ -235,7 +235,7 @@ class Logger {
   logPerformance(
     operation: string,
     duration: number,
-    metadata?: Record<string, any>,
+    metadata?: Record<string, any>
   ): void {
     this.info(
       `Performance: ${operation}`,
@@ -243,7 +243,7 @@ class Logger {
         operation,
         duration: `${duration}ms`,
       },
-      metadata,
+      metadata
     );
   }
 
@@ -251,7 +251,7 @@ class Logger {
   logBusinessEvent(
     event: string,
     details: Record<string, any>,
-    userId?: string,
+    userId?: string
   ): void {
     this.info(`Business event: ${event}`, details, {
       userId,

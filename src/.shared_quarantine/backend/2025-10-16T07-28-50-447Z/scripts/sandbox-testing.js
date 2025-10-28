@@ -1,27 +1,27 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
-const { spawn } = require("child_process");
+const fs = require('fs');
+const path = require('path');
+const { spawn } = require('child_process');
 
 class SandboxTesting {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
-    this.sandboxDir = path.join(this.workspaceRoot, "sandbox");
-    this.logFile = path.join(this.workspaceRoot, "logs", "sandbox-testing.log");
+    this.workspaceRoot = path.join(__dirname, '..');
+    this.sandboxDir = path.join(this.workspaceRoot, 'sandbox');
+    this.logFile = path.join(this.workspaceRoot, 'logs', 'sandbox-testing.log');
     this.testResultsFile = path.join(
       this.workspaceRoot,
-      "temp",
-      "sandbox-test-results.json",
+      'temp',
+      'sandbox-test-results.json'
     );
     this.testHistoryFile = path.join(
       this.workspaceRoot,
-      "learning",
-      "test-history.json",
+      'learning',
+      'test-history.json'
     );
   }
 
-  log(message, level = "info") {
+  log(message, level = 'info') {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] [${level.toUpperCase()}] Sandbox Testing: ${message}\n`;
 
@@ -35,7 +35,7 @@ class SandboxTesting {
   }
 
   async initialize() {
-    this.log("Initializing Sandbox Testing...");
+    this.log('Initializing Sandbox Testing...');
 
     // Create sandbox directory
     if (!fs.existsSync(this.sandboxDir)) {
@@ -43,7 +43,7 @@ class SandboxTesting {
     }
 
     // Create test directories
-    const testDirs = ["scripts", "config", "temp", "logs", "reports"];
+    const testDirs = ['scripts', 'config', 'temp', 'logs', 'reports'];
     for (const dir of testDirs) {
       const testDir = path.join(this.sandboxDir, dir);
       if (!fs.existsSync(testDir)) {
@@ -51,18 +51,18 @@ class SandboxTesting {
       }
     }
 
-    this.log("Sandbox Testing initialized");
+    this.log('Sandbox Testing initialized');
   }
 
   async createSandboxEnvironment() {
-    this.log("Creating sandbox environment...");
+    this.log('Creating sandbox environment...');
 
     // Copy essential files to sandbox
     const filesToCopy = [
-      "package.json",
-      "next.config.js",
-      "tailwind.config.js",
-      "tsconfig.json",
+      'package.json',
+      'next.config.js',
+      'tailwind.config.js',
+      'tsconfig.json',
     ];
 
     for (const file of filesToCopy) {
@@ -78,19 +78,19 @@ class SandboxTesting {
     // Create sandbox-specific configuration
     await this.createSandboxConfig();
 
-    this.log("Sandbox environment created");
+    this.log('Sandbox environment created');
   }
 
   async createSandboxConfig() {
     const sandboxConfig = {
-      environment: "sandbox",
+      environment: 'sandbox',
       database: {
-        url: "sandbox://localhost:5432/sandbox_db",
+        url: 'sandbox://localhost:5432/sandbox_db',
         enabled: false,
       },
       logging: {
-        level: "debug",
-        file: "sandbox-test.log",
+        level: 'debug',
+        file: 'sandbox-test.log',
       },
       testing: {
         enabled: true,
@@ -101,8 +101,8 @@ class SandboxTesting {
 
     const configFile = path.join(
       this.sandboxDir,
-      "config",
-      "sandbox-config.json",
+      'config',
+      'sandbox-config.json'
     );
     fs.writeFileSync(configFile, JSON.stringify(sandboxConfig, null, 2));
   }
@@ -117,7 +117,7 @@ class SandboxTesting {
       success: false,
       duration: 0,
       error: null,
-      output: "",
+      output: '',
       warnings: [],
     };
 
@@ -126,16 +126,16 @@ class SandboxTesting {
       const result = await testFunction();
 
       testResult.success = result.success || false;
-      testResult.output = result.output || "";
+      testResult.output = result.output || '';
       testResult.warnings = result.warnings || [];
 
       if (!testResult.success) {
-        testResult.error = result.error || "Test failed";
+        testResult.error = result.error || 'Test failed';
       }
     } catch (error) {
       testResult.success = false;
       testResult.error = error.message;
-      this.log(`Test ${testName} failed: ${error.message}`, "error");
+      this.log(`Test ${testName} failed: ${error.message}`, 'error');
     }
 
     testResult.duration = Date.now() - testStartTime;
@@ -145,7 +145,7 @@ class SandboxTesting {
     if (testResult.success) {
       this.log(`Test ${testName} passed in ${testResult.duration}ms`);
     } else {
-      this.log(`Test ${testName} failed: ${testResult.error}`, "error");
+      this.log(`Test ${testName} failed: ${testResult.error}`, 'error');
     }
 
     return testResult;
@@ -153,24 +153,24 @@ class SandboxTesting {
 
   async testScriptExecution(scriptPath) {
     return this.runTest(`Script Execution: ${scriptPath}`, async () => {
-      return new Promise((resolve) => {
-        const child = spawn("node", [scriptPath], {
+      return new Promise(resolve => {
+        const child = spawn('node', [scriptPath], {
           cwd: this.sandboxDir,
-          stdio: "pipe",
+          stdio: 'pipe',
         });
 
-        let stdout = "";
-        let stderr = "";
+        let stdout = '';
+        let stderr = '';
 
-        child.stdout.on("data", (data) => {
+        child.stdout.on('data', data => {
           stdout += data.toString();
         });
 
-        child.stderr.on("data", (data) => {
+        child.stderr.on('data', data => {
           stderr += data.toString();
         });
 
-        child.on("close", (code) => {
+        child.on('close', code => {
           resolve({
             success: code === 0,
             output: stdout,
@@ -178,7 +178,7 @@ class SandboxTesting {
           });
         });
 
-        child.on("error", (error) => {
+        child.on('error', error => {
           resolve({
             success: false,
             error: error.message,
@@ -192,7 +192,7 @@ class SandboxTesting {
     return this.runTest(`Configuration Changes: ${configPath}`, async () => {
       try {
         // Backup original config
-        const backupPath = configPath + ".backup";
+        const backupPath = configPath + '.backup';
         if (fs.existsSync(configPath)) {
           fs.copyFileSync(configPath, backupPath);
         }
@@ -200,7 +200,7 @@ class SandboxTesting {
         // Apply changes
         let config = {};
         if (fs.existsSync(configPath)) {
-          const data = fs.readFileSync(configPath, "utf8");
+          const data = fs.readFileSync(configPath, 'utf8');
           config = JSON.parse(data);
         }
 
@@ -234,11 +234,11 @@ class SandboxTesting {
   }
 
   async testSystemHealth() {
-    return this.runTest("System Health Check", async () => {
+    return this.runTest('System Health Check', async () => {
       const healthChecks = [];
 
       // Check if essential directories exist
-      const essentialDirs = ["temp", "logs", "reports", "config"];
+      const essentialDirs = ['temp', 'logs', 'reports', 'config'];
       for (const dir of essentialDirs) {
         const dirPath = path.join(this.sandboxDir, dir);
         healthChecks.push({
@@ -248,7 +248,7 @@ class SandboxTesting {
       }
 
       // Check if essential files exist
-      const essentialFiles = ["package.json", "next.config.js"];
+      const essentialFiles = ['package.json', 'next.config.js'];
       for (const file of essentialFiles) {
         const filePath = path.join(this.sandboxDir, file);
         healthChecks.push({
@@ -257,13 +257,13 @@ class SandboxTesting {
         });
       }
 
-      const allPassed = healthChecks.every((check) => check.success);
-      const failedChecks = healthChecks.filter((check) => !check.success);
+      const allPassed = healthChecks.every(check => check.success);
+      const failedChecks = healthChecks.filter(check => !check.success);
 
       return {
         success: allPassed,
         output: `Health checks: ${healthChecks.length - failedChecks.length}/${healthChecks.length} passed`,
-        warnings: failedChecks.map((check) => check.check),
+        warnings: failedChecks.map(check => check.check),
       };
     });
   }
@@ -285,13 +285,13 @@ class SandboxTesting {
           // Test if optimization improved performance
           const performanceGain = this.calculatePerformanceGain(
             optimization,
-            duration,
+            duration
           );
 
           return {
             success: performanceGain > 0,
             output: `Optimization applied, performance gain: ${performanceGain}%`,
-            warnings: performanceGain < 0 ? ["Performance degraded"] : [],
+            warnings: performanceGain < 0 ? ['Performance degraded'] : [],
           };
         } catch (error) {
           return {
@@ -299,21 +299,21 @@ class SandboxTesting {
             error: error.message,
           };
         }
-      },
+      }
     );
   }
 
   async applyOptimization(optimization) {
     switch (optimization.type) {
-      case "memory_cleanup":
+      case 'memory_cleanup':
         if (global.gc) {
           global.gc();
         }
         break;
-      case "file_cleanup":
+      case 'file_cleanup':
         await this.cleanupSandboxFiles();
         break;
-      case "config_optimization":
+      case 'config_optimization':
         await this.optimizeSandboxConfig(optimization.config);
         break;
       default:
@@ -322,7 +322,7 @@ class SandboxTesting {
   }
 
   async cleanupSandboxFiles() {
-    const tempDir = path.join(this.sandboxDir, "temp");
+    const tempDir = path.join(this.sandboxDir, 'temp');
     if (fs.existsSync(tempDir)) {
       const files = fs.readdirSync(tempDir);
       for (const file of files) {
@@ -341,13 +341,13 @@ class SandboxTesting {
   async optimizeSandboxConfig(configChanges) {
     const configFile = path.join(
       this.sandboxDir,
-      "config",
-      "sandbox-config.json",
+      'config',
+      'sandbox-config.json'
     );
     let config = {};
 
     if (fs.existsSync(configFile)) {
-      const data = fs.readFileSync(configFile, "utf8");
+      const data = fs.readFileSync(configFile, 'utf8');
       config = JSON.parse(data);
     }
 
@@ -362,19 +362,19 @@ class SandboxTesting {
   }
 
   async runTestSuite() {
-    this.log("Running sandbox test suite...");
+    this.log('Running sandbox test suite...');
 
     const tests = [
       () => this.testSystemHealth(),
-      () => this.testScriptExecution("scripts/test-script.js"),
+      () => this.testScriptExecution('scripts/test-script.js'),
       () =>
         this.testConfigurationChanges(
-          path.join(this.sandboxDir, "config", "sandbox-config.json"),
-          { testing: { timeout: 60000 } },
+          path.join(this.sandboxDir, 'config', 'sandbox-config.json'),
+          { testing: { timeout: 60000 } }
         ),
       () =>
         this.testPerformanceOptimization({
-          type: "memory_cleanup",
+          type: 'memory_cleanup',
           baseline: 1000,
         }),
     ];
@@ -387,7 +387,7 @@ class SandboxTesting {
         results.push(result);
       } catch (error) {
         results.push({
-          name: "Unknown Test",
+          name: 'Unknown Test',
           success: false,
           error: error.message,
           duration: 0,
@@ -399,21 +399,21 @@ class SandboxTesting {
   }
 
   async generateTestReport() {
-    this.log("Generating test report...");
+    this.log('Generating test report...');
 
     const testResults = await this.runTestSuite();
 
     const report = {
       timestamp: new Date().toISOString(),
-      environment: "sandbox",
+      environment: 'sandbox',
       tests: testResults,
       summary: {
         totalTests: testResults.length,
-        passedTests: testResults.filter((t) => t.success).length,
-        failedTests: testResults.filter((t) => !t.success).length,
+        passedTests: testResults.filter(t => t.success).length,
+        failedTests: testResults.filter(t => !t.success).length,
         successRate:
           testResults.length > 0
-            ? testResults.filter((t) => t.success).length / testResults.length
+            ? testResults.filter(t => t.success).length / testResults.length
             : 0,
         averageDuration:
           testResults.length > 0
@@ -430,7 +430,7 @@ class SandboxTesting {
     await this.saveTestHistory(report);
 
     this.log(
-      `Test report generated: ${report.summary.passedTests}/${report.summary.totalTests} tests passed`,
+      `Test report generated: ${report.summary.passedTests}/${report.summary.totalTests} tests passed`
     );
     return report;
   }
@@ -440,10 +440,10 @@ class SandboxTesting {
 
     if (fs.existsSync(this.testHistoryFile)) {
       try {
-        const data = fs.readFileSync(this.testHistoryFile, "utf8");
+        const data = fs.readFileSync(this.testHistoryFile, 'utf8');
         history = JSON.parse(data);
       } catch (error) {
-        this.log(`Error loading test history: ${error.message}`, "warn");
+        this.log(`Error loading test history: ${error.message}`, 'warn');
       }
     }
 
@@ -458,7 +458,7 @@ class SandboxTesting {
   }
 
   async start() {
-    this.log("Starting Sandbox Testing...");
+    this.log('Starting Sandbox Testing...');
 
     await this.initialize();
     await this.createSandboxEnvironment();
@@ -471,19 +471,19 @@ class SandboxTesting {
       try {
         await this.generateTestReport();
       } catch (error) {
-        this.log(`Testing error: ${error.message}`, "error");
+        this.log(`Testing error: ${error.message}`, 'error');
       }
     }, 300000); // Every 5 minutes
 
     // Cleanup on exit
-    process.on("SIGINT", () => {
+    process.on('SIGINT', () => {
       clearInterval(testingInterval);
-      this.log("Sandbox Testing stopped");
+      this.log('Sandbox Testing stopped');
     });
 
-    process.on("SIGTERM", () => {
+    process.on('SIGTERM', () => {
       clearInterval(testingInterval);
-      this.log("Sandbox Testing stopped");
+      this.log('Sandbox Testing stopped');
     });
   }
 }
@@ -491,8 +491,8 @@ class SandboxTesting {
 // Main execution
 if (require.main === module) {
   const sandbox = new SandboxTesting();
-  sandbox.start().catch((error) => {
-    console.error("Sandbox Testing failed:", error);
+  sandbox.start().catch(error => {
+    console.error('Sandbox Testing failed:', error);
     process.exit(1);
   });
 }

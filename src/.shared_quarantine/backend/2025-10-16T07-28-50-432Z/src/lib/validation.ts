@@ -1,17 +1,17 @@
-import { _z } from "zod";
-import DOMPurify from "isomorphic-dompurify";
+import { _z } from 'zod';
+import DOMPurify from 'isomorphic-dompurify';
 
 // Sanitization helpers
 export function __sanitizeHtml(_html: string): string {
   return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ["b", "i", "em", "strong", "p", "br"],
+    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p', 'br'],
     ALLOWED_ATTR: [],
   });
 }
 
 export function __sanitizeText(_text: string): string {
   return text
-    .replace(/[<>]/g, "") // Remove potential HTML tags
+    .replace(/[<>]/g, '') // Remove potential HTML tags
     .trim()
     .slice(0, 1000); // Limit length
 }
@@ -21,99 +21,99 @@ export const __validationSchemas = {
   patient: z.object({
     full_name: z
       .string()
-      .min(2, "Name must be at least 2 characters")
-      .max(100, "Name must be less than 100 characters")
+      .min(2, 'Name must be at least 2 characters')
+      .max(100, 'Name must be less than 100 characters')
       .transform(sanitizeText),
     email: z
       .string()
-      .email("Invalid email format")
+      .email('Invalid email format')
       .optional()
-      .transform((email) => (email ? email.toLowerCase().trim() : undefined)),
+      .transform(email => (email ? email.toLowerCase().trim() : undefined)),
     phone: z
       .string()
-      .regex(/^[\+]?[1-9][\d]{0,15}$/, "Invalid phone number format")
-      .min(10, "Phone number must be at least 10 digits"),
+      .regex(/^[\+]?[1-9][\d]{0,15}$/, 'Invalid phone number format')
+      .min(10, 'Phone number must be at least 10 digits'),
     date_of_birth: z
       .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format")
-      .refine((date) => {
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format')
+      .refine(date => {
         const __birthDate = new Date(date);
         const __today = new Date();
         const __age = today.getFullYear() - birthDate.getFullYear();
         return age >= 0 && age <= 150;
-      }, "Invalid birth date"),
-    gender: z.enum(["male", "female", "other"]).optional(),
+      }, 'Invalid birth date'),
+    gender: z.enum(['male', 'female', 'other']).optional(),
     address: z
       .string()
-      .max(500, "Address must be less than 500 characters")
+      .max(500, 'Address must be less than 500 characters')
       .optional()
-      .transform((addr) => (addr ? sanitizeText(addr) : undefined)),
+      .transform(addr => (addr ? sanitizeText(addr) : undefined)),
     medical_history: z
       .string()
-      .max(2000, "Medical history must be less than 2000 characters")
+      .max(2000, 'Medical history must be less than 2000 characters')
       .optional()
-      .transform((history) => (history ? sanitizeHtml(history) : undefined)),
+      .transform(history => (history ? sanitizeHtml(history) : undefined)),
     allergies: z
       .string()
-      .max(1000, "Allergies must be less than 1000 characters")
+      .max(1000, 'Allergies must be less than 1000 characters')
       .optional()
-      .transform((allergies) =>
-        allergies ? sanitizeText(allergies) : undefined,
+      .transform(allergies =>
+        allergies ? sanitizeText(allergies) : undefined
       ),
   }),
 
   appointment: z.object({
-    patient_id: z.string().uuid("Invalid patient ID"),
-    doctor_id: z.string().uuid("Invalid doctor ID"),
+    patient_id: z.string().uuid('Invalid patient ID'),
+    doctor_id: z.string().uuid('Invalid doctor ID'),
     appointment_date: z
       .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format")
-      .refine((date) => {
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'Invalid date format')
+      .refine(date => {
         const __appointmentDate = new Date(date);
         const __today = new Date();
         today.setHours(0, 0, 0, 0);
         return appointmentDate >= today;
-      }, "Appointment date cannot be in the past"),
+      }, 'Appointment date cannot be in the past'),
     appointment_time: z
       .string()
-      .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format"),
+      .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format'),
     duration_minutes: z
       .number()
-      .int("Duration must be an integer")
-      .min(15, "Minimum appointment duration is 15 minutes")
-      .max(480, "Maximum appointment duration is 8 hours"),
-    type: z.enum(["consultation", "follow_up", "emergency"]).optional(),
+      .int('Duration must be an integer')
+      .min(15, 'Minimum appointment duration is 15 minutes')
+      .max(480, 'Maximum appointment duration is 8 hours'),
+    type: z.enum(['consultation', 'follow_up', 'emergency']).optional(),
     notes: z
       .string()
-      .max(1000, "Notes must be less than 1000 characters")
+      .max(1000, 'Notes must be less than 1000 characters')
       .optional()
-      .transform((notes) => (notes ? sanitizeText(notes) : undefined)),
+      .transform(notes => (notes ? sanitizeText(notes) : undefined)),
   }),
 
   user: z.object({
     email: z
       .string()
-      .email("Invalid email format")
-      .transform((email) => email.toLowerCase().trim()),
+      .email('Invalid email format')
+      .transform(email => email.toLowerCase().trim()),
     password: z
       .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(128, "Password must be less than 128 characters")
+      .min(8, 'Password must be at least 8 characters')
+      .max(128, 'Password must be less than 128 characters')
       .regex(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+        'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
       ),
     full_name: z
       .string()
-      .min(2, "Name must be at least 2 characters")
-      .max(100, "Name must be less than 100 characters")
+      .min(2, 'Name must be at least 2 characters')
+      .max(100, 'Name must be less than 100 characters')
       .transform(sanitizeText),
-    role: z.enum(["admin", "doctor", "therapist", "patient", "family_member"]),
+    role: z.enum(['admin', 'doctor', 'therapist', 'patient', 'family_member']),
   }),
 
   // CSRF token validation
   csrf: z.object({
-    token: z.string().min(1, "CSRF token is required"),
+    token: z.string().min(1, 'CSRF token is required'),
   }),
 };
 
@@ -126,7 +126,7 @@ export function validateRequest<T>(_schema: z.ZodSchema<T>) {
     } catch (error) {
       if (error instanceof z.ZodError) {
         throw new Error(
-          `Validation error: ${error.errors.map((e) => e.message).join(", ")}`,
+          `Validation error: ${error.errors.map(e => e.message).join(', ')}`
         );
       }
       throw error;
@@ -144,7 +144,7 @@ export function __generateCSRFToken(): string {
 
 export function __validateCSRFToken(
   token: string,
-  sessionToken: string,
+  sessionToken: string
 ): boolean {
   return token === sessionToken && token.length > 0;
 }

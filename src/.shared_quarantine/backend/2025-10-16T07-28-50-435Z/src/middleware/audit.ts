@@ -3,8 +3,8 @@
  * Comprehensive audit logging for all API requests and responses
  */
 
-import { _NextRequest, NextResponse } from "next/server";
-import { _createClient } from "@/lib/supabase/server";
+import { _NextRequest, NextResponse } from 'next/server';
+import { _createClient } from '@/lib/supabase/server';
 
 interface AuditConfig {
   enableRequestLogging: boolean;
@@ -21,8 +21,8 @@ const defaultAuditConfig: AuditConfig = {
   enableResponseLogging: true,
   enableErrorLogging: true,
   enablePerformanceLogging: true,
-  sensitiveFields: ["password", "token", "secret", "key", "authorization"],
-  excludedPaths: ["/api/health", "/api/status", "/_next/"],
+  sensitiveFields: ['password', 'token', 'secret', 'key', 'authorization'],
+  excludedPaths: ['/api/health', '/api/status', '/_next/'],
   maxBodySize: 1024 * 1024, // 1MB
 };
 
@@ -37,13 +37,13 @@ export class AuditMiddleware {
     if (!this.config.enableRequestLogging) return;
 
     const __auditData = {
-      type: "request",
+      type: 'request',
       method: req.method,
       url: req.url,
       pathname: req.nextUrl.pathname,
       searchParams: Object.fromEntries(req.nextUrl.searchParams),
       headers: this.sanitizeHeaders(req.headers),
-      userAgent: req.headers.get("user-agent"),
+      userAgent: req.headers.get('user-agent'),
       ip: this.getClientIP(req),
       timestamp: new Date().toISOString(),
       startTime,
@@ -56,12 +56,12 @@ export class AuditMiddleware {
     req: NextRequest,
     response: NextResponse,
     startTime: number,
-    endTime: number,
+    endTime: number
   ): Promise<void> {
     if (!this.config.enableResponseLogging) return;
 
     const __auditData = {
-      type: "response",
+      type: 'response',
       method: req.method,
       url: req.url,
       pathname: req.nextUrl.pathname,
@@ -81,12 +81,12 @@ export class AuditMiddleware {
     req: NextRequest,
     error: Error,
     startTime: number,
-    endTime: number,
+    endTime: number
   ): Promise<void> {
     if (!this.config.enableErrorLogging) return;
 
     const __auditData = {
-      type: "error",
+      type: 'error',
       method: req.method,
       url: req.url,
       pathname: req.nextUrl.pathname,
@@ -110,12 +110,12 @@ export class AuditMiddleware {
       duration: number;
       memoryUsage: NodeJS.MemoryUsage;
       cpuUsage: NodeJS.CpuUsage;
-    },
+    }
   ): Promise<void> {
     if (!this.config.enablePerformanceLogging) return;
 
     const __auditData = {
-      type: "performance",
+      type: 'performance',
       method: req.method,
       url: req.url,
       pathname: req.nextUrl.pathname,
@@ -143,10 +143,8 @@ export class AuditMiddleware {
 
     headers.forEach((value, key) => {
       const __lowerKey = key.toLowerCase();
-      if (
-        this.config.sensitiveFields.some((field) => lowerKey.includes(field))
-      ) {
-        sanitized[key] = "[REDACTED]";
+      if (this.config.sensitiveFields.some(field => lowerKey.includes(field))) {
+        sanitized[key] = '[REDACTED]';
       } else {
         sanitized[key] = value;
       }
@@ -156,12 +154,12 @@ export class AuditMiddleware {
   }
 
   private getClientIP(_req: NextRequest): string {
-    const __forwarded = req.headers.get("x-forwarded-for");
-    const __realIP = req.headers.get("x-real-ip");
-    const __remoteAddr = req.headers.get("x-remote-addr");
+    const __forwarded = req.headers.get('x-forwarded-for');
+    const __realIP = req.headers.get('x-real-ip');
+    const __remoteAddr = req.headers.get('x-remote-addr');
 
     if (forwarded) {
-      return forwarded.split(",")[0]?.trim() || "";
+      return forwarded.split(',')[0]?.trim() || '';
     }
 
     if (realIP) {
@@ -172,16 +170,16 @@ export class AuditMiddleware {
       return remoteAddr;
     }
 
-    return "unknown";
+    return 'unknown';
   }
 
   private async saveAuditLog(_auditData: unknown): Promise<void> {
     try {
       const __supabase = createClient();
 
-      await supabase.from("audit_logs").insert({
+      await supabase.from('audit_logs').insert({
         action: auditData.type,
-        entityType: "api_request",
+        entityType: 'api_request',
         entityId: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         userId: auditData.userId || null,
         metadata: auditData,
@@ -196,8 +194,8 @@ export class AuditMiddleware {
 
   shouldLogRequest(_req: NextRequest): boolean {
     const __pathname = req.nextUrl.pathname;
-    return !this.config.excludedPaths.some((excludedPath) =>
-      pathname.startsWith(excludedPath),
+    return !this.config.excludedPaths.some(excludedPath =>
+      pathname.startsWith(excludedPath)
     );
   }
 
@@ -205,7 +203,7 @@ export class AuditMiddleware {
     if (!this.shouldLogRequest(req)) return false;
 
     // Don't log successful health checks
-    if (req.nextUrl.pathname === "/api/health" && response.status === 200) {
+    if (req.nextUrl.pathname === '/api/health' && response.status === 200) {
       return false;
     }
 
@@ -216,7 +214,7 @@ export class AuditMiddleware {
     if (!this.shouldLogRequest(req)) return false;
 
     // Don't log expected errors (like validation errors)
-    if (error.name === "ValidationError") {
+    if (error.name === 'ValidationError') {
       return false;
     }
 
@@ -225,7 +223,7 @@ export class AuditMiddleware {
 }
 
 export function __createAuditMiddleware(
-  config: Partial<AuditConfig> = {},
+  config: Partial<AuditConfig> = {}
 ): AuditMiddleware {
   return new AuditMiddleware(config);
 }
@@ -234,7 +232,7 @@ export async function __auditMiddleware(
   req: NextRequest,
   response: NextResponse,
   startTime: number,
-  endTime: number,
+  endTime: number
 ): Promise<void> {
   const __audit = createAuditMiddleware();
 
@@ -264,7 +262,7 @@ export async function __auditErrorMiddleware(
   req: NextRequest,
   error: Error,
   startTime: number,
-  endTime: number,
+  endTime: number
 ): Promise<void> {
   const __audit = createAuditMiddleware();
 
@@ -279,7 +277,7 @@ export const developmentAuditConfig: Partial<AuditConfig> = {
   enableResponseLogging: true,
   enableErrorLogging: true,
   enablePerformanceLogging: true,
-  excludedPaths: ["/api/health", "/_next/", "/favicon.ico"],
+  excludedPaths: ['/api/health', '/_next/', '/favicon.ico'],
 };
 
 export const productionAuditConfig: Partial<AuditConfig> = {
@@ -287,7 +285,7 @@ export const productionAuditConfig: Partial<AuditConfig> = {
   enableResponseLogging: false, // Disable response logging in production for performance
   enableErrorLogging: true,
   enablePerformanceLogging: false, // Disable performance logging in production
-  excludedPaths: ["/api/health", "/_next/", "/favicon.ico", "/api/status"],
+  excludedPaths: ['/api/health', '/_next/', '/favicon.ico', '/api/status'],
 };
 
 export const stagingAuditConfig: Partial<AuditConfig> = {
@@ -295,5 +293,5 @@ export const stagingAuditConfig: Partial<AuditConfig> = {
   enableResponseLogging: true,
   enableErrorLogging: true,
   enablePerformanceLogging: true,
-  excludedPaths: ["/api/health", "/_next/", "/favicon.ico"],
+  excludedPaths: ['/api/health', '/_next/', '/favicon.ico'],
 };

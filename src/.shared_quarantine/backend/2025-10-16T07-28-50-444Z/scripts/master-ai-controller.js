@@ -1,21 +1,21 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
-const { spawn } = require("child_process");
+const fs = require('fs');
+const path = require('path');
+const { spawn } = require('child_process');
 
 class MasterAIController {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
+    this.workspaceRoot = path.join(__dirname, '..');
     this.logFile = path.join(
       this.workspaceRoot,
-      "logs",
-      "master-ai-controller.log",
+      'logs',
+      'master-ai-controller.log'
     );
     this.stateFile = path.join(
       this.workspaceRoot,
-      "temp",
-      "master-ai-state.json",
+      'temp',
+      'master-ai-state.json'
     );
     this.isRunning = false;
     this.startTime = new Date();
@@ -23,7 +23,7 @@ class MasterAIController {
     this.processes = new Map();
   }
 
-  log(message, level = "info") {
+  log(message, level = 'info') {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] [${level.toUpperCase()}] Master AI Controller: ${message}\n`;
 
@@ -37,16 +37,16 @@ class MasterAIController {
   }
 
   async initialize() {
-    this.log("Initializing Master AI Controller...");
+    this.log('Initializing Master AI Controller...');
 
     // Create necessary directories
     const directories = [
-      "logs",
-      "temp",
-      "reports",
-      "learning",
-      "backups",
-      "sandbox",
+      'logs',
+      'temp',
+      'reports',
+      'learning',
+      'backups',
+      'sandbox',
     ];
 
     for (const dir of directories) {
@@ -59,19 +59,19 @@ class MasterAIController {
     // Load state
     await this.loadState();
 
-    this.log("Master AI Controller initialized");
+    this.log('Master AI Controller initialized');
   }
 
   async loadState() {
     try {
       if (fs.existsSync(this.stateFile)) {
-        const data = fs.readFileSync(this.stateFile, "utf8");
+        const data = fs.readFileSync(this.stateFile, 'utf8');
         const state = JSON.parse(data);
         this.cyclesCompleted = state.cyclesCompleted || 0;
         this.log(`Loaded state: ${this.cyclesCompleted} cycles completed`);
       }
     } catch (error) {
-      this.log(`Error loading state: ${error.message}`, "warn");
+      this.log(`Error loading state: ${error.message}`, 'warn');
     }
   }
 
@@ -87,7 +87,7 @@ class MasterAIController {
 
       fs.writeFileSync(this.stateFile, JSON.stringify(state, null, 2));
     } catch (error) {
-      this.log(`Error saving state: ${error.message}`, "error");
+      this.log(`Error saving state: ${error.message}`, 'error');
     }
   }
 
@@ -95,9 +95,9 @@ class MasterAIController {
     this.log(`Starting process: ${name}`);
 
     try {
-      const child = spawn("node", [scriptPath, ...args], {
+      const child = spawn('node', [scriptPath, ...args], {
         cwd: this.workspaceRoot,
-        stdio: "pipe",
+        stdio: 'pipe',
         detached: true,
       });
 
@@ -107,8 +107,8 @@ class MasterAIController {
         restarts: 0,
       });
 
-      child.on("exit", (code) => {
-        this.log(`Process ${name} exited with code ${code}`, "warn");
+      child.on('exit', code => {
+        this.log(`Process ${name} exited with code ${code}`, 'warn');
         this.processes.delete(name);
 
         // Auto-restart if not intentionally stopped
@@ -120,15 +120,15 @@ class MasterAIController {
         }
       });
 
-      child.on("error", (error) => {
-        this.log(`Process ${name} error: ${error.message}`, "error");
+      child.on('error', error => {
+        this.log(`Process ${name} error: ${error.message}`, 'error');
         this.processes.delete(name);
       });
 
       this.log(`Process ${name} started with PID ${child.pid}`);
       return true;
     } catch (error) {
-      this.log(`Failed to start process ${name}: ${error.message}`, "error");
+      this.log(`Failed to start process ${name}: ${error.message}`, 'error');
       return false;
     }
   }
@@ -139,29 +139,29 @@ class MasterAIController {
     const processInfo = this.processes.get(name);
     if (processInfo) {
       try {
-        processInfo.process.kill("SIGTERM");
+        processInfo.process.kill('SIGTERM');
         this.processes.delete(name);
         this.log(`Process ${name} stopped`);
         return true;
       } catch (error) {
-        this.log(`Error stopping process ${name}: ${error.message}`, "error");
+        this.log(`Error stopping process ${name}: ${error.message}`, 'error');
         return false;
       }
     } else {
-      this.log(`Process ${name} not found`, "warn");
+      this.log(`Process ${name} not found`, 'warn');
       return false;
     }
   }
 
   async startAllProcesses() {
-    this.log("Starting all AI processes...");
+    this.log('Starting all AI processes...');
 
     const processes = [
-      { name: "continuous-ai-loop", script: "scripts/continuous-ai-loop.js" },
-      { name: "advanced-monitoring", script: "scripts/advanced-monitoring.js" },
-      { name: "self-healing", script: "scripts/self-healing.js" },
-      { name: "ml-learning-engine", script: "scripts/ml-learning-engine.js" },
-      { name: "sandbox-testing", script: "scripts/sandbox-testing.js" },
+      { name: 'continuous-ai-loop', script: 'scripts/continuous-ai-loop.js' },
+      { name: 'advanced-monitoring', script: 'scripts/advanced-monitoring.js' },
+      { name: 'self-healing', script: 'scripts/self-healing.js' },
+      { name: 'ml-learning-engine', script: 'scripts/ml-learning-engine.js' },
+      { name: 'sandbox-testing', script: 'scripts/sandbox-testing.js' },
     ];
 
     const results = [];
@@ -171,17 +171,17 @@ class MasterAIController {
       results.push({ name: process.name, success });
 
       // Wait a moment between starting processes
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
     }
 
-    const successful = results.filter((r) => r.success).length;
+    const successful = results.filter(r => r.success).length;
     this.log(`Started ${successful}/${results.length} processes`);
 
     return results;
   }
 
   async stopAllProcesses() {
-    this.log("Stopping all AI processes...");
+    this.log('Stopping all AI processes...');
 
     const results = [];
 
@@ -190,14 +190,14 @@ class MasterAIController {
       results.push({ name, success });
     }
 
-    const successful = results.filter((r) => r.success).length;
+    const successful = results.filter(r => r.success).length;
     this.log(`Stopped ${successful}/${results.length} processes`);
 
     return results;
   }
 
   async monitorProcesses() {
-    this.log("Monitoring processes...");
+    this.log('Monitoring processes...');
 
     const status = {
       timestamp: new Date().toISOString(),
@@ -222,8 +222,8 @@ class MasterAIController {
     // Save status
     const statusFile = path.join(
       this.workspaceRoot,
-      "temp",
-      "process-status.json",
+      'temp',
+      'process-status.json'
     );
     fs.writeFileSync(statusFile, JSON.stringify(status, null, 2));
 
@@ -254,7 +254,7 @@ class MasterAIController {
 
       const cycleTime = Date.now() - cycleStartTime;
       this.log(
-        `Master cycle ${this.cyclesCompleted} completed in ${cycleTime}ms`,
+        `Master cycle ${this.cyclesCompleted} completed in ${cycleTime}ms`
       );
 
       return {
@@ -269,7 +269,7 @@ class MasterAIController {
     } catch (error) {
       this.log(
         `Master cycle ${this.cyclesCompleted} failed: ${error.message}`,
-        "error",
+        'error'
       );
       return {
         cycleNumber: this.cyclesCompleted,
@@ -280,16 +280,16 @@ class MasterAIController {
   }
 
   async runContinuousAILoop() {
-    this.log("Running continuous AI loop...");
+    this.log('Running continuous AI loop...');
 
     try {
       // This would trigger the continuous AI loop
       // For now, we'll simulate it
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       return {
         success: true,
-        message: "Continuous AI loop executed",
+        message: 'Continuous AI loop executed',
       };
     } catch (error) {
       return {
@@ -300,10 +300,10 @@ class MasterAIController {
   }
 
   async runVerification() {
-    this.log("Running verification...");
+    this.log('Running verification...');
 
     try {
-      const result = await this.executeScript("scripts/verification.js");
+      const result = await this.executeScript('scripts/verification.js');
       return result;
     } catch (error) {
       return {
@@ -314,24 +314,24 @@ class MasterAIController {
   }
 
   async executeScript(scriptPath) {
-    return new Promise((resolve) => {
-      const child = spawn("node", [scriptPath], {
+    return new Promise(resolve => {
+      const child = spawn('node', [scriptPath], {
         cwd: this.workspaceRoot,
-        stdio: "pipe",
+        stdio: 'pipe',
       });
 
-      let stdout = "";
-      let stderr = "";
+      let stdout = '';
+      let stderr = '';
 
-      child.stdout.on("data", (data) => {
+      child.stdout.on('data', data => {
         stdout += data.toString();
       });
 
-      child.stderr.on("data", (data) => {
+      child.stderr.on('data', data => {
         stderr += data.toString();
       });
 
-      child.on("close", (code) => {
+      child.on('close', code => {
         resolve({
           success: code === 0,
           code: code,
@@ -340,7 +340,7 @@ class MasterAIController {
         });
       });
 
-      child.on("error", (error) => {
+      child.on('error', error => {
         resolve({
           success: false,
           error: error.message,
@@ -350,7 +350,7 @@ class MasterAIController {
   }
 
   async generateMasterReport() {
-    this.log("Generating master report...");
+    this.log('Generating master report...');
 
     const report = {
       timestamp: new Date().toISOString(),
@@ -366,17 +366,17 @@ class MasterAIController {
         arch: process.arch,
       },
       summary: {
-        status: this.isRunning ? "running" : "stopped",
+        status: this.isRunning ? 'running' : 'stopped',
         totalCycles: this.cyclesCompleted,
         averageCycleTime: 0, // Would calculate from history
-        systemHealth: "healthy",
+        systemHealth: 'healthy',
       },
     };
 
     const reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "master-ai-report.json",
+      'reports',
+      'master-ai-report.json'
     );
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
@@ -385,7 +385,7 @@ class MasterAIController {
   }
 
   async start() {
-    this.log("Starting Master AI Controller...");
+    this.log('Starting Master AI Controller...');
     this.isRunning = true;
 
     await this.initialize();
@@ -399,24 +399,24 @@ class MasterAIController {
         const cycleResult = await this.runMasterCycle();
 
         if (!cycleResult.success) {
-          this.log(`Master cycle failed, waiting before retry...`, "warn");
-          await new Promise((resolve) => setTimeout(resolve, 30000)); // Wait 30 seconds
+          this.log(`Master cycle failed, waiting before retry...`, 'warn');
+          await new Promise(resolve => setTimeout(resolve, 30000)); // Wait 30 seconds
         } else {
           // Wait 10 minutes before next cycle
-          this.log("Waiting 10 minutes before next master cycle...");
-          await new Promise((resolve) => setTimeout(resolve, 10 * 60 * 1000));
+          this.log('Waiting 10 minutes before next master cycle...');
+          await new Promise(resolve => setTimeout(resolve, 10 * 60 * 1000));
         }
       } catch (error) {
-        this.log(`Critical error in master loop: ${error.message}`, "error");
-        await new Promise((resolve) => setTimeout(resolve, 60000)); // Wait 1 minute
+        this.log(`Critical error in master loop: ${error.message}`, 'error');
+        await new Promise(resolve => setTimeout(resolve, 60000)); // Wait 1 minute
       }
     }
 
-    this.log("Master AI Controller stopped");
+    this.log('Master AI Controller stopped');
   }
 
   async stop() {
-    this.log("Stopping Master AI Controller...");
+    this.log('Stopping Master AI Controller...');
     this.isRunning = false;
 
     // Stop all processes
@@ -425,7 +425,7 @@ class MasterAIController {
     // Save final state
     await this.saveState();
 
-    this.log("Master AI Controller stopped");
+    this.log('Master AI Controller stopped');
   }
 }
 
@@ -434,19 +434,19 @@ if (require.main === module) {
   const controller = new MasterAIController();
 
   // Handle graceful shutdown
-  process.on("SIGINT", async () => {
+  process.on('SIGINT', async () => {
     await controller.stop();
     process.exit(0);
   });
 
-  process.on("SIGTERM", async () => {
+  process.on('SIGTERM', async () => {
     await controller.stop();
     process.exit(0);
   });
 
   // Start the controller
-  controller.start().catch((error) => {
-    console.error("Master AI Controller failed:", error);
+  controller.start().catch(error => {
+    console.error('Master AI Controller failed:', error);
     process.exit(1);
   });
 }

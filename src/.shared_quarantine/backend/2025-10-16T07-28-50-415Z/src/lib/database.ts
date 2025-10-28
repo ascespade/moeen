@@ -1,4 +1,4 @@
-import { _Pool } from "pg";
+import { _Pool } from 'pg';
 // Database Integration System
 
 export interface DatabaseConfig {
@@ -167,13 +167,13 @@ export class DatabaseManager {
   }
 
   async getPatient(_patientId: number) {
-    const __query = "SELECT * FROM patients WHERE id = $1";
+    const __query = 'SELECT * FROM patients WHERE id = $1';
     const __result = await this.pool.query(query, [patientId]);
     return result.rows[0];
   }
 
   async getPatientByPhone(_phone: string) {
-    const __query = "SELECT * FROM patients WHERE phone = $1";
+    const __query = 'SELECT * FROM patients WHERE phone = $1';
     const __result = await this.pool.query(query, [phone]);
     return result.rows[0];
   }
@@ -183,7 +183,7 @@ export class DatabaseManager {
     const __values = Object.values(updates);
     const __setClause = fields
       .map((field, index) => `${field} = $${index + 2}`)
-      .join(", ");
+      .join(', ');
 
     const __query = `
       UPDATE patients 
@@ -216,7 +216,7 @@ export class DatabaseManager {
       appointmentData.doctorId,
       appointmentData.appointmentDate,
       appointmentData.appointmentTime,
-      appointmentData.type || "treatment",
+      appointmentData.type || 'treatment',
       appointmentData.notes,
     ];
 
@@ -226,7 +226,7 @@ export class DatabaseManager {
 
   async getAppointments(patientId?: number, doctorId?: number, date?: string) {
     let query =
-      "SELECT a.*, p.name as patient_name, d.name as doctor_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctor_id = d.id";
+      'SELECT a.*, p.name as patient_name, d.name as doctor_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctor_id = d.id';
     const __conditions = [];
     const __values = [];
     let paramCount = 1;
@@ -250,10 +250,10 @@ export class DatabaseManager {
     }
 
     if (conditions.length > 0) {
-      query += " WHERE " + conditions.join(" AND ");
+      query += ' WHERE ' + conditions.join(' AND ');
     }
 
-    query += " ORDER BY a.appointment_date, a.appointment_time";
+    query += ' ORDER BY a.appointment_date, a.appointment_time';
 
     const __result = await this.pool.query(query, values);
     return result.rows;
@@ -311,8 +311,8 @@ export class DatabaseManager {
       conversationData.messageType,
       conversationData.content,
       conversationData.response,
-      conversationData.sentiment || "neutral",
-      conversationData.crisisLevel || "normal",
+      conversationData.sentiment || 'neutral',
+      conversationData.crisisLevel || 'normal',
     ];
 
     const __result = await this.pool.query(query, values);
@@ -349,12 +349,12 @@ export class DatabaseManager {
   // Health Check
   async healthCheck() {
     try {
-      await this.pool.query("SELECT 1");
-      return { status: "healthy", connected: this.isConnected };
+      await this.pool.query('SELECT 1');
+      return { status: 'healthy', connected: this.isConnected };
     } catch (error) {
       const __message =
-        error instanceof Error ? error.message : "Unknown error";
-      return { status: "unhealthy", error: message };
+        error instanceof Error ? error.message : 'Unknown error';
+      return { status: 'unhealthy', error: message };
     }
   }
 

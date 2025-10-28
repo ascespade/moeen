@@ -25,19 +25,19 @@ export class MoyasarPaymentService {
   constructor() {
     this.config = {
       apiKey: process.env.MOYASAR_SECRET_KEY!,
-      baseUrl: "https://api.moyasar.com/v1",
+      baseUrl: 'https://api.moyasar.com/v1',
     };
   }
 
   async createPayment(
-    _data: MoyasarPaymentData,
+    _data: MoyasarPaymentData
   ): Promise<MoyasarPaymentResult> {
     try {
       const __response = await fetch(`${this.config.baseUrl}/payments`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          Authorization: `Basic ${Buffer.from(this.config.apiKey + ":").toString("base64")}`,
-          "Content-Type": "application/json",
+          Authorization: `Basic ${Buffer.from(this.config.apiKey + ':').toString('base64')}`,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           amount: Math.round(data.amount * 100), // Convert to halalas
@@ -56,7 +56,7 @@ export class MoyasarPaymentService {
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || "Payment creation failed",
+          error: result.message || 'Payment creation failed',
         };
       }
 
@@ -69,7 +69,7 @@ export class MoyasarPaymentService {
       return {
         success: false,
         error:
-          error instanceof Error ? error.message : "Payment creation failed",
+          error instanceof Error ? error.message : 'Payment creation failed',
       };
     }
   }
@@ -79,11 +79,11 @@ export class MoyasarPaymentService {
       const __response = await fetch(
         `${this.config.baseUrl}/payments/${paymentId}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            Authorization: `Basic ${Buffer.from(this.config.apiKey + ":").toString("base64")}`,
+            Authorization: `Basic ${Buffer.from(this.config.apiKey + ':').toString('base64')}`,
           },
-        },
+        }
       );
 
       const __result = await response.json();
@@ -91,7 +91,7 @@ export class MoyasarPaymentService {
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || "Payment retrieval failed",
+          error: result.message || 'Payment retrieval failed',
         };
       }
 
@@ -104,28 +104,28 @@ export class MoyasarPaymentService {
       return {
         success: false,
         error:
-          error instanceof Error ? error.message : "Payment retrieval failed",
+          error instanceof Error ? error.message : 'Payment retrieval failed',
       };
     }
   }
 
   async refundPayment(
     paymentId: string,
-    amount?: number,
+    amount?: number
   ): Promise<MoyasarPaymentResult> {
     try {
       const __response = await fetch(
         `${this.config.baseUrl}/payments/${paymentId}/refund`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            Authorization: `Basic ${Buffer.from(this.config.apiKey + ":").toString("base64")}`,
-            "Content-Type": "application/json",
+            Authorization: `Basic ${Buffer.from(this.config.apiKey + ':').toString('base64')}`,
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             amount: amount ? Math.round(amount * 100) : undefined,
           }),
-        },
+        }
       );
 
       const __result = await response.json();
@@ -133,7 +133,7 @@ export class MoyasarPaymentService {
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || "Refund failed",
+          error: result.message || 'Refund failed',
         };
       }
 
@@ -145,7 +145,7 @@ export class MoyasarPaymentService {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Refund failed",
+        error: error instanceof Error ? error.message : 'Refund failed',
       };
     }
   }
@@ -156,14 +156,14 @@ export class MoyasarPaymentService {
       const __event = payload;
 
       switch (event.type) {
-        case "payment.succeeded":
+        case 'payment.succeeded':
           return {
             success: true,
             paymentId: event.data.id,
-            status: "succeeded",
+            status: 'succeeded',
           };
 
-        case "payment.failed":
+        case 'payment.failed':
           return {
             success: false,
             error: `Payment failed: ${event.data.failure_reason}`,
@@ -172,14 +172,14 @@ export class MoyasarPaymentService {
         default:
           return {
             success: true,
-            paymentId: "unknown_event",
+            paymentId: 'unknown_event',
           };
       }
     } catch (error) {
       return {
         success: false,
         error:
-          error instanceof Error ? error.message : "Webhook processing failed",
+          error instanceof Error ? error.message : 'Webhook processing failed',
       };
     }
   }

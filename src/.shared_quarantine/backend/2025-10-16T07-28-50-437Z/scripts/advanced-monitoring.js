@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
-const { exec } = require("child_process");
+const fs = require('fs');
+const path = require('path');
+const { exec } = require('child_process');
 
 class AdvancedMonitoring {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
+    this.workspaceRoot = path.join(__dirname, '..');
     this.logFile = path.join(
       this.workspaceRoot,
-      "logs",
-      "advanced-monitoring.log",
+      'logs',
+      'advanced-monitoring.log'
     );
     this.metricsFile = path.join(
       this.workspaceRoot,
-      "temp",
-      "monitoring-metrics.json",
+      'temp',
+      'monitoring-metrics.json'
     );
-    this.alertsFile = path.join(this.workspaceRoot, "temp", "alerts.json");
+    this.alertsFile = path.join(this.workspaceRoot, 'temp', 'alerts.json');
     this.thresholds = {
       memoryUsage: 100 * 1024 * 1024, // 100MB
       cpuUsage: 80, // 80%
@@ -27,7 +27,7 @@ class AdvancedMonitoring {
     };
   }
 
-  log(message, level = "info") {
+  log(message, level = 'info') {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] [${level.toUpperCase()}] Advanced Monitoring: ${message}\n`;
 
@@ -41,7 +41,7 @@ class AdvancedMonitoring {
   }
 
   async collectSystemMetrics() {
-    this.log("Collecting system metrics...");
+    this.log('Collecting system metrics...');
 
     const metrics = {
       timestamp: new Date().toISOString(),
@@ -68,12 +68,12 @@ class AdvancedMonitoring {
   }
 
   async getCPUUsage() {
-    return new Promise((resolve) => {
-      exec("ps -o pid,pcpu,pmem,comm -p " + process.pid, (error, stdout) => {
+    return new Promise(resolve => {
+      exec('ps -o pid,pcpu,pmem,comm -p ' + process.pid, (error, stdout) => {
         if (error) {
           resolve(0);
         } else {
-          const lines = stdout.trim().split("\n");
+          const lines = stdout.trim().split('\n');
           if (lines.length > 1) {
             const values = lines[1].trim().split(/\s+/);
             resolve(parseFloat(values[1]) || 0);
@@ -86,8 +86,8 @@ class AdvancedMonitoring {
   }
 
   async getDiskUsage() {
-    return new Promise((resolve) => {
-      exec("df -h", (error, stdout) => {
+    return new Promise(resolve => {
+      exec('df -h', (error, stdout) => {
         if (error) {
           resolve({ error: error.message });
         } else {
@@ -98,8 +98,8 @@ class AdvancedMonitoring {
   }
 
   async getNetworkLatency() {
-    return new Promise((resolve) => {
-      exec("ping -c 1 8.8.8.8", (error, stdout) => {
+    return new Promise(resolve => {
+      exec('ping -c 1 8.8.8.8', (error, stdout) => {
         if (error) {
           resolve({ error: error.message });
         } else {
@@ -111,8 +111,8 @@ class AdvancedMonitoring {
   }
 
   async getActiveProcesses() {
-    return new Promise((resolve) => {
-      exec("ps aux | grep node | grep -v grep | wc -l", (error, stdout) => {
+    return new Promise(resolve => {
+      exec('ps aux | grep node | grep -v grep | wc -l', (error, stdout) => {
         if (error) {
           resolve(0);
         } else {
@@ -124,17 +124,17 @@ class AdvancedMonitoring {
 
   async getFileSystemHealth() {
     const health = {
-      tempDir: fs.existsSync(path.join(this.workspaceRoot, "temp")),
-      logsDir: fs.existsSync(path.join(this.workspaceRoot, "logs")),
-      reportsDir: fs.existsSync(path.join(this.workspaceRoot, "reports")),
-      configDir: fs.existsSync(path.join(this.workspaceRoot, "config")),
+      tempDir: fs.existsSync(path.join(this.workspaceRoot, 'temp')),
+      logsDir: fs.existsSync(path.join(this.workspaceRoot, 'logs')),
+      reportsDir: fs.existsSync(path.join(this.workspaceRoot, 'reports')),
+      configDir: fs.existsSync(path.join(this.workspaceRoot, 'config')),
     };
 
     return health;
   }
 
   async getLogFileSizes() {
-    const logDir = path.join(this.workspaceRoot, "logs");
+    const logDir = path.join(this.workspaceRoot, 'logs');
     const sizes = {};
 
     if (fs.existsSync(logDir)) {
@@ -150,15 +150,15 @@ class AdvancedMonitoring {
   }
 
   async analyzeMetrics(metrics) {
-    this.log("Analyzing metrics for anomalies...");
+    this.log('Analyzing metrics for anomalies...');
 
     const alerts = [];
 
     // Memory usage check
     if (metrics.system.memory.heapUsed > this.thresholds.memoryUsage) {
       alerts.push({
-        type: "memory_usage",
-        severity: "warning",
+        type: 'memory_usage',
+        severity: 'warning',
         message: `High memory usage: ${Math.round(metrics.system.memory.heapUsed / 1024 / 1024)}MB`,
         value: metrics.system.memory.heapUsed,
         threshold: this.thresholds.memoryUsage,
@@ -168,8 +168,8 @@ class AdvancedMonitoring {
     // CPU usage check
     if (metrics.performance.cpuUsage > this.thresholds.cpuUsage) {
       alerts.push({
-        type: "cpu_usage",
-        severity: "warning",
+        type: 'cpu_usage',
+        severity: 'warning',
         message: `High CPU usage: ${metrics.performance.cpuUsage}%`,
         value: metrics.performance.cpuUsage,
         threshold: this.thresholds.cpuUsage,
@@ -179,13 +179,13 @@ class AdvancedMonitoring {
     // File system health check
     const fsHealth = metrics.application.fileSystemHealth;
     const missingDirs = Object.entries(fsHealth).filter(
-      ([dir, exists]) => !exists,
+      ([dir, exists]) => !exists
     );
     if (missingDirs.length > 0) {
       alerts.push({
-        type: "filesystem_health",
-        severity: "error",
-        message: `Missing directories: ${missingDirs.map(([dir]) => dir).join(", ")}`,
+        type: 'filesystem_health',
+        severity: 'error',
+        message: `Missing directories: ${missingDirs.map(([dir]) => dir).join(', ')}`,
         value: missingDirs.length,
         threshold: 0,
       });
@@ -197,8 +197,8 @@ class AdvancedMonitoring {
       if (size > 50 * 1024 * 1024) {
         // 50MB
         alerts.push({
-          type: "log_file_size",
-          severity: "info",
+          type: 'log_file_size',
+          severity: 'info',
           message: `Large log file: ${file} (${Math.round(size / 1024 / 1024)}MB)`,
           value: size,
           threshold: 50 * 1024 * 1024,
@@ -215,14 +215,14 @@ class AdvancedMonitoring {
     for (const alert of alerts) {
       this.log(
         `Alert [${alert.severity.toUpperCase()}]: ${alert.message}`,
-        alert.severity,
+        alert.severity
       );
 
       // Auto-fix certain types of alerts
-      if (alert.type === "filesystem_health") {
+      if (alert.type === 'filesystem_health') {
         await this.fixFileSystemHealth();
-      } else if (alert.type === "log_file_size") {
-        await this.rotateLogFile(alert.message.split(": ")[1]);
+      } else if (alert.type === 'log_file_size') {
+        await this.rotateLogFile(alert.message.split(': ')[1]);
       }
     }
 
@@ -232,9 +232,9 @@ class AdvancedMonitoring {
       alerts: alerts,
       totalAlerts: alerts.length,
       severityCounts: {
-        error: alerts.filter((a) => a.severity === "error").length,
-        warning: alerts.filter((a) => a.severity === "warning").length,
-        info: alerts.filter((a) => a.severity === "info").length,
+        error: alerts.filter(a => a.severity === 'error').length,
+        warning: alerts.filter(a => a.severity === 'warning').length,
+        info: alerts.filter(a => a.severity === 'info').length,
       },
     };
 
@@ -242,16 +242,16 @@ class AdvancedMonitoring {
   }
 
   async fixFileSystemHealth() {
-    this.log("Fixing file system health...");
+    this.log('Fixing file system health...');
 
     const dirs = [
-      "temp",
-      "logs",
-      "reports",
-      "config",
-      "sandbox",
-      "learning",
-      "backups",
+      'temp',
+      'logs',
+      'reports',
+      'config',
+      'sandbox',
+      'learning',
+      'backups',
     ];
 
     for (const dir of dirs) {
@@ -266,11 +266,11 @@ class AdvancedMonitoring {
   async rotateLogFile(filename) {
     this.log(`Rotating log file: ${filename}`);
 
-    const logPath = path.join(this.workspaceRoot, "logs", filename);
+    const logPath = path.join(this.workspaceRoot, 'logs', filename);
     const backupPath = path.join(
       this.workspaceRoot,
-      "backups",
-      `${filename}.${Date.now()}`,
+      'backups',
+      `${filename}.${Date.now()}`
     );
 
     if (fs.existsSync(logPath)) {
@@ -278,14 +278,14 @@ class AdvancedMonitoring {
       fs.copyFileSync(logPath, backupPath);
 
       // Clear original file
-      fs.writeFileSync(logPath, "");
+      fs.writeFileSync(logPath, '');
 
       this.log(`Log file rotated: ${filename} -> ${backupPath}`);
     }
   }
 
   async generateMonitoringReport() {
-    this.log("Generating monitoring report...");
+    this.log('Generating monitoring report...');
 
     const metrics = await this.collectSystemMetrics();
     const alerts = await this.analyzeMetrics(metrics);
@@ -297,10 +297,10 @@ class AdvancedMonitoring {
       alerts: alerts,
       summary: {
         totalAlerts: alerts.length,
-        criticalAlerts: alerts.filter((a) => a.severity === "error").length,
-        warningAlerts: alerts.filter((a) => a.severity === "warning").length,
-        infoAlerts: alerts.filter((a) => a.severity === "info").length,
-        systemHealth: alerts.length === 0 ? "healthy" : "degraded",
+        criticalAlerts: alerts.filter(a => a.severity === 'error').length,
+        warningAlerts: alerts.filter(a => a.severity === 'warning').length,
+        infoAlerts: alerts.filter(a => a.severity === 'info').length,
+        systemHealth: alerts.length === 0 ? 'healthy' : 'degraded',
       },
     };
 
@@ -310,8 +310,8 @@ class AdvancedMonitoring {
     // Save report
     const reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "monitoring-report.json",
+      'reports',
+      'monitoring-report.json'
     );
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
@@ -320,7 +320,7 @@ class AdvancedMonitoring {
   }
 
   async startMonitoring() {
-    this.log("Starting advanced monitoring...");
+    this.log('Starting advanced monitoring...');
 
     // Initial metrics collection
     await this.generateMonitoringReport();
@@ -330,19 +330,19 @@ class AdvancedMonitoring {
       try {
         await this.generateMonitoringReport();
       } catch (error) {
-        this.log(`Monitoring error: ${error.message}`, "error");
+        this.log(`Monitoring error: ${error.message}`, 'error');
       }
     }, 60000); // Every minute
 
     // Cleanup on exit
-    process.on("SIGINT", () => {
+    process.on('SIGINT', () => {
       clearInterval(monitoringInterval);
-      this.log("Monitoring stopped");
+      this.log('Monitoring stopped');
     });
 
-    process.on("SIGTERM", () => {
+    process.on('SIGTERM', () => {
       clearInterval(monitoringInterval);
-      this.log("Monitoring stopped");
+      this.log('Monitoring stopped');
     });
   }
 }
@@ -350,8 +350,8 @@ class AdvancedMonitoring {
 // Main execution
 if (require.main === module) {
   const monitoring = new AdvancedMonitoring();
-  monitoring.startMonitoring().catch((error) => {
-    console.error("Monitoring failed:", error);
+  monitoring.startMonitoring().catch(error => {
+    console.error('Monitoring failed:', error);
     process.exit(1);
   });
 }

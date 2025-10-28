@@ -1,4 +1,4 @@
-import { _createClient } from "@supabase/supabase-js";
+import { _createClient } from '@supabase/supabase-js';
 // Supabase Integration for Hemam Center
 
 const __supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -23,7 +23,7 @@ export interface Patient {
   name: string;
   name_en?: string;
   age: number;
-  gender: "male" | "female";
+  gender: 'male' | 'female';
   phone: string;
   email?: string;
   emergency_contact: string;
@@ -38,7 +38,7 @@ export interface Patient {
   allergies: string[];
   created_at: string;
   updated_at: string;
-  status: "active" | "inactive" | "suspended";
+  status: 'active' | 'inactive' | 'suspended';
 }
 
 export interface Doctor {
@@ -53,7 +53,7 @@ export interface Doctor {
   qualifications: string[];
   experience_years: number;
   created_at: string;
-  status: "active" | "inactive";
+  status: 'active' | 'inactive';
 }
 
 export interface Appointment {
@@ -62,14 +62,14 @@ export interface Appointment {
   doctor_id: string;
   appointment_date: string;
   appointment_time: string;
-  type: "assessment" | "treatment" | "follow_up" | "consultation";
+  type: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
   status:
-    | "scheduled"
-    | "confirmed"
-    | "in_progress"
-    | "completed"
-    | "cancelled"
-    | "no_show";
+    | 'scheduled'
+    | 'confirmed'
+    | 'in_progress'
+    | 'completed'
+    | 'cancelled'
+    | 'no_show';
   notes?: string;
   insurance_covered: boolean;
   insurance_approval_number?: string;
@@ -83,7 +83,7 @@ export interface Session {
   doctor_id: string;
   session_date: string;
   session_time: string;
-  type: "assessment" | "treatment" | "follow_up";
+  type: 'assessment' | 'treatment' | 'follow_up';
   notes: string;
   exercises: unknown[];
   completed: boolean;
@@ -99,7 +99,7 @@ export interface InsuranceClaim {
   insurance_provider: string;
   claim_number: string;
   amount: number;
-  status: "pending" | "approved" | "rejected" | "under_review";
+  status: 'pending' | 'approved' | 'rejected' | 'under_review';
   submitted_at: string;
   processed_at?: string;
   rejection_reason?: string;
@@ -109,10 +109,10 @@ export interface InsuranceClaim {
 export class SupabaseDatabaseManager {
   // Patient Management
   async createPatient(
-    patientData: Omit<Patient, "id" | "created_at" | "updated_at">,
+    patientData: Omit<Patient, 'id' | 'created_at' | 'updated_at'>
   ) {
     const { data, error } = await supabaseAdmin
-      .from("patients")
+      .from('patients')
       .insert([patientData])
       .select()
       .single();
@@ -123,9 +123,9 @@ export class SupabaseDatabaseManager {
 
   async getPatient(_patientId: string) {
     const { data, error } = await supabaseAdmin
-      .from("patients")
-      .select("*")
-      .eq("id", patientId)
+      .from('patients')
+      .select('*')
+      .eq('id', patientId)
       .single();
 
     if (error) throw new Error(`Failed to get patient: ${error.message}`);
@@ -134,9 +134,9 @@ export class SupabaseDatabaseManager {
 
   async getPatientByNationalId(_nationalId: string) {
     const { data, error } = await supabaseAdmin
-      .from("patients")
-      .select("*")
-      .eq("national_id", nationalId)
+      .from('patients')
+      .select('*')
+      .eq('national_id', nationalId)
       .single();
 
     if (error)
@@ -146,9 +146,9 @@ export class SupabaseDatabaseManager {
 
   async updatePatient(_patientId: string, updates: Partial<Patient>) {
     const { data, error } = await supabaseAdmin
-      .from("patients")
+      .from('patients')
       .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq("id", patientId)
+      .eq('id', patientId)
       .select()
       .single();
 
@@ -158,21 +158,21 @@ export class SupabaseDatabaseManager {
 
   async searchPatients(_searchTerm: string) {
     const { data, error } = await supabaseAdmin
-      .from("patients")
-      .select("*")
+      .from('patients')
+      .select('*')
       .or(
-        `name.ilike.%${searchTerm}%,national_id.ilike.%${searchTerm}%,phone.ilike.%${searchTerm}%`,
+        `name.ilike.%${searchTerm}%,national_id.ilike.%${searchTerm}%,phone.ilike.%${searchTerm}%`
       )
-      .order("created_at", { ascending: false });
+      .order('created_at', { ascending: false });
 
     if (error) throw new Error(`Failed to search patients: ${error.message}`);
     return data;
   }
 
   // Doctor Management
-  async createDoctor(_doctorData: Omit<Doctor, "id" | "created_at">) {
+  async createDoctor(_doctorData: Omit<Doctor, 'id' | 'created_at'>) {
     const { data, error } = await supabaseAdmin
-      .from("doctors")
+      .from('doctors')
       .insert([doctorData])
       .select()
       .single();
@@ -183,9 +183,9 @@ export class SupabaseDatabaseManager {
 
   async getDoctor(_doctorId: string) {
     const { data, error } = await supabaseAdmin
-      .from("doctors")
-      .select("*")
-      .eq("id", doctorId)
+      .from('doctors')
+      .select('*')
+      .eq('id', doctorId)
       .single();
 
     if (error) throw new Error(`Failed to get doctor: ${error.message}`);
@@ -194,10 +194,10 @@ export class SupabaseDatabaseManager {
 
   async getDoctorsBySpecialty(_specialty: string) {
     const { data, error } = await supabaseAdmin
-      .from("doctors")
-      .select("*")
-      .eq("specialty", specialty)
-      .eq("status", "active");
+      .from('doctors')
+      .select('*')
+      .eq('specialty', specialty)
+      .eq('status', 'active');
 
     if (error)
       throw new Error(`Failed to get doctors by specialty: ${error.message}`);
@@ -206,10 +206,10 @@ export class SupabaseDatabaseManager {
 
   // Appointment Management
   async createAppointment(
-    appointmentData: Omit<Appointment, "id" | "created_at" | "updated_at">,
+    appointmentData: Omit<Appointment, 'id' | 'created_at' | 'updated_at'>
   ) {
     const { data, error } = await supabaseAdmin
-      .from("appointments")
+      .from('appointments')
       .insert([appointmentData])
       .select()
       .single();
@@ -225,20 +225,20 @@ export class SupabaseDatabaseManager {
       doctorId?: string;
       date?: string;
       status?: string;
-    } = {},
+    } = {}
   ) {
-    let query = supabaseAdmin.from("appointments").select(`
+    let query = supabaseAdmin.from('appointments').select(`
       *,
       patients!appointments_patient_id_fkey(name, phone),
       doctors!appointments_doctor_id_fkey(name, specialty)
     `);
 
-    if (filters.patientId) query = query.eq("patient_id", filters.patientId);
-    if (filters.doctorId) query = query.eq("doctor_id", filters.doctorId);
-    if (filters.date) query = query.eq("appointment_date", filters.date);
-    if (filters.status) query = query.eq("status", filters.status);
+    if (filters.patientId) query = query.eq('patient_id', filters.patientId);
+    if (filters.doctorId) query = query.eq('doctor_id', filters.doctorId);
+    if (filters.date) query = query.eq('appointment_date', filters.date);
+    if (filters.status) query = query.eq('status', filters.status);
 
-    const { data, error } = await query.order("appointment_date", {
+    const { data, error } = await query.order('appointment_date', {
       ascending: true,
     });
 
@@ -248,12 +248,12 @@ export class SupabaseDatabaseManager {
 
   async updateAppointment(
     appointmentId: string,
-    updates: Partial<Appointment>,
+    updates: Partial<Appointment>
   ) {
     const { data, error } = await supabaseAdmin
-      .from("appointments")
+      .from('appointments')
       .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq("id", appointmentId)
+      .eq('id', appointmentId)
       .select()
       .single();
 
@@ -263,9 +263,9 @@ export class SupabaseDatabaseManager {
   }
 
   // Session Management
-  async createSession(_sessionData: Omit<Session, "id" | "created_at">) {
+  async createSession(_sessionData: Omit<Session, 'id' | 'created_at'>) {
     const { data, error } = await supabaseAdmin
-      .from("sessions")
+      .from('sessions')
       .insert([sessionData])
       .select()
       .single();
@@ -276,15 +276,15 @@ export class SupabaseDatabaseManager {
 
   async getSessions(_patientId: string) {
     const { data, error } = await supabaseAdmin
-      .from("sessions")
+      .from('sessions')
       .select(
         `
         *,
         doctors!sessions_doctor_id_fkey(name, specialty)
-      `,
+      `
       )
-      .eq("patient_id", patientId)
-      .order("session_date", { ascending: false });
+      .eq('patient_id', patientId)
+      .order('session_date', { ascending: false });
 
     if (error) throw new Error(`Failed to get sessions: ${error.message}`);
     return data;
@@ -292,10 +292,10 @@ export class SupabaseDatabaseManager {
 
   // Insurance Claims
   async createInsuranceClaim(
-    claimData: Omit<InsuranceClaim, "id" | "submitted_at">,
+    claimData: Omit<InsuranceClaim, 'id' | 'submitted_at'>
   ) {
     const { data, error } = await supabaseAdmin
-      .from("insurance_claims")
+      .from('insurance_claims')
       .insert([
         {
           ...claimData,
@@ -312,10 +312,10 @@ export class SupabaseDatabaseManager {
 
   async getInsuranceClaims(_patientId: string) {
     const { data, error } = await supabaseAdmin
-      .from("insurance_claims")
-      .select("*")
-      .eq("patient_id", patientId)
-      .order("submitted_at", { ascending: false });
+      .from('insurance_claims')
+      .select('*')
+      .eq('patient_id', patientId)
+      .order('submitted_at', { ascending: false });
 
     if (error)
       throw new Error(`Failed to get insurance claims: ${error.message}`);
@@ -324,12 +324,12 @@ export class SupabaseDatabaseManager {
 
   async updateInsuranceClaim(
     claimId: string,
-    updates: Partial<InsuranceClaim>,
+    updates: Partial<InsuranceClaim>
   ) {
     const { data, error } = await supabaseAdmin
-      .from("insurance_claims")
+      .from('insurance_claims')
       .update(updates)
-      .eq("id", claimId)
+      .eq('id', claimId)
       .select()
       .single();
 
@@ -341,14 +341,14 @@ export class SupabaseDatabaseManager {
   // Analytics
   async getPatientStats() {
     const { data, error } = await supabaseAdmin
-      .from("patients")
-      .select("id, created_at, status");
+      .from('patients')
+      .select('id, created_at, status');
 
     if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
 
     const __total = data.length;
-    const __active = data.filter((p) => p.status === "active").length;
-    const __newLast30Days = data.filter((p) => {
+    const __active = data.filter(p => p.status === 'active').length;
+    const __newLast30Days = data.filter(p => {
       const __createdAt = new Date(p.created_at);
       const __thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -360,18 +360,18 @@ export class SupabaseDatabaseManager {
 
   async getAppointmentStats() {
     const { data, error } = await supabaseAdmin
-      .from("appointments")
-      .select("status, appointment_date, created_at");
+      .from('appointments')
+      .select('status, appointment_date, created_at');
 
     if (error)
       throw new Error(`Failed to get appointment stats: ${error.message}`);
 
     const __total = data.length;
-    const __completed = data.filter((a) => a.status === "completed").length;
-    const __cancelled = data.filter((a) => a.status === "cancelled").length;
-    const __upcoming = data.filter((a) => {
+    const __completed = data.filter(a => a.status === 'completed').length;
+    const __cancelled = data.filter(a => a.status === 'cancelled').length;
+    const __upcoming = data.filter(a => {
       const __appointmentDate = new Date(a.appointment_date);
-      return appointmentDate >= new Date() && a.status === "scheduled";
+      return appointmentDate >= new Date() && a.status === 'scheduled';
     }).length;
 
     return { total, completed, cancelled, upcoming };
@@ -381,21 +381,21 @@ export class SupabaseDatabaseManager {
   async healthCheck() {
     try {
       const { data: _d, error } = await supabaseAdmin
-        .from("patients")
-        .select("id")
+        .from('patients')
+        .select('id')
         .limit(1);
 
       if (error) throw error;
 
       return {
-        status: "healthy",
+        status: 'healthy',
         connected: true,
         timestamp: new Date().toISOString(),
       };
     } catch (error) {
       const __err = error as Error;
       return {
-        status: "unhealthy",
+        status: 'unhealthy',
         connected: false,
         error: err.message,
         timestamp: new Date().toISOString(),

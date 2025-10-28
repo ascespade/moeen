@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 class CursorAgent {
   constructor() {
-    this.logFile = path.join(__dirname, "../logs/cursor-agent.log");
+    this.logFile = path.join(__dirname, '../logs/cursor-agent.log');
     this.startTime = new Date();
     this.isRunning = false;
   }
@@ -25,15 +25,15 @@ class CursorAgent {
   }
 
   async initialize() {
-    this.log("Initializing Cursor Agent...");
+    this.log('Initializing Cursor Agent...');
 
     // Create necessary directories
     const directories = [
-      "../logs",
-      "../temp",
-      "../reports",
-      "../archive",
-      "../videos",
+      '../logs',
+      '../temp',
+      '../reports',
+      '../archive',
+      '../videos',
     ];
 
     for (const dir of directories) {
@@ -44,11 +44,11 @@ class CursorAgent {
       }
     }
 
-    this.log("Cursor Agent initialized successfully");
+    this.log('Cursor Agent initialized successfully');
   }
 
   async performMaintenance() {
-    this.log("Performing maintenance tasks...");
+    this.log('Performing maintenance tasks...');
 
     try {
       // Check system health
@@ -60,24 +60,24 @@ class CursorAgent {
       // Update file index
       await this.updateFileIndex();
 
-      this.log("Maintenance tasks completed");
+      this.log('Maintenance tasks completed');
     } catch (error) {
-      this.log("Error during maintenance: " + error.message);
+      this.log('Error during maintenance: ' + error.message);
     }
   }
 
   async checkSystemHealth() {
-    this.log("Checking system health...");
+    this.log('Checking system health...');
 
     // Check disk space
     const stats = fs.statSync(__dirname);
-    this.log("System health check completed");
+    this.log('System health check completed');
   }
 
   async cleanupTempFiles() {
-    this.log("Cleaning up temporary files...");
+    this.log('Cleaning up temporary files...');
 
-    const tempDir = path.join(__dirname, "../temp");
+    const tempDir = path.join(__dirname, '../temp');
     if (fs.existsSync(tempDir)) {
       const files = fs.readdirSync(tempDir);
       let cleanedCount = 0;
@@ -99,7 +99,7 @@ class CursorAgent {
   }
 
   async updateFileIndex() {
-    this.log("Updating file index...");
+    this.log('Updating file index...');
 
     const fileIndex = {
       timestamp: new Date().toISOString(),
@@ -107,11 +107,11 @@ class CursorAgent {
     };
 
     // Scan workspace for files
-    const workspaceDir = path.join(__dirname, "..");
+    const workspaceDir = path.join(__dirname, '..');
     this.scanDirectory(workspaceDir, fileIndex.files);
 
     // Save file index
-    const indexFile = path.join(__dirname, "../temp/file-index.json");
+    const indexFile = path.join(__dirname, '../temp/file-index.json');
     fs.writeFileSync(indexFile, JSON.stringify(fileIndex, null, 2));
 
     this.log(`File index updated with ${fileIndex.files.length} files`);
@@ -128,25 +128,25 @@ class CursorAgent {
         if (stats.isDirectory()) {
           // Skip node_modules and other common directories
           if (
-            !["node_modules", ".git", ".next", "dist", "build"].includes(file)
+            !['node_modules', '.git', '.next', 'dist', 'build'].includes(file)
           ) {
             this.scanDirectory(filePath, fileList);
           }
         } else {
           fileList.push({
-            path: path.relative(path.join(__dirname, ".."), filePath),
+            path: path.relative(path.join(__dirname, '..'), filePath),
             size: stats.size,
             modified: stats.mtime.toISOString(),
           });
         }
       }
     } catch (error) {
-      this.log("Error scanning directory: " + error.message);
+      this.log('Error scanning directory: ' + error.message);
     }
   }
 
   async run() {
-    this.log("Starting Cursor Agent...");
+    this.log('Starting Cursor Agent...');
     this.isRunning = true;
 
     await this.initialize();
@@ -157,18 +157,18 @@ class CursorAgent {
         await this.performMaintenance();
 
         // Wait 5 minutes before next maintenance cycle
-        await new Promise((resolve) => setTimeout(resolve, 5 * 60 * 1000));
+        await new Promise(resolve => setTimeout(resolve, 5 * 60 * 1000));
       } catch (error) {
-        this.log("Error in main loop: " + error.message);
-        await new Promise((resolve) => setTimeout(resolve, 60000)); // Wait 1 minute on error
+        this.log('Error in main loop: ' + error.message);
+        await new Promise(resolve => setTimeout(resolve, 60000)); // Wait 1 minute on error
       }
     }
 
-    this.log("Cursor Agent stopped");
+    this.log('Cursor Agent stopped');
   }
 
   stop() {
-    this.log("Stopping Cursor Agent...");
+    this.log('Stopping Cursor Agent...');
     this.isRunning = false;
   }
 }
@@ -178,19 +178,19 @@ if (require.main === module) {
   const agent = new CursorAgent();
 
   // Handle graceful shutdown
-  process.on("SIGINT", () => {
+  process.on('SIGINT', () => {
     agent.stop();
     process.exit(0);
   });
 
-  process.on("SIGTERM", () => {
+  process.on('SIGTERM', () => {
     agent.stop();
     process.exit(0);
   });
 
   // Start agent
-  agent.run().catch((error) => {
-    console.error("Agent failed:", error);
+  agent.run().catch(error => {
+    console.error('Agent failed:', error);
     process.exit(1);
   });
 }

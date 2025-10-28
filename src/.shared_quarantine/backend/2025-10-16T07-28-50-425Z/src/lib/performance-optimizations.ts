@@ -1,9 +1,9 @@
-import { _logger } from "@/lib/logger";
+import { _logger } from '@/lib/logger';
 
 // Performance optimizations for the application
 
 // Disable console logs in production
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === 'production') {
   logger.info = () => {};
   logger.warn = () => {};
   logger.error = () => {};
@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Optimize memory usage
 export const __optimizeMemory = () => {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     // Clear unused variables
     if (window.gc) {
       window.gc();
@@ -21,7 +21,7 @@ export const __optimizeMemory = () => {
 
 // Lazy load components
 export const __lazyLoadComponent = (_importFn: () => Promise<any>) => {
-  return importFn().catch((error) => {
+  return importFn().catch(error => {
     return null;
   });
 };
@@ -30,15 +30,15 @@ export const __lazyLoadComponent = (_importFn: () => Promise<any>) => {
 export const __optimizeImage = (_src: string) => {
   return {
     src,
-    loading: "lazy" as const,
-    decoding: "async" as const,
+    loading: 'lazy' as const,
+    decoding: 'async' as const,
   };
 };
 
 // Debounce function for performance
 export const __debounce = <T extends (...args: unknown[]) => any>(
   func: T,
-  wait: number,
+  wait: number
 ): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout;
   return (...args: Parameters<T>) => {
@@ -50,7 +50,7 @@ export const __debounce = <T extends (...args: unknown[]) => any>(
 // Throttle function for performance
 export const __throttle = <T extends (...args: unknown[]) => any>(
   func: T,
-  limit: number,
+  limit: number
 ): ((...args: Parameters<T>) => void) => {
   let inThrottle: boolean;
   return (...args: Parameters<T>) => {

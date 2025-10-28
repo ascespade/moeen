@@ -3,8 +3,8 @@
  * Comprehensive testing utilities and helpers
  */
 
-import { _createClient } from "@/lib/supabase/server";
-import { _logger } from "../monitoring/logger";
+import { _createClient } from '@/lib/supabase/server';
+import { _logger } from '../monitoring/logger';
 
 interface TestUser {
   id: string;
@@ -37,8 +37,8 @@ class TestUtils {
 
   // Create test user
   async createTestUser(
-    role: string = "patient",
-    overrides: Partial<TestUser> = {},
+    role: string = 'patient',
+    overrides: Partial<TestUser> = {}
   ): Promise<TestUser> {
     const testUser: TestUser = {
       id: `test_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -46,14 +46,14 @@ class TestUtils {
       role,
       profile: {
         fullName: `Test User ${Date.now()}`,
-        phone: "+966501234567",
+        phone: '+966501234567',
         ...overrides.profile,
       },
       ...overrides,
     };
 
     // Create user in database
-    const { error } = await this.supabase.from("users").insert({
+    const { error } = await this.supabase.from('users').insert({
       id: testUser.id,
       email: testUser.email,
       role: testUser.role,
@@ -72,22 +72,22 @@ class TestUtils {
   // Create test patient
   async createTestPatient(userId?: string): Promise<any> {
     const __user = userId
-      ? this.testData.users.find((u) => u.id === userId)
-      : await this.createTestUser("patient");
+      ? this.testData.users.find(u => u.id === userId)
+      : await this.createTestUser('patient');
 
     const __patient = {
       id: `patient_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      userId: user?.id || "",
-      fullName: user?.profile?.fullName || "",
-      email: user?.email || "",
-      phone: user?.profile?.phone || "",
+      userId: user?.id || '',
+      fullName: user?.profile?.fullName || '',
+      email: user?.email || '',
+      phone: user?.profile?.phone || '',
       medicalRecordNumber: `MR${Date.now()}${Math.random().toString(36).substr(2, 4)}`,
       isActivated: true,
-      insuranceProvider: "tawuniya",
+      insuranceProvider: 'tawuniya',
       insuranceNumber: `INS${Date.now()}`,
     };
 
-    const { error } = await this.supabase.from("patients").insert(patient);
+    const { error } = await this.supabase.from('patients').insert(patient);
 
     if (error) {
       throw new Error(`Failed to create test patient: ${error.message}`);
@@ -100,29 +100,29 @@ class TestUtils {
   // Create test doctor
   async createTestDoctor(userId?: string): Promise<any> {
     const __user = userId
-      ? this.testData.users.find((u) => u.id === userId)
-      : await this.createTestUser("doctor");
+      ? this.testData.users.find(u => u.id === userId)
+      : await this.createTestUser('doctor');
 
     const __doctor = {
       id: `doctor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      userId: user?.id || "",
-      fullName: user?.profile?.fullName || "",
-      email: user?.email || "",
-      phone: user?.profile?.phone || "",
-      speciality: "General Practice",
+      userId: user?.id || '',
+      fullName: user?.profile?.fullName || '',
+      email: user?.email || '',
+      phone: user?.profile?.phone || '',
+      speciality: 'General Practice',
       licenseNumber: `DR${Date.now()}${Math.random().toString(36).substr(2, 4)}`,
       schedule: {
-        0: { isWorking: false, startTime: "09:00", endTime: "17:00" },
-        1: { isWorking: true, startTime: "09:00", endTime: "17:00" },
-        2: { isWorking: true, startTime: "09:00", endTime: "17:00" },
-        3: { isWorking: true, startTime: "09:00", endTime: "17:00" },
-        4: { isWorking: true, startTime: "09:00", endTime: "17:00" },
-        5: { isWorking: true, startTime: "09:00", endTime: "17:00" },
-        6: { isWorking: false, startTime: "09:00", endTime: "17:00" },
+        0: { isWorking: false, startTime: '09:00', endTime: '17:00' },
+        1: { isWorking: true, startTime: '09:00', endTime: '17:00' },
+        2: { isWorking: true, startTime: '09:00', endTime: '17:00' },
+        3: { isWorking: true, startTime: '09:00', endTime: '17:00' },
+        4: { isWorking: true, startTime: '09:00', endTime: '17:00' },
+        5: { isWorking: true, startTime: '09:00', endTime: '17:00' },
+        6: { isWorking: false, startTime: '09:00', endTime: '17:00' },
       },
     };
 
-    const { error } = await this.supabase.from("doctors").insert(doctor);
+    const { error } = await this.supabase.from('doctors').insert(doctor);
 
     if (error) {
       throw new Error(`Failed to create test doctor: ${error.message}`);
@@ -135,14 +135,14 @@ class TestUtils {
   // Create test appointment
   async createTestAppointment(
     patientId?: string,
-    doctorId?: string,
+    doctorId?: string
   ): Promise<any> {
     const __patient = patientId
-      ? this.testData.patients.find((p) => p.id === patientId)
+      ? this.testData.patients.find(p => p.id === patientId)
       : await this.createTestPatient();
 
     const __doctor = doctorId
-      ? this.testData.doctors.find((d) => d.id === doctorId)
+      ? this.testData.doctors.find(d => d.id === doctorId)
       : await this.createTestDoctor();
 
     const __appointment = {
@@ -150,15 +150,15 @@ class TestUtils {
       patientId: patient.id,
       doctorId: doctor.id,
       scheduledAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // Tomorrow
-      type: "consultation",
-      status: "pending",
-      paymentStatus: "unpaid",
+      type: 'consultation',
+      status: 'pending',
+      paymentStatus: 'unpaid',
       duration: 30,
-      notes: "Test appointment",
+      notes: 'Test appointment',
     };
 
     const { error } = await this.supabase
-      .from("appointments")
+      .from('appointments')
       .insert(appointment);
 
     if (error) {
@@ -172,21 +172,21 @@ class TestUtils {
   // Create test payment
   async createTestPayment(appointmentId?: string): Promise<any> {
     const __appointment = appointmentId
-      ? this.testData.appointments.find((a) => a.id === appointmentId)
+      ? this.testData.appointments.find(a => a.id === appointmentId)
       : await this.createTestAppointment();
 
     const __payment = {
       id: `payment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       appointmentId: appointment.id,
       amount: 200,
-      currency: "SAR",
-      method: "cash",
-      status: "paid",
+      currency: 'SAR',
+      method: 'cash',
+      status: 'paid',
       transactionId: `TXN${Date.now()}`,
-      description: "Test payment",
+      description: 'Test payment',
     };
 
-    const { error } = await this.supabase.from("payments").insert(payment);
+    const { error } = await this.supabase.from('payments').insert(payment);
 
     if (error) {
       throw new Error(`Failed to create test payment: ${error.message}`);
@@ -202,51 +202,51 @@ class TestUtils {
       // Delete in reverse order to respect foreign key constraints
       if (this.testData.payments.length > 0) {
         await this.supabase
-          .from("payments")
+          .from('payments')
           .delete()
           .in(
-            "id",
-            this.testData.payments.map((p) => p.id),
+            'id',
+            this.testData.payments.map(p => p.id)
           );
       }
 
       if (this.testData.appointments.length > 0) {
         await this.supabase
-          .from("appointments")
+          .from('appointments')
           .delete()
           .in(
-            "id",
-            this.testData.appointments.map((a) => a.id),
+            'id',
+            this.testData.appointments.map(a => a.id)
           );
       }
 
       if (this.testData.patients.length > 0) {
         await this.supabase
-          .from("patients")
+          .from('patients')
           .delete()
           .in(
-            "id",
-            this.testData.patients.map((p) => p.id),
+            'id',
+            this.testData.patients.map(p => p.id)
           );
       }
 
       if (this.testData.doctors.length > 0) {
         await this.supabase
-          .from("doctors")
+          .from('doctors')
           .delete()
           .in(
-            "id",
-            this.testData.doctors.map((d) => d.id),
+            'id',
+            this.testData.doctors.map(d => d.id)
           );
       }
 
       if (this.testData.users.length > 0) {
         await this.supabase
-          .from("users")
+          .from('users')
           .delete()
           .in(
-            "id",
-            this.testData.users.map((u) => u.id),
+            'id',
+            this.testData.users.map(u => u.id)
           );
       }
 
@@ -259,9 +259,9 @@ class TestUtils {
         payments: [],
       };
 
-      logger.info("Test data cleaned up successfully");
+      logger.info('Test data cleaned up successfully');
     } catch (error) {
-      logger.error("Failed to cleanup test data", {}, error as Error);
+      logger.error('Failed to cleanup test data', {}, error as Error);
       throw error;
     }
   }
@@ -276,12 +276,12 @@ class TestUtils {
     method: string,
     url: string,
     body?: unknown,
-    headers?: Record<string, string>,
+    headers?: Record<string, string>
   ): Request {
     return new Request(url, {
       method,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...headers,
       },
       body: body ? JSON.stringify(body) : undefined,
@@ -293,7 +293,7 @@ class TestUtils {
     method: string,
     url: string,
     body?: unknown,
-    headers?: Record<string, string>,
+    headers?: Record<string, string>
   ): unknown {
     const __request = this.mockRequest(method, url, body, headers);
     return {
@@ -306,14 +306,14 @@ class TestUtils {
 
   // Wait for async operations
   async wait(_ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   // Retry function
   async retry<T>(
     fn: () => Promise<T>,
     maxAttempts: number = 3,
-    delay: number = 1000,
+    delay: number = 1000
   ): Promise<T> {
     let lastError: Error;
 

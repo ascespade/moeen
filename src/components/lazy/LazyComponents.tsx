@@ -1,42 +1,42 @@
-import dynamic from "next/dynamic";
-import { _Suspense } from "react";
+import dynamic from 'next/dynamic';
+import { _Suspense } from 'react';
 
-import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import LoadingSpinner from '@/components/shared/LoadingSpinner';
 
 // Lazy load heavy components
 export const __LazyCalendar = dynamic(
-  () => import("@/components/appointments/AppointmentManager"),
+  () => import('@/components/appointments/AppointmentManager'),
   {
     loading: () => <LoadingSpinner />,
     ssr: false,
-  },
+  }
 );
 
 export const __LazyChart = dynamic(
-  () => import("@/components/dashboard/Charts"),
+  () => import('@/components/dashboard/Charts'),
   {
     loading: () => <LoadingSpinner />,
     ssr: false,
-  },
+  }
 );
 
 export const __LazyFlowBuilder = dynamic(
-  () => import("@/components/chatbot/MoainChatbot"),
+  () => import('@/components/chatbot/MoainChatbot'),
   {
     loading: () => <LoadingSpinner />,
     ssr: false,
-  },
+  }
 );
 
 export const __LazyDataTable = dynamic(
-  () => import("@/components/shared/DataTable"),
+  () => import('@/components/shared/DataTable'),
   {
-    loading: () => <div className="h-64 bg-gray-100 animate-pulse rounded" />,
+    loading: () => <div className='h-64 bg-gray-100 animate-pulse rounded' />,
     ssr: false,
-  },
+  }
 );
 
-export const __LazyModal = dynamic(() => import("@/components/shared/Modal"), {
+export const __LazyModal = dynamic(() => import('@/components/shared/Modal'), {
   loading: () => null,
   ssr: false,
 });
@@ -45,7 +45,7 @@ export const __LazyModal = dynamic(() => import("@/components/shared/Modal"), {
 export function __SuspenseWrapper({
   children,
   fallback = <LoadingSpinner />,
-  className = "",
+  className = '',
 }: {
   children: React.ReactNode;
   fallback?: React.ReactNode;

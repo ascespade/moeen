@@ -1,8 +1,8 @@
-import { _ROUTES } from "@/constants/routes";
+import { _ROUTES } from '@/constants/routes';
 export interface User {
   id: string;
   email: string;
-  role: "admin" | "user" | "doctor" | "nurse";
+  role: 'admin' | 'user' | 'doctor' | 'nurse';
   permissions?: string[];
 }
 
@@ -15,11 +15,11 @@ export function __getDefaultRouteForUser(_user: User | null): string {
   }
 
   switch (user.role) {
-    case "admin":
+    case 'admin':
       return ROUTES.ADMIN.DASHBOARD;
-    case "doctor":
-    case "nurse":
-    case "user":
+    case 'doctor':
+    case 'nurse':
+    case 'user':
     default:
       return ROUTES.USER.DASHBOARD;
   }
@@ -30,7 +30,7 @@ export function __getDefaultRouteForUser(_user: User | null): string {
  */
 export function __isProtectedRoute(_pathname: string): boolean {
   return !((ROUTES as any).PUBLIC_ROUTES as readonly string[]).includes(
-    pathname,
+    pathname
   );
 }
 
@@ -38,7 +38,7 @@ export function __isProtectedRoute(_pathname: string): boolean {
  * Check if a route requires admin privileges
  */
 export function __isAdminRoute(_pathname: string): boolean {
-  return pathname.startsWith("/admin");
+  return pathname.startsWith('/admin');
 }
 
 /**
@@ -46,14 +46,14 @@ export function __isAdminRoute(_pathname: string): boolean {
  */
 export function __canAccessRoute(
   _user: User | null,
-  pathname: string,
+  pathname: string
 ): boolean {
   if (!user) {
     return !isProtectedRoute(pathname);
   }
 
   if (isAdminRoute(pathname)) {
-    return user.role === "admin";
+    return user.role === 'admin';
   }
 
   return true;
@@ -65,25 +65,25 @@ export function __canAccessRoute(
 export function __getNavigationItems(_user: User | null) {
   if (!user) {
     return [
-      { label: "الرئيسية", href: ROUTES.HOME },
-      { label: "تسجيل الدخول", href: ROUTES.LOGIN },
-      { label: "إنشاء حساب", href: ROUTES.REGISTER },
+      { label: 'الرئيسية', href: ROUTES.HOME },
+      { label: 'تسجيل الدخول', href: ROUTES.LOGIN },
+      { label: 'إنشاء حساب', href: ROUTES.REGISTER },
     ];
   }
 
   const __baseItems = [
-    { label: "لوحة التحكم", href: ROUTES.USER.DASHBOARD },
-    { label: "المواعيد", href: ROUTES.HEALTH.APPOINTMENTS },
-    { label: "المرضى", href: ROUTES.HEALTH.PATIENTS },
-    { label: "الجلسات", href: ROUTES.HEALTH.SESSIONS },
+    { label: 'لوحة التحكم', href: ROUTES.USER.DASHBOARD },
+    { label: 'المواعيد', href: ROUTES.HEALTH.APPOINTMENTS },
+    { label: 'المرضى', href: ROUTES.HEALTH.PATIENTS },
+    { label: 'الجلسات', href: ROUTES.HEALTH.SESSIONS },
   ];
 
-  if (user.role === "admin") {
+  if (user.role === 'admin') {
     return [
       ...baseItems,
-      { label: "الإدارة", href: ROUTES.ADMIN.DASHBOARD },
-      { label: "المستخدمون", href: ROUTES.ADMIN.USERS },
-      { label: "الإعدادات", href: ROUTES.ADMIN.SETTINGS },
+      { label: 'الإدارة', href: ROUTES.ADMIN.DASHBOARD },
+      { label: 'المستخدمون', href: ROUTES.ADMIN.USERS },
+      { label: 'الإعدادات', href: ROUTES.ADMIN.SETTINGS },
     ];
   }
 

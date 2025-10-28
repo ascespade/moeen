@@ -37,37 +37,37 @@ export class InsuranceProviderService {
   private initializeProviders() {
     const providers: InsuranceProvider[] = [
       {
-        id: "seha",
-        name: "SEHA",
-        code: "SEHA",
-        apiEndpoint: process.env.SEHA_API_ENDPOINT || "https://api.seha.sa/v1",
-        apiKey: process.env.SEHA_API_KEY || "",
-        supportedOperations: ["verify_member", "create_claim", "check_status"],
+        id: 'seha',
+        name: 'SEHA',
+        code: 'SEHA',
+        apiEndpoint: process.env.SEHA_API_ENDPOINT || 'https://api.seha.sa/v1',
+        apiKey: process.env.SEHA_API_KEY || '',
+        supportedOperations: ['verify_member', 'create_claim', 'check_status'],
         isActive: true,
       },
       {
-        id: "shoon",
-        name: "SHOON",
-        code: "SHOON",
+        id: 'shoon',
+        name: 'SHOON',
+        code: 'SHOON',
         apiEndpoint:
-          process.env.SHOON_API_ENDPOINT || "https://api.shoon.sa/v1",
-        apiKey: process.env.SHOON_API_KEY || "",
-        supportedOperations: ["verify_member", "create_claim", "check_status"],
+          process.env.SHOON_API_ENDPOINT || 'https://api.shoon.sa/v1',
+        apiKey: process.env.SHOON_API_KEY || '',
+        supportedOperations: ['verify_member', 'create_claim', 'check_status'],
         isActive: true,
       },
       {
-        id: "tatman",
-        name: "TATMAN",
-        code: "TATMAN",
+        id: 'tatman',
+        name: 'TATMAN',
+        code: 'TATMAN',
         apiEndpoint:
-          process.env.TATMAN_API_ENDPOINT || "https://api.tatman.sa/v1",
-        apiKey: process.env.TATMAN_API_KEY || "",
-        supportedOperations: ["verify_member", "create_claim", "check_status"],
+          process.env.TATMAN_API_ENDPOINT || 'https://api.tatman.sa/v1',
+        apiKey: process.env.TATMAN_API_KEY || '',
+        supportedOperations: ['verify_member', 'create_claim', 'check_status'],
         isActive: true,
       },
     ];
 
-    providers.forEach((provider) => {
+    providers.forEach(provider => {
       this.providers.set(provider.code, provider);
     });
   }
@@ -75,19 +75,19 @@ export class InsuranceProviderService {
   async verifyMember(
     providerCode: string,
     memberId: string,
-    dateOfBirth: string,
+    dateOfBirth: string
   ): Promise<ClaimResult> {
     const __provider = this.providers.get(providerCode);
     if (!provider || !provider.isActive) {
-      return { success: false, error: "Provider not found or inactive" };
+      return { success: false, error: 'Provider not found or inactive' };
     }
 
     try {
       const __response = await fetch(`${provider.apiEndpoint}/members/verify`, {
-        method: "POST",
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${provider.apiKey}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           member_id: memberId,
@@ -100,7 +100,7 @@ export class InsuranceProviderService {
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || "Member verification failed",
+          error: result.message || 'Member verification failed',
         };
       }
 
@@ -112,26 +112,26 @@ export class InsuranceProviderService {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Verification failed",
+        error: error instanceof Error ? error.message : 'Verification failed',
       };
     }
   }
 
   async createClaim(
     providerCode: string,
-    claimData: ClaimData,
+    claimData: ClaimData
   ): Promise<ClaimResult> {
     const __provider = this.providers.get(providerCode);
     if (!provider || !provider.isActive) {
-      return { success: false, error: "Provider not found or inactive" };
+      return { success: false, error: 'Provider not found or inactive' };
     }
 
     try {
       const __response = await fetch(`${provider.apiEndpoint}/claims`, {
-        method: "POST",
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${provider.apiKey}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           patient_id: claimData.patientId,
@@ -149,7 +149,7 @@ export class InsuranceProviderService {
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || "Claim creation failed",
+          error: result.message || 'Claim creation failed',
         };
       }
 
@@ -162,29 +162,29 @@ export class InsuranceProviderService {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Claim creation failed",
+        error: error instanceof Error ? error.message : 'Claim creation failed',
       };
     }
   }
 
   async checkClaimStatus(
     providerCode: string,
-    claimId: string,
+    claimId: string
   ): Promise<ClaimResult> {
     const __provider = this.providers.get(providerCode);
     if (!provider || !provider.isActive) {
-      return { success: false, error: "Provider not found or inactive" };
+      return { success: false, error: 'Provider not found or inactive' };
     }
 
     try {
       const __response = await fetch(
         `${provider.apiEndpoint}/claims/${claimId}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
             Authorization: `Bearer ${provider.apiKey}`,
           },
-        },
+        }
       );
 
       const __result = await response.json();
@@ -192,7 +192,7 @@ export class InsuranceProviderService {
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || "Status check failed",
+          error: result.message || 'Status check failed',
         };
       }
 
@@ -205,30 +205,30 @@ export class InsuranceProviderService {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : "Status check failed",
+        error: error instanceof Error ? error.message : 'Status check failed',
       };
     }
   }
 
   async submitClaim(
     providerCode: string,
-    claimId: string,
+    claimId: string
   ): Promise<ClaimResult> {
     const __provider = this.providers.get(providerCode);
     if (!provider || !provider.isActive) {
-      return { success: false, error: "Provider not found or inactive" };
+      return { success: false, error: 'Provider not found or inactive' };
     }
 
     try {
       const __response = await fetch(
         `${provider.apiEndpoint}/claims/${claimId}/submit`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${provider.apiKey}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
 
       const __result = await response.json();
@@ -236,7 +236,7 @@ export class InsuranceProviderService {
       if (!response.ok) {
         return {
           success: false,
-          error: result.message || "Claim submission failed",
+          error: result.message || 'Claim submission failed',
         };
       }
 
@@ -250,13 +250,13 @@ export class InsuranceProviderService {
       return {
         success: false,
         error:
-          error instanceof Error ? error.message : "Claim submission failed",
+          error instanceof Error ? error.message : 'Claim submission failed',
       };
     }
   }
 
   getProviders(): InsuranceProvider[] {
-    return Array.from(this.providers.values()).filter((p) => p.isActive);
+    return Array.from(this.providers.values()).filter(p => p.isActive);
   }
 
   getProvider(_code: string): InsuranceProvider | undefined {

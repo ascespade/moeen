@@ -1,5 +1,5 @@
-import { _NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { _NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 // Ultra-simple middleware for fastest compilation
 export function __middleware(__request: NextRequest) {
@@ -8,6 +8,6 @@ export function __middleware(__request: NextRequest) {
 
 export const __config = {
   matcher: [
-    "/((?!_next|api|static|.*\\.png$|.*\\.svg$|.*\\.ico$|.*\\.jpg$|.*\\.jpeg$).*)",
+    '/((?!_next|api|static|.*\\.png$|.*\\.svg$|.*\\.ico$|.*\\.jpg$|.*\\.jpeg$).*)',
   ],
 };

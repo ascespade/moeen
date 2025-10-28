@@ -1,4 +1,4 @@
-import { _NextRequest } from "next/server";
+import { _NextRequest } from 'next/server';
 // Comprehensive Caching System for Hemam Center
 
 // Cache entry interface
@@ -135,9 +135,9 @@ export class CacheKeys {
   static appointments(
     patientId?: string,
     doctorId?: string,
-    date?: string,
+    date?: string
   ): string {
-    const __params = [patientId, doctorId, date].filter(Boolean).join(":");
+    const __params = [patientId, doctorId, date].filter(Boolean).join(':');
     return `appointments:${params}`;
   }
 
@@ -162,11 +162,11 @@ export class CacheKeys {
   }
 
   static centerSettings(): string {
-    return "center_settings";
+    return 'center_settings';
   }
 
   static messageTemplates(): string {
-    return "message_templates";
+    return 'message_templates';
   }
 }
 
@@ -195,7 +195,7 @@ export class CacheManager {
   async get<T>(
     key: string,
     fetcher?: () => Promise<T>,
-    ttl?: number,
+    ttl?: number
   ): Promise<T | null> {
     // Check cache first
     const __cached = this.cache.get<T>(key);
@@ -215,12 +215,12 @@ export class CacheManager {
 
     // Fetch data
     const __promise = fetcher()
-      .then((data) => {
+      .then(data => {
         this.cache.set(key, data, ttl);
         this.requestCache.delete(key);
         return data;
       })
-      .catch((error) => {
+      .catch(error => {
         this.requestCache.delete(key);
         throw error;
       });
@@ -238,8 +238,8 @@ export class CacheManager {
   }
 
   invalidatePattern(_pattern: string): void {
-    const __regex = new RegExp(pattern.replace(/\*/g, ".*"));
-    for (const key of this.cache["cache"].keys()) {
+    const __regex = new RegExp(pattern.replace(/\*/g, '.*'));
+    for (const key of this.cache['cache'].keys()) {
       if (regex.test(key)) {
         this.cache.delete(key);
       }
@@ -263,51 +263,51 @@ export class CacheManager {
     fetcher: () => Promise<any>,
     patientId?: string,
     doctorId?: string,
-    date?: string,
+    date?: string
   ): Promise<any> {
     return this.get(
       CacheKeys.appointments(patientId, doctorId, date),
       fetcher,
-      2 * 60 * 1000,
+      2 * 60 * 1000
     ); // 2 minutes
   }
 
   async getSessions(
     patientId: string,
-    fetcher: () => Promise<any>,
+    fetcher: () => Promise<any>
   ): Promise<any> {
     return this.get(CacheKeys.sessions(patientId), fetcher, 5 * 60 * 1000); // 5 minutes
   }
 
   async getConversations(
     patientId: string,
-    fetcher: () => Promise<any>,
+    fetcher: () => Promise<any>
   ): Promise<any> {
     return this.get(CacheKeys.conversations(patientId), fetcher, 1 * 60 * 1000); // 1 minute
   }
 
   async getAnalytics(
     period: string,
-    fetcher: () => Promise<any>,
+    fetcher: () => Promise<any>
   ): Promise<any> {
     return this.get(CacheKeys.analytics(period), fetcher, 5 * 60 * 1000); // 5 minutes
   }
 
   async getNotifications(
     userId: string,
-    fetcher: () => Promise<any>,
+    fetcher: () => Promise<any>
   ): Promise<any> {
     return this.get(CacheKeys.notifications(userId), fetcher, 1 * 60 * 1000); // 1 minute
   }
 
   async getInsuranceClaims(
     patientId: string,
-    fetcher: () => Promise<any>,
+    fetcher: () => Promise<any>
   ): Promise<any> {
     return this.get(
       CacheKeys.insuranceClaims(patientId),
       fetcher,
-      10 * 60 * 1000,
+      10 * 60 * 1000
     ); // 10 minutes
   }
 
@@ -348,7 +348,7 @@ export class CacheManager {
     if (doctorId) {
       this.invalidatePattern(`appointments:*:${doctorId}`);
     }
-    this.invalidatePattern("appointments:*");
+    this.invalidatePattern('appointments:*');
   }
 
   invalidateSessions(_patientId: string): void {
@@ -360,7 +360,7 @@ export class CacheManager {
   }
 
   invalidateAnalytics(): void {
-    this.invalidatePattern("analytics:*");
+    this.invalidatePattern('analytics:*');
   }
 
   invalidateNotifications(_userId: string): void {
@@ -394,12 +394,12 @@ export class CacheManager {
 // Cache middleware
 export function __withCache(
   keyGenerator: (_request: NextRequest) => string,
-  ttl?: number,
+  ttl?: number
 ) {
   return function (
     _target: unknown,
     _propertyName: string,
-    descriptor: PropertyDescriptor,
+    descriptor: PropertyDescriptor
   ) {
     const __method = descriptor.value;
     const __cache = CacheManager.getInstance();
@@ -415,7 +415,7 @@ export function __withCache(
         async () => {
           return await method.call(this, request, ...args);
         },
-        ttl,
+        ttl
       );
     };
   };

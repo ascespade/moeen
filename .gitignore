@@ -1,7 +1,66 @@
+# Dependencies
 node_modules/
-reports/
-ai_logs.db
-dashboard/logs.json
-.next/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
 playwright-report/
 test-results/
+*.test.ts.snap
+
+# Production
+build/
+dist/
+.out/
+.next/
+
+# Misc
+.DS_Store
+*.pem
+.vscode/
+.idea/
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs
+logs/
+*.log
+ai_logs.db
+dashboard/logs.json
+
+# Reports
+reports/
+test-reports/
+
+# Agent system (non-project files)
+.agent-system/
+.cursor/
+.agent-work/
+
+# Isolated trash
+.isolated_trash/
+
+# Build cache
+.turbo/
+.cache/
+
+# Supabase
+.supabase/

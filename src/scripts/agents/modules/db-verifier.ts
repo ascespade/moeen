@@ -3,8 +3,8 @@
  * Verifies if API endpoints reference real database tables
  */
 
-import { _getServiceSupabase } from "@/lib/supabaseClient";
-import { _DatabaseTable, QuarantineCandidate } from "../shared/types";
+import { _getServiceSupabase } from '@/lib/supabaseClient';
+import { _DatabaseTable, QuarantineCandidate } from '../shared/types';
 
 export class DatabaseVerifier {
   private supabase: unknown;
@@ -35,7 +35,7 @@ export class DatabaseVerifier {
       for (const candidate of candidates) {
         const __verifiedCandidate = await this.verifyCandidate(
           candidate,
-          databaseTables,
+          databaseTables
         );
         verifiedCandidates.push(verifiedCandidate);
       }
@@ -47,9 +47,9 @@ export class DatabaseVerifier {
       // Return candidates as-is if database check fails
       return {
         databaseTables: [],
-        verifiedCandidates: candidates.map((c) => ({
+        verifiedCandidates: candidates.map(c => ({
           ...c,
-          risk_level: "needs-review",
+          risk_level: 'needs-review',
         })),
       };
     }
@@ -63,30 +63,30 @@ export class DatabaseVerifier {
 
     // Known tables from the schema analysis
     const __knownTables = [
-      "users",
-      "patients",
-      "doctors",
-      "appointments",
-      "sessions",
-      "insurance_claims",
-      "conversations",
-      "messages",
-      "chatbot_conversations",
-      "chatbot_messages",
-      "chatbot_intents",
-      "crm_leads",
-      "crm_deals",
-      "crm_activities",
-      "settings",
-      "translations",
-      "audit_logs",
-      "file_uploads",
-      "notifications",
-      "notification_templates",
-      "system_settings",
-      "system_metrics",
-      "reports",
-      "languages",
+      'users',
+      'patients',
+      'doctors',
+      'appointments',
+      'sessions',
+      'insurance_claims',
+      'conversations',
+      'messages',
+      'chatbot_conversations',
+      'chatbot_messages',
+      'chatbot_intents',
+      'crm_leads',
+      'crm_deals',
+      'crm_activities',
+      'settings',
+      'translations',
+      'audit_logs',
+      'file_uploads',
+      'notifications',
+      'notification_templates',
+      'system_settings',
+      'system_metrics',
+      'reports',
+      'languages',
     ];
 
     for (const tableName of knownTables) {
@@ -94,7 +94,7 @@ export class DatabaseVerifier {
         // Try to query the table with a simple select
         const { data, error, count } = await this.supabase
           .from(tableName)
-          .select("*", { count: "exact", head: true })
+          .select('*', { count: 'exact', head: true })
           .limit(1);
 
         if (error) {
@@ -132,7 +132,7 @@ export class DatabaseVerifier {
    */
   private async verifyCandidate(
     candidate: QuarantineCandidate,
-    databaseTables: DatabaseTable[],
+    databaseTables: DatabaseTable[]
   ): Promise<QuarantineCandidate> {
     const __verifiedCandidate = { ...candidate };
 
@@ -145,33 +145,33 @@ export class DatabaseVerifier {
         // Check which tables are referenced
         const __referencedTables = this.extractReferencedTables(
           fileContent,
-          databaseTables,
+          databaseTables
         );
 
         if (referencedTables.length > 0) {
           const __productionTables = referencedTables.filter(
-            (table) => table.is_production,
+            table => table.is_production
           );
 
           if (productionTables.length > 0) {
             // File uses production database tables
-            verifiedCandidate.risk_level = "dangerous";
-            verifiedCandidate.reason += ` (Uses production tables: ${productionTables.map((t) => t.name).join(", ")})`;
+            verifiedCandidate.risk_level = 'dangerous';
+            verifiedCandidate.reason += ` (Uses production tables: ${productionTables.map(t => t.name).join(', ')})`;
             verifiedCandidate.metadata.database_tables = productionTables.map(
-              (t) => t.name,
+              t => t.name
             );
             verifiedCandidate.metadata.has_production_data = true;
           } else {
             // File uses non-production tables
-            verifiedCandidate.risk_level = "needs-review";
+            verifiedCandidate.risk_level = 'needs-review';
             verifiedCandidate.metadata.database_tables = referencedTables.map(
-              (t) => t.name,
+              t => t.name
             );
             verifiedCandidate.metadata.has_production_data = false;
           }
         } else {
           // File has database queries but no known table references
-          verifiedCandidate.risk_level = "needs-review";
+          verifiedCandidate.risk_level = 'needs-review';
           verifiedCandidate.metadata.has_database_queries = true;
         }
       } else {
@@ -180,7 +180,7 @@ export class DatabaseVerifier {
       }
     } catch (error) {
       // // console.warn(`⚠️  Failed to verify ${candidate.file_path}:`, error);
-      verifiedCandidate.risk_level = "needs-review";
+      verifiedCandidate.risk_level = 'needs-review';
       verifiedCandidate.metadata.verification_error = error.message;
     }
 
@@ -191,8 +191,8 @@ export class DatabaseVerifier {
    * Read file content
    */
   private async readFileContent(_filePath: string): Promise<string> {
-    const __fs = require("fs").promises;
-    return await fs.readFile(filePath, "utf-8");
+    const __fs = require('fs').promises;
+    return await fs.readFile(filePath, 'utf-8');
   }
 
   /**
@@ -217,7 +217,7 @@ export class DatabaseVerifier {
       /DROP\s+TABLE/gi, // SQL DROP TABLE
     ];
 
-    return databasePatterns.some((pattern) => pattern.test(content));
+    return databasePatterns.some(pattern => pattern.test(content));
   }
 
   /**
@@ -225,7 +225,7 @@ export class DatabaseVerifier {
    */
   private extractReferencedTables(
     content: string,
-    databaseTables: DatabaseTable[],
+    databaseTables: DatabaseTable[]
   ): DatabaseTable[] {
     const referencedTables: DatabaseTable[] = [];
 
@@ -233,19 +233,17 @@ export class DatabaseVerifier {
       if (table.exists) {
         // Look for table references in the content
         const __patterns = [
-          new RegExp(`\\.from\\(['"]${table.name}['"]`, "g"),
-          new RegExp(`\\.from\\(['"]${table.name}['"]`, "g"),
-          new RegExp(`FROM\\s+${table.name}\\b`, "gi"),
-          new RegExp(`INTO\\s+${table.name}\\b`, "gi"),
-          new RegExp(`UPDATE\\s+${table.name}\\b`, "gi"),
-          new RegExp(`DELETE\\s+FROM\\s+${table.name}\\b`, "gi"),
-          new RegExp(`JOIN\\s+${table.name}\\b`, "gi"),
-          new RegExp(`table_name\\s*[:=]\\s*['"]${table.name}['"]`, "gi"),
+          new RegExp(`\\.from\\(['"]${table.name}['"]`, 'g'),
+          new RegExp(`\\.from\\(['"]${table.name}['"]`, 'g'),
+          new RegExp(`FROM\\s+${table.name}\\b`, 'gi'),
+          new RegExp(`INTO\\s+${table.name}\\b`, 'gi'),
+          new RegExp(`UPDATE\\s+${table.name}\\b`, 'gi'),
+          new RegExp(`DELETE\\s+FROM\\s+${table.name}\\b`, 'gi'),
+          new RegExp(`JOIN\\s+${table.name}\\b`, 'gi'),
+          new RegExp(`table_name\\s*[:=]\\s*['"]${table.name}['"]`, 'gi'),
         ];
 
-        const __hasReference = patterns.some((pattern) =>
-          pattern.test(content),
-        );
+        const __hasReference = patterns.some(pattern => pattern.test(content));
 
         if (hasReference) {
           referencedTables.push(table);
@@ -261,7 +259,7 @@ export class DatabaseVerifier {
    */
   private isProductionTable(_tableName: string, rowCount: number): boolean {
     // Test tables are not production
-    if (tableName.includes("test") || tableName.includes("mock")) {
+    if (tableName.includes('test') || tableName.includes('mock')) {
       return false;
     }
 
@@ -272,14 +270,14 @@ export class DatabaseVerifier {
 
     // Core business tables are production
     const __productionTables = [
-      "users",
-      "patients",
-      "doctors",
-      "appointments",
-      "sessions",
-      "insurance_claims",
-      "conversations",
-      "messages",
+      'users',
+      'patients',
+      'doctors',
+      'appointments',
+      'sessions',
+      'insurance_claims',
+      'conversations',
+      'messages',
     ];
 
     return productionTables.includes(tableName);
@@ -291,8 +289,8 @@ export class DatabaseVerifier {
   async testConnection(): Promise<boolean> {
     try {
       const { data, error } = await this.supabase
-        .from("users")
-        .select("id")
+        .from('users')
+        .select('id')
         .limit(1);
 
       if (error) {

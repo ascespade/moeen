@@ -1,18 +1,18 @@
 #!/usr/bin/env node
-require("dotenv").config();
-const { createClient } = require("@supabase/supabase-js");
+require('dotenv').config();
+const { createClient } = require('@supabase/supabase-js');
 
 async function createAllTables() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE;
 
-  console.log("🚀 Creating all database tables...");
+  console.log('🚀 Creating all database tables...');
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   const tables = [
     {
-      name: "patients",
+      name: 'patients',
       sql: `
         CREATE TABLE IF NOT EXISTS patients (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -30,7 +30,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "doctors",
+      name: 'doctors',
       sql: `
         CREATE TABLE IF NOT EXISTS doctors (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -45,7 +45,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "appointments",
+      name: 'appointments',
       sql: `
         CREATE TABLE IF NOT EXISTS appointments (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -64,7 +64,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "sessions",
+      name: 'sessions',
       sql: `
         CREATE TABLE IF NOT EXISTS sessions (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -86,7 +86,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "insurance_claims",
+      name: 'insurance_claims',
       sql: `
         CREATE TABLE IF NOT EXISTS insurance_claims (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -106,7 +106,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "chatbot_flows",
+      name: 'chatbot_flows',
       sql: `
         CREATE TABLE IF NOT EXISTS chatbot_flows (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -123,7 +123,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "chatbot_nodes",
+      name: 'chatbot_nodes',
       sql: `
         CREATE TABLE IF NOT EXISTS chatbot_nodes (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -140,7 +140,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "chatbot_edges",
+      name: 'chatbot_edges',
       sql: `
         CREATE TABLE IF NOT EXISTS chatbot_edges (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -154,7 +154,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "chatbot_templates",
+      name: 'chatbot_templates',
       sql: `
         CREATE TABLE IF NOT EXISTS chatbot_templates (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -173,7 +173,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "chatbot_integrations",
+      name: 'chatbot_integrations',
       sql: `
         CREATE TABLE IF NOT EXISTS chatbot_integrations (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -193,7 +193,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "conversations",
+      name: 'conversations',
       sql: `
         CREATE TABLE IF NOT EXISTS conversations (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -212,7 +212,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "messages",
+      name: 'messages',
       sql: `
         CREATE TABLE IF NOT EXISTS messages (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -228,7 +228,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "crm_leads",
+      name: 'crm_leads',
       sql: `
         CREATE TABLE IF NOT EXISTS crm_leads (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -249,7 +249,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "crm_deals",
+      name: 'crm_deals',
       sql: `
         CREATE TABLE IF NOT EXISTS crm_deals (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -271,7 +271,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "crm_activities",
+      name: 'crm_activities',
       sql: `
         CREATE TABLE IF NOT EXISTS crm_activities (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -293,7 +293,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "notifications",
+      name: 'notifications',
       sql: `
         CREATE TABLE IF NOT EXISTS notifications (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -311,7 +311,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "internal_messages",
+      name: 'internal_messages',
       sql: `
         CREATE TABLE IF NOT EXISTS internal_messages (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -328,7 +328,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "audit_logs",
+      name: 'audit_logs',
       sql: `
         CREATE TABLE IF NOT EXISTS audit_logs (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -346,7 +346,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "roles",
+      name: 'roles',
       sql: `
         CREATE TABLE IF NOT EXISTS roles (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -361,7 +361,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "user_roles",
+      name: 'user_roles',
       sql: `
         CREATE TABLE IF NOT EXISTS user_roles (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -375,7 +375,7 @@ async function createAllTables() {
       `,
     },
     {
-      name: "settings",
+      name: 'settings',
       sql: `
         CREATE TABLE IF NOT EXISTS settings (
           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -403,17 +403,17 @@ async function createAllTables() {
       // Try to create table using a simple approach
       const { error } = await supabase
         .from(table.name)
-        .select("count")
+        .select('count')
         .limit(1);
 
-      if (error && error.code === "PGRST116") {
+      if (error && error.code === 'PGRST116') {
         // Table doesn't exist, we need to create it
         console.log(
-          `⚠️  Table ${table.name} doesn't exist. Need to create via SQL Editor.`,
+          `⚠️  Table ${table.name} doesn't exist. Need to create via SQL Editor.`
         );
         console.log(`📝 SQL for ${table.name}:`);
         console.log(table.sql);
-        console.log("\n" + "=".repeat(50) + "\n");
+        console.log('\n' + '='.repeat(50) + '\n');
         errorCount++;
       } else if (error) {
         console.log(`⚠️  Table ${table.name}: ${error.message}`);
@@ -433,21 +433,21 @@ async function createAllTables() {
   console.log(`⚠️  Need Manual Creation: ${errorCount}`);
 
   if (errorCount > 0) {
-    console.log("\n📋 Next Steps:");
-    console.log("1. Go to Supabase Dashboard > SQL Editor");
-    console.log("2. Copy the SQL statements shown above");
-    console.log("3. Paste and run them one by one");
-    console.log("4. Run: node scripts/test-after-migration.js");
+    console.log('\n📋 Next Steps:');
+    console.log('1. Go to Supabase Dashboard > SQL Editor');
+    console.log('2. Copy the SQL statements shown above');
+    console.log('3. Paste and run them one by one');
+    console.log('4. Run: node scripts/test-after-migration.js');
   }
 
   return errorCount === 0;
 }
 
-createAllTables().then((success) => {
+createAllTables().then(success => {
   if (success) {
-    console.log("\n🎉 All tables created successfully!");
+    console.log('\n🎉 All tables created successfully!');
   } else {
-    console.log("\n⚠️  Some tables need manual creation via SQL Editor.");
+    console.log('\n⚠️  Some tables need manual creation via SQL Editor.');
   }
   process.exit(success ? 0 : 1);
 });

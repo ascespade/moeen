@@ -4,12 +4,12 @@
 
 export interface QuarantineSession {
   id: string;
-  agent: "backend" | "frontend" | "shared";
+  agent: 'backend' | 'frontend' | 'shared';
   timestamp: string;
   duration_ms: number;
   files_quarantined: number;
   size_recovered_bytes: number;
-  status: "running" | "completed" | "failed" | "cancelled";
+  status: 'running' | 'completed' | 'failed' | 'cancelled';
   quarantine_dir: string;
   rollback_script: string;
   manifest: QuarantineManifest;
@@ -37,8 +37,8 @@ export interface QuarantinedFile {
   file_hash: string;
   size_bytes: number;
   reason: string;
-  category: "mock" | "seed" | "test" | "unused" | "duplicate" | "obsolete";
-  risk_level: "safe" | "needs-review" | "dangerous";
+  category: 'mock' | 'seed' | 'test' | 'unused' | 'duplicate' | 'obsolete';
+  risk_level: 'safe' | 'needs-review' | 'dangerous';
   dependencies: string[];
   dependents: string[];
   moved_at: string;
@@ -58,11 +58,11 @@ export interface UsageMap {
 export interface PossibleBreak {
   file_path: string;
   break_type:
-    | "import_error"
-    | "runtime_error"
-    | "missing_export"
-    | "database_error";
-  severity: "low" | "medium" | "high" | "critical";
+    | 'import_error'
+    | 'runtime_error'
+    | 'missing_export'
+    | 'database_error';
+  severity: 'low' | 'medium' | 'high' | 'critical';
   description: string;
   affected_files: string[];
   suggested_fix?: string;
@@ -97,7 +97,7 @@ export interface LockInfo {
   agent_id: string;
   timestamp: string;
   pid: number;
-  status: "active" | "stale";
+  status: 'active' | 'stale';
 }
 
 export interface DatabaseTable {
@@ -130,7 +130,7 @@ export interface QuarantineCandidate {
   file_path: string;
   reason: string;
   category: string;
-  risk_level: "safe" | "needs-review" | "dangerous";
+  risk_level: 'safe' | 'needs-review' | 'dangerous';
   confidence: number;
   dependencies: string[];
   dependents: string[];

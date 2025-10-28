@@ -13,7 +13,7 @@ export interface SlackMessage {
 export interface SlackChannel {
   id: string;
   name: string;
-  type: "public" | "private" | "im" | "mpim";
+  type: 'public' | 'private' | 'im' | 'mpim';
   purpose?: string;
   members: string[];
   is_archived: boolean;
@@ -48,16 +48,16 @@ export interface SlackAppointment {
 
 export interface SlackNotification {
   type:
-    | "appointment_reminder"
-    | "appointment_confirmed"
-    | "appointment_cancelled"
-    | "patient_message"
-    | "doctor_response"
-    | "emergency_alert";
+    | 'appointment_reminder'
+    | 'appointment_confirmed'
+    | 'appointment_cancelled'
+    | 'patient_message'
+    | 'doctor_response'
+    | 'emergency_alert';
   recipient: string;
   message: string;
   data?: unknown;
-  priority: "low" | "medium" | "high" | "urgent";
+  priority: 'low' | 'medium' | 'high' | 'urgent';
 }
 
 export class SlackIntegration {
@@ -68,15 +68,15 @@ export class SlackIntegration {
   private appointments: Map<string, SlackAppointment> = new Map();
 
   constructor() {
-    this.botToken = process.env.SLACK_BOT_TOKEN || "";
-    this.appToken = process.env.SLACK_APP_TOKEN || "";
+    this.botToken = process.env.SLACK_BOT_TOKEN || '';
+    this.appToken = process.env.SLACK_APP_TOKEN || '';
   }
 
   // Initialize Slack connection
   async initialize(): Promise<boolean> {
     try {
       // Test bot token
-      const __botTest = await this.makeSlackRequest("auth.test");
+      const __botTest = await this.makeSlackRequest('auth.test');
       if (!botTest.ok) {
         return false;
       }
@@ -94,8 +94,8 @@ export class SlackIntegration {
   // Load channels
   private async loadChannels(): Promise<void> {
     try {
-      const __response = await this.makeSlackRequest("conversations.list", {
-        types: "public_channel,private_channel,mpim,im",
+      const __response = await this.makeSlackRequest('conversations.list', {
+        types: 'public_channel,private_channel,mpim,im',
         limit: 1000,
       });
 
@@ -105,12 +105,12 @@ export class SlackIntegration {
             id: channel.id,
             name: channel.name,
             type: channel.is_im
-              ? "im"
+              ? 'im'
               : channel.is_mpim
-                ? "mpim"
+                ? 'mpim'
                 : channel.is_private
-                  ? "private"
-                  : "public",
+                  ? 'private'
+                  : 'public',
             purpose: channel.purpose?.value,
             members: channel.members || [],
             is_archived: channel.is_archived || false,
@@ -123,7 +123,7 @@ export class SlackIntegration {
   // Load users
   private async loadUsers(): Promise<void> {
     try {
-      const __response = await this.makeSlackRequest("users.list", {
+      const __response = await this.makeSlackRequest('users.list', {
         limit: 1000,
       });
 
@@ -158,10 +158,10 @@ export class SlackIntegration {
       attachments?: unknown[];
       username?: string;
       icon_emoji?: string;
-    } = {},
+    } = {}
   ): Promise<string | null> {
     try {
-      const __response = await this.makeSlackRequest("chat.postMessage", {
+      const __response = await this.makeSlackRequest('chat.postMessage', {
         channel,
         text,
         ...options,
@@ -180,10 +180,10 @@ export class SlackIntegration {
   // Send appointment notification
   async sendAppointmentNotification(
     appointmentId: string,
-    type: "created" | "confirmed" | "cancelled" | "reminder",
+    type: 'created' | 'confirmed' | 'cancelled' | 'reminder',
     appointment: unknown,
     doctor: unknown,
-    patient: unknown,
+    patient: unknown
   ): Promise<void> {
     try {
       const __channel = this.getAppointmentChannel(doctor.id);
@@ -191,44 +191,44 @@ export class SlackIntegration {
         return;
       }
 
-      let message = "";
+      let message = '';
       let blocks: unknown[] = [];
 
       switch (type) {
-        case "created":
+        case 'created':
           message = `📅 موعد جديد تم حجزه`;
           blocks = this.createAppointmentBlocks(
             appointment,
             doctor,
             patient,
-            "new",
+            'new'
           );
           break;
-        case "confirmed":
+        case 'confirmed':
           message = `✅ تم تأكيد الموعد`;
           blocks = this.createAppointmentBlocks(
             appointment,
             doctor,
             patient,
-            "confirmed",
+            'confirmed'
           );
           break;
-        case "cancelled":
+        case 'cancelled':
           message = `❌ تم إلغاء الموعد`;
           blocks = this.createAppointmentBlocks(
             appointment,
             doctor,
             patient,
-            "cancelled",
+            'cancelled'
           );
           break;
-        case "reminder":
+        case 'reminder':
           message = `⏰ تذكير بالموعد`;
           blocks = this.createAppointmentBlocks(
             appointment,
             doctor,
             patient,
-            "reminder",
+            'reminder'
           );
           break;
       }
@@ -242,7 +242,7 @@ export class SlackIntegration {
     patientId: string,
     doctorId: string,
     message: string,
-    channel: "whatsapp" | "website",
+    channel: 'whatsapp' | 'website'
   ): Promise<void> {
     try {
       const __doctorChannel = this.getAppointmentChannel(doctorId);
@@ -252,17 +252,17 @@ export class SlackIntegration {
 
       const __blocks = [
         {
-          type: "section",
+          type: 'section',
           text: {
-            type: "mrkdwn",
-            text: `*رسالة من المريض عبر ${channel === "whatsapp" ? "واتساب" : "الموقع"}*\n\n${message}`,
+            type: 'mrkdwn',
+            text: `*رسالة من المريض عبر ${channel === 'whatsapp' ? 'واتساب' : 'الموقع'}*\n\n${message}`,
           },
         },
         {
-          type: "context",
+          type: 'context',
           elements: [
             {
-              type: "mrkdwn",
+              type: 'mrkdwn',
               text: `المريض: ${patientId} | القناة: ${channel}`,
             },
           ],
@@ -278,7 +278,7 @@ export class SlackIntegration {
     patientId: string,
     doctorId: string,
     response: string,
-    originalMessageId?: string,
+    originalMessageId?: string
   ): Promise<void> {
     try {
       // This would integrate with WhatsApp or website chatbot
@@ -295,78 +295,78 @@ export class SlackIntegration {
     appointment: unknown,
     doctor: unknown,
     patient: unknown,
-    status: string,
+    status: string
   ): unknown[] {
     const __statusEmoji = {
-      new: "🆕",
-      confirmed: "✅",
-      cancelled: "❌",
-      reminder: "⏰",
+      new: '🆕',
+      confirmed: '✅',
+      cancelled: '❌',
+      reminder: '⏰',
     };
 
     const __statusText = {
-      new: "موعد جديد",
-      confirmed: "تم التأكيد",
-      cancelled: "تم الإلغاء",
-      reminder: "تذكير",
+      new: 'موعد جديد',
+      confirmed: 'تم التأكيد',
+      cancelled: 'تم الإلغاء',
+      reminder: 'تذكير',
     };
 
     return [
       {
-        type: "header",
+        type: 'header',
         text: {
-          type: "plain_text",
+          type: 'plain_text',
           text: `${statusEmoji[status]} ${statusText[status]}`,
         },
       },
       {
-        type: "section",
+        type: 'section',
         fields: [
           {
-            type: "mrkdwn",
+            type: 'mrkdwn',
             text: `*المريض:*\n${patient.first_name} ${patient.last_name}`,
           },
           {
-            type: "mrkdwn",
+            type: 'mrkdwn',
             text: `*الطبيب:*\nد. ${doctor.first_name} ${doctor.last_name}`,
           },
           {
-            type: "mrkdwn",
-            text: `*التاريخ:*\n${new Date(appointment.appointment_date).toLocaleDateString("ar-SA")}`,
+            type: 'mrkdwn',
+            text: `*التاريخ:*\n${new Date(appointment.appointment_date).toLocaleDateString('ar-SA')}`,
           },
           {
-            type: "mrkdwn",
+            type: 'mrkdwn',
             text: `*الوقت:*\n${appointment.appointment_time}`,
           },
           {
-            type: "mrkdwn",
+            type: 'mrkdwn',
             text: `*التخصص:*\n${doctor.specialty}`,
           },
           {
-            type: "mrkdwn",
+            type: 'mrkdwn',
             text: `*الحالة:*\n${appointment.status}`,
           },
         ],
       },
       {
-        type: "actions",
+        type: 'actions',
         elements: [
           {
-            type: "button",
+            type: 'button',
             text: {
-              type: "plain_text",
-              text: "عرض التفاصيل",
+              type: 'plain_text',
+              text: 'عرض التفاصيل',
             },
-            action_id: "view_appointment",
+            action_id: 'view_appointment',
             value: appointment.id,
           },
           {
-            type: "button",
+            type: 'button',
             text: {
-              type: "plain_text",
-              text: "رد على المريض",
+              type: 'plain_text',
+              text: 'رد على المريض',
             },
-            action_id: "reply_to_patient",
+            action_id: 'reply_to_patient',
             value: `${appointment.id}_${patient.id}`,
           },
         ],
@@ -382,17 +382,17 @@ export class SlackIntegration {
     // 3. Return the channel ID
 
     // For now, return a general appointments channel
-    return process.env.SLACK_APPOINTMENTS_CHANNEL || "general";
+    return process.env.SLACK_APPOINTMENTS_CHANNEL || 'general';
   }
 
   // Create doctor channel
   async createDoctorChannel(
     doctorId: string,
-    doctorName: string,
+    doctorName: string
   ): Promise<string | null> {
     try {
       const __channelName = `doctor-${doctorId}`;
-      const __response = await this.makeSlackRequest("conversations.create", {
+      const __response = await this.makeSlackRequest('conversations.create', {
         name: channelName,
         is_private: true,
       });
@@ -411,13 +411,13 @@ export class SlackIntegration {
   async handleSlackEvent(_event: unknown): Promise<void> {
     try {
       switch (event.type) {
-        case "message":
+        case 'message':
           await this.handleMessage(event);
           break;
-        case "app_mention":
+        case 'app_mention':
           await this.handleAppMention(event);
           break;
-        case "interactive_message":
+        case 'interactive_message':
           await this.handleInteractiveMessage(event);
           break;
         default:
@@ -450,10 +450,10 @@ export class SlackIntegration {
     const __action = event.actions[0];
 
     switch (action.action_id) {
-      case "view_appointment":
+      case 'view_appointment':
         await this.handleViewAppointment(action.value);
         break;
-      case "reply_to_patient":
+      case 'reply_to_patient':
         await this.handleReplyToPatient(action.value);
         break;
     }
@@ -478,15 +478,15 @@ export class SlackIntegration {
   // Make Slack API request
   private async makeSlackRequest(
     method: string,
-    params: unknown = {},
+    params: unknown = {}
   ): Promise<any> {
     const __url = `https://slack.com/api/${method}`;
 
     const __response = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${this.botToken}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(params),
     });
@@ -497,13 +497,13 @@ export class SlackIntegration {
   // Get channel by name
   getChannelByName(_name: string): SlackChannel | undefined {
     return Array.from(this.channels.values()).find(
-      (channel) => channel.name === name,
+      channel => channel.name === name
     );
   }
 
   // Get user by name
   getUserByName(_name: string): SlackUser | undefined {
-    return Array.from(this.users.values()).find((user) => user.name === name);
+    return Array.from(this.users.values()).find(user => user.name === name);
   }
 
   // Get all channels
@@ -519,32 +519,32 @@ export class SlackIntegration {
   // Send emergency alert
   async sendEmergencyAlert(
     message: string,
-    channel: string = "general",
+    channel: string = 'general'
   ): Promise<void> {
     const __blocks = [
       {
-        type: "header",
+        type: 'header',
         text: {
-          type: "plain_text",
-          text: "🚨 تنبيه طارئ",
+          type: 'plain_text',
+          text: '🚨 تنبيه طارئ',
         },
       },
       {
-        type: "section",
+        type: 'section',
         text: {
-          type: "mrkdwn",
+          type: 'mrkdwn',
           text: message,
         },
       },
     ];
 
-    await this.sendMessage(channel, "تنبيه طارئ", { blocks });
+    await this.sendMessage(channel, 'تنبيه طارئ', { blocks });
   }
 
   // Send daily summary
-  async sendDailySummary(_channel: string = "general"): Promise<void> {
+  async sendDailySummary(_channel: string = 'general'): Promise<void> {
     // This would generate a daily summary of appointments, messages, etc.
-    const __message = "📊 ملخص يومي للمواعيد والرسائل";
+    const __message = '📊 ملخص يومي للمواعيد والرسائل';
     await this.sendMessage(channel, message);
   }
 }

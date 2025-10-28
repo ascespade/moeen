@@ -1,28 +1,28 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
-const { spawn, exec } = require("child_process");
+const fs = require('fs');
+const path = require('path');
+const { spawn, exec } = require('child_process');
 
 class SelfHealingSystem {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
-    this.logFile = path.join(this.workspaceRoot, "logs", "self-healing.log");
+    this.workspaceRoot = path.join(__dirname, '..');
+    this.logFile = path.join(this.workspaceRoot, 'logs', 'self-healing.log');
     this.healingRulesFile = path.join(
       this.workspaceRoot,
-      "config",
-      "healing-rules.json",
+      'config',
+      'healing-rules.json'
     );
     this.healingHistoryFile = path.join(
       this.workspaceRoot,
-      "temp",
-      "healing-history.json",
+      'temp',
+      'healing-history.json'
     );
     this.healingRules = {};
     this.healingHistory = [];
   }
 
-  log(message, level = "info") {
+  log(message, level = 'info') {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] [${level.toUpperCase()}] Self-Healing: ${message}\n`;
 
@@ -36,10 +36,10 @@ class SelfHealingSystem {
   }
 
   async initialize() {
-    this.log("Initializing Self-Healing System...");
+    this.log('Initializing Self-Healing System...');
 
     // Create necessary directories
-    const directories = ["config", "logs", "temp", "backups", "sandbox"];
+    const directories = ['config', 'logs', 'temp', 'backups', 'sandbox'];
     for (const dir of directories) {
       const fullPath = path.join(this.workspaceRoot, dir);
       if (!fs.existsSync(fullPath)) {
@@ -53,17 +53,17 @@ class SelfHealingSystem {
     // Load healing history
     await this.loadHealingHistory();
 
-    this.log("Self-Healing System initialized");
+    this.log('Self-Healing System initialized');
   }
 
   async loadHealingRules() {
     if (fs.existsSync(this.healingRulesFile)) {
       try {
-        const data = fs.readFileSync(this.healingRulesFile, "utf8");
+        const data = fs.readFileSync(this.healingRulesFile, 'utf8');
         this.healingRules = JSON.parse(data);
-        this.log("Healing rules loaded");
+        this.log('Healing rules loaded');
       } catch (error) {
-        this.log(`Error loading healing rules: ${error.message}`, "warn");
+        this.log(`Error loading healing rules: ${error.message}`, 'warn');
         await this.createDefaultHealingRules();
       }
     } else {
@@ -75,55 +75,55 @@ class SelfHealingSystem {
     this.healingRules = {
       fileSystem: {
         missingDirectories: {
-          pattern: "ENOENT.*no such file or directory",
-          action: "createDirectories",
-          priority: "high",
+          pattern: 'ENOENT.*no such file or directory',
+          action: 'createDirectories',
+          priority: 'high',
           successRate: 0.95,
         },
         permissionDenied: {
-          pattern: "EACCES.*permission denied",
-          action: "fixPermissions",
-          priority: "high",
+          pattern: 'EACCES.*permission denied',
+          action: 'fixPermissions',
+          priority: 'high',
           successRate: 0.9,
         },
         diskSpace: {
-          pattern: "ENOSPC.*no space left",
-          action: "cleanupDiskSpace",
-          priority: "critical",
+          pattern: 'ENOSPC.*no space left',
+          action: 'cleanupDiskSpace',
+          priority: 'critical',
           successRate: 0.85,
         },
       },
       process: {
         moduleNotFound: {
-          pattern: "Cannot find module",
-          action: "installDependencies",
-          priority: "high",
+          pattern: 'Cannot find module',
+          action: 'installDependencies',
+          priority: 'high',
           successRate: 0.8,
         },
         portInUse: {
-          pattern: "EADDRINUSE.*address already in use",
-          action: "killProcessOnPort",
-          priority: "medium",
+          pattern: 'EADDRINUSE.*address already in use',
+          action: 'killProcessOnPort',
+          priority: 'medium',
           successRate: 0.75,
         },
         memoryLeak: {
-          pattern: "JavaScript heap out of memory",
-          action: "restartProcess",
-          priority: "critical",
+          pattern: 'JavaScript heap out of memory',
+          action: 'restartProcess',
+          priority: 'critical',
           successRate: 0.7,
         },
       },
       network: {
         connectionRefused: {
-          pattern: "ECONNREFUSED",
-          action: "retryWithBackoff",
-          priority: "medium",
+          pattern: 'ECONNREFUSED',
+          action: 'retryWithBackoff',
+          priority: 'medium',
           successRate: 0.6,
         },
         timeout: {
-          pattern: "ETIMEDOUT",
-          action: "increaseTimeout",
-          priority: "low",
+          pattern: 'ETIMEDOUT',
+          action: 'increaseTimeout',
+          priority: 'low',
           successRate: 0.5,
         },
       },
@@ -131,18 +131,18 @@ class SelfHealingSystem {
 
     fs.writeFileSync(
       this.healingRulesFile,
-      JSON.stringify(this.healingRules, null, 2),
+      JSON.stringify(this.healingRules, null, 2)
     );
-    this.log("Default healing rules created");
+    this.log('Default healing rules created');
   }
 
   async loadHealingHistory() {
     if (fs.existsSync(this.healingHistoryFile)) {
       try {
-        const data = fs.readFileSync(this.healingHistoryFile, "utf8");
+        const data = fs.readFileSync(this.healingHistoryFile, 'utf8');
         this.healingHistory = JSON.parse(data);
       } catch (error) {
-        this.log(`Error loading healing history: ${error.message}`, "warn");
+        this.log(`Error loading healing history: ${error.message}`, 'warn');
         this.healingHistory = [];
       }
     }
@@ -151,28 +151,28 @@ class SelfHealingSystem {
   async saveHealingHistory() {
     fs.writeFileSync(
       this.healingHistoryFile,
-      JSON.stringify(this.healingHistory, null, 2),
+      JSON.stringify(this.healingHistory, null, 2)
     );
   }
 
   async detectErrors() {
-    this.log("Detecting errors...");
+    this.log('Detecting errors...');
 
     const errors = [];
 
     // Check log files for error patterns
-    const logDir = path.join(this.workspaceRoot, "logs");
+    const logDir = path.join(this.workspaceRoot, 'logs');
     if (fs.existsSync(logDir)) {
       const logFiles = fs.readdirSync(logDir);
       for (const logFile of logFiles) {
         const logPath = path.join(logDir, logFile);
-        const content = fs.readFileSync(logPath, "utf8");
-        const lines = content.split("\n");
+        const content = fs.readFileSync(logPath, 'utf8');
+        const lines = content.split('\n');
 
         for (const line of lines) {
           for (const [category, rules] of Object.entries(this.healingRules)) {
             for (const [ruleName, rule] of Object.entries(rules)) {
-              if (line.match(new RegExp(rule.pattern, "i"))) {
+              if (line.match(new RegExp(rule.pattern, 'i'))) {
                 errors.push({
                   category: category,
                   rule: ruleName,
@@ -202,38 +202,38 @@ class SelfHealingSystem {
 
     try {
       switch (error.action) {
-        case "createDirectories":
+        case 'createDirectories':
           result = await this.createDirectories();
           break;
-        case "fixPermissions":
+        case 'fixPermissions':
           result = await this.fixPermissions();
           break;
-        case "cleanupDiskSpace":
+        case 'cleanupDiskSpace':
           result = await this.cleanupDiskSpace();
           break;
-        case "installDependencies":
+        case 'installDependencies':
           result = await this.installDependencies();
           break;
-        case "killProcessOnPort":
+        case 'killProcessOnPort':
           result = await this.killProcessOnPort();
           break;
-        case "restartProcess":
+        case 'restartProcess':
           result = await this.restartProcess();
           break;
-        case "retryWithBackoff":
+        case 'retryWithBackoff':
           result = await this.retryWithBackoff();
           break;
-        case "increaseTimeout":
+        case 'increaseTimeout':
           result = await this.increaseTimeout();
           break;
         default:
-          this.log(`Unknown healing action: ${error.action}`, "warn");
+          this.log(`Unknown healing action: ${error.action}`, 'warn');
           return false;
       }
 
       success = result && result.success;
     } catch (healingError) {
-      this.log(`Healing failed: ${healingError.message}`, "error");
+      this.log(`Healing failed: ${healingError.message}`, 'error');
       success = false;
     }
 
@@ -255,23 +255,23 @@ class SelfHealingSystem {
     // Update success rate
     await this.updateSuccessRate(error.category, error.rule, success);
 
-    this.log(`Healing ${success ? "succeeded" : "failed"} in ${duration}ms`);
+    this.log(`Healing ${success ? 'succeeded' : 'failed'} in ${duration}ms`);
     return success;
   }
 
   async createDirectories() {
-    this.log("Creating missing directories...");
+    this.log('Creating missing directories...');
 
     const directories = [
-      "temp",
-      "logs",
-      "reports",
-      "config",
-      "sandbox",
-      "learning",
-      "backups",
-      "n8n-workflows",
-      "videos",
+      'temp',
+      'logs',
+      'reports',
+      'config',
+      'sandbox',
+      'learning',
+      'backups',
+      'n8n-workflows',
+      'videos',
     ];
 
     let created = 0;
@@ -288,17 +288,17 @@ class SelfHealingSystem {
   }
 
   async fixPermissions() {
-    this.log("Fixing file permissions...");
+    this.log('Fixing file permissions...');
 
-    const scriptsDir = path.join(this.workspaceRoot, "scripts");
+    const scriptsDir = path.join(this.workspaceRoot, 'scripts');
     if (fs.existsSync(scriptsDir)) {
       const files = fs.readdirSync(scriptsDir);
       let fixed = 0;
 
       for (const file of files) {
-        if (file.endsWith(".js")) {
+        if (file.endsWith('.js')) {
           const filePath = path.join(scriptsDir, file);
-          fs.chmodSync(filePath, "755");
+          fs.chmodSync(filePath, '755');
           fixed++;
         }
       }
@@ -307,17 +307,17 @@ class SelfHealingSystem {
       return { success: true, fixed: fixed };
     }
 
-    return { success: false, error: "Scripts directory not found" };
+    return { success: false, error: 'Scripts directory not found' };
   }
 
   async cleanupDiskSpace() {
-    this.log("Cleaning up disk space...");
+    this.log('Cleaning up disk space...');
 
     let cleaned = 0;
     const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 days
 
     // Clean temp directory
-    const tempDir = path.join(this.workspaceRoot, "temp");
+    const tempDir = path.join(this.workspaceRoot, 'temp');
     if (fs.existsSync(tempDir)) {
       const files = fs.readdirSync(tempDir);
       for (const file of files) {
@@ -331,7 +331,7 @@ class SelfHealingSystem {
     }
 
     // Clean old logs
-    const logDir = path.join(this.workspaceRoot, "logs");
+    const logDir = path.join(this.workspaceRoot, 'logs');
     if (fs.existsSync(logDir)) {
       const files = fs.readdirSync(logDir);
       for (const file of files) {
@@ -341,11 +341,11 @@ class SelfHealingSystem {
           // Archive instead of delete
           const backupPath = path.join(
             this.workspaceRoot,
-            "backups",
-            `${file}.${Date.now()}`,
+            'backups',
+            `${file}.${Date.now()}`
           );
           fs.copyFileSync(filePath, backupPath);
-          fs.writeFileSync(filePath, "");
+          fs.writeFileSync(filePath, '');
           cleaned++;
         }
       }
@@ -356,38 +356,38 @@ class SelfHealingSystem {
   }
 
   async installDependencies() {
-    this.log("Installing dependencies...");
+    this.log('Installing dependencies...');
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       exec(
-        "npm install",
+        'npm install',
         { cwd: this.workspaceRoot },
         (error, stdout, stderr) => {
           if (error) {
             this.log(
               `Dependency installation failed: ${error.message}`,
-              "error",
+              'error'
             );
             resolve({ success: false, error: error.message });
           } else {
-            this.log("Dependencies installed successfully");
+            this.log('Dependencies installed successfully');
             resolve({ success: true, output: stdout });
           }
-        },
+        }
       );
     });
   }
 
   async killProcessOnPort() {
-    this.log("Killing process on port...");
+    this.log('Killing process on port...');
 
-    return new Promise((resolve) => {
-      exec("lsof -ti:3000 | xargs kill -9", (error, stdout, stderr) => {
+    return new Promise(resolve => {
+      exec('lsof -ti:3000 | xargs kill -9', (error, stdout, stderr) => {
         if (error) {
-          this.log(`Failed to kill process: ${error.message}`, "warn");
+          this.log(`Failed to kill process: ${error.message}`, 'warn');
           resolve({ success: false, error: error.message });
         } else {
-          this.log("Process killed successfully");
+          this.log('Process killed successfully');
           resolve({ success: true, output: stdout });
         }
       });
@@ -395,16 +395,16 @@ class SelfHealingSystem {
   }
 
   async restartProcess() {
-    this.log("Restarting process...");
+    this.log('Restarting process...');
 
     // This would restart the main process
     // In a real implementation, this would use PM2 or similar
-    this.log("Process restart requested");
-    return { success: true, message: "Process restart requested" };
+    this.log('Process restart requested');
+    return { success: true, message: 'Process restart requested' };
   }
 
   async retryWithBackoff() {
-    this.log("Retrying with exponential backoff...");
+    this.log('Retrying with exponential backoff...');
 
     // Implement exponential backoff retry logic
     const maxRetries = 3;
@@ -412,7 +412,7 @@ class SelfHealingSystem {
 
     while (retryCount < maxRetries) {
       const delay = Math.pow(2, retryCount) * 1000; // 1s, 2s, 4s
-      await new Promise((resolve) => setTimeout(resolve, delay));
+      await new Promise(resolve => setTimeout(resolve, delay));
 
       // Simulate retry attempt
       this.log(`Retry attempt ${retryCount + 1}/${maxRetries}`);
@@ -423,11 +423,11 @@ class SelfHealingSystem {
   }
 
   async increaseTimeout() {
-    this.log("Increasing timeout...");
+    this.log('Increasing timeout...');
 
     // This would modify configuration to increase timeouts
-    this.log("Timeout increased");
-    return { success: true, message: "Timeout increased" };
+    this.log('Timeout increased');
+    return { success: true, message: 'Timeout increased' };
   }
 
   async updateSuccessRate(category, rule, success) {
@@ -440,13 +440,13 @@ class SelfHealingSystem {
       // Save updated rules
       fs.writeFileSync(
         this.healingRulesFile,
-        JSON.stringify(this.healingRules, null, 2),
+        JSON.stringify(this.healingRules, null, 2)
       );
     }
   }
 
   async runHealingCycle() {
-    this.log("Running healing cycle...");
+    this.log('Running healing cycle...');
 
     const errors = await this.detectErrors();
     const healingResults = [];
@@ -463,19 +463,19 @@ class SelfHealingSystem {
       } else {
         this.log(
           `Skipping healing for ${error.category}.${error.rule} (low success rate)`,
-          "warn",
+          'warn'
         );
       }
     }
 
     this.log(
-      `Healing cycle completed: ${healingResults.length} errors processed`,
+      `Healing cycle completed: ${healingResults.length} errors processed`
     );
     return healingResults;
   }
 
   async generateHealingReport() {
-    this.log("Generating healing report...");
+    this.log('Generating healing report...');
 
     const report = {
       timestamp: new Date().toISOString(),
@@ -483,11 +483,11 @@ class SelfHealingSystem {
       rules: this.healingRules,
       summary: {
         totalHealingAttempts: this.healingHistory.length,
-        successfulHealings: this.healingHistory.filter((h) => h.success).length,
-        failedHealings: this.healingHistory.filter((h) => !h.success).length,
+        successfulHealings: this.healingHistory.filter(h => h.success).length,
+        failedHealings: this.healingHistory.filter(h => !h.success).length,
         successRate:
           this.healingHistory.length > 0
-            ? this.healingHistory.filter((h) => h.success).length /
+            ? this.healingHistory.filter(h => h.success).length /
               this.healingHistory.length
             : 0,
       },
@@ -495,8 +495,8 @@ class SelfHealingSystem {
 
     const reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "healing-report.json",
+      'reports',
+      'healing-report.json'
     );
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
@@ -505,7 +505,7 @@ class SelfHealingSystem {
   }
 
   async start() {
-    this.log("Starting Self-Healing System...");
+    this.log('Starting Self-Healing System...');
 
     await this.initialize();
 
@@ -518,19 +518,19 @@ class SelfHealingSystem {
         await this.runHealingCycle();
         await this.generateHealingReport();
       } catch (error) {
-        this.log(`Healing cycle error: ${error.message}`, "error");
+        this.log(`Healing cycle error: ${error.message}`, 'error');
       }
     }, 300000); // Every 5 minutes
 
     // Cleanup on exit
-    process.on("SIGINT", () => {
+    process.on('SIGINT', () => {
       clearInterval(healingInterval);
-      this.log("Self-Healing System stopped");
+      this.log('Self-Healing System stopped');
     });
 
-    process.on("SIGTERM", () => {
+    process.on('SIGTERM', () => {
       clearInterval(healingInterval);
-      this.log("Self-Healing System stopped");
+      this.log('Self-Healing System stopped');
     });
   }
 }
@@ -538,8 +538,8 @@ class SelfHealingSystem {
 // Main execution
 if (require.main === module) {
   const healing = new SelfHealingSystem();
-  healing.start().catch((error) => {
-    console.error("Self-Healing System failed:", error);
+  healing.start().catch(error => {
+    console.error('Self-Healing System failed:', error);
     process.exit(1);
   });
 }

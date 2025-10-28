@@ -3,8 +3,8 @@
  * Optimized database connection management
  */
 
-import { _createClient } from "@/lib/supabase/server";
-import { _logger } from "../monitoring/logger";
+import { _createClient } from '@/lib/supabase/server';
+import { _logger } from '../monitoring/logger';
 
 interface ConnectionPoolConfig {
   maxConnections: number;
@@ -29,7 +29,7 @@ class DatabaseConnectionPool {
       minConnections: 2,
       idleTimeout: 30000, // 30 seconds
       connectionTimeout: 5000, // 5 seconds
-    },
+    }
   ) {
     this.config = config;
     this.initializePool();
@@ -42,7 +42,7 @@ class DatabaseConnectionPool {
       this.connections.push(connection);
     }
 
-    logger.info("Database connection pool initialized", {
+    logger.info('Database connection pool initialized', {
       minConnections: this.config.minConnections,
       maxConnections: this.config.maxConnections,
     });
@@ -54,7 +54,7 @@ class DatabaseConnectionPool {
       this.activeConnections++;
       return connection;
     } catch (error) {
-      logger.error("Failed to create database connection", {}, error as Error);
+      logger.error('Failed to create database connection', {}, error as Error);
       throw error;
     }
   }
@@ -84,11 +84,11 @@ class DatabaseConnectionPool {
       // Set timeout for connection request
       setTimeout(() => {
         const __index = this.waitingQueue.findIndex(
-          (item) => item.resolve === resolve,
+          item => item.resolve === resolve
         );
         if (index !== -1) {
           this.waitingQueue.splice(index, 1);
-          reject(new Error("Connection timeout"));
+          reject(new Error('Connection timeout'));
         }
       }, this.config.connectionTimeout);
     });
@@ -111,17 +111,17 @@ class DatabaseConnectionPool {
       await connection.close?.();
       this.activeConnections--;
 
-      logger.debug("Database connection closed", {
+      logger.debug('Database connection closed', {
         activeConnections: this.activeConnections,
       });
     } catch (error) {
-      logger.error("Error closing database connection", {}, error as Error);
+      logger.error('Error closing database connection', {}, error as Error);
     }
   }
 
   async closeAllConnections(): Promise<void> {
-    const __closePromises = this.connections.map((conn) =>
-      this.closeConnection(conn),
+    const __closePromises = this.connections.map(conn =>
+      this.closeConnection(conn)
     );
     await Promise.all(closePromises);
 
@@ -130,11 +130,11 @@ class DatabaseConnectionPool {
 
     // Reject all waiting requests
     this.waitingQueue.forEach(({ reject }) => {
-      reject(new Error("Connection pool closed"));
+      reject(new Error('Connection pool closed'));
     });
     this.waitingQueue = [];
 
-    logger.info("All database connections closed");
+    logger.info('All database connections closed');
   }
 
   getStats(): {
@@ -155,11 +155,11 @@ class DatabaseConnectionPool {
   async healthCheck(): Promise<boolean> {
     try {
       const __connection = await this.getConnection();
-      const { error } = await connection.from("users").select("count").limit(1);
+      const { error } = await connection.from('users').select('count').limit(1);
       this.releaseConnection(connection);
       return !error;
     } catch (error) {
-      logger.error("Database health check failed", {}, error as Error);
+      logger.error('Database health check failed', {}, error as Error);
       return false;
     }
   }
@@ -169,14 +169,14 @@ class DatabaseConnectionPool {
 export const __connectionPool = new DatabaseConnectionPool();
 
 // Graceful shutdown
-process.on("SIGINT", async () => {
-  logger.info("Shutting down database connection pool...");
+process.on('SIGINT', async () => {
+  logger.info('Shutting down database connection pool...');
   await connectionPool.closeAllConnections();
   process.exit(0);
 });
 
-process.on("SIGTERM", async () => {
-  logger.info("Shutting down database connection pool...");
+process.on('SIGTERM', async () => {
+  logger.info('Shutting down database connection pool...');
   await connectionPool.closeAllConnections();
   process.exit(0);
 });

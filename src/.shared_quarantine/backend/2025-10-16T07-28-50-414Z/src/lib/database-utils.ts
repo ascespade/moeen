@@ -3,7 +3,7 @@
  * Provides helper functions for database operations with CUID support
  */
 
-import { _generatePublicId, cuidEntity } from "@/lib/cuid";
+import { _generatePublicId, cuidEntity } from '@/lib/cuid';
 
 /**
  * Database helper functions for CUID generation and management
@@ -13,7 +13,7 @@ export class DatabaseUtils {
    * Generate public_id for a specific entity type
    */
   static generateEntityId(_entityType: keyof typeof cuidEntity): string {
-    return cuidEntity[entityType]("");
+    return cuidEntity[entityType]('');
   }
 
   /**
@@ -21,9 +21,9 @@ export class DatabaseUtils {
    */
   static generateMultipleEntityIds(
     entityType: keyof typeof cuidEntity,
-    count: number,
+    count: number
   ): string[] {
-    return Array.from({ length: count }, () => cuidEntity[entityType](""));
+    return Array.from({ length: count }, () => cuidEntity[entityType](''));
   }
 
   /**
@@ -38,7 +38,7 @@ export class DatabaseUtils {
    */
   static extractEntityType(_publicId: string): string | null {
     const __match = publicId.match(/^([a-z]+)_/);
-    return match && typeof match[1] === "string" ? (match[1] as string) : null;
+    return match && typeof match[1] === 'string' ? (match[1] as string) : null;
   }
 
   /**
@@ -46,11 +46,11 @@ export class DatabaseUtils {
    */
   static createInsertData<T extends Record<string, any>>(
     entityType: keyof typeof cuidEntity,
-    data: Omit<T, "id" | "public_id">,
+    data: Omit<T, 'id' | 'public_id'>
   ): T {
     return {
       ...data,
-      public_id: cuidEntity[entityType](""),
+      public_id: cuidEntity[entityType](''),
     } as unknown as T;
   }
 
@@ -59,9 +59,9 @@ export class DatabaseUtils {
    */
   static createMultipleInsertData<T extends Record<string, any>>(
     entityType: keyof typeof cuidEntity,
-    dataArray: Array<Omit<T, "id" | "public_id">>,
+    dataArray: Array<Omit<T, 'id' | 'public_id'>>
   ): T[] {
-    return dataArray.map((data) => this.createInsertData(entityType, data));
+    return dataArray.map(data => this.createInsertData(entityType, data));
   }
 }
 
@@ -88,7 +88,7 @@ export class QueryBuilder {
    */
   static paginate(
     page: number = 1,
-    limit: number = 20,
+    limit: number = 20
   ): {
     offset: number;
     limit: number;
@@ -104,9 +104,9 @@ export class QueryBuilder {
    */
   static sortBy(
     field: string,
-    direction: "asc" | "desc" = "desc",
+    direction: 'asc' | 'desc' = 'desc'
   ): {
-    orderBy: { [key: string]: "asc" | "desc" };
+    orderBy: { [key: string]: 'asc' | 'desc' };
   } {
     return {
       orderBy: { [field]: direction },
@@ -122,9 +122,9 @@ export class EntityOperations {
    * Patient operations
    */
   static patients = {
-    create: (_data: unknown) => DatabaseUtils.createInsertData("patient", data),
+    create: (_data: unknown) => DatabaseUtils.createInsertData('patient', data),
     createMultiple: (_dataArray: unknown[]) =>
-      DatabaseUtils.createMultipleInsertData("patient", dataArray),
+      DatabaseUtils.createMultipleInsertData('patient', dataArray),
     findByPublicId: (_publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
 
@@ -133,9 +133,9 @@ export class EntityOperations {
    */
   static appointments = {
     create: (_data: unknown) =>
-      DatabaseUtils.createInsertData("appointment", data),
+      DatabaseUtils.createInsertData('appointment', data),
     createMultiple: (_dataArray: unknown[]) =>
-      DatabaseUtils.createMultipleInsertData("appointment", dataArray),
+      DatabaseUtils.createMultipleInsertData('appointment', dataArray),
     findByPublicId: (_publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
 
@@ -143,9 +143,9 @@ export class EntityOperations {
    * Session operations
    */
   static sessions = {
-    create: (_data: unknown) => DatabaseUtils.createInsertData("session", data),
+    create: (_data: unknown) => DatabaseUtils.createInsertData('session', data),
     createMultiple: (_dataArray: unknown[]) =>
-      DatabaseUtils.createMultipleInsertData("session", dataArray),
+      DatabaseUtils.createMultipleInsertData('session', dataArray),
     findByPublicId: (_publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
 
@@ -153,9 +153,9 @@ export class EntityOperations {
    * Chatbot flow operations
    */
   static chatbotFlows = {
-    create: (_data: unknown) => DatabaseUtils.createInsertData("flow", data),
+    create: (_data: unknown) => DatabaseUtils.createInsertData('flow', data),
     createMultiple: (_dataArray: unknown[]) =>
-      DatabaseUtils.createMultipleInsertData("flow", dataArray),
+      DatabaseUtils.createMultipleInsertData('flow', dataArray),
     findByPublicId: (_publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
 
@@ -163,9 +163,9 @@ export class EntityOperations {
    * CRM lead operations
    */
   static crmLeads = {
-    create: (_data: unknown) => DatabaseUtils.createInsertData("lead", data),
+    create: (_data: unknown) => DatabaseUtils.createInsertData('lead', data),
     createMultiple: (_dataArray: unknown[]) =>
-      DatabaseUtils.createMultipleInsertData("lead", dataArray),
+      DatabaseUtils.createMultipleInsertData('lead', dataArray),
     findByPublicId: (_publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
 
@@ -173,9 +173,9 @@ export class EntityOperations {
    * CRM deal operations
    */
   static crmDeals = {
-    create: (_data: unknown) => DatabaseUtils.createInsertData("deal", data),
+    create: (_data: unknown) => DatabaseUtils.createInsertData('deal', data),
     createMultiple: (_dataArray: unknown[]) =>
-      DatabaseUtils.createMultipleInsertData("deal", dataArray),
+      DatabaseUtils.createMultipleInsertData('deal', dataArray),
     findByPublicId: (_publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
 }
@@ -189,14 +189,14 @@ export class DatabaseValidation {
    */
   static validateRequiredFields<T extends Record<string, any>>(
     data: T,
-    requiredFields: (keyof T)[],
+    requiredFields: (keyof T)[]
   ): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
 
     for (const field of requiredFields) {
       if (
         !data[field] ||
-        (typeof data[field] === "string" && data[field].trim() === "")
+        (typeof data[field] === 'string' && data[field].trim() === '')
       ) {
         errors.push(`Field '${String(field)}' is required`);
       }
@@ -228,7 +228,7 @@ export class DatabaseValidation {
    */
   static validatePhone(_phone: string): boolean {
     const __phoneRegex = /^(\+966|966|0)?[5-9][0-9]{8}$/;
-    return phoneRegex.test(phone.replace(/\s/g, ""));
+    return phoneRegex.test(phone.replace(/\s/g, ''));
   }
 }
 
@@ -241,11 +241,11 @@ export class MigrationHelpers {
    */
   static generateBackfillData(
     entityType: keyof typeof cuidEntity,
-    existingRecords: Array<{ id: string }>,
+    existingRecords: Array<{ id: string }>
   ): Array<{ id: string; public_id: string }> {
-    return existingRecords.map((record) => ({
+    return existingRecords.map(record => ({
       id: record.id,
-      public_id: cuidEntity[entityType](""),
+      public_id: cuidEntity[entityType](''),
     }));
   }
 
@@ -254,8 +254,8 @@ export class MigrationHelpers {
    */
   static createMigrationLog(
     migrationName: string,
-    status: "started" | "completed" | "failed",
-    details?: unknown,
+    status: 'started' | 'completed' | 'failed',
+    details?: unknown
   ) {
     return {
       migration: migrationName,

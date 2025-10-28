@@ -146,49 +146,25 @@
       "deps": []
     },
     ".backup-files-20251015/project-documentation/page.tsx": {
-      "deps": [
-        "\"react",
-        "\"next/image"
-      ]
+      "deps": ["\"react", "\"next/image"]
     },
     ".backup-files-20251015/root-test-files/ai-task-processor.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     ".backup-files-20251015/root-test-files/cursor-agent-monitor.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process",
-        "util"
-      ]
+      "deps": ["fs", "path", "child_process", "util"]
     },
     ".backup-files-20251015/root-test-files/real-ai-agent-integration.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process",
-        "util"
-      ]
+      "deps": ["fs", "path", "child_process", "util"]
     },
     ".backup-files-20251015/root-test-files/real-ai-task-processor.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     ".backup-files-20251015/root-test-files/test-database-setup.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js"]
     },
     ".backup-files-20251015/sandbox/next.config.js": {
-      "deps": [
-        "@next/bundle-analyzer"
-      ]
+      "deps": ["@next/bundle-analyzer"]
     },
     ".backup-files-20251015/sandbox/tailwind.config.js": {
       "deps": []
@@ -204,10 +180,7 @@
       ]
     },
     ".backup-files-20251015/src/app/page.backup.tsx": {
-      "deps": [
-        "\"@/constants/routes",
-        "\"next/link"
-      ]
+      "deps": ["\"@/constants/routes", "\"next/link"]
     },
     ".backup-files-20251015/src/app/page.complex.tsx": {
       "deps": [
@@ -217,20 +190,13 @@
       ]
     },
     ".backup-files-20251015/src/app/page.simple.tsx": {
-      "deps": [
-        "\"@/constants/routes",
-        "\"next/link"
-      ]
+      "deps": ["\"@/constants/routes", "\"next/link"]
     },
     ".eslintrc.js": {
-      "deps": [
-        "@rushstack/eslint-patch/modern-module-resolution"
-      ]
+      "deps": ["@rushstack/eslint-patch/modern-module-resolution"]
     },
     ".temp_complex/(admin)/analytics/page.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     ".temp_complex/(admin)/channels/page.tsx": {
       "deps": []
@@ -269,10 +235,7 @@
       ]
     },
     ".temp_complex/(admin)/layout.tsx": {
-      "deps": [
-        "\"@/components/shell/Sidebar",
-        "\"@/components/shell/Header"
-      ]
+      "deps": ["\"@/components/shell/Sidebar", "\"@/components/shell/Header"]
     },
     ".temp_complex/(admin)/logs/page.tsx": {
       "deps": [
@@ -282,17 +245,10 @@
       ]
     },
     ".temp_complex/(admin)/private-center-dashboard/page.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     ".temp_complex/(admin)/review/page.tsx": {
-      "deps": [
-        "\"react",
-        "\"next/image",
-        "\"next/link",
-        "\"lucide-react"
-      ]
+      "deps": ["\"react", "\"next/image", "\"next/link", "\"lucide-react"]
     },
     ".temp_complex/(admin)/settings/i18n/page.tsx": {
       "deps": [
@@ -303,12 +259,7 @@
       ]
     },
     ".temp_complex/(admin)/settings/page.tsx": {
-      "deps": [
-        "\"react",
-        "\"next/image",
-        "\"next/link",
-        "\"lucide-react"
-      ]
+      "deps": ["\"react", "\"next/image", "\"next/link", "\"lucide-react"]
     },
     ".temp_complex/(admin)/users/page.tsx": {
       "deps": [
@@ -318,11 +269,7 @@
       ]
     },
     ".temp_complex/(auth)/forgot-password/page.tsx": {
-      "deps": [
-        "\"react",
-        "\"next/link",
-        "\"next/image"
-      ]
+      "deps": ["\"react", "\"next/link", "\"next/image"]
     },
     ".temp_complex/(auth)/login/page.tsx": {
       "deps": [
@@ -337,72 +284,37 @@
       ]
     },
     ".temp_complex/(auth)/register/page.tsx": {
-      "deps": [
-        "\"react",
-        "\"next/link"
-      ]
+      "deps": ["\"react", "\"next/link"]
     },
     ".temp_complex/(auth)/reset-password/page.tsx": {
-      "deps": [
-        "\"react",
-        "\"next/link",
-        "\"next/image",
-        "\"lucide-react"
-      ]
+      "deps": ["\"react", "\"next/link", "\"next/image", "\"lucide-react"]
     },
     ".temp_complex/(auth)/verify-email/page.tsx": {
-      "deps": [
-        "\"react",
-        "\"next/link",
-        "\"next/image",
-        "\"lucide-react"
-      ]
+      "deps": ["\"react", "\"next/link", "\"next/image", "\"lucide-react"]
     },
     ".temp_complex/(info)/about/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"lucide-react"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"lucide-react"]
     },
     ".temp_complex/(info)/contact/page.tsx": {
-      "deps": [
-        "\"react",
-        "\"next/image",
-        "\"next/link",
-        "\"lucide-react"
-      ]
+      "deps": ["\"react", "\"next/image", "\"next/link", "\"lucide-react"]
     },
     ".temp_complex/(legal)/privacy/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     ".temp_complex/(legal)/terms/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     ".temp_complex/(marketing)/faq/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     ".temp_complex/(marketing)/features/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     ".temp_complex/(marketing)/pricing/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     ".temp_complex/(marketing)/project-documentation/page.tsx": {
-      "deps": [
-        "\"react",
-        "\"next/image"
-      ]
+      "deps": ["\"react", "\"next/image"]
     },
     ".temp_complex/api/ai/chat/route.ts": {
       "deps": [
@@ -413,20 +325,13 @@
       ]
     },
     ".temp_complex/api/ai/respond/route.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     ".temp_complex/api/ai/transcribe/route.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     ".temp_complex/api/analytics/dashboard/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/database"
-      ]
+      "deps": ["\"next/server", "\"@/lib/database"]
     },
     ".temp_complex/api/appointments/route.ts": {
       "deps": [
@@ -436,34 +341,19 @@
       ]
     },
     ".temp_complex/api/auth/login/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"zod",
-        "\"jsonwebtoken",
-        "\"bcryptjs"
-      ]
+      "deps": ["\"next/server", "\"zod", "\"jsonwebtoken", "\"bcryptjs"]
     },
     ".temp_complex/api/auth/logout/route.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     ".temp_complex/api/auth/me/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"jsonwebtoken"
-      ]
+      "deps": ["\"next/server", "\"jsonwebtoken"]
     },
     ".temp_complex/api/auth/refresh/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"jsonwebtoken"
-      ]
+      "deps": ["\"next/server", "\"jsonwebtoken"]
     },
     ".temp_complex/api/channels/whatsapp/send/route.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     ".temp_complex/api/health/route.ts": {
       "deps": [
@@ -476,51 +366,28 @@
       ]
     },
     ".temp_complex/api/i18n/admin/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     ".temp_complex/api/i18n/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     ".temp_complex/api/insurance/claim/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/saudi-health-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/saudi-health-integration"]
     },
     ".temp_complex/api/logs/route.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     ".temp_complex/api/ministry-health/compliance/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/saudi-ministry-health-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/saudi-ministry-health-integration"]
     },
     ".temp_complex/api/ministry-health/submit/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/saudi-ministry-health-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/saudi-ministry-health-integration"]
     },
     ".temp_complex/api/ministry-health/sync/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/saudi-ministry-health-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/saudi-ministry-health-integration"]
     },
     ".temp_complex/api/ministry-health/verify/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/saudi-ministry-health-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/saudi-ministry-health-integration"]
     },
     ".temp_complex/api/patients/route.ts": {
       "deps": [
@@ -530,62 +397,34 @@
       ]
     },
     ".temp_complex/api/private-center/analytics/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/private-center-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/private-center-integration"]
     },
     ".temp_complex/api/private-center/cchi-claim/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/private-center-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/private-center-integration"]
     },
     ".temp_complex/api/private-center/compliance/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/private-center-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/private-center-integration"]
     },
     ".temp_complex/api/private-center/moh-report/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/private-center-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/private-center-integration"]
     },
     ".temp_complex/api/private-center/sfda-report/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/private-center-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/private-center-integration"]
     },
     ".temp_complex/api/saudi-health/verify/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/saudi-health-integration"
-      ]
+      "deps": ["\"next/server", "\"@/lib/saudi-health-integration"]
     },
     ".temp_complex/api/settings/route.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     ".temp_complex/api/translations/seed/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/scripts/seed-translations"
-      ]
+      "deps": ["\"next/server", "\"@/scripts/seed-translations"]
     },
     ".temp_complex/api/webhooks/whatsapp/route.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     ".temp_complex/api/whatsapp/send/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/whatsapp-business-api"
-      ]
+      "deps": ["\"next/server", "\"@/lib/whatsapp-business-api"]
     },
     ".temp_complex/api/whatsapp/webhook/route.ts": {
       "deps": [
@@ -603,83 +442,46 @@
       ]
     },
     "apply-all-migrations.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js",
-        "fs",
-        "path"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js", "fs", "path"]
     },
     "apply-migrations-simple.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js",
-        "fs",
-        "path"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js", "fs", "path"]
     },
     "apply-single-migration.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js",
-        "fs",
-        "path"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js", "fs", "path"]
     },
     "check-migration-status.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js"]
     },
     "components/Footer.jsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "components/Header.jsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "database-analysis-simple.js": {
-      "deps": [
-        "@supabase/supabase-js",
-        "dotenv"
-      ]
+      "deps": ["@supabase/supabase-js", "dotenv"]
     },
     "database-analysis.js": {
-      "deps": [
-        "@supabase/supabase-js",
-        "dotenv"
-      ]
+      "deps": ["@supabase/supabase-js", "dotenv"]
     },
     "jest.config.js": {
-      "deps": [
-        "next/jest"
-      ]
+      "deps": ["next/jest"]
     },
     "jest.setup.js": {
       "deps": []
     },
     "next.config.js": {
-      "deps": [
-        "@next/bundle-analyzer"
-      ]
+      "deps": ["@next/bundle-analyzer"]
     },
     "playwright.config.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "postcss.config.js": {
       "deps": []
     },
     "run-migration.js": {
-      "deps": [
-        "dotenv",
-        "./scripts/create-tables-supabase.js"
-      ]
+      "deps": ["dotenv", "./scripts/create-tables-supabase.js"]
     },
     "scripts/agents/backend-cleaner.js": {
       "deps": [
@@ -703,38 +505,19 @@
       ]
     },
     "scripts/agents/lib/file-lock.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "scripts/agents/lib/import-analyzer.js": {
-      "deps": [
-        "fs",
-        "path",
-        "glob",
-        "eslint"
-      ]
+      "deps": ["fs", "path", "glob", "eslint"]
     },
     "scripts/agents/lib/usage-map.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "scripts/agents/rollback-frontend.js": {
-      "deps": [
-        "fs",
-        "path",
-        "crypto"
-      ]
+      "deps": ["fs", "path", "crypto"]
     },
     "scripts/agents/rollback-shared.js": {
-      "deps": [
-        "fs",
-        "path",
-        "crypto"
-      ]
+      "deps": ["fs", "path", "crypto"]
     },
     "scripts/agents/run-cleanup-agents.js": {
       "deps": [
@@ -746,12 +529,7 @@
       ]
     },
     "scripts/agents/shared-infrastructure.js": {
-      "deps": [
-        "fs",
-        "path",
-        "crypto",
-        "winston"
-      ]
+      "deps": ["fs", "path", "crypto", "winston"]
     },
     "scripts/agents/shared-verifier.js": {
       "deps": [
@@ -838,9 +616,7 @@
       ]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-392Z/src/lib/accessibility.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-402Z/src/lib/ai-assistant.ts": {
       "deps": []
@@ -852,16 +628,10 @@
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-405Z/src/lib/api/whatsapp.ts": {
-      "deps": [
-        "\"./config"
-      ]
+      "deps": ["\"./config"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-406Z/src/lib/auth/authorize.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabase/server",
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabase/server", "\"@/lib/logger"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-407Z/src/lib/auth/roles.ts": {
       "deps": []
@@ -870,9 +640,7 @@
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-408Z/src/lib/cache-system.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-409Z/src/lib/centralized-theme.ts": {
       "deps": []
@@ -886,22 +654,13 @@
       ]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-411Z/src/lib/conversation-flows/FlowManager.ts": {
-      "deps": [
-        "\"./IntentAnalyzer",
-        "\"./ActionExecutor"
-      ]
+      "deps": ["\"./IntentAnalyzer", "\"./ActionExecutor"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-411Z/src/lib/conversation-flows/IntentAnalyzer.ts": {
-      "deps": [
-        "\"./types"
-      ]
+      "deps": ["\"./types"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-412Z/src/lib/conversation-flows/index.ts": {
-      "deps": [
-        "\"./FlowManager",
-        "\"./IntentAnalyzer",
-        "\"./ActionExecutor"
-      ]
+      "deps": ["\"./FlowManager", "\"./IntentAnalyzer", "\"./ActionExecutor"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-412Z/src/lib/conversation-flows/types.ts": {
       "deps": []
@@ -910,38 +669,22 @@
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-413Z/src/lib/cuid.ts": {
-      "deps": [
-        "\"@paralleldrive/cuid2"
-      ]
+      "deps": ["\"@paralleldrive/cuid2"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-414Z/src/lib/database/connection-pool.ts": {
-      "deps": [
-        "\"@/lib/supabase/server",
-        "\"../monitoring/logger"
-      ]
+      "deps": ["\"@/lib/supabase/server", "\"../monitoring/logger"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-414Z/src/lib/database-utils.ts": {
-      "deps": [
-        "\"@/lib/cuid"
-      ]
+      "deps": ["\"@/lib/cuid"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-415Z/src/lib/database.ts": {
-      "deps": [
-        "\"pg"
-      ]
+      "deps": ["\"pg"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-416Z/src/lib/deployment/docker.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"../monitoring/logger"
-      ]
+      "deps": ["\"fs", "\"path", "\"../monitoring/logger"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-417Z/src/lib/dynamic-content-manager.ts": {
-      "deps": [
-        "\"./supabase/client",
-        "\"@/constants/i18n-keys"
-      ]
+      "deps": ["\"./supabase/client", "\"@/constants/i18n-keys"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-417Z/src/lib/error-handler.ts": {
       "deps": []
@@ -950,12 +693,7 @@
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-418Z/src/lib/file-upload.ts": {
-      "deps": [
-        "\"next/server",
-        "\"./supabase-real",
-        "\"crypto",
-        "\"path"
-      ]
+      "deps": ["\"next/server", "\"./supabase-real", "\"crypto", "\"path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-419Z/src/lib/i18n/translationService.ts": {
       "deps": []
@@ -967,9 +705,7 @@
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-420Z/src/lib/logger/index.ts": {
-      "deps": [
-        "\"@/lib/supabase/server"
-      ]
+      "deps": ["\"@/lib/supabase/server"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-420Z/src/lib/logger.ts": {
       "deps": []
@@ -984,51 +720,34 @@
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-422Z/src/lib/optimization/performance.ts": {
-      "deps": [
-        "\"../monitoring/logger"
-      ]
+      "deps": ["\"../monitoring/logger"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-423Z/src/lib/payments/moyasar.ts": {
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-424Z/src/lib/payments/stripe.ts": {
-      "deps": [
-        "\"stripe"
-      ]
+      "deps": ["\"stripe"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-424Z/src/lib/performance-monitor.ts": {
-      "deps": [
-        "\"next/server",
-        "\"./supabase-real"
-      ]
+      "deps": ["\"next/server", "\"./supabase-real"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-425Z/src/lib/performance-optimizations.ts": {
-      "deps": [
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"@/lib/logger"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-425Z/src/lib/performance.ts": {
-      "deps": [
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"@/lib/logger"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-425Z/src/lib/private-center-integration.ts": {
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-426Z/src/lib/rate-limiter.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-426Z/src/lib/responsive-design.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-426Z/src/lib/router.ts": {
-      "deps": [
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"@/constants/routes"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-427Z/src/lib/saudi-health-integration.ts": {
       "deps": []
@@ -1037,82 +756,46 @@
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-427Z/src/lib/security/encryption.ts": {
-      "deps": [
-        "\"crypto",
-        "\"../monitoring/logger"
-      ]
+      "deps": ["\"crypto", "\"../monitoring/logger"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-428Z/src/lib/security.ts": {
-      "deps": [
-        "\"next/server",
-        "crypto"
-      ]
+      "deps": ["\"next/server", "crypto"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-428Z/src/lib/slack-integration.ts": {
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-428Z/src/lib/supabase/client.ts": {
-      "deps": [
-        "\"@supabase/supabase-js"
-      ]
+      "deps": ["\"@supabase/supabase-js"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-429Z/src/lib/supabase/server.ts": {
-      "deps": [
-        "\"@supabase/ssr",
-        "\"next/headers"
-      ]
+      "deps": ["\"@supabase/ssr", "\"next/headers"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-429Z/src/lib/supabase-real.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"@/types/supabase"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"@/types/supabase"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-429Z/src/lib/supabase.ts": {
-      "deps": [
-        "\"@supabase/supabase-js"
-      ]
+      "deps": ["\"@supabase/supabase-js"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-430Z/src/lib/supabaseClient.ts": {
-      "deps": [
-        "\"@supabase/ssr",
-        "\"next/headers",
-        "@supabase/supabase-js"
-      ]
+      "deps": ["\"@supabase/ssr", "\"next/headers", "@supabase/supabase-js"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-430Z/src/lib/testing/test-utils.ts": {
-      "deps": [
-        "\"@/lib/supabase/server",
-        "\"../monitoring/logger"
-      ]
+      "deps": ["\"@/lib/supabase/server", "\"../monitoring/logger"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-430Z/src/lib/translations-manager.ts": {
-      "deps": [
-        "\"./cuid",
-        "\"./supabaseClient"
-      ]
+      "deps": ["\"./cuid", "\"./supabaseClient"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-431Z/src/lib/utils.ts": {
-      "deps": [
-        "\"clsx"
-      ]
+      "deps": ["\"clsx"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-431Z/src/lib/validation/schemas.ts": {
-      "deps": [
-        "\"zod"
-      ]
+      "deps": ["\"zod"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-431Z/src/lib/validation/security.ts": {
-      "deps": [
-        "\"zod",
-        "\"isomorphic-dompurify"
-      ]
+      "deps": ["\"zod", "\"isomorphic-dompurify"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-432Z/src/lib/validation.ts": {
-      "deps": [
-        "\"zod",
-        "\"isomorphic-dompurify"
-      ]
+      "deps": ["\"zod", "\"isomorphic-dompurify"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-432Z/src/lib/whatsapp-business-api.ts": {
       "deps": []
@@ -1124,9 +807,7 @@
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-433Z/src/utils/api.ts": {
-      "deps": [
-        "\"@/types"
-      ]
+      "deps": ["\"@/types"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-433Z/src/utils/date.ts": {
       "deps": []
@@ -1147,135 +828,67 @@
       "deps": []
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-435Z/src/middleware/audit.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabase/server"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabase/server"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-435Z/src/middleware/auth.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/auth/authorize"
-      ]
+      "deps": ["\"next/server", "\"@/lib/auth/authorize"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-435Z/src/middleware/rate-limiter.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"next/server", "\"@/lib/logger"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-436Z/src/middleware/security.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-437Z/scripts/admin-module.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-437Z/scripts/advanced-monitoring.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process"
-      ]
+      "deps": ["fs", "path", "child_process"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-438Z/scripts/analyze-bundle.js": {
-      "deps": [
-        "webpack-bundle-analyzer",
-        "path"
-      ]
+      "deps": ["webpack-bundle-analyzer", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-438Z/scripts/apply-migration-direct.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js",
-        "fs"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js", "fs"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-438Z/scripts/apply-migrations-supabase.js": {
-      "deps": [
-        "@supabase/supabase-js",
-        "fs",
-        "path"
-      ]
+      "deps": ["@supabase/supabase-js", "fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-438Z/scripts/apply-supabase-migrations.js": {
-      "deps": [
-        "@supabase/supabase-js",
-        "fs",
-        "path",
-        "dotenv"
-      ]
+      "deps": ["@supabase/supabase-js", "fs", "path", "dotenv"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-439Z/scripts/backfill-public-ids.js": {
-      "deps": [
-        "pg",
-        "./cuid-standalone",
-        "dotenv"
-      ]
+      "deps": ["pg", "./cuid-standalone", "dotenv"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-439Z/scripts/continuous-ai-loop.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process"
-      ]
+      "deps": ["fs", "path", "child_process"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-439Z/scripts/create-all-tables.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-440Z/scripts/create-missing-tables.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-440Z/scripts/create-tables-direct.js": {
-      "deps": [
-        "@supabase/supabase-js",
-        "dotenv"
-      ]
+      "deps": ["@supabase/supabase-js", "dotenv"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-440Z/scripts/create-tables-supabase.js": {
-      "deps": [
-        "@supabase/supabase-js"
-      ]
+      "deps": ["@supabase/supabase-js"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-440Z/scripts/cuid-standalone.js": {
-      "deps": [
-        "@paralleldrive/cuid2"
-      ]
+      "deps": ["@paralleldrive/cuid2"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-441Z/scripts/cursor-agent-monitor.js": {
-      "deps": [
-        "child_process",
-        "fs",
-        "path"
-      ]
+      "deps": ["child_process", "fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-441Z/scripts/cursor-agent.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-441Z/scripts/enhance_chatbot_flows.js": {
-      "deps": [
-        "@supabase/supabase-js",
-        "uuid"
-      ]
+      "deps": ["@supabase/supabase-js", "uuid"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-442Z/scripts/enhanced-run-all.js": {
-      "deps": [
-        "child_process",
-        "path"
-      ]
+      "deps": ["child_process", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-442Z/scripts/enhancements.js": {
       "deps": [
@@ -1289,163 +902,79 @@
       ]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-443Z/scripts/file-cleanup.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process"
-      ]
+      "deps": ["fs", "path", "child_process"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-443Z/scripts/fix-imports.js": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"glob",
-        "'${module}"
-      ]
+      "deps": ["\"fs", "\"path", "\"glob", "'${module}"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-443Z/scripts/generate-barrels.js": {
-      "deps": [
-        "\"fs",
-        "\"path"
-      ]
+      "deps": ["\"fs", "\"path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-444Z/scripts/generate-final-report.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process"
-      ]
+      "deps": ["fs", "path", "child_process"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-444Z/scripts/generate-migration-script.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-444Z/scripts/hemmam-center-ai-integration.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-444Z/scripts/master-ai-controller.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process"
-      ]
+      "deps": ["fs", "path", "child_process"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-445Z/scripts/ml-learning-engine.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-445Z/scripts/n8n-workflow-manager.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-446Z/scripts/reorganize-project.js": {
-      "deps": [
-        "\"fs",
-        "\"path"
-      ]
+      "deps": ["\"fs", "\"path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-446Z/scripts/rewrite-client-directive.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-446Z/scripts/run-all.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process"
-      ]
+      "deps": ["fs", "path", "child_process"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-446Z/scripts/run-migrations.js": {
-      "deps": [
-        "@supabase/supabase-js",
-        "fs",
-        "path",
-        "dotenv"
-      ]
+      "deps": ["@supabase/supabase-js", "fs", "path", "dotenv"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-447Z/scripts/sandbox-testing.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process"
-      ]
+      "deps": ["fs", "path", "child_process"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-447Z/scripts/seed_supabase_full.js": {
-      "deps": [
-        "@supabase/supabase-js",
-        "bcryptjs",
-        "uuid"
-      ]
+      "deps": ["@supabase/supabase-js", "bcryptjs", "uuid"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-447Z/scripts/self-healing.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process"
-      ]
+      "deps": ["fs", "path", "child_process"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-447Z/scripts/smart-clean.js": {
-      "deps": [
-        "\"fs",
-        "\"path"
-      ]
+      "deps": ["\"fs", "\"path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-448Z/scripts/social-media-automation.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-448Z/scripts/test-after-migration.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-448Z/scripts/test-connection.js": {
-      "deps": [
-        "@supabase/supabase-js"
-      ]
+      "deps": ["@supabase/supabase-js"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-448Z/scripts/test-database.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-449Z/scripts/validate-schema.js": {
-      "deps": [
-        "pg"
-      ]
+      "deps": ["pg"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-449Z/scripts/validate-structure.js": {
-      "deps": [
-        "fs",
-        "path"
-      ]
+      "deps": ["fs", "path"]
     },
     "src/.shared_quarantine/backend/2025-10-16T07-28-50-449Z/scripts/verification.js": {
-      "deps": [
-        "fs",
-        "path",
-        "child_process"
-      ]
+      "deps": ["fs", "path", "child_process"]
     },
     "src/__tests__/ai-assistant.test.ts": {
-      "deps": [
-        "\"@/lib/ai-assistant"
-      ]
+      "deps": ["\"@/lib/ai-assistant"]
     },
     "src/__tests__/api/appointments.test.ts": {
       "deps": [
@@ -1464,28 +993,19 @@
       ]
     },
     "src/__tests__/saudi-health-integration.test.ts": {
-      "deps": [
-        "\"@/lib/saudi-health-integration"
-      ]
+      "deps": ["\"@/lib/saudi-health-integration"]
     },
     "src/__tests__/setup.ts": {
       "deps": []
     },
     "src/__tests__/whatsapp-business-api.test.ts": {
-      "deps": [
-        "\"@/lib/whatsapp-business-api"
-      ]
+      "deps": ["\"@/lib/whatsapp-business-api"]
     },
     "src/__tests__/whatsapp-integration.test.ts": {
-      "deps": [
-        "\"@/lib/whatsapp-integration"
-      ]
+      "deps": ["\"@/lib/whatsapp-integration"]
     },
     "src/app/(admin)/admin/audit-logs/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react"
-      ]
+      "deps": ["\"next/image", "\"react"]
     },
     "src/app/(admin)/admin/channels/page.tsx": {
       "deps": []
@@ -1516,10 +1036,7 @@
       ]
     },
     "src/app/(admin)/admin/roles/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react"
-      ]
+      "deps": ["\"next/image", "\"react"]
     },
     "src/app/(admin)/admin/users/page.tsx": {
       "deps": [
@@ -1529,9 +1046,7 @@
       ]
     },
     "src/app/(admin)/agent-dashboard/page.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/app/(admin)/analytics/page.tsx": {
       "deps": [
@@ -1544,50 +1059,22 @@
       ]
     },
     "src/app/(admin)/chatbot/analytics/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"react", "\"@/constants/routes"]
     },
     "src/app/(admin)/chatbot/flows/[flowId]/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(admin)/chatbot/flows/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(admin)/chatbot/integrations/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"react", "\"@/constants/routes"]
     },
     "src/app/(admin)/chatbot/templates/[id]/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(admin)/chatbot/templates/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(admin)/conversations/page.tsx": {
       "deps": [
@@ -1597,11 +1084,7 @@
       ]
     },
     "src/app/(admin)/crm/activities/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"react", "\"@/constants/routes"]
     },
     "src/app/(admin)/crm/contacts/[id]/page.tsx": {
       "deps": []
@@ -1632,12 +1115,7 @@
       "deps": []
     },
     "src/app/(admin)/crm/deals/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(admin)/crm/flows/page.tsx": {
       "deps": [
@@ -1650,12 +1128,7 @@
       ]
     },
     "src/app/(admin)/crm/leads/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(admin)/flow/page.tsx": {
       "deps": []
@@ -1670,16 +1143,10 @@
       ]
     },
     "src/app/(admin)/layout.tsx": {
-      "deps": [
-        "\"@/components/shell/Header",
-        "\"@/components/shell/Sidebar"
-      ]
+      "deps": ["\"@/components/shell/Header", "\"@/components/shell/Sidebar"]
     },
     "src/app/(admin)/messages/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react"
-      ]
+      "deps": ["\"next/image", "\"react"]
     },
     "src/app/(admin)/notifications/page.tsx": {
       "deps": [
@@ -1701,15 +1168,10 @@
       ]
     },
     "src/app/(admin)/profile/page.tsx": {
-      "deps": [
-        "\"jotai",
-        "\"@/components/providers/UIProvider"
-      ]
+      "deps": ["\"jotai", "\"@/components/providers/UIProvider"]
     },
     "src/app/(admin)/review/page.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/app/(admin)/security/page.tsx": {
       "deps": [
@@ -1722,23 +1184,13 @@
       ]
     },
     "src/app/(admin)/settings/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react"
-      ]
+      "deps": ["\"next/image", "\"react"]
     },
     "src/app/(auth)/forgot-password/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(auth)/layout.tsx": {
-      "deps": [
-        "\"next"
-      ]
+      "deps": ["\"next"]
     },
     "src/app/(auth)/login/page.tsx": {
       "deps": [
@@ -1753,28 +1205,13 @@
       ]
     },
     "src/app/(auth)/register/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(auth)/reset-password/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(auth)/verify-email/page.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"next/image",
-        "\"next/link",
-        "\"react"
-      ]
+      "deps": ["\"lucide-react", "\"next/image", "\"next/link", "\"react"]
     },
     "src/app/(doctor)/doctor-dashboard/page.tsx": {
       "deps": [
@@ -1831,17 +1268,10 @@
       ]
     },
     "src/app/(health)/insurance-claims/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"react", "\"@/constants/routes"]
     },
     "src/app/(health)/layout.tsx": {
-      "deps": [
-        "\"@/components/shell/Header",
-        "\"@/components/shell/Sidebar"
-      ]
+      "deps": ["\"@/components/shell/Header", "\"@/components/shell/Sidebar"]
     },
     "src/app/(health)/medical-file/page.tsx": {
       "deps": [
@@ -1854,12 +1284,7 @@
       ]
     },
     "src/app/(health)/patients/[id]/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/(health)/patients/page.tsx": {
       "deps": [
@@ -1885,11 +1310,7 @@
       ]
     },
     "src/app/(health)/sessions/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"react", "\"@/constants/routes"]
     },
     "src/app/(health)/therapy/page.tsx": {
       "deps": [
@@ -1914,54 +1335,31 @@
       ]
     },
     "src/app/(info)/about/page.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"next/image",
-        "\"next/link"
-      ]
+      "deps": ["\"lucide-react", "\"next/image", "\"next/link"]
     },
     "src/app/(info)/contact/page.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"next/image",
-        "\"next/link",
-        "\"react"
-      ]
+      "deps": ["\"lucide-react", "\"next/image", "\"next/link", "\"react"]
     },
     "src/app/(info)/layout.tsx": {
-      "deps": [
-        "\"next"
-      ]
+      "deps": ["\"next"]
     },
     "src/app/(legal)/layout.tsx": {
-      "deps": [
-        "\"next"
-      ]
+      "deps": ["\"next"]
     },
     "src/app/(legal)/privacy/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     "src/app/(legal)/terms/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     "src/app/(marketing)/faq/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     "src/app/(marketing)/features/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     "src/app/(marketing)/pricing/page.tsx": {
-      "deps": [
-        "\"@/components/providers/I18nProvider"
-      ]
+      "deps": ["\"@/components/providers/I18nProvider"]
     },
     "src/app/(patient)/patient-dashboard/page.tsx": {
       "deps": [
@@ -2022,10 +1420,7 @@
       ]
     },
     "src/app/api/admin/users/[id]/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/admin/users/route.ts": {
       "deps": [
@@ -2038,44 +1433,22 @@
       ]
     },
     "src/app/api/agent/completion/route.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"next/server"
-      ]
+      "deps": ["\"fs", "\"path", "\"next/server"]
     },
     "src/app/api/agent/logs/route.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"next/server"
-      ]
+      "deps": ["\"fs", "\"path", "\"next/server"]
     },
     "src/app/api/agent/status/route.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"next/server"
-      ]
+      "deps": ["\"fs", "\"path", "\"next/server"]
     },
     "src/app/api/agent/tasks/route.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"next/server"
-      ]
+      "deps": ["\"fs", "\"path", "\"next/server"]
     },
     "src/app/api/analytics/action/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/analytics/metrics/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/appointments/[id]/route.ts": {
       "deps": [
@@ -2132,21 +1505,13 @@
       ]
     },
     "src/app/api/auth/login/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/auth/logout/route.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     "src/app/api/auth/me/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/auth/authorize"
-      ]
+      "deps": ["\"next/server", "\"@/lib/auth/authorize"]
     },
     "src/app/api/chatbot/actions/route.ts": {
       "deps": [
@@ -2160,34 +1525,19 @@
       ]
     },
     "src/app/api/chatbot/appointments/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabase/server"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabase/server"]
     },
     "src/app/api/chatbot/config/route.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"next/server"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"next/server"]
     },
     "src/app/api/chatbot/conversations/route.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"next/server"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"next/server"]
     },
     "src/app/api/chatbot/flows/route.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"next/server"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"next/server"]
     },
     "src/app/api/chatbot/intents/route.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"next/server"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"next/server"]
     },
     "src/app/api/chatbot/message/route.ts": {
       "deps": [
@@ -2197,48 +1547,25 @@
       ]
     },
     "src/app/api/chatbot/messages/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabase/server"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabase/server"]
     },
     "src/app/api/crm/contacts/route.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"next/server"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"next/server"]
     },
     "src/app/api/crm/leads/route.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"next/server"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"next/server"]
     },
     "src/app/api/crm/stats/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabase/server"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabase/server"]
     },
     "src/app/api/dashboard/health/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/dashboard/logs/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/dashboard/metrics/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient",
-        "fs",
-        "path"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient", "fs", "path"]
     },
     "src/app/api/doctors/availability/route.ts": {
       "deps": [
@@ -2248,42 +1575,22 @@
       ]
     },
     "src/app/api/doctors/me/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/auth/authorize"
-      ]
+      "deps": ["\"next/server", "\"@/lib/auth/authorize"]
     },
     "src/app/api/errors/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/logger",
-        "\"@/lib/supabase/server"
-      ]
+      "deps": ["\"next/server", "\"@/lib/logger", "\"@/lib/supabase/server"]
     },
     "src/app/api/health/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/logger",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/logger", "\"@/lib/supabaseClient"]
     },
     "src/app/api/healthcare/appointments/route.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"next/server"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"next/server"]
     },
     "src/app/api/healthcare/patients/route.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"next/server"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"next/server"]
     },
     "src/app/api/i18n/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/insurance/claims/[id]/submit/route.ts": {
       "deps": [
@@ -2375,10 +1682,7 @@
       ]
     },
     "src/app/api/patients/me/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/auth/authorize"
-      ]
+      "deps": ["\"next/server", "\"@/lib/auth/authorize"]
     },
     "src/app/api/patients/route.ts": {
       "deps": [
@@ -2448,27 +1752,16 @@
       ]
     },
     "src/app/api/test/endpoints/route.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     "src/app/api/test/health/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabase/server"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabase/server"]
     },
     "src/app/api/translations/[lang]/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/translations/missing/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/upload/route.ts": {
       "deps": [
@@ -2478,17 +1771,10 @@
       ]
     },
     "src/app/api/user/preferences/route.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/supabaseClient"
-      ]
+      "deps": ["\"next/server", "\"@/lib/supabaseClient"]
     },
     "src/app/api/webhook/whatsapp/route.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"next/server",
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"next/server", "\"@/lib/logger"]
     },
     "src/app/api/webhooks/payments/moyasar/route.ts": {
       "deps": [
@@ -2561,11 +1847,7 @@
       ]
     },
     "src/app/error.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"next/image",
-        "\"next/link"
-      ]
+      "deps": ["\"lucide-react", "\"next/image", "\"next/link"]
     },
     "src/app/layout.minimal.tsx": {
       "deps": []
@@ -2581,29 +1863,16 @@
       ]
     },
     "src/app/not-found.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"next/image",
-        "\"next/link"
-      ]
+      "deps": ["\"lucide-react", "\"next/image", "\"next/link"]
     },
     "src/app/page.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"next/link",
-        "\"react",
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"next/image", "\"next/link", "\"react", "\"@/constants/routes"]
     },
     "src/app/robots.ts": {
-      "deps": [
-        "\"next"
-      ]
+      "deps": ["\"next"]
     },
     "src/app/sitemap.ts": {
-      "deps": [
-        "\"next"
-      ]
+      "deps": ["\"next"]
     },
     "src/app/uikit/guidelines/page.tsx": {
       "deps": []
@@ -2612,11 +1881,7 @@
       "deps": []
     },
     "src/components/LanguageSwitcher.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"react",
-        "\"@/design-system/hooks"
-      ]
+      "deps": ["\"lucide-react", "\"react", "\"@/design-system/hooks"]
     },
     "src/components/ThemeSwitcher.tsx": {
       "deps": [
@@ -2652,28 +1917,16 @@
       ]
     },
     "src/components/charts/AreaChart.tsx": {
-      "deps": [
-        "\"react",
-        "\"@/context/ThemeContext"
-      ]
+      "deps": ["\"react", "\"@/context/ThemeContext"]
     },
     "src/components/charts/BarChart.tsx": {
-      "deps": [
-        "\"react",
-        "\"@/context/ThemeContext"
-      ]
+      "deps": ["\"react", "\"@/context/ThemeContext"]
     },
     "src/components/charts/LineChart.tsx": {
-      "deps": [
-        "\"react",
-        "\"@/context/ThemeContext"
-      ]
+      "deps": ["\"react", "\"@/context/ThemeContext"]
     },
     "src/components/charts/PieChart.tsx": {
-      "deps": [
-        "\"react",
-        "\"@/context/ThemeContext"
-      ]
+      "deps": ["\"react", "\"@/context/ThemeContext"]
     },
     "src/components/charts/index.ts": {
       "deps": []
@@ -2688,9 +1941,7 @@
       ]
     },
     "src/components/common/DirectionToggle.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/common/EmptyState.tsx": {
       "deps": []
@@ -2720,29 +1971,19 @@
       "deps": []
     },
     "src/components/common/OptimizedImage.tsx": {
-      "deps": [
-        "\"next/image",
-        "\"react"
-      ]
+      "deps": ["\"next/image", "\"react"]
     },
     "src/components/common/PerformanceOptimizedImage.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/common/PlaceholderSquare.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/common/Skeleton.tsx": {
       "deps": []
     },
     "src/components/common/StatusBanner.tsx": {
-      "deps": [
-        "\"react",
-        "\"./LiveDot"
-      ]
+      "deps": ["\"react", "\"./LiveDot"]
     },
     "src/components/common/ThemeSwitcher.tsx": {
       "deps": [
@@ -2753,9 +1994,7 @@
       ]
     },
     "src/components/common/ThemeToggle.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/dashboard/Charts.tsx": {
       "deps": []
@@ -2830,27 +2069,16 @@
       ]
     },
     "src/components/providers/DesignSystemProvider.tsx": {
-      "deps": [
-        "\"@/design-system/hooks",
-        "\"@/design-system/utils"
-      ]
+      "deps": ["\"@/design-system/hooks", "\"@/design-system/utils"]
     },
     "src/components/providers/I18nProvider.tsx": {
-      "deps": [
-        "\"@/hooks/useI18n"
-      ]
+      "deps": ["\"@/hooks/useI18n"]
     },
     "src/components/providers/UIProvider.tsx": {
-      "deps": [
-        "\"jotai",
-        "\"next/navigation",
-        "\"react"
-      ]
+      "deps": ["\"jotai", "\"next/navigation", "\"react"]
     },
     "src/components/settings/KeywordEditor.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/settings/SettingsTabs.tsx": {
       "deps": [
@@ -2860,58 +2088,37 @@
       ]
     },
     "src/components/shared/AccessibleButton.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/shared/DataTable.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/shared/EmptyState.tsx": {
       "deps": []
     },
     "src/components/shared/ErrorBoundary.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"react"
-      ]
+      "deps": ["\"lucide-react", "\"react"]
     },
     "src/components/shared/Form.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/shared/LiveRegion.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/shared/LoadingSpinner.tsx": {
       "deps": []
     },
     "src/components/shared/Modal.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/shared/OptimizedImage.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"next/image",
-        "\"react"
-      ]
+      "deps": ["\"lucide-react", "\"next/image", "\"react"]
     },
     "src/components/shared/ScreenReaderOnly.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/shared/Tabs.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/shared/index.ts": {
       "deps": []
@@ -2928,11 +2135,7 @@
       ]
     },
     "src/components/shell/HeaderSimple.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"next/image",
-        "\"react"
-      ]
+      "deps": ["\"lucide-react", "\"next/image", "\"react"]
     },
     "src/components/shell/Sidebar.tsx": {
       "deps": [
@@ -2942,57 +2145,31 @@
       ]
     },
     "src/components/ui/Badge.tsx": {
-      "deps": [
-        "\"clsx",
-        "\"@/lib/centralized-theme"
-      ]
+      "deps": ["\"clsx", "\"@/lib/centralized-theme"]
     },
     "src/components/ui/Button.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"react",
-        "\"@/core/utils"
-      ]
+      "deps": ["\"lucide-react", "\"react", "\"@/core/utils"]
     },
     "src/components/ui/Card.tsx": {
-      "deps": [
-        "\"react",
-        "\"@/core/utils"
-      ]
+      "deps": ["\"react", "\"@/core/utils"]
     },
     "src/components/ui/Checkbox.tsx": {
-      "deps": [
-        "\"react",
-        "\"@/lib/utils"
-      ]
+      "deps": ["\"react", "\"@/lib/utils"]
     },
     "src/components/ui/DataTable.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/components/ui/Input.tsx": {
-      "deps": [
-        "\"lucide-react",
-        "\"react",
-        "\"@/core/utils"
-      ]
+      "deps": ["\"lucide-react", "\"react", "\"@/core/utils"]
     },
     "src/components/ui/Label.tsx": {
-      "deps": [
-        "\"clsx"
-      ]
+      "deps": ["\"clsx"]
     },
     "src/components/ui/Modal.tsx": {
-      "deps": [
-        "\"clsx",
-        "\"react"
-      ]
+      "deps": ["\"clsx", "\"react"]
     },
     "src/components/ui/ScrollArea.tsx": {
-      "deps": [
-        "\"clsx"
-      ]
+      "deps": ["\"clsx"]
     },
     "src/components/ui/Select.tsx": {
       "deps": [
@@ -3003,43 +2180,25 @@
       ]
     },
     "src/components/ui/Skeleton.tsx": {
-      "deps": [
-        "\"clsx"
-      ]
+      "deps": ["\"clsx"]
     },
     "src/components/ui/Switch.tsx": {
-      "deps": [
-        "\"@radix-ui/react-switch",
-        "\"react",
-        "\"@/lib/utils"
-      ]
+      "deps": ["\"@radix-ui/react-switch", "\"react", "\"@/lib/utils"]
     },
     "src/components/ui/Table.tsx": {
-      "deps": [
-        "\"clsx"
-      ]
+      "deps": ["\"clsx"]
     },
     "src/components/ui/Tabs.tsx": {
-      "deps": [
-        "\"clsx",
-        "\"react"
-      ]
+      "deps": ["\"clsx", "\"react"]
     },
     "src/components/ui/Textarea.tsx": {
-      "deps": [
-        "\"clsx"
-      ]
+      "deps": ["\"clsx"]
     },
     "src/components/ui/Toast.tsx": {
-      "deps": [
-        "\"clsx",
-        "\"react"
-      ]
+      "deps": ["\"clsx", "\"react"]
     },
     "src/components/ui/Tooltip.tsx": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/config/env.ts": {
       "deps": []
@@ -3079,17 +2238,10 @@
       ]
     },
     "src/core/api/client.ts": {
-      "deps": [
-        "\"../constants",
-        "\"../errors",
-        "\"../types",
-        "\"../utils"
-      ]
+      "deps": ["\"../constants", "\"../errors", "\"../types", "\"../utils"]
     },
     "src/core/config/index.ts": {
-      "deps": [
-        "\"../types"
-      ]
+      "deps": ["\"../types"]
     },
     "src/core/constants/index.ts": {
       "deps": []
@@ -3098,9 +2250,7 @@
       "deps": []
     },
     "src/core/errors/index.ts": {
-      "deps": [
-        "\"../constants"
-      ]
+      "deps": ["\"../constants"]
     },
     "src/core/hooks/index.ts": {
       "deps": [
@@ -3125,16 +2275,10 @@
       "deps": []
     },
     "src/core/utils/index.ts": {
-      "deps": [
-        "\"clsx"
-      ]
+      "deps": ["\"clsx"]
     },
     "src/core/validation/index.ts": {
-      "deps": [
-        "\"zod",
-        "\"../constants",
-        "\"../errors"
-      ]
+      "deps": ["\"zod", "\"../constants", "\"../errors"]
     },
     "src/design-system/hooks/index.ts": {
       "deps": []
@@ -3149,37 +2293,22 @@
       "deps": []
     },
     "src/hooks/useApi.ts": {
-      "deps": [
-        "\"react",
-        "\"@/types",
-        "\"@/utils/api"
-      ]
+      "deps": ["\"react", "\"@/types", "\"@/utils/api"]
     },
     "src/hooks/useAsync.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useAuth.ts": {
-      "deps": [
-        "\"react",
-        "\"@/types"
-      ]
+      "deps": ["\"react", "\"@/types"]
     },
     "src/hooks/useClickOutside.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useCounter.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useDebounce.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useErrorHandler.tsx": {
       "deps": [
@@ -3190,84 +2319,49 @@
       ]
     },
     "src/hooks/useForm.ts": {
-      "deps": [
-        "\"react",
-        "\"@/utils/validation"
-      ]
+      "deps": ["\"react", "\"@/utils/validation"]
     },
     "src/hooks/useI18n.ts": {
-      "deps": [
-        "\"react",
-        "\"@/lib/dynamic-content-manager"
-      ]
+      "deps": ["\"react", "\"@/lib/dynamic-content-manager"]
     },
     "src/hooks/useIntersectionObserver.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useKeyPress.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useKeyboardNavigation.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useLocalStorage.ts": {
-      "deps": [
-        "\"react",
-        "\"@/utils/storage"
-      ]
+      "deps": ["\"react", "\"@/utils/storage"]
     },
     "src/hooks/useMediaQuery.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useMemoryLeakPrevention.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/usePageI18n.ts": {
-      "deps": [
-        "\"next/navigation",
-        "\"react",
-        "\"./useI18n"
-      ]
+      "deps": ["\"next/navigation", "\"react", "\"./useI18n"]
     },
     "src/hooks/usePerformance.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/usePrevious.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useT.tsx": {
-      "deps": [
-        "\"@/lib/i18n/translationService"
-      ]
+      "deps": ["\"@/lib/i18n/translationService"]
     },
     "src/hooks/useThrottle.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/hooks/useToggle.ts": {
-      "deps": [
-        "\"react"
-      ]
+      "deps": ["\"react"]
     },
     "src/lib/auth/authorize.ts": {
-      "deps": [
-        "\"@/lib/supabase/server"
-      ]
+      "deps": ["\"@/lib/supabase/server"]
     },
     "src/lib/centralized-theme.ts": {
       "deps": []
@@ -3276,16 +2370,10 @@
       "deps": []
     },
     "src/lib/database-utils.ts": {
-      "deps": [
-        "\"@/types/supabase",
-        "\"./supabaseClient"
-      ]
+      "deps": ["\"@/types/supabase", "\"./supabaseClient"]
     },
     "src/lib/database.ts": {
-      "deps": [
-        "\"@/types/supabase",
-        "\"./supabaseClient"
-      ]
+      "deps": ["\"@/types/supabase", "\"./supabaseClient"]
     },
     "src/lib/dynamic-content-manager.ts": {
       "deps": []
@@ -3309,15 +2397,10 @@
       "deps": []
     },
     "src/lib/real-time-notifications.ts": {
-      "deps": [
-        "\"nodemailer",
-        "\"socket.io"
-      ]
+      "deps": ["\"nodemailer", "\"socket.io"]
     },
     "src/lib/router.ts": {
-      "deps": [
-        "\"@/constants/routes"
-      ]
+      "deps": ["\"@/constants/routes"]
     },
     "src/lib/security-enhanced.ts": {
       "deps": [
@@ -3331,21 +2414,13 @@
       "deps": []
     },
     "src/lib/supabase/client.ts": {
-      "deps": [
-        "\"@supabase/ssr",
-        "\"@/types/supabase"
-      ]
+      "deps": ["\"@supabase/ssr", "\"@/types/supabase"]
     },
     "src/lib/supabase/server.ts": {
-      "deps": [
-        "\"@supabase/ssr",
-        "\"next/headers"
-      ]
+      "deps": ["\"@supabase/ssr", "\"next/headers"]
     },
     "src/lib/supabase-real.ts": {
-      "deps": [
-        "\"@supabase/supabase-js"
-      ]
+      "deps": ["\"@supabase/supabase-js"]
     },
     "src/lib/supabaseClient.ts": {
       "deps": [
@@ -3356,45 +2431,28 @@
       ]
     },
     "src/lib/validation/schemas.ts": {
-      "deps": [
-        "\"zod"
-      ]
+      "deps": ["\"zod"]
     },
     "src/lib/whatsapp-business-api.ts": {
       "deps": []
     },
     "src/middleware/audit.ts": {
-      "deps": [
-        "\"next/server",
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"next/server", "\"@/lib/logger"]
     },
     "src/middleware/rate-limiter.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     "src/middleware/security.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     "src/middleware.backup.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     "src/middleware.disabled.ts": {
-      "deps": [
-        "\"next/server"
-      ]
+      "deps": ["\"next/server"]
     },
     "src/middleware.prod.ts": {
-      "deps": [
-        "\"jsonwebtoken",
-        "\"next/server",
-        "\"@/lib/security"
-      ]
+      "deps": ["\"jsonwebtoken", "\"next/server", "\"@/lib/security"]
     },
     "src/middleware.ts": {
       "deps": [
@@ -3417,127 +2475,64 @@
       ]
     },
     "src/scripts/agents/modules/db-verifier.ts": {
-      "deps": [
-        "\"@/lib/supabaseClient",
-        "\"../shared/types",
-        "fs"
-      ]
+      "deps": ["\"@/lib/supabaseClient", "\"../shared/types", "fs"]
     },
     "src/scripts/agents/modules/dependency-analyzer.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"typescript",
-        "\"../shared/types"
-      ]
+      "deps": ["\"fs", "\"path", "\"typescript", "\"../shared/types"]
     },
     "src/scripts/agents/modules/impact-analyzer.ts": {
       "deps": []
     },
     "src/scripts/agents/modules/mock-detector.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"../shared/types"
-      ]
+      "deps": ["\"fs", "\"path", "\"../shared/types"]
     },
     "src/scripts/agents/modules/quarantine-executor.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"../shared/quarantine-manager"
-      ]
+      "deps": ["\"fs", "\"path", "\"../shared/quarantine-manager"]
     },
     "src/scripts/agents/rollback-backend.ts": {
-      "deps": [
-        "\"fs/promises",
-        "\"path",
-        "\"crypto"
-      ]
+      "deps": ["\"fs/promises", "\"path", "\"crypto"]
     },
     "src/scripts/agents/shared/lock-manager.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"./types"
-      ]
+      "deps": ["\"fs", "\"path", "\"./types"]
     },
     "src/scripts/agents/shared/quarantine-manager.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"crypto"
-      ]
+      "deps": ["\"fs", "\"path", "\"crypto"]
     },
     "src/scripts/agents/shared/types.ts": {
       "deps": []
     },
     "src/scripts/cleanup-console-logs.js": {
-      "deps": [
-        "fs",
-        "path",
-        "glob",
-        "'@/lib/logger",
-        ")"
-      ]
+      "deps": ["fs", "path", "glob", "'@/lib/logger", ")"]
     },
     "src/scripts/complete-translations.ts": {
-      "deps": [
-        "\"@/lib/supabase/server",
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"@/lib/supabase/server", "\"@/lib/logger"]
     },
     "src/scripts/seed-complete-translations.js": {
-      "deps": [
-        "@supabase/supabase-js",
-        "\"@/lib/logger"
-      ]
+      "deps": ["@supabase/supabase-js", "\"@/lib/logger"]
     },
     "src/scripts/seed-homepage-content.ts": {
-      "deps": [
-        "\"../lib/dynamic-content-manager",
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"../lib/dynamic-content-manager", "\"@/lib/logger"]
     },
     "src/scripts/seed-translations.ts": {
-      "deps": [
-        "\"../lib/translations-manager",
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"../lib/translations-manager", "\"@/lib/logger"]
     },
     "src/scripts/system-validation.js": {
-      "deps": [
-        "fs",
-        "path",
-        "glob",
-        "\"@/lib/logger"
-      ]
+      "deps": ["fs", "path", "glob", "\"@/lib/logger"]
     },
     "src/scripts/test-apis.js": {
       "deps": []
     },
     "src/scripts/validate-business-logic.js": {
-      "deps": [
-        "fs",
-        "path",
-        "glob"
-      ]
+      "deps": ["fs", "path", "glob"]
     },
     "src/scripts/validate-dynamic-content.ts": {
-      "deps": [
-        "\"fs",
-        "\"path",
-        "\"glob",
-        "\"@/lib/logger"
-      ]
+      "deps": ["\"fs", "\"path", "\"glob", "\"@/lib/logger"]
     },
     "src/scripts/validate-system.js": {
       "deps": []
     },
     "src/types/api.ts": {
-      "deps": [
-        "\"./index"
-      ]
+      "deps": ["\"./index"]
     },
     "src/types/database.ts": {
       "deps": []
@@ -3558,120 +2553,67 @@
       "deps": []
     },
     "test-supabase-connection.js": {
-      "deps": [
-        "dotenv",
-        "@supabase/supabase-js"
-      ]
+      "deps": ["dotenv", "@supabase/supabase-js"]
     },
     "tests/accessibility/accessibility.test.ts": {
-      "deps": [
-        "\"@playwright/test",
-        "\"@axe-core/playwright"
-      ]
+      "deps": ["\"@playwright/test", "\"@axe-core/playwright"]
     },
     "tests/auto_generated/auth.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/auto_generated/backend.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/auto_generated/frontend.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/auto_generated/ui.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/chatbot.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/crm.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/e2e/admin.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/e2e/automation.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/e2e/chatbot.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/e2e/dashboard.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/e2e/global-setup.ts": {
-      "deps": [
-        "\"@playwright/test",
-        "\"@supabase/supabase-js"
-      ]
+      "deps": ["\"@playwright/test", "\"@supabase/supabase-js"]
     },
     "tests/e2e/global-teardown.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "fs",
-        "path"
-      ]
+      "deps": ["\"@supabase/supabase-js", "fs", "path"]
     },
     "tests/e2e/playwright.config.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/e2e/test-runner.js": {
-      "deps": [
-        "child_process",
-        "fs",
-        "path",
-        "winston",
-        "util"
-      ]
+      "deps": ["child_process", "fs", "path", "winston", "util"]
     },
     "tests/healthcare.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/lighthouse/lighthouse.test.ts": {
-      "deps": [
-        "\"@playwright/test",
-        "\"playwright-lh"
-      ]
+      "deps": ["\"@playwright/test", "\"playwright-lh"]
     },
     "tests/navigation.spec.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/performance/performance.test.ts": {
-      "deps": [
-        "\"@playwright/test"
-      ]
+      "deps": ["\"@playwright/test"]
     },
     "tests/supabase-cleanup.ts": {
-      "deps": [
-        "\"@supabase/supabase-js",
-        "\"dotenv"
-      ]
+      "deps": ["\"@supabase/supabase-js", "\"dotenv"]
     },
     "utils/helpers.js": {
       "deps": []

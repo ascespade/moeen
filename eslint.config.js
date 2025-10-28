@@ -20,6 +20,43 @@ export default [
         },
       },
     },
+    languageOptions: {
+      globals: {
+        // Browser globals
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        console: 'readonly',
+        fetch: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        HTMLElement: 'readonly',
+        MediaQueryList: 'readonly',
+        Element: 'readonly',
+        Event: 'readonly',
+        // Node.js globals
+        process: 'readonly',
+        Buffer: 'readonly',
+        setInterval: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        clearInterval: 'readonly',
+        // Next.js globals
+        Headers: 'readonly',
+        Request: 'readonly',
+        Response: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+        RequestInit: 'readonly',
+        HeadersInit: 'readonly',
+        // Performance API
+        performance: 'readonly',
+        PerformanceNavigationTiming: 'readonly',
+        // TextEncoder/Decoder
+        TextEncoder: 'readonly',
+        TextDecoder: 'readonly',
+      },
+    },
     plugins: {
       '@typescript-eslint': typescript,
       react: react,
@@ -44,6 +81,8 @@ export default [
       'prefer-template': 'error',
       'react/react-in-jsx-scope': 'off', // Not needed in Next.js 13+
       'react/jsx-uses-react': 'off', // Not needed in Next.js 13+
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-explicit-any': 'warn',
     },
   },
   {

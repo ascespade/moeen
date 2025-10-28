@@ -1,29 +1,29 @@
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-const path = require("path");
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const path = require('path');
 
 module.exports = {
   webpack: (config, { isServer, dev }) => {
-    if (process.env.ANALYZE === "true") {
+    if (process.env.ANALYZE === 'true') {
       config.plugins.push(
         new BundleAnalyzerPlugin({
-          analyzerMode: "static",
+          analyzerMode: 'static',
           openAnalyzer: false,
           reportFilename: isServer
-            ? path.join(__dirname, "../analyze/server.html")
-            : path.join(__dirname, "../analyze/client.html"),
+            ? path.join(__dirname, '../analyze/server.html')
+            : path.join(__dirname, '../analyze/client.html'),
           generateStatsFile: true,
           statsFilename: isServer
-            ? path.join(__dirname, "../analyze/server.json")
-            : path.join(__dirname, "../analyze/client.json"),
-          defaultSizes: "gzip",
-        }),
+            ? path.join(__dirname, '../analyze/server.json')
+            : path.join(__dirname, '../analyze/client.json'),
+          defaultSizes: 'gzip',
+        })
       );
     }
 
     // Enhanced bundle optimization
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
-        chunks: "all",
+        chunks: 'all',
         minSize: 20000,
         maxSize: 244000,
         cacheGroups: {
@@ -34,27 +34,27 @@ module.exports = {
           },
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: "vendors",
+            name: 'vendors',
             priority: -10,
-            chunks: "all",
+            chunks: 'all',
           },
           react: {
             test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-            name: "react",
+            name: 'react',
             priority: 20,
-            chunks: "all",
+            chunks: 'all',
           },
           ui: {
             test: /[\\/]node_modules[\\/](@headlessui|lucide-react)[\\/]/,
-            name: "ui",
+            name: 'ui',
             priority: 15,
-            chunks: "all",
+            chunks: 'all',
           },
           utils: {
             test: /[\\/]node_modules[\\/](clsx|class-variance-authority)[\\/]/,
-            name: "utils",
+            name: 'utils',
             priority: 10,
-            chunks: "all",
+            chunks: 'all',
           },
         },
       };

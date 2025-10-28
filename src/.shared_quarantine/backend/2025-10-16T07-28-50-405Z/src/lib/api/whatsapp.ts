@@ -1,4 +1,4 @@
-import { _getApiConfig, isWhatsAppConfigured } from "./config";
+import { _getApiConfig, isWhatsAppConfigured } from './config';
 type SendTextPayload = {
   to: string;
   text: string;
@@ -7,21 +7,21 @@ type SendTextPayload = {
 export const __sendWhatsAppMessage = async (_payload: SendTextPayload) => {
   const __cfg = getApiConfig();
   if (!isWhatsAppConfigured(cfg)) {
-    return { success: true, note: "Connect WhatsApp API in Admin Settings." };
+    return { success: true, note: 'Connect WhatsApp API in Admin Settings.' };
   }
 
   try {
     const __url = `${cfg.whatsapp.baseUrl}/${cfg.whatsapp.phoneNumberId}/messages`;
     const __res = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${cfg.whatsapp.token}`,
       },
       body: JSON.stringify({
-        messaging_product: "whatsapp",
+        messaging_product: 'whatsapp',
         to: payload.to,
-        type: "text",
+        type: 'text',
         text: { body: payload.text },
       }),
     });
@@ -32,7 +32,7 @@ export const __sendWhatsAppMessage = async (_payload: SendTextPayload) => {
     }
     return { success: true };
   } catch (_e: unknown) {
-    return { success: false, error: e?.message || "Unknown error" };
+    return { success: false, error: e?.message || 'Unknown error' };
   }
 };
 

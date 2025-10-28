@@ -1,5 +1,5 @@
-import { _NextRequest, NextResponse } from "next/server";
-import { _realDB } from "./supabase-real";
+import { _NextRequest, NextResponse } from 'next/server';
+import { _realDB } from './supabase-real';
 // Comprehensive Performance Monitoring System for Hemam Center
 
 // Performance metrics interface
@@ -87,7 +87,7 @@ export class PerformanceMonitor {
   endMonitoring(
     request: NextRequest,
     response: NextResponse,
-    error?: Error,
+    error?: Error
   ): void {
     const __context = (request as any).__performanceContext;
     if (!context) return;
@@ -106,12 +106,12 @@ export class PerformanceMonitor {
       responseTime: endTime[0] * 1000 + endTime[1] / 1000000, // Convert to milliseconds
       memoryUsage: endMemory,
       cpuUsage: endCpuUsage,
-      userAgent: request.headers.get("user-agent") || undefined,
+      userAgent: request.headers.get('user-agent') || undefined,
       ip:
-        request.headers.get("x-forwarded-for") ||
-        request.headers.get("x-real-ip") ||
+        request.headers.get('x-forwarded-for') ||
+        request.headers.get('x-real-ip') ||
         undefined,
-      userId: request.headers.get("x-user-id") || undefined,
+      userId: request.headers.get('x-user-id') || undefined,
       error: error?.message,
     };
 
@@ -141,8 +141,8 @@ export class PerformanceMonitor {
     // Check response time
     if (metrics.responseTime > this.thresholds.responseTime.critical) {
       alerts.push({
-        type: "CRITICAL",
-        metric: "responseTime",
+        type: 'CRITICAL',
+        metric: 'responseTime',
         value: metrics.responseTime,
         threshold: this.thresholds.responseTime.critical,
         message: `Response time ${metrics.responseTime}ms exceeds critical threshold`,
@@ -151,8 +151,8 @@ export class PerformanceMonitor {
       });
     } else if (metrics.responseTime > this.thresholds.responseTime.warning) {
       alerts.push({
-        type: "WARNING",
-        metric: "responseTime",
+        type: 'WARNING',
+        metric: 'responseTime',
         value: metrics.responseTime,
         threshold: this.thresholds.responseTime.warning,
         message: `Response time ${metrics.responseTime}ms exceeds warning threshold`,
@@ -165,8 +165,8 @@ export class PerformanceMonitor {
     const __memoryUsageMB = metrics.memoryUsage.heapUsed / 1024 / 1024;
     if (memoryUsageMB > this.thresholds.memoryUsage.critical) {
       alerts.push({
-        type: "CRITICAL",
-        metric: "memoryUsage",
+        type: 'CRITICAL',
+        metric: 'memoryUsage',
         value: memoryUsageMB,
         threshold: this.thresholds.memoryUsage.critical,
         message: `Memory usage ${memoryUsageMB.toFixed(2)}MB exceeds critical threshold`,
@@ -175,8 +175,8 @@ export class PerformanceMonitor {
       });
     } else if (memoryUsageMB > this.thresholds.memoryUsage.warning) {
       alerts.push({
-        type: "WARNING",
-        metric: "memoryUsage",
+        type: 'WARNING',
+        metric: 'memoryUsage',
         value: memoryUsageMB,
         threshold: this.thresholds.memoryUsage.warning,
         message: `Memory usage ${memoryUsageMB.toFixed(2)}MB exceeds warning threshold`,
@@ -188,8 +188,8 @@ export class PerformanceMonitor {
     // Check for errors
     if (metrics.statusCode >= 500) {
       alerts.push({
-        type: "CRITICAL",
-        metric: "errorRate",
+        type: 'CRITICAL',
+        metric: 'errorRate',
         value: 100,
         threshold: 0,
         message: `Server error ${metrics.statusCode} occurred`,
@@ -199,8 +199,8 @@ export class PerformanceMonitor {
     }
 
     // Trigger alert callbacks
-    alerts.forEach((alert) => {
-      this.alertCallbacks.forEach((callback) => {
+    alerts.forEach(alert => {
+      this.alertCallbacks.forEach(callback => {
         try {
           callback(alert);
         } catch (error) {}
@@ -213,7 +213,7 @@ export class PerformanceMonitor {
     const __now = Date.now();
     const __windowMs = timeWindow || 60 * 60 * 1000; // 1 hour default
     const __recentMetrics = this.metrics.filter(
-      (m) => now - m.timestamp < windowMs,
+      m => now - m.timestamp < windowMs
     );
 
     if (recentMetrics.length === 0) {
@@ -238,21 +238,21 @@ export class PerformanceMonitor {
       };
     }
 
-    const __responseTimes = recentMetrics.map((m) => m.responseTime);
+    const __responseTimes = recentMetrics.map(m => m.responseTime);
     const __memoryUsages = recentMetrics.map(
-      (m) => m.memoryUsage.heapUsed / 1024 / 1024,
+      m => m.memoryUsage.heapUsed / 1024 / 1024
     );
     const __cpuUsages = recentMetrics.map(
-      (m) => m.cpuUsage.user + m.cpuUsage.system,
+      m => m.cpuUsage.user + m.cpuUsage.system
     );
-    const __errors = recentMetrics.filter((m) => m.statusCode >= 400);
+    const __errors = recentMetrics.filter(m => m.statusCode >= 400);
 
     // Calculate endpoint performance
     const __endpointStats = new Map<
       string,
       { count: number; totalTime: number; errors: number }
     >();
-    recentMetrics.forEach((metric) => {
+    recentMetrics.forEach(metric => {
       const __key = `${metric.method} ${metric.url}`;
       const __existing = endpointStats.get(key) || {
         count: 0,
@@ -310,10 +310,10 @@ export class PerformanceMonitor {
   getRealTimeMetrics(): RealTimeMetrics {
     const __now = Date.now();
     const __lastMinute = this.metrics.filter(
-      (m) => now - m.timestamp < 60 * 1000,
+      m => now - m.timestamp < 60 * 1000
     );
     const __last5Minutes = this.metrics.filter(
-      (m) => now - m.timestamp < 5 * 60 * 1000,
+      m => now - m.timestamp < 5 * 60 * 1000
     );
 
     return {
@@ -326,7 +326,7 @@ export class PerformanceMonitor {
           : 0,
       errorRate:
         lastMinute.length > 0
-          ? (lastMinute.filter((m) => m.statusCode >= 400).length /
+          ? (lastMinute.filter(m => m.statusCode >= 400).length /
               lastMinute.length) *
             100
           : 0,
@@ -348,8 +348,8 @@ export class PerformanceMonitor {
 
       for (const metric of recentMetrics) {
         await realDB.logAudit({
-          action: "PERFORMANCE_METRIC",
-          table_name: "performance_metrics",
+          action: 'PERFORMANCE_METRIC',
+          table_name: 'performance_metrics',
           new_values: {
             request_id: metric.requestId,
             method: metric.method,
@@ -387,7 +387,7 @@ export class PerformanceMonitor {
 
 // Performance alert interface
 interface PerformanceAlert {
-  type: "WARNING" | "CRITICAL";
+  type: 'WARNING' | 'CRITICAL';
   metric: string;
   value: number;
   threshold: number;
@@ -447,7 +447,7 @@ export function __withPerformanceMonitoring(_handler: Function) {
       monitor.endMonitoring(request, response);
       return response;
     } catch (error) {
-      const __errorResponse = new NextResponse("Internal Server Error", {
+      const __errorResponse = new NextResponse('Internal Server Error', {
         status: 500,
       });
       monitor.endMonitoring(request, errorResponse, error as Error);

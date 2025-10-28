@@ -1,44 +1,44 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 class HemmamCenterAIIntegration {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
+    this.workspaceRoot = path.join(__dirname, '..');
     this.logFile = path.join(
       this.workspaceRoot,
-      "logs",
-      "hemmam-ai-integration.log",
+      'logs',
+      'hemmam-ai-integration.log'
     );
     this.configFile = path.join(
       this.workspaceRoot,
-      "config",
-      "hemmam-center-config.json",
+      'config',
+      'hemmam-center-config.json'
     );
     this.learningFile = path.join(
       this.workspaceRoot,
-      "learning",
-      "hemmam-learning-data.json",
+      'learning',
+      'hemmam-learning-data.json'
     );
     this.chatbotDataFile = path.join(
       this.workspaceRoot,
-      "data",
-      "chatbot-conversations.json",
+      'data',
+      'chatbot-conversations.json'
     );
     this.appointmentDataFile = path.join(
       this.workspaceRoot,
-      "data",
-      "appointments-data.json",
+      'data',
+      'appointments-data.json'
     );
     this.patientDataFile = path.join(
       this.workspaceRoot,
-      "data",
-      "patients-data.json",
+      'data',
+      'patients-data.json'
     );
   }
 
-  log(message, level = "info") {
+  log(message, level = 'info') {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] [${level.toUpperCase()}] Hemmam AI Integration: ${message}\n`;
 
@@ -52,10 +52,10 @@ class HemmamCenterAIIntegration {
   }
 
   async initialize() {
-    this.log("Initializing Hemmam Center AI Integration...");
+    this.log('Initializing Hemmam Center AI Integration...');
 
     // Create necessary directories
-    const directories = ["data", "learning", "config", "logs"];
+    const directories = ['data', 'learning', 'config', 'logs'];
     for (const dir of directories) {
       const fullPath = path.join(this.workspaceRoot, dir);
       if (!fs.existsSync(fullPath)) {
@@ -69,21 +69,21 @@ class HemmamCenterAIIntegration {
     // Initialize learning data
     await this.initializeLearningData();
 
-    this.log("Hemmam Center AI Integration initialized");
+    this.log('Hemmam Center AI Integration initialized');
   }
 
   async loadConfiguration() {
     try {
       if (fs.existsSync(this.configFile)) {
-        const data = fs.readFileSync(this.configFile, "utf8");
+        const data = fs.readFileSync(this.configFile, 'utf8');
         this.config = JSON.parse(data);
-        this.log("Configuration loaded successfully");
+        this.log('Configuration loaded successfully');
       } else {
-        this.log("Configuration file not found", "warn");
+        this.log('Configuration file not found', 'warn');
         this.config = null;
       }
     } catch (error) {
-      this.log(`Error loading configuration: ${error.message}`, "error");
+      this.log(`Error loading configuration: ${error.message}`, 'error');
       this.config = null;
     }
   }
@@ -153,20 +153,20 @@ class HemmamCenterAIIntegration {
     if (!fs.existsSync(this.learningFile)) {
       fs.writeFileSync(
         this.learningFile,
-        JSON.stringify(learningData, null, 2),
+        JSON.stringify(learningData, null, 2)
       );
-      this.log("Learning data initialized");
+      this.log('Learning data initialized');
     }
   }
 
   async loadLearningData() {
     try {
       if (fs.existsSync(this.learningFile)) {
-        const data = fs.readFileSync(this.learningFile, "utf8");
+        const data = fs.readFileSync(this.learningFile, 'utf8');
         return JSON.parse(data);
       }
     } catch (error) {
-      this.log(`Error loading learning data: ${error.message}`, "warn");
+      this.log(`Error loading learning data: ${error.message}`, 'warn');
     }
     return null;
   }
@@ -175,12 +175,12 @@ class HemmamCenterAIIntegration {
     try {
       fs.writeFileSync(this.learningFile, JSON.stringify(data, null, 2));
     } catch (error) {
-      this.log(`Error saving learning data: ${error.message}`, "error");
+      this.log(`Error saving learning data: ${error.message}`, 'error');
     }
   }
 
   async analyzeChatbotConversations() {
-    this.log("Analyzing chatbot conversations...");
+    this.log('Analyzing chatbot conversations...');
 
     const learningData = await this.loadLearningData();
     if (!learningData) return;
@@ -190,10 +190,10 @@ class HemmamCenterAIIntegration {
 
     // Analyze common questions
     const questionPatterns = {};
-    conversations.forEach((conv) => {
+    conversations.forEach(conv => {
       if (conv.userMessage) {
-        const words = conv.userMessage.toLowerCase().split(" ");
-        words.forEach((word) => {
+        const words = conv.userMessage.toLowerCase().split(' ');
+        words.forEach(word => {
           if (word.length > 3) {
             questionPatterns[word] = (questionPatterns[word] || 0) + 1;
           }
@@ -205,17 +205,17 @@ class HemmamCenterAIIntegration {
 
     // Analyze successful responses
     const successfulResponses = conversations.filter(
-      (conv) => conv.userSatisfaction > 3,
+      conv => conv.userSatisfaction > 3
     );
     learningData.chatbot.improvements.userSatisfaction =
       successfulResponses.length / Math.max(conversations.length, 1);
 
     await this.saveLearningData(learningData);
-    this.log("Chatbot conversation analysis completed");
+    this.log('Chatbot conversation analysis completed');
   }
 
   async analyzeAppointmentPatterns() {
-    this.log("Analyzing appointment patterns...");
+    this.log('Analyzing appointment patterns...');
 
     const learningData = await this.loadLearningData();
     if (!learningData) return;
@@ -226,14 +226,14 @@ class HemmamCenterAIIntegration {
 
     // Simulate appointment data analysis
     const mockAppointments = [
-      { time: "09:00", doctor: "د. سارة أحمد", status: "completed" },
-      { time: "10:00", doctor: "د. محمد حسن", status: "completed" },
-      { time: "14:00", doctor: "د. سارة أحمد", status: "completed" },
-      { time: "15:00", doctor: "د. نورا سالم", status: "cancelled" },
+      { time: '09:00', doctor: 'د. سارة أحمد', status: 'completed' },
+      { time: '10:00', doctor: 'د. محمد حسن', status: 'completed' },
+      { time: '14:00', doctor: 'د. سارة أحمد', status: 'completed' },
+      { time: '15:00', doctor: 'د. نورا سالم', status: 'cancelled' },
     ];
 
-    mockAppointments.forEach((apt) => {
-      const hour = apt.time.split(":")[0];
+    mockAppointments.forEach(apt => {
+      const hour = apt.time.split(':')[0];
       peakHours[hour] = (peakHours[hour] || 0) + 1;
     });
 
@@ -241,17 +241,17 @@ class HemmamCenterAIIntegration {
 
     // Calculate optimization metrics
     const completedAppointments = mockAppointments.filter(
-      (apt) => apt.status === "completed",
+      apt => apt.status === 'completed'
     );
     learningData.appointments.optimization.patientSatisfaction =
       completedAppointments.length / mockAppointments.length;
 
     await this.saveLearningData(learningData);
-    this.log("Appointment pattern analysis completed");
+    this.log('Appointment pattern analysis completed');
   }
 
   async analyzePatientData() {
-    this.log("Analyzing patient data...");
+    this.log('Analyzing patient data...');
 
     const learningData = await this.loadLearningData();
     if (!learningData) return;
@@ -260,27 +260,27 @@ class HemmamCenterAIIntegration {
     const mockPatients = [
       {
         age: 25,
-        gender: "male",
-        specialNeeds: ["كرسي متحرك"],
-        insurance: "شركة التأمين الوطنية",
+        gender: 'male',
+        specialNeeds: ['كرسي متحرك'],
+        insurance: 'شركة التأمين الوطنية',
       },
       {
         age: 35,
-        gender: "female",
-        specialNeeds: ["مترجم لغة الإشارة"],
-        insurance: "شركة التأمين التعاوني",
+        gender: 'female',
+        specialNeeds: ['مترجم لغة الإشارة'],
+        insurance: 'شركة التأمين التعاوني',
       },
       {
         age: 45,
-        gender: "male",
-        specialNeeds: ["كرسي متحرك"],
-        insurance: "شركة التأمين الوطنية",
+        gender: 'male',
+        specialNeeds: ['كرسي متحرك'],
+        insurance: 'شركة التأمين الوطنية',
       },
       {
         age: 30,
-        gender: "female",
+        gender: 'female',
         specialNeeds: [],
-        insurance: "شركة التأمين التعاوني",
+        insurance: 'شركة التأمين التعاوني',
       },
     ];
 
@@ -289,7 +289,7 @@ class HemmamCenterAIIntegration {
     const specialNeeds = {};
     const insuranceProviders = {};
 
-    mockPatients.forEach((patient) => {
+    mockPatients.forEach(patient => {
       // Age groups
       const ageGroup = Math.floor(patient.age / 10) * 10;
       ageGroups[ageGroup] = (ageGroups[ageGroup] || 0) + 1;
@@ -299,7 +299,7 @@ class HemmamCenterAIIntegration {
         (genderDistribution[patient.gender] || 0) + 1;
 
       // Special needs
-      patient.specialNeeds.forEach((need) => {
+      patient.specialNeeds.forEach(need => {
         specialNeeds[need] = (specialNeeds[need] || 0) + 1;
       });
 
@@ -316,11 +316,11 @@ class HemmamCenterAIIntegration {
     };
 
     await this.saveLearningData(learningData);
-    this.log("Patient data analysis completed");
+    this.log('Patient data analysis completed');
   }
 
   async generateImprovementRecommendations() {
-    this.log("Generating improvement recommendations...");
+    this.log('Generating improvement recommendations...');
 
     const learningData = await this.loadLearningData();
     if (!learningData) return;
@@ -330,24 +330,24 @@ class HemmamCenterAIIntegration {
     // Chatbot recommendations
     if (learningData.chatbot.improvements.userSatisfaction < 0.8) {
       recommendations.push({
-        category: "chatbot",
-        priority: "high",
-        title: "تحسين استجابات الشات بوت",
+        category: 'chatbot',
+        priority: 'high',
+        title: 'تحسين استجابات الشات بوت',
         description:
-          "معدل رضا المستخدمين منخفض. يوصى بتحسين قاعدة المعرفة والاستجابات.",
-        action: "update_chatbot_knowledge_base",
+          'معدل رضا المستخدمين منخفض. يوصى بتحسين قاعدة المعرفة والاستجابات.',
+        action: 'update_chatbot_knowledge_base',
       });
     }
 
     // Appointment recommendations
     if (learningData.appointments.optimization.patientSatisfaction < 0.9) {
       recommendations.push({
-        category: "appointments",
-        priority: "medium",
-        title: "تحسين إدارة المواعيد",
+        category: 'appointments',
+        priority: 'medium',
+        title: 'تحسين إدارة المواعيد',
         description:
-          "معدل رضا المرضى منخفض. يوصى بتحسين توقيت المواعيد وتقليل أوقات الانتظار.",
-        action: "optimize_appointment_scheduling",
+          'معدل رضا المرضى منخفض. يوصى بتحسين توقيت المواعيد وتقليل أوقات الانتظار.',
+        action: 'optimize_appointment_scheduling',
       });
     }
 
@@ -355,28 +355,28 @@ class HemmamCenterAIIntegration {
     const specialNeeds = learningData.patients.demographics.specialNeeds || {};
     const mostCommonNeed = Object.keys(specialNeeds).reduce(
       (a, b) => (specialNeeds[a] > specialNeeds[b] ? a : b),
-      "",
+      ''
     );
 
     if (mostCommonNeed) {
       recommendations.push({
-        category: "patient_care",
-        priority: "medium",
+        category: 'patient_care',
+        priority: 'medium',
         title: `تحسين الخدمات لـ ${mostCommonNeed}`,
         description: `هذا هو أكثر الاحتياجات الخاصة شيوعاً. يوصى بتطوير خدمات متخصصة.`,
-        action: "develop_specialized_services",
+        action: 'develop_specialized_services',
       });
     }
 
     // System performance recommendations
     if (learningData.system.performance.responseTime > 2000) {
       recommendations.push({
-        category: "system",
-        priority: "high",
-        title: "تحسين أداء النظام",
+        category: 'system',
+        priority: 'high',
+        title: 'تحسين أداء النظام',
         description:
-          "وقت الاستجابة بطيء. يوصى بتحسين الأداء وتقليل وقت التحميل.",
-        action: "optimize_system_performance",
+          'وقت الاستجابة بطيء. يوصى بتحسين الأداء وتقليل وقت التحميل.',
+        action: 'optimize_system_performance',
       });
     }
 
@@ -388,7 +388,7 @@ class HemmamCenterAIIntegration {
   }
 
   async applyImprovements() {
-    this.log("Applying improvements...");
+    this.log('Applying improvements...');
 
     const learningData = await this.loadLearningData();
     if (!learningData) return;
@@ -400,19 +400,19 @@ class HemmamCenterAIIntegration {
     for (const recommendation of recommendations) {
       try {
         switch (recommendation.action) {
-          case "update_chatbot_knowledge_base":
+          case 'update_chatbot_knowledge_base':
             await this.updateChatbotKnowledgeBase();
             appliedImprovements.push(recommendation);
             break;
-          case "optimize_appointment_scheduling":
+          case 'optimize_appointment_scheduling':
             await this.optimizeAppointmentScheduling();
             appliedImprovements.push(recommendation);
             break;
-          case "develop_specialized_services":
+          case 'develop_specialized_services':
             await this.developSpecializedServices(recommendation.title);
             appliedImprovements.push(recommendation);
             break;
-          case "optimize_system_performance":
+          case 'optimize_system_performance':
             await this.optimizeSystemPerformance();
             appliedImprovements.push(recommendation);
             break;
@@ -420,7 +420,7 @@ class HemmamCenterAIIntegration {
       } catch (error) {
         this.log(
           `Error applying improvement ${recommendation.title}: ${error.message}`,
-          "error",
+          'error'
         );
       }
     }
@@ -433,53 +433,53 @@ class HemmamCenterAIIntegration {
   }
 
   async updateChatbotKnowledgeBase() {
-    this.log("Updating chatbot knowledge base...");
+    this.log('Updating chatbot knowledge base...');
 
     // Simulate knowledge base update
     const knowledgeUpdate = {
       timestamp: new Date().toISOString(),
       updates: [
-        "Added new medical terminology",
-        "Updated appointment booking procedures",
-        "Enhanced special needs support responses",
-        "Improved Arabic language processing",
+        'Added new medical terminology',
+        'Updated appointment booking procedures',
+        'Enhanced special needs support responses',
+        'Improved Arabic language processing',
       ],
     };
 
     // Save knowledge update
     const knowledgeFile = path.join(
       this.workspaceRoot,
-      "data",
-      "chatbot-knowledge.json",
+      'data',
+      'chatbot-knowledge.json'
     );
     fs.writeFileSync(knowledgeFile, JSON.stringify(knowledgeUpdate, null, 2));
 
-    this.log("Chatbot knowledge base updated");
+    this.log('Chatbot knowledge base updated');
   }
 
   async optimizeAppointmentScheduling() {
-    this.log("Optimizing appointment scheduling...");
+    this.log('Optimizing appointment scheduling...');
 
     // Simulate scheduling optimization
     const optimization = {
       timestamp: new Date().toISOString(),
       changes: [
-        "Adjusted peak hour scheduling",
-        "Improved doctor availability distribution",
-        "Enhanced reminder system",
-        "Optimized buffer times between appointments",
+        'Adjusted peak hour scheduling',
+        'Improved doctor availability distribution',
+        'Enhanced reminder system',
+        'Optimized buffer times between appointments',
       ],
     };
 
     // Save optimization
     const optimizationFile = path.join(
       this.workspaceRoot,
-      "data",
-      "scheduling-optimization.json",
+      'data',
+      'scheduling-optimization.json'
     );
     fs.writeFileSync(optimizationFile, JSON.stringify(optimization, null, 2));
 
-    this.log("Appointment scheduling optimized");
+    this.log('Appointment scheduling optimized');
   }
 
   async developSpecializedServices(serviceName) {
@@ -490,22 +490,22 @@ class HemmamCenterAIIntegration {
       name: serviceName,
       timestamp: new Date().toISOString(),
       features: [
-        "Customized treatment plans",
-        "Specialized equipment",
-        "Trained staff",
-        "Enhanced accessibility",
+        'Customized treatment plans',
+        'Specialized equipment',
+        'Trained staff',
+        'Enhanced accessibility',
       ],
     };
 
     // Save service
     const serviceFile = path.join(
       this.workspaceRoot,
-      "data",
-      "specialized-services.json",
+      'data',
+      'specialized-services.json'
     );
     let services = [];
     if (fs.existsSync(serviceFile)) {
-      services = JSON.parse(fs.readFileSync(serviceFile, "utf8"));
+      services = JSON.parse(fs.readFileSync(serviceFile, 'utf8'));
     }
     services.push(service);
     fs.writeFileSync(serviceFile, JSON.stringify(services, null, 2));
@@ -514,47 +514,47 @@ class HemmamCenterAIIntegration {
   }
 
   async optimizeSystemPerformance() {
-    this.log("Optimizing system performance...");
+    this.log('Optimizing system performance...');
 
     // Simulate performance optimization
     const optimization = {
       timestamp: new Date().toISOString(),
       improvements: [
-        "Database query optimization",
-        "Caching implementation",
-        "Image compression",
-        "Code splitting",
-        "Lazy loading",
+        'Database query optimization',
+        'Caching implementation',
+        'Image compression',
+        'Code splitting',
+        'Lazy loading',
       ],
     };
 
     // Save optimization
     const performanceFile = path.join(
       this.workspaceRoot,
-      "data",
-      "performance-optimization.json",
+      'data',
+      'performance-optimization.json'
     );
     fs.writeFileSync(performanceFile, JSON.stringify(optimization, null, 2));
 
-    this.log("System performance optimized");
+    this.log('System performance optimized');
   }
 
   async generateHemmamReport() {
-    this.log("Generating Hemmam Center report...");
+    this.log('Generating Hemmam Center report...');
 
     const learningData = await this.loadLearningData();
     if (!learningData) return;
 
     const report = {
       timestamp: new Date().toISOString(),
-      center: "مركز الهمم",
-      period: "Last 30 days",
+      center: 'مركز الهمم',
+      period: 'Last 30 days',
       summary: {
         totalPatients: Object.values(
-          learningData.patients.demographics.genderDistribution || {},
+          learningData.patients.demographics.genderDistribution || {}
         ).reduce((a, b) => a + b, 0),
         totalAppointments: Object.values(
-          learningData.appointments.scheduling.peakHours || {},
+          learningData.appointments.scheduling.peakHours || {}
         ).reduce((a, b) => a + b, 0),
         chatbotSatisfaction: learningData.chatbot.improvements.userSatisfaction,
         appointmentSatisfaction:
@@ -563,34 +563,34 @@ class HemmamCenterAIIntegration {
       },
       insights: {
         mostCommonSpecialNeed: Object.keys(
-          learningData.patients.demographics.specialNeeds || {},
+          learningData.patients.demographics.specialNeeds || {}
         ).reduce(
           (a, b) =>
             (learningData.patients.demographics.specialNeeds[a] || 0) >
             (learningData.patients.demographics.specialNeeds[b] || 0)
               ? a
               : b,
-          "",
+          ''
         ),
         peakAppointmentHour: Object.keys(
-          learningData.appointments.scheduling.peakHours || {},
+          learningData.appointments.scheduling.peakHours || {}
         ).reduce(
           (a, b) =>
             (learningData.appointments.scheduling.peakHours[a] || 0) >
             (learningData.appointments.scheduling.peakHours[b] || 0)
               ? a
               : b,
-          "",
+          ''
         ),
         mostActiveInsuranceProvider: Object.keys(
-          learningData.patients.demographics.insuranceProviders || {},
+          learningData.patients.demographics.insuranceProviders || {}
         ).reduce(
           (a, b) =>
             (learningData.patients.demographics.insuranceProviders[a] || 0) >
             (learningData.patients.demographics.insuranceProviders[b] || 0)
               ? a
               : b,
-          "",
+          ''
         ),
       },
       recommendations: learningData.system.improvements.recommendations || [],
@@ -599,8 +599,8 @@ class HemmamCenterAIIntegration {
 
     const reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "hemmam-center-report.json",
+      'reports',
+      'hemmam-center-report.json'
     );
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
@@ -609,7 +609,7 @@ class HemmamCenterAIIntegration {
   }
 
   async runIntegrationCycle() {
-    this.log("Running Hemmam Center AI integration cycle...");
+    this.log('Running Hemmam Center AI integration cycle...');
 
     try {
       // Analyze all data
@@ -626,16 +626,16 @@ class HemmamCenterAIIntegration {
       // Generate report
       await this.generateHemmamReport();
 
-      this.log("Hemmam Center AI integration cycle completed successfully");
+      this.log('Hemmam Center AI integration cycle completed successfully');
       return true;
     } catch (error) {
-      this.log(`Integration cycle failed: ${error.message}`, "error");
+      this.log(`Integration cycle failed: ${error.message}`, 'error');
       return false;
     }
   }
 
   async start() {
-    this.log("Starting Hemmam Center AI Integration...");
+    this.log('Starting Hemmam Center AI Integration...');
 
     await this.initialize();
 
@@ -647,19 +647,19 @@ class HemmamCenterAIIntegration {
       try {
         await this.runIntegrationCycle();
       } catch (error) {
-        this.log(`Integration cycle error: ${error.message}`, "error");
+        this.log(`Integration cycle error: ${error.message}`, 'error');
       }
     }, 300000); // Every 5 minutes
 
     // Cleanup on exit
-    process.on("SIGINT", () => {
+    process.on('SIGINT', () => {
       clearInterval(integrationInterval);
-      this.log("Hemmam Center AI Integration stopped");
+      this.log('Hemmam Center AI Integration stopped');
     });
 
-    process.on("SIGTERM", () => {
+    process.on('SIGTERM', () => {
       clearInterval(integrationInterval);
-      this.log("Hemmam Center AI Integration stopped");
+      this.log('Hemmam Center AI Integration stopped');
     });
   }
 }
@@ -667,8 +667,8 @@ class HemmamCenterAIIntegration {
 // Main execution
 if (require.main === module) {
   const integration = new HemmamCenterAIIntegration();
-  integration.start().catch((error) => {
-    console.error("Hemmam Center AI Integration failed:", error);
+  integration.start().catch(error => {
+    console.error('Hemmam Center AI Integration failed:', error);
     process.exit(1);
   });
 }

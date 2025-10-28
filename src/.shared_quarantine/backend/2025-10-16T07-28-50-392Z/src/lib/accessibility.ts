@@ -1,7 +1,7 @@
 // Accessibility utilities for users with special needs
 export interface AccessibilitySettings {
-  fontSize: "small" | "medium" | "large" | "extra-large";
-  contrast: "normal" | "high" | "extra-high";
+  fontSize: 'small' | 'medium' | 'large' | 'extra-large';
+  contrast: 'normal' | 'high' | 'extra-high';
   screenReader: boolean;
   keyboardNavigation: boolean;
   voiceControl: boolean;
@@ -9,7 +9,7 @@ export interface AccessibilitySettings {
   focusIndicators: boolean;
   colorBlindSupport: boolean;
   dyslexiaSupport: boolean;
-  language: "ar" | "en";
+  language: 'ar' | 'en';
 }
 
 export class AccessibilityManager {
@@ -24,11 +24,11 @@ export class AccessibilityManager {
 
   // Load settings from localStorage or use defaults
   private loadSettings(): AccessibilitySettings {
-    if (typeof window === "undefined") {
+    if (typeof window === 'undefined') {
       return this.getDefaultSettings();
     }
 
-    const __saved = localStorage.getItem("accessibility-settings");
+    const __saved = localStorage.getItem('accessibility-settings');
     if (saved) {
       try {
         return { ...this.getDefaultSettings(), ...JSON.parse(saved) };
@@ -40,8 +40,8 @@ export class AccessibilityManager {
 
   private getDefaultSettings(): AccessibilitySettings {
     return {
-      fontSize: "medium",
-      contrast: "normal",
+      fontSize: 'medium',
+      contrast: 'normal',
       screenReader: false,
       keyboardNavigation: true,
       voiceControl: false,
@@ -49,98 +49,98 @@ export class AccessibilityManager {
       focusIndicators: true,
       colorBlindSupport: false,
       dyslexiaSupport: false,
-      language: "ar",
+      language: 'ar',
     };
   }
 
   // Save settings to localStorage
   private saveSettings(): void {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     try {
       localStorage.setItem(
-        "accessibility-settings",
-        JSON.stringify(this.settings),
+        'accessibility-settings',
+        JSON.stringify(this.settings)
       );
     } catch (error) {}
   }
 
   // Apply accessibility settings to the DOM
   private applySettings(): void {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     const __root = document.documentElement;
 
     // Font size
     const __fontSizeMap = {
-      small: "14px",
-      medium: "16px",
-      large: "18px",
-      "extra-large": "20px",
+      small: '14px',
+      medium: '16px',
+      large: '18px',
+      'extra-large': '20px',
     };
     root.style.setProperty(
-      "--base-font-size",
-      fontSizeMap[this.settings.fontSize],
+      '--base-font-size',
+      fontSizeMap[this.settings.fontSize]
     );
 
     // Contrast
-    if (this.settings.contrast === "high") {
-      root.classList.add("high-contrast");
-    } else if (this.settings.contrast === "extra-high") {
-      root.classList.add("extra-high-contrast");
+    if (this.settings.contrast === 'high') {
+      root.classList.add('high-contrast');
+    } else if (this.settings.contrast === 'extra-high') {
+      root.classList.add('extra-high-contrast');
     } else {
-      root.classList.remove("high-contrast", "extra-high-contrast");
+      root.classList.remove('high-contrast', 'extra-high-contrast');
     }
 
     // Reduced motion
     if (this.settings.reducedMotion) {
-      root.classList.add("reduced-motion");
+      root.classList.add('reduced-motion');
     } else {
-      root.classList.remove("reduced-motion");
+      root.classList.remove('reduced-motion');
     }
 
     // Focus indicators
     if (this.settings.focusIndicators) {
-      root.classList.add("focus-indicators");
+      root.classList.add('focus-indicators');
     } else {
-      root.classList.remove("focus-indicators");
+      root.classList.remove('focus-indicators');
     }
 
     // Color blind support
     if (this.settings.colorBlindSupport) {
-      root.classList.add("color-blind-support");
+      root.classList.add('color-blind-support');
     } else {
-      root.classList.remove("color-blind-support");
+      root.classList.remove('color-blind-support');
     }
 
     // Dyslexia support
     if (this.settings.dyslexiaSupport) {
-      root.classList.add("dyslexia-support");
+      root.classList.add('dyslexia-support');
     } else {
-      root.classList.remove("dyslexia-support");
+      root.classList.remove('dyslexia-support');
     }
 
     // Screen reader support
     if (this.settings.screenReader) {
-      root.classList.add("screen-reader-mode");
+      root.classList.add('screen-reader-mode');
     } else {
-      root.classList.remove("screen-reader-mode");
+      root.classList.remove('screen-reader-mode');
     }
 
     // Language direction
-    root.setAttribute("dir", this.settings.language === "ar" ? "rtl" : "ltr");
-    root.setAttribute("lang", this.settings.language);
+    root.setAttribute('dir', this.settings.language === 'ar' ? 'rtl' : 'ltr');
+    root.setAttribute('lang', this.settings.language);
   }
 
   // Setup event listeners for accessibility features
   private setupEventListeners(): void {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     // Keyboard navigation
     if (this.settings.keyboardNavigation) {
       document.addEventListener(
-        "keydown",
-        this.handleKeyboardNavigation.bind(this),
+        'keydown',
+        this.handleKeyboardNavigation.bind(this)
       );
     }
 
@@ -150,36 +150,36 @@ export class AccessibilityManager {
     }
 
     // Focus management
-    document.addEventListener("focusin", this.handleFocusIn.bind(this));
-    document.addEventListener("focusout", this.handleFocusOut.bind(this));
+    document.addEventListener('focusin', this.handleFocusIn.bind(this));
+    document.addEventListener('focusout', this.handleFocusOut.bind(this));
   }
 
   // Handle keyboard navigation
   private handleKeyboardNavigation(_event: KeyboardEvent): void {
     // Skip links
-    if (event.key === "Tab" && event.shiftKey === false) {
-      this.announceToScreenReader("انتقل إلى العنصر التالي");
-    } else if (event.key === "Tab" && event.shiftKey === true) {
-      this.announceToScreenReader("انتقل إلى العنصر السابق");
+    if (event.key === 'Tab' && event.shiftKey === false) {
+      this.announceToScreenReader('انتقل إلى العنصر التالي');
+    } else if (event.key === 'Tab' && event.shiftKey === true) {
+      this.announceToScreenReader('انتقل إلى العنصر السابق');
     }
 
     // Escape key
-    if (event.key === "Escape") {
-      this.announceToScreenReader("إغلاق");
+    if (event.key === 'Escape') {
+      this.announceToScreenReader('إغلاق');
     }
 
     // Enter key
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === 'Enter' || event.key === ' ') {
       const __target = event.target as HTMLElement;
-      if (target && target.getAttribute("role") === "button") {
-        this.announceToScreenReader("تم الضغط على الزر");
+      if (target && target.getAttribute('role') === 'button') {
+        this.announceToScreenReader('تم الضغط على الزر');
       }
     }
   }
 
   // Setup voice control
   private setupVoiceControl(): void {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     // This would integrate with Web Speech API
     // For now, we'll just set up the basic structure
@@ -190,9 +190,9 @@ export class AccessibilityManager {
     const __target = event.target as HTMLElement;
     if (target) {
       // Announce focused element to screen reader
-      const __ariaLabel = target.getAttribute("aria-label");
+      const __ariaLabel = target.getAttribute('aria-label');
       const __textContent = target.textContent?.trim();
-      const __role = target.getAttribute("role");
+      const __role = target.getAttribute('role');
 
       if (ariaLabel) {
         this.announceToScreenReader(ariaLabel);
@@ -203,25 +203,25 @@ export class AccessibilityManager {
       }
 
       // Add focus indicator
-      target.classList.add("focused");
+      target.classList.add('focused');
     }
   }
 
   private handleFocusOut(_event: FocusEvent): void {
     const __target = event.target as HTMLElement;
     if (target) {
-      target.classList.remove("focused");
+      target.classList.remove('focused');
     }
   }
 
   // Announce text to screen reader
   private announceToScreenReader(_text: string): void {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
-    const __announcement = document.createElement("div");
-    announcement.setAttribute("aria-live", "polite");
-    announcement.setAttribute("aria-atomic", "true");
-    announcement.className = "sr-only";
+    const __announcement = document.createElement('div');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.setAttribute('aria-atomic', 'true');
+    announcement.className = 'sr-only';
     announcement.textContent = text;
 
     document.body.appendChild(announcement);
@@ -236,7 +236,7 @@ export class AccessibilityManager {
     this.settings = { ...this.settings, ...newSettings };
     this.saveSettings();
     this.applySettings();
-    this.notifyListeners("settingsChanged", this.settings);
+    this.notifyListeners('settingsChanged', this.settings);
   }
 
   // Get current settings
@@ -267,39 +267,39 @@ export class AccessibilityManager {
   private notifyListeners(_event: string, data: unknown): void {
     const __listeners = this.listeners.get(event);
     if (listeners) {
-      listeners.forEach((callback) => callback(data));
+      listeners.forEach(callback => callback(data));
     }
   }
 
   // Accessibility helpers
   static addAriaLabels(_element: HTMLElement, label: string): void {
-    element.setAttribute("aria-label", label);
+    element.setAttribute('aria-label', label);
   }
 
   static addAriaDescribedBy(
     _element: HTMLElement,
-    descriptionId: string,
+    descriptionId: string
   ): void {
-    element.setAttribute("aria-describedby", descriptionId);
+    element.setAttribute('aria-describedby', descriptionId);
   }
 
   static addRole(_element: HTMLElement, role: string): void {
-    element.setAttribute("role", role);
+    element.setAttribute('role', role);
   }
 
   static addTabIndex(_element: HTMLElement, index: number): void {
-    element.setAttribute("tabindex", index.toString());
+    element.setAttribute('tabindex', index.toString());
   }
 
   static makeFocusable(_element: HTMLElement): void {
-    element.setAttribute("tabindex", "0");
+    element.setAttribute('tabindex', '0');
   }
 
   static addKeyboardHandler(
     element: HTMLElement,
-    handler: (_event: KeyboardEvent) => void,
+    handler: (_event: KeyboardEvent) => void
   ): void {
-    element.addEventListener("keydown", handler);
+    element.addEventListener('keydown', handler);
   }
 
   // Color contrast utilities
@@ -319,19 +319,19 @@ export class AccessibilityManager {
       small: 0.875,
       medium: 1,
       large: 1.125,
-      "extra-large": 1.25,
+      'extra-large': 1.25,
     };
     return multipliers[fontSize as keyof typeof multipliers] || 1;
   }
 
   // Language utilities
   static isRTL(_language: string): boolean {
-    const __rtlLanguages = ["ar", "he", "fa", "ur"];
+    const __rtlLanguages = ['ar', 'he', 'fa', 'ur'];
     return rtlLanguages.includes(language);
   }
 
-  static getTextDirection(_language: string): "ltr" | "rtl" {
-    return this.isRTL(language) ? "rtl" : "ltr";
+  static getTextDirection(_language: string): 'ltr' | 'rtl' {
+    return this.isRTL(language) ? 'rtl' : 'ltr';
   }
 }
 
@@ -341,7 +341,7 @@ export const __accessibilityManager = new AccessibilityManager();
 // React hook for accessibility
 export function __useAccessibility() {
   const [settings, setSettings] = React.useState(
-    accessibilityManager.getSettings(),
+    accessibilityManager.getSettings()
   );
 
   React.useEffect(() => {
@@ -350,14 +350,14 @@ export function __useAccessibility() {
     };
 
     accessibilityManager.addEventListener(
-      "settingsChanged",
-      handleSettingsChange,
+      'settingsChanged',
+      handleSettingsChange
     );
 
     return () => {
       accessibilityManager.removeEventListener(
-        "settingsChanged",
-        handleSettingsChange,
+        'settingsChanged',
+        handleSettingsChange
       );
     };
   }, []);
@@ -370,4 +370,4 @@ export function __useAccessibility() {
 }
 
 // Import React for the hook
-import React from "react";
+import React from 'react';

@@ -3,9 +3,9 @@
  * RTL-compatible pie chart with brand colors and theme support
  */
 
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 import {
   PieChart as RechartsPieChart,
   Pie,
@@ -13,9 +13,9 @@ import {
   Tooltip,
   ResponsiveContainer,
   Legend,
-} from "recharts";
+} from 'recharts';
 
-import { _useTheme } from "@/context/ThemeContext";
+import { _useTheme } from '@/context/ThemeContext';
 
 interface PieChartProps {
   data: Array<{
@@ -35,7 +35,7 @@ interface PieChartProps {
 export const PieChart: React.FC<PieChartProps> = ({
   data,
   height = 300,
-  className = "",
+  className = '',
   showLegend = true,
   showTooltip = true,
   innerRadius = 0,
@@ -46,13 +46,13 @@ export const PieChart: React.FC<PieChartProps> = ({
 
   // Brand colors for default coloring
   const __brandColors = [
-    "var(--brand-primary)",
-    "var(--brand-secondary)",
-    "var(--brand-accent)",
-    "var(--brand-accent-deep)",
-    "var(--brand-success)",
-    "var(--brand-warning)",
-    "var(--brand-error)",
+    'var(--brand-primary)',
+    'var(--brand-secondary)',
+    'var(--brand-accent)',
+    'var(--brand-accent-deep)',
+    'var(--brand-success)',
+    'var(--brand-warning)',
+    'var(--brand-error)',
   ];
 
   // Add colors to data if not provided
@@ -61,16 +61,16 @@ export const PieChart: React.FC<PieChartProps> = ({
     color: item.color || brandColors[index % brandColors.length],
   }));
 
-  const __isRTL = document.documentElement.getAttribute("dir") === "rtl";
+  const __isRTL = document.documentElement.getAttribute('dir') === 'rtl';
 
   return (
     <div className={`w-full ${className}`} style={{ height }}>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width='100%' height='100%'>
         <RechartsPieChart>
           <Pie
             data={dataWithColors}
-            cx="50%"
-            cy="50%"
+            cx='50%'
+            cy='50%'
             labelLine={false}
             label={
               labelKey
@@ -80,8 +80,8 @@ export const PieChart: React.FC<PieChartProps> = ({
             }
             outerRadius={outerRadius}
             innerRadius={innerRadius}
-            fill="#8884d8"
-            dataKey="value"
+            fill='#8884d8'
+            dataKey='value'
           >
             {dataWithColors.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.color} />
@@ -90,26 +90,26 @@ export const PieChart: React.FC<PieChartProps> = ({
           {showTooltip && (
             <Tooltip
               contentStyle={{
-                backgroundColor: isDark ? "#1f2937" : "#ffffff",
-                border: `1px solid ${isDark ? "#374151" : "#e5e7eb"}`,
-                borderRadius: "8px",
-                color: isDark ? "#e5eef7" : "#0f172a",
+                backgroundColor: isDark ? '#1f2937' : '#ffffff',
+                border: `1px solid ${isDark ? '#374151' : '#e5e7eb'}`,
+                borderRadius: '8px',
+                color: isDark ? '#e5eef7' : '#0f172a',
               }}
               labelStyle={{
-                color: isDark ? "#9ca3af" : "#6b7280",
-                fontSize: "12px",
+                color: isDark ? '#9ca3af' : '#6b7280',
+                fontSize: '12px',
               }}
             />
           )}
           {showLegend && (
             <Legend
               wrapperStyle={{
-                color: isDark ? "#e5eef7" : "#0f172a",
-                fontSize: "12px",
+                color: isDark ? '#e5eef7' : '#0f172a',
+                fontSize: '12px',
               }}
-              layout={isRTL ? "vertical" : "horizontal"}
-              verticalAlign="bottom"
-              align={isRTL ? "right" : "center"}
+              layout={isRTL ? 'vertical' : 'horizontal'}
+              verticalAlign='bottom'
+              align={isRTL ? 'right' : 'center'}
             />
           )}
         </RechartsPieChart>

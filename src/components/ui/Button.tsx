@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+  variant?: 'default' | 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   loading?: boolean;
   asChild?: boolean;
@@ -30,6 +30,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const variants = {
       default:
         'bg-[var(--default-default)] text-white hover:bg-[var(--default-default-hover)] focus:ring-[var(--default-default)]',
+      primary:
+        'bg-[var(--default-default)] text-white hover:bg-[var(--default-default-hover)] focus:ring-[var(--default-default)]',
+      secondary:
+        'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700 focus:ring-gray-500',
       info: 'bg-[var(--default-info)] text-white hover:bg-opacity-90 focus:ring-[var(--default-info)]',
       outline:
         'border-2 border-[var(--default-default)] text-[var(--default-default)] hover:bg-[var(--default-default)] hover:text-white focus:ring-[var(--default-default)]',
@@ -45,9 +49,25 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       xl: 'px-8 py-4 text-xl',
     };
 
+    const computedClasses = cn(
+      baseClasses,
+      variants[variant || 'primary'],
+      sizes[size],
+      className
+    );
+
+    // If asChild is true, we need to wrap the child with className
+    if (asChild && typeof children === 'object' && children !== null && 'props' in children) {
+      return React.cloneElement(children as React.ReactElement, {
+        ...props,
+        className: cn(computedClasses, (children as React.ReactElement).props?.className),
+        disabled: disabled || loading,
+      });
+    }
+
     return (
       <button
-        className={cn(baseClasses, variants[variant], sizes[size], className)}
+        className={computedClasses}
         ref={ref}
         disabled={disabled || loading}
         {...props}

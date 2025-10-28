@@ -1,33 +1,33 @@
-import { _ApiResponse } from "@/types";
+import { _ApiResponse } from '@/types';
 // API utilities
 
-const __API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
+const __API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 export class ApiError extends Error {
   constructor(
     message: string,
     public status: number,
-    public data?: unknown,
+    public data?: unknown
   ) {
     super(message);
-    this.name = "ApiError";
+    this.name = 'ApiError';
   }
 }
 
 export const __api = {
   async request<T = any>(
     endpoint: string,
-    options: RequestInit = {},
+    options: RequestInit = {}
   ): Promise<ApiResponse<T>> {
     const __url = `${API_BASE_URL}${endpoint}`;
 
     const defaultHeaders: HeadersInit = {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     };
 
     // Add auth token if available
     const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     if (token) {
       defaultHeaders.Authorization = `Bearer ${token}`;
     }
@@ -46,9 +46,9 @@ export const __api = {
 
       if (!response.ok) {
         throw new ApiError(
-          data.message || "An error occurred",
+          data.message || 'An error occurred',
           response.status,
-          data,
+          data
         );
       }
 
@@ -58,41 +58,41 @@ export const __api = {
         throw error;
       }
 
-      throw new ApiError("Network error occurred", 0, { originalError: error });
+      throw new ApiError('Network error occurred', 0, { originalError: error });
     }
   },
 
   get: <T = any>(_endpoint: string, options?: RequestInit) =>
-    api.request<T>(endpoint, { ...options, method: "GET" }),
+    api.request<T>(endpoint, { ...options, method: 'GET' }),
 
   post: <T = any>(_endpoint: string, data?: unknown, options?: RequestInit) =>
     api.request<T>(endpoint, {
       ...options,
-      method: "POST",
+      method: 'POST',
       body: data ? JSON.stringify(data) : null,
     }),
 
   put: <T = any>(_endpoint: string, data?: unknown, options?: RequestInit) =>
     api.request<T>(endpoint, {
       ...options,
-      method: "PUT",
+      method: 'PUT',
       body: data ? JSON.stringify(data) : null,
     }),
 
   patch: <T = any>(_endpoint: string, data?: unknown, options?: RequestInit) =>
     api.request<T>(endpoint, {
       ...options,
-      method: "PATCH",
+      method: 'PATCH',
       body: data ? JSON.stringify(data) : null,
     }),
 
   delete: <T = any>(_endpoint: string, options?: RequestInit) =>
-    api.request<T>(endpoint, { ...options, method: "DELETE" }),
+    api.request<T>(endpoint, { ...options, method: 'DELETE' }),
 };
 
 // Request interceptors
 export const __addRequestInterceptor = (
-  interceptor: (_config: RequestInit) => RequestInit,
+  interceptor: (_config: RequestInit) => RequestInit
 ) => {
   // This would be implemented with a more sophisticated interceptor system
   // For now, we'll use a simple approach
@@ -106,7 +106,7 @@ export const __addRequestInterceptor = (
 // Response interceptors
 export const __addResponseInterceptor = (
   onSuccess?: (_response: unknown) => any,
-  onError?: (_error: ApiError) => any,
+  onError?: (_error: ApiError) => any
 ) => {
   const __originalRequest = api.request;
   api.request = async (endpoint, options) => {
@@ -129,7 +129,7 @@ export const __buildQueryString = (_params: Record<string, any>): string => {
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
       if (Array.isArray(value)) {
-        value.forEach((item) => searchParams.append(key, String(item)));
+        value.forEach(item => searchParams.append(key, String(item)));
       } else {
         searchParams.append(key, String(value));
       }
@@ -141,7 +141,7 @@ export const __buildQueryString = (_params: Record<string, any>): string => {
 
 export const __buildUrl = (
   endpoint: string,
-  params?: Record<string, any>,
+  params?: Record<string, any>
 ): string => {
   if (!params || Object.keys(params).length === 0) {
     return endpoint;
@@ -161,14 +161,14 @@ export const __handleApiError = (_error: unknown): string => {
     return error.message;
   }
 
-  return "An unexpected error occurred";
+  return 'An unexpected error occurred';
 };
 
 // Retry logic
 export const __withRetry = async <T>(
   fn: () => Promise<T>,
   maxRetries: number = 3,
-  delay: number = 1000,
+  delay: number = 1000
 ): Promise<T> => {
   let lastError: Error;
 
@@ -183,9 +183,7 @@ export const __withRetry = async <T>(
       }
 
       // Wait before retrying
-      await new Promise((resolve) =>
-        setTimeout(resolve, delay * Math.pow(2, i)),
-      );
+      await new Promise(resolve => setTimeout(resolve, delay * Math.pow(2, i)));
     }
   }
 

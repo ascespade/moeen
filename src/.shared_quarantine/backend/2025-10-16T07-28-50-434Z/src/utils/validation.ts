@@ -5,28 +5,28 @@ export const __isValidEmail = (_email: string): boolean => {
 };
 
 export const __isValidPassword = (
-  password: string,
+  password: string
 ): { isValid: boolean; errors: string[] } => {
   const errors: string[] = [];
 
   if (password.length < 8) {
-    errors.push("Password must be at least 8 characters long");
+    errors.push('Password must be at least 8 characters long');
   }
 
   if (!/[A-Z]/.test(password)) {
-    errors.push("Password must contain at least one uppercase letter");
+    errors.push('Password must contain at least one uppercase letter');
   }
 
   if (!/[a-z]/.test(password)) {
-    errors.push("Password must contain at least one lowercase letter");
+    errors.push('Password must contain at least one lowercase letter');
   }
 
   if (!/\d/.test(password)) {
-    errors.push("Password must contain at least one number");
+    errors.push('Password must contain at least one number');
   }
 
   if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-    errors.push("Password must contain at least one special character");
+    errors.push('Password must contain at least one special character');
   }
 
   return {
@@ -56,13 +56,13 @@ export const __isValidUuid = (_uuid: string): boolean => {
 };
 
 export const __isNotEmpty = (_value: unknown): boolean => {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return value.trim().length > 0;
   }
   if (Array.isArray(value)) {
     return value.length > 0;
   }
-  if (typeof value === "object" && value !== null) {
+  if (typeof value === 'object' && value !== null) {
     return Object.keys(value).length > 0;
   }
   return value !== null && value !== undefined;
@@ -83,7 +83,7 @@ export const __isPositive = (_value: number): boolean => {
 export const __isInRange = (
   _value: number,
   min: number,
-  max: number,
+  max: number
 ): boolean => {
   return value >= min && value <= max;
 };
@@ -105,7 +105,7 @@ export const __validateForm = <T extends Record<string, any>>(
   rules: Record<
     keyof T,
     (_value: unknown) => { isValid: boolean; error?: string }
-  >,
+  >
 ): { isValid: boolean; errors: Record<keyof T, string> } => {
   const errors: Record<keyof T, string> = {} as Record<keyof T, string>;
   let isValid = true;
@@ -113,7 +113,7 @@ export const __validateForm = <T extends Record<string, any>>(
   for (const [field, rule] of Object.entries(rules)) {
     const __result = rule(data[field as keyof T]);
     if (!result.isValid) {
-      errors[field as keyof T] = result.error || "Invalid value";
+      errors[field as keyof T] = result.error || 'Invalid value';
       isValid = false;
     }
   }

@@ -5,8 +5,8 @@ export interface WhatsAppMessage {
   to: string;
   content: string;
   timestamp: Date;
-  type: "text" | "image" | "audio" | "document";
-  status: "sent" | "delivered" | "read" | "failed";
+  type: 'text' | 'image' | 'audio' | 'document';
+  status: 'sent' | 'delivered' | 'read' | 'failed';
 }
 
 export interface WhatsAppContact {
@@ -17,18 +17,18 @@ export interface WhatsAppContact {
   patientId?: string;
   familyMemberId?: string;
   lastInteraction: Date;
-  preferredLanguage: "ar" | "en";
+  preferredLanguage: 'ar' | 'en';
 }
 
 export interface WhatsAppTemplate {
   id: string;
   name: string;
   category:
-    | "appointment"
-    | "reminder"
-    | "motivational"
-    | "educational"
-    | "crisis";
+    | 'appointment'
+    | 'reminder'
+    | 'motivational'
+    | 'educational'
+    | 'crisis';
   content: string;
   variables: string[];
   approved: boolean;
@@ -45,65 +45,65 @@ export class WhatsAppIntegration {
 
   private initializeTemplates() {
     // Appointment Templates
-    this.templates.set("appointment_confirmation", {
-      id: "appointment_confirmation",
-      name: "تأكيد الموعد",
-      category: "appointment",
+    this.templates.set('appointment_confirmation', {
+      id: 'appointment_confirmation',
+      name: 'تأكيد الموعد',
+      category: 'appointment',
       content:
-        "مرحباً {{name}}، تم تأكيد موعدك في مركز الهمم بتاريخ {{date}} في الساعة {{time}}. ننتظرك!",
-      variables: ["name", "date", "time"],
+        'مرحباً {{name}}، تم تأكيد موعدك في مركز الهمم بتاريخ {{date}} في الساعة {{time}}. ننتظرك!',
+      variables: ['name', 'date', 'time'],
       approved: true,
     });
 
-    this.templates.set("appointment_reminder", {
-      id: "appointment_reminder",
-      name: "تذكير الموعد",
-      category: "reminder",
+    this.templates.set('appointment_reminder', {
+      id: 'appointment_reminder',
+      name: 'تذكير الموعد',
+      category: 'reminder',
       content:
-        "تذكير: لديك موعد غداً في مركز الهمم في الساعة {{time}}. نتمنى لك يوم سعيد!",
-      variables: ["time"],
+        'تذكير: لديك موعد غداً في مركز الهمم في الساعة {{time}}. نتمنى لك يوم سعيد!',
+      variables: ['time'],
       approved: true,
     });
 
     // Motivational Templates
-    this.templates.set("daily_motivation", {
-      id: "daily_motivation",
-      name: "التحفيز اليومي",
-      category: "motivational",
+    this.templates.set('daily_motivation', {
+      id: 'daily_motivation',
+      name: 'التحفيز اليومي',
+      category: 'motivational',
       content:
-        "صباح الخير {{name}}! نتمنى لك يوماً مليئاً بالهمة والإنجاز. تذكر أن كل خطوة هي تقدم نحو هدفك. فريق مركز الهمم معك دائماً!",
-      variables: ["name"],
+        'صباح الخير {{name}}! نتمنى لك يوماً مليئاً بالهمة والإنجاز. تذكر أن كل خطوة هي تقدم نحو هدفك. فريق مركز الهمم معك دائماً!',
+      variables: ['name'],
       approved: true,
     });
 
-    this.templates.set("milestone_celebration", {
-      id: "milestone_celebration",
-      name: "احتفال بالإنجاز",
-      category: "motivational",
+    this.templates.set('milestone_celebration', {
+      id: 'milestone_celebration',
+      name: 'احتفال بالإنجاز',
+      category: 'motivational',
       content:
-        "تهانينا الحارة {{name}}! لقد أكملت بنجاح {{milestone}}. نحن في مركز الهمم فخورون جداً بإصرارك وهمتك العالية. إلى الأمام دائماً!",
-      variables: ["name", "milestone"],
+        'تهانينا الحارة {{name}}! لقد أكملت بنجاح {{milestone}}. نحن في مركز الهمم فخورون جداً بإصرارك وهمتك العالية. إلى الأمام دائماً!',
+      variables: ['name', 'milestone'],
       approved: true,
     });
 
     // Educational Templates
-    this.templates.set("exercise_reminder", {
-      id: "exercise_reminder",
-      name: "تذكير التمرين",
-      category: "educational",
+    this.templates.set('exercise_reminder', {
+      id: 'exercise_reminder',
+      name: 'تذكير التمرين',
+      category: 'educational',
       content:
-        "يا {{name}}، اليوم لديك تمرين {{exercise}} في خطتك. هل أنت مستعد؟ يمكنك الرد بـ: 👍 نعم، أتممته | 💬 أحتاج مساعدة | ⏰ سأقوم به لاحقاً",
-      variables: ["name", "exercise"],
+        'يا {{name}}، اليوم لديك تمرين {{exercise}} في خطتك. هل أنت مستعد؟ يمكنك الرد بـ: 👍 نعم، أتممته | 💬 أحتاج مساعدة | ⏰ سأقوم به لاحقاً',
+      variables: ['name', 'exercise'],
       approved: true,
     });
 
     // Crisis Templates
-    this.templates.set("crisis_support", {
-      id: "crisis_support",
-      name: "دعم الأزمات",
-      category: "crisis",
+    this.templates.set('crisis_support', {
+      id: 'crisis_support',
+      name: 'دعم الأزمات',
+      category: 'crisis',
       content:
-        "أرى أنك قد تحتاج لمساعدة عاجلة. يرجى الاتصال فوراً بالرقم 997 أو 911. نحن هنا لمساعدتك في هذه اللحظة الصعبة.",
+        'أرى أنك قد تحتاج لمساعدة عاجلة. يرجى الاتصال فوراً بالرقم 997 أو 911. نحن هنا لمساعدتك في هذه اللحظة الصعبة.',
       variables: [],
       approved: true,
     });
@@ -131,17 +131,17 @@ export class WhatsAppIntegration {
   async sendMessage(
     to: string,
     content: string,
-    type: "text" | "image" | "audio" | "document" = "text",
+    type: 'text' | 'image' | 'audio' | 'document' = 'text'
   ): Promise<string> {
     const __messageId = this.generateMessageId();
     const message: WhatsAppMessage = {
       id: messageId,
-      from: "center_hemam",
+      from: 'center_hemam',
       to,
       content,
       timestamp: new Date(),
       type,
-      status: "sent",
+      status: 'sent',
     };
 
     this.messageQueue.push(message);
@@ -154,7 +154,7 @@ export class WhatsAppIntegration {
   async sendTemplateMessage(
     templateId: string,
     to: string,
-    variables: Record<string, string>,
+    variables: Record<string, string>
   ): Promise<string> {
     const __template = this.templates.get(templateId);
     if (!template) {
@@ -165,7 +165,7 @@ export class WhatsAppIntegration {
 
     // Replace variables in template
     Object.entries(variables).forEach(([key, value]) => {
-      content = content.replace(new RegExp(`{{${key}}}`, "g"), value);
+      content = content.replace(new RegExp(`{{${key}}}`, 'g'), value);
     });
 
     return this.sendMessage(to, content);
@@ -174,18 +174,18 @@ export class WhatsAppIntegration {
   // Automated Messages
   async sendAppointmentReminder(
     patientPhone: string,
-    appointmentTime: string,
+    appointmentTime: string
   ): Promise<string> {
-    return this.sendTemplateMessage("appointment_reminder", patientPhone, {
+    return this.sendTemplateMessage('appointment_reminder', patientPhone, {
       time: appointmentTime,
     });
   }
 
   async sendMotivationalMessage(
     patientPhone: string,
-    patientName: string,
+    patientName: string
   ): Promise<string> {
-    return this.sendTemplateMessage("daily_motivation", patientPhone, {
+    return this.sendTemplateMessage('daily_motivation', patientPhone, {
       name: patientName,
     });
   }
@@ -193,9 +193,9 @@ export class WhatsAppIntegration {
   async sendMilestoneCelebration(
     patientPhone: string,
     patientName: string,
-    milestone: string,
+    milestone: string
   ): Promise<string> {
-    return this.sendTemplateMessage("milestone_celebration", patientPhone, {
+    return this.sendTemplateMessage('milestone_celebration', patientPhone, {
       name: patientName,
       milestone,
     });
@@ -204,16 +204,16 @@ export class WhatsAppIntegration {
   async sendExerciseReminder(
     patientPhone: string,
     patientName: string,
-    exerciseName: string,
+    exerciseName: string
   ): Promise<string> {
-    return this.sendTemplateMessage("exercise_reminder", patientPhone, {
+    return this.sendTemplateMessage('exercise_reminder', patientPhone, {
       name: patientName,
       exercise: exerciseName,
     });
   }
 
   async sendCrisisSupport(_patientPhone: string): Promise<string> {
-    return this.sendTemplateMessage("crisis_support", patientPhone, {});
+    return this.sendTemplateMessage('crisis_support', patientPhone, {});
   }
 
   // Family Notifications
@@ -221,18 +221,18 @@ export class WhatsAppIntegration {
     familyPhone: string,
     patientName: string,
     notificationType: string,
-    details: string,
+    details: string
   ): Promise<string> {
-    let content = "";
+    let content = '';
 
     switch (notificationType) {
-      case "appointment":
+      case 'appointment':
         content = `تذكير: لدى ${patientName} موعد غداً الساعة ${details}.`;
         break;
-      case "update":
+      case 'update':
         content = `تم تحديث جدول جلسات ${patientName} لهذا الأسبوع: ${details}`;
         break;
-      case "reminder":
+      case 'reminder':
         content = `تذكير: ${details} لـ ${patientName}`;
         break;
       default:
@@ -246,7 +246,7 @@ export class WhatsAppIntegration {
   async processIncomingMessage(
     from: string,
     content: string,
-    messageType: string,
+    messageType: string
   ): Promise<string> {
     const __contact = this.getContact(from);
 
@@ -256,85 +256,85 @@ export class WhatsAppIntegration {
     }
 
     // Process based on message type
-    if (messageType === "text") {
+    if (messageType === 'text') {
       return this.processTextMessage(from, content);
-    } else if (messageType === "audio") {
+    } else if (messageType === 'audio') {
       return this.processAudioMessage(from);
-    } else if (messageType === "image") {
+    } else if (messageType === 'image') {
       return this.processImageMessage(from);
     }
 
-    return "شكراً لك على رسالتك. سنقوم بالرد عليك قريباً.";
+    return 'شكراً لك على رسالتك. سنقوم بالرد عليك قريباً.';
   }
 
   private async processTextMessage(
     from: string,
-    content: string,
+    content: string
   ): Promise<string> {
     const __lowerContent = content.toLowerCase();
 
     // Crisis detection
     if (this.detectCrisisKeywords(lowerContent)) {
       await this.sendCrisisSupport(from);
-      return "تم إرسال معلومات الدعم العاجل. يرجى التواصل مع الأرقام المذكورة فوراً.";
+      return 'تم إرسال معلومات الدعم العاجل. يرجى التواصل مع الأرقام المذكورة فوراً.';
     }
 
     // Appointment related
-    if (lowerContent.includes("موعد") || lowerContent.includes("حجز")) {
-      return "يمكنني مساعدتك في حجز موعد. هل تود حجز موعد جديد أم إعادة جدولة موعد موجود؟";
+    if (lowerContent.includes('موعد') || lowerContent.includes('حجز')) {
+      return 'يمكنني مساعدتك في حجز موعد. هل تود حجز موعد جديد أم إعادة جدولة موعد موجود؟';
     }
 
     // General inquiry
-    if (lowerContent.includes("معلومات") || lowerContent.includes("خدمات")) {
-      return "مرحباً بك في مركز الهمم! يمكنني مساعدتك في:\n1️⃣ معلومات عن المركز\n2️⃣ الخدمات المتاحة\n3️⃣ الفعاليات والورش\n4️⃣ التواصل مع الفريق الطبي";
+    if (lowerContent.includes('معلومات') || lowerContent.includes('خدمات')) {
+      return 'مرحباً بك في مركز الهمم! يمكنني مساعدتك في:\n1️⃣ معلومات عن المركز\n2️⃣ الخدمات المتاحة\n3️⃣ الفعاليات والورش\n4️⃣ التواصل مع الفريق الطبي';
     }
 
     // Support request
-    if (lowerContent.includes("مساعدة") || lowerContent.includes("دعم")) {
-      return "نحن هنا لمساعدتك! كيف يمكنني دعمك اليوم؟";
+    if (lowerContent.includes('مساعدة') || lowerContent.includes('دعم')) {
+      return 'نحن هنا لمساعدتك! كيف يمكنني دعمك اليوم؟';
     }
 
     // Default response
-    return "شكراً لك على رسالتك. يمكنني مساعدتك في حجز المواعيد، تقديم المعلومات، أو التواصل مع الفريق الطبي. ما الذي تحتاجه؟";
+    return 'شكراً لك على رسالتك. يمكنني مساعدتك في حجز المواعيد، تقديم المعلومات، أو التواصل مع الفريق الطبي. ما الذي تحتاجه؟';
   }
 
   private async processAudioMessage(__from: string): Promise<string> {
     // In real implementation, this would use speech-to-text
-    return "شكراً لك على الرسالة الصوتية. يرجى إرسال رسالة نصية لمساعدتي في فهم طلبك بشكل أفضل.";
+    return 'شكراً لك على الرسالة الصوتية. يرجى إرسال رسالة نصية لمساعدتي في فهم طلبك بشكل أفضل.';
   }
 
   private async processImageMessage(__from: string): Promise<string> {
-    return "شكراً لك على الصورة. يرجى إرسال رسالة نصية لمساعدتي في فهم ما تحتاجه.";
+    return 'شكراً لك على الصورة. يرجى إرسال رسالة نصية لمساعدتي في فهم ما تحتاجه.';
   }
 
   // Crisis Detection
   private detectCrisisKeywords(_content: string): boolean {
     const __crisisKeywords = [
-      "إيذاء نفسي",
-      "أذى نفسي",
-      "أريد أن أموت",
-      "انتحار",
-      "قتل نفسي",
-      "طارئ",
-      "عاجل",
-      "مستشفى",
-      "إسعاف",
-      "خطر",
-      "خوف شديد",
-      "ذعر",
-      "مهدد",
-      "تهديد",
+      'إيذاء نفسي',
+      'أذى نفسي',
+      'أريد أن أموت',
+      'انتحار',
+      'قتل نفسي',
+      'طارئ',
+      'عاجل',
+      'مستشفى',
+      'إسعاف',
+      'خطر',
+      'خوف شديد',
+      'ذعر',
+      'مهدد',
+      'تهديد',
     ];
 
-    return crisisKeywords.some((keyword) => content.includes(keyword));
+    return crisisKeywords.some(keyword => content.includes(keyword));
   }
 
   // Message Status Tracking
   updateMessageStatus(
     messageId: string,
-    status: "delivered" | "read" | "failed",
+    status: 'delivered' | 'read' | 'failed'
   ): boolean {
-    const __message = this.messageQueue.find((m) => m.id === messageId);
+    const __message = this.messageQueue.find(m => m.id === messageId);
     if (!message) return false;
 
     message.status = status;
@@ -351,16 +351,16 @@ export class WhatsAppIntegration {
   } {
     const __totalMessages = this.messageQueue.length;
     const __sentMessages = this.messageQueue.filter(
-      (m) => m.status === "sent",
+      m => m.status === 'sent'
     ).length;
     const __deliveredMessages = this.messageQueue.filter(
-      (m) => m.status === "delivered",
+      m => m.status === 'delivered'
     ).length;
     const __readMessages = this.messageQueue.filter(
-      (m) => m.status === "read",
+      m => m.status === 'read'
     ).length;
     const __failedMessages = this.messageQueue.filter(
-      (m) => m.status === "failed",
+      m => m.status === 'failed'
     ).length;
 
     return {
@@ -392,11 +392,11 @@ export class WhatsAppIntegration {
 
   // Accessibility Features
   generateAccessibleResponse(_options: string[]): string {
-    let response = "يمكنك اختيار:";
+    let response = 'يمكنك اختيار:';
     options.forEach((option, index) => {
       response += `\n${index + 1}️⃣ ${option}`;
     });
-    response += "\n\nيمكنك الكتابة أو إرسال رسالة صوتية بطلبك.";
+    response += '\n\nيمكنك الكتابة أو إرسال رسالة صوتية بطلبك.';
     return response;
   }
 
@@ -404,9 +404,9 @@ export class WhatsAppIntegration {
   generateMultilingualResponse(
     arabicText: string,
     englishText: string,
-    preferredLanguage: "ar" | "en",
+    preferredLanguage: 'ar' | 'en'
   ): string {
-    if (preferredLanguage === "ar") {
+    if (preferredLanguage === 'ar') {
       return arabicText;
     } else {
       return englishText;

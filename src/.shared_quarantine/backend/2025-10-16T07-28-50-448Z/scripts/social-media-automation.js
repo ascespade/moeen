@@ -1,22 +1,22 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 class SocialMediaAutomation {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
-    this.videosDir = path.join(this.workspaceRoot, "videos");
-    this.logFile = path.join(this.workspaceRoot, "logs", "social-media.log");
+    this.workspaceRoot = path.join(__dirname, '..');
+    this.videosDir = path.join(this.workspaceRoot, 'videos');
+    this.logFile = path.join(this.workspaceRoot, 'logs', 'social-media.log');
     this.scheduleFile = path.join(
       this.workspaceRoot,
-      "temp",
-      "post-schedule.json",
+      'temp',
+      'post-schedule.json'
     );
     this.configFile = path.join(
       this.workspaceRoot,
-      "config",
-      "social-media-config.json",
+      'config',
+      'social-media-config.json'
     );
   }
 
@@ -35,10 +35,10 @@ class SocialMediaAutomation {
   }
 
   async initialize() {
-    this.log("Initializing Social Media Automation...");
+    this.log('Initializing Social Media Automation...');
 
     // Create necessary directories
-    const directories = ["videos", "config", "logs", "temp", "reports"];
+    const directories = ['videos', 'config', 'logs', 'temp', 'reports'];
 
     for (const dir of directories) {
       const fullPath = path.join(this.workspaceRoot, dir);
@@ -51,7 +51,7 @@ class SocialMediaAutomation {
     // Initialize configuration
     await this.initializeConfig();
 
-    this.log("Social Media Automation initialized");
+    this.log('Social Media Automation initialized');
   }
 
   async initializeConfig() {
@@ -60,27 +60,27 @@ class SocialMediaAutomation {
         platforms: {
           tiktok: {
             enabled: true,
-            apiKey: process.env.TIKTOK_API_KEY || "",
-            accessToken: process.env.TIKTOK_ACCESS_TOKEN || "",
-            webhookUrl: process.env.TIKTOK_WEBHOOK_URL || "",
+            apiKey: process.env.TIKTOK_API_KEY || '',
+            accessToken: process.env.TIKTOK_ACCESS_TOKEN || '',
+            webhookUrl: process.env.TIKTOK_WEBHOOK_URL || '',
           },
           instagram: {
             enabled: true,
-            apiKey: process.env.INSTAGRAM_API_KEY || "",
-            accessToken: process.env.INSTAGRAM_ACCESS_TOKEN || "",
-            webhookUrl: process.env.INSTAGRAM_WEBHOOK_URL || "",
+            apiKey: process.env.INSTAGRAM_API_KEY || '',
+            accessToken: process.env.INSTAGRAM_ACCESS_TOKEN || '',
+            webhookUrl: process.env.INSTAGRAM_WEBHOOK_URL || '',
           },
           linkedin: {
             enabled: true,
-            apiKey: process.env.LINKEDIN_API_KEY || "",
-            accessToken: process.env.LINKEDIN_ACCESS_TOKEN || "",
-            webhookUrl: process.env.LINKEDIN_WEBHOOK_URL || "",
+            apiKey: process.env.LINKEDIN_API_KEY || '',
+            accessToken: process.env.LINKEDIN_ACCESS_TOKEN || '',
+            webhookUrl: process.env.LINKEDIN_WEBHOOK_URL || '',
           },
           facebook: {
             enabled: true,
-            apiKey: process.env.FACEBOOK_API_KEY || "",
-            accessToken: process.env.FACEBOOK_ACCESS_TOKEN || "",
-            webhookUrl: process.env.FACEBOOK_WEBHOOK_URL || "",
+            apiKey: process.env.FACEBOOK_API_KEY || '',
+            accessToken: process.env.FACEBOOK_ACCESS_TOKEN || '',
+            webhookUrl: process.env.FACEBOOK_WEBHOOK_URL || '',
           },
         },
         posting: {
@@ -88,21 +88,21 @@ class SocialMediaAutomation {
           minTimeBetweenPosts: 4 * 60 * 60 * 1000, // 4 hours
           maxTimeBetweenPosts: 8 * 60 * 60 * 1000, // 8 hours
           hashtags: [
-            "#healthcare",
-            "#ai",
-            "#innovation",
-            "#technology",
-            "#medical",
+            '#healthcare',
+            '#ai',
+            '#innovation',
+            '#technology',
+            '#medical',
           ],
         },
         content: {
-          videoFormats: [".mp4", ".mov", ".avi", ".mkv"],
+          videoFormats: ['.mp4', '.mov', '.avi', '.mkv'],
           maxFileSize: 100 * 1024 * 1024, // 100MB
           descriptionTemplates: [
-            "Amazing healthcare innovation! {hashtags}",
-            "Check out this breakthrough in medical technology! {hashtags}",
-            "Revolutionary healthcare solution! {hashtags}",
-            "The future of healthcare is here! {hashtags}",
+            'Amazing healthcare innovation! {hashtags}',
+            'Check out this breakthrough in medical technology! {hashtags}',
+            'Revolutionary healthcare solution! {hashtags}',
+            'The future of healthcare is here! {hashtags}',
           ],
         },
       };
@@ -114,13 +114,13 @@ class SocialMediaAutomation {
       }
 
       fs.writeFileSync(this.configFile, JSON.stringify(defaultConfig, null, 2));
-      this.log("Default configuration created");
+      this.log('Default configuration created');
     }
   }
 
   async loadConfig() {
     try {
-      const configData = fs.readFileSync(this.configFile, "utf8");
+      const configData = fs.readFileSync(this.configFile, 'utf8');
       return JSON.parse(configData);
     } catch (error) {
       this.log(`Error loading config: ${error.message}`);
@@ -129,12 +129,12 @@ class SocialMediaAutomation {
   }
 
   async getAvailableVideos() {
-    this.log("Scanning for available videos...");
+    this.log('Scanning for available videos...');
 
     const videos = [];
 
     if (!fs.existsSync(this.videosDir)) {
-      this.log("Videos directory does not exist");
+      this.log('Videos directory does not exist');
       return videos;
     }
 
@@ -159,7 +159,7 @@ class SocialMediaAutomation {
               });
             } else {
               this.log(
-                `Video too large: ${file} (${Math.round(stats.size / 1024 / 1024)}MB)`,
+                `Video too large: ${file} (${Math.round(stats.size / 1024 / 1024)}MB)`
               );
             }
           }
@@ -179,7 +179,7 @@ class SocialMediaAutomation {
     const availableVideos = await this.getAvailableVideos();
 
     if (availableVideos.length === 0) {
-      this.log("No videos available for posting");
+      this.log('No videos available for posting');
       return [];
     }
 
@@ -209,19 +209,19 @@ class SocialMediaAutomation {
   }
 
   async generatePostSchedule() {
-    this.log("Generating post schedule...");
+    this.log('Generating post schedule...');
 
     const config = await this.loadConfig();
     if (!config) {
-      throw new Error("Failed to load configuration");
+      throw new Error('Failed to load configuration');
     }
 
     const selectedVideos = await this.selectRandomVideos(
-      config.posting.postsPerDay,
+      config.posting.postsPerDay
     );
 
     if (selectedVideos.length === 0) {
-      this.log("No videos selected for posting");
+      this.log('No videos selected for posting');
       return [];
     }
 
@@ -247,10 +247,10 @@ class SocialMediaAutomation {
         video: video,
         scheduledTime: postTime.toISOString(),
         platforms: Object.keys(config.platforms).filter(
-          (platform) => config.platforms[platform].enabled,
+          platform => config.platforms[platform].enabled
         ),
         description: description,
-        status: "scheduled",
+        status: 'scheduled',
       });
     }
 
@@ -263,10 +263,10 @@ class SocialMediaAutomation {
 
   generateDescription(video, config) {
     const templates = config.content.descriptionTemplates;
-    const hashtags = config.posting.hashtags.join(" ");
+    const hashtags = config.posting.hashtags.join(' ');
 
     const template = templates[Math.floor(Math.random() * templates.length)];
-    return template.replace("{hashtags}", hashtags);
+    return template.replace('{hashtags}', hashtags);
   }
 
   async postToPlatform(platform, postData) {
@@ -281,7 +281,7 @@ class SocialMediaAutomation {
 
     if (!platformConfig.enabled) {
       this.log(`Platform ${platform} is disabled, skipping`);
-      return { success: false, reason: "disabled" };
+      return { success: false, reason: 'disabled' };
     }
 
     try {
@@ -289,7 +289,7 @@ class SocialMediaAutomation {
       const result = await this.simulatePlatformPost(
         platform,
         postData,
-        platformConfig,
+        platformConfig
       );
 
       this.log(`Successfully posted to ${platform}`);
@@ -302,8 +302,8 @@ class SocialMediaAutomation {
 
   async simulatePlatformPost(platform, postData, platformConfig) {
     // Simulate API call delay
-    await new Promise((resolve) =>
-      setTimeout(resolve, 1000 + Math.random() * 2000),
+    await new Promise(resolve =>
+      setTimeout(resolve, 1000 + Math.random() * 2000)
     );
 
     // Simulate potential errors
@@ -321,19 +321,19 @@ class SocialMediaAutomation {
   }
 
   async executeScheduledPosts() {
-    this.log("Executing scheduled posts...");
+    this.log('Executing scheduled posts...');
 
     if (!fs.existsSync(this.scheduleFile)) {
-      this.log("No schedule file found");
+      this.log('No schedule file found');
       return [];
     }
 
-    const schedule = JSON.parse(fs.readFileSync(this.scheduleFile, "utf8"));
+    const schedule = JSON.parse(fs.readFileSync(this.scheduleFile, 'utf8'));
     const now = new Date();
     const results = [];
 
     for (const post of schedule) {
-      if (post.status !== "scheduled") {
+      if (post.status !== 'scheduled') {
         continue;
       }
 
@@ -353,7 +353,7 @@ class SocialMediaAutomation {
         }
 
         // Update post status
-        post.status = "completed";
+        post.status = 'completed';
         post.results = postResults;
         post.completedAt = new Date().toISOString();
 
@@ -375,7 +375,7 @@ class SocialMediaAutomation {
   }
 
   async generatePostingReport() {
-    this.log("Generating posting report...");
+    this.log('Generating posting report...');
 
     const report = {
       timestamp: new Date().toISOString(),
@@ -389,13 +389,13 @@ class SocialMediaAutomation {
     };
 
     if (fs.existsSync(this.scheduleFile)) {
-      const schedule = JSON.parse(fs.readFileSync(this.scheduleFile, "utf8"));
+      const schedule = JSON.parse(fs.readFileSync(this.scheduleFile, 'utf8'));
       report.schedule = schedule;
 
       for (const post of schedule) {
         report.summary.totalPosts++;
 
-        if (post.status === "completed" && post.results) {
+        if (post.status === 'completed' && post.results) {
           for (const result of post.results) {
             if (result.success) {
               report.summary.successfulPosts++;
@@ -423,8 +423,8 @@ class SocialMediaAutomation {
     // Save report
     const reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "social-media-report.json",
+      'reports',
+      'social-media-report.json'
     );
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
@@ -433,7 +433,7 @@ class SocialMediaAutomation {
   }
 
   async runAutomation() {
-    this.log("Starting social media automation...");
+    this.log('Starting social media automation...');
 
     await this.initialize();
 
@@ -441,7 +441,7 @@ class SocialMediaAutomation {
     const schedule = await this.generatePostSchedule();
 
     if (schedule.length === 0) {
-      this.log("No posts scheduled, automation complete");
+      this.log('No posts scheduled, automation complete');
       return;
     }
 
@@ -451,7 +451,7 @@ class SocialMediaAutomation {
     // Generate report
     const report = await this.generatePostingReport();
 
-    this.log("Social media automation completed");
+    this.log('Social media automation completed');
     return {
       schedule: schedule,
       results: results,
@@ -466,14 +466,14 @@ if (require.main === module) {
 
   automation
     .runAutomation()
-    .then((result) => {
-      console.log("Social media automation completed successfully");
+    .then(result => {
+      console.log('Social media automation completed successfully');
       if (result) {
         console.log(JSON.stringify(result, null, 2));
       }
     })
-    .catch((error) => {
-      console.error("Social media automation failed:", error);
+    .catch(error => {
+      console.error('Social media automation failed:', error);
       process.exit(1);
     });
 }

@@ -2,9 +2,9 @@
 export interface AssistantPersona {
   name: string;
   personality: {
-    tone: "empathetic" | "professional" | "encouraging";
-    language: "simple" | "medical" | "family-friendly";
-    responseStyle: "warm" | "clinical" | "motivational";
+    tone: 'empathetic' | 'professional' | 'encouraging';
+    language: 'simple' | 'medical' | 'family-friendly';
+    responseStyle: 'warm' | 'clinical' | 'motivational';
   };
   capabilities: string[];
   limitations: string[];
@@ -14,20 +14,20 @@ export interface ConversationContext {
   userId: string;
   sessionId: string;
   userType:
-    | "new_beneficiary"
-    | "existing_patient"
-    | "family_member"
-    | "medical_staff";
+    | 'new_beneficiary'
+    | 'existing_patient'
+    | 'family_member'
+    | 'medical_staff';
   currentFlow: string;
   previousInteractions: Interaction[];
-  emergencyLevel: "normal" | "urgent" | "crisis";
+  emergencyLevel: 'normal' | 'urgent' | 'crisis';
 }
 
 export interface Interaction {
   timestamp: Date;
   message: string;
   response: string;
-  sentiment: "positive" | "neutral" | "negative" | "crisis";
+  sentiment: 'positive' | 'neutral' | 'negative' | 'crisis';
   actionTaken: string;
 }
 
@@ -49,43 +49,43 @@ export class HemamAssistant {
 
   constructor() {
     this.persona = {
-      name: "مُعين",
+      name: 'مُعين',
       personality: {
-        tone: "empathetic",
-        language: "simple",
-        responseStyle: "warm",
+        tone: 'empathetic',
+        language: 'simple',
+        responseStyle: 'warm',
       },
       capabilities: [
-        "إدارة المواعيد",
-        "توفير المعلومات العامة",
-        "التواصل مع الفريق الطبي",
-        "الدعم النفسي الأولي",
-        "تنسيق الخدمات",
+        'إدارة المواعيد',
+        'توفير المعلومات العامة',
+        'التواصل مع الفريق الطبي',
+        'الدعم النفسي الأولي',
+        'تنسيق الخدمات',
       ],
       limitations: [
-        "لا يمكنه التشخيص الطبي",
-        "لا يقدم نصائح طبية متخصصة",
-        "يحتاج لتحويل الحالات الطارئة",
+        'لا يمكنه التشخيص الطبي',
+        'لا يقدم نصائح طبية متخصصة',
+        'يحتاج لتحويل الحالات الطارئة',
       ],
     };
 
     this.crisisKeywords = {
       selfHarm: [
-        "إيذاء نفسي",
-        "أذى نفسي",
-        "أريد أن أموت",
-        "انتحار",
-        "قتل نفسي",
+        'إيذاء نفسي',
+        'أذى نفسي',
+        'أريد أن أموت',
+        'انتحار',
+        'قتل نفسي',
       ],
-      emergency: ["طارئ", "عاجل", "مستشفى", "إسعاف", "خطر"],
-      danger: ["خطر", "مهدد", "تهديد", "خوف شديد", "ذعر"],
-      urgent: ["فوراً", "الآن", "سريع", "عاجل", "مستعجل"],
+      emergency: ['طارئ', 'عاجل', 'مستشفى', 'إسعاف', 'خطر'],
+      danger: ['خطر', 'مهدد', 'تهديد', 'خوف شديد', 'ذعر'],
+      urgent: ['فوراً', 'الآن', 'سريع', 'عاجل', 'مستعجل'],
     };
 
     this.emergencyContacts = {
-      crisis: "997", // Saudi emergency number
-      medical: "+966501234567", // Center's emergency line
-      admin: "+966501234568", // Admin emergency line
+      crisis: '997', // Saudi emergency number
+      medical: '+966501234567', // Center's emergency line
+      admin: '+966501234568', // Admin emergency line
     };
   }
 
@@ -94,53 +94,53 @@ export class HemamAssistant {
   }
 
   // Analyze message for crisis indicators
-  analyzeCrisisLevel(_message: string): "normal" | "urgent" | "crisis" {
+  analyzeCrisisLevel(_message: string): 'normal' | 'urgent' | 'crisis' {
     const __lowerMessage = message.toLowerCase();
 
     // Check for crisis keywords
     for (const keyword of this.crisisKeywords.selfHarm) {
       if (lowerMessage.includes(keyword)) {
-        return "crisis";
+        return 'crisis';
       }
     }
 
     for (const keyword of this.crisisKeywords.emergency) {
       if (lowerMessage.includes(keyword)) {
-        return "urgent";
+        return 'urgent';
       }
     }
 
     for (const keyword of this.crisisKeywords.danger) {
       if (lowerMessage.includes(keyword)) {
-        return "urgent";
+        return 'urgent';
       }
     }
 
-    return "normal";
+    return 'normal';
   }
 
   // Generate empathetic response
   generateEmpatheticResponse(
     context: ConversationContext,
-    userMessage: string,
+    userMessage: string
   ): string {
     const __crisisLevel = this.analyzeCrisisLevel(userMessage);
 
-    if (crisisLevel === "crisis") {
+    if (crisisLevel === 'crisis') {
       return this.handleCrisisResponse();
     }
 
-    if (crisisLevel === "urgent") {
+    if (crisisLevel === 'urgent') {
       return this.handleUrgentResponse();
     }
 
     // Normal empathetic response
     const __empatheticStarters = [
-      "نحن هنا لمساعدتك",
-      "أتفهم تماماً ما تمر به",
-      "شكراً لمشاركتنا، معاً سنجد الدعم المناسب",
-      "أنت لست وحدك، نحن معك",
-      "نقدر ثقتك فينا",
+      'نحن هنا لمساعدتك',
+      'أتفهم تماماً ما تمر به',
+      'شكراً لمشاركتنا، معاً سنجد الدعم المناسب',
+      'أنت لست وحدك، نحن معك',
+      'نقدر ثقتك فينا',
     ];
 
     const randomStarter =
@@ -162,16 +162,16 @@ export class HemamAssistant {
   // Generate contextual response based on conversation flow
   private generateContextualResponse(
     context: ConversationContext,
-    userMessage: string,
+    userMessage: string
   ): string {
     switch (context.currentFlow) {
-      case "new_beneficiary":
+      case 'new_beneficiary':
         return this.handleNewBeneficiaryFlow(userMessage);
-      case "appointment_booking":
+      case 'appointment_booking':
         return this.handleAppointmentFlow(userMessage);
-      case "general_inquiry":
+      case 'general_inquiry':
         return this.handleGeneralInquiry(userMessage);
-      case "family_support":
+      case 'family_support':
         return this.handleFamilySupportFlow(userMessage);
       default:
         return this.handleDefaultFlow(userMessage);
@@ -225,7 +225,7 @@ export class HemamAssistant {
   // Generate motivational message
   generateMotivationalMessage(
     _patientName: string,
-    milestone?: string,
+    milestone?: string
   ): string {
     const __motivationalMessages = [
       `صباح الخير يا ${patientName}، نتمنى لك أسبوعاً مليئاً بالهمة والإنجاز! تذكر أن كل خطوة، مهما كانت صغيرة، هي تقدم نحو هدفك. فريق مركز الهمم كله يدعمك.`,
@@ -240,14 +240,14 @@ export class HemamAssistant {
 
     const __idx = Math.floor(Math.random() * motivationalMessages.length);
     const __selected = motivationalMessages[idx];
-    const fallback: string = "نحن معك وكل خطوة تُحدث فرقاً — استمر!";
+    const fallback: string = 'نحن معك وكل خطوة تُحدث فرقاً — استمر!';
     return selected ?? fallback;
   }
 
   // Generate proactive care message
   generateProactiveCareMessage(
     patientName: string,
-    exerciseName: string,
+    exerciseName: string
   ): string {
     return `يا ${patientName}، اليوم لديك تمرين ${exerciseName} في خطتك. هل أنت مستعد؟ يمكنك الرد بـ:
 👍 نعم، أتممته
@@ -258,15 +258,15 @@ export class HemamAssistant {
   // Generate family notification
   generateFamilyNotification(
     patientName: string,
-    notificationType: "appointment" | "update" | "reminder",
-    details: string,
+    notificationType: 'appointment' | 'update' | 'reminder',
+    details: string
   ): string {
     switch (notificationType) {
-      case "appointment":
+      case 'appointment':
         return `تذكير: لدى ${patientName} موعد غداً الساعة ${details}.`;
-      case "update":
+      case 'update':
         return `تم تحديث جدول جلسات ${patientName} لهذا الأسبوع: ${details}`;
-      case "reminder":
+      case 'reminder':
         return `تذكير: ${details} لـ ${patientName}`;
       default:
         return `تحديث: ${details} لـ ${patientName}`;
@@ -275,11 +275,11 @@ export class HemamAssistant {
 
   // Generate accessibility-friendly response
   generateAccessibleResponse(_options: string[]): string {
-    let response = "يمكنك اختيار:";
+    let response = 'يمكنك اختيار:';
     options.forEach((option, index) => {
       response += `\n${index + 1}️⃣ ${option}`;
     });
-    response += "\n\nيمكنك الكتابة أو إرسال رسالة صوتية بطلبك.";
+    response += '\n\nيمكنك الكتابة أو إرسال رسالة صوتية بطلبك.';
     return response;
   }
 }

@@ -1,7 +1,7 @@
 // WhatsApp Business API Integration
 export interface WhatsAppMessage {
   to: string;
-  type: "text" | "template" | "image" | "document" | "audio" | "video";
+  type: 'text' | 'template' | 'image' | 'document' | 'audio' | 'video';
   text?: {
     body: string;
   };
@@ -11,9 +11,9 @@ export interface WhatsAppMessage {
       code: string;
     };
     components?: Array<{
-      type: "body";
+      type: 'body';
       parameters: Array<{
-        type: "text";
+        type: 'text';
         text: string;
       }>;
     }>;
@@ -31,14 +31,14 @@ export interface WhatsAppMessage {
 
 export interface WhatsAppTemplate {
   name: string;
-  status: "PENDING" | "APPROVED" | "REJECTED" | "DISABLED";
-  category: "AUTHENTICATION" | "MARKETING" | "UTILITY";
+  status: 'PENDING' | 'APPROVED' | 'REJECTED' | 'DISABLED';
+  category: 'AUTHENTICATION' | 'MARKETING' | 'UTILITY';
   language: string;
   components: Array<{
-    type: "HEADER" | "BODY" | "FOOTER" | "BUTTONS";
+    type: 'HEADER' | 'BODY' | 'FOOTER' | 'BUTTONS';
     text?: string;
     buttons?: Array<{
-      type: "QUICK_REPLY" | "URL" | "PHONE_NUMBER";
+      type: 'QUICK_REPLY' | 'URL' | 'PHONE_NUMBER';
       text: string;
       url?: string;
       phone_number?: string;
@@ -90,7 +90,7 @@ export interface WhatsAppWebhookEvent {
         }>;
         statuses?: Array<{
           id: string;
-          status: "sent" | "delivered" | "read" | "failed";
+          status: 'sent' | 'delivered' | 'read' | 'failed';
           timestamp: string;
           recipient_id: string;
         }>;
@@ -108,36 +108,36 @@ export class WhatsAppBusinessAPI {
   private baseUrl: string;
 
   constructor() {
-    this.accessToken = process.env.WHATSAPP_ACCESS_TOKEN || "";
-    this.phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID || "";
-    this.businessAccountId = process.env.WHATSAPP_BUSINESS_ACCOUNT_ID || "";
-    this.apiVersion = "v18.0";
+    this.accessToken = process.env.WHATSAPP_ACCESS_TOKEN || '';
+    this.phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID || '';
+    this.businessAccountId = process.env.WHATSAPP_BUSINESS_ACCOUNT_ID || '';
+    this.apiVersion = 'v18.0';
     this.baseUrl = `https://graph.facebook.com/${this.apiVersion}`;
   }
 
   // Send Text Message
   async sendTextMessage(
     to: string,
-    message: string,
+    message: string
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
       const __response = await fetch(
         `${this.baseUrl}/${this.phoneNumberId}/messages`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            messaging_product: "whatsapp",
+            messaging_product: 'whatsapp',
             to,
-            type: "text",
+            type: 'text',
             text: {
               body: message,
             },
           }),
-        },
+        }
       );
 
       const __data = await response.json();
@@ -150,7 +150,7 @@ export class WhatsAppBusinessAPI {
       } else {
         return {
           success: false,
-          error: data.error?.message || "Failed to send message",
+          error: data.error?.message || 'Failed to send message',
         };
       }
     } catch (error) {
@@ -165,14 +165,14 @@ export class WhatsAppBusinessAPI {
   async sendTemplateMessage(
     to: string,
     templateName: string,
-    languageCode: string = "ar",
-    parameters: string[] = [],
+    languageCode: string = 'ar',
+    parameters: string[] = []
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
       const messageData: unknown = {
-        messaging_product: "whatsapp",
+        messaging_product: 'whatsapp',
         to,
-        type: "template",
+        type: 'template',
         template: {
           name: templateName,
           language: {
@@ -185,9 +185,9 @@ export class WhatsAppBusinessAPI {
       if (parameters.length > 0) {
         messageData.template.components = [
           {
-            type: "body",
-            parameters: parameters.map((param) => ({
-              type: "text",
+            type: 'body',
+            parameters: parameters.map(param => ({
+              type: 'text',
               text: param,
             })),
           },
@@ -197,13 +197,13 @@ export class WhatsAppBusinessAPI {
       const __response = await fetch(
         `${this.baseUrl}/${this.phoneNumberId}/messages`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(messageData),
-        },
+        }
       );
 
       const __data = await response.json();
@@ -216,7 +216,7 @@ export class WhatsAppBusinessAPI {
       } else {
         return {
           success: false,
-          error: data.error?.message || "Failed to send template message",
+          error: data.error?.message || 'Failed to send template message',
         };
       }
     } catch (error) {
@@ -231,27 +231,27 @@ export class WhatsAppBusinessAPI {
   async sendImageMessage(
     to: string,
     imageUrl: string,
-    caption?: string,
+    caption?: string
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
       const __response = await fetch(
         `${this.baseUrl}/${this.phoneNumberId}/messages`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            messaging_product: "whatsapp",
+            messaging_product: 'whatsapp',
             to,
-            type: "image",
+            type: 'image',
             image: {
               link: imageUrl,
               caption: caption,
             },
           }),
-        },
+        }
       );
 
       const __data = await response.json();
@@ -264,7 +264,7 @@ export class WhatsAppBusinessAPI {
       } else {
         return {
           success: false,
-          error: data.error?.message || "Failed to send image message",
+          error: data.error?.message || 'Failed to send image message',
         };
       }
     } catch (error) {
@@ -280,28 +280,28 @@ export class WhatsAppBusinessAPI {
     to: string,
     documentUrl: string,
     filename: string,
-    caption?: string,
+    caption?: string
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
       const __response = await fetch(
         `${this.baseUrl}/${this.phoneNumberId}/messages`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            messaging_product: "whatsapp",
+            messaging_product: 'whatsapp',
             to,
-            type: "document",
+            type: 'document',
             document: {
               link: documentUrl,
               filename: filename,
               caption: caption,
             },
           }),
-        },
+        }
       );
 
       const __data = await response.json();
@@ -314,7 +314,7 @@ export class WhatsAppBusinessAPI {
       } else {
         return {
           success: false,
-          error: data.error?.message || "Failed to send document message",
+          error: data.error?.message || 'Failed to send document message',
         };
       }
     } catch (error) {
@@ -327,11 +327,11 @@ export class WhatsAppBusinessAPI {
 
   // Get Message Status
   async getMessageStatus(
-    messageId: string,
+    messageId: string
   ): Promise<{ status: string; timestamp: string } | null> {
     try {
       const __response = await fetch(`${this.baseUrl}/${messageId}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${this.accessToken}`,
         },
@@ -358,11 +358,11 @@ export class WhatsAppBusinessAPI {
       const __response = await fetch(
         `${this.baseUrl}/${this.businessAccountId}/message_templates`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
           },
-        },
+        }
       );
 
       const __data = await response.json();
@@ -379,19 +379,19 @@ export class WhatsAppBusinessAPI {
 
   // Create Template
   async createTemplate(
-    template: Omit<WhatsAppTemplate, "status">,
+    template: Omit<WhatsAppTemplate, 'status'>
   ): Promise<{ success: boolean; templateId?: string; error?: string }> {
     try {
       const __response = await fetch(
         `${this.baseUrl}/${this.businessAccountId}/message_templates`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${this.accessToken}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(template),
-        },
+        }
       );
 
       const __data = await response.json();
@@ -404,7 +404,7 @@ export class WhatsAppBusinessAPI {
       } else {
         return {
           success: false,
-          error: data.error?.message || "Failed to create template",
+          error: data.error?.message || 'Failed to create template',
         };
       }
     } catch (error) {
@@ -434,10 +434,10 @@ export class WhatsAppBusinessAPI {
     const messages: unknown[] = [];
     const statuses: unknown[] = [];
 
-    event.entry.forEach((entry) => {
-      entry.changes.forEach((change) => {
+    event.entry.forEach(entry => {
+      entry.changes.forEach(change => {
         if (change.value.messages) {
-          change.value.messages.forEach((message) => {
+          change.value.messages.forEach(message => {
             messages.push({
               from: message.from,
               messageId: message.id,
@@ -453,7 +453,7 @@ export class WhatsAppBusinessAPI {
         }
 
         if (change.value.statuses) {
-          change.value.statuses.forEach((status) => {
+          change.value.statuses.forEach(status => {
             statuses.push({
               messageId: status.id,
               status: status.status,
@@ -471,7 +471,7 @@ export class WhatsAppBusinessAPI {
   // Verify Webhook
   verifyWebhook(_mode: string, token: string, _challenge: string): boolean {
     const __verifyToken = process.env.WHATSAPP_VERIFY_TOKEN;
-    return mode === "subscribe" && token === verifyToken;
+    return mode === 'subscribe' && token === verifyToken;
   }
 
   // Get Business Profile
@@ -482,7 +482,7 @@ export class WhatsAppBusinessAPI {
   }> {
     try {
       const __response = await fetch(`${this.baseUrl}/${this.phoneNumberId}`, {
-        method: "GET",
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${this.accessToken}`,
         },
@@ -498,7 +498,7 @@ export class WhatsAppBusinessAPI {
       } else {
         return {
           success: false,
-          error: data.error?.message || "Failed to get business profile",
+          error: data.error?.message || 'Failed to get business profile',
         };
       }
     } catch (error) {
@@ -520,10 +520,10 @@ export class WhatsAppBusinessAPI {
   }): Promise<{ success: boolean; error?: string }> {
     try {
       const __response = await fetch(`${this.baseUrl}/${this.phoneNumberId}`, {
-        method: "POST",
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${this.accessToken}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(profileData),
       });
@@ -535,7 +535,7 @@ export class WhatsAppBusinessAPI {
       } else {
         return {
           success: false,
-          error: data.error?.message || "Failed to update business profile",
+          error: data.error?.message || 'Failed to update business profile',
         };
       }
     } catch (error) {

@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 class FileCleanupManager {
   constructor() {
-    this.workspaceRoot = path.join(__dirname, "..");
-    this.tempDir = path.join(this.workspaceRoot, "temp");
-    this.logsDir = path.join(this.workspaceRoot, "logs");
-    this.archiveDir = path.join(this.workspaceRoot, "archive");
-    this.logFile = path.join(this.logsDir, "file-cleanup.log");
+    this.workspaceRoot = path.join(__dirname, '..');
+    this.tempDir = path.join(this.workspaceRoot, 'temp');
+    this.logsDir = path.join(this.workspaceRoot, 'logs');
+    this.archiveDir = path.join(this.workspaceRoot, 'archive');
+    this.logFile = path.join(this.logsDir, 'file-cleanup.log');
   }
 
   log(message) {
@@ -26,7 +26,7 @@ class FileCleanupManager {
   }
 
   async cleanupOldFiles() {
-    this.log("Starting file cleanup process...");
+    this.log('Starting file cleanup process...');
 
     let totalCleaned = 0;
     let totalArchived = 0;
@@ -44,7 +44,7 @@ class FileCleanupManager {
     totalArchived += archived;
 
     this.log(
-      `Cleanup completed: ${totalCleaned} files deleted, ${totalArchived} files archived`,
+      `Cleanup completed: ${totalCleaned} files deleted, ${totalArchived} files archived`
     );
 
     return {
@@ -103,7 +103,7 @@ class FileCleanupManager {
   }
 
   async archiveImportantLogs() {
-    this.log("Archiving important logs...");
+    this.log('Archiving important logs...');
 
     // Ensure archive directory exists
     if (!fs.existsSync(this.archiveDir)) {
@@ -112,11 +112,11 @@ class FileCleanupManager {
 
     let archivedCount = 0;
     const importantLogs = [
-      "cursor-agent.log",
-      "file-cleanup.log",
-      "n8n-workflow.log",
-      "social-media.log",
-      "dashboard.log",
+      'cursor-agent.log',
+      'file-cleanup.log',
+      'n8n-workflow.log',
+      'social-media.log',
+      'dashboard.log',
     ];
 
     for (const logFile of importantLogs) {
@@ -130,7 +130,7 @@ class FileCleanupManager {
         if (age > maxAge) {
           const archivePath = path.join(
             this.archiveDir,
-            `${logFile}.${Date.now()}`,
+            `${logFile}.${Date.now()}`
           );
           fs.copyFileSync(sourcePath, archivePath);
           fs.unlinkSync(sourcePath);
@@ -144,7 +144,7 @@ class FileCleanupManager {
   }
 
   async updateFileIndex() {
-    this.log("Updating file index...");
+    this.log('Updating file index...');
 
     const fileIndex = {
       timestamp: new Date().toISOString(),
@@ -157,15 +157,15 @@ class FileCleanupManager {
     this.scanDirectory(
       this.workspaceRoot,
       fileIndex.files,
-      fileIndex.directories,
+      fileIndex.directories
     );
 
     // Save file index
-    const indexFile = path.join(this.tempDir, "file-index.json");
+    const indexFile = path.join(this.tempDir, 'file-index.json');
     fs.writeFileSync(indexFile, JSON.stringify(fileIndex, null, 2));
 
     this.log(
-      `File index updated with ${fileIndex.files.length} files and ${fileIndex.directories.length} directories`,
+      `File index updated with ${fileIndex.files.length} files and ${fileIndex.directories.length} directories`
     );
 
     return fileIndex;
@@ -183,12 +183,12 @@ class FileCleanupManager {
           // Skip common directories that don't need indexing
           if (
             ![
-              "node_modules",
-              ".git",
-              ".next",
-              "dist",
-              "build",
-              "coverage",
+              'node_modules',
+              '.git',
+              '.next',
+              'dist',
+              'build',
+              'coverage',
             ].includes(item)
           ) {
             const relativePath = path.relative(this.workspaceRoot, itemPath);
@@ -218,7 +218,7 @@ class FileCleanupManager {
   }
 
   async generateCleanupReport() {
-    this.log("Generating cleanup report...");
+    this.log('Generating cleanup report...');
 
     const report = {
       timestamp: new Date().toISOString(),
@@ -231,8 +231,8 @@ class FileCleanupManager {
     // Save report
     const reportFile = path.join(
       this.workspaceRoot,
-      "reports",
-      "file-cleanup-report.json",
+      'reports',
+      'file-cleanup-report.json'
     );
     fs.writeFileSync(reportFile, JSON.stringify(report, null, 2));
 
@@ -243,10 +243,10 @@ class FileCleanupManager {
 
   async getDiskUsage() {
     try {
-      const { exec } = require("child_process");
+      const { exec } = require('child_process');
 
-      return new Promise((resolve) => {
-        exec("df -h", (error, stdout) => {
+      return new Promise(resolve => {
+        exec('df -h', (error, stdout) => {
           if (error) {
             resolve({ error: error.message });
           } else {
@@ -266,12 +266,12 @@ if (require.main === module) {
 
   cleanupManager
     .generateCleanupReport()
-    .then((report) => {
-      console.log("File cleanup completed successfully");
+    .then(report => {
+      console.log('File cleanup completed successfully');
       console.log(JSON.stringify(report, null, 2));
     })
-    .catch((error) => {
-      console.error("File cleanup failed:", error);
+    .catch(error => {
+      console.error('File cleanup failed:', error);
       process.exit(1);
     });
 }

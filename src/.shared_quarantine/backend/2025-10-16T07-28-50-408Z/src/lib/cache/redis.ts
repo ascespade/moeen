@@ -15,7 +15,7 @@ class RedisCache {
   constructor() {
     this.config = {
       ttl: 3600, // 1 hour default
-      prefix: "healthcare:",
+      prefix: 'healthcare:',
     };
   }
 
@@ -108,12 +108,12 @@ class RedisCache {
 // Cache decorator for functions
 export function __cached(
   ttl: number = 3600,
-  keyGenerator?: (...args: unknown[]) => string,
+  keyGenerator?: (...args: unknown[]) => string
 ) {
   return function (
     target: unknown,
     propertyName: string,
-    descriptor: PropertyDescriptor,
+    descriptor: PropertyDescriptor
   ) {
     const __method = descriptor.value;
     const __cache = new RedisCache();

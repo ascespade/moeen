@@ -3,14 +3,14 @@
  * Comprehensive logging system with multiple transports and log levels
  */
 
-import { _createClient } from "@/lib/supabase/server";
+import { _createClient } from '@/lib/supabase/server';
 
 export enum LogLevel {
-  ERROR = "error",
-  WARN = "warn",
-  INFO = "info",
-  DEBUG = "debug",
-  TRACE = "trace",
+  ERROR = 'error',
+  WARN = 'warn',
+  INFO = 'info',
+  DEBUG = 'debug',
+  TRACE = 'trace',
 }
 
 export interface LogEntry {
@@ -82,7 +82,7 @@ export class Logger {
     level: LogLevel,
     message: string,
     context?: Record<string, any>,
-    error?: Error,
+    error?: Error
   ): void {
     // Check if we should log this level
     if (!this.shouldLog(level)) {
@@ -136,10 +136,10 @@ export class Logger {
   private logToConsole(_logEntry: LogEntry): void {
     const __timestamp = logEntry.timestamp.toISOString();
     const __level = logEntry.level.toUpperCase().padEnd(5);
-    const __moduleName = logEntry.module ? `[${logEntry.module}]` : "";
-    const __functionName = logEntry.function ? `[${logEntry.function}]` : "";
-    const __context = logEntry.context ? JSON.stringify(logEntry.context) : "";
-    const __error = logEntry.error ? `\nError: ${logEntry.error.stack}` : "";
+    const __moduleName = logEntry.module ? `[${logEntry.module}]` : '';
+    const __functionName = logEntry.function ? `[${logEntry.function}]` : '';
+    const __context = logEntry.context ? JSON.stringify(logEntry.context) : '';
+    const __error = logEntry.error ? `\nError: ${logEntry.error.stack}` : '';
 
     const __logMessage = `${timestamp} ${level} ${moduleName}${functionName} ${logEntry.message} ${context}${error}`;
 
@@ -170,7 +170,7 @@ export class Logger {
 
   private async logToDatabase(_logEntry: LogEntry): Promise<void> {
     try {
-      await this.supabase.from("system_logs").insert({
+      await this.supabase.from('system_logs').insert({
         level: logEntry.level,
         message: logEntry.message,
         context: logEntry.context,
@@ -201,9 +201,9 @@ export class Logger {
 
     try {
       await fetch(this.config.remoteEndpoint, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${this.config.remoteApiKey}`,
         },
         body: JSON.stringify(logEntry),
@@ -216,14 +216,14 @@ export class Logger {
   private getCallerInfo(): { module: string; function: string } {
     const __stack = new Error().stack;
     if (!stack) {
-      return { module: "unknown", function: "unknown" };
+      return { module: 'unknown', function: 'unknown' };
     }
 
-    const __lines = stack.split("\n");
+    const __lines = stack.split('\n');
     const __callerLine = lines[3]; // Skip Error, getCallerInfo, and log methods
 
     if (!callerLine) {
-      return { module: "unknown", function: "unknown" };
+      return { module: 'unknown', function: 'unknown' };
     }
 
     // Extract module and function name from stack trace
@@ -231,12 +231,12 @@ export class Logger {
     if (match) {
       const __fullPath = match[2];
       const moduleName =
-        fullPath?.split("/").pop()?.replace(".ts", "") || "unknown";
-      const __functionName = match[1]?.split(".").pop() || "unknown";
+        fullPath?.split('/').pop()?.replace('.ts', '') || 'unknown';
+      const __functionName = match[1]?.split('.').pop() || 'unknown';
       return { module: moduleName, function: functionName };
     }
 
-    return { module: "unknown", function: "unknown" };
+    return { module: 'unknown', function: 'unknown' };
   }
 
   // Performance logging
@@ -250,42 +250,42 @@ export class Logger {
 
   // Structured logging for specific use cases
   logApiRequest(_req: unknown, res: unknown, duration: number): void {
-    this.info("API Request", {
+    this.info('API Request', {
       method: req.method,
       url: req.url,
       statusCode: res.statusCode,
       duration,
-      userAgent: req.headers["user-agent"],
+      userAgent: req.headers['user-agent'],
       ip: req.ip,
     });
   }
 
   logApiError(_req: unknown, error: Error, duration: number): void {
     this.error(
-      "API Error",
+      'API Error',
       {
         method: req.method,
         url: req.url,
         duration,
-        userAgent: req.headers["user-agent"],
+        userAgent: req.headers['user-agent'],
         ip: req.ip,
       },
-      error,
+      error
     );
   }
 
   logDatabaseQuery(_query: string, duration: number, error?: Error): void {
     if (error) {
       this.error(
-        "Database Query Error",
+        'Database Query Error',
         {
           query,
           duration,
         },
-        error,
+        error
       );
     } else {
-      this.debug("Database Query", {
+      this.debug('Database Query', {
         query,
         duration,
       });
@@ -296,24 +296,24 @@ export class Logger {
     userId: string,
     action: string,
     success: boolean,
-    error?: Error,
+    error?: Error
   ): void {
     if (success) {
-      this.info("Authentication Success", {
+      this.info('Authentication Success', {
         userId,
         action,
       });
     } else {
-      this.warn("Authentication Failed", {
+      this.warn('Authentication Failed', {
         userId,
         action,
-        error: error?.message || "Unknown error",
+        error: error?.message || 'Unknown error',
       });
     }
   }
 
   logSecurityEvent(_event: string, details: Record<string, any>): void {
-    this.warn("Security Event", {
+    this.warn('Security Event', {
       event,
       ...details,
     });

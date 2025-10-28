@@ -1,4 +1,4 @@
-import { _Intent } from "./types";
+import { _Intent } from './types';
 
 export class IntentAnalyzer {
   private intents: Map<string, any> = new Map();
@@ -9,8 +9,8 @@ export class IntentAnalyzer {
 
   private initializeIntents() {
     // Appointment booking intents
-    this.intents.set("book_appointment", {
-      keywords: ["موعد", "حجز", "تحديد", "appointment", "book", "schedule"],
+    this.intents.set('book_appointment', {
+      keywords: ['موعد', 'حجز', 'تحديد', 'appointment', 'book', 'schedule'],
       patterns: [
         /أريد حجز موعد/,
         /أريد تحديد موعد/,
@@ -18,56 +18,56 @@ export class IntentAnalyzer {
         /schedule appointment/,
         /موعد مع طبيب/,
       ],
-      actionType: "create_appointment",
+      actionType: 'create_appointment',
       priority: 1,
     });
 
     // Payment intents
-    this.intents.set("payment_inquiry", {
-      keywords: ["دفع", "فاتورة", "payment", "bill", "invoice"],
+    this.intents.set('payment_inquiry', {
+      keywords: ['دفع', 'فاتورة', 'payment', 'bill', 'invoice'],
       patterns: [
         /كم المبلغ المطلوب/,
         /أين أدفع/,
         /payment amount/,
         /how to pay/,
       ],
-      actionType: "payment_info",
+      actionType: 'payment_info',
       priority: 2,
     });
 
     // Insurance intents
-    this.intents.set("insurance_inquiry", {
-      keywords: ["تأمين", "مطالبة", "insurance", "claim"],
+    this.intents.set('insurance_inquiry', {
+      keywords: ['تأمين', 'مطالبة', 'insurance', 'claim'],
       patterns: [/حالة المطالبة/, /insurance claim/, /تأمين صحي/],
-      actionType: "insurance_info",
+      actionType: 'insurance_info',
       priority: 2,
     });
 
     // Reminder intents
-    this.intents.set("set_reminder", {
-      keywords: ["تذكير", "reminder", "تذكيرني"],
+    this.intents.set('set_reminder', {
+      keywords: ['تذكير', 'reminder', 'تذكيرني'],
       patterns: [/تذكيرني/, /set reminder/, /remind me/],
-      actionType: "send_reminder",
+      actionType: 'send_reminder',
       priority: 3,
     });
 
     // General inquiry intents
-    this.intents.set("general_inquiry", {
-      keywords: ["معلومات", "سؤال", "help", "info", "question"],
+    this.intents.set('general_inquiry', {
+      keywords: ['معلومات', 'سؤال', 'help', 'info', 'question'],
       patterns: [/معلومات عن/, /أريد معرفة/, /help me/, /what is/],
-      actionType: "general_info",
+      actionType: 'general_info',
       priority: 4,
     });
 
     // Greeting intents
-    this.intents.set("greeting", {
+    this.intents.set('greeting', {
       keywords: [
-        "مرحبا",
-        "أهلا",
-        "hello",
-        "hi",
-        "good morning",
-        "good afternoon",
+        'مرحبا',
+        'أهلا',
+        'hello',
+        'hi',
+        'good morning',
+        'good afternoon',
       ],
       patterns: [
         /مرحبا/,
@@ -77,7 +77,7 @@ export class IntentAnalyzer {
         /good morning/,
         /good afternoon/,
       ],
-      actionType: "greeting",
+      actionType: 'greeting',
       priority: 5,
     });
   }
@@ -85,7 +85,7 @@ export class IntentAnalyzer {
   async analyzeIntent(_message: string): Promise<Intent> {
     const __normalizedMessage = message.toLowerCase().trim();
     let bestMatch: Intent = {
-      type: "unknown",
+      type: 'unknown',
       confidence: 0,
       entities: {},
       actionType: undefined,
@@ -111,11 +111,11 @@ export class IntentAnalyzer {
       }
 
       // Extract entities based on intent type
-      if (intentType === "book_appointment") {
+      if (intentType === 'book_appointment') {
         entities.doctor = this.extractDoctor(normalizedMessage);
         entities.time = this.extractTime(normalizedMessage);
         entities.date = this.extractDate(normalizedMessage);
-      } else if (intentType === "payment_inquiry") {
+      } else if (intentType === 'payment_inquiry') {
         entities.amount = this.extractAmount(normalizedMessage);
         entities.method = this.extractPaymentMethod(normalizedMessage);
       }
@@ -178,12 +178,12 @@ export class IntentAnalyzer {
     for (const pattern of datePatterns) {
       const __match = message.match(pattern);
       if (match) {
-        if (match[0] === "اليوم" || match[0] === "today") {
-          return new Date().toISOString().split("T")[0] || null;
-        } else if (match[0] === "غدا" || match[0] === "tomorrow") {
+        if (match[0] === 'اليوم' || match[0] === 'today') {
+          return new Date().toISOString().split('T')[0] || null;
+        } else if (match[0] === 'غدا' || match[0] === 'tomorrow') {
           const __tomorrow = new Date();
           tomorrow.setDate(tomorrow.getDate() + 1);
-          return tomorrow.toISOString().split("T")[0] || null;
+          return tomorrow.toISOString().split('T')[0] || null;
         }
         return match[0]?.trim() || null;
       }
@@ -199,7 +199,7 @@ export class IntentAnalyzer {
   }
 
   private extractPaymentMethod(_message: string): string | null {
-    const __methods = ["نقدا", "بطاقة", "تحويل", "cash", "card", "transfer"];
+    const __methods = ['نقدا', 'بطاقة', 'تحويل', 'cash', 'card', 'transfer'];
     for (const method of methods) {
       if (message.includes(method)) {
         return method;

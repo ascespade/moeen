@@ -8,13 +8,22 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'all';
 
-    // Load real data from database
-    const [patients, doctors, appointments, sessions] = await Promise.all([
-      realDB.searchUsers('', 'patient'),
-      realDB.searchUsers('', 'doctor'),
-      realDB.getAppointments(),
-      realDB.getSessions(''),
-    ]);
+    // Load real data from database with error handling
+    let patients: any[] = [];
+    let doctors: any[] = [];
+    let appointments: any[] = [];
+    let sessions: any[] = [];
+
+    try {
+      [patients, doctors, appointments, sessions] = await Promise.all([
+        realDB.searchUsers('', 'patient').catch(() => []),
+        realDB.searchUsers('', 'doctor').catch(() => []),
+        realDB.getAppointments().catch(() => []),
+        realDB.getSessions('').catch(() => []),
+      ]);
+    } catch (dbError) {
+      console.warn('Database fetch error, using fallback data:', dbError);
+    }
 
     const dynamicData = {
       center_info: {

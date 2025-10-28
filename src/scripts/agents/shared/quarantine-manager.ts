@@ -2,9 +2,9 @@
  * Shared quarantine utilities for file management, logging, and rollback
  */
 
-import * as fs from "fs";
-import * as path from "path";
-import * as crypto from "crypto";
+import * as fs from 'fs';
+import * as path from 'path';
+import * as crypto from 'crypto';
 import {
   QuarantineSession,
   QuarantineManifest,
@@ -12,7 +12,7 @@ import {
   CleanupLog,
   UsageMap,
   PossibleBreak,
-} from "./types";
+} from './types';
 
 export class QuarantineManager {
   private quarantineDir: string;
@@ -21,7 +21,7 @@ export class QuarantineManager {
 
   constructor(_quarantineDir: string) {
     this.quarantineDir = quarantineDir;
-    this.cleanupLogPath = path.join(quarantineDir, "cleanup-log.json");
+    this.cleanupLogPath = path.join(quarantineDir, 'cleanup-log.json');
     this.sessionId = this.generateSessionId();
   }
 
@@ -33,7 +33,7 @@ export class QuarantineManager {
     const __sessionDir = path.join(
       this.quarantineDir,
       agent,
-      this.formatTimestamp(timestamp),
+      this.formatTimestamp(timestamp)
     );
 
     // Create session directory
@@ -41,14 +41,14 @@ export class QuarantineManager {
 
     const session: QuarantineSession = {
       id: this.sessionId,
-      agent: agent as "backend" | "frontend" | "shared",
+      agent: agent as 'backend' | 'frontend' | 'shared',
       timestamp,
       duration_ms: 0,
       files_quarantined: 0,
       size_recovered_bytes: 0,
-      status: "running",
+      status: 'running',
       quarantine_dir: sessionDir,
-      rollback_script: path.join(sessionDir, "rollback.sh"),
+      rollback_script: path.join(sessionDir, 'rollback.sh'),
       manifest: {
         session_id: this.sessionId,
         created_at: timestamp,
@@ -77,8 +77,8 @@ export class QuarantineManager {
     session: QuarantineSession,
     reason: string,
     category: string,
-    riskLevel: "safe" | "needs-review" | "dangerous",
-    metadata: Record<string, any> = {},
+    riskLevel: 'safe' | 'needs-review' | 'dangerous',
+    metadata: Record<string, any> = {}
   ): Promise<QuarantinedFile> {
     try {
       const __stats = await fs.promises.stat(filePath);
@@ -150,12 +150,12 @@ export class QuarantineManager {
       if (fs.existsSync(this.cleanupLogPath)) {
         const __logContent = await fs.promises.readFile(
           this.cleanupLogPath,
-          "utf-8",
+          'utf-8'
         );
         cleanupLog = JSON.parse(logContent);
       } else {
         cleanupLog = {
-          version: "1.0.0",
+          version: '1.0.0',
           created_at: new Date().toISOString(),
           sessions: [],
           total_files_quarantined: 0,
@@ -169,7 +169,7 @@ export class QuarantineManager {
       }
 
       // Update session status
-      session.status = "completed";
+      session.status = 'completed';
       session.duration_ms = Date.now() - new Date(session.timestamp).getTime();
 
       // Add session to log
@@ -193,7 +193,7 @@ export class QuarantineManager {
       // Write updated log
       await fs.promises.writeFile(
         this.cleanupLogPath,
-        JSON.stringify(cleanupLog, null, 2),
+        JSON.stringify(cleanupLog, null, 2)
       );
     } catch (error) {
       // // console.error("❌ Failed to update cleanup log:", error);
@@ -205,10 +205,10 @@ export class QuarantineManager {
    * Save session manifest
    */
   async saveManifest(_session: QuarantineSession): Promise<void> {
-    const __manifestPath = path.join(session.quarantine_dir, "manifest.json");
+    const __manifestPath = path.join(session.quarantine_dir, 'manifest.json');
     await fs.promises.writeFile(
       manifestPath,
-      JSON.stringify(session.manifest, null, 2),
+      JSON.stringify(session.manifest, null, 2)
     );
   }
 
@@ -217,12 +217,12 @@ export class QuarantineManager {
    */
   async saveUsageMap(
     session: QuarantineSession,
-    usageMap: UsageMap,
+    usageMap: UsageMap
   ): Promise<void> {
-    const __usageMapPath = path.join(session.quarantine_dir, "usage-map.json");
+    const __usageMapPath = path.join(session.quarantine_dir, 'usage-map.json');
     await fs.promises.writeFile(
       usageMapPath,
-      JSON.stringify(usageMap, null, 2),
+      JSON.stringify(usageMap, null, 2)
     );
     session.manifest.usage_map = usageMap;
   }
@@ -232,9 +232,9 @@ export class QuarantineManager {
    */
   async savePossibleBreaks(
     session: QuarantineSession,
-    possibleBreaks: PossibleBreak[],
+    possibleBreaks: PossibleBreak[]
   ): Promise<void> {
-    const __breaksPath = path.join(session.quarantine_dir, "possibleBreaks.md");
+    const __breaksPath = path.join(session.quarantine_dir, 'possibleBreaks.md');
     const __content = this.buildPossibleBreaksReport(possibleBreaks);
     await fs.promises.writeFile(breaksPath, content);
     session.possible_breaks = possibleBreaks;
@@ -242,7 +242,7 @@ export class QuarantineManager {
 
   private async calculateFileHash(_filePath: string): Promise<string> {
     const __content = await fs.promises.readFile(filePath);
-    return crypto.createHash("sha256").update(content).digest("hex");
+    return crypto.createHash('sha256').update(content).digest('hex');
   }
 
   private generateSessionId(): string {
@@ -250,7 +250,7 @@ export class QuarantineManager {
   }
 
   private formatTimestamp(_timestamp: string): string {
-    return new Date(timestamp).toISOString().replace(/[:.]/g, "-").slice(0, 19);
+    return new Date(timestamp).toISOString().replace(/[:.]/g, '-').slice(0, 19);
   }
 
   private buildRollbackScript(_session: QuarantineSession): string {
@@ -262,18 +262,18 @@ echo "🔄 Rolling back ${session.agent} cleanup session ${session.id}..."
 
 # Create directories if they don't exist
 ${session.manifest.files
-  .map((file) => {
+  .map(file => {
     const __dir = path.dirname(file.original_path);
     return `mkdir -p "${dir}"`;
   })
-  .join("\n")}
+  .join('\n')}
 
 # Restore files
 ${session.manifest.files
-  .map((file) => {
+  .map(file => {
     return `mv "${file.quarantine_path}" "${file.original_path}"`;
   })
-  .join("\n")}
+  .join('\n')}
 
 echo "✅ Rollback completed successfully!"
 echo "📊 Restored ${session.manifest.files.length} files"
@@ -304,7 +304,7 @@ echo "💾 Total size: ${this.formatBytes(session.size_recovered_bytes)}"
 
       if (breakItem.affected_files.length > 0) {
         content += `- **Affected Files**:\n`;
-        breakItem.affected_files.forEach((file) => {
+        breakItem.affected_files.forEach(file => {
           content += `  - \`${file}\`\n`;
         });
       }
@@ -320,9 +320,9 @@ echo "💾 Total size: ${this.formatBytes(session.size_recovered_bytes)}"
   }
 
   private formatBytes(_bytes: number): string {
-    const __sizes = ["Bytes", "KB", "MB", "GB"];
-    if (bytes === 0) return "0 Bytes";
+    const __sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    if (bytes === 0) return '0 Bytes';
     const __i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return Math.round((bytes / Math.pow(1024, i)) * 100) / 100 + " " + sizes[i];
+    return Math.round((bytes / Math.pow(1024, i)) * 100) / 100 + ' ' + sizes[i];
   }
 }

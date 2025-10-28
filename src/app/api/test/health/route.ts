@@ -3,9 +3,9 @@
  * Comprehensive API testing and validation
  */
 
-import { _NextRequest, NextResponse } from "next/server";
+import { _NextRequest, NextResponse } from 'next/server';
 
-import { _createClient } from "@/lib/supabase/server";
+import { _createClient } from '@/lib/supabase/server';
 
 export async function __GET(_request: NextRequest) {
   try {
@@ -17,7 +17,7 @@ export async function __GET(_request: NextRequest) {
       errors: string[];
     } = {
       timestamp: new Date().toISOString(),
-      status: "healthy",
+      status: 'healthy',
       services: {},
       errors: [],
     };
@@ -25,59 +25,59 @@ export async function __GET(_request: NextRequest) {
     // Test database connection
     try {
       const { data, error } = await supabase
-        .from("users")
-        .select("count")
+        .from('users')
+        .select('count')
         .limit(1);
 
       healthChecks.services.database = {
-        status: error ? "error" : "healthy",
+        status: error ? 'error' : 'healthy',
         responseTime: Date.now(),
         error: error?.message,
       };
     } catch (error) {
       healthChecks.services.database = {
-        status: "error",
+        status: 'error',
         error: error.message,
       };
-      healthChecks.errors.push("Database connection failed");
+      healthChecks.errors.push('Database connection failed');
     }
 
     // Test authentication
     try {
       const { data, error } = await supabase.auth.getSession();
       healthChecks.services.auth = {
-        status: error ? "error" : "healthy",
+        status: error ? 'error' : 'healthy',
         hasSession: !!data.session,
       };
     } catch (error) {
       healthChecks.services.auth = {
-        status: "error",
+        status: 'error',
         error: error.message,
       };
-      healthChecks.errors.push("Authentication service failed");
+      healthChecks.errors.push('Authentication service failed');
     }
 
     // Test storage
     try {
       const { data, error } = await supabase.storage
-        .from("medical-files")
-        .list("", { limit: 1 });
+        .from('medical-files')
+        .list('', { limit: 1 });
 
       healthChecks.services.storage = {
-        status: error ? "error" : "healthy",
+        status: error ? 'error' : 'healthy',
         error: error?.message,
       };
     } catch (error) {
       healthChecks.services.storage = {
-        status: "error",
+        status: 'error',
         error: error.message,
       };
-      healthChecks.errors.push("Storage service failed");
+      healthChecks.errors.push('Storage service failed');
     }
 
     // Overall status
     const __hasErrors = healthChecks.errors.length > 0;
-    healthChecks.status = hasErrors ? "unhealthy" : "healthy";
+    healthChecks.status = hasErrors ? 'unhealthy' : 'healthy';
 
     return NextResponse.json(healthChecks, {
       status: hasErrors ? 500 : 200,
@@ -86,10 +86,10 @@ export async function __GET(_request: NextRequest) {
     return NextResponse.json(
       {
         timestamp: new Date().toISOString(),
-        status: "unhealthy",
+        status: 'unhealthy',
         error: error.message,
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

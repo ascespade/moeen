@@ -4,10 +4,10 @@
  */
 
 // Production CUID using @paralleldrive/cuid2
-import { _createId } from "@paralleldrive/cuid2";
+import { _createId } from '@paralleldrive/cuid2';
 
 // CUID alphabet (base 36 with custom characters for URL safety)
-const __ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyz";
+const __ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyz';
 
 // Counter for uniqueness
 let counter = 0;
@@ -16,7 +16,7 @@ let counter = 0;
  * Generate a random string of specified length
  */
 function __randomString(_length: number): string {
-  let result = "";
+  let result = '';
   for (let i = 0; i < length; i++) {
     result += ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
   }
@@ -36,9 +36,9 @@ function __timestamp(): string {
  * Get hostname hash (simulated for browser environment)
  */
 function __hostname(): string {
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     return window.location.hostname
-      .split("")
+      .split('')
       .reduce((a, b) => {
         a = (a << 5) - a + b.charCodeAt(0);
         return a & a;
@@ -46,7 +46,7 @@ function __hostname(): string {
       .toString(36)
       .slice(-2);
   }
-  return "00";
+  return '00';
 }
 
 /**
@@ -68,7 +68,7 @@ export function __generateCuid(): string {
  * Generate a CUID for database records
  * Includes prefix for easy identification
  */
-export function __generateDbCuid(_prefix: string = "db"): string {
+export function __generateDbCuid(_prefix: string = 'db'): string {
   return `${prefix}_${generateCuid()}`;
 }
 
@@ -77,23 +77,23 @@ export function __generateDbCuid(_prefix: string = "db"): string {
  */
 export const __cuid = {
   // User related
-  user: () => generateDbCuid("usr"),
-  userRole: () => generateDbCuid("rol"),
-  userSession: () => generateDbCuid("ses"),
+  user: () => generateDbCuid('usr'),
+  userRole: () => generateDbCuid('rol'),
+  userSession: () => generateDbCuid('ses'),
 
   // Content related
-  translation: () => generateDbCuid("trn"),
-  conversation: () => generateDbCuid("cnv"),
-  message: () => generateDbCuid("msg"),
-  channel: () => generateDbCuid("chn"),
+  translation: () => generateDbCuid('trn'),
+  conversation: () => generateDbCuid('cnv'),
+  message: () => generateDbCuid('msg'),
+  channel: () => generateDbCuid('chn'),
 
   // System related
-  setting: () => generateDbCuid("set"),
-  log: () => generateDbCuid("log"),
-  notification: () => generateDbCuid("ntf"),
+  setting: () => generateDbCuid('set'),
+  log: () => generateDbCuid('log'),
+  notification: () => generateDbCuid('ntf'),
 
   // Generic
-  generic: () => generateDbCuid("gen"),
+  generic: () => generateDbCuid('gen'),
 
   // Custom prefix
   custom: (_prefix: string) => generateDbCuid(prefix),
@@ -114,7 +114,7 @@ export function __isValidCuid(_id: string): boolean {
  */
 export function __extractPrefix(_id: string): string | null {
   const __match = id.match(/^([a-z]+)_/);
-  return match && typeof match[1] === "string" ? match[1] : null;
+  return match && typeof match[1] === 'string' ? match[1] : null;
 }
 
 /**
@@ -122,10 +122,10 @@ export function __extractPrefix(_id: string): string | null {
  */
 export function __generateMultipleCuid(
   _count: number,
-  prefix?: string,
+  prefix?: string
 ): string[] {
   return Array.from({ length: count }, () =>
-    prefix ? generateDbCuid(prefix) : generateCuid(),
+    prefix ? generateDbCuid(prefix) : generateCuid()
   );
 }
 
@@ -144,7 +144,7 @@ export function __generateProductionCuid(): string {
  * @param prefix - Prefix for the ID (_default: 'pub')
  * @returns Formatted public ID
  */
-export function __generatePublicId(_prefix: string = "pub"): string {
+export function __generatePublicId(_prefix: string = 'pub'): string {
   return `${prefix}_${createId()}`;
 }
 
@@ -161,36 +161,36 @@ export function __generateShortId(): string {
  */
 export const __cuidEntity = {
   // Healthcare entities
-  patient: () => generatePublicId("pat"),
-  appointment: () => generatePublicId("apt"),
-  session: () => generatePublicId("ses"),
-  claim: () => generatePublicId("clm"),
-  doctor: () => generatePublicId("doc"),
+  patient: () => generatePublicId('pat'),
+  appointment: () => generatePublicId('apt'),
+  session: () => generatePublicId('ses'),
+  claim: () => generatePublicId('clm'),
+  doctor: () => generatePublicId('doc'),
 
   // Chatbot entities
-  flow: () => generatePublicId("flw"),
-  node: () => generatePublicId("nod"),
-  edge: () => generatePublicId("edg"),
-  conversation: () => generatePublicId("cnv"),
-  message: () => generatePublicId("msg"),
-  template: () => generatePublicId("tpl"),
-  integration: () => generatePublicId("int"),
+  flow: () => generatePublicId('flw'),
+  node: () => generatePublicId('nod'),
+  edge: () => generatePublicId('edg'),
+  conversation: () => generatePublicId('cnv'),
+  message: () => generatePublicId('msg'),
+  template: () => generatePublicId('tpl'),
+  integration: () => generatePublicId('int'),
 
   // CRM entities
-  lead: () => generatePublicId("led"),
-  deal: () => generatePublicId("del"),
-  activity: () => generatePublicId("act"),
-  contact: () => generatePublicId("cnt"),
+  lead: () => generatePublicId('led'),
+  deal: () => generatePublicId('del'),
+  activity: () => generatePublicId('act'),
+  contact: () => generatePublicId('cnt'),
 
   // System entities
-  notification: () => generatePublicId("ntf"),
-  audit: () => generatePublicId("aud"),
-  role: () => generatePublicId("rol"),
-  setting: () => generatePublicId("set"),
-  user: () => generatePublicId("usr"),
+  notification: () => generatePublicId('ntf'),
+  audit: () => generatePublicId('aud'),
+  role: () => generatePublicId('rol'),
+  setting: () => generatePublicId('set'),
+  user: () => generatePublicId('usr'),
 
   // Generic
-  generic: () => generatePublicId("gen"),
+  generic: () => generatePublicId('gen'),
 
   // Custom prefix
   custom: (_prefix: string) => generatePublicId(prefix),

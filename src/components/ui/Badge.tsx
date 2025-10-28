@@ -3,11 +3,13 @@ import { cn } from '@/lib/utils';
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?:
+    | 'default'
     | 'primary'
+    | 'secondary'
     | 'success'
     | 'warning'
     | 'error'
-    | 'secondary'
+    | 'info'
     | 'outline';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
@@ -22,6 +24,8 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
 
     const variants = {
       default: 'bg-[var(--default-default)] text-white',
+      primary: 'bg-[var(--default-default)] text-white',
+      secondary: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200',
       success:
         'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
       warning:

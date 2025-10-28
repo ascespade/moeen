@@ -7,49 +7,49 @@ export class APIError extends Error {
     message: string,
     statusCode: number = 500,
     code?: string,
-    details?: unknown,
+    details?: unknown
   ) {
     super(message);
-    this.name = "APIError";
+    this.name = 'APIError';
     this.statusCode = statusCode;
-    this.code = code || "INTERNAL_ERROR";
+    this.code = code || 'INTERNAL_ERROR';
     this.details = details;
   }
 }
 
 export class ValidationError extends APIError {
   constructor(_message: string, details?: unknown) {
-    super(message, 400, "VALIDATION_ERROR", details);
+    super(message, 400, 'VALIDATION_ERROR', details);
   }
 }
 
 export class AuthenticationError extends APIError {
-  constructor(_message: string = "Authentication required") {
-    super(message, 401, "AUTHENTICATION_ERROR");
+  constructor(_message: string = 'Authentication required') {
+    super(message, 401, 'AUTHENTICATION_ERROR');
   }
 }
 
 export class AuthorizationError extends APIError {
-  constructor(_message: string = "Insufficient permissions") {
-    super(message, 403, "AUTHORIZATION_ERROR");
+  constructor(_message: string = 'Insufficient permissions') {
+    super(message, 403, 'AUTHORIZATION_ERROR');
   }
 }
 
 export class NotFoundError extends APIError {
-  constructor(_resource: string = "Resource") {
-    super(`${resource} not found`, 404, "NOT_FOUND");
+  constructor(_resource: string = 'Resource') {
+    super(`${resource} not found`, 404, 'NOT_FOUND');
   }
 }
 
 export class ConflictError extends APIError {
   constructor(_message: string, details?: unknown) {
-    super(message, 409, "CONFLICT_ERROR", details);
+    super(message, 409, 'CONFLICT_ERROR', details);
   }
 }
 
 export class RateLimitError extends APIError {
-  constructor(_message: string = "Rate limit exceeded") {
-    super(message, 429, "RATE_LIMIT_ERROR");
+  constructor(_message: string = 'Rate limit exceeded') {
+    super(message, 429, 'RATE_LIMIT_ERROR');
   }
 }
 
@@ -58,26 +58,26 @@ export class ExternalServiceError extends APIError {
     super(
       `External service error (${service}): ${message}`,
       502,
-      "EXTERNAL_SERVICE_ERROR",
+      'EXTERNAL_SERVICE_ERROR'
     );
   }
 }
 
 export class DatabaseError extends APIError {
   constructor(_message: string, details?: unknown) {
-    super(`Database error: ${message}`, 500, "DATABASE_ERROR", details);
+    super(`Database error: ${message}`, 500, 'DATABASE_ERROR', details);
   }
 }
 
 export class PaymentError extends APIError {
   constructor(_message: string, details?: unknown) {
-    super(`Payment error: ${message}`, 400, "PAYMENT_ERROR", details);
+    super(`Payment error: ${message}`, 400, 'PAYMENT_ERROR', details);
   }
 }
 
 export class InsuranceError extends APIError {
   constructor(_message: string, details?: unknown) {
-    super(`Insurance error: ${message}`, 400, "INSURANCE_ERROR", details);
+    super(`Insurance error: ${message}`, 400, 'INSURANCE_ERROR', details);
   }
 }
 
@@ -103,15 +103,15 @@ export function __formatErrorResponse(_error: unknown): {
     return {
       success: false,
       error: error.message,
-      code: "UNKNOWN_ERROR",
+      code: 'UNKNOWN_ERROR',
       statusCode: 500,
     };
   }
 
   return {
     success: false,
-    error: "An unexpected error occurred",
-    code: "UNKNOWN_ERROR",
+    error: 'An unexpected error occurred',
+    code: 'UNKNOWN_ERROR',
     statusCode: 500,
   };
 }
@@ -132,7 +132,7 @@ export function __logError(_error: unknown, context?: unknown) {
   };
 
   // Log to console in development
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
   }
 
   // TODO: Send to external logging service in production

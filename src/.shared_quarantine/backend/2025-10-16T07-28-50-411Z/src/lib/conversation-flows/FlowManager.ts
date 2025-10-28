@@ -3,9 +3,9 @@ import {
   FlowStep,
   ConversationContext,
   FlowAction,
-} from "./types";
-import { _IntentAnalyzer } from "./IntentAnalyzer";
-import { _ActionExecutor } from "./ActionExecutor";
+} from './types';
+import { _IntentAnalyzer } from './IntentAnalyzer';
+import { _ActionExecutor } from './ActionExecutor';
 
 export class FlowManager {
   private flows: Map<string, ConversationFlow> = new Map();
@@ -18,107 +18,107 @@ export class FlowManager {
 
   private initializeFlows() {
     // Appointment booking flow
-    this.flows.set("appointment_booking", {
-      id: "appointment_booking",
-      name: "حجز موعد",
-      description: "تدفق حجز المواعيد",
+    this.flows.set('appointment_booking', {
+      id: 'appointment_booking',
+      name: 'حجز موعد',
+      description: 'تدفق حجز المواعيد',
       isActive: true,
-      startStep: "greeting",
+      startStep: 'greeting',
       steps: [
         {
-          id: "greeting",
-          name: "الترحيب",
-          type: "response",
-          content: "مرحباً! كيف يمكنني مساعدتك في حجز موعد؟",
-          nextStep: "get_doctor_preference",
+          id: 'greeting',
+          name: 'الترحيب',
+          type: 'response',
+          content: 'مرحباً! كيف يمكنني مساعدتك في حجز موعد؟',
+          nextStep: 'get_doctor_preference',
         },
         {
-          id: "get_doctor_preference",
-          name: "اختيار الطبيب",
-          type: "question",
-          content: "أي تخصص تفضل؟",
-          nextStep: "get_time_preference",
+          id: 'get_doctor_preference',
+          name: 'اختيار الطبيب',
+          type: 'question',
+          content: 'أي تخصص تفضل؟',
+          nextStep: 'get_time_preference',
         },
         {
-          id: "get_time_preference",
-          name: "اختيار الوقت",
-          type: "question",
-          content: "متى تفضل أن يكون الموعد؟",
-          nextStep: "confirm_appointment",
+          id: 'get_time_preference',
+          name: 'اختيار الوقت',
+          type: 'question',
+          content: 'متى تفضل أن يكون الموعد؟',
+          nextStep: 'confirm_appointment',
         },
         {
-          id: "confirm_appointment",
-          name: "تأكيد الموعد",
-          type: "action",
-          content: "هل تريد تأكيد هذا الموعد؟",
+          id: 'confirm_appointment',
+          name: 'تأكيد الموعد',
+          type: 'action',
+          content: 'هل تريد تأكيد هذا الموعد؟',
           actions: [
             {
-              type: "create_appointment",
+              type: 'create_appointment',
               data: {
-                doctorId: "{{doctorId}}",
-                appointmentTime: "{{appointmentTime}}",
-                patientId: "{{userId}}",
-                notes: "حجز عبر الشات بوت",
+                doctorId: '{{doctorId}}',
+                appointmentTime: '{{appointmentTime}}',
+                patientId: '{{userId}}',
+                notes: 'حجز عبر الشات بوت',
               },
             },
           ],
-          nextStep: "appointment_confirmed",
+          nextStep: 'appointment_confirmed',
         },
         {
-          id: "appointment_confirmed",
-          name: "تم تأكيد الموعد",
-          type: "response",
-          content: "تم حجز موعدك بنجاح! ستصلك رسالة تأكيد قريباً.",
+          id: 'appointment_confirmed',
+          name: 'تم تأكيد الموعد',
+          type: 'response',
+          content: 'تم حجز موعدك بنجاح! ستصلك رسالة تأكيد قريباً.',
         },
       ],
     });
 
     // Payment inquiry flow
-    this.flows.set("payment_inquiry", {
-      id: "payment_inquiry",
-      name: "استفسار الدفع",
-      description: "تدفق استفسارات الدفع",
+    this.flows.set('payment_inquiry', {
+      id: 'payment_inquiry',
+      name: 'استفسار الدفع',
+      description: 'تدفق استفسارات الدفع',
       isActive: true,
-      startStep: "greeting",
+      startStep: 'greeting',
       steps: [
         {
-          id: "greeting",
-          name: "الترحيب",
-          type: "response",
-          content: "مرحباً! كيف يمكنني مساعدتك في استفسارات الدفع؟",
-          nextStep: "get_payment_info",
+          id: 'greeting',
+          name: 'الترحيب',
+          type: 'response',
+          content: 'مرحباً! كيف يمكنني مساعدتك في استفسارات الدفع؟',
+          nextStep: 'get_payment_info',
         },
         {
-          id: "get_payment_info",
-          name: "معلومات الدفع",
-          type: "response",
+          id: 'get_payment_info',
+          name: 'معلومات الدفع',
+          type: 'response',
           content:
-            "يمكنك الدفع نقداً في العيادة أو عبر البطاقة الائتمانية أو التحويل البنكي.",
+            'يمكنك الدفع نقداً في العيادة أو عبر البطاقة الائتمانية أو التحويل البنكي.',
         },
       ],
     });
 
     // General inquiry flow
-    this.flows.set("general_inquiry", {
-      id: "general_inquiry",
-      name: "استفسار عام",
-      description: "تدفق الاستفسارات العامة",
+    this.flows.set('general_inquiry', {
+      id: 'general_inquiry',
+      name: 'استفسار عام',
+      description: 'تدفق الاستفسارات العامة',
       isActive: true,
-      startStep: "greeting",
+      startStep: 'greeting',
       steps: [
         {
-          id: "greeting",
-          name: "الترحيب",
-          type: "response",
-          content: "مرحباً! كيف يمكنني مساعدتك اليوم؟",
-          nextStep: "provide_info",
+          id: 'greeting',
+          name: 'الترحيب',
+          type: 'response',
+          content: 'مرحباً! كيف يمكنني مساعدتك اليوم؟',
+          nextStep: 'provide_info',
         },
         {
-          id: "provide_info",
-          name: "تقديم المعلومات",
-          type: "response",
+          id: 'provide_info',
+          name: 'تقديم المعلومات',
+          type: 'response',
           content:
-            "يمكنني مساعدتك في حجز المواعيد، استفسارات الدفع، التأمين، أو أي استفسار آخر.",
+            'يمكنني مساعدتك في حجز المواعيد، استفسارات الدفع، التأمين، أو أي استفسار آخر.',
         },
       ],
     });
@@ -130,11 +130,11 @@ export class FlowManager {
 
   getFlowByIntent(_intentType: string): ConversationFlow | undefined {
     const flowMapping: Record<string, string> = {
-      book_appointment: "appointment_booking",
-      payment_inquiry: "payment_inquiry",
-      insurance_inquiry: "general_inquiry",
-      general_inquiry: "general_inquiry",
-      greeting: "general_inquiry",
+      book_appointment: 'appointment_booking',
+      payment_inquiry: 'payment_inquiry',
+      insurance_inquiry: 'general_inquiry',
+      general_inquiry: 'general_inquiry',
+      greeting: 'general_inquiry',
     };
 
     const __flowId = flowMapping[intentType];
@@ -144,12 +144,12 @@ export class FlowManager {
   getNextStep(
     flowId: string,
     currentStepId: string,
-    userMessage: string,
+    userMessage: string
   ): FlowStep | null {
     const __flow = this.flows.get(flowId);
     if (!flow) return null;
 
-    const __currentStep = flow.steps.find((step) => step.id === currentStepId);
+    const __currentStep = flow.steps.find(step => step.id === currentStepId);
     if (!currentStep) return null;
 
     // Handle conditional logic
@@ -157,7 +157,7 @@ export class FlowManager {
       for (const condition of currentStep.conditions) {
         if (this.evaluateCondition(condition, userMessage)) {
           return (
-            flow.steps.find((step) => step.id === currentStep.nextStep) || null
+            flow.steps.find(step => step.id === currentStep.nextStep) || null
           );
         }
       }
@@ -170,9 +170,7 @@ export class FlowManager {
 
     // Return next step
     if (currentStep.nextStep) {
-      return (
-        flow.steps.find((step) => step.id === currentStep.nextStep) || null
-      );
+      return flow.steps.find(step => step.id === currentStep.nextStep) || null;
     }
 
     return null;
@@ -180,7 +178,7 @@ export class FlowManager {
 
   async executeStepAction(
     step: FlowStep,
-    context: ConversationContext,
+    context: ConversationContext
   ): Promise<any> {
     if (!step.actions) return null;
 
@@ -196,7 +194,7 @@ export class FlowManager {
 
   private async executeStepActions(
     actions: FlowAction[],
-    userMessage: string,
+    userMessage: string
   ): Promise<void> {
     // This would be implemented based on specific action requirements
     // // console.log("Executing step actions:", actions);
@@ -205,11 +203,11 @@ export class FlowManager {
   private evaluateCondition(_condition: unknown, userMessage: string): boolean {
     // Simple condition evaluation logic
     switch (condition.operator) {
-      case "contains":
+      case 'contains':
         return userMessage
           .toLowerCase()
           .includes(condition.value.toLowerCase());
-      case "equals":
+      case 'equals':
         return userMessage.toLowerCase() === condition.value.toLowerCase();
       default:
         return false;

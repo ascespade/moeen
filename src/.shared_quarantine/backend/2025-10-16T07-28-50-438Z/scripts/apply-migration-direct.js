@@ -1,26 +1,26 @@
 #!/usr/bin/env node
-require("dotenv").config();
-const { createClient } = require("@supabase/supabase-js");
-const fs = require("fs");
+require('dotenv').config();
+const { createClient } = require('@supabase/supabase-js');
+const fs = require('fs');
 
 async function applyMigrationDirectly() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE;
 
-  console.log("🚀 Applying database migration directly...");
+  console.log('🚀 Applying database migration directly...');
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   // Read the complete migration file
-  const migrationSQL = fs.readFileSync("migration-complete.sql", "utf8");
+  const migrationSQL = fs.readFileSync('migration-complete.sql', 'utf8');
 
   // Split into individual statements
   const statements = migrationSQL
-    .split(";")
-    .map((stmt) => stmt.trim())
+    .split(';')
+    .map(stmt => stmt.trim())
     .filter(
-      (stmt) =>
-        stmt.length > 0 && !stmt.startsWith("--") && !stmt.startsWith("/*"),
+      stmt =>
+        stmt.length > 0 && !stmt.startsWith('--') && !stmt.startsWith('/*')
     );
 
   let successCount = 0;
@@ -36,8 +36,8 @@ async function applyMigrationDirectly() {
 
       try {
         // Use the SQL editor approach
-        const { data, error } = await supabase.rpc("exec_sql", {
-          sql: statement + ";",
+        const { data, error } = await supabase.rpc('exec_sql', {
+          sql: statement + ';',
         });
 
         if (error) {
@@ -59,17 +59,17 @@ async function applyMigrationDirectly() {
   console.log(`❌ Failed: ${errorCount}`);
 
   if (errorCount === 0) {
-    console.log("\n🎉 Migration completed successfully!");
+    console.log('\n🎉 Migration completed successfully!');
     return true;
   } else {
-    console.log("\n⚠️  Some statements failed. Check errors above.");
+    console.log('\n⚠️  Some statements failed. Check errors above.');
     return false;
   }
 }
 
-applyMigrationDirectly().then((success) => {
+applyMigrationDirectly().then(success => {
   if (success) {
-    console.log("\n✅ Ready to test the application!");
+    console.log('\n✅ Ready to test the application!');
   }
   process.exit(success ? 0 : 1);
 });

@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import centralized design system styles */
-@import '../design-system/centralized-styles.css';
-
 /* Inter font family */
 .font-inter {
   font-family:

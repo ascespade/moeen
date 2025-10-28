@@ -6,7 +6,7 @@
  * سياق React لإدارة حالة الثيم في التطبيق
  */
 
-"use client";
+'use client';
 
 import React, {
   createContext,
@@ -14,7 +14,7 @@ import React, {
   useEffect,
   useState,
   ReactNode,
-} from "react";
+} from 'react';
 
 import {
   Theme,
@@ -30,7 +30,7 @@ import {
   getStoredLanguage,
   storeLanguage,
   getSystemTheme,
-} from "@/lib/centralized-theme";
+} from '@/lib/centralized-theme';
 
 // ========================================
 // CONTEXT TYPES - أنواع السياق
@@ -82,8 +82,8 @@ interface ThemeProviderProps {
 
 export function __ThemeProvider({
   children,
-  defaultTheme = "light",
-  defaultLanguage = "ar",
+  defaultTheme = 'light',
+  defaultLanguage = 'ar',
   enableSystemTheme = true,
   enableLanguageSwitching = true,
   enableThemeTransition = true,
@@ -96,12 +96,12 @@ export function __ThemeProvider({
 
   // Resolved theme - الثيم المحلول
   const __resolvedTheme = resolveTheme(theme);
-  const direction: Direction = language === "ar" ? "rtl" : "ltr";
+  const direction: Direction = language === 'ar' ? 'rtl' : 'ltr';
 
   // Computed values - القيم المحسوبة
-  const __isDark = resolvedTheme === "dark";
-  const __isLight = resolvedTheme === "light";
-  const __isSystem = theme === "system";
+  const __isDark = resolvedTheme === 'dark';
+  const __isLight = resolvedTheme === 'light';
+  const __isSystem = theme === 'system';
 
   // ========================================
   // THEME FUNCTIONS - دوال الثيم
@@ -125,11 +125,11 @@ export function __ThemeProvider({
 
   const __toggleTheme = () => {
     if (isDark) {
-      setTheme("light");
+      setTheme('light');
     } else if (isLight) {
-      setTheme("system");
+      setTheme('system');
     } else {
-      setTheme("dark");
+      setTheme('dark');
     }
   };
 
@@ -195,18 +195,18 @@ export function __ThemeProvider({
 
   // Listen for system theme changes - الاستماع لتغييرات ثيم النظام
   useEffect(() => {
-    if (!enableSystemTheme || theme !== "system") return;
+    if (!enableSystemTheme || theme !== 'system') return;
 
-    const __mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const __mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const __handleChange = () => {
-      if (theme === "system") {
+      if (theme === 'system') {
         applyThemeToDocument(getSystemTheme());
       }
     };
 
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, [theme, enableSystemTheme]);
 
   // ========================================
@@ -257,7 +257,7 @@ export function __useTheme() {
   const __context = useContext(ThemeContext);
 
   if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
 
   return context;
