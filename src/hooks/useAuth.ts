@@ -1,13 +1,12 @@
-import { _useState, useEffect, useCallback } from "react";
-
-import { _User } from "@/types";
+import { useState, useEffect, useCallback } from 'react';
+import { User } from '@/types';
 import {
   getUser,
   setUser,
   getToken,
   setToken,
   clearAuth,
-} from "@/utils/storage";
+} from '@/utils/storage';
 // Authentication hooks
 
 interface AuthState {
@@ -18,42 +17,34 @@ interface AuthState {
 }
 
 interface AuthActions {
-  login: (_user: User, token: string) => void;
+  login: (user: User, token: string) => void;
   logout: () => void;
-  updateUser: (_user: Partial<User>) => void;
+  updateUser: (user: Partial<User>) => void;
   loginWithCredentials: (
     email: string,
     password: string,
-    rememberMe?: boolean,
+    rememberMe?: boolean
   ) => Promise<{ success: boolean }>;
 }
 
-export const __useAuth = (): AuthState & AuthActions => {
+export const useAuth = (): AuthState & AuthActions => {
   const [user, setUserState] = useState<User | null>(null);
   const [token, setTokenState] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Initialize auth state from storage
   useEffect(() => {
-    const __initializeAuth = () => {
+    const initializeAuth = () => {
       try {
-        const __storedUser = getUser();
-        const __storedToken = getToken();
+        const storedUser = getUser();
+        const storedToken = getToken();
 
         if (storedUser && storedToken) {
           setUserState(storedUser);
           setTokenState(storedToken);
-        } else {
-          // Clear any invalid data
-          clearAuth();
-          setUserState(null);
-          setTokenState(null);
         }
       } catch (error) {
-        // // console.error("Auth initialization error:", error);
         clearAuth();
-        setUserState(null);
-        setTokenState(null);
       } finally {
         setIsLoading(false);
       }
@@ -62,61 +53,48 @@ export const __useAuth = (): AuthState & AuthActions => {
     initializeAuth();
   }, []);
 
-  const __login = useCallback((_userData: User, tokenData: string) => {
+  const login = useCallback((userData: User, tokenData: string) => {
     setUser(userData);
     setToken(tokenData);
     setUserState(userData);
     setTokenState(tokenData);
   }, []);
 
-  const __loginWithCredentials = useCallback(
-    async (_email: string, password: string, rememberMe: boolean = false) => {
+  const loginWithCredentials = useCallback(
+    async (email: string, password: string, rememberMe: boolean = false) => {
       try {
-        const __response = await fetch("/api/auth/login", {
-          method: "POST",
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ email, password, rememberMe }),
         });
 
-        const __data = await response.json();
+        const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || "Login failed");
+          throw new Error(data.error || 'Login failed');
         }
 
         if (data.success) {
           login(data.data.user, data.data.token);
           return { success: true };
         } else {
-          throw new Error(data.error || "Login failed");
+          throw new Error(data.error || 'Login failed');
         }
       } catch (error) {
         throw error;
       }
     },
-    [login],
+    [login]
   );
 
-  // Helper function to get auth headers for API calls
-  const __getAuthHeaders = useCallback(() => {
-    if (token) {
-      return {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      };
-    }
-    return {
-      "Content-Type": "application/json",
-    };
-  }, [token]);
-
-  const __logout = useCallback(async () => {
+  const logout = useCallback(async () => {
     try {
       // Call logout API to clear server-side session
-      await fetch("/api/auth/logout", {
-        method: "POST",
+      await fetch('/api/auth/logout', {
+        method: 'POST',
       });
     } catch (error) {
     } finally {
@@ -127,15 +105,15 @@ export const __useAuth = (): AuthState & AuthActions => {
     }
   }, []);
 
-  const __updateUser = useCallback(
-    (_userData: Partial<User>) => {
+  const updateUser = useCallback(
+    (userData: Partial<User>) => {
       if (user) {
-        const __updatedUser = { ...user, ...userData };
+        const updatedUser = { ...user, ...userData };
         setUser(updatedUser);
         setUserState(updatedUser);
       }
     },
-    [user],
+    [user]
   );
 
   return {
@@ -147,11 +125,10 @@ export const __useAuth = (): AuthState & AuthActions => {
     loginWithCredentials,
     logout,
     updateUser,
-    getAuthHeaders,
   };
 };
 
-export const __useRequireAuth = (_redirectTo: string = "/login") => {
+export const useRequireAuth = (redirectTo: string = '/login') => {
   const { isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
@@ -164,24 +141,24 @@ export const __useRequireAuth = (_redirectTo: string = "/login") => {
   return { isAuthenticated, isLoading };
 };
 
-export const __useRole = (_requiredRole: string | string[]) => {
+export const useRole = (requiredRole: string | string[]) => {
   const { user } = useAuth();
 
-  const __hasRole = useCallback(
-    (_role: string) => {
+  const hasRole = useCallback(
+    (role: string) => {
       return user?.role === role;
     },
-    [user?.role],
+    [user?.role]
   );
 
-  const __hasAnyRole = useCallback(
-    (_roles: string[]) => {
+  const hasAnyRole = useCallback(
+    (roles: string[]) => {
       return user ? roles.includes(user.role) : false;
     },
-    [user],
+    [user]
   );
 
-  const __canAccess = useCallback(() => {
+  const canAccess = useCallback(() => {
     if (!user) return false;
 
     if (Array.isArray(requiredRole)) {

@@ -1,15 +1,11 @@
-/**
- * Authorization utilities
- * Handles user authorization and permission checking
- */
-
-import { _createClient } from "@/lib/supabase/server";
+import { NextRequest } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
 export interface User {
   id: string;
   email: string;
-  role: string;
-  permissions: string[];
+  role: 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin';
+  meta?: Record<string, any>;
 }
 
 export interface AuthResult {
@@ -17,114 +13,63 @@ export interface AuthResult {
   error: string | null;
 }
 
-export async function __authorizeUser(): Promise<AuthResult> {
+export async function authorize(request: NextRequest): Promise<AuthResult> {
   try {
-    const __supabase = await createClient();
+    const supabase = await createClient();
 
+    // Get session from cookies
     const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
+      data: { session },
+      error: sessionError,
+    } = await supabase.auth.getSession();
 
-    if (authError || !user) {
-      return { user: null, error: "Unauthorized" };
+    if (sessionError || !session) {
+      return { user: null, error: 'Unauthorized' };
     }
 
-    // Get user profile with role and permissions
-    const { data: profile, error: profileError } = await supabase
-      .from("users")
-      .select("id, email, role, permissions")
-      .eq("id", user.id)
+    // Get user data with role
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('id, email, role, meta')
+      .eq('id', session.user.id)
       .single();
 
-    if (profileError || !profile) {
-      return { user: null, error: "User profile not found" };
+    if (userError || !userData) {
+      return { user: null, error: 'User not found' };
     }
 
     return {
       user: {
-        id: profile.id,
-        email: profile.email,
-        role: profile.role || "user",
-        permissions: profile.permissions || [],
+        id: userData.id,
+        email: userData.email,
+        role: userData.role as User['role'],
+        meta: userData.meta || {},
       },
       error: null,
     };
   } catch (error) {
-    // // console.error("Authorization error:", error);
-    return { user: null, error: "Authorization failed" };
+    return { user: null, error: 'Authorization failed' };
   }
 }
 
-export function __hasPermission(_user: User, permission: string): boolean {
-  return (
-    user.permissions.includes(permission) || user.permissions.includes("*")
-  );
+export function requireRole(
+  allowedRoles: User['role'][]
+): (user: User) => boolean {
+  return (user: User) => allowedRoles.includes(user.role);
 }
 
-export function __hasRole(_user: User, role: string): boolean {
-  return user.role === role || user.role === "admin";
-}
-
-export function __requireAuth(_handler: (_user: User) => any) {
-  return async (_req: Request) => {
-    const { user, error } = await authorizeUser();
+export function requireAuth(allowedRoles?: User['role'][]) {
+  return async (request: NextRequest) => {
+    const { user, error } = await authorize(request);
 
     if (error || !user) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      });
+      return { authorized: false, user: null, error };
     }
 
-    return handler(user);
-  };
-}
+    if (allowedRoles && !allowedRoles.includes(user.role)) {
+      return { authorized: false, user, error: 'Insufficient permissions' };
+    }
 
-export function __requirePermission(_permission: string) {
-  return (_handler: (_user: User) => any) => {
-    return async (_req: Request) => {
-      const { user, error } = await authorizeUser();
-
-      if (error || !user) {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401,
-          headers: { "Content-Type": "application/json" },
-        });
-      }
-
-      if (!hasPermission(user, permission)) {
-        return new Response(JSON.stringify({ error: "Forbidden" }), {
-          status: 403,
-          headers: { "Content-Type": "application/json" },
-        });
-      }
-
-      return handler(user);
-    };
-  };
-}
-
-export function __requireRole(_role: string) {
-  return (_handler: (_user: User) => any) => {
-    return async (_req: Request) => {
-      const { user, error } = await authorizeUser();
-
-      if (error || !user) {
-        return new Response(JSON.stringify({ error: "Unauthorized" }), {
-          status: 401,
-          headers: { "Content-Type": "application/json" },
-        });
-      }
-
-      if (!hasRole(user, role)) {
-        return new Response(JSON.stringify({ error: "Forbidden" }), {
-          status: 403,
-          headers: { "Content-Type": "application/json" },
-        });
-      }
-
-      return handler(user);
-    };
+    return { authorized: true, user, error: null };
   };
 }

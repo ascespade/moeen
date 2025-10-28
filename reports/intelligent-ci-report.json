@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-10-18T13:33:34.555Z",
+  "summary": {
+    "filesChanged": 0,
+    "modulesAffected": 0,
+    "testsGenerated": 0,
+    "testsPassed": 0,
+    "testsFailed": 0,
+    "testsFixed": 0,
+    "healingAttempts": 0
+  },
+  "diffMap": {
+    "timestamp": "2025-10-18T13:33:34.549Z",
+    "from": "HEAD~1",
+    "to": "HEAD",
+    "files": [],
+    "modules": [],
+    "totalFiles": 0,
+    "totalModules": 0
+  },
+  "testResults": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "tests": []
+  },
+  "healingResults": {
+    "fixed": 0,
+    "attempts": 0
+  },
+  "learnedPatterns": []
+}

@@ -1,28 +1,31 @@
-import { _NextRequest, NextResponse } from "next/server";
-
-import { _authorize } from "@/lib/auth/authorize";
-import { _createClient } from "@/lib/supabase/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { authorize } from '@/lib/auth/authorize';
 import {
   validateData,
   appointmentUpdateSchema,
-} from "@/lib/validation/schemas";
+} from '@/lib/validation/schemas';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 
-export async function __GET(
+export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+
   try {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const __supabase = createClient();
-    const __appointmentId = params.id;
+    const supabase = await createClient();
+    const appointmentId = params.id;
 
     const { data: appointment, error: appointmentError } = await supabase
-      .from("appointments")
+      .from('appointments')
       .select(
         `
         id,
@@ -36,25 +39,39 @@ export async function __GET(
         updated_at,
         patients!inner(id, full_name, phone, user_id),
         doctors!inner(id, speciality, user_id)
-      `,
+      `
       )
-      .eq("id", appointmentId)
+      .eq('id', appointmentId)
       .single();
 
     if (appointmentError || !appointment) {
       return NextResponse.json(
-        { error: "Appointment not found" },
-        { status: 404 },
+        { error: 'Appointment not found' },
+        { status: 404 }
       );
     }
 
     // Check permissions
-    if (user.role === "patient" && appointment.patients.user_id !== user.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    if (user.role === 'patient' && appointment.patients.user_id !== user.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
-    if (user.role === "doctor" && appointment.doctors.user_id !== user.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    if (user.role === 'doctor' && appointment.doctors.user_id !== user.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
+
+    // Log appointment view
+    const supabase2 = await createClient();
+    await supabase2.from('audit_logs').insert({
+      action: 'appointment_viewed',
+      user_id: user.id,
+      resource_type: 'appointment',
+      resource_id: appointmentId,
+      ip_address: ipAddress,
+      user_agent: userAgent,
+      status: 'success',
+      severity: 'secondary',
+      duration_ms: Date.now() - startTime,
+    });
 
     return NextResponse.json({
       appointment: {
@@ -78,42 +95,45 @@ export async function __GET(
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
 
-export async function __PATCH(
+export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { id: string } }
 ) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+
   try {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const __body = await request.json();
-    const __validation = validateData(appointmentUpdateSchema, body);
+    const body = await request.json();
+    const validation = validateData(appointmentUpdateSchema, body);
 
     if (!validation.success) {
       return NextResponse.json(
         {
-          error: "Validation failed",
+          error: 'Validation failed',
           details: validation.errors,
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
-    const __supabase = createClient();
-    const __appointmentId = params.id;
+    const supabase = await createClient();
+    const appointmentId = params.id;
 
     // Get current appointment
     const { data: currentAppointment, error: getError } = await supabase
-      .from("appointments")
+      .from('appointments')
       .select(
         `
         id,
@@ -122,40 +142,42 @@ export async function __PATCH(
         status,
         patients!inner(user_id),
         doctors!inner(user_id)
-      `,
+      `
       )
-      .eq("id", appointmentId)
+      .eq('id', appointmentId)
       .single();
 
     if (getError || !currentAppointment) {
       return NextResponse.json(
-        { error: "Appointment not found" },
-        { status: 404 },
+        { error: 'Appointment not found' },
+        { status: 404 }
       );
     }
 
     // Check permissions
     if (
-      user.role === "patient" &&
+      user.role === 'patient' &&
       currentAppointment.patients.user_id !== user.id
     ) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
     if (
-      user.role === "doctor" &&
+      user.role === 'doctor' &&
       currentAppointment.doctors.user_id !== user.id
     ) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
-    // Update appointment
+    // Update appointment with tracking
     const { data: appointment, error: updateError } = await supabase
-      .from("appointments")
+      .from('appointments')
       .update({
         ...validation.data,
         updated_at: new Date().toISOString(),
+        updated_by: user.id,
+        last_activity_at: new Date().toISOString(),
       })
-      .eq("id", appointmentId)
+      .eq('id', appointmentId)
       .select(
         `
         id,
@@ -167,28 +189,34 @@ export async function __PATCH(
         payment_status,
         patients!inner(full_name),
         doctors!inner(speciality)
-      `,
+      `
       )
       .single();
 
     if (updateError) {
       return NextResponse.json(
-        { error: "Failed to update appointment" },
-        { status: 500 },
+        { error: 'Failed to update appointment' },
+        { status: 500 }
       );
     }
 
-    // Log appointment update
-    await supabase.from("audit_logs").insert({
-      action: "appointment_updated",
+    // Log appointment update with full tracking
+    await supabase.from('audit_logs').insert({
+      action: 'appointment_updated',
       user_id: user.id,
-      resource_type: "appointment",
+      resource_type: 'appointment',
       resource_id: appointmentId,
+      ip_address: ipAddress,
+      user_agent: userAgent,
+      status: 'success',
+      severity: 'secondary',
       metadata: {
         old_status: currentAppointment.status,
         new_status: appointment.status,
         patient_name: appointment.patients.full_name,
+        changes: validation.data,
       },
+      duration_ms: Date.now() - startTime,
     });
 
     return NextResponse.json({
@@ -205,8 +233,8 @@ export async function __PATCH(
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

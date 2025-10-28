@@ -1,4 +1,4 @@
-import { _useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 // Intersection Observer hook
 
 interface UseIntersectionObserverOptions {
@@ -8,35 +8,35 @@ interface UseIntersectionObserverOptions {
   freezeOnceVisible?: boolean;
 }
 
-export const __useIntersectionObserver = (
-  options: UseIntersectionObserverOptions = {},
+export const useIntersectionObserver = (
+  options: UseIntersectionObserverOptions = {}
 ) => {
   const {
     threshold = 0,
     root = null,
-    rootMargin = "0%",
+    rootMargin = '0%',
     freezeOnceVisible = false,
   } = options;
 
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
   const [node, setNode] = useState<Element | null>(null);
-  const __observer = useRef<IntersectionObserver | null>(null);
+  const observer = useRef<IntersectionObserver | null>(null);
 
-  const __frozen = entry?.isIntersecting && freezeOnceVisible;
+  const frozen = entry?.isIntersecting && freezeOnceVisible;
 
-  const __updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
+  const updateEntry = ([entry]: IntersectionObserverEntry[]): void => {
     setEntry(entry || null);
   };
 
   useEffect(() => {
-    const __hasIOSupport = !!window.IntersectionObserver;
+    const hasIOSupport = !!window.IntersectionObserver;
 
     if (!hasIOSupport || frozen || !node) return;
 
-    const __observerParams = { threshold, root, rootMargin };
-    const __currentObserver = new IntersectionObserver(
+    const observerParams = { threshold, root, rootMargin };
+    const currentObserver = new IntersectionObserver(
       updateEntry,
-      observerParams,
+      observerParams
     );
 
     observer.current = currentObserver;
@@ -47,7 +47,7 @@ export const __useIntersectionObserver = (
     };
   }, [node, threshold, root, rootMargin, frozen]);
 
-  const __prevNode = useRef<Element | null>(null);
+  const prevNode = useRef<Element | null>(null);
 
   useEffect(() => {
     if (prevNode.current) {
@@ -64,14 +64,12 @@ export const __useIntersectionObserver = (
   return [setNode, entry] as const;
 };
 
-export const __useInView = (_options: UseIntersectionObserverOptions = {}) => {
+export const useInView = (options: UseIntersectionObserverOptions = {}) => {
   const [ref, entry] = useIntersectionObserver(options);
   return [ref, !!entry?.isIntersecting] as const;
 };
 
-export const __useLazyLoad = (
-  _options: UseIntersectionObserverOptions = {},
-) => {
+export const useLazyLoad = (options: UseIntersectionObserverOptions = {}) => {
   const [ref, inView] = useInView(options);
   const [hasLoaded, setHasLoaded] = useState(false);
 

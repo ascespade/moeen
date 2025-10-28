@@ -3,10 +3,9 @@
  * Centralized state management using Zustand
  */
 
-import { _create } from "zustand";
-import { _devtools, persist } from "zustand/middleware";
-import { _immer } from "zustand/middleware/immer";
-
+import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 import {
   User,
   Patient,
@@ -15,7 +14,7 @@ import {
   Payment,
   InsuranceClaim,
   Notification,
-} from "../types";
+} from '../types';
 
 // Auth Store
 interface AuthState {
@@ -27,17 +26,17 @@ interface AuthState {
 }
 
 interface AuthActions {
-  login: (_user: User, token: string) => void;
+  login: (user: User, token: string) => void;
   logout: () => void;
-  setLoading: (_loading: boolean) => void;
-  setError: (_error: string | null) => void;
-  updateUser: (_user: Partial<User>) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
+  updateUser: (user: Partial<User>) => void;
 }
 
-export const __useAuthStore = create<AuthState & AuthActions>()(
+export const useAuthStore = create<AuthState & AuthActions>()(
   devtools(
     persist(
-      immer((set) => ({
+      immer(set => ({
         // State
         user: null,
         token: null,
@@ -47,7 +46,7 @@ export const __useAuthStore = create<AuthState & AuthActions>()(
 
         // Actions
         login: (user, token) =>
-          set((state) => {
+          set(state => {
             state.user = user;
             state.token = token;
             state.isAuthenticated = true;
@@ -55,48 +54,48 @@ export const __useAuthStore = create<AuthState & AuthActions>()(
           }),
 
         logout: () =>
-          set((state) => {
+          set(state => {
             state.user = null;
             state.token = null;
             state.isAuthenticated = false;
             state.error = null;
           }),
 
-        setLoading: (loading) =>
-          set((state) => {
+        setLoading: loading =>
+          set(state => {
             state.isLoading = loading;
           }),
 
-        setError: (error) =>
-          set((state) => {
+        setError: error =>
+          set(state => {
             state.error = error;
           }),
 
-        updateUser: (userData) =>
-          set((state) => {
+        updateUser: userData =>
+          set(state => {
             if (state.user) {
               state.user = { ...state.user, ...userData };
             }
           }),
       })),
       {
-        name: "auth-store",
-        partialize: (state) => ({
+        name: 'auth-store',
+        partialize: state => ({
           user: state.user,
           token: state.token,
           isAuthenticated: state.isAuthenticated,
         }),
-      },
+      }
     ),
-    { name: "AuthStore" },
-  ),
+    { name: 'AuthStore' }
+  )
 );
 
 // UI Store
 interface UIState {
   sidebarOpen: boolean;
-  theme: "light" | "dark" | "system";
-  language: "ar" | "en";
+  theme: 'light' | 'dark' | 'system';
+  language: 'ar' | 'en';
   notifications: Notification[];
   modals: Record<string, boolean>;
   loading: Record<string, boolean>;
@@ -104,55 +103,55 @@ interface UIState {
 
 interface UIActions {
   toggleSidebar: () => void;
-  setSidebarOpen: (_open: boolean) => void;
-  setTheme: (_theme: "light" | "dark" | "system") => void;
-  setLanguage: (_language: "ar" | "en") => void;
+  setSidebarOpen: (open: boolean) => void;
+  setTheme: (theme: 'light' | 'dark' | 'system') => void;
+  setLanguage: (language: 'ar' | 'en') => void;
   addNotification: (
-    notification: Omit<Notification, "id" | "createdAt">,
+    notification: Omit<Notification, 'id' | 'createdAt'>
   ) => void;
-  removeNotification: (_id: string) => void;
-  markNotificationAsRead: (_id: string) => void;
+  removeNotification: (id: string) => void;
+  markNotificationAsRead: (id: string) => void;
   clearNotifications: () => void;
-  openModal: (_modalId: string) => void;
-  closeModal: (_modalId: string) => void;
-  setLoading: (_key: string, loading: boolean) => void;
+  openModal: (modalId: string) => void;
+  closeModal: (modalId: string) => void;
+  setLoading: (key: string, loading: boolean) => void;
 }
 
-export const __useUIStore = create<UIState & UIActions>()(
+export const useUIStore = create<UIState & UIActions>()(
   devtools(
     persist(
-      immer((set) => ({
+      immer(set => ({
         // State
         sidebarOpen: false,
-        theme: "system",
-        language: "ar",
+        theme: 'system',
+        language: 'ar',
         notifications: [],
         modals: {},
         loading: {},
 
         // Actions
         toggleSidebar: () =>
-          set((state) => {
+          set(state => {
             state.sidebarOpen = !state.sidebarOpen;
           }),
 
-        setSidebarOpen: (open) =>
-          set((state) => {
+        setSidebarOpen: open =>
+          set(state => {
             state.sidebarOpen = open;
           }),
 
-        setTheme: (theme) =>
-          set((state) => {
+        setTheme: theme =>
+          set(state => {
             state.theme = theme;
           }),
 
-        setLanguage: (language) =>
-          set((state) => {
+        setLanguage: language =>
+          set(state => {
             state.language = language;
           }),
 
-        addNotification: (notification) =>
-          set((state) => {
+        addNotification: notification =>
+          set(state => {
             const newNotification: Notification = {
               ...notification,
               id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -161,51 +160,49 @@ export const __useUIStore = create<UIState & UIActions>()(
             state.notifications.unshift(newNotification);
           }),
 
-        removeNotification: (id) =>
-          set((state) => {
-            state.notifications = state.notifications.filter(
-              (n) => n.id !== id,
-            );
+        removeNotification: id =>
+          set(state => {
+            state.notifications = state.notifications.filter(n => n.id !== id);
           }),
 
-        markNotificationAsRead: (id) =>
-          set((state) => {
-            const __notification = state.notifications.find((n) => n.id === id);
+        markNotificationAsRead: id =>
+          set(state => {
+            const notification = state.notifications.find(n => n.id === id);
             if (notification) {
               notification.isRead = true;
             }
           }),
 
         clearNotifications: () =>
-          set((state) => {
+          set(state => {
             state.notifications = [];
           }),
 
-        openModal: (modalId) =>
-          set((state) => {
+        openModal: modalId =>
+          set(state => {
             state.modals[modalId] = true;
           }),
 
-        closeModal: (modalId) =>
-          set((state) => {
+        closeModal: modalId =>
+          set(state => {
             state.modals[modalId] = false;
           }),
 
         setLoading: (key, loading) =>
-          set((state) => {
+          set(state => {
             state.loading[key] = loading;
           }),
       })),
       {
-        name: "ui-store",
-        partialize: (state) => ({
+        name: 'ui-store',
+        partialize: state => ({
           theme: state.theme,
           language: state.language,
         }),
-      },
+      }
     ),
-    { name: "UIStore" },
-  ),
+    { name: 'UIStore' }
+  )
 );
 
 // Data Store
@@ -222,76 +219,76 @@ interface DataState {
 
 interface DataActions {
   // Patients
-  setPatients: (_patients: Patient[]) => void;
-  addPatient: (_patient: Patient) => void;
+  setPatients: (patients: Patient[]) => void;
+  addPatient: (patient: Patient) => void;
   updatePatient: (
     id: string,
-    patientData: Partial<Omit<Patient, "id" | "createdAt" | "updatedAt">>,
+    patientData: Partial<Omit<Patient, 'id' | 'createdAt' | 'updatedAt'>>
   ) => void;
-  removePatient: (_id: string) => void;
-  getPatient: (_id: string) => Patient | undefined;
+  removePatient: (id: string) => void;
+  getPatient: (id: string) => Patient | undefined;
 
   // Doctors
-  setDoctors: (_doctors: Doctor[]) => void;
-  addDoctor: (_doctor: Doctor) => void;
+  setDoctors: (doctors: Doctor[]) => void;
+  addDoctor: (doctor: Doctor) => void;
   updateDoctor: (
     id: string,
-    doctorData: Partial<Omit<Doctor, "id" | "createdAt" | "updatedAt">>,
+    doctorData: Partial<Omit<Doctor, 'id' | 'createdAt' | 'updatedAt'>>
   ) => void;
-  removeDoctor: (_id: string) => void;
-  getDoctor: (_id: string) => Doctor | undefined;
+  removeDoctor: (id: string) => void;
+  getDoctor: (id: string) => Doctor | undefined;
 
   // Appointments
-  setAppointments: (_appointments: Appointment[]) => void;
-  addAppointment: (_appointment: Appointment) => void;
+  setAppointments: (appointments: Appointment[]) => void;
+  addAppointment: (appointment: Appointment) => void;
   updateAppointment: (
     id: string,
     appointmentData: Partial<
-      Omit<Appointment, "id" | "createdAt" | "updatedAt">
-    >,
+      Omit<Appointment, 'id' | 'createdAt' | 'updatedAt'>
+    >
   ) => void;
-  removeAppointment: (_id: string) => void;
-  getAppointment: (_id: string) => Appointment | undefined;
+  removeAppointment: (id: string) => void;
+  getAppointment: (id: string) => Appointment | undefined;
 
   // Payments
-  setPayments: (_payments: Payment[]) => void;
-  addPayment: (_payment: Payment) => void;
+  setPayments: (payments: Payment[]) => void;
+  addPayment: (payment: Payment) => void;
   updatePayment: (
     id: string,
-    paymentData: Partial<Omit<Payment, "id" | "createdAt" | "updatedAt">>,
+    paymentData: Partial<Omit<Payment, 'id' | 'createdAt' | 'updatedAt'>>
   ) => void;
-  removePayment: (_id: string) => void;
-  getPayment: (_id: string) => Payment | undefined;
+  removePayment: (id: string) => void;
+  getPayment: (id: string) => Payment | undefined;
 
   // Insurance Claims
-  setInsuranceClaims: (_claims: InsuranceClaim[]) => void;
-  addInsuranceClaim: (_claim: InsuranceClaim) => void;
+  setInsuranceClaims: (claims: InsuranceClaim[]) => void;
+  addInsuranceClaim: (claim: InsuranceClaim) => void;
   updateInsuranceClaim: (
     id: string,
-    claimData: Partial<Omit<InsuranceClaim, "id" | "createdAt" | "updatedAt">>,
+    claimData: Partial<Omit<InsuranceClaim, 'id' | 'createdAt' | 'updatedAt'>>
   ) => void;
-  removeInsuranceClaim: (_id: string) => void;
-  getInsuranceClaim: (_id: string) => InsuranceClaim | undefined;
+  removeInsuranceClaim: (id: string) => void;
+  getInsuranceClaim: (id: string) => InsuranceClaim | undefined;
 
   // Notifications
-  setNotifications: (_notifications: Notification[]) => void;
-  addNotification: (_notification: Notification) => void;
+  setNotifications: (notifications: Notification[]) => void;
+  addNotification: (notification: Notification) => void;
   updateNotification: (
     id: string,
     notificationData: Partial<
-      Omit<Notification, "id" | "createdAt" | "updatedAt">
-    >,
+      Omit<Notification, 'id' | 'createdAt' | 'updatedAt'>
+    >
   ) => void;
-  removeNotification: (_id: string) => void;
-  getNotification: (_id: string) => Notification | undefined;
+  removeNotification: (id: string) => void;
+  getNotification: (id: string) => Notification | undefined;
 
   // General
-  setLoading: (_loading: boolean) => void;
-  setError: (_error: string | null) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
   clearError: () => void;
 }
 
-export const __useDataStore = create<DataState & DataActions>()(
+export const useDataStore = create<DataState & DataActions>()(
   devtools(
     persist(
       immer((set, get) => ({
@@ -306,24 +303,24 @@ export const __useDataStore = create<DataState & DataActions>()(
         error: null,
 
         // Patient Actions
-        setPatients: (patients) =>
-          set((state) => {
+        setPatients: patients =>
+          set(state => {
             state.patients = patients;
           }),
 
-        addPatient: (patient) =>
-          set((state) => {
+        addPatient: patient =>
+          set(state => {
             state.patients.push(patient);
           }),
 
         updatePatient: (id, patientData) =>
-          set((state) => {
-            const __index = state.patients.findIndex((p) => p.id === id);
+          set(state => {
+            const index = state.patients.findIndex(p => p.id === id);
             if (index !== -1) {
-              const __validUpdates = Object.fromEntries(
+              const validUpdates = Object.fromEntries(
                 Object.entries(patientData).filter(
-                  ([_, value]) => value !== undefined,
-                ),
+                  ([_, value]) => value !== undefined
+                )
               );
               state.patients[index] = {
                 ...state.patients[index],
@@ -332,35 +329,35 @@ export const __useDataStore = create<DataState & DataActions>()(
             }
           }),
 
-        removePatient: (id) =>
-          set((state) => {
-            state.patients = state.patients.filter((p) => p.id !== id);
+        removePatient: id =>
+          set(state => {
+            state.patients = state.patients.filter(p => p.id !== id);
           }),
 
-        getPatient: (id) => {
-          const __state = get();
-          return state.patients.find((p) => p.id === id);
+        getPatient: id => {
+          const state = get();
+          return state.patients.find(p => p.id === id);
         },
 
         // Doctor Actions
-        setDoctors: (doctors) =>
-          set((state) => {
+        setDoctors: doctors =>
+          set(state => {
             state.doctors = doctors;
           }),
 
-        addDoctor: (doctor) =>
-          set((state) => {
+        addDoctor: doctor =>
+          set(state => {
             state.doctors.push(doctor);
           }),
 
         updateDoctor: (id, doctorData) =>
-          set((state) => {
-            const __index = state.doctors.findIndex((d) => d.id === id);
+          set(state => {
+            const index = state.doctors.findIndex(d => d.id === id);
             if (index !== -1) {
-              const __validUpdates = Object.fromEntries(
+              const validUpdates = Object.fromEntries(
                 Object.entries(doctorData).filter(
-                  ([_, value]) => value !== undefined,
-                ),
+                  ([_, value]) => value !== undefined
+                )
               );
               state.doctors[index] = {
                 ...state.doctors[index],
@@ -369,35 +366,35 @@ export const __useDataStore = create<DataState & DataActions>()(
             }
           }),
 
-        removeDoctor: (id) =>
-          set((state) => {
-            state.doctors = state.doctors.filter((d) => d.id !== id);
+        removeDoctor: id =>
+          set(state => {
+            state.doctors = state.doctors.filter(d => d.id !== id);
           }),
 
-        getDoctor: (id) => {
-          const __state = get();
-          return state.doctors.find((d) => d.id === id);
+        getDoctor: id => {
+          const state = get();
+          return state.doctors.find(d => d.id === id);
         },
 
         // Appointment Actions
-        setAppointments: (appointments) =>
-          set((state) => {
+        setAppointments: appointments =>
+          set(state => {
             state.appointments = appointments;
           }),
 
-        addAppointment: (appointment) =>
-          set((state) => {
+        addAppointment: appointment =>
+          set(state => {
             state.appointments.push(appointment);
           }),
 
         updateAppointment: (id, appointmentData) =>
-          set((state) => {
-            const __index = state.appointments.findIndex((a) => a.id === id);
+          set(state => {
+            const index = state.appointments.findIndex(a => a.id === id);
             if (index !== -1) {
-              const __validUpdates = Object.fromEntries(
+              const validUpdates = Object.fromEntries(
                 Object.entries(appointmentData).filter(
-                  ([_, value]) => value !== undefined,
-                ),
+                  ([_, value]) => value !== undefined
+                )
               );
               state.appointments[index] = {
                 ...state.appointments[index],
@@ -406,35 +403,35 @@ export const __useDataStore = create<DataState & DataActions>()(
             }
           }),
 
-        removeAppointment: (id) =>
-          set((state) => {
-            state.appointments = state.appointments.filter((a) => a.id !== id);
+        removeAppointment: id =>
+          set(state => {
+            state.appointments = state.appointments.filter(a => a.id !== id);
           }),
 
-        getAppointment: (id) => {
-          const __state = get();
-          return state.appointments.find((a) => a.id === id);
+        getAppointment: id => {
+          const state = get();
+          return state.appointments.find(a => a.id === id);
         },
 
         // Payment Actions
-        setPayments: (payments) =>
-          set((state) => {
+        setPayments: payments =>
+          set(state => {
             state.payments = payments;
           }),
 
-        addPayment: (payment) =>
-          set((state) => {
+        addPayment: payment =>
+          set(state => {
             state.payments.push(payment);
           }),
 
         updatePayment: (id, paymentData) =>
-          set((state) => {
-            const __index = state.payments.findIndex((p) => p.id === id);
+          set(state => {
+            const index = state.payments.findIndex(p => p.id === id);
             if (index !== -1) {
-              const __validUpdates = Object.fromEntries(
+              const validUpdates = Object.fromEntries(
                 Object.entries(paymentData).filter(
-                  ([_, value]) => value !== undefined,
-                ),
+                  ([_, value]) => value !== undefined
+                )
               );
               state.payments[index] = {
                 ...state.payments[index],
@@ -443,35 +440,35 @@ export const __useDataStore = create<DataState & DataActions>()(
             }
           }),
 
-        removePayment: (id) =>
-          set((state) => {
-            state.payments = state.payments.filter((p) => p.id !== id);
+        removePayment: id =>
+          set(state => {
+            state.payments = state.payments.filter(p => p.id !== id);
           }),
 
-        getPayment: (id) => {
-          const __state = get();
-          return state.payments.find((p) => p.id === id);
+        getPayment: id => {
+          const state = get();
+          return state.payments.find(p => p.id === id);
         },
 
         // Insurance Claim Actions
-        setInsuranceClaims: (claims) =>
-          set((state) => {
+        setInsuranceClaims: claims =>
+          set(state => {
             state.insuranceClaims = claims;
           }),
 
-        addInsuranceClaim: (claim) =>
-          set((state) => {
+        addInsuranceClaim: claim =>
+          set(state => {
             state.insuranceClaims.push(claim);
           }),
 
         updateInsuranceClaim: (id, claimData) =>
-          set((state) => {
-            const __index = state.insuranceClaims.findIndex((c) => c.id === id);
+          set(state => {
+            const index = state.insuranceClaims.findIndex(c => c.id === id);
             if (index !== -1) {
-              const __validUpdates = Object.fromEntries(
+              const validUpdates = Object.fromEntries(
                 Object.entries(claimData).filter(
-                  ([_, value]) => value !== undefined,
-                ),
+                  ([_, value]) => value !== undefined
+                )
               );
               state.insuranceClaims[index] = {
                 ...state.insuranceClaims[index],
@@ -480,37 +477,37 @@ export const __useDataStore = create<DataState & DataActions>()(
             }
           }),
 
-        removeInsuranceClaim: (id) =>
-          set((state) => {
+        removeInsuranceClaim: id =>
+          set(state => {
             state.insuranceClaims = state.insuranceClaims.filter(
-              (c) => c.id !== id,
+              c => c.id !== id
             );
           }),
 
-        getInsuranceClaim: (id) => {
-          const __state = get();
-          return state.insuranceClaims.find((c) => c.id === id);
+        getInsuranceClaim: id => {
+          const state = get();
+          return state.insuranceClaims.find(c => c.id === id);
         },
 
         // Notification Actions
-        setNotifications: (notifications) =>
-          set((state) => {
+        setNotifications: notifications =>
+          set(state => {
             state.notifications = notifications;
           }),
 
-        addNotification: (notification) =>
-          set((state) => {
+        addNotification: notification =>
+          set(state => {
             state.notifications.push(notification);
           }),
 
         updateNotification: (id, notificationData) =>
-          set((state) => {
-            const __index = state.notifications.findIndex((n) => n.id === id);
+          set(state => {
+            const index = state.notifications.findIndex(n => n.id === id);
             if (index !== -1) {
-              const __validUpdates = Object.fromEntries(
+              const validUpdates = Object.fromEntries(
                 Object.entries(notificationData).filter(
-                  ([_, value]) => value !== undefined,
-                ),
+                  ([_, value]) => value !== undefined
+                )
               );
               state.notifications[index] = {
                 ...state.notifications[index],
@@ -519,37 +516,35 @@ export const __useDataStore = create<DataState & DataActions>()(
             }
           }),
 
-        removeNotification: (id) =>
-          set((state) => {
-            state.notifications = state.notifications.filter(
-              (n) => n.id !== id,
-            );
+        removeNotification: id =>
+          set(state => {
+            state.notifications = state.notifications.filter(n => n.id !== id);
           }),
 
-        getNotification: (id) => {
-          const __state = get();
-          return state.notifications.find((n) => n.id === id);
+        getNotification: id => {
+          const state = get();
+          return state.notifications.find(n => n.id === id);
         },
 
         // General Actions
-        setLoading: (loading) =>
-          set((state) => {
+        setLoading: loading =>
+          set(state => {
             state.isLoading = loading;
           }),
 
-        setError: (error) =>
-          set((state) => {
+        setError: error =>
+          set(state => {
             state.error = error;
           }),
 
         clearError: () =>
-          set((state) => {
+          set(state => {
             state.error = null;
           }),
       })),
       {
-        name: "data-store",
-        partialize: (state) => ({
+        name: 'data-store',
+        partialize: state => ({
           patients: state.patients,
           doctors: state.doctors,
           appointments: state.appointments,
@@ -557,8 +552,8 @@ export const __useDataStore = create<DataState & DataActions>()(
           insuranceClaims: state.insuranceClaims,
           notifications: state.notifications,
         }),
-      },
+      }
     ),
-    { name: "DataStore" },
-  ),
+    { name: 'DataStore' }
+  )
 );

@@ -1,7 +1,7 @@
-import fs from "fs";
-import path from "path";
-import { _glob } from "glob";
-import { _logger } from "@/lib/logger";
+import fs from 'fs';
+import path from 'path';
+import { glob } from 'glob';
+import { logger } from '@/lib/logger';
 
 /**
  * Validation script to check for hardcoded content violations
@@ -12,8 +12,8 @@ interface Violation {
   file: string;
   line: number;
   content: string;
-  type: "hardcoded_string" | "static_array" | "mock_data" | "fallback_data";
-  severity: "error" | "warning";
+  type: 'hardcoded_string' | 'static_array' | 'mock_data' | 'fallback_data';
+  severity: 'error' | 'warning';
 }
 
 class DynamicContentValidator {
@@ -66,35 +66,35 @@ class DynamicContentValidator {
     /^\s*export\s/g,
   ];
 
-  async validateFile(_filePath: string): Promise<void> {
+  async validateFile(filePath: string): Promise<void> {
     try {
       // Skip utility files, types, scripts, and config files
       if (this.shouldSkipFile(filePath)) {
         return;
       }
 
-      const __content = fs.readFileSync(filePath, "utf-8");
-      const __lines = content.split("\n");
+      const content = fs.readFileSync(filePath, 'utf-8');
+      const lines = content.split('\n');
 
       lines.forEach((line, index) => {
         // Skip comments and imports
         if (
-          line.trim().startsWith("//") ||
-          line.trim().startsWith("/*") ||
-          line.trim().startsWith("*") ||
-          line.trim().startsWith("import ")
+          line.trim().startsWith('//') ||
+          line.trim().startsWith('/*') ||
+          line.trim().startsWith('*') ||
+          line.trim().startsWith('import ')
         ) {
           return;
         }
 
         // Check for disallowed patterns
-        this.disallowedPatterns.forEach((pattern) => {
-          const __matches = line.match(pattern);
+        this.disallowedPatterns.forEach(pattern => {
+          const matches = line.match(pattern);
           if (matches) {
             // Check if this line contains allowed patterns (exceptions)
-            const __hasAllowedPattern = this.allowedPatterns.some(
-              (allowedPattern) =>
-                allowedPattern.test(line) || allowedPattern.test(filePath),
+            const hasAllowedPattern = this.allowedPatterns.some(
+              allowedPattern =>
+                allowedPattern.test(line) || allowedPattern.test(filePath)
             );
 
             if (!hasAllowedPattern) {
@@ -103,7 +103,7 @@ class DynamicContentValidator {
                 line: index + 1,
                 content: line.trim(),
                 type: this.getViolationType(pattern),
-                severity: "error",
+                severity: 'error',
               });
             }
           }
@@ -114,8 +114,8 @@ class DynamicContentValidator {
     }
   }
 
-  private shouldSkipFile(_filePath: string): boolean {
-    const __skipPatterns = [
+  private shouldSkipFile(filePath: string): boolean {
+    const skipPatterns = [
       /src\/utils\//,
       /src\/types\//,
       /src\/scripts\//,
@@ -132,55 +132,55 @@ class DynamicContentValidator {
       /build\//,
     ];
 
-    return skipPatterns.some((pattern) => pattern.test(filePath));
+    return skipPatterns.some(pattern => pattern.test(filePath));
   }
 
-  private getViolationType(_pattern: RegExp): Violation["type"] {
-    if (pattern.source.includes("mock|fixture|simulation|sampleData")) {
-      return "mock_data";
+  private getViolationType(pattern: RegExp): Violation['type'] {
+    if (pattern.source.includes('mock|fixture|simulation|sampleData')) {
+      return 'mock_data';
     }
     if (
-      pattern.source.includes("const.*=.*\\[") ||
-      pattern.source.includes("export.*=.*\\[")
+      pattern.source.includes('const.*=.*\\[') ||
+      pattern.source.includes('export.*=.*\\[')
     ) {
-      return "static_array";
+      return 'static_array';
     }
     if (
-      pattern.source.includes("getDefault") ||
-      pattern.source.includes("fallback")
+      pattern.source.includes('getDefault') ||
+      pattern.source.includes('fallback')
     ) {
-      return "fallback_data";
+      return 'fallback_data';
     }
-    return "hardcoded_string";
+    return 'hardcoded_string';
   }
 
-  async validateDirectory(_dirPath: string): Promise<void> {
-    const __files = await glob("**/*.{ts,tsx,js,jsx}", {
+  async validateDirectory(dirPath: string): Promise<void> {
+    const files = await glob('**/*.{ts,tsx,js,jsx}', {
       cwd: dirPath,
-      ignore: ["node_modules/**", "dist/**", "build/**", "**/*.d.ts"],
+      ignore: ['node_modules/**', 'dist/**', 'build/**', '**/*.d.ts'],
     });
 
     logger.info(`🔍 Validating ${files.length} files...`);
 
     for (const file of files) {
-      const __fullPath = path.join(dirPath, file);
+      const fullPath = path.join(dirPath, file);
       await this.validateFile(fullPath);
     }
   }
 
   generateReport(): void {
-    logger.info("\n📊 Dynamic Content Validation Report");
-    logger.info("=====================================\n");
+    logger.info('\n📊 Dynamic Content Validation Report');
+    logger.info('=====================================\n');
 
     if (this.violations.length === 0) {
       logger.info(
-        "✅ No violations found! All content is dynamic and database-driven.",
+        '✅ No violations found! All content is dynamic and database-driven.'
       );
       return;
     }
 
     // Group violations by type
-    const __violationsByType = this.violations.reduce(
+    const violationsByType = this.violations.reduce(
       (acc, violation) => {
         if (!acc[violation.type]) {
           acc[violation.type] = [];
@@ -188,34 +188,34 @@ class DynamicContentValidator {
         acc[violation.type].push(violation);
         return acc;
       },
-      {} as Record<string, Violation[]>,
+      {} as Record<string, Violation[]>
     );
 
     // Print violations by type
     Object.entries(violationsByType).forEach(([type, violations]) => {
       logger.info(
-        `\n❌ ${type.toUpperCase()} VIOLATIONS (${violations.length}):`,
+        `\n❌ ${type.toUpperCase()} VIOLATIONS (${violations.length}):`
       );
-      logger.info("─".repeat(50));
+      logger.info('─'.repeat(50));
 
-      violations.forEach((violation) => {
+      violations.forEach(violation => {
         logger.info(`📁 ${violation.file}:${violation.line}`);
         logger.info(`   ${violation.content}`);
-        logger.info("");
+        logger.info('');
       });
     });
 
     logger.info(`\n📈 Summary:`);
     logger.info(`   Total violations: ${this.violations.length}`);
     logger.info(
-      `   Error severity: ${this.violations.filter((v) => v.severity === "error").length}`,
+      `   Error severity: ${this.violations.filter(v => v.severity === 'error').length}`
     );
     logger.info(
-      `   Warning severity: ${this.violations.filter((v) => v.severity === "warning").length}`,
+      `   Warning severity: ${this.violations.filter(v => v.severity === 'warning').length}`
     );
 
     if (this.violations.length > 0) {
-      logger.info("\n🚨 Build should be blocked due to violations!");
+      logger.info('\n🚨 Build should be blocked due to violations!');
       process.exit(1);
     }
   }
@@ -225,13 +225,13 @@ class DynamicContentValidator {
   }
 }
 
-async function __main() {
-  const __validator = new DynamicContentValidator();
+async function main() {
+  const validator = new DynamicContentValidator();
 
-  logger.info("🔍 Starting dynamic content validation...");
+  logger.info('🔍 Starting dynamic content validation...');
 
   // Validate src directory
-  await validator.validateDirectory("./src");
+  await validator.validateDirectory('./src');
 
   // Generate report
   validator.generateReport();

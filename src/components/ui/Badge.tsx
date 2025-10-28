@@ -1,40 +1,55 @@
-import clsx from "clsx";
+import React from 'react';
+import { cn } from '@/lib/utils';
 
-import { _COMPONENT_CLASSES } from "@/lib/centralized-theme";
-
-type BadgeVariant =
-  | "default"
-  | "primary"
-  | "secondary"
-  | "destructive"
-  | "success"
-  | "warning"
-  | "danger"
-  | "info"
-  | "outline"
-  | "brand"
-  | "error";
-
-export function __Badge({
-  className,
-  variant = "default",
-  ...props
-}: React.HTMLAttributes<HTMLSpanElement> & { variant?: BadgeVariant }) {
-  const __styles = {
-    default: `${COMPONENT_CLASSES.badge} bg-brand-surface text-foreground`,
-    primary: COMPONENT_CLASSES["badge-brand"],
-    secondary: `${COMPONENT_CLASSES.badge} bg-brand-surface text-foreground border border-brand-border`,
-    destructive: `${COMPONENT_CLASSES.badge} bg-brand-error/10 text-brand-error`,
-    success: COMPONENT_CLASSES["badge-success"],
-    warning: COMPONENT_CLASSES["badge-warning"],
-    danger: COMPONENT_CLASSES["badge-error"],
-    info: COMPONENT_CLASSES["badge-info"],
-    outline: `${COMPONENT_CLASSES.badge} bg-transparent text-foreground border border-brand-border`,
-    brand: `${COMPONENT_CLASSES.badge} bg-brand-primary text-white`,
-    error: COMPONENT_CLASSES["badge-error"],
-  } as const;
-
-  return <span className={clsx(styles[variant], className)} {...props} />;
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?:
+    | 'primary'
+    | 'success'
+    | 'warning'
+    | 'error'
+    | 'secondary'
+    | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  children: React.ReactNode;
 }
 
-export default Badge;
+const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+  (
+    { className, variant = 'primary', size = 'md', children, ...props },
+    ref
+  ) => {
+    const baseClasses = 'inline-flex items-center rounded-full font-medium';
+
+    const variants = {
+      default: 'bg-[var(--default-default)] text-white',
+      success:
+        'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+      warning:
+        'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
+      error: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
+      info: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+      outline:
+        'border border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-300',
+    };
+
+    const sizes = {
+      sm: 'px-2 py-0.5 text-xs',
+      md: 'px-2.5 py-0.5 text-xs',
+      lg: 'px-3 py-1 text-sm',
+    };
+
+    return (
+      <div
+        className={cn(baseClasses, variants[variant], sizes[size], className)}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+
+Badge.displayName = 'Badge';
+
+export { Badge };

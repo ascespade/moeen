@@ -28,18 +28,18 @@ export interface UserProfile {
   phone?: string;
   avatar?: string;
   dateOfBirth?: Date;
-  gender?: "male" | "female" | "other";
+  gender?: 'male' | 'female' | 'other';
   address?: Address;
 }
 
 export interface UserPreferences {
-  language: "ar" | "en";
-  theme: "light" | "dark" | "system";
+  language: 'ar' | 'en';
+  theme: 'light' | 'dark' | 'system';
   notifications: NotificationSettings;
   privacy: PrivacySettings;
 }
 
-export type UserRole = "patient" | "doctor" | "staff" | "supervisor" | "admin";
+export type UserRole = 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin';
 
 // Patient Types
 export interface Patient extends BaseEntity {
@@ -118,23 +118,23 @@ export interface Appointment extends BaseEntity {
 }
 
 export type AppointmentType =
-  | "consultation"
-  | "follow_up"
-  | "emergency"
-  | "routine_checkup";
+  | 'consultation'
+  | 'follow_up'
+  | 'emergency'
+  | 'routine_checkup';
 export type AppointmentStatus =
-  | "scheduled"
-  | "confirmed"
-  | "in_progress"
-  | "completed"
-  | "cancelled"
-  | "no_show";
+  | 'scheduled'
+  | 'confirmed'
+  | 'in_progress'
+  | 'completed'
+  | 'cancelled'
+  | 'no_show';
 export type PaymentStatus =
-  | "pending"
-  | "paid"
-  | "partial"
-  | "refunded"
-  | "cancelled";
+  | 'pending'
+  | 'paid'
+  | 'partial'
+  | 'refunded'
+  | 'cancelled';
 
 // Payment Types
 export interface Payment extends BaseEntity {
@@ -144,17 +144,17 @@ export interface Payment extends BaseEntity {
   method: PaymentMethod;
   status: PaymentStatus;
   transactionId?: string;
-  gatewayResponse?: unknown;
+  gatewayResponse?: any;
   refundAmount?: number;
   refundReason?: string;
 }
 
 export type PaymentMethod =
-  | "cash"
-  | "card"
-  | "bank_transfer"
-  | "insurance"
-  | "wallet";
+  | 'cash'
+  | 'card'
+  | 'bank_transfer'
+  | 'insurance'
+  | 'wallet';
 
 // Insurance Types
 export interface InsuranceClaim extends BaseEntity {
@@ -172,12 +172,12 @@ export interface InsuranceClaim extends BaseEntity {
 }
 
 export type ClaimStatus =
-  | "draft"
-  | "submitted"
-  | "under_review"
-  | "approved"
-  | "rejected"
-  | "cancelled";
+  | 'draft'
+  | 'submitted'
+  | 'under_review'
+  | 'approved'
+  | 'rejected'
+  | 'cancelled';
 
 // Notification Types
 export interface Notification extends BaseEntity {
@@ -189,21 +189,21 @@ export interface Notification extends BaseEntity {
   readAt?: Date;
   priority: NotificationPriority;
   channels: NotificationChannel[];
-  metadata?: unknown;
+  metadata?: any;
 }
 
 export type NotificationType =
-  | "appointment_reminder"
-  | "payment_confirmation"
-  | "insurance_update"
-  | "system_alert";
-export type NotificationPriority = "low" | "medium" | "high" | "urgent";
-export type NotificationChannel = "email" | "sms" | "push" | "in_app";
+  | 'appointment_reminder'
+  | 'payment_confirmation'
+  | 'insurance_update'
+  | 'system_alert';
+export type NotificationPriority = 'low' | 'medium' | 'high' | 'urgent';
+export type NotificationChannel = 'email' | 'sms' | 'push' | 'in_app';
 
 // System Types
 export interface SystemConfig extends BaseEntity {
   key: string;
-  value: unknown;
+  value: any;
   category: string;
   description?: string;
   isPublic: boolean;
@@ -214,7 +214,7 @@ export interface AuditLog extends BaseEntity {
   resourceType: string;
   resourceId: string;
   userId: string;
-  metadata: unknown;
+  metadata: any;
   ipAddress?: string;
   userAgent?: string;
 }
@@ -242,15 +242,15 @@ export interface FormField {
   name: string;
   label: string;
   type:
-    | "text"
-    | "email"
-    | "password"
-    | "number"
-    | "date"
-    | "select"
-    | "textarea"
-    | "checkbox"
-    | "radio";
+    | 'text'
+    | 'email'
+    | 'password'
+    | 'number'
+    | 'date'
+    | 'select'
+    | 'textarea'
+    | 'checkbox'
+    | 'radio';
   required: boolean;
   placeholder?: string;
   options?: SelectOption[];
@@ -264,8 +264,8 @@ export interface SelectOption {
 }
 
 export interface ValidationRule {
-  type: "required" | "email" | "min" | "max" | "pattern";
-  value?: unknown;
+  type: 'required' | 'email' | 'min' | 'max' | 'pattern';
+  value?: any;
   message: string;
 }
 
@@ -300,8 +300,8 @@ export interface Typography {
     base: string;
     lg: string;
     xl: string;
-    "2xl": string;
-    "3xl": string;
+    '2xl': string;
+    '3xl': string;
   };
   fontWeight: {
     normal: number;
@@ -322,7 +322,7 @@ export interface Spacing {
   md: string;
   lg: string;
   xl: string;
-  "2xl": string;
+  '2xl': string;
 }
 
 export interface BorderRadius {
@@ -333,8 +333,8 @@ export interface BorderRadius {
 }
 
 // Utility Types
-export type Status = "idle" | "loading" | "success" | "error";
-export type SortOrder = "asc" | "desc";
+export type Status = 'idle' | 'loading' | 'success' | 'error';
+export type SortOrder = 'asc' | 'desc';
 export type SortField<T> = keyof T;
 
 export interface Address {
@@ -373,7 +373,7 @@ export interface NotificationSettings {
 }
 
 export interface PrivacySettings {
-  profileVisibility: "public" | "private" | "contacts_only";
+  profileVisibility: 'public' | 'private' | 'contacts_only';
   dataSharing: boolean;
   marketingEmails: boolean;
 }

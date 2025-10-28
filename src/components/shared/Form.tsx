@@ -1,5 +1,5 @@
-"use client";
-import { _ReactNode } from "react";
+'use client';
+import { ReactNode } from 'react';
 interface FormFieldProps {
   label: string;
   error?: string;
@@ -8,22 +8,22 @@ interface FormFieldProps {
   className?: string;
 }
 
-export function __FormField({
+export function FormField({
   label,
   error,
   required,
   children,
-  className = "",
+  className = '',
 }: FormFieldProps) {
   return (
     <div className={`space-y-2 ${className}`}>
-      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+      <label className='block text-sm font-medium text-gray-700 dark:text-gray-300'>
         {label}
-        {required && <span className="mr-1 text-red-500">*</span>}
+        {required && <span className='mr-1 text-default-error'>*</span>}
       </label>
       {children}
       {error && (
-        <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        <p className='text-sm text-default-error dark:text-red-400'>{error}</p>
       )}
     </div>
   );
@@ -34,7 +34,7 @@ interface FormGroupProps {
   className?: string;
 }
 
-export function __FormGroup({ children, className = "" }: FormGroupProps) {
+export function FormGroup({ children, className = '' }: FormGroupProps) {
   return <div className={`space-y-4 ${className}`}>{children}</div>;
 }
 
@@ -43,7 +43,7 @@ interface FormRowProps {
   className?: string;
 }
 
-export function __FormRow({ children, className = "" }: FormRowProps) {
+export function FormRow({ children, className = '' }: FormRowProps) {
   return (
     <div className={`grid grid-cols-1 gap-4 md:grid-cols-2 ${className}`}>
       {children}
@@ -56,7 +56,7 @@ interface FormActionsProps {
   className?: string;
 }
 
-export function __FormActions({ children, className = "" }: FormActionsProps) {
+export function FormActions({ children, className = '' }: FormActionsProps) {
   return (
     <div
       className={`flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700 ${className}`}

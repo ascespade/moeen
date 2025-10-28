@@ -3,15 +3,15 @@
  * Centralized API client with error handling and interceptors
  */
 
-import { _API_ENDPOINTS, ERROR_CODES } from "../constants";
-import { _ErrorHandler, ExternalServiceError } from "../errors";
-import { _ApiResponse } from "../types";
-import { _storageUtils } from "../utils";
+import { API_ENDPOINTS, ERROR_CODES } from '../constants';
+import { ErrorHandler, ExternalServiceError } from '../errors';
+import { storageUtils } from '../utils/index';
+import { ApiResponse } from '../types';
 
 export interface ApiRequestConfig {
-  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   headers?: Record<string, string>;
-  body?: unknown;
+  body?: any;
   params?: Record<string, any>;
   timeout?: number;
   retries?: number;
@@ -22,7 +22,7 @@ class ApiClient {
   private defaultTimeout: number;
   private errorHandler: ErrorHandler;
 
-  constructor(_baseURL: string = "/api", timeout: number = 30000) {
+  constructor(baseURL: string = '/api', timeout: number = 30000) {
     this.baseURL = baseURL;
     this.defaultTimeout = timeout;
     this.errorHandler = ErrorHandler.getInstance();
@@ -30,10 +30,10 @@ class ApiClient {
 
   private async request<T>(
     endpoint: string,
-    config: ApiRequestConfig = {},
+    config: ApiRequestConfig = {}
   ): Promise<ApiResponse<T>> {
     const {
-      method = "GET",
+      method = 'GET',
       headers = {},
       body,
       params,
@@ -41,8 +41,8 @@ class ApiClient {
       retries = 3,
     } = config;
 
-    const __url = this.buildURL(endpoint, params);
-    const __requestHeaders = this.buildHeaders(headers);
+    const url = this.buildURL(endpoint, params);
+    const requestHeaders = this.buildHeaders(headers);
 
     const requestConfig: RequestInit = {
       method,
@@ -51,10 +51,10 @@ class ApiClient {
     };
 
     try {
-      const __controller = new AbortController();
-      const __timeoutId = setTimeout(() => controller.abort(), timeout);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), timeout);
 
-      const __response = await fetch(url, {
+      const response = await fetch(url, {
         ...requestConfig,
         signal: controller.signal,
       });
@@ -64,12 +64,12 @@ class ApiClient {
       if (!response.ok) {
         throw new ExternalServiceError(
           `HTTP ${response.status}: ${response.statusText}`,
-          "API",
-          { status: response.status, url },
+          'API',
+          { status: response.status, url }
         );
       }
 
-      const __data = await response.json();
+      const data = await response.json();
       return data;
     } catch (error) {
       if (retries > 0 && this.shouldRetry(error)) {
@@ -77,7 +77,7 @@ class ApiClient {
         return this.request(endpoint, { ...config, retries: retries - 1 });
       }
 
-      const __handledError = this.errorHandler.handle(error as Error);
+      const handledError = this.errorHandler.handle(error as Error);
       return {
         success: false,
         error: handledError.message,
@@ -85,8 +85,8 @@ class ApiClient {
     }
   }
 
-  private buildURL(_endpoint: string, params?: Record<string, any>): string {
-    const __url = new URL(endpoint, this.baseURL);
+  private buildURL(endpoint: string, params?: Record<string, any>): string {
+    const url = new URL(endpoint, this.baseURL);
 
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
@@ -100,58 +100,58 @@ class ApiClient {
   }
 
   private buildHeaders(
-    customHeaders: Record<string, string>,
+    customHeaders: Record<string, string>
   ): Record<string, string> {
-    const __token = storageUtils.get("auth_token");
+    const token = storageUtils.get('auth_token');
 
     return {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...customHeaders,
     };
   }
 
-  private shouldRetry(_error: unknown): boolean {
-    if (error.name === "AbortError") return false;
+  private shouldRetry(error: any): boolean {
+    if (error.name === 'AbortError') return false;
     if (error.status >= 500) return true;
     if (error.status === 429) return true;
     return false;
   }
 
-  private delay(_ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   // HTTP Methods
   async get<T>(
     endpoint: string,
-    params?: Record<string, any>,
+    params?: Record<string, any>
   ): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "GET", params });
+    return this.request<T>(endpoint, { method: 'GET', params });
   }
 
-  async post<T>(_endpoint: string, body?: unknown): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "POST", body });
+  async post<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, { method: 'POST', body });
   }
 
-  async put<T>(_endpoint: string, body?: unknown): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "PUT", body });
+  async put<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, { method: 'PUT', body });
   }
 
-  async patch<T>(_endpoint: string, body?: unknown): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "PATCH", body });
+  async patch<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, { method: 'PATCH', body });
   }
 
-  async delete<T>(_endpoint: string): Promise<ApiResponse<T>> {
-    return this.request<T>(endpoint, { method: "DELETE" });
+  async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, { method: 'DELETE' });
   }
 
   // Authentication Methods
-  async login(_credentials: {
+  async login(credentials: {
     email: string;
     password: string;
-  }): Promise<ApiResponse<{ token: string; user: unknown }>> {
+  }): Promise<ApiResponse<{ token: string; user: any }>> {
     return this.post(API_ENDPOINTS.AUTH.LOGIN, credentials);
   }
 
@@ -172,19 +172,19 @@ class ApiClient {
     return this.get(API_ENDPOINTS.USERS.LIST, params);
   }
 
-  async createUser(_userData: unknown): Promise<ApiResponse<any>> {
+  async createUser(userData: any): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.USERS.CREATE, userData);
   }
 
-  async getUser(_id: string): Promise<ApiResponse<any>> {
+  async getUser(id: string): Promise<ApiResponse<any>> {
     return this.get(API_ENDPOINTS.USERS.GET(id));
   }
 
-  async updateUser(_id: string, userData: unknown): Promise<ApiResponse<any>> {
+  async updateUser(id: string, userData: any): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.USERS.UPDATE(id), userData);
   }
 
-  async deleteUser(_id: string): Promise<ApiResponse<void>> {
+  async deleteUser(id: string): Promise<ApiResponse<void>> {
     return this.delete(API_ENDPOINTS.USERS.DELETE(id));
   }
 
@@ -197,24 +197,21 @@ class ApiClient {
     return this.get(API_ENDPOINTS.PATIENTS.LIST, params);
   }
 
-  async createPatient(_patientData: unknown): Promise<ApiResponse<any>> {
+  async createPatient(patientData: any): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.PATIENTS.CREATE, patientData);
   }
 
-  async getPatient(_id: string): Promise<ApiResponse<any>> {
+  async getPatient(id: string): Promise<ApiResponse<any>> {
     return this.get(API_ENDPOINTS.PATIENTS.GET(id));
   }
 
-  async updatePatient(
-    _id: string,
-    patientData: unknown,
-  ): Promise<ApiResponse<any>> {
+  async updatePatient(id: string, patientData: any): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.PATIENTS.UPDATE(id), patientData);
   }
 
   async activatePatient(
     id: string,
-    activationData?: unknown,
+    activationData?: any
   ): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.PATIENTS.ACTIVATE(id), activationData);
   }
@@ -228,22 +225,19 @@ class ApiClient {
     return this.get(API_ENDPOINTS.DOCTORS.LIST, params);
   }
 
-  async createDoctor(_doctorData: unknown): Promise<ApiResponse<any>> {
+  async createDoctor(doctorData: any): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.DOCTORS.CREATE, doctorData);
   }
 
-  async getDoctor(_id: string): Promise<ApiResponse<any>> {
+  async getDoctor(id: string): Promise<ApiResponse<any>> {
     return this.get(API_ENDPOINTS.DOCTORS.GET(id));
   }
 
-  async updateDoctor(
-    _id: string,
-    doctorData: unknown,
-  ): Promise<ApiResponse<any>> {
+  async updateDoctor(id: string, doctorData: any): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.DOCTORS.UPDATE(id), doctorData);
   }
 
-  async getDoctorAvailability(_params: {
+  async getDoctorAvailability(params: {
     doctorId?: string;
     date: string;
     speciality?: string;
@@ -262,24 +256,22 @@ class ApiClient {
     return this.get(API_ENDPOINTS.APPOINTMENTS.LIST, params);
   }
 
-  async createAppointment(
-    _appointmentData: unknown,
-  ): Promise<ApiResponse<any>> {
+  async createAppointment(appointmentData: any): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.APPOINTMENTS.CREATE, appointmentData);
   }
 
-  async getAppointment(_id: string): Promise<ApiResponse<any>> {
+  async getAppointment(id: string): Promise<ApiResponse<any>> {
     return this.get(API_ENDPOINTS.APPOINTMENTS.GET(id));
   }
 
   async updateAppointment(
     id: string,
-    appointmentData: unknown,
+    appointmentData: any
   ): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.APPOINTMENTS.UPDATE(id), appointmentData);
   }
 
-  async deleteAppointment(_id: string): Promise<ApiResponse<void>> {
+  async deleteAppointment(id: string): Promise<ApiResponse<void>> {
     return this.delete(API_ENDPOINTS.APPOINTMENTS.DELETE(id));
   }
 
@@ -292,11 +284,11 @@ class ApiClient {
     return this.get(API_ENDPOINTS.PAYMENTS.LIST, params);
   }
 
-  async createPayment(_paymentData: unknown): Promise<ApiResponse<any>> {
+  async createPayment(paymentData: any): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.PAYMENTS.CREATE, paymentData);
   }
 
-  async processPayment(_paymentData: unknown): Promise<ApiResponse<any>> {
+  async processPayment(paymentData: any): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.PAYMENTS.PROCESS, paymentData);
   }
 
@@ -310,13 +302,13 @@ class ApiClient {
     return this.get(API_ENDPOINTS.INSURANCE.CLAIMS, params);
   }
 
-  async createInsuranceClaim(_claimData: unknown): Promise<ApiResponse<any>> {
+  async createInsuranceClaim(claimData: any): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.INSURANCE.CLAIMS, claimData);
   }
 
   async submitInsuranceClaim(
     id: string,
-    submitData: unknown,
+    submitData: any
   ): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.INSURANCE.SUBMIT(id), submitData);
   }
@@ -331,13 +323,11 @@ class ApiClient {
     return this.get(API_ENDPOINTS.NOTIFICATIONS.LIST, params);
   }
 
-  async sendNotification(
-    _notificationData: unknown,
-  ): Promise<ApiResponse<any>> {
+  async sendNotification(notificationData: any): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.NOTIFICATIONS.SEND, notificationData);
   }
 
-  async markNotificationAsRead(_id: string): Promise<ApiResponse<void>> {
+  async markNotificationAsRead(id: string): Promise<ApiResponse<void>> {
     return this.post(API_ENDPOINTS.NOTIFICATIONS.MARK_READ(id));
   }
 
@@ -354,17 +344,17 @@ class ApiClient {
   async uploadFile(
     file: File,
     type: string,
-    metadata?: unknown,
+    metadata?: any
   ): Promise<ApiResponse<any>> {
-    const __formData = new FormData();
-    formData.append("file", file);
-    formData.append("type", type);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('type', type);
     if (metadata) {
-      formData.append("metadata", JSON.stringify(metadata));
+      formData.append('metadata', JSON.stringify(metadata));
     }
 
     return this.request(API_ENDPOINTS.UPLOAD.FILE, {
-      method: "POST",
+      method: 'POST',
       body: formData,
       headers: {}, // Let browser set Content-Type for FormData
     });
@@ -372,6 +362,6 @@ class ApiClient {
 }
 
 // Create singleton instance
-export const __apiClient = new ApiClient();
+export const apiClient = new ApiClient();
 
 // Export types

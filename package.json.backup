@@ -1,0 +1,15 @@
+{
+  "name": "ai-intelligent-ci",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start-dashboard": "node dashboard/server.mjs",
+    "self-heal": "node scripts/ai_self_test_and_fix.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.36.0",
+    "supawright": "^0.1.0",
+    "sqlite3": "^5.1.6",
+    "openai": "^4.0.0"
+  }
+}

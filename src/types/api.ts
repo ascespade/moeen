@@ -1,4 +1,4 @@
-import { _ApiResponse, PaginationParams, PaginatedResponse } from "./index";
+import { ApiResponse, PaginationParams, PaginatedResponse } from './index';
 // API-specific type definitions
 
 // Auth API Types
@@ -35,7 +35,7 @@ export interface RefreshTokenRequest {
 export interface CreateChannelRequest {
   name: string;
   description?: string;
-  type: "public" | "private" | "direct";
+  type: 'public' | 'private' | 'direct';
   members?: string[];
 }
 
@@ -46,12 +46,12 @@ export interface UpdateChannelRequest {
 }
 
 export interface ChannelListParams extends PaginationParams {
-  type?: "public" | "private" | "direct";
+  type?: 'public' | 'private' | 'direct';
   search?: string;
 }
 
 export interface ChannelListResponse extends PaginatedResponse<any> {
-  data: unknown[]; // Will be replaced with proper Channel type
+  data: any[]; // Will be replaced with proper Channel type
 }
 
 // Messages API Types
@@ -68,18 +68,18 @@ export interface MessageListParams extends PaginationParams {
 }
 
 export interface MessageListResponse extends PaginatedResponse<any> {
-  data: unknown[]; // Will be replaced with proper Message type
+  data: any[]; // Will be replaced with proper Message type
 }
 
 // Users API Types
 export interface UserListParams extends PaginationParams {
   role?: string;
   search?: string;
-  status?: "active" | "inactive" | "banned";
+  status?: 'active' | 'inactive' | 'banned';
 }
 
 export interface UserListResponse extends PaginatedResponse<any> {
-  data: unknown[]; // Will be replaced with proper User type
+  data: any[]; // Will be replaced with proper User type
 }
 
 export interface UpdateUserRequest {
@@ -91,7 +91,7 @@ export interface UpdateUserRequest {
 
 // Settings API Types
 export interface UpdateSettingsRequest {
-  theme?: "light" | "dark" | "system";
+  theme?: 'light' | 'dark' | 'system';
   language?: string;
   notifications?: {
     email?: boolean;
@@ -142,7 +142,7 @@ export interface AIResponse extends ApiResponse {
 
 // Logs API Types
 export interface LogListParams extends PaginationParams {
-  level?: "error" | "warn" | "info" | "debug";
+  level?: 'error' | 'warn' | 'info' | 'debug';
   service?: string;
   startDate?: string;
   endDate?: string;
@@ -150,11 +150,11 @@ export interface LogListParams extends PaginationParams {
 
 export interface LogEntry {
   id: string;
-  level: "error" | "warn" | "info" | "debug";
+  level: 'error' | 'warn' | 'info' | 'debug';
   message: string;
   service: string;
   timestamp: string;
-  metadata?: unknown;
+  metadata?: any;
 }
 
 export interface LogListResponse extends PaginatedResponse<LogEntry> {

@@ -1,25 +1,24 @@
-import { _NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
 
-import { _getServiceSupabase } from "@/lib/supabaseClient";
-
-export async function __POST(_request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const { action, context } = await request.json();
 
     // Validate request
     if (!action || !context) {
       return NextResponse.json(
-        { error: "Invalid analytics data" },
-        { status: 400 },
+        { error: 'Invalid analytics data' },
+        { status: 400 }
       );
     }
 
     // Only track in production
-    if (process.env.NODE_ENV === "production") {
-      const __supabase = getServiceSupabase();
+    if (process.env.NODE_ENV === 'production') {
+      const supabase = getServiceSupabase();
 
       // Insert into analytics table
-      const { error } = await supabase.from("analytics").insert({
+      const { error } = await supabase.from('analytics').insert({
         action,
         context,
         user_id: context.userId,
@@ -34,8 +33,8 @@ export async function __POST(_request: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to process analytics" },
-      { status: 500 },
+      { error: 'Failed to process analytics' },
+      { status: 500 }
     );
   }
 }

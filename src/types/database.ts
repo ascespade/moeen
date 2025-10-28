@@ -4,12 +4,12 @@
 export interface UserPreferences {
   id: string;
   user_id: string;
-  theme: "light" | "dark" | "system";
-  language: "ar" | "en";
+  theme: 'light' | 'dark' | 'system';
+  language: 'ar' | 'en';
   timezone: string;
   notifications_enabled: boolean;
   sidebar_collapsed: boolean;
-  dashboard_layout: "grid" | "list";
+  dashboard_layout: 'grid' | 'list';
   created_at: string;
   updated_at: string;
 }
@@ -29,7 +29,7 @@ export interface User {
   email: string;
   password_hash?: string;
   full_name?: string;
-  role: "admin" | "doctor" | "user";
+  role: 'admin' | 'doctor' | 'user';
   avatar_url?: string;
   phone?: string;
   is_active: boolean;
@@ -81,7 +81,7 @@ export interface Appointment {
   appointment_date: string;
   appointment_time: string;
   type: string;
-  status: "scheduled" | "confirmed" | "completed" | "cancelled";
+  status: 'scheduled' | 'confirmed' | 'completed' | 'cancelled';
   notes?: string;
   created_at: string;
   updated_at: string;
@@ -96,7 +96,7 @@ export interface Session {
   session_time: string;
   type: string;
   notes?: string;
-  exercises?: unknown; // JSONB
+  exercises?: any; // JSONB
   completed: boolean;
   created_at: string;
   updated_at: string;
@@ -109,7 +109,7 @@ export interface InsuranceClaim {
   claim_number: string;
   insurance_company: string;
   amount: number;
-  status: "submitted" | "approved" | "rejected" | "pending";
+  status: 'submitted' | 'approved' | 'rejected' | 'pending';
   submitted_at: string;
   processed_at?: string;
   created_at: string;
@@ -123,7 +123,7 @@ export interface ChatbotFlow {
   name: string;
   description?: string;
   owner_id: string;
-  status: "draft" | "active" | "paused" | "archived";
+  status: 'draft' | 'active' | 'paused' | 'archived';
   created_at: string;
   updated_at: string;
 }
@@ -132,9 +132,9 @@ export interface ChatbotNode {
   id: string;
   public_id: string;
   flow_id: string;
-  type: "start" | "message" | "question" | "condition" | "action" | "end";
+  type: 'start' | 'message' | 'question' | 'condition' | 'action' | 'end';
   name: string;
-  content?: unknown; // JSONB
+  content?: any; // JSONB
   position_x: number;
   position_y: number;
   created_at: string;
@@ -147,7 +147,7 @@ export interface ChatbotEdge {
   flow_id: string;
   from_node_id: string;
   to_node_id: string;
-  condition?: unknown; // JSONB
+  condition?: any; // JSONB
   created_at: string;
   updated_at: string;
 }
@@ -162,13 +162,13 @@ export interface CRMLead {
   company?: string;
   source: string;
   status:
-    | "new"
-    | "contacted"
-    | "qualified"
-    | "proposal"
-    | "negotiation"
-    | "closed_won"
-    | "closed_lost";
+    | 'new'
+    | 'contacted'
+    | 'qualified'
+    | 'proposal'
+    | 'negotiation'
+    | 'closed_won'
+    | 'closed_lost';
   stage: string;
   owner_id: string;
   created_at: string;
@@ -183,12 +183,12 @@ export interface CRMDeal {
   value: number;
   currency: string;
   stage:
-    | "prospecting"
-    | "qualification"
-    | "proposal"
-    | "negotiation"
-    | "closed_won"
-    | "closed_lost";
+    | 'prospecting'
+    | 'qualification'
+    | 'proposal'
+    | 'negotiation'
+    | 'closed_won'
+    | 'closed_lost';
   probability: number;
   close_date?: string;
   owner_id: string;
@@ -199,7 +199,7 @@ export interface CRMDeal {
 export interface CRMActivity {
   id: string;
   public_id: string;
-  type: "call" | "email" | "meeting" | "task" | "note";
+  type: 'call' | 'email' | 'meeting' | 'task' | 'note';
   subject: string;
   description?: string;
   lead_id?: string;
@@ -216,11 +216,11 @@ export interface Notification {
   id: string;
   public_id: string;
   user_id: string;
-  type: "info" | "warning" | "error" | "success";
+  type: 'info' | 'warning' | 'error' | 'success';
   title: string;
   message: string;
   read: boolean;
-  data?: unknown; // JSONB
+  data?: any; // JSONB
   created_at: string;
   updated_at: string;
 }
@@ -244,8 +244,8 @@ export interface AuditLog {
   action: string;
   resource_type: string;
   resource_id: string;
-  old_values?: unknown; // JSONB
-  new_values?: unknown; // JSONB
+  old_values?: any; // JSONB
+  new_values?: any; // JSONB
   ip_address?: string;
   user_agent?: string;
   created_at: string;
@@ -254,7 +254,7 @@ export interface AuditLog {
 export interface Setting {
   id: string;
   key: string;
-  value: unknown; // JSONB
+  value: any; // JSONB
   description?: string;
   category: string;
   created_at: string;
@@ -291,5 +291,5 @@ export interface TranslationResponse {
   locale: string;
   ns: string;
   messages: Record<string, string>;
-  source: "database" | "fallback";
+  source: 'database' | 'fallback';
 }

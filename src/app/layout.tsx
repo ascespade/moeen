@@ -1,56 +1,50 @@
-import { _Cairo, Inter } from "next/font/google";
-import "./globals.css";
-import type { Metadata } from "next";
-
-import { _DesignSystemProvider } from "@/components/providers/DesignSystemProvider";
-import I18nProvider from "@/components/providers/I18nProvider";
-import UIProvider from "@/components/providers/UIProvider";
-import { _ThemeProvider } from "@/context/ThemeContext";
+// src/app/layout.tsx
+import type { Metadata } from 'next';
+import I18nProvider from '@/components/providers/I18nProvider';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "مُعين",
-  description: "منصة دردشة متعددة القنوات مدعومة بالذكاء الاصطناعي",
-  other: {
-    "font-display": "swap",
+  title: 'Ultimate E2E Self-Healing Runner',
+  description:
+    'Comprehensive testing system with Playwright and Supawright. AI-powered auto-healing and intelligent test management.',
+  keywords:
+    'E2E testing, Playwright, Supawright, auto-healing, testing automation, AI testing',
+  authors: [{ name: 'Ultimate E2E Team' }],
+  openGraph: {
+    title: 'Ultimate E2E Self-Healing Runner',
+    description: 'Comprehensive testing system with Playwright and Supawright',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ultimate E2E Self-Healing Runner',
+    description: 'Comprehensive testing system with Playwright and Supawright',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
-const __cairo = Cairo({
-  subsets: ["arabic", "latin"],
-  weight: ["400", "700"],
-  variable: "--font-cairo",
-  display: "swap",
-  preload: true,
-  fallback: ["system-ui", "arial"],
-});
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#f8fafc',
+};
 
-const __inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  variable: "--font-inter",
-  display: "swap",
-  preload: true,
-  fallback: ["system-ui", "arial"],
-});
-
-export default function __RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <body
-        className={`${cairo.variable} ${inter.variable} antialiased`}
-        suppressHydrationWarning
-      >
-        <DesignSystemProvider>
-          <ThemeProvider>
-            <I18nProvider>
-              <UIProvider>{children}</UIProvider>
-            </I18nProvider>
-          </ThemeProvider>
-        </DesignSystemProvider>
+    <html lang='en' className='scroll-smooth'>
+      <head>
+        <link rel='icon' href='/favicon.ico' />
+      </head>
+      <body className='antialiased font-inter bg-slate-50 text-slate-900'>
+        <I18nProvider>{children}</I18nProvider>
       </body>
     </html>
   );

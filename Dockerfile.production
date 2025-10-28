@@ -1,0 +1,84 @@
+# Dockerfile.production
+FROM node:18-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
+
+# Install SSH and other utilities
+RUN apk add --no-cache openssh-client openssh-server curl
+
+# Create SSH directory and setup
+RUN mkdir -p /root/.ssh && \
+    chmod 700 /root/.ssh
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# Copy SSH setup script
+COPY scripts/setup-ssh.sh /usr/local/bin/setup-ssh.sh
+RUN chmod +x /usr/local/bin/setup-ssh.sh
+
+# Create startup script
+RUN cat > /usr/local/bin/start.sh << 'EOF'
+#!/bin/bash
+# Setup SSH if keys are mounted
+if [ -f /root/.ssh/id_rsa ]; then
+    /usr/local/bin/setup-ssh.sh
+fi
+
+# Start SSH daemon in background
+if [ -f /root/.ssh/authorized_keys ]; then
+    /usr/sbin/sshd -D &
+fi
+
+# Start the main application
+exec node server.js
+EOF
+
+RUN chmod +x /usr/local/bin/start.sh
+
+USER nextjs
+
+EXPOSE 3000 22
+
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+CMD ["/usr/local/bin/start.sh"]

@@ -1,169 +1,222 @@
-/**
- * Email Notification Service
- * Handles email sending and templates
- */
-
-export interface EmailTemplate {
-  id: string;
-  name: string;
+import logger from '@/lib/monitoring/logger';
+interface EmailTemplate {
   subject: string;
   html: string;
   text: string;
-  variables: string[];
 }
 
-export interface EmailData {
-  to: string | string[];
-  templateId?: string;
-  subject?: string;
-  html?: string;
-  text?: string;
-  variables?: Record<string, any>;
-  attachments?: Array<{
-    filename: string;
-    content: Buffer | string;
-    contentType: string;
-  }>;
+interface EmailData {
+  to: string;
+  template: string;
+  data: Record<string, any>;
+  language?: 'ar' | 'en';
 }
 
-export interface EmailResponse {
-  success: boolean;
-  messageId?: string;
-  error?: string;
-}
-
-class EmailService {
+export class EmailNotificationService {
   private templates: Map<string, EmailTemplate> = new Map();
 
-  registerTemplate(_template: EmailTemplate): void {
-    this.templates.set(template.id, template);
+  constructor() {
+    this.initializeTemplates();
   }
 
-  getTemplate(_id: string): EmailTemplate | null {
-    return this.templates.get(id) || null;
+  private initializeTemplates() {
+    // Appointment confirmation template
+    this.templates.set('appointment_confirmation', {
+      subject: 'تأكيد الموعد - مركز الحمام',
+      html: `
+        <div style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">
+          <h2>تأكيد الموعد</h2>
+          <p>عزيزي/عزيزتي {{patientName}}،</p>
+          <p>تم تأكيد موعدك بنجاح مع الدكتور {{doctorName}}.</p>
+          <div style="background: #f5f5f5; padding: 15px; margin: 15px 0;">
+            <h3>تفاصيل الموعد:</h3>
+            <p><strong>التاريخ:</strong> {{appointmentDate}}</p>
+            <p><strong>الوقت:</strong> {{appointmentTime}}</p>
+            <p><strong>الطبيب:</strong> {{doctorName}}</p>
+            <p><strong>التخصص:</strong> {{speciality}}</p>
+          </div>
+          <p>يرجى الحضور قبل الموعد بـ 15 دقيقة.</p>
+          <p>شكراً لاختياركم مركز الحمام.</p>
+        </div>
+      `,
+      text: `
+        تأكيد الموعد
+        عزيزي/عزيزتي {{patientName}}،
+        تم تأكيد موعدك بنجاح مع الدكتور {{doctorName}}.
+        
+        تفاصيل الموعد:
+        التاريخ: {{appointmentDate}}
+        الوقت: {{appointmentTime}}
+        الطبيب: {{doctorName}}
+        التخصص: {{speciality}}
+        
+        يرجى الحضور قبل الموعد بـ 15 دقيقة.
+        شكراً لاختياركم مركز الحمام.
+      `,
+    });
+
+    // Payment confirmation template
+    this.templates.set('payment_confirmation', {
+      subject: 'تأكيد الدفع - مركز الحمام',
+      html: `
+        <div style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">
+          <h2>تأكيد الدفع</h2>
+          <p>عزيزي/عزيزتي {{patientName}}،</p>
+          <p>تم استلام دفعتك بنجاح.</p>
+          <div style="background: #f5f5f5; padding: 15px; margin: 15px 0;">
+            <h3>تفاصيل الدفع:</h3>
+            <p><strong>المبلغ:</strong> {{amount}} ريال سعودي</p>
+            <p><strong>طريقة الدفع:</strong> {{paymentMethod}}</p>
+            <p><strong>رقم المعاملة:</strong> {{transactionId}}</p>
+            <p><strong>التاريخ:</strong> {{paymentDate}}</p>
+          </div>
+          <p>شكراً لاختياركم مركز الحمام.</p>
+        </div>
+      `,
+      text: `
+        تأكيد الدفع
+        عزيزي/عزيزتي {{patientName}}،
+        تم استلام دفعتك بنجاح.
+        
+        تفاصيل الدفع:
+        المبلغ: {{amount}} ريال سعودي
+        طريقة الدفع: {{paymentMethod}}
+        رقم المعاملة: {{transactionId}}
+        التاريخ: {{paymentDate}}
+        
+        شكراً لاختياركم مركز الحمام.
+      `,
+    });
+
+    // Appointment reminder template
+    this.templates.set('appointment_reminder', {
+      subject: 'تذكير بالموعد - مركز الحمام',
+      html: `
+        <div style="font-family: Arial, sans-serif; direction: rtl; text-align: right;">
+          <h2>تذكير بالموعد</h2>
+          <p>عزيزي/عزيزتي {{patientName}}،</p>
+          <p>نذكرك بموعدك غداً مع الدكتور {{doctorName}}.</p>
+          <div style="background: #f5f5f5; padding: 15px; margin: 15px 0;">
+            <h3>تفاصيل الموعد:</h3>
+            <p><strong>التاريخ:</strong> {{appointmentDate}}</p>
+            <p><strong>الوقت:</strong> {{appointmentTime}}</p>
+            <p><strong>الطبيب:</strong> {{doctorName}}</p>
+          </div>
+          <p>يرجى الحضور قبل الموعد بـ 15 دقيقة.</p>
+          <p>شكراً لاختياركم مركز الحمام.</p>
+        </div>
+      `,
+      text: `
+        تذكير بالموعد
+        عزيزي/عزيزتي {{patientName}}،
+        نذكرك بموعدك غداً مع الدكتور {{doctorName}}.
+        
+        تفاصيل الموعد:
+        التاريخ: {{appointmentDate}}
+        الوقت: {{appointmentTime}}
+        الطبيب: {{doctorName}}
+        
+        يرجى الحضور قبل الموعد بـ 15 دقيقة.
+        شكراً لاختياركم مركز الحمام.
+      `,
+    });
   }
 
-  private replaceVariables(
-    content: string,
-    variables: Record<string, any>,
-  ): string {
-    let result = content;
-    for (const [key, value] of Object.entries(variables)) {
-      const __regex = new RegExp(`{{${key}}}`, "g");
-      result = result.replace(regex, String(value));
-    }
-    return result;
-  }
-
-  async sendEmail(_emailData: EmailData): Promise<EmailResponse> {
+  async sendEmail(
+    emailData: EmailData
+  ): Promise<{ success: boolean; error?: string }> {
     try {
-      let subject = emailData.subject;
-      let html = emailData.html;
-      let text = emailData.text;
-
-      // Use template if provided
-      if (emailData.templateId) {
-        const __template = this.getTemplate(emailData.templateId);
-        if (!template) {
-          return {
-            success: false,
-            error: "Email template not found",
-          };
-        }
-
-        const __variables = emailData.variables || {};
-        subject = this.replaceVariables(template.subject, variables);
-        html = this.replaceVariables(template.html, variables);
-        text = this.replaceVariables(template.text, variables);
+      const template = this.templates.get(emailData.template);
+      if (!template) {
+        return { success: false, error: 'Template not found' };
       }
 
-      if (!subject || (!html && !text)) {
-        return {
-          success: false,
-          error: "Email subject and content are required",
-        };
-      }
+      // Replace template variables
+      let subject = template.subject;
+      let html = template.html;
+      let text = template.text;
 
-      // Simulate email sending (replace with actual email service)
-      const __response = await fetch("https://api.emailservice.com/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.EMAIL_API_KEY}`,
-        },
-        body: JSON.stringify({
-          to: Array.isArray(emailData.to) ? emailData.to : [emailData.to],
+      Object.entries(emailData.data).forEach(([key, value]) => {
+        const regex = new RegExp(`{{${key}}}`, 'g');
+        subject = subject.replace(regex, String(value));
+        html = html.replace(regex, String(value));
+        text = text.replace(regex, String(value));
+      });
+
+      // In production, this would integrate with an email service like SendGrid, AWS SES, etc.
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Email would be sent:', {
+          to: emailData.to,
           subject,
           html,
           text,
-          attachments: emailData.attachments,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Email service error: ${response.statusText}`);
+        });
+        return { success: true };
       }
 
-      const __result = await response.json();
-      return {
-        success: true,
-        messageId: result.messageId,
-      };
+      // TODO: Implement actual email sending service
+      // await emailService.send({
+      //   to: emailData.to,
+      //   subject,
+      //   html,
+      //   text
+      // });
+
+      return { success: true };
     } catch (error) {
-      // // console.error("Email sending error:", error);
       return {
         success: false,
-        error: "Failed to send email",
+        error: error instanceof Error ? error.message : 'Email sending failed',
       };
     }
   }
 
-  async sendBulkEmails(_emails: EmailData[]): Promise<EmailResponse[]> {
-    const results: EmailResponse[] = [];
+  async sendAppointmentConfirmation(data: {
+    patientEmail: string;
+    patientName: string;
+    doctorName: string;
+    appointmentDate: string;
+    appointmentTime: string;
+    speciality: string;
+  }) {
+    return this.sendEmail({
+      to: data.patientEmail,
+      template: 'appointment_confirmation',
+      data,
+      language: 'ar',
+    });
+  }
 
-    for (const email of emails) {
-      const __result = await this.sendEmail(email);
-      results.push(result);
-    }
+  async sendPaymentConfirmation(data: {
+    patientEmail: string;
+    patientName: string;
+    amount: number;
+    paymentMethod: string;
+    transactionId: string;
+    paymentDate: string;
+  }) {
+    return this.sendEmail({
+      to: data.patientEmail,
+      template: 'payment_confirmation',
+      data,
+      language: 'ar',
+    });
+  }
 
-    return results;
+  async sendAppointmentReminder(data: {
+    patientEmail: string;
+    patientName: string;
+    doctorName: string;
+    appointmentDate: string;
+    appointmentTime: string;
+  }) {
+    return this.sendEmail({
+      to: data.patientEmail,
+      template: 'appointment_reminder',
+      data,
+      language: 'ar',
+    });
   }
 }
 
-// Create global email service
-export const __emailService = new EmailService();
-
-// Register default templates
-emailService.registerTemplate({
-  id: "appointment_confirmation",
-  name: "Appointment Confirmation",
-  subject: "تأكيد موعدك الطبي - {{patientName}}",
-  html: `
-    <div dir="rtl">
-      <h2>تأكيد الموعد الطبي</h2>
-      <p>عزيزي/عزيزتي {{patientName}}،</p>
-      <p>تم تأكيد موعدك الطبي مع الدكتور {{doctorName}} في {{date}} في تمام الساعة {{time}}.</p>
-      <p>يرجى الحضور قبل الموعد بـ 15 دقيقة.</p>
-      <p>شكراً لثقتكم بنا.</p>
-    </div>
-  `,
-  text: "تأكيد موعدك الطبي مع الدكتور {{doctorName}} في {{date}} في تمام الساعة {{time}}.",
-  variables: ["patientName", "doctorName", "date", "time"],
-});
-
-emailService.registerTemplate({
-  id: "prescription_ready",
-  name: "Prescription Ready",
-  subject: "وصفتك الطبية جاهزة - {{patientName}}",
-  html: `
-    <div dir="rtl">
-      <h2>وصفتك الطبية جاهزة</h2>
-      <p>عزيزي/عزيزتي {{patientName}}،</p>
-      <p>وصفتك الطبية جاهزة ويمكنك استلامها من الصيدلية.</p>
-      <p>الوصفة صالحة لمدة {{validity}} أيام.</p>
-      <p>شكراً لثقتكم بنا.</p>
-    </div>
-  `,
-  text: "وصفتك الطبية جاهزة ويمكنك استلامها من الصيدلية.",
-  variables: ["patientName", "validity"],
-});
+export const emailService = new EmailNotificationService();

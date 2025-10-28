@@ -1,0 +1,44 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
+    },
+    "type-check": {
+      "dependsOn": ["^build"]
+    },
+    "e2e-healer": {
+      "dependsOn": ["^build", "lint", "type-check"],
+      "outputs": ["reports/**", "test-results/**"]
+    },
+    "generate-tests": {
+      "dependsOn": ["^build"],
+      "outputs": ["tests/generated/**"]
+    },
+    "apply-fixes": {
+      "dependsOn": ["^build"],
+      "outputs": ["src/**"]
+    },
+    "generate-reports": {
+      "dependsOn": ["^build", "test"],
+      "outputs": ["reports/**"]
+    },
+    "manage-pr": {
+      "dependsOn": ["^build", "e2e-healer"],
+      "outputs": []
+    }
+  }
+}

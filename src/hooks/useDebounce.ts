@@ -1,11 +1,11 @@
-import { _useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from 'react';
 // Debounce hooks
 
-export const __useDebounce = <T>(_value: T, delay: number): T => {
+export const useDebounce = <T>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
   useEffect(() => {
-    const __handler = setTimeout(() => {
+    const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
 
@@ -17,27 +17,27 @@ export const __useDebounce = <T>(_value: T, delay: number): T => {
   return debouncedValue;
 };
 
-export const __useDebouncedCallback = <T extends (...args: unknown[]) => any>(
+export const useDebouncedCallback = <T extends (...args: any[]) => any>(
   callback: T,
-  delay: number,
+  delay: number
 ): T => {
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(
-    null,
+    null
   );
 
-  const __debouncedCallback = useCallback(
+  const debouncedCallback = useCallback(
     (...args: Parameters<T>) => {
       if (debounceTimer) {
         clearTimeout(debounceTimer);
       }
 
-      const __newTimer = setTimeout(() => {
+      const newTimer = setTimeout(() => {
         callback(...args);
       }, delay);
 
       setDebounceTimer(newTimer);
     },
-    [callback, delay, debounceTimer],
+    [callback, delay, debounceTimer]
   );
 
   useEffect(() => {
@@ -51,15 +51,15 @@ export const __useDebouncedCallback = <T extends (...args: unknown[]) => any>(
   return debouncedCallback as T;
 };
 
-export const __useDebouncedValue = <T>(
+export const useDebouncedValue = <T>(
   initialValue: T,
-  delay: number,
-): [T, (_value: T) => void, T] => {
+  delay: number
+): [T, (value: T) => void, T] => {
   const [value, setValue] = useState<T>(initialValue);
   const [debouncedValue, setDebouncedValue] = useState<T>(initialValue);
 
   useEffect(() => {
-    const __handler = setTimeout(() => {
+    const handler = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
 

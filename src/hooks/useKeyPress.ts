@@ -1,14 +1,14 @@
-import { _useEffect, useCallback } from "react";
+import { useEffect, useCallback } from 'react';
 // Key press hooks
 
-export const __useKeyPress = (
+export const useKeyPress = (
   targetKey: string | string[],
-  handler: (_event: KeyboardEvent) => void,
+  handler: (event: KeyboardEvent) => void,
   options: {
     preventDefault?: boolean;
     stopPropagation?: boolean;
     enabled?: boolean;
-  } = {},
+  } = {}
 ) => {
   const {
     preventDefault = false,
@@ -16,13 +16,12 @@ export const __useKeyPress = (
     enabled = true,
   } = options;
 
-  const __handleKeyPress = useCallback(
-    (_event: KeyboardEvent) => {
+  const handleKeyPress = useCallback(
+    (event: KeyboardEvent) => {
       if (!enabled) return;
 
-      const __keys = Array.isArray(targetKey) ? targetKey : [targetKey];
-      const __isTargetKey =
-        keys.includes(event.key) || keys.includes(event.code);
+      const keys = Array.isArray(targetKey) ? targetKey : [targetKey];
+      const isTargetKey = keys.includes(event.key) || keys.includes(event.code);
 
       if (isTargetKey) {
         if (preventDefault) {
@@ -34,70 +33,64 @@ export const __useKeyPress = (
         handler(event);
       }
     },
-    [targetKey, handler, preventDefault, stopPropagation, enabled],
+    [targetKey, handler, preventDefault, stopPropagation, enabled]
   );
 
   useEffect(() => {
     if (!enabled) return;
 
-    document.addEventListener("keydown", handleKeyPress);
+    document.addEventListener('keydown', handleKeyPress);
 
     return () => {
-      document.removeEventListener("keydown", handleKeyPress);
+      document.removeEventListener('keydown', handleKeyPress);
     };
   }, [handleKeyPress, enabled]);
 };
 
-export const __useEscapeKey = (
-  _handler: () => void,
-  enabled: boolean = true,
-) => {
-  useKeyPress("Escape", handler, { enabled });
+export const useEscapeKey = (handler: () => void, enabled: boolean = true) => {
+  useKeyPress('Escape', handler, { enabled });
 };
 
-export const __useEnterKey = (
-  _handler: () => void,
-  enabled: boolean = true,
-) => {
-  useKeyPress("Enter", handler, { enabled });
+export const useEnterKey = (handler: () => void, enabled: boolean = true) => {
+  useKeyPress('Enter', handler, { enabled });
 };
 
-export const __useArrowKeys = (
-  handler: (_direction: "up" | "down" | "left" | "right") => void,
-  enabled: boolean = true,
+export const useArrowKeys = (
+  handler: (direction: 'up' | 'down' | 'left' | 'right') => void,
+  enabled: boolean = true
 ) => {
-  const __handleArrowKey = useCallback(
-    (_event: KeyboardEvent) => {
+  const handleArrowKey = useCallback(
+    (event: KeyboardEvent) => {
       if (!enabled) return;
 
       switch (event.key) {
-        case "ArrowUp":
-          handler("up");
+        case 'ArrowUp':
+          handler('up');
           break;
-        case "ArrowDown":
-          handler("down");
+        case 'ArrowDown':
+          handler('down');
           break;
-        case "ArrowLeft":
-          handler("left");
+        case 'ArrowLeft':
+          handler('left');
           break;
-        case "ArrowRight":
-          handler("right");
+        case 'ArrowRight':
+          handler('right');
           break;
       }
     },
-    [handler, enabled],
+    [handler, enabled]
   );
 
   useKeyPress(
-    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"],
+    ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'],
     handleArrowKey,
     {
       enabled,
-    },
+    }
   );
 };
 
-export const __useHotkey = (
+export const useHotkey = (
   key: string,
   handler: () => void,
   options: {
@@ -106,7 +99,7 @@ export const __useHotkey = (
     shiftKey?: boolean;
     metaKey?: boolean;
     enabled?: boolean;
-  } = {},
+  } = {}
 ) => {
   const {
     ctrlKey = false,
@@ -116,11 +109,11 @@ export const __useHotkey = (
     enabled = true,
   } = options;
 
-  const __handleHotkey = useCallback(
-    (_event: KeyboardEvent) => {
+  const handleHotkey = useCallback(
+    (event: KeyboardEvent) => {
       if (!enabled) return;
 
-      const __isTargetKey = event.key === key || event.code === key;
+      const isTargetKey = event.key === key || event.code === key;
       const modifiersMatch =
         event.ctrlKey === ctrlKey &&
         event.altKey === altKey &&
@@ -132,16 +125,16 @@ export const __useHotkey = (
         handler();
       }
     },
-    [key, handler, ctrlKey, altKey, shiftKey, metaKey, enabled],
+    [key, handler, ctrlKey, altKey, shiftKey, metaKey, enabled]
   );
 
   useEffect(() => {
     if (!enabled) return;
 
-    document.addEventListener("keydown", handleHotkey);
+    document.addEventListener('keydown', handleHotkey);
 
     return () => {
-      document.removeEventListener("keydown", handleHotkey);
+      document.removeEventListener('keydown', handleHotkey);
     };
   }, [handleHotkey, enabled]);
 };

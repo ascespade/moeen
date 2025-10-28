@@ -3,17 +3,16 @@
  * Unified API request handler with error handling and validation
  */
 
-import { _NextRequest, NextResponse } from "next/server";
-import { _z } from "zod";
-
-import { _authorize } from "@/lib/auth/authorize";
-import { _createClient } from "@/lib/supabase/server";
-
-import { _ErrorHandler, ErrorFactory } from "../errors";
-import { _ValidationHelper } from "../validation";
+import logger from '@/lib/monitoring/logger';
+import { NextRequest, NextResponse } from 'next/server';
+import { ErrorHandler, ErrorFactory } from '../errors';
+import { ValidationHelper } from '../validation';
+import { z } from 'zod';
+import { createClient } from '@/lib/supabase/server';
+import { authorize } from '@/lib/auth/authorize';
 
 export interface ApiHandlerConfig {
-  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   auth?: boolean;
   roles?: string[];
   validation?: {
@@ -34,10 +33,10 @@ export class BaseApiHandler {
   }
 
   public createHandler<T = any>(
-    handler: (_req: NextRequest, context: unknown) => Promise<NextResponse<T>>,
-    config: ApiHandlerConfig,
+    handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
+    config: ApiHandlerConfig
   ) {
-    return async (_req: NextRequest, context: unknown) => {
+    return async (req: NextRequest, context: any) => {
       try {
         // Method validation
         if (req.method !== config.method) {
@@ -45,11 +44,11 @@ export class BaseApiHandler {
             {
               success: false,
               error: {
-                message: "Method not allowed",
-                code: "METHOD_NOT_ALLOWED",
+                message: 'Method not allowed',
+                code: 'METHOD_NOT_ALLOWED',
               },
             },
-            { status: 405 },
+            { status: 405 }
           );
         }
 
@@ -61,9 +60,9 @@ export class BaseApiHandler {
             return NextResponse.json(
               {
                 success: false,
-                error: { message: "Unauthorized", code: "UNAUTHORIZED" },
+                error: { message: 'Unauthorized', code: 'UNAUTHORIZED' },
               },
-              { status: 401 },
+              { status: 401 }
             );
           }
 
@@ -72,9 +71,9 @@ export class BaseApiHandler {
             return NextResponse.json(
               {
                 success: false,
-                error: { message: "Forbidden", code: "FORBIDDEN" },
+                error: { message: 'Forbidden', code: 'FORBIDDEN' },
               },
-              { status: 403 },
+              { status: 403 }
             );
           }
 
@@ -85,17 +84,17 @@ export class BaseApiHandler {
         // Request validation
         if (config.validation) {
           // Body validation
-          if (config.validation.body && req.method !== "GET") {
-            const __body = await req.json();
-            const __validation = ValidationHelper.validateRequestBody(
+          if (config.validation.body && req.method !== 'GET') {
+            const body = await req.json();
+            const validation = ValidationHelper.validateRequestBody(
               config.validation.body,
-              body,
+              body
             );
 
             if (!validation.success) {
               return NextResponse.json(
                 { success: false, error: validation.error.toJSON() },
-                { status: 400 },
+                { status: 400 }
               );
             }
 
@@ -104,8 +103,8 @@ export class BaseApiHandler {
 
           // Query validation
           if (config.validation.query) {
-            const __searchParams = new URLSearchParams(
-              req.url.split("?")[1] || "",
+            const searchParams = new URLSearchParams(
+              req.url.split('?')[1] || ''
             );
             const queryParams: Record<string, any> = {};
 
@@ -115,8 +114,8 @@ export class BaseApiHandler {
                 queryParams[key] = Number(value);
               }
               // Try to parse as boolean
-              else if (value === "true" || value === "false") {
-                queryParams[key] = value === "true";
+              else if (value === 'true' || value === 'false') {
+                queryParams[key] = value === 'true';
               }
               // Keep as string
               else {
@@ -124,15 +123,15 @@ export class BaseApiHandler {
               }
             }
 
-            const __validation = ValidationHelper.validate(
+            const validation = ValidationHelper.validate(
               config.validation.query,
-              queryParams,
+              queryParams
             );
 
             if (!validation.success) {
               return NextResponse.json(
                 { success: false, error: validation.error.toJSON() },
-                { status: 400 },
+                { status: 400 }
               );
             }
 
@@ -148,7 +147,7 @@ export class BaseApiHandler {
         // Execute handler
         return await handler(req, context);
       } catch (error) {
-        const __handledError = this.errorHandler.handle(error as Error);
+        const handledError = this.errorHandler.handle(error as Error);
 
         return NextResponse.json(
           {
@@ -156,12 +155,12 @@ export class BaseApiHandler {
             error: {
               code: handledError.code,
               message: handledError.message,
-              ...(process.env.NODE_ENV === "development" && {
+              ...(process.env.NODE_ENV === 'development' && {
                 stack: (error as Error).stack,
               }),
             },
           },
-          { status: handledError.statusCode },
+          { status: handledError.statusCode }
         );
       }
     };
@@ -172,7 +171,7 @@ export class BaseApiHandler {
     return createClient();
   }
 
-  public async getCurrentUser(_req: NextRequest) {
+  public async getCurrentUser(req: NextRequest) {
     const { user, error } = await authorize(req);
     if (error || !user) {
       throw ErrorFactory.createAuthenticationError();
@@ -183,8 +182,8 @@ export class BaseApiHandler {
   public async checkResourceAccess(
     resourceType: string,
     resourceId: string,
-    user: unknown,
-    supabase: unknown,
+    user: any,
+    supabase: any
   ) {
     // Implement resource access checking logic
     // This would check if the user has access to the specific resource
@@ -195,12 +194,12 @@ export class BaseApiHandler {
     action: string,
     resourceType: string,
     resourceId: string,
-    user: unknown,
-    metadata: unknown,
-    supabase: unknown,
+    user: any,
+    metadata: any,
+    supabase: any
   ) {
     try {
-      await supabase.from("audit_logs").insert({
+      await supabase.from('audit_logs').insert({
         action,
         resource_type: resourceType,
         resource_id: resourceId,
@@ -209,11 +208,11 @@ export class BaseApiHandler {
         created_at: new Date().toISOString(),
       });
     } catch (error) {
-      // // console.error("Failed to create audit log:", error);
+      console.error('Failed to create audit log:', error);
     }
   }
 
-  public createSuccessResponse<T>(_data: T, message?: string) {
+  public createSuccessResponse<T>(data: T, message?: string) {
     return NextResponse.json({
       success: true,
       data,
@@ -224,7 +223,7 @@ export class BaseApiHandler {
   public createErrorResponse(
     message: string,
     code: string,
-    statusCode: number = 400,
+    statusCode: number = 400
   ) {
     return NextResponse.json(
       {
@@ -234,7 +233,7 @@ export class BaseApiHandler {
           message,
         },
       },
-      { status: statusCode },
+      { status: statusCode }
     );
   }
 
@@ -242,9 +241,9 @@ export class BaseApiHandler {
     data: T[],
     page: number,
     limit: number,
-    total: number,
+    total: number
   ) {
-    const __totalPages = Math.ceil(total / limit);
+    const totalPages = Math.ceil(total / limit);
 
     return NextResponse.json({
       success: true,
@@ -262,12 +261,12 @@ export class BaseApiHandler {
 }
 
 // Export singleton instance
-export const __baseApiHandler = new BaseApiHandler();
+export const baseApiHandler = new BaseApiHandler();
 
 // Helper function to create API handlers
-export const __createApiHandler = <T = any>(
-  handler: (_req: NextRequest, context: unknown) => Promise<NextResponse<T>>,
-  config: ApiHandlerConfig,
+export const createApiHandler = <T = any>(
+  handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
+  config: ApiHandlerConfig
 ) => {
   return baseApiHandler.createHandler(handler, config);
 };

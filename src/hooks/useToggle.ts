@@ -1,32 +1,29 @@
-import { _useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 // Toggle hooks
 
-export const __useToggle = (
-  initialValue: boolean = false,
-): [boolean, () => void, (_value: boolean) => void] => {
+export const useToggle = (
+  initialValue: boolean = false
+): [boolean, () => void, (value: boolean) => void] => {
   const [value, setValue] = useState<boolean>(initialValue);
 
-  const __toggle = useCallback(() => {
-    setValue((prev) => !prev);
+  const toggle = useCallback(() => {
+    setValue(prev => !prev);
   }, []);
 
-  const __setToggle = useCallback((_newValue: boolean) => {
+  const setToggle = useCallback((newValue: boolean) => {
     setValue(newValue);
   }, []);
 
   return [value, toggle, setToggle];
 };
 
-export const __useBoolean = (_initialValue: boolean = false) => {
+export const useBoolean = (initialValue: boolean = false) => {
   const [value, setValue] = useState<boolean>(initialValue);
 
-  const __setTrue = useCallback(() => setValue(true), []);
-  const __setFalse = useCallback(() => setValue(false), []);
-  const __toggle = useCallback(() => setValue((prev) => !prev), []);
-  const __setBoolean = useCallback(
-    (_newValue: boolean) => setValue(newValue),
-    [],
-  );
+  const setTrue = useCallback(() => setValue(true), []);
+  const setFalse = useCallback(() => setValue(false), []);
+  const toggle = useCallback(() => setValue(prev => !prev), []);
+  const setBoolean = useCallback((newValue: boolean) => setValue(newValue), []);
 
   return {
     value,

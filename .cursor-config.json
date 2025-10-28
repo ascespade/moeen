@@ -1,0 +1,114 @@
+{
+  "tasks": [
+    {
+      "name": "Enforce Dynamic Data & No Mocks",
+      "description": "Ensure all data is dynamic, sourced from the database or environment variables. Block hardcoded values, mock files, or simulated responses.",
+      "triggers": ["onProjectOpen", "onFileSave", "beforeBuild"],
+      "autoRun": true,
+      "persistent": true,
+      "steps": [
+        "Scan for mock files (mock, fixtures, simulation, sampleData)",
+        "Scan for hardcoded arrays, objects, static strings, or default values",
+        "Check that all fetch calls use live DB services (Supabase)",
+        "Ensure UI texts (home page, headers, buttons, forms) come from translation tables or env-config",
+        "Enforce using env variables for config values",
+        "Block build if violations are found"
+      ]
+    },
+    {
+      "name": "Enforce Translation & Defaults",
+      "description": "Check that all frontend content uses translation keys and defaults come from DB/config. No hardcoded text or static default values.",
+      "triggers": ["onFileSave", "beforeBuild"],
+      "autoRun": true,
+      "persistent": true,
+      "steps": [
+        "Scan all components for hardcoded text strings",
+        "Ensure text comes from translation system (i18next / Supabase table)",
+        "Validate default values for forms, home page cards, banners, placeholders come from DB",
+        "Validate language switch triggers correct translations",
+        "Validate theme switch triggers correct dark/light mode classes/styles"
+      ]
+    },
+    {
+      "name": "Auto-Fix Translation & Defaults",
+      "description": "Suggest or automatically replace hardcoded text with translation keys or dynamic DB-driven content.",
+      "triggers": ["onFileSave"],
+      "autoRun": true,
+      "persistent": true
+    }
+  ],
+  "preferences": {
+    "autoFix": true,
+    "maxFixIterations": 10,
+    "stopOnClean": true,
+    "allowConfigChanges": true,
+    "reportFixProgress": true,
+    "safeFileHandling": true,
+    "preventDataLoss": true,
+    "enforceDynamicData": true,
+    "enforceTranslations": true,
+    "enforceDefaultsFromDB": true,
+    "noMocksAllowed": true,
+    "detectHardcodedData": true,
+    "scanForLocalJsonMocks": true,
+    "blockBuildOnViolation": true
+  },
+  "rules": {
+    "disallowedPatterns": [
+      "mock",
+      "fixture",
+      "simulation",
+      "sampleData",
+      "const data =",
+      "export const data =",
+      "require\\(.+\\.json\\)",
+      "import .+ from .+\\.json",
+      "[\"'][^\"']*[\"']\\s*[,;]",
+      "const.*=.*\\[.*\\]",
+      "export const.*=.*\\[.*\\]",
+      "getDefault.*\\(\\)",
+      "fallback.*=.*\\[",
+      "hardcoded.*=.*\\["
+    ],
+    "allowedDataSources": [
+      "supabase",
+      "env",
+      "process.env",
+      "i18next",
+      "translationsTable",
+      "settings",
+      "useI18n",
+      "usePageI18n",
+      "t\\(",
+      "createClient",
+      "from\\('settings'\\)",
+      "from\\('translations'\\)"
+    ],
+    "requiredImports": ["useI18n", "usePageI18n", "createClient", "I18N_KEYS"],
+    "enforcedPatterns": [
+      "t\\(I18N_KEYS\\.",
+      "usePageI18n\\(\\)",
+      "createClient\\(\\)",
+      "from\\('settings'\\)",
+      "from\\('translations'\\)"
+    ]
+  },
+  "validation": {
+    "checkHardcodedStrings": true,
+    "checkStaticArrays": true,
+    "checkMockFiles": true,
+    "checkTranslationUsage": true,
+    "checkDatabaseQueries": true,
+    "checkEnvVariables": true,
+    "enforceDynamicContent": true,
+    "blockBuildOnViolation": true
+  },
+  "autoFix": {
+    "replaceHardcodedStrings": true,
+    "convertToTranslationKeys": true,
+    "replaceStaticData": true,
+    "addDatabaseQueries": true,
+    "addMissingImports": true,
+    "suggestDynamicAlternatives": true
+  }
+}

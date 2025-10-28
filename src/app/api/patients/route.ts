@@ -1,182 +1,104 @@
-import { _NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { realDB } from '@/lib/supabase-real';
+import { z } from 'zod';
 
-import { _realDB } from "@/lib/supabase-real";
-import { _whatsappAPI } from "@/lib/whatsapp-business-api";
+const patientSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  phone: z.string().min(1, 'Phone is required'),
+  email: z.string().email().optional(),
+  date_of_birth: z.string().optional(),
+  gender: z.enum(['male', 'female']).optional(),
+  address: z.string().optional(),
+  emergency_contact: z.string().optional(),
+  emergency_contact_phone: z.string().optional(),
+  medical_history: z.array(z.string()).optional(),
+  allergies: z.array(z.string()).optional(),
+  medications: z.array(z.string()).optional(),
+  insurance_provider: z.string().optional(),
+  insurance_number: z.string().optional(),
+});
 
-export async function __GET(_request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const __page = parseInt(searchParams.get("page") || "1");
-    const __limit = parseInt(searchParams.get("limit") || "20");
-    const __search = searchParams.get("search") || "";
+    const searchTerm = searchParams.get('search') || '';
+    const role = searchParams.get('role') || 'patient';
+    const limit = parseInt(searchParams.get('limit') || '50');
+    const offset = parseInt(searchParams.get('offset') || '0');
 
-    // Get patients from real database
-    const __patients = await realDB.searchUsers(search, "patient");
+    const patients = await realDB.searchUsers(searchTerm, role);
 
-    // Get additional patient data
-    const __patientsWithDetails = await Promise.all(
-      (patients as any[]).map(async (_patient: unknown) => {
-        const __patientData = (await realDB.getPatient(patient.id)) as any;
-        const __appointments = (await realDB.getAppointments({
-          patientId: patient.id,
-          limit: 1,
-        })) as any[];
-
-        return {
-          id: patient.id,
-          name: patient.name,
-          age: patient.age,
-          contactInfo: {
-            phone: patient.phone,
-            email: patient.email,
-          },
-          lastVisit:
-            (appointments as any[]).length > 0
-              ? new Date((appointments as any[])[0].appointment_date as string)
-              : null,
-          nextAppointment:
-            (appointments as any[]).length > 0
-              ? new Date((appointments as any[])[0].appointment_date as string)
-              : null,
-          status: (patientData as any)?.status || "active",
-        };
-      }),
-    );
-
-    // Pagination
-    const __startIndex = (page - 1) * limit;
-    const __endIndex = startIndex + limit;
-    const __paginatedPatients = patientsWithDetails.slice(startIndex, endIndex);
+    // Apply pagination
+    const paginatedPatients = patients.slice(offset, offset + limit);
 
     return NextResponse.json({
       success: true,
       data: paginatedPatients,
       pagination: {
-        page,
+        total: patients.length,
         limit,
-        total: patientsWithDetails.length,
-        totalPages: Math.ceil(patientsWithDetails.length / limit),
+        offset,
+        hasMore: offset + limit < patients.length,
       },
     });
   } catch (error) {
-    // // console.error("Get patients error:", error);
-
+    console.error('Error fetching patients:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: "Internal server error",
-        code: "INTERNAL_ERROR",
-      },
-      { status: 500 },
+      { error: 'Failed to fetch patients' },
+      { status: 500 }
     );
   }
 }
 
-export async function __POST(_request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const __body = await request.json();
-    const {
-      name,
-      age,
-      phone,
-      email,
-      national_id,
-      gender,
-      address,
-      city,
-      emergency_contact,
-      emergency_contact_relation,
-      insurance_provider,
-      insurance_number,
-      medical_history,
-      current_conditions,
-      medications,
-      allergies,
-      guardian_name,
-      guardian_relation,
-      guardian_phone,
-      medical_conditions,
-      treatment_goals,
-      assigned_doctor_id,
-    } = body;
+    const body = await request.json();
+    const validation = patientSchema.safeParse(body);
 
-    if (!name || !age || !phone) {
+    if (!validation.success) {
       return NextResponse.json(
-        {
-          success: false,
-          error: "Name, age, and phone are required",
-          code: "MISSING_REQUIRED_FIELDS",
-        },
-        { status: 400 },
+        { error: 'Validation failed', details: validation.error.issues },
+        { status: 400 }
       );
     }
 
-    // Create user first
-    const __userData = {
-      national_id,
-      name,
-      age,
-      gender,
-      phone,
-      email,
-      role: "patient" as const,
-      address,
-      city,
-      emergency_contact,
-      emergency_contact_relation,
-      insurance_provider,
-      insurance_number,
-      medical_history,
-      current_conditions,
-      medications,
-      allergies,
+    const patientData = {
+      ...validation.data,
+      role: 'patient' as const,
+      national_id: body.national_id,
+      name_en: body.name_en,
+      age: body.age,
+      city: body.city,
+      emergency_contact_relation: body.emergency_contact_relation,
+      current_conditions: body.current_conditions,
     };
 
-    const __user = await realDB.createUser(userData);
+    const patient = await realDB.createUser(patientData);
 
     // Create patient record
-    const __patientData = {
-      id: user.id,
-      guardian_name,
-      guardian_relation,
-      guardian_phone,
-      medical_conditions,
-      treatment_goals,
-      assigned_doctor_id,
-      status: "active",
-    };
-
-    await realDB.createPatient(patientData);
-
-    // Send welcome WhatsApp message
-    try {
-      await whatsappAPI.sendTextMessage(
-        phone,
-        `مرحباً ${name}، أهلاً بك في مركز الهمم! تم إنشاء حسابك بنجاح. نحن هنا لمساعدتك في رحلة العلاج والشفاء.`,
-      );
-    } catch (whatsappError) {
-      // // console.error("WhatsApp message failed:", whatsappError);
-      // Don't fail the entire request if WhatsApp fails
-    }
+    const patientRecord = await realDB.createPatient({
+      id: patient.id,
+      guardian_name: body.guardian_name,
+      guardian_relation: body.guardian_relation,
+      guardian_phone: body.guardian_phone,
+      medical_conditions: body.medical_conditions,
+      treatment_goals: body.treatment_goals,
+      assigned_doctor_id: body.assigned_doctor_id,
+      assigned_therapist_id: body.assigned_therapist_id,
+      admission_date: new Date().toISOString(),
+      status: 'active',
+    });
 
     return NextResponse.json({
       success: true,
-      data: {
-        id: user.id,
-        message: "Patient created successfully",
-        whatsappSent: true,
-      },
+      data: { ...patient, patientRecord },
+      message: 'Patient created successfully',
     });
   } catch (error) {
-    // // console.error("Create patient error:", error);
-
+    console.error('Error creating patient:', error);
     return NextResponse.json(
-      {
-        success: false,
-        error: "Internal server error",
-        code: "INTERNAL_ERROR",
-      },
-      { status: 500 },
+      { error: 'Failed to create patient' },
+      { status: 500 }
     );
   }
 }

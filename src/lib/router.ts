@@ -1,206 +1,110 @@
-/**
- * Router utilities for navigation and route management
- */
-
-import { _ROUTES } from "@/constants/routes";
-
+import { ROUTES } from '@/constants/routes';
 export interface User {
   id: string;
   email: string;
-  role: "admin" | "doctor" | "therapist" | "patient" | "family_member";
+  role:
+    | 'admin'
+    | 'user'
+    | 'doctor'
+    | 'nurse'
+    | 'staff'
+    | 'supervisor'
+    | 'patient'
+    | 'agent'
+    | 'manager'
+    | 'demo'
+    | 'moderator';
+  permissions?: string[];
 }
 
 /**
  * Get the default route for a user based on their role
  */
-export function __getDefaultRouteForUser(_user: User): string {
+export function getDefaultRouteForUser(user: User | null): string {
+  if (!user) {
+    return ROUTES.LOGIN;
+  }
+
   switch (user.role) {
-    case "admin":
-      return ROUTES.ADMIN_DASHBOARD;
-    case "doctor":
-      return ROUTES.DOCTOR_DASHBOARD;
-    case "therapist":
-      return ROUTES.THERAPIST_DASHBOARD;
-    case "patient":
-      return ROUTES.PATIENT_DASHBOARD;
-    case "family_member":
-      return ROUTES.FAMILY_DASHBOARD;
+    case 'admin':
+      return ROUTES.ADMIN.DASHBOARD;
+    case 'doctor':
+      return '/dashboard/doctor';
+    case 'nurse':
+    case 'staff':
+      return '/dashboard/staff';
+    case 'supervisor':
+      return '/dashboard/supervisor';
+    case 'patient':
+      return '/dashboard/patient';
+    case 'agent':
+    case 'manager':
+    case 'demo':
+      return '/dashboard';
+    case 'user':
     default:
-      return ROUTES.DASHBOARD;
+      return '/dashboard';
   }
-}
-
-/**
- * Check if a user has access to a specific route
- */
-export function __canAccessRoute(_user: User, route: string): boolean {
-  // Admin can access everything
-  if (user.role === "admin") {
-    return true;
-  }
-
-  // Role-based access control
-  const roleRoutes: Record<string, string[]> = {
-    doctor: [
-      ROUTES.DOCTOR_DASHBOARD,
-      ROUTES.PATIENTS,
-      ROUTES.APPOINTMENTS,
-      ROUTES.SESSIONS,
-      ROUTES.REPORTS,
-      ROUTES.PROFILE,
-    ],
-    therapist: [
-      ROUTES.THERAPIST_DASHBOARD,
-      ROUTES.PATIENTS,
-      ROUTES.SESSIONS,
-      ROUTES.REPORTS,
-      ROUTES.PROFILE,
-    ],
-    patient: [
-      ROUTES.PATIENT_DASHBOARD,
-      ROUTES.APPOINTMENTS,
-      ROUTES.MEDICAL_RECORDS,
-      ROUTES.PROFILE,
-    ],
-    family_member: [
-      ROUTES.FAMILY_DASHBOARD,
-      ROUTES.PATIENTS,
-      ROUTES.APPOINTMENTS,
-      ROUTES.PROFILE,
-    ],
-  };
-
-  const __allowedRoutes = roleRoutes[user.role] || [];
-  return allowedRoutes.includes(route) || route === ROUTES.DASHBOARD;
-}
-
-/**
- * Get navigation menu items for a user
- */
-export function __getNavigationItems(_user: User) {
-  const __baseItems = [
-    { label: "الرئيسية", href: ROUTES.DASHBOARD, icon: "🏠" },
-  ];
-
-  const roleItems: Record<
-    string,
-    Array<{ label: string; href: string; icon: string }>
-  > = {
-    admin: [
-      { label: "لوحة التحكم", href: ROUTES.ADMIN_DASHBOARD, icon: "📊" },
-      { label: "المستخدمين", href: ROUTES.ADMIN_USERS, icon: "👥" },
-      { label: "التقارير", href: ROUTES.REPORTS, icon: "📈" },
-      { label: "الإعدادات", href: ROUTES.SETTINGS, icon: "⚙️" },
-    ],
-    doctor: [
-      { label: "لوحة التحكم", href: ROUTES.DOCTOR_DASHBOARD, icon: "📊" },
-      { label: "المرضى", href: ROUTES.PATIENTS, icon: "👥" },
-      { label: "المواعيد", href: ROUTES.APPOINTMENTS, icon: "📅" },
-      { label: "الجلسات", href: ROUTES.SESSIONS, icon: "💬" },
-      { label: "التقارير", href: ROUTES.REPORTS, icon: "📈" },
-    ],
-    therapist: [
-      { label: "لوحة التحكم", href: ROUTES.THERAPIST_DASHBOARD, icon: "📊" },
-      { label: "المرضى", href: ROUTES.PATIENTS, icon: "👥" },
-      { label: "الجلسات", href: ROUTES.SESSIONS, icon: "💬" },
-      { label: "التقارير", href: ROUTES.REPORTS, icon: "📈" },
-    ],
-    patient: [
-      { label: "لوحة التحكم", href: ROUTES.PATIENT_DASHBOARD, icon: "📊" },
-      { label: "المواعيد", href: ROUTES.APPOINTMENTS, icon: "📅" },
-      { label: "السجلات الطبية", href: ROUTES.MEDICAL_RECORDS, icon: "📋" },
-      { label: "الملف الشخصي", href: ROUTES.PROFILE, icon: "👤" },
-    ],
-    family_member: [
-      { label: "لوحة التحكم", href: ROUTES.FAMILY_DASHBOARD, icon: "📊" },
-      { label: "المرضى", href: ROUTES.PATIENTS, icon: "👥" },
-      { label: "المواعيد", href: ROUTES.APPOINTMENTS, icon: "📅" },
-      { label: "الملف الشخصي", href: ROUTES.PROFILE, icon: "👤" },
-    ],
-  };
-
-  const __roleSpecificItems = roleItems[user.role] || [];
-  return [...baseItems, ...roleSpecificItems];
-}
-
-/**
- * Redirect to login if user is not authenticated
- */
-export function __redirectToLogin(): string {
-  return ROUTES.LOGIN;
-}
-
-/**
- * Redirect to unauthorized page if user doesn't have access
- */
-export function __redirectToUnauthorized(): string {
-  return ROUTES.UNAUTHORIZED;
 }
 
 /**
  * Check if a route requires authentication
  */
-export function __requiresAuth(_route: string): boolean {
-  const __publicRoutes = [
-    ROUTES.LOGIN,
-    ROUTES.REGISTER,
-    ROUTES.FORGOT_PASSWORD,
-    ROUTES.RESET_PASSWORD,
-    ROUTES.HOME,
-  ];
-
-  return !publicRoutes.includes(route);
+export function isProtectedRoute(pathname: string): boolean {
+  return !((ROUTES as any).PUBLIC_ROUTES as readonly string[]).includes(
+    pathname
+  );
 }
 
 /**
- * Get breadcrumb items for a route
+ * Check if a route requires admin privileges
  */
-export function __getBreadcrumbs(
-  route: string,
-): Array<{ label: string; href: string }> {
-  const breadcrumbMap: Record<
-    string,
-    Array<{ label: string; href: string }>
-  > = {
-    [ROUTES.ADMIN_DASHBOARD]: [
-      { label: "الرئيسية", href: ROUTES.DASHBOARD },
-      { label: "لوحة التحكم", href: ROUTES.ADMIN_DASHBOARD },
-    ],
-    [ROUTES.DOCTOR_DASHBOARD]: [
-      { label: "الرئيسية", href: ROUTES.DASHBOARD },
-      { label: "لوحة التحكم", href: ROUTES.DOCTOR_DASHBOARD },
-    ],
-    [ROUTES.THERAPIST_DASHBOARD]: [
-      { label: "الرئيسية", href: ROUTES.DASHBOARD },
-      { label: "لوحة التحكم", href: ROUTES.THERAPIST_DASHBOARD },
-    ],
-    [ROUTES.PATIENT_DASHBOARD]: [
-      { label: "الرئيسية", href: ROUTES.DASHBOARD },
-      { label: "لوحة التحكم", href: ROUTES.PATIENT_DASHBOARD },
-    ],
-    [ROUTES.PATIENTS]: [
-      { label: "الرئيسية", href: ROUTES.DASHBOARD },
-      { label: "المرضى", href: ROUTES.PATIENTS },
-    ],
-    [ROUTES.APPOINTMENTS]: [
-      { label: "الرئيسية", href: ROUTES.DASHBOARD },
-      { label: "المواعيد", href: ROUTES.APPOINTMENTS },
-    ],
-    [ROUTES.SESSIONS]: [
-      { label: "الرئيسية", href: ROUTES.DASHBOARD },
-      { label: "الجلسات", href: ROUTES.SESSIONS },
-    ],
-    [ROUTES.REPORTS]: [
-      { label: "الرئيسية", href: ROUTES.DASHBOARD },
-      { label: "التقارير", href: ROUTES.REPORTS },
-    ],
-    [ROUTES.PROFILE]: [
-      { label: "الرئيسية", href: ROUTES.DASHBOARD },
-      { label: "الملف الشخصي", href: ROUTES.PROFILE },
-    ],
-  };
+export function isAdminRoute(pathname: string): boolean {
+  return pathname.startsWith('/admin');
+}
 
-  return (
-    breadcrumbMap[route] || [{ label: "الرئيسية", href: ROUTES.DASHBOARD }]
-  );
+/**
+ * Check if user has permission to access a route
+ */
+export function canAccessRoute(user: User | null, pathname: string): boolean {
+  if (!user) {
+    return !isProtectedRoute(pathname);
+  }
+
+  if (isAdminRoute(pathname)) {
+    return user.role === 'admin';
+  }
+
+  return true;
+}
+
+/**
+ * Get navigation items based on user role
+ */
+export function getNavigationItems(user: User | null) {
+  if (!user) {
+    return [
+      { label: 'الرئيسية', href: ROUTES.HOME },
+      { label: 'تسجيل الدخول', href: ROUTES.LOGIN },
+      { label: 'إنشاء حساب', href: ROUTES.REGISTER },
+    ];
+  }
+
+  const baseItems = [
+    { label: 'لوحة التحكم', href: ROUTES.USER.DASHBOARD },
+    { label: 'المواعيد', href: '/appointments' },
+    { label: 'المرضى', href: '/patients' },
+    { label: 'الجلسات', href: '/sessions' },
+  ];
+
+  if (user.role === 'admin') {
+    return [
+      ...baseItems,
+      { label: 'الإدارة', href: ROUTES.ADMIN.DASHBOARD },
+      { label: 'المستخدمون', href: ROUTES.ADMIN.USERS },
+      { label: 'الإعدادات', href: ROUTES.ADMIN.SETTINGS },
+    ];
+  }
+
+  return baseItems;
 }

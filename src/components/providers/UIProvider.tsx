@@ -1,22 +1,16 @@
-"use client";
-import { _atom } from "jotai";
-import { _usePathname } from "next/navigation";
-import { _useEffect } from "react";
+'use client';
+import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
+import { atom } from 'jotai';
+import useBrandColorFromLogo from '@/hooks/useBrandColorFromLogo';
 
-import {
-  CENTRALIZED_THEME,
-  type Theme,
-  type ResolvedTheme,
-  type Language,
-} from "@/lib/centralized-theme";
-
-export type AppTheme = ResolvedTheme;
-export type AppLang = Language;
-export type AppRole = "admin" | "staff" | "viewer";
+export type AppTheme = 'light' | 'dark';
+export type AppLang = 'ar' | 'en';
+export type AppRole = 'admin' | 'staff' | 'viewer';
 
 // Jotai atoms for global state
-export const __themeAtom = atom<AppTheme>("light");
-export const __langAtom = atom<AppLang>("ar");
+export const themeAtom = atom<AppTheme>('light');
+export const langAtom = atom<AppLang>('ar');
 
 declare global {
   interface Window {
@@ -24,18 +18,19 @@ declare global {
   }
 }
 
-export default function __UIProvider({
+export default function UIProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const __pathname = usePathname();
+  const pathname = usePathname();
+  useBrandColorFromLogo('/hemam-logo.jpg');
 
   useEffect(() => {
-    // Apply language based on pathname using centralized system
-    const __isEnglish = pathname?.startsWith("/en");
-    const language: Language = isEnglish ? "en" : "ar";
-    CENTRALIZED_THEME.applyLanguageToDocument(language);
+    const html = document.documentElement;
+    const isEnglish = pathname?.startsWith('/en');
+    html.setAttribute('lang', isEnglish ? 'en' : 'ar');
+    html.setAttribute('dir', isEnglish ? 'ltr' : 'rtl');
   }, [pathname]);
 
   return <div>{children}</div>;

@@ -1,9 +1,8 @@
-"use client";
-import Image from "next/image";
-import Link from "next/link";
-import { _useState } from "react";
-
-import { _ROUTES } from "@/constants/routes";
+'use client';
+import { useState } from 'react';
+import { ROUTES } from '@/constants/routes';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface Template {
   id: string;
@@ -11,7 +10,7 @@ interface Template {
   description: string;
   category: string;
   language: string;
-  status: "draft" | "approved" | "pending";
+  status: 'draft' | 'approved' | 'pending';
   content: string;
   variables: string[];
   createdAt: string;
@@ -20,21 +19,21 @@ interface Template {
 }
 
 const mockTemplate: Template = {
-  id: "1",
-  name: "ترحيب المرضى",
-  description: "رسالة ترحيب للمرضى الجدد",
-  category: "ترحيب",
-  language: "العربية",
-  status: "approved",
+  id: '1',
+  name: 'ترحيب المرضى',
+  description: 'رسالة ترحيب للمرضى الجدد',
+  category: 'ترحيب',
+  language: 'العربية',
+  status: 'approved',
   content:
-    "مرحباً {{اسم المريض}}، أهلاً وسهلاً بك في {{اسم المركز}}! نحن سعداء لاختيارك خدماتنا الطبية المتخصصة. كيف يمكننا مساعدتك اليوم؟",
-  variables: ["اسم المريض", "اسم المركز"],
-  createdAt: "2024-01-10",
-  updatedAt: "2024-01-15",
+    'مرحباً {{اسم المريض}}، أهلاً وسهلاً بك في {{اسم المركز}}! نحن سعداء لاختيارك خدماتنا الطبية المتخصصة. كيف يمكننا مساعدتك اليوم؟',
+  variables: ['اسم المريض', 'اسم المركز'],
+  createdAt: '2024-01-10',
+  updatedAt: '2024-01-15',
   usageCount: 45,
 };
 
-export default function __TemplateEditorPage({
+export default function TemplateEditorPage({
   params,
 }: {
   params: { id: string };
@@ -43,48 +42,48 @@ export default function __TemplateEditorPage({
   const [isEditing, setIsEditing] = useState(false);
   const [showTestModal, setShowTestModal] = useState(false);
   const [testVariables, setTestVariables] = useState<Record<string, string>>(
-    {},
+    {}
   );
 
-  const __handleContentChange = (_newContent: string) => {
-    setTemplate((prev) => ({ ...prev, content: newContent }));
+  const handleContentChange = (newContent: string) => {
+    setTemplate(prev => ({ ...prev, content: newContent }));
   };
 
-  const __handleVariableAdd = (_newVariable: string) => {
+  const handleVariableAdd = (newVariable: string) => {
     if (newVariable && !template.variables.includes(newVariable)) {
-      setTemplate((prev) => ({
+      setTemplate(prev => ({
         ...prev,
         variables: [...prev.variables, newVariable],
       }));
     }
   };
 
-  const __handleVariableRemove = (_variableToRemove: string) => {
-    setTemplate((prev) => ({
+  const handleVariableRemove = (variableToRemove: string) => {
+    setTemplate(prev => ({
       ...prev,
-      variables: prev.variables.filter((v) => v !== variableToRemove),
+      variables: prev.variables.filter(v => v !== variableToRemove),
     }));
   };
 
-  const __generatePreview = () => {
+  const generatePreview = () => {
     let preview = template.content;
-    template.variables.forEach((variable) => {
-      const __value = testVariables[variable] || `{{${variable}}}`;
-      preview = preview.replace(new RegExp(`{{${variable}}}`, "g"), value);
+    template.variables.forEach(variable => {
+      const value = testVariables[variable] || `{{${variable}}}`;
+      preview = preview.replace(new RegExp(`{{${variable}}}`, 'g'), value);
     });
     return preview;
   };
 
-  const __handleSave = () => {
+  const handleSave = () => {
     // Simulate save
     setIsEditing(false);
     // Show success message
   };
 
-  const __handleTest = () => {
+  const handleTest = () => {
     // Initialize test variables
     const initialTestVars: Record<string, string> = {};
-    template.variables.forEach((variable) => {
+    template.variables.forEach(variable => {
       initialTestVars[variable] = `قيمة ${variable}`;
     });
     setTestVariables(initialTestVars);
@@ -92,42 +91,42 @@ export default function __TemplateEditorPage({
   };
 
   return (
-    <div className="min-h-screen bg-[var(--brand-surface)]">
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
-      <header className="border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900">
-        <div className="container-app py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+        <div className='container-app py-6'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center gap-4'>
               <Link
                 href={ROUTES.CHATBOT.TEMPLATES}
-                className="text-gray-400 hover:text-gray-600"
+                className='text-gray-400 hover:text-gray-600'
               >
                 ← العودة
               </Link>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>
                   {template.name}
                 </h1>
-                <p className="text-gray-600 dark:text-gray-300">محرر القوالب</p>
+                <p className='text-gray-600 dark:text-gray-300'>محرر القوالب</p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className='flex items-center gap-3'>
               <button
                 onClick={handleTest}
-                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 اختبار
               </button>
               <button
                 onClick={() => setIsEditing(!isEditing)}
-                className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
-                {isEditing ? "عرض" : "تعديل"}
+                {isEditing ? 'عرض' : 'تعديل'}
               </button>
               {isEditing && (
                 <button
                   onClick={handleSave}
-                  className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+                  className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   حفظ
                 </button>
@@ -137,50 +136,50 @@ export default function __TemplateEditorPage({
         </div>
       </header>
 
-      <main className="container-app py-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <main className='container-app py-8'>
+        <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
           {/* Template Info */}
-          <div className="lg:col-span-1">
-            <div className="card mb-6 p-6">
-              <h3 className="mb-4 text-lg font-semibold">معلومات القالب</h3>
-              <div className="space-y-3">
+          <div className='lg:col-span-1'>
+            <div className='card mb-6 p-6'>
+              <h3 className='mb-4 text-lg font-semibold'>معلومات القالب</h3>
+              <div className='space-y-3'>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                     التصنيف:
                   </label>
-                  <p className="text-gray-900 dark:text-white">
+                  <p className='text-gray-900 dark:text-white'>
                     {template.category}
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                     اللغة:
                   </label>
-                  <p className="text-gray-900 dark:text-white">
+                  <p className='text-gray-900 dark:text-white'>
                     {template.language}
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                     الحالة:
                   </label>
-                  <span className="rounded-full bg-green-100 px-2 py-1 text-sm text-green-800">
+                  <span className='rounded-full bg-green-100 px-2 py-1 text-sm text-green-800'>
                     موافق عليه
                   </span>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                     عدد الاستخدام:
                   </label>
-                  <p className="text-gray-900 dark:text-white">
+                  <p className='text-gray-900 dark:text-white'>
                     {template.usageCount} مرة
                   </p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <label className='text-sm font-medium text-gray-700 dark:text-gray-300'>
                     آخر تحديث:
                   </label>
-                  <p className="text-gray-900 dark:text-white">
+                  <p className='text-gray-900 dark:text-white'>
                     {template.updatedAt}
                   </p>
                 </div>
@@ -188,19 +187,19 @@ export default function __TemplateEditorPage({
             </div>
 
             {/* Variables */}
-            <div className="card p-6">
-              <h3 className="mb-4 text-lg font-semibold">المتغيرات</h3>
-              <div className="space-y-3">
+            <div className='card p-6'>
+              <h3 className='mb-4 text-lg font-semibold'>المتغيرات</h3>
+              <div className='space-y-3'>
                 {template.variables.map((variable, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between rounded-lg bg-gray-50 p-2 dark:bg-gray-800"
+                    className='flex items-center justify-between rounded-lg bg-surface p-2 dark:bg-gray-800'
                   >
-                    <span className="text-sm font-medium">{variable}</span>
+                    <span className='text-sm font-medium'>{variable}</span>
                     {isEditing && (
                       <button
                         onClick={() => handleVariableRemove(variable)}
-                        className="text-sm text-red-500 hover:text-red-700"
+                        className='text-sm text-default-error hover:text-red-700'
                       >
                         حذف
                       </button>
@@ -209,29 +208,29 @@ export default function __TemplateEditorPage({
                 ))}
 
                 {isEditing && (
-                  <div className="flex gap-2">
+                  <div className='flex gap-2'>
                     <input
-                      type="text"
-                      placeholder="إضافة متغير جديد"
-                      className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
+                      type='text'
+                      placeholder='إضافة متغير جديد'
+                      className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
+                      onKeyPress={e => {
+                        if (e.key === 'Enter') {
                           handleVariableAdd(e.currentTarget.value);
-                          e.currentTarget.value = "";
+                          e.currentTarget.value = '';
                         }
                       }}
                     />
                     <button
                       onClick={() => {
-                        const __input = document.querySelector(
-                          'input[placeholder="إضافة متغير جديد"]',
+                        const input = document.querySelector(
+                          'input[placeholder="إضافة متغير جديد"]'
                         ) as HTMLInputElement;
                         if (input?.value) {
                           handleVariableAdd(input.value);
-                          input.value = "";
+                          input.value = '';
                         }
                       }}
-                      className="rounded-lg bg-[var(--brand-primary)] px-3 py-2 text-sm text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+                      className='rounded-lg bg-[var(--default-default)] px-3 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'
                     >
                       إضافة
                     </button>
@@ -242,86 +241,86 @@ export default function __TemplateEditorPage({
           </div>
 
           {/* Template Editor */}
-          <div className="lg:col-span-2">
-            <div className="card p-6">
-              <div className="mb-6 flex items-center justify-between">
-                <h3 className="text-lg font-semibold">محتوى القالب</h3>
-                <div className="flex gap-2">
-                  <button className="rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50">
+          <div className='lg:col-span-2'>
+            <div className='card p-6'>
+              <div className='mb-6 flex items-center justify-between'>
+                <h3 className='text-lg font-semibold'>محتوى القالب</h3>
+                <div className='flex gap-2'>
+                  <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface'>
                     نسخ
                   </button>
-                  <button className="rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-gray-50">
+                  <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface'>
                     استيراد
                   </button>
                 </div>
               </div>
 
               {isEditing ? (
-                <div className="space-y-4">
+                <div className='space-y-4'>
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                       اسم القالب
                     </label>
                     <input
-                      type="text"
+                      type='text'
                       value={template.name}
-                      onChange={(e) =>
-                        setTemplate((prev) => ({
+                      onChange={e =>
+                        setTemplate(prev => ({
                           ...prev,
                           name: e.target.value,
                         }))
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
+                      className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     />
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                       الوصف
                     </label>
                     <textarea
                       rows={2}
                       value={template.description}
-                      onChange={(e) =>
-                        setTemplate((prev) => ({
+                      onChange={e =>
+                        setTemplate(prev => ({
                           ...prev,
                           description: e.target.value,
                         }))
                       }
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
+                      className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     />
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                       محتوى القالب
                     </label>
                     <textarea
                       rows={8}
                       value={template.content}
-                      onChange={(e) => handleContentChange(e.target.value)}
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 font-mono focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
-                      placeholder="اكتب محتوى القالب هنا... استخدم {{اسم المتغير}} للمتغيرات"
+                      onChange={e => handleContentChange(e.target.value)}
+                      className='w-full rounded-lg border border-gray-300 px-3 py-2 font-mono focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
+                      placeholder='اكتب محتوى القالب هنا... استخدم {{اسم المتغير}} للمتغيرات'
                     />
-                    <p className="mt-1 text-xs text-gray-500">
-                      استخدم {"{{"}اسم المتغير{"}}"} لإدراج المتغيرات في النص
+                    <p className='mt-1 text-xs text-gray-500'>
+                      استخدم {'{{'}اسم المتغير{'}}'} لإدراج المتغيرات في النص
                     </p>
                   </div>
                 </div>
               ) : (
-                <div className="space-y-4">
-                  <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
-                    <h4 className="mb-2 font-semibold">المحتوى الحالي:</h4>
-                    <p className="whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+                <div className='space-y-4'>
+                  <div className='rounded-lg bg-surface p-4 dark:bg-gray-800'>
+                    <h4 className='mb-2 font-semibold'>المحتوى الحالي:</h4>
+                    <p className='whitespace-pre-wrap text-gray-700 dark:text-gray-300'>
                       {template.content}
                     </p>
                   </div>
 
-                  <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
-                    <h4 className="mb-2 font-semibold text-blue-800 dark:text-blue-300">
+                  <div className='rounded-lg bg-surface p-4 dark:bg-blue-900/20'>
+                    <h4 className='mb-2 font-semibold text-blue-800 dark:text-blue-300'>
                       المعاينة:
                     </h4>
-                    <p className="whitespace-pre-wrap text-blue-700 dark:text-blue-300">
+                    <p className='whitespace-pre-wrap text-blue-700 dark:text-blue-300'>
                       {generatePreview()}
                     </p>
                   </div>
@@ -329,23 +328,23 @@ export default function __TemplateEditorPage({
               )}
 
               {/* Action Buttons */}
-              <div className="flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700">
+              <div className='flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700'>
                 <button
                   onClick={handleTest}
-                  className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   اختبار القالب
                 </button>
-                <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
+                <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'>
                   نسخ القالب
                 </button>
-                <button className="rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
+                <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'>
                   تصدير
                 </button>
                 {isEditing && (
                   <button
                     onClick={handleSave}
-                    className="btn-brand rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]"
+                    className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                   >
                     حفظ التغييرات
                   </button>
@@ -358,44 +357,44 @@ export default function __TemplateEditorPage({
 
       {/* Test Modal */}
       {showTestModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900">
-            <div className="mb-6 flex items-center justify-between">
-              <h3 className="text-xl font-semibold">اختبار القالب</h3>
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4'>
+          <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
+            <div className='mb-6 flex items-center justify-between'>
+              <h3 className='text-xl font-semibold'>اختبار القالب</h3>
               <button
                 onClick={() => setShowTestModal(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className='text-gray-400 hover:text-gray-600'
               >
                 ✕
               </button>
             </div>
 
-            <div className="space-y-4">
-              <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
-                <h4 className="mb-2 font-semibold">المعاينة المباشرة:</h4>
-                <p className="whitespace-pre-wrap text-gray-700 dark:text-gray-300">
+            <div className='space-y-4'>
+              <div className='rounded-lg bg-surface p-4 dark:bg-gray-800'>
+                <h4 className='mb-2 font-semibold'>المعاينة المباشرة:</h4>
+                <p className='whitespace-pre-wrap text-gray-700 dark:text-gray-300'>
                   {generatePreview()}
                 </p>
               </div>
 
               <div>
-                <h4 className="mb-3 font-semibold">قيم المتغيرات:</h4>
-                <div className="space-y-3">
+                <h4 className='mb-3 font-semibold'>قيم المتغيرات:</h4>
+                <div className='space-y-3'>
                   {template.variables.map((variable, index) => (
                     <div key={index}>
-                      <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                      <label className='mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         {variable}:
                       </label>
                       <input
-                        type="text"
-                        value={testVariables[variable] || ""}
-                        onChange={(e) =>
-                          setTestVariables((prev) => ({
+                        type='text'
+                        value={testVariables[variable] || ''}
+                        onChange={e =>
+                          setTestVariables(prev => ({
                             ...prev,
                             [variable]: e.target.value,
                           }))
                         }
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--brand-primary)]"
+                        className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         placeholder={`أدخل قيمة ${variable}`}
                       />
                     </div>
@@ -403,14 +402,14 @@ export default function __TemplateEditorPage({
                 </div>
               </div>
 
-              <div className="flex gap-3 pt-4">
+              <div className='flex gap-3 pt-4'>
                 <button
                   onClick={() => setShowTestModal(false)}
-                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+                  className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إغلاق
                 </button>
-                <button className="btn-brand flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]">
+                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
                   استخدام القالب
                 </button>
               </div>

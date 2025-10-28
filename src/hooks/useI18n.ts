@@ -1,11 +1,10 @@
-"use client";
-import { _useEffect, useState } from "react";
-
-import { _dynamicContentManager } from "@/lib/dynamic-content-manager";
+'use client';
+import { useEffect, useState } from 'react';
+import { dynamicContentManager } from '@/lib/dynamic-content-manager';
 
 export type Messages = Record<string, string>;
 
-export function __useI18n(_locale: "ar" | "en" = "ar", ns: string = "common") {
+export function useI18n(locale: 'ar' | 'en' = 'ar', ns: string = 'common') {
   const [messages, setMessages] = useState<Messages>({});
   const [loading, setLoading] = useState(true);
 
@@ -16,11 +15,11 @@ export function __useI18n(_locale: "ar" | "en" = "ar", ns: string = "common") {
     // Load translations from dynamic content manager
     dynamicContentManager
       .getTranslations(locale, ns)
-      .then((translations) => {
+      .then(translations => {
         if (!mounted) return;
         setMessages(translations);
       })
-      .catch((error) => {
+      .catch(error => {
         if (!mounted) return;
         setMessages({});
       })
@@ -33,7 +32,7 @@ export function __useI18n(_locale: "ar" | "en" = "ar", ns: string = "common") {
     };
   }, [locale, ns]);
 
-  const __t = (_key: string, fallback?: string) =>
+  const t = (key: string, fallback?: string) =>
     messages[key] ?? fallback ?? key;
   return { t, messages, loading };
 }

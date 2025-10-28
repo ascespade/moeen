@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { _useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 
 interface PerformanceOptimizedImageProps {
   src: string;
@@ -12,33 +12,33 @@ interface PerformanceOptimizedImageProps {
   priority?: boolean;
 }
 
-export function __PerformanceOptimizedImage({
+export function PerformanceOptimizedImage({
   src,
   alt,
   width,
   height,
-  className = "",
-  placeholder = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+",
+  className = '',
+  placeholder = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PC9zdmc+',
   priority = false,
 }: PerformanceOptimizedImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(priority);
   const [hasError, setHasError] = useState(false);
-  const __imgRef = useRef<HTMLImageElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     if (priority || isInView) return;
 
-    const __observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             setIsInView(true);
             observer.unobserve(entry.target);
           }
         });
       },
-      { rootMargin: "50px" },
+      { rootMargin: '50px' }
     );
 
     if (imgRef.current) {
@@ -48,11 +48,11 @@ export function __PerformanceOptimizedImage({
     return () => observer.disconnect();
   }, [priority, isInView]);
 
-  const __handleLoad = () => {
+  const handleLoad = () => {
     setIsLoaded(true);
   };
 
-  const __handleError = () => {
+  const handleError = () => {
     setHasError(true);
   };
 
@@ -64,18 +64,18 @@ export function __PerformanceOptimizedImage({
     >
       {!isInView ? (
         <div
-          className="w-full h-full bg-gray-200 animate-pulse flex items-center justify-center"
+          className='w-full h-full bg-gray-200 animate-pulse flex items-center justify-center'
           style={{ width, height }}
         >
-          <div className="text-gray-400 text-sm">Loading...</div>
+          <div className='text-gray-400 text-sm'>Loading...</div>
         </div>
       ) : (
         <>
           {!isLoaded && (
             <img
               src={placeholder}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover blur-sm"
+              alt=''
+              className='absolute inset-0 w-full h-full object-cover blur-sm'
               style={{ width, height }}
             />
           )}
@@ -85,15 +85,15 @@ export function __PerformanceOptimizedImage({
             width={width}
             height={height}
             className={`w-full h-full object-cover transition-opacity duration-300 ${
-              isLoaded ? "opacity-100" : "opacity-0"
+              isLoaded ? 'opacity-100' : 'opacity-0'
             }`}
             onLoad={handleLoad}
             onError={handleError}
-            loading={priority ? "eager" : "lazy"}
+            loading={priority ? 'eager' : 'lazy'}
           />
           {hasError && (
-            <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
-              <div className="text-gray-500 text-sm">Failed to load</div>
+            <div className='absolute inset-0 bg-gray-200 flex items-center justify-center'>
+              <div className='text-gray-500 text-sm'>Failed to load</div>
             </div>
           )}
         </>

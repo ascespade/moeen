@@ -1,5 +1,11 @@
-"use client";
+'use client';
 
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Input } from '@/components/ui/Input';
+import { realDB } from '@/lib/supabase-real';
 import {
   TrendingUp,
   Calendar,
@@ -25,21 +31,10 @@ import {
   Brain,
   Heart,
   Zap,
-} from "lucide-react";
-import Image from "next/image";
-import { _useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
-
-import { _Badge } from "@/components/ui/Badge";
-import { _Button } from "@/components/ui/Button";
-import {
-  _Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/Card";
-import { _Input } from "@/components/ui/Input";
-import { _useAuth } from "@/hooks/useAuth";
+} from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface ProgressGoal {
   id: string;
@@ -49,7 +44,7 @@ interface ProgressGoal {
   category: string;
   target_date: string;
   progress_percentage: number;
-  status: "active" | "completed" | "paused" | "cancelled";
+  status: 'active' | 'completed' | 'paused' | 'cancelled';
   milestones: Milestone[];
   created_at: string;
   updated_at: string;
@@ -69,7 +64,7 @@ interface Milestone {
   description: string;
   target_date: string;
   completed_date?: string;
-  status: "pending" | "in_progress" | "completed" | "cancelled";
+  status: 'pending' | 'in_progress' | 'completed' | 'cancelled';
   progress_percentage: number;
   notes?: string;
 }
@@ -114,174 +109,92 @@ interface ProgressReport {
 
 const ProgressTrackingPage: React.FC = () => {
   const { user, isAuthenticated } = useAuth();
-  const __router = useRouter();
+  const router = useRouter();
   const [goals, setGoals] = useState<ProgressGoal[]>([]);
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [reports, setReports] = useState<ProgressReport[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState<
-    "goals" | "assessments" | "reports"
-  >("goals");
-  const [filterCategory, setFilterCategory] = useState<string>("all");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
+    'goals' | 'assessments' | 'reports'
+  >('goals');
+  const [filterCategory, setFilterCategory] = useState<string>('all');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push("/login");
+      router.push('/login');
       return;
     }
     loadProgressData();
   }, [isAuthenticated, router]);
 
-  const __loadProgressData = async () => {
+  const loadProgressData = async () => {
     try {
       setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockGoals: ProgressGoal[] = [
-        {
-          id: "1",
-          patient_id: "pat-1",
-          goal_title: "تحسين المشي",
-          description: "القدرة على المشي لمسافة 10 أمتار بدون مساعدة",
-          category: "الحركة",
-          target_date: "2024-03-15",
-          progress_percentage: 65,
-          status: "active",
-          milestones: [
-            {
-              id: "1",
-              goal_id: "1",
-              title: "الوقوف بدون مساعدة",
-              description: "القدرة على الوقوف لمدة 30 ثانية",
-              target_date: "2024-02-01",
-              completed_date: "2024-01-25",
-              status: "completed",
-              progress_percentage: 100,
-              notes: "تم إنجاز الهدف بنجاح",
-            },
-            {
-              id: "2",
-              goal_id: "1",
-              title: "المشي بمساعدة",
-              description: "المشي لمسافة 5 أمتار بمساعدة شخص",
-              target_date: "2024-02-15",
-              status: "in_progress",
-              progress_percentage: 80,
-              notes: "تحسن ملحوظ في التوازن",
-            },
-          ],
-          created_at: "2024-01-01T00:00:00Z",
-          updated_at: "2024-01-20T00:00:00Z",
-          patients: {
-            first_name: "أحمد",
-            last_name: "محمد",
-            age: 8,
-            condition: "شلل دماغي",
-            avatar: "/logo.png",
-          },
-        },
-      ];
+      // Load real data from database
+      const goalsData = await realDB.getProgressGoals();
+      const assessmentsData = await realDB.getAssessments();
+      const reportsData = await realDB.getProgressReports();
 
-      const mockAssessments: Assessment[] = [
-        {
-          id: "1",
-          patient_id: "pat-1",
-          assessor_id: "ass-1",
-          assessment_date: "2024-01-15",
-          assessment_type: "تقييم شامل",
-          category: "الحركة",
-          score: 75,
-          max_score: 100,
-          percentage: 75,
-          notes: "تحسن ملحوظ في نطاق الحركة والقوة",
-          recommendations: ["زيادة مدة التمارين", "إضافة تمارين التوازن"],
-          next_assessment_date: "2024-02-15",
-          created_at: "2024-01-15T00:00:00Z",
-          assessors: {
-            first_name: "د. فاطمة",
-            last_name: "العلي",
-            specialty: "العلاج الطبيعي",
-            avatar: "/logo.png",
-          },
-        },
-      ];
-
-      const mockReports: ProgressReport[] = [
-        {
-          id: "1",
-          patient_id: "pat-1",
-          report_date: "2024-01-31",
-          period_start: "2024-01-01",
-          period_end: "2024-01-31",
-          overall_progress: 70,
-          goals_achieved: 2,
-          total_goals: 5,
-          sessions_completed: 12,
-          total_sessions: 16,
-          recommendations: ["متابعة التمارين اليومية", "زيادة مدة الجلسات"],
-          next_review_date: "2024-02-28",
-          created_at: "2024-01-31T00:00:00Z",
-        },
-      ];
-
-      setGoals(mockGoals);
-      setAssessments(mockAssessments);
-      setReports(mockReports);
+      setGoals(goalsData);
+      setAssessments(assessmentsData);
+      setReports(reportsData);
     } catch (error) {
-      setError("فشل في تحميل بيانات تتبع التقدم");
+      setError('فشل في تحميل بيانات تتبع التقدم');
+      console.error('Error loading progress data:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const __getStatusBadge = (_status: string) => {
-    const __statusMap = {
-      active: { label: "نشط", variant: "primary" as const },
-      completed: { label: "مكتمل", variant: "primary" as const },
-      paused: { label: "متوقف", variant: "secondary" as const },
-      cancelled: { label: "ملغي", variant: "destructive" as const },
+  const getStatusBadge = (status: string) => {
+    const statusMap = {
+      active: { label: 'نشط', variant: 'primary' as const },
+      completed: { label: 'مكتمل', variant: 'primary' as const },
+      paused: { label: 'متوقف', variant: 'secondary' as const },
+      cancelled: { label: 'ملغي', variant: 'error' as const },
     };
 
-    const __statusInfo = statusMap[status as keyof typeof statusMap] || {
+    const statusInfo = statusMap[status as keyof typeof statusMap] || {
       label: status,
-      variant: "primary" as const,
+      variant: 'primary' as const,
     };
     return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
   };
 
-  const __getCategoryIcon = (_category: string) => {
+  const getCategoryIcon = (category: string) => {
     switch (category) {
-      case "الحركة":
-        return <Activity className="w-4 h-4 text-blue-500" />;
-      case "التواصل":
-        return <Heart className="w-4 h-4 text-red-500" />;
-      case "الإدراك":
-        return <Brain className="w-4 h-4 text-purple-500" />;
-      case "الاستقلالية":
-        return <Zap className="w-4 h-4 text-yellow-500" />;
+      case 'الحركة':
+        return <Activity className='w-4 h-4 text-default-default' />;
+      case 'التواصل':
+        return <Heart className='w-4 h-4 text-default-error' />;
+      case 'الإدراك':
+        return <Brain className='w-4 h-4 text-purple-500' />;
+      case 'الاستقلالية':
+        return <Zap className='w-4 h-4 text-default-warning' />;
       default:
-        return <Target className="w-4 h-4 text-gray-500" />;
+        return <Target className='w-4 h-4 text-gray-500' />;
     }
   };
 
-  const __getProgressColor = (_percentage: number) => {
-    if (percentage >= 80) return "bg-green-500";
-    if (percentage >= 60) return "bg-yellow-500";
-    if (percentage >= 40) return "bg-orange-500";
-    return "bg-red-500";
+  const getProgressColor = (percentage: number) => {
+    if (percentage >= 80) return 'bg-default-success';
+    if (percentage >= 60) return 'bg-default-warning';
+    if (percentage >= 40) return 'bg-default-default';
+    return 'bg-default-error';
   };
 
-  const __filteredGoals = goals.filter((goal) => {
+  const filteredGoals = goals.filter(goal => {
     const matchesSearch =
       goal.goal_title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       goal.description.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesCategory =
-      filterCategory === "all" || goal.category === filterCategory;
+      filterCategory === 'all' || goal.category === filterCategory;
     const matchesStatus =
-      filterStatus === "all" || goal.status === filterStatus;
+      filterStatus === 'all' || goal.status === filterStatus;
 
     return matchesSearch && matchesCategory && matchesStatus;
   });
@@ -291,155 +204,155 @@ const ProgressTrackingPage: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8" dir="rtl">
+    <div className='container mx-auto px-4 py-8' dir='rtl'>
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
+      <div className='mb-8'>
+        <div className='flex items-center justify-between mb-4'>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className='text-3xl font-bold text-gray-900'>
               تتبع التقدم والتقييم
             </h1>
-            <p className="text-gray-600 mt-2">
+            <p className='text-gray-600 mt-2'>
               مراقبة تقدم المرضى وتقييم أدائهم
             </p>
           </div>
           <Button
-            onClick={() => router.push("/progress-tracking/new")}
-            className="bg-[var(--brand-primary)] hover:brightness-95"
+            onClick={() => router.push('/progress-tracking/new')}
+            className='bg-[var(--default-default)] hover:brightness-95'
           >
-            <Plus className="w-4 h-4 mr-2" />
+            <Plus className='w-4 h-4 mr-2' />
             هدف جديد
           </Button>
         </div>
 
         {/* Search and Filters */}
-        <div className="flex flex-col md:flex-row gap-4 mb-6">
-          <div className="flex-1">
+        <div className='flex flex-col md:flex-row gap-4 mb-6'>
+          <div className='flex-1'>
             <Input
-              placeholder="البحث في الأهداف والتقييمات..."
+              placeholder='البحث في الأهداف والتقييمات...'
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pr-10"
+              onChange={e => setSearchTerm(e.target.value)}
+              className='pr-10'
             />
           </div>
-          <div className="flex gap-2">
+          <div className='flex gap-2'>
             <select
               value={filterCategory}
-              onChange={(e) => setFilterCategory(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+              onChange={e => setFilterCategory(e.target.value)}
+              className='px-3 py-2 border border-gray-300 rounded-md text-sm'
             >
-              <option value="all">جميع الفئات</option>
-              <option value="الحركة">الحركة</option>
-              <option value="التواصل">التواصل</option>
-              <option value="الإدراك">الإدراك</option>
-              <option value="الاستقلالية">الاستقلالية</option>
+              <option value='all'>جميع الفئات</option>
+              <option value='الحركة'>الحركة</option>
+              <option value='التواصل'>التواصل</option>
+              <option value='الإدراك'>الإدراك</option>
+              <option value='الاستقلالية'>الاستقلالية</option>
             </select>
             <select
               value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+              onChange={e => setFilterStatus(e.target.value)}
+              className='px-3 py-2 border border-gray-300 rounded-md text-sm'
             >
-              <option value="all">جميع الحالات</option>
-              <option value="active">نشط</option>
-              <option value="completed">مكتمل</option>
-              <option value="paused">متوقف</option>
+              <option value='all'>جميع الحالات</option>
+              <option value='active'>نشط</option>
+              <option value='completed'>مكتمل</option>
+              <option value='paused'>متوقف</option>
             </select>
           </div>
         </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+            <CardTitle className='text-sm font-medium'>
               الأهداف النشطة
             </CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
+            <Target className='h-4 w-4 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {goals.filter((g) => g.status === "active").length}
+            <div className='text-2xl font-bold'>
+              {goals.filter(g => g.status === 'active').length}
             </div>
-            <p className="text-xs text-muted-foreground">
-              {goals.filter((g) => g.status === "completed").length} مكتملة
+            <p className='text-xs text-muted-foreground'>
+              {goals.filter(g => g.status === 'completed').length} مكتملة
             </p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">متوسط التقدم</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+            <CardTitle className='text-sm font-medium'>متوسط التقدم</CardTitle>
+            <TrendingUp className='h-4 w-4 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className='text-2xl font-bold'>
               {goals.length > 0
                 ? Math.round(
                     goals.reduce(
                       (acc, goal) => acc + goal.progress_percentage,
-                      0,
-                    ) / goals.length,
+                      0
+                    ) / goals.length
                   )
                 : 0}
               %
             </div>
-            <p className="text-xs text-muted-foreground">من الأهداف</p>
+            <p className='text-xs text-muted-foreground'>من الأهداف</p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">التقييمات</CardTitle>
-            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+            <CardTitle className='text-sm font-medium'>التقييمات</CardTitle>
+            <BarChart3 className='h-4 w-4 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{assessments.length}</div>
-            <p className="text-xs text-muted-foreground">تقييم مكتمل</p>
+            <div className='text-2xl font-bold'>{assessments.length}</div>
+            <p className='text-xs text-muted-foreground'>تقييم مكتمل</p>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">التقارير</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+            <CardTitle className='text-sm font-medium'>التقارير</CardTitle>
+            <FileText className='h-4 w-4 text-muted-foreground' />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{reports.length}</div>
-            <p className="text-xs text-muted-foreground">تقرير شهري</p>
+            <div className='text-2xl font-bold'>{reports.length}</div>
+            <p className='text-xs text-muted-foreground'>تقرير شهري</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Tabs */}
-      <div className="mb-6">
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+      <div className='mb-6'>
+        <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
           <button
-            onClick={() => setActiveTab("goals")}
+            onClick={() => setActiveTab('goals')}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === "goals"
-                ? "bg-white text-gray-900 shadow-sm"
-                : "text-gray-600 hover:text-gray-900"
+              activeTab === 'goals'
+                ? 'bg-white text-gray-900 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
             }`}
           >
             الأهداف والمراحل
           </button>
           <button
-            onClick={() => setActiveTab("assessments")}
+            onClick={() => setActiveTab('assessments')}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === "assessments"
-                ? "bg-white text-gray-900 shadow-sm"
-                : "text-gray-600 hover:text-gray-900"
+              activeTab === 'assessments'
+                ? 'bg-white text-gray-900 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
             }`}
           >
             التقييمات
           </button>
           <button
-            onClick={() => setActiveTab("reports")}
+            onClick={() => setActiveTab('reports')}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-              activeTab === "reports"
-                ? "bg-white text-gray-900 shadow-sm"
-                : "text-gray-600 hover:text-gray-900"
+              activeTab === 'reports'
+                ? 'bg-white text-gray-900 shadow-sm'
+                : 'text-gray-600 hover:text-gray-900'
             }`}
           >
             التقارير
@@ -449,75 +362,75 @@ const ProgressTrackingPage: React.FC = () => {
 
       {/* Content based on active tab */}
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--brand-primary)]"></div>
+        <div className='flex justify-center items-center h-64'>
+          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
       ) : (
         <>
           {/* Goals Tab */}
-          {activeTab === "goals" && (
-            <div className="space-y-6">
+          {activeTab === 'goals' && (
+            <div className='space-y-6'>
               {filteredGoals.length === 0 ? (
                 <Card>
-                  <CardContent className="p-12 text-center">
-                    <Target className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <CardContent className='p-12 text-center'>
+                    <Target className='h-12 w-12 text-gray-400 mx-auto mb-4' />
+                    <h3 className='text-lg font-semibold text-gray-900 mb-2'>
                       لا توجد أهداف
                     </h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className='text-gray-600 mb-4'>
                       ابدأ بإنشاء هدف جديد للمريض
                     </p>
                     <Button
-                      onClick={() => router.push("/progress-tracking/new")}
-                      className="bg-[var(--brand-primary)] hover:brightness-95"
+                      onClick={() => router.push('/progress-tracking/new')}
+                      className='bg-[var(--default-default)] hover:brightness-95'
                     >
                       إنشاء هدف جديد
                     </Button>
                   </CardContent>
                 </Card>
               ) : (
-                filteredGoals.map((goal) => (
+                filteredGoals.map(goal => (
                   <Card
                     key={goal.id}
-                    className="hover:shadow-md transition-shadow"
+                    className='hover:shadow-md transition-shadow'
                   >
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-4">
-                          <div className="p-3 bg-blue-50 rounded-lg">
+                    <CardContent className='p-6'>
+                      <div className='flex items-start justify-between mb-4'>
+                        <div className='flex items-center gap-4'>
+                          <div className='p-3 bg-surface rounded-lg'>
                             {getCategoryIcon(goal.category)}
                           </div>
                           <div>
-                            <h3 className="text-lg font-semibold">
+                            <h3 className='text-lg font-semibold'>
                               {goal.goal_title}
                             </h3>
-                            <p className="text-sm text-gray-600">
+                            <p className='text-sm text-gray-600'>
                               {goal.description}
                             </p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              {goal.patients?.first_name}{" "}
-                              {goal.patients?.last_name} -{" "}
+                            <p className='text-xs text-gray-500 mt-1'>
+                              {goal.patients?.first_name}{' '}
+                              {goal.patients?.last_name} -{' '}
                               {goal.patients?.condition}
                             </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className='flex items-center gap-2'>
                           {getStatusBadge(goal.status)}
-                          <Button variant="outline" size="sm">
-                            <MoreVertical className="w-4 h-4" />
+                          <Button variant='outline' size='sm'>
+                            <MoreVertical className='w-4 h-4' />
                           </Button>
                         </div>
                       </div>
 
                       {/* Progress Bar */}
-                      <div className="mb-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium">التقدم</span>
-                          <span className="text-sm text-gray-600">
+                      <div className='mb-4'>
+                        <div className='flex items-center justify-between mb-2'>
+                          <span className='text-sm font-medium'>التقدم</span>
+                          <span className='text-sm text-gray-600'>
                             {goal.progress_percentage}%
                           </span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-3">
+                        <div className='w-full bg-gray-200 rounded-full h-3'>
                           <div
                             className={`h-3 rounded-full transition-all duration-300 ${getProgressColor(goal.progress_percentage)}`}
                             style={{ width: `${goal.progress_percentage}%` }}
@@ -526,38 +439,38 @@ const ProgressTrackingPage: React.FC = () => {
                       </div>
 
                       {/* Milestones */}
-                      <div className="mb-4">
-                        <h4 className="text-sm font-semibold mb-3">المراحل:</h4>
-                        <div className="space-y-2">
-                          {goal.milestones.map((milestone) => (
+                      <div className='mb-4'>
+                        <h4 className='text-sm font-semibold mb-3'>المراحل:</h4>
+                        <div className='space-y-2'>
+                          {goal.milestones.map(milestone => (
                             <div
                               key={milestone.id}
-                              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                              className='flex items-center justify-between p-3 bg-surface rounded-lg'
                             >
-                              <div className="flex items-center gap-3">
+                              <div className='flex items-center gap-3'>
                                 <div
                                   className={`w-3 h-3 rounded-full ${
-                                    milestone.status === "completed"
-                                      ? "bg-green-500"
-                                      : milestone.status === "in_progress"
-                                        ? "bg-yellow-500"
-                                        : "bg-gray-300"
+                                    milestone.status === 'completed'
+                                      ? 'bg-default-success'
+                                      : milestone.status === 'in_progress'
+                                        ? 'bg-default-warning'
+                                        : 'bg-gray-300'
                                   }`}
                                 ></div>
                                 <div>
-                                  <p className="text-sm font-medium">
+                                  <p className='text-sm font-medium'>
                                     {milestone.title}
                                   </p>
-                                  <p className="text-xs text-gray-600">
+                                  <p className='text-xs text-gray-600'>
                                     {milestone.description}
                                   </p>
                                 </div>
                               </div>
-                              <div className="text-right">
-                                <p className="text-xs text-gray-600">
+                              <div className='text-right'>
+                                <p className='text-xs text-gray-600'>
                                   {milestone.progress_percentage}%
                                 </p>
-                                <p className="text-xs text-gray-500">
+                                <p className='text-xs text-gray-500'>
                                   {milestone.target_date}
                                 </p>
                               </div>
@@ -566,20 +479,20 @@ const ProgressTrackingPage: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between pt-4 border-t">
-                        <div className="text-sm text-gray-600">
-                          الهدف حتى{" "}
+                      <div className='flex items-center justify-between pt-4 border-t'>
+                        <div className='text-sm text-gray-600'>
+                          الهدف حتى{' '}
                           {new Date(goal.target_date).toLocaleDateString(
-                            "ar-SA",
+                            'ar-SA'
                           )}
                         </div>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">
-                            <Eye className="w-4 h-4 mr-1" />
+                        <div className='flex gap-2'>
+                          <Button variant='outline' size='sm'>
+                            <Eye className='w-4 h-4 mr-1' />
                             عرض
                           </Button>
-                          <Button variant="outline" size="sm">
-                            <Edit className="w-4 h-4 mr-1" />
+                          <Button variant='outline' size='sm'>
+                            <Edit className='w-4 h-4 mr-1' />
                             تعديل
                           </Button>
                         </div>
@@ -592,75 +505,75 @@ const ProgressTrackingPage: React.FC = () => {
           )}
 
           {/* Assessments Tab */}
-          {activeTab === "assessments" && (
-            <div className="space-y-6">
+          {activeTab === 'assessments' && (
+            <div className='space-y-6'>
               {assessments.length === 0 ? (
                 <Card>
-                  <CardContent className="p-12 text-center">
-                    <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <CardContent className='p-12 text-center'>
+                    <BarChart3 className='h-12 w-12 text-gray-400 mx-auto mb-4' />
+                    <h3 className='text-lg font-semibold text-gray-900 mb-2'>
                       لا توجد تقييمات
                     </h3>
-                    <p className="text-gray-600 mb-4">ابدأ بإنشاء تقييم جديد</p>
+                    <p className='text-gray-600 mb-4'>ابدأ بإنشاء تقييم جديد</p>
                     <Button
                       onClick={() =>
-                        router.push("/progress-tracking/assessments/new")
+                        router.push('/progress-tracking/assessments/new')
                       }
-                      className="bg-[var(--brand-primary)] hover:brightness-95"
+                      className='bg-[var(--default-default)] hover:brightness-95'
                     >
                       إنشاء تقييم جديد
                     </Button>
                   </CardContent>
                 </Card>
               ) : (
-                assessments.map((assessment) => (
+                assessments.map(assessment => (
                   <Card
                     key={assessment.id}
-                    className="hover:shadow-md transition-shadow"
+                    className='hover:shadow-md transition-shadow'
                   >
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
+                    <CardContent className='p-6'>
+                      <div className='flex items-start justify-between mb-4'>
                         <div>
-                          <h3 className="text-lg font-semibold">
+                          <h3 className='text-lg font-semibold'>
                             {assessment.assessment_type}
                           </h3>
-                          <p className="text-sm text-gray-600">
+                          <p className='text-sm text-gray-600'>
                             {assessment.category}
                           </p>
-                          <p className="text-xs text-gray-500 mt-1">
-                            {assessment.assessors?.first_name}{" "}
+                          <p className='text-xs text-gray-500 mt-1'>
+                            {assessment.assessors?.first_name}{' '}
                             {assessment.assessors?.last_name}
                           </p>
                         </div>
-                        <div className="text-right">
-                          <div className="text-2xl font-bold text-blue-600">
+                        <div className='text-right'>
+                          <div className='text-2xl font-bold text-default-default'>
                             {assessment.percentage}%
                           </div>
-                          <p className="text-sm text-gray-600">
+                          <p className='text-sm text-gray-600'>
                             {assessment.score}/{assessment.max_score}
                           </p>
                         </div>
                       </div>
 
-                      <div className="mb-4">
-                        <h4 className="text-sm font-semibold mb-2">
+                      <div className='mb-4'>
+                        <h4 className='text-sm font-semibold mb-2'>
                           الملاحظات:
                         </h4>
-                        <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded-lg">
+                        <p className='text-sm text-gray-700 bg-surface p-3 rounded-lg'>
                           {assessment.notes}
                         </p>
                       </div>
 
-                      <div className="mb-4">
-                        <h4 className="text-sm font-semibold mb-2">
+                      <div className='mb-4'>
+                        <h4 className='text-sm font-semibold mb-2'>
                           التوصيات:
                         </h4>
-                        <div className="flex flex-wrap gap-2">
+                        <div className='flex flex-wrap gap-2'>
                           {assessment.recommendations.map((rec, index) => (
                             <Badge
                               key={index}
-                              variant="outline"
-                              className="text-xs"
+                              variant='secondary'
+                              className='text-xs'
                             >
                               {rec}
                             </Badge>
@@ -668,19 +581,19 @@ const ProgressTrackingPage: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between pt-4 border-t">
-                        <div className="text-sm text-gray-600">
+                      <div className='flex items-center justify-between pt-4 border-t'>
+                        <div className='text-sm text-gray-600'>
                           {new Date(
-                            assessment.assessment_date,
-                          ).toLocaleDateString("ar-SA")}
+                            assessment.assessment_date
+                          ).toLocaleDateString('ar-SA')}
                         </div>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">
-                            <Eye className="w-4 h-4 mr-1" />
+                        <div className='flex gap-2'>
+                          <Button variant='outline' size='sm'>
+                            <Eye className='w-4 h-4 mr-1' />
                             عرض
                           </Button>
-                          <Button variant="outline" size="sm">
-                            <Edit className="w-4 h-4 mr-1" />
+                          <Button variant='outline' size='sm'>
+                            <Edit className='w-4 h-4 mr-1' />
                             تعديل
                           </Button>
                         </div>
@@ -693,97 +606,96 @@ const ProgressTrackingPage: React.FC = () => {
           )}
 
           {/* Reports Tab */}
-          {activeTab === "reports" && (
-            <div className="space-y-6">
+          {activeTab === 'reports' && (
+            <div className='space-y-6'>
               {reports.length === 0 ? (
                 <Card>
-                  <CardContent className="p-12 text-center">
-                    <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <CardContent className='p-12 text-center'>
+                    <FileText className='h-12 w-12 text-gray-400 mx-auto mb-4' />
+                    <h3 className='text-lg font-semibold text-gray-900 mb-2'>
                       لا توجد تقارير
                     </h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className='text-gray-600 mb-4'>
                       سيتم إنشاء التقارير تلقائياً
                     </p>
                   </CardContent>
                 </Card>
               ) : (
-                reports.map((report) => (
+                reports.map(report => (
                   <Card
                     key={report.id}
-                    className="hover:shadow-md transition-shadow"
+                    className='hover:shadow-md transition-shadow'
                   >
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
+                    <CardContent className='p-6'>
+                      <div className='flex items-start justify-between mb-4'>
                         <div>
-                          <h3 className="text-lg font-semibold">
+                          <h3 className='text-lg font-semibold'>
                             تقرير التقدم الشهري
                           </h3>
-                          <p className="text-sm text-gray-600">
+                          <p className='text-sm text-gray-600'>
                             {new Date(report.period_start).toLocaleDateString(
-                              "ar-SA",
-                            )}{" "}
-                            -{" "}
+                              'ar-SA'
+                            )}{' '}
+                            -{' '}
                             {new Date(report.period_end).toLocaleDateString(
-                              "ar-SA",
+                              'ar-SA'
                             )}
                           </p>
                         </div>
-                        <div className="text-right">
-                          <div className="text-2xl font-bold text-green-600">
+                        <div className='text-right'>
+                          <div className='text-2xl font-bold text-default-success'>
                             {report.overall_progress}%
                           </div>
-                          <p className="text-sm text-gray-600">التقدم العام</p>
+                          <p className='text-sm text-gray-600'>التقدم العام</p>
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div className="text-center p-3 bg-blue-50 rounded-lg">
-                          <div className="text-xl font-bold text-blue-600">
+                      <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mb-4'>
+                        <div className='text-center p-3 bg-surface rounded-lg'>
+                          <div className='text-xl font-bold text-default-default'>
                             {report.goals_achieved}
                           </div>
-                          <div className="text-sm text-blue-700">
+                          <div className='text-sm text-blue-700'>
                             أهداف محققة
                           </div>
-                          <div className="text-xs text-gray-600">
+                          <div className='text-xs text-gray-600'>
                             من أصل {report.total_goals}
                           </div>
                         </div>
-                        <div className="text-center p-3 bg-green-50 rounded-lg">
-                          <div className="text-xl font-bold text-green-600">
+                        <div className='text-center p-3 bg-surface rounded-lg'>
+                          <div className='text-xl font-bold text-default-success'>
                             {report.sessions_completed}
                           </div>
-                          <div className="text-sm text-green-700">
+                          <div className='text-sm text-green-700'>
                             جلسات مكتملة
                           </div>
-                          <div className="text-xs text-gray-600">
+                          <div className='text-xs text-gray-600'>
                             من أصل {report.total_sessions}
                           </div>
                         </div>
-                        <div className="text-center p-3 bg-purple-50 rounded-lg">
-                          <div className="text-xl font-bold text-purple-600">
+                        <div className='text-center p-3 bg-surface rounded-lg'>
+                          <div className='text-xl font-bold text-purple-600'>
                             {Math.round(
-                              (report.goals_achieved / report.total_goals) *
-                                100,
+                              (report.goals_achieved / report.total_goals) * 100
                             )}
                             %
                           </div>
-                          <div className="text-sm text-purple-700">
+                          <div className='text-sm text-purple-700'>
                             معدل الإنجاز
                           </div>
                         </div>
                       </div>
 
-                      <div className="mb-4">
-                        <h4 className="text-sm font-semibold mb-2">
+                      <div className='mb-4'>
+                        <h4 className='text-sm font-semibold mb-2'>
                           التوصيات:
                         </h4>
-                        <div className="flex flex-wrap gap-2">
+                        <div className='flex flex-wrap gap-2'>
                           {report.recommendations.map((rec, index) => (
                             <Badge
                               key={index}
-                              variant="secondary"
-                              className="text-xs"
+                              variant='secondary'
+                              className='text-xs'
                             >
                               {rec}
                             </Badge>
@@ -791,20 +703,20 @@ const ProgressTrackingPage: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between pt-4 border-t">
-                        <div className="text-sm text-gray-600">
-                          التقرير التالي:{" "}
+                      <div className='flex items-center justify-between pt-4 border-t'>
+                        <div className='text-sm text-gray-600'>
+                          التقرير التالي:{' '}
                           {new Date(report.next_review_date).toLocaleDateString(
-                            "ar-SA",
+                            'ar-SA'
                           )}
                         </div>
-                        <div className="flex gap-2">
-                          <Button variant="outline" size="sm">
-                            <Eye className="w-4 h-4 mr-1" />
+                        <div className='flex gap-2'>
+                          <Button variant='outline' size='sm'>
+                            <Eye className='w-4 h-4 mr-1' />
                             عرض
                           </Button>
-                          <Button variant="outline" size="sm">
-                            <FileText className="w-4 h-4 mr-1" />
+                          <Button variant='outline' size='sm'>
+                            <FileText className='w-4 h-4 mr-1' />
                             تصدير
                           </Button>
                         </div>

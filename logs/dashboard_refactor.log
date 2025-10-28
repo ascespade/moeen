@@ -1,0 +1,21 @@
+[2025-10-18T12:10:10.935Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T12:11:29.947Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T13:36:12.124Z] Dashboard metrics error in database_connection: TypeError: fetch failed
+[2025-10-18T13:44:07.041Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T13:44:45.400Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T13:45:53.540Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T13:46:31.720Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T13:47:36.030Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T13:48:13.273Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T13:52:15.755Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T13:52:47.681Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T13:54:10.690Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T14:50:14.704Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T14:50:48.687Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T15:14:30.821Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T15:55:39.993Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T15:57:00.784Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-18T15:59:02.669Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-19T04:28:48.967Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-19T04:30:26.798Z] Dashboard metrics error in database_connection: column system_health.id does not exist
+[2025-10-19T04:31:53.650Z] Dashboard metrics error in database_connection: column system_health.id does not exist

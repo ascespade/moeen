@@ -1,92 +1,66 @@
-/**
- * Button Component - مكون الزر
- * Unified button component with multiple variants and states
- */
-
-"use client";
-
-import { _Loader2 } from "lucide-react";
-import React, { forwardRef } from "react";
-
-import { _cn } from "@/core/utils";
+import React from 'react';
+import { cn } from '@/lib/utils';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?:
-    | "primary"
-    | "secondary"
-    | "outline"
-    | "ghost"
-    | "destructive"
-    | "link";
-  size?: "sm" | "md" | "lg" | "xl";
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   loading?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  fullWidth?: boolean;
+  asChild?: boolean;
+  children: React.ReactNode;
 }
 
-const __Button = forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
-      variant = "primary",
-      size = "md",
+      variant = 'primary',
+      size = 'md',
       loading = false,
-      leftIcon,
-      rightIcon,
-      fullWidth = false,
       disabled,
+      asChild = false,
       children,
       ...props
     },
-    ref,
+    ref
   ) => {
     const baseClasses =
-      "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
+      'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 
-    const __variants = {
-      primary:
-        "bg-primary-500 text-white hover:bg-primary-600 focus-visible:ring-primary-500",
-      secondary:
-        "bg-secondary-500 text-white hover:bg-secondary-600 focus-visible:ring-secondary-500",
+    const variants = {
+      default:
+        'bg-[var(--default-default)] text-white hover:bg-[var(--default-default-hover)] focus:ring-[var(--default-default)]',
+      info: 'bg-[var(--default-info)] text-white hover:bg-opacity-90 focus:ring-[var(--default-info)]',
       outline:
-        "border border-gray-300 bg-transparent hover:bg-gray-50 focus-visible:ring-gray-500",
-      ghost: "hover:bg-gray-100 focus-visible:ring-gray-500",
-      destructive:
-        "bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-500",
-      link: "text-primary-500 underline-offset-4 hover:underline focus-visible:ring-primary-500",
+        'border-2 border-[var(--default-default)] text-[var(--default-default)] hover:bg-[var(--default-default)] hover:text-white focus:ring-[var(--default-default)]',
+      ghost:
+        'text-[var(--default-default)] hover:bg-[var(--default-default)] hover:bg-opacity-10 focus:ring-[var(--default-default)]',
+      destructive: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-600',
     };
 
-    const __sizes = {
-      sm: "h-8 px-3 text-sm",
-      md: "h-10 px-4 text-sm",
-      lg: "h-12 px-6 text-base",
-      xl: "h-14 px-8 text-lg",
+    const sizes = {
+      sm: 'px-3 py-1.5 text-sm',
+      md: 'px-4 py-2 text-base',
+      lg: 'px-6 py-3 text-lg',
+      xl: 'px-8 py-4 text-xl',
     };
 
     return (
       <button
-        className={cn(
-          baseClasses,
-          variants[variant],
-          sizes[size],
-          fullWidth && "w-full",
-          className,
-        )}
-        disabled={disabled || loading}
+        className={cn(baseClasses, variants[variant], sizes[size], className)}
         ref={ref}
+        disabled={disabled || loading}
         {...props}
       >
-        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        {!loading && leftIcon && <span className="mr-2">{leftIcon}</span>}
+        {loading && (
+          <div className='h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent mr-2' />
+        )}
         {children}
-        {!loading && rightIcon && <span className="ml-2">{rightIcon}</span>}
       </button>
     );
-  },
+  }
 );
 
-Button.displayName = "Button";
+Button.displayName = 'Button';
 
 export { Button };

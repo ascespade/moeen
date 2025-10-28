@@ -1,10 +1,10 @@
-"use client";
+'use client';
+import logger from '@/lib/monitoring/logger';
 
-import { _useCallback } from "react";
-
-import { _useT } from "@/components/providers/I18nProvider";
-// import { _toast } from '@/components/ui/Toast';
-// import { _logger } from '@/lib/logger';
+import { useCallback } from 'react';
+import { useT } from '@/hooks/useT';
+// import { toast } from '@/components/ui/Toast';
+// import { logger } from '@/lib/logger';
 
 interface ErrorHandlerOptions {
   showToast?: boolean;
@@ -12,36 +12,36 @@ interface ErrorHandlerOptions {
   fallbackMessage?: string;
 }
 
-export function __useErrorHandler() {
+export function useErrorHandler() {
   const { t } = useT();
 
-  const __handleError = useCallback(
-    (_error: unknown, options: ErrorHandlerOptions = {}) => {
+  const handleError = useCallback(
+    (error: unknown, options: ErrorHandlerOptions = {}) => {
       const {
         showToast = true,
         logError = true,
-        fallbackMessage = t("error.generic"),
+        fallbackMessage = t('error.generic'),
       } = options;
 
       let errorMessage = fallbackMessage;
-      const __errorCode = "UNKNOWN_ERROR";
+      const errorCode = 'UNKNOWN_ERROR';
 
       // Extract error information
       if (error instanceof Error) {
         errorMessage = error.message;
-      } else if (typeof error === "string") {
+      } else if (typeof error === 'string') {
         errorMessage = error;
-      } else if (error && typeof error === "object" && "message" in error) {
+      } else if (error && typeof error === 'object' && 'message' in error) {
         errorMessage = (error as any).message;
       }
 
       // Log error if enabled
       if (logError) {
         // Log to external service in production
-        if (process.env.NODE_ENV === "production") {
-          fetch("/api/errors", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+        if (process.env.NODE_ENV === 'production') {
+          fetch('/api/errors', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               message: errorMessage,
               stack: error instanceof Error ? error.stack : undefined,
@@ -49,13 +49,13 @@ export function __useErrorHandler() {
               userAgent: navigator.userAgent,
               url: window.location.href,
             }),
-          }).catch(// // console.error);
+          }).catch(console.error);
         }
       }
 
       // Show toast if enabled
       if (showToast) {
-        // // console.error("Error:", errorMessage);
+        console.error('Error:', errorMessage);
       }
 
       return {
@@ -63,18 +63,18 @@ export function __useErrorHandler() {
         code: errorCode,
       };
     },
-    [t],
+    [t]
   );
 
-  const __handleAsyncError = useCallback(
-    async (_asyncFn: () => Promise<any>, options: ErrorHandlerOptions = {}) => {
+  const handleAsyncError = useCallback(
+    async (asyncFn: () => Promise<any>, options: ErrorHandlerOptions = {}) => {
       try {
         return await asyncFn();
       } catch (error) {
         return handleError(error, options);
       }
     },
-    [handleError],
+    [handleError]
   );
 
   return {

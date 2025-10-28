@@ -1,5 +1,6 @@
-"use client";
+'use client';
 
+import React, { useState, useEffect } from 'react';
 import {
   User,
   Phone,
@@ -13,30 +14,18 @@ import {
   Filter,
   Download,
   Eye,
-} from "lucide-react";
-import React, { useState, useEffect } from "react";
-
-import { _Badge } from "@/components/ui/Badge";
-import { _Button } from "@/components/ui/Button";
-import {
-  _Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/Card";
-import { _Input } from "@/components/ui/Input";
+} from 'lucide-react';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Input } from '@/components/ui/Input';
+import { Badge } from '@/components/ui/Badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from "@/components/ui/Select";
-import {
-  _Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/Tabs";
+} from '@/components/ui/Select';
 
 interface Patient {
   id: string;
@@ -44,7 +33,7 @@ interface Patient {
   phone: string;
   email: string;
   dateOfBirth: string;
-  gender: "male" | "female";
+  gender: 'male' | 'female';
   nationalId: string;
   address: string;
   emergencyContact: {
@@ -63,7 +52,7 @@ interface Patient {
   };
   createdAt: string;
   lastVisit: string;
-  status: "active" | "inactive" | "archived";
+  status: 'active' | 'inactive' | 'archived';
 }
 
 interface MedicalRecord {
@@ -83,149 +72,150 @@ const PatientRecords: React.FC = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [medicalRecords, setMedicalRecords] = useState<MedicalRecord[]>([]);
   const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<
-    "all" | "active" | "inactive" | "archived"
-  >("all");
+    'all' | 'active' | 'inactive' | 'archived'
+  >('all');
   const [showAddPatient, setShowAddPatient] = useState(false);
   const [showAddRecord, setShowAddRecord] = useState(false);
 
   // نموذج إضافة مريض جديد
   const [newPatient, setNewPatient] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    dateOfBirth: "",
-    gender: "male" as "male" | "female",
-    nationalId: "",
-    address: "",
+    name: '',
+    phone: '',
+    email: '',
+    dateOfBirth: '',
+    gender: 'male' as 'male' | 'female',
+    nationalId: '',
+    address: '',
     emergencyContact: {
-      name: "",
-      phone: "",
-      relationship: "",
+      name: '',
+      phone: '',
+      relationship: '',
     },
     medicalHistory: [] as string[],
     allergies: [] as string[],
     medications: [] as string[],
     specialNeeds: [] as string[],
     insuranceInfo: {
-      provider: "",
-      policyNumber: "",
-      expiryDate: "",
+      provider: '',
+      policyNumber: '',
+      expiryDate: '',
     },
   });
 
   // نموذج إضافة سجل طبي
   const [newRecord, setNewRecord] = useState({
-    date: "",
-    doctorName: "",
-    diagnosis: "",
-    treatment: "",
-    notes: "",
+    date: '',
+    doctorName: '',
+    diagnosis: '',
+    treatment: '',
+    notes: '',
     followUpRequired: false,
-    followUpDate: "",
+    followUpDate: '',
   });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadPatients();
     loadMedicalRecords();
   }, []);
 
-  const __loadPatients = async () => {
+  const loadPatients = async () => {
     // محاكاة تحميل المرضى من قاعدة البيانات
-    const mockPatients: Patient[] = [
+    const patients: Patient[] = [
       {
-        id: "1",
-        name: "أحمد محمد الأحمد",
-        phone: "+966501234567",
-        email: "ahmed@example.com",
-        dateOfBirth: "1990-05-15",
-        gender: "male",
-        nationalId: "1234567890",
-        address: "جدة، المملكة العربية السعودية",
+        id: '1',
+        name: 'أحمد محمد الأحمد',
+        phone: '+966501234567',
+        email: 'ahmed@example.com',
+        dateOfBirth: '1990-05-15',
+        gender: 'male',
+        nationalId: '1234567890',
+        address: 'جدة، المملكة العربية السعودية',
         emergencyContact: {
-          name: "فاطمة الأحمد",
-          phone: "+966502345678",
-          relationship: "أخت",
+          name: 'فاطمة الأحمد',
+          phone: '+966502345678',
+          relationship: 'أخت',
         },
-        medicalHistory: ["سكري", "ضغط دم"],
-        allergies: ["البنسلين"],
-        medications: ["ميتفورمين", "أملوديبين"],
-        specialNeeds: ["كرسي متحرك"],
+        medicalHistory: ['سكري', 'ضغط دم'],
+        allergies: ['البنسلين'],
+        medications: ['ميتفورمين', 'أملوديبين'],
+        specialNeeds: ['كرسي متحرك'],
         insuranceInfo: {
-          provider: "شركة التأمين الوطنية",
-          policyNumber: "INS-001",
-          expiryDate: "2024-12-31",
+          provider: 'شركة التأمين الوطنية',
+          policyNumber: 'INS-001',
+          expiryDate: '2024-12-31',
         },
-        createdAt: "2024-01-01T00:00:00Z",
-        lastVisit: "2024-01-10T00:00:00Z",
-        status: "active",
+        createdAt: '2024-01-01T00:00:00Z',
+        lastVisit: '2024-01-10T00:00:00Z',
+        status: 'active',
       },
       {
-        id: "2",
-        name: "فاطمة علي السالم",
-        phone: "+966502345678",
-        email: "fatima@example.com",
-        dateOfBirth: "1985-08-22",
-        gender: "female",
-        nationalId: "0987654321",
-        address: "الرياض، المملكة العربية السعودية",
+        id: '2',
+        name: 'فاطمة علي السالم',
+        phone: '+966502345678',
+        email: 'fatima@example.com',
+        dateOfBirth: '1985-08-22',
+        gender: 'female',
+        nationalId: '0987654321',
+        address: 'الرياض، المملكة العربية السعودية',
         emergencyContact: {
-          name: "محمد السالم",
-          phone: "+966503456789",
-          relationship: "زوج",
+          name: 'محمد السالم',
+          phone: '+966503456789',
+          relationship: 'زوج',
         },
-        medicalHistory: ["ربو", "حساسية"],
-        allergies: ["الغبار", "اللقاح"],
-        medications: ["فينتولين", "كلاريتين"],
-        specialNeeds: ["مترجم لغة الإشارة"],
+        medicalHistory: ['ربو', 'حساسية'],
+        allergies: ['الغبار', 'اللقاح'],
+        medications: ['فينتولين', 'كلاريتين'],
+        specialNeeds: ['مترجم لغة الإشارة'],
         insuranceInfo: {
-          provider: "شركة التأمين التعاوني",
-          policyNumber: "INS-002",
-          expiryDate: "2024-11-30",
+          provider: 'شركة التأمين التعاوني',
+          policyNumber: 'INS-002',
+          expiryDate: '2024-11-30',
         },
-        createdAt: "2024-01-02T00:00:00Z",
-        lastVisit: "2024-01-12T00:00:00Z",
-        status: "active",
+        createdAt: '2024-01-02T00:00:00Z',
+        lastVisit: '2024-01-12T00:00:00Z',
+        status: 'active',
       },
     ];
-    setPatients(mockPatients);
+    setPatients(patients);
   };
 
-  const __loadMedicalRecords = async () => {
+  const loadMedicalRecords = async () => {
     // محاكاة تحميل السجلات الطبية
     const mockRecords: MedicalRecord[] = [
       {
-        id: "1",
-        patientId: "1",
-        date: "2024-01-10",
-        doctorName: "د. سارة أحمد",
-        diagnosis: "فحص دوري",
-        treatment: "فحص شامل، تحاليل دم",
-        notes: "المريض في حالة جيدة، يحتاج متابعة دورية",
-        attachments: ["lab-results.pdf", "x-ray.jpg"],
+        id: '1',
+        patientId: '1',
+        date: '2024-01-10',
+        doctorName: 'د. سارة أحمد',
+        diagnosis: 'فحص دوري',
+        treatment: 'فحص شامل، تحاليل دم',
+        notes: 'المريض في حالة جيدة، يحتاج متابعة دورية',
+        attachments: ['lab-results.pdf', 'x-ray.jpg'],
         followUpRequired: true,
-        followUpDate: "2024-02-10",
+        followUpDate: '2024-02-10',
       },
       {
-        id: "2",
-        patientId: "2",
-        date: "2024-01-12",
-        doctorName: "د. محمد حسن",
-        diagnosis: "علاج طبيعي للظهر",
-        treatment: "تمارين تقوية، جلسات علاج طبيعي",
-        notes: "تحسن ملحوظ في الحركة، يحتاج استمرار العلاج",
-        attachments: ["therapy-plan.pdf"],
+        id: '2',
+        patientId: '2',
+        date: '2024-01-12',
+        doctorName: 'د. محمد حسن',
+        diagnosis: 'علاج طبيعي للظهر',
+        treatment: 'تمارين تقوية، جلسات علاج طبيعي',
+        notes: 'تحسن ملحوظ في الحركة، يحتاج استمرار العلاج',
+        attachments: ['therapy-plan.pdf'],
         followUpRequired: true,
-        followUpDate: "2024-01-26",
+        followUpDate: '2024-01-26',
       },
     ];
     setMedicalRecords(mockRecords);
   };
 
-  const __handleAddPatient = async () => {
+  const handleAddPatient = async () => {
     if (!newPatient.name || !newPatient.phone) {
-      alert("يرجى ملء الحقول المطلوبة");
+      alert('يرجى ملء الحقول المطلوبة');
       return;
     }
 
@@ -234,39 +224,39 @@ const PatientRecords: React.FC = () => {
       ...newPatient,
       createdAt: new Date().toISOString(),
       lastVisit: new Date().toISOString(),
-      status: "active",
+      status: 'active',
     };
 
-    setPatients((prev) => [...prev, patient]);
+    setPatients(prev => [...prev, patient]);
     setNewPatient({
-      name: "",
-      phone: "",
-      email: "",
-      dateOfBirth: "",
-      gender: "male",
-      nationalId: "",
-      address: "",
+      name: '',
+      phone: '',
+      email: '',
+      dateOfBirth: '',
+      gender: 'male',
+      nationalId: '',
+      address: '',
       emergencyContact: {
-        name: "",
-        phone: "",
-        relationship: "",
+        name: '',
+        phone: '',
+        relationship: '',
       },
       medicalHistory: [],
       allergies: [],
       medications: [],
       specialNeeds: [],
       insuranceInfo: {
-        provider: "",
-        policyNumber: "",
-        expiryDate: "",
+        provider: '',
+        policyNumber: '',
+        expiryDate: '',
       },
     });
     setShowAddPatient(false);
   };
 
-  const __handleAddRecord = async () => {
+  const handleAddRecord = async () => {
     if (!selectedPatient || !newRecord.date || !newRecord.doctorName) {
-      alert("يرجى ملء الحقول المطلوبة");
+      alert('يرجى ملء الحقول المطلوبة');
       return;
     }
 
@@ -277,126 +267,126 @@ const PatientRecords: React.FC = () => {
       ...newRecord,
     };
 
-    setMedicalRecords((prev) => [...prev, record]);
+    setMedicalRecords(prev => [...prev, record]);
     setNewRecord({
-      date: "",
-      doctorName: "",
-      diagnosis: "",
-      treatment: "",
-      notes: "",
+      date: '',
+      doctorName: '',
+      diagnosis: '',
+      treatment: '',
+      notes: '',
       followUpRequired: false,
-      followUpDate: "",
+      followUpDate: '',
     });
     setShowAddRecord(false);
   };
 
-  const __getStatusColor = (_status: string) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
-      case "active":
-        return "bg-green-100 text-green-800";
-      case "inactive":
-        return "bg-yellow-100 text-yellow-800";
-      case "archived":
-        return "bg-gray-100 text-gray-800";
+      case 'active':
+        return 'bg-green-100 text-green-800';
+      case 'inactive':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'archived':
+        return 'bg-surface text-gray-800';
       default:
-        return "bg-gray-100 text-gray-800";
+        return 'bg-surface text-gray-800';
     }
   };
 
-  const __getStatusText = (_status: string) => {
+  const getStatusText = (status: string) => {
     switch (status) {
-      case "active":
-        return "نشط";
-      case "inactive":
-        return "غير نشط";
-      case "archived":
-        return "مؤرشف";
+      case 'active':
+        return 'نشط';
+      case 'inactive':
+        return 'غير نشط';
+      case 'archived':
+        return 'مؤرشف';
       default:
-        return "غير محدد";
+        return 'غير محدد';
     }
   };
 
-  const __filteredPatients = patients.filter((patient) => {
+  const filteredPatients = patients.filter(patient => {
     const matchesSearch =
       patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.phone.includes(searchTerm) ||
       patient.nationalId.includes(searchTerm);
     const matchesFilter =
-      filterStatus === "all" || patient.status === filterStatus;
+      filterStatus === 'all' || patient.status === filterStatus;
     return matchesSearch && matchesFilter;
   });
 
-  const __patientRecords = selectedPatient
-    ? medicalRecords.filter((record) => record.patientId === selectedPatient.id)
+  const patientRecords = selectedPatient
+    ? medicalRecords.filter(record => record.patientId === selectedPatient.id)
     : [];
 
   return (
-    <div className="p-6 space-y-6" dir="rtl">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-gray-900">سجلات المرضى</h1>
+    <div className='p-6 space-y-6' dir='rtl'>
+      <div className='flex justify-between items-center'>
+        <h1 className='text-3xl font-bold text-gray-900'>سجلات المرضى</h1>
         <Button
           onClick={() => setShowAddPatient(true)}
-          className="bg-[var(--brand-primary)] hover:brightness-95"
+          className='bg-[var(--default-default)] hover:brightness-95'
         >
-          <Plus className="w-4 h-4 mr-2" />
+          <Plus className='w-4 h-4 mr-2' />
           إضافة مريض جديد
         </Button>
       </div>
 
       {/* فلاتر البحث */}
-      <div className="flex gap-4 items-center">
-        <div className="relative flex-1">
-          <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+      <div className='flex gap-4 items-center'>
+        <div className='relative flex-1'>
+          <Search className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4' />
           <Input
-            placeholder="البحث بالاسم، الهاتف، أو الرقم الوطني..."
+            placeholder='البحث بالاسم، الهاتف، أو الرقم الوطني...'
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pr-10"
+            onChange={e => setSearchTerm(e.target.value)}
+            className='pr-10'
           />
         </div>
         <Select
           value={filterStatus}
-          onValueChange={(_value: unknown) => setFilterStatus(value)}
+          onValueChange={(value: any) => setFilterStatus(value)}
         >
-          <SelectTrigger className="w-48">
-            <span className="text-gray-400">فلترة الحالة</span>
+          <SelectTrigger className='w-48'>
+            <span className='text-gray-400'>فلترة الحالة</span>
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">جميع المرضى</SelectItem>
-            <SelectItem value="active">نشط</SelectItem>
-            <SelectItem value="inactive">غير نشط</SelectItem>
-            <SelectItem value="archived">مؤرشف</SelectItem>
+            <SelectItem value='all'>جميع المرضى</SelectItem>
+            <SelectItem value='active'>نشط</SelectItem>
+            <SelectItem value='inactive'>غير نشط</SelectItem>
+            <SelectItem value='archived'>مؤرشف</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
         {/* قائمة المرضى */}
-        <div className="lg:col-span-1">
+        <div className='lg:col-span-1'>
           <Card>
             <CardHeader>
               <CardTitle>قائمة المرضى ({filteredPatients.length})</CardTitle>
             </CardHeader>
-            <CardContent className="p-0">
-              <div className="space-y-2">
-                {filteredPatients.map((patient) => (
+            <CardContent className='p-0'>
+              <div className='space-y-2'>
+                {filteredPatients.map(patient => (
                   <div
                     key={patient.id}
-                    className={`p-4 border-b cursor-pointer hover:bg-gray-50 ${
+                    className={`p-4 border-b cursor-pointer hover:bg-surface ${
                       selectedPatient?.id === patient.id
-                        ? "bg-blue-50 border-blue-200"
-                        : ""
+                        ? 'bg-surface border-blue-200'
+                        : ''
                     }`}
                     onClick={() => setSelectedPatient(patient)}
                   >
-                    <div className="flex justify-between items-start">
+                    <div className='flex justify-between items-start'>
                       <div>
-                        <h3 className="font-semibold">{patient.name}</h3>
-                        <p className="text-sm text-gray-600">{patient.phone}</p>
-                        <p className="text-xs text-gray-500">
-                          آخر زيارة:{" "}
+                        <h3 className='font-semibold'>{patient.name}</h3>
+                        <p className='text-sm text-gray-600'>{patient.phone}</p>
+                        <p className='text-xs text-gray-500'>
+                          آخر زيارة:{' '}
                           {new Date(patient.lastVisit).toLocaleDateString(
-                            "ar-SA",
+                            'ar-SA'
                           )}
                         </p>
                       </div>
@@ -412,97 +402,97 @@ const PatientRecords: React.FC = () => {
         </div>
 
         {/* تفاصيل المريض والسجلات */}
-        <div className="lg:col-span-2">
+        <div className='lg:col-span-2'>
           {selectedPatient ? (
-            <Tabs defaultValue="details" className="space-y-4">
+            <Tabs defaultValue='details' className='space-y-4'>
               <TabsList>
-                <TabsTrigger value="details">التفاصيل</TabsTrigger>
-                <TabsTrigger value="records">السجلات الطبية</TabsTrigger>
-                <TabsTrigger value="history">التاريخ الطبي</TabsTrigger>
+                <TabsTrigger value='details'>التفاصيل</TabsTrigger>
+                <TabsTrigger value='records'>السجلات الطبية</TabsTrigger>
+                <TabsTrigger value='history'>التاريخ الطبي</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="details">
+              <TabsContent value='details'>
                 <Card>
                   <CardHeader>
-                    <div className="flex justify-between items-start">
+                    <div className='flex justify-between items-start'>
                       <CardTitle>تفاصيل المريض</CardTitle>
                       <Button
-                        variant="outline"
-                        size="sm"
+                        variant='outline'
+                        size='sm'
                         onClick={() => setShowAddRecord(true)}
                       >
-                        <Plus className="w-4 h-4 mr-2" />
+                        <Plus className='w-4 h-4 mr-2' />
                         إضافة سجل طبي
                       </Button>
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                  <CardContent className='space-y-4'>
+                    <div className='grid grid-cols-2 gap-4'>
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           الاسم الكامل
                         </label>
-                        <p className="text-sm text-gray-900">
+                        <p className='text-sm text-gray-900'>
                           {selectedPatient.name}
                         </p>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           رقم الهاتف
                         </label>
-                        <p className="text-sm text-gray-900">
+                        <p className='text-sm text-gray-900'>
                           {selectedPatient.phone}
                         </p>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           البريد الإلكتروني
                         </label>
-                        <p className="text-sm text-gray-900">
+                        <p className='text-sm text-gray-900'>
                           {selectedPatient.email}
                         </p>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           تاريخ الميلاد
                         </label>
-                        <p className="text-sm text-gray-900">
+                        <p className='text-sm text-gray-900'>
                           {selectedPatient.dateOfBirth}
                         </p>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           الجنس
                         </label>
-                        <p className="text-sm text-gray-900">
-                          {selectedPatient.gender === "male" ? "ذكر" : "أنثى"}
+                        <p className='text-sm text-gray-900'>
+                          {selectedPatient.gender === 'male' ? 'ذكر' : 'أنثى'}
                         </p>
                       </div>
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           الرقم الوطني
                         </label>
-                        <p className="text-sm text-gray-900">
+                        <p className='text-sm text-gray-900'>
                           {selectedPatient.nationalId}
                         </p>
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className='text-sm font-medium text-gray-700'>
                         العنوان
                       </label>
-                      <p className="text-sm text-gray-900">
+                      <p className='text-sm text-gray-900'>
                         {selectedPatient.address}
                       </p>
                     </div>
 
                     <div>
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className='text-sm font-medium text-gray-700'>
                         جهة الاتصال في الطوارئ
                       </label>
-                      <p className="text-sm text-gray-900">
-                        {selectedPatient.emergencyContact.name} -{" "}
+                      <p className='text-sm text-gray-900'>
+                        {selectedPatient.emergencyContact.name} -{' '}
                         {selectedPatient.emergencyContact.phone}(
                         {selectedPatient.emergencyContact.relationship})
                       </p>
@@ -510,12 +500,12 @@ const PatientRecords: React.FC = () => {
 
                     {selectedPatient.specialNeeds.length > 0 && (
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           الاحتياجات الخاصة
                         </label>
-                        <div className="flex flex-wrap gap-2 mt-1">
+                        <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.specialNeeds.map((need, index) => (
-                            <Badge key={index} variant="outline">
+                            <Badge key={index} variant='secondary'>
                               {need}
                             </Badge>
                           ))}
@@ -525,12 +515,12 @@ const PatientRecords: React.FC = () => {
 
                     {selectedPatient.allergies.length > 0 && (
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           الحساسيات
                         </label>
-                        <div className="flex flex-wrap gap-2 mt-1">
+                        <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.allergies.map((allergy, index) => (
-                            <Badge key={index} variant="destructive">
+                            <Badge key={index} variant='error'>
                               {allergy}
                             </Badge>
                           ))}
@@ -540,16 +530,16 @@ const PatientRecords: React.FC = () => {
 
                     {selectedPatient.medications.length > 0 && (
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           الأدوية الحالية
                         </label>
-                        <div className="flex flex-wrap gap-2 mt-1">
+                        <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.medications.map(
                             (medication, index) => (
-                              <Badge key={index} variant="info">
+                              <Badge key={index} variant='secondary'>
                                 {medication}
                               </Badge>
-                            ),
+                            )
                           )}
                         </div>
                       </div>
@@ -558,59 +548,61 @@ const PatientRecords: React.FC = () => {
                 </Card>
               </TabsContent>
 
-              <TabsContent value="records">
+              <TabsContent value='records'>
                 <Card>
                   <CardHeader>
                     <CardTitle>السجلات الطبية</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      {patientRecords.map((record) => (
-                        <div key={record.id} className="border rounded-lg p-4">
-                          <div className="flex justify-between items-start mb-2">
+                    <div className='space-y-4'>
+                      {patientRecords.map(record => (
+                        <div key={record.id} className='border rounded-lg p-4'>
+                          <div className='flex justify-between items-start mb-2'>
                             <div>
-                              <h4 className="font-semibold">
+                              <h4 className='font-semibold'>
                                 {record.doctorName}
                               </h4>
-                              <p className="text-sm text-gray-600">
+                              <p className='text-sm text-gray-600'>
                                 {record.date}
                               </p>
                             </div>
-                            <Badge variant="outline">{record.diagnosis}</Badge>
+                            <Badge variant='secondary'>
+                              {record.diagnosis}
+                            </Badge>
                           </div>
-                          <div className="space-y-2">
+                          <div className='space-y-2'>
                             <div>
-                              <label className="text-sm font-medium text-gray-700">
+                              <label className='text-sm font-medium text-gray-700'>
                                 التشخيص
                               </label>
-                              <p className="text-sm text-gray-900">
+                              <p className='text-sm text-gray-900'>
                                 {record.diagnosis}
                               </p>
                             </div>
                             <div>
-                              <label className="text-sm font-medium text-gray-700">
+                              <label className='text-sm font-medium text-gray-700'>
                                 العلاج
                               </label>
-                              <p className="text-sm text-gray-900">
+                              <p className='text-sm text-gray-900'>
                                 {record.treatment}
                               </p>
                             </div>
                             {record.notes && (
                               <div>
-                                <label className="text-sm font-medium text-gray-700">
+                                <label className='text-sm font-medium text-gray-700'>
                                   ملاحظات
                                 </label>
-                                <p className="text-sm text-gray-900">
+                                <p className='text-sm text-gray-900'>
                                   {record.notes}
                                 </p>
                               </div>
                             )}
                             {record.followUpRequired && (
                               <div>
-                                <label className="text-sm font-medium text-gray-700">
+                                <label className='text-sm font-medium text-gray-700'>
                                   موعد المتابعة
                                 </label>
-                                <p className="text-sm text-gray-900">
+                                <p className='text-sm text-gray-900'>
                                   {record.followUpDate}
                                 </p>
                               </div>
@@ -623,24 +615,24 @@ const PatientRecords: React.FC = () => {
                 </Card>
               </TabsContent>
 
-              <TabsContent value="history">
+              <TabsContent value='history'>
                 <Card>
                   <CardHeader>
                     <CardTitle>التاريخ الطبي</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
+                    <div className='space-y-4'>
                       <div>
-                        <label className="text-sm font-medium text-gray-700">
+                        <label className='text-sm font-medium text-gray-700'>
                           التاريخ الطبي
                         </label>
-                        <div className="flex flex-wrap gap-2 mt-1">
+                        <div className='flex flex-wrap gap-2 mt-1'>
                           {selectedPatient.medicalHistory.map(
                             (condition, index) => (
-                              <Badge key={index} variant="outline">
+                              <Badge key={index} variant='secondary'>
                                 {condition}
                               </Badge>
-                            ),
+                            )
                           )}
                         </div>
                       </div>
@@ -651,10 +643,10 @@ const PatientRecords: React.FC = () => {
             </Tabs>
           ) : (
             <Card>
-              <CardContent className="flex items-center justify-center h-64">
-                <div className="text-center">
-                  <User className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">اختر مريضاً لعرض تفاصيله</p>
+              <CardContent className='flex items-center justify-center h-64'>
+                <div className='text-center'>
+                  <User className='w-12 h-12 text-gray-400 mx-auto mb-4' />
+                  <p className='text-gray-500'>اختر مريضاً لعرض تفاصيله</p>
                 </div>
               </CardContent>
             </Card>
@@ -664,72 +656,72 @@ const PatientRecords: React.FC = () => {
 
       {/* نموذج إضافة مريض جديد */}
       {showAddPatient && (
-        <Card className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <CardContent className="bg-white p-6 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+        <Card className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
+          <CardContent className='bg-white p-6 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto'>
             <CardHeader>
               <CardTitle>إضافة مريض جديد</CardTitle>
             </CardHeader>
 
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+            <div className='space-y-4'>
+              <div className='grid grid-cols-2 gap-4'>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">
+                  <label className='text-sm font-medium text-gray-700'>
                     الاسم الكامل *
                   </label>
                   <Input
                     value={newPatient.name}
-                    onChange={(e) =>
-                      setNewPatient((prev) => ({
+                    onChange={e =>
+                      setNewPatient(prev => ({
                         ...prev,
                         name: e.target.value,
                       }))
                     }
-                    placeholder="أدخل الاسم الكامل"
+                    placeholder='أدخل الاسم الكامل'
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">
+                  <label className='text-sm font-medium text-gray-700'>
                     رقم الهاتف *
                   </label>
                   <Input
                     value={newPatient.phone}
-                    onChange={(e) =>
-                      setNewPatient((prev) => ({
+                    onChange={e =>
+                      setNewPatient(prev => ({
                         ...prev,
                         phone: e.target.value,
                       }))
                     }
-                    placeholder="+966501234567"
+                    placeholder='+966501234567'
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className='grid grid-cols-2 gap-4'>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">
+                  <label className='text-sm font-medium text-gray-700'>
                     البريد الإلكتروني
                   </label>
                   <Input
-                    type="email"
+                    type='email'
                     value={newPatient.email}
-                    onChange={(e) =>
-                      setNewPatient((prev) => ({
+                    onChange={e =>
+                      setNewPatient(prev => ({
                         ...prev,
                         email: e.target.value,
                       }))
                     }
-                    placeholder="patient@example.com"
+                    placeholder='patient@example.com'
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">
+                  <label className='text-sm font-medium text-gray-700'>
                     تاريخ الميلاد
                   </label>
                   <Input
-                    type="date"
+                    type='date'
                     value={newPatient.dateOfBirth}
-                    onChange={(e) =>
-                      setNewPatient((prev) => ({
+                    onChange={e =>
+                      setNewPatient(prev => ({
                         ...prev,
                         dateOfBirth: e.target.value,
                       }))
@@ -738,70 +730,70 @@ const PatientRecords: React.FC = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className='grid grid-cols-2 gap-4'>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">
+                  <label className='text-sm font-medium text-gray-700'>
                     الجنس
                   </label>
                   <Select
                     value={newPatient.gender}
-                    onValueChange={(_value: unknown) =>
-                      setNewPatient((prev) => ({ ...prev, gender: value }))
+                    onValueChange={(value: any) =>
+                      setNewPatient(prev => ({ ...prev, gender: value }))
                     }
                   >
                     <SelectTrigger>
-                      <span className="text-gray-400">اختر الجنس</span>
+                      <span className='text-gray-400'>اختر الجنس</span>
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="male">ذكر</SelectItem>
-                      <SelectItem value="female">أنثى</SelectItem>
+                      <SelectItem value='male'>ذكر</SelectItem>
+                      <SelectItem value='female'>أنثى</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">
+                  <label className='text-sm font-medium text-gray-700'>
                     الرقم الوطني
                   </label>
                   <Input
                     value={newPatient.nationalId}
-                    onChange={(e) =>
-                      setNewPatient((prev) => ({
+                    onChange={e =>
+                      setNewPatient(prev => ({
                         ...prev,
                         nationalId: e.target.value,
                       }))
                     }
-                    placeholder="1234567890"
+                    placeholder='1234567890'
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-700">
+                <label className='text-sm font-medium text-gray-700'>
                   العنوان
                 </label>
                 <Input
                   value={newPatient.address}
-                  onChange={(e) =>
-                    setNewPatient((prev) => ({
+                  onChange={e =>
+                    setNewPatient(prev => ({
                       ...prev,
                       address: e.target.value,
                     }))
                   }
-                  placeholder="العنوان الكامل"
+                  placeholder='العنوان الكامل'
                 />
               </div>
             </div>
 
-            <div className="flex justify-end gap-2 mt-6">
+            <div className='flex justify-end gap-2 mt-6'>
               <Button
-                variant="outline"
+                variant='outline'
                 onClick={() => setShowAddPatient(false)}
               >
                 إلغاء
               </Button>
               <Button
                 onClick={handleAddPatient}
-                className="bg-[var(--brand-primary)] hover:brightness-95"
+                className='bg-[var(--default-default)] hover:brightness-95'
               >
                 إضافة المريض
               </Button>

@@ -1,45 +1,45 @@
-"use client";
-import { _Sun, Moon, Languages } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { _useEffect, useState } from "react";
-
-import { _ROUTES } from "@/constants/routes";
-import { _useI18n } from "@/hooks/useI18n";
+'use client';
+import { useEffect, useState } from 'react';
+import { Sun, Moon, Languages } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { ROUTES } from '@/constants/routes';
+import { useI18n } from '@/hooks/useI18n';
 
 // Theme and Language Switches Component
-function __ThemeLanguageSwitches() {
-  const [theme, setTheme] = useState<string>("light");
-  const [language, setLanguage] = useState<string>("ar");
+function ThemeLanguageSwitches() {
+  const [theme, setTheme] = useState<string>('light');
+  const [language, setLanguage] = useState<string>('ar');
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useI18n(language as "ar" | "en");
+  const { t } = useI18n(language as 'ar' | 'en');
 
   // Load user preferences from database on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     loadUserPreferences();
   }, []);
 
   // Apply theme and language changes
   useEffect(() => {
-    const __html = document.documentElement;
-    html.setAttribute("data-theme", theme);
-    html.setAttribute("lang", language);
-    html.setAttribute("dir", language === "ar" ? "rtl" : "ltr");
+    const html = document.documentElement;
+    html.setAttribute('data-theme', theme);
+    html.setAttribute('lang', language);
+    html.setAttribute('dir', language === 'ar' ? 'rtl' : 'ltr');
 
     // Only save to database if not initial load
     if (!isLoading) {
-      saveUserPreference("theme", theme);
-      saveUserPreference("language", language);
+      saveUserPreference('theme', theme);
+      saveUserPreference('language', language);
     }
   }, [theme, language, isLoading]);
 
   // Function to load user preferences from database
-  const __loadUserPreferences = async () => {
+  const loadUserPreferences = async () => {
     try {
       setIsLoading(true);
-      const __response = await fetch("/api/user/preferences");
+      const response = await fetch('/api/user/preferences');
       if (response.ok) {
-        const __data = await response.json();
+        const data = await response.json();
         if (data.theme) setTheme(data.theme);
         if (data.language) setLanguage(data.language);
       }
@@ -50,12 +50,12 @@ function __ThemeLanguageSwitches() {
   };
 
   // Function to save preferences to database
-  const __saveUserPreference = async (_key: string, value: string) => {
+  const saveUserPreference = async (key: string, value: string) => {
     try {
-      await fetch("/api/user/preferences", {
-        method: "POST",
+      await fetch('/api/user/preferences', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ key, value }),
       });
@@ -63,16 +63,16 @@ function __ThemeLanguageSwitches() {
   };
 
   // Toggle theme function
-  const __toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   // Toggle language function - reload page to apply translations
-  const __toggleLanguage = () => {
-    const __newLanguage = language === "ar" ? "en" : "ar";
+  const toggleLanguage = () => {
+    const newLanguage = language === 'ar' ? 'en' : 'ar';
     setLanguage(newLanguage);
     // Save preference and reload page to apply translations
-    saveUserPreference("language", newLanguage).then(() => {
+    saveUserPreference('language', newLanguage).then(() => {
       window.location.reload();
     });
   };
@@ -81,33 +81,33 @@ function __ThemeLanguageSwitches() {
     <>
       {/* Theme Toggle Button */}
       <button
-        className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50"
+        className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
         onClick={toggleTheme}
         disabled={isLoading}
       >
         {isLoading ? (
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
-        ) : theme === "light" ? (
-          <Sun className="h-4 w-4" />
+          <div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600'></div>
+        ) : theme === 'light' ? (
+          <Sun className='h-4 w-4' />
         ) : (
-          <Moon className="h-4 w-4" />
+          <Moon className='h-4 w-4' />
         )}
-        <span className="hidden sm:inline">{t("theme", "الثيم")}</span>
+        <span className='hidden sm:inline'>{t('theme', 'الثيم')}</span>
       </button>
 
       {/* Language Toggle Button */}
       <button
-        className="inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50"
+        className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
         onClick={toggleLanguage}
         disabled={isLoading}
       >
         {isLoading ? (
-          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
+          <div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600'></div>
         ) : (
-          <Languages className="h-4 w-4" />
+          <Languages className='h-4 w-4' />
         )}
-        <span className="hidden sm:inline">
-          {language === "ar" ? "العربية" : "English"}
+        <span className='hidden sm:inline'>
+          {language === 'ar' ? 'العربية' : 'English'}
         </span>
       </button>
     </>
@@ -115,17 +115,17 @@ function __ThemeLanguageSwitches() {
 }
 
 // Main Header Component
-export default function __GlobalHeader() {
-  const [language, setLanguage] = useState<string>("ar");
-  const { t } = useI18n(language as "ar" | "en");
+export default function GlobalHeader() {
+  const [language, setLanguage] = useState<string>('ar');
+  const { t } = useI18n(language as 'ar' | 'en');
 
   // Load language preference on mount
   useEffect(() => {
-    const __loadLanguage = async () => {
+    const loadLanguage = async () => {
       try {
-        const __response = await fetch("/api/user/preferences");
+        const response = await fetch('/api/user/preferences');
         if (response.ok) {
-          const __data = await response.json();
+          const data = await response.json();
           if (data.language) setLanguage(data.language);
         }
       } catch (error) {}
@@ -134,41 +134,41 @@ export default function __GlobalHeader() {
   }, []);
 
   return (
-    <nav className="nav sticky top-0 z-50">
-      <div className="container-app py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+    <nav className='nav sticky top-0 z-50'>
+      <div className='container-app py-4'>
+        <div className='flex items-center justify-between'>
+          <div className='flex items-center gap-4'>
             <Image
-              src="/logo.png"
-              alt="مُعين"
+              src='/logo.png'
+              alt='مُعين'
               width={50}
               height={50}
-              className="rounded-lg"
+              className='rounded-lg'
             />
-            <h1 className="text-brand text-2xl font-bold">مُعين</h1>
+            <h1 className='text-default text-2xl font-bold'>مُعين</h1>
           </div>
-          <div className="hidden items-center gap-6 md:flex">
-            <Link href="#services" className="nav-link">
-              {t("nav.services", "الخدمات")}
+          <div className='hidden items-center gap-6 md:flex'>
+            <Link href='#services' className='nav-link'>
+              {t('nav.services', 'الخدمات')}
             </Link>
-            <Link href="#about" className="nav-link">
-              {t("nav.about", "عن معين")}
+            <Link href='#about' className='nav-link'>
+              {t('nav.about', 'عن معين')}
             </Link>
-            <Link href="#gallery" className="nav-link">
-              {t("nav.gallery", "المعرض")}
+            <Link href='#gallery' className='nav-link'>
+              {t('nav.gallery', 'المعرض')}
             </Link>
-            <Link href="#contact" className="nav-link">
-              {t("nav.contact", "اتصل بنا")}
+            <Link href='#contact' className='nav-link'>
+              {t('nav.contact', 'اتصل بنا')}
             </Link>
           </div>
-          <div className="flex items-center gap-3">
+          <div className='flex items-center gap-3'>
             {/* Theme and Language Switches */}
             <ThemeLanguageSwitches />
-            <Link href={ROUTES.LOGIN} className="btn btn-outline">
-              {t("auth.login", "تسجيل الدخول")}
+            <Link href={ROUTES.LOGIN} className='btn btn-outline'>
+              {t('auth.login', 'تسجيل الدخول')}
             </Link>
-            <Link href={ROUTES.REGISTER} className="btn btn-brand">
-              {t("auth.register", "إنشاء حساب")}
+            <Link href={ROUTES.REGISTER} className='btn btn-default'>
+              {t('auth.register', 'إنشاء حساب')}
             </Link>
           </div>
         </div>

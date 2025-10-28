@@ -1,20 +1,20 @@
-import React from "react";
+import React from 'react';
 
 interface LiveRegionProps {
   message: string;
-  politeness?: "polite" | "assertive";
+  politeness?: 'polite' | 'assertive';
 }
 
-export function __LiveRegion({
+export function LiveRegion({
   message,
-  politeness = "polite",
+  politeness = 'polite',
 }: LiveRegionProps) {
   return (
     <div
-      role="status"
+      role='status'
       aria-live={politeness}
-      aria-atomic="true"
-      className="sr-only"
+      aria-atomic='true'
+      className='sr-only'
     >
       {message}
     </div>

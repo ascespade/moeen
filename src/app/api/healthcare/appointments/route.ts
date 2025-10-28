@@ -1,24 +1,24 @@
-import { _createClient } from "@supabase/supabase-js";
-import { _NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
-const __supabase = createClient(
+const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 // GET /api/healthcare/appointments - جلب المواعيد
-export async function __GET(_request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const __doctor_id = searchParams.get("doctor_id");
-    const __patient_id = searchParams.get("patient_id");
-    const __date = searchParams.get("date");
-    const __status = searchParams.get("status");
-    const __page = parseInt(searchParams.get("page") || "1");
-    const __limit = parseInt(searchParams.get("limit") || "10");
+    const doctor_id = searchParams.get('doctor_id');
+    const patient_id = searchParams.get('patient_id');
+    const date = searchParams.get('date');
+    const status = searchParams.get('status');
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
 
     let query = supabase
-      .from("appointments")
+      .from('appointments')
       .select(
         `
         *,
@@ -34,29 +34,29 @@ export async function __GET(_request: NextRequest) {
           last_name,
           specialization
         )
-      `,
+      `
       )
-      .order("appointment_date", { ascending: true });
+      .order('appointment_date', { ascending: true });
 
     if (doctor_id) {
-      query = query.eq("doctor_id", doctor_id);
+      query = query.eq('doctor_id', doctor_id);
     }
 
     if (patient_id) {
-      query = query.eq("patient_id", patient_id);
+      query = query.eq('patient_id', patient_id);
     }
 
     if (date) {
-      query = query.eq("appointment_date", date);
+      query = query.eq('appointment_date', date);
     }
 
     if (status) {
-      query = query.eq("status", status);
+      query = query.eq('status', status);
     }
 
     // تطبيق الصفحات
-    const __from = (page - 1) * limit;
-    const __to = from + limit - 1;
+    const from = (page - 1) * limit;
+    const to = from + limit - 1;
     query = query.range(from, to);
 
     const { data: appointments, error, count } = await query;
@@ -71,21 +71,21 @@ export async function __GET(_request: NextRequest) {
         page,
         limit,
         total: count || 0,
-        pages: Math.ceil((count || 0) / (limit || 20)),
+        pages: Math.ceil((count || 0) / limit),
       },
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
 
 // POST /api/healthcare/appointments - إنشاء موعد جديد
-export async function __POST(_request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const __body = await request.json();
+    const body = await request.json();
     const {
       patient_id,
       doctor_id,
@@ -100,7 +100,7 @@ export async function __POST(_request: NextRequest) {
     } = body;
 
     const { data: appointment, error } = await supabase
-      .from("appointments")
+      .from('appointments')
       .insert({
         patient_id,
         doctor_id,
@@ -109,7 +109,7 @@ export async function __POST(_request: NextRequest) {
         duration,
         type,
         notes,
-        status: "scheduled",
+        status: 'scheduled',
         insurance_covered,
         insurance_company,
         insurance_number,
@@ -124,8 +124,8 @@ export async function __POST(_request: NextRequest) {
     return NextResponse.json({ appointment }, { status: 201 });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }

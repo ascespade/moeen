@@ -1,62 +1,62 @@
-import React from "react";
+import React from 'react';
 
 interface Column {
   key: string;
   label: string;
   sortable?: boolean;
-  sortDirection?: "asc" | "desc" | "none";
-  render?: (_value: unknown, row: unknown) => React.ReactNode;
+  sortDirection?: 'asc' | 'desc' | 'none';
+  render?: (value: any, row: any) => React.ReactNode;
 }
 
 interface DataTableProps {
   columns: Column[];
-  data: unknown[];
-  onSort?: (_key: string) => void;
-  onFilter?: (_filters: Record<string, any>) => void;
+  data: any[];
+  onSort?: (key: string) => void;
+  onFilter?: (filters: Record<string, any>) => void;
   caption?: string;
   className?: string;
 }
 
-export function __DataTable({
+export function DataTable({
   columns,
   data,
   onSort,
   onFilter,
   caption,
-  className = "",
+  className = '',
 }: DataTableProps) {
   return (
     <div
-      role="region"
-      aria-label="Data table"
+      role='region'
+      aria-label='Data table'
       className={`overflow-x-auto ${className}`}
     >
       <table
-        role="table"
-        aria-label="Data table"
-        className="min-w-full divide-y divide-gray-200"
+        role='table'
+        aria-label='Data table'
+        className='min-w-full divide-y divide-gray-200'
       >
-        <caption className="sr-only">
+        <caption className='sr-only'>
           {caption ||
             `Table with ${data.length} rows and ${columns.length} columns`}
         </caption>
-        <thead className="bg-gray-50">
-          <tr role="row">
-            {columns.map((column) => (
+        <thead className='bg-surface'>
+          <tr role='row'>
+            {columns.map(column => (
               <th
                 key={column.key}
-                role="columnheader"
+                role='columnheader'
                 aria-sort={
-                  column.sortDirection === "asc"
-                    ? "ascending"
-                    : column.sortDirection === "desc"
-                      ? "descending"
-                      : "none"
+                  column.sortDirection === 'asc'
+                    ? 'ascending'
+                    : column.sortDirection === 'desc'
+                      ? 'descending'
+                      : 'none'
                 }
                 tabIndex={0}
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-[var(--brand-surface)] focus:bg-[var(--brand-surface)] focus:outline-none focus:ring-2"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
+                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-[var(--default-surface)] focus:bg-[var(--default-surface)] focus:outline-none focus:ring-2'
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     onSort?.(column.key);
                   }
@@ -65,26 +65,26 @@ export function __DataTable({
               >
                 {column.label}
                 {column.sortable && (
-                  <span aria-hidden="true" className="ml-1">
-                    {column.sortDirection === "asc"
-                      ? "↑"
-                      : column.sortDirection === "desc"
-                        ? "↓"
-                        : "↕"}
+                  <span aria-hidden='true' className='ml-1'>
+                    {column.sortDirection === 'asc'
+                      ? '↑'
+                      : column.sortDirection === 'desc'
+                        ? '↓'
+                        : '↕'}
                   </span>
                 )}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className='bg-white divide-y divide-gray-200'>
           {data.map((row, index) => (
-            <tr key={row.id || index} role="row" className="hover:bg-gray-50">
-              {columns.map((column) => (
+            <tr key={row.id || index} role='row' className='hover:bg-surface'>
+              {columns.map(column => (
                 <td
                   key={column.key}
-                  role="gridcell"
-                  className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                  role='gridcell'
+                  className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'
                 >
                   {column.render
                     ? column.render(row[column.key], row)

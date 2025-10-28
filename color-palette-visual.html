@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة ألوان مركز الهمم - Al Hemam Center Color Palette</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        color: #0f172a;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #1e40af, #059669);
+        border-radius: 20px;
+        margin: 0 auto 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: bold;
+        color: white;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #1e40af, #059669);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .subtitle {
+        color: #64748b;
+        font-size: 1.2rem;
+      }
+
+      .color-section {
+        margin-bottom: 3rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: #1e40af;
+        border-bottom: 3px solid #059669;
+        padding-bottom: 0.5rem;
+        display: inline-block;
+      }
+
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .color-card {
+        background: white;
+        border-radius: 15px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .color-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .color-preview {
+        width: 100%;
+        height: 80px;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .color-preview::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+          linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+          linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%);
+        background-size: 10px 10px;
+      }
+
+      .color-name {
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        color: #0f172a;
+      }
+
+      .color-value {
+        font-family: 'Courier New', monospace;
+        background: #f1f5f9;
+        padding: 0.3rem 0.6rem;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        color: #475569;
+        margin-bottom: 0.5rem;
+        display: inline-block;
+      }
+
+      .color-description {
+        color: #64748b;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .usage-examples {
+        background: #f8fafc;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        border-left: 4px solid #059669;
+      }
+
+      .usage-title {
+        font-weight: bold;
+        color: #1e40af;
+        margin-bottom: 0.5rem;
+      }
+
+      .code-example {
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 1rem;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        margin-top: 0.5rem;
+      }
+
+      .gradient-section {
+        background: linear-gradient(135deg, #1e40af, #059669, #7c3aed);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        text-align: center;
+      }
+
+      .gradient-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .gradient-preview {
+        width: 100%;
+        height: 100px;
+        border-radius: 10px;
+        margin: 1rem 0;
+        background: linear-gradient(135deg, #1e40af, #059669, #7c3aed);
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding: 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .footer-text {
+        color: #64748b;
+        margin-bottom: 1rem;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .footer-link {
+        color: #1e40af;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .footer-link:hover {
+        color: #059669;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .color-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">هـ</div>
+        <h1>لوحة ألوان مركز الهمم</h1>
+        <p class="subtitle">Al Hemam Center Color Palette</p>
+      </div>
+
+      <!-- الألوان الأساسية -->
+      <div class="color-section">
+        <h2 class="section-title">🎯 الألوان الأساسية</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-preview" style="background: #1e40af"></div>
+            <div class="color-name">الأزرق الطبي</div>
+            <div class="color-value">#1e40af</div>
+            <div class="color-description">
+              الثقة والاحترافية الطبية - للعناصر الرئيسية والأزرار
+            </div>
+            <div class="usage-examples">
+              <div class="usage-title">مثال الاستخدام:</div>
+              <div class="code-example">background-color: #1e40af;</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #059669"></div>
+            <div class="color-name">الأخضر الشافي</div>
+            <div class="color-value">#059669</div>
+            <div class="color-description">
+              النمو والشفاء والأمل - لرسائل النجاح والتقدم
+            </div>
+            <div class="usage-examples">
+              <div class="usage-title">مثال الاستخدام:</div>
+              <div class="code-example">color: #059669;</div>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #7c3aed"></div>
+            <div class="color-name">البنفسجي المميز</div>
+            <div class="color-value">#7c3aed</div>
+            <div class="color-description">
+              التميز والإبداع والرقي - للعناصر المميزة
+            </div>
+            <div class="usage-examples">
+              <div class="usage-title">مثال الاستخدام:</div>
+              <div class="code-example">border-color: #7c3aed;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- الألوان الثانوية -->
+      <div class="color-section">
+        <h2 class="section-title">🌈 الألوان الثانوية</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-preview" style="background: #ea580c"></div>
+            <div class="color-name">البرتقالي الدافئ</div>
+            <div class="color-value">#ea580c</div>
+            <div class="color-description">
+              الدفء والاهتمام والطاقة الإيجابية
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #0d9488"></div>
+            <div class="color-name">التركوازي الهادئ</div>
+            <div class="color-value">#0d9488</div>
+            <div class="color-description">الهدوء والصفاء والشفافية</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ألوان الحالة -->
+      <div class="color-section">
+        <h2 class="section-title">⚡ ألوان الحالة</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-preview" style="background: #059669"></div>
+            <div class="color-name">النجاح</div>
+            <div class="color-value">#059669</div>
+            <div class="color-description">رسائل النجاح والتحقق من الأهداف</div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #d97706"></div>
+            <div class="color-name">التحذير</div>
+            <div class="color-value">#d97706</div>
+            <div class="color-description">التنبيهات والتحذيرات المهمة</div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #dc2626"></div>
+            <div class="color-name">الخطأ</div>
+            <div class="color-value">#dc2626</div>
+            <div class="color-description">رسائل الخطأ والتحذيرات الخطيرة</div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #2563eb"></div>
+            <div class="color-name">المعلومات</div>
+            <div class="color-value">#2563eb</div>
+            <div class="color-description">النصائح والإرشادات والمعلومات</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ألوان الخلفية -->
+      <div class="color-section">
+        <h2 class="section-title">🎨 ألوان الخلفية</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-preview" style="background: #ffffff"></div>
+            <div class="color-name">الخلفية الأساسية</div>
+            <div class="color-value">#ffffff</div>
+            <div class="color-description">النظافة والوضوح والصفاء</div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #f8fafc"></div>
+            <div class="color-name">الخلفية الثانوية</div>
+            <div class="color-value">#f8fafc</div>
+            <div class="color-description">الراحة للعين والتدرج اللطيف</div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #f1f5f9"></div>
+            <div class="color-name">الخلفية الثالثة</div>
+            <div class="color-value">#f1f5f9</div>
+            <div class="color-description">التدرج اللطيف والانسجام</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ألوان النصوص -->
+      <div class="color-section">
+        <h2 class="section-title">📝 ألوان النصوص</h2>
+        <div class="color-grid">
+          <div class="color-card">
+            <div class="color-preview" style="background: #0f172a"></div>
+            <div class="color-name">النص الأساسي</div>
+            <div class="color-value">#0f172a</div>
+            <div class="color-description">الوضوح والقراءة المثلى للعناوين</div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #475569"></div>
+            <div class="color-name">النص الثانوي</div>
+            <div class="color-value">#475569</div>
+            <div class="color-description">
+              التوازن والانسجام للنصوص الفرعية
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #64748b"></div>
+            <div class="color-name">النص الثالث</div>
+            <div class="color-value">#64748b</div>
+            <div class="color-description">الخفيف والمرافق للتوضيحات</div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview" style="background: #94a3b8"></div>
+            <div class="color-name">النص الخافت</div>
+            <div class="color-value">#94a3b8</div>
+            <div class="color-description">
+              المساعد والمرجع للعناصر غير النشطة
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- التدرجات -->
+      <div class="gradient-section">
+        <h2 class="gradient-title">🎨 التدرجات المميزة</h2>
+        <div class="gradient-preview"></div>
+        <p>تدرج يجمع بين الأزرق الطبي والأخضر الشافي والبنفسجي المميز</p>
+      </div>
+
+      <div class="footer">
+        <p class="footer-text">
+          لوحة ألوان مركز الهمم - مصممة خصيصاً للهوية الطبية المتخصصة
+        </p>
+        <div class="footer-links">
+          <a href="/color-palette" class="footer-link">الصفحة التفاعلية</a>
+          <a href="/design-system" class="footer-link">نظام التصميم</a>
+          <a href="/docs" class="footer-link">الوثائق</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

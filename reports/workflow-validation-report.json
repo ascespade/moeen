@@ -1,0 +1,31 @@
+{
+  "timestamp": "2025-10-18T19:37:02.064Z",
+  "summary": {
+    "totalWorkflows": 2,
+    "validWorkflows": 2,
+    "totalErrors": 0,
+    "totalWarnings": 4
+  },
+  "workflows": [
+    {
+      "file": "ci-assistant.yml",
+      "path": ".github/workflows/ci-assistant.yml",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Workflow uploads artifacts but doesn't download them - ensure this is intentional"
+      ]
+    },
+    {
+      "file": "ultimate-ci-self-healing.yml",
+      "path": ".github/workflows/ultimate-ci-self-healing.yml",
+      "valid": true,
+      "errors": [],
+      "warnings": [
+        "Environment variable 'WORKFLOW_MODE' uses GitHub context without secrets - ensure this is intentional",
+        "Environment variable 'SCOPE' uses GitHub context without secrets - ensure this is intentional",
+        "Environment variable 'FORCE_FULL_TEST' uses GitHub context without secrets - ensure this is intentional"
+      ]
+    }
+  ]
+}

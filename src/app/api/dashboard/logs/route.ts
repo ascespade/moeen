@@ -2,21 +2,20 @@
 // Activity logs API endpoint for dashboard
 // Provides real-time logs and activity monitoring
 
-import { _NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
 
-import { _getServiceSupabase } from "@/lib/supabaseClient";
+const supabase = getServiceSupabase();
 
-const __supabase = getServiceSupabase();
-
-export async function __GET(_request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const __service = searchParams.get("service");
-    const __level = searchParams.get("level");
-    const __limit = parseInt(searchParams.get("limit") || "100");
-    const __hours = parseInt(searchParams.get("hours") || "24");
+    const service = searchParams.get('service');
+    const level = searchParams.get('level');
+    const limit = parseInt(searchParams.get('limit') || '100');
+    const hours = parseInt(searchParams.get('hours') || '24');
 
-    const __logs = await getActivityLogs({
+    const logs = await getActivityLogs({
       service,
       level,
       limit,
@@ -30,13 +29,13 @@ export async function __GET(_request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to fetch logs" },
-      { status: 500 },
+      { error: 'Failed to fetch logs' },
+      { status: 500 }
     );
   }
 }
 
-async function __getActivityLogs(_filters: {
+async function getActivityLogs(filters: {
   service?: string | null;
   level?: string | null;
   limit: number;
@@ -44,21 +43,21 @@ async function __getActivityLogs(_filters: {
 }) {
   try {
     let query = supabase
-      .from("activity_logs")
-      .select("*")
+      .from('activity_logs')
+      .select('*')
       .gte(
-        "timestamp",
-        new Date(Date.now() - filters.hours * 60 * 60 * 1000).toISOString(),
+        'timestamp',
+        new Date(Date.now() - filters.hours * 60 * 60 * 1000).toISOString()
       )
-      .order("timestamp", { ascending: false })
+      .order('timestamp', { ascending: false })
       .limit(filters.limit);
 
     if (filters.service) {
-      query = query.eq("service_name", filters.service);
+      query = query.eq('service_name', filters.service);
     }
 
     if (filters.level) {
-      query = query.eq("level", filters.level);
+      query = query.eq('level', filters.level);
     }
 
     const { data, error } = await query;
@@ -66,7 +65,7 @@ async function __getActivityLogs(_filters: {
     if (error) throw error;
 
     return (
-      data?.map((_log: unknown) => ({
+      data?.map(log => ({
         id: log.id,
         timestamp: log.timestamp,
         service: log.service_name,
@@ -83,8 +82,8 @@ async function __getActivityLogs(_filters: {
   }
 }
 
-function __generateLogSummary(_logs: unknown[]) {
-  const __summary = {
+function generateLogSummary(logs: any[]) {
+  const summary = {
     total: logs.length,
     byLevel: {} as Record<string, number>,
     byService: {} as Record<string, number>,
@@ -94,7 +93,7 @@ function __generateLogSummary(_logs: unknown[]) {
     warningRate: 0,
   };
 
-  logs.forEach((log) => {
+  logs.forEach(log => {
     // Count by level
     summary.byLevel[log.level] = (summary.byLevel[log.level] || 0) + 1;
 

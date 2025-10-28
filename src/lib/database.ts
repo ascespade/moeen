@@ -1,506 +1,364 @@
-/**
- * Database utilities using Supabase
- * Centralized database operations for the healthcare system
- */
+import { Pool } from 'pg';
+// Database Integration System
 
-import { _Database } from "@/types/supabase";
-
-import { _getServiceSupabase, getServerSupabase } from "./supabaseClient";
-
-type Tables = Database["public"]["Tables"];
-type Users = Tables["users"]["Row"];
-type Patients = Tables["patients"]["Row"];
-type Doctors = Tables["doctors"]["Row"];
-type Appointments = Tables["appointments"]["Row"];
-type Sessions = Tables["sessions"]["Row"];
-type InsuranceClaims = Tables["insurance_claims"]["Row"];
+export interface DatabaseConfig {
+  host: string;
+  port: number;
+  database: string;
+  username: string;
+  password: string;
+  ssl: boolean;
+}
 
 export class DatabaseManager {
-  private supabase;
+  private pool: Pool;
+  private isConnected: boolean = false;
 
-  constructor(useService = false) {
-    this.supabase = useService ? getServiceSupabase() : getServerSupabase();
+  constructor(config: DatabaseConfig) {
+    this.pool = new Pool({
+      host: config.host,
+      port: config.port,
+      database: config.database,
+      user: config.username,
+      password: config.password,
+      ssl: config.ssl,
+      max: 20,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
+    });
+
+    this.initializeTables();
   }
 
-  // User Management
-  async createUser(_userData: Omit<Users, "id" | "created_at" | "updated_at">) {
-    const { data, error } = await this.supabase
-      .from("users")
-      .insert([userData])
-      .select()
-      .single();
+  private async initializeTables() {
+    try {
+      // Create patients table
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS patients (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          age INTEGER NOT NULL,
+          phone VARCHAR(20) UNIQUE NOT NULL,
+          email VARCHAR(255),
+          emergency_contact VARCHAR(20),
+          medical_history TEXT[],
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
 
-    if (error) throw new Error(`Failed to create user: ${error.message}`);
-    return data;
-  }
+      // Create doctors table
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS doctors (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          specialty VARCHAR(255) NOT NULL,
+          phone VARCHAR(20),
+          email VARCHAR(255),
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
 
-  async getUser(_userId: string) {
-    const { data, error } = await this.supabase
-      .from("users")
-      .select("*")
-      .eq("id", userId)
-      .single();
+      // Create appointments table
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS appointments (
+          id SERIAL PRIMARY KEY,
+          patient_id INTEGER REFERENCES patients(id),
+          doctor_id INTEGER REFERENCES doctors(id),
+          appointment_date DATE NOT NULL,
+          appointment_time TIME NOT NULL,
+          type VARCHAR(50) DEFAULT 'treatment',
+          status VARCHAR(50) DEFAULT 'scheduled',
+          notes TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
 
-    if (error) throw new Error(`Failed to get user: ${error.message}`);
-    return data;
-  }
+      // Create sessions table
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS sessions (
+          id SERIAL PRIMARY KEY,
+          patient_id INTEGER REFERENCES patients(id),
+          doctor_id INTEGER REFERENCES doctors(id),
+          session_date DATE NOT NULL,
+          session_time TIME NOT NULL,
+          type VARCHAR(50) NOT NULL,
+          notes TEXT,
+          exercises JSONB,
+          completed BOOLEAN DEFAULT FALSE,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
 
-  async getUserByEmail(_email: string) {
-    const { data, error } = await this.supabase
-      .from("users")
-      .select("*")
-      .eq("email", email)
-      .single();
+      // Create family_members table
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS family_members (
+          id SERIAL PRIMARY KEY,
+          patient_id INTEGER REFERENCES patients(id),
+          name VARCHAR(255) NOT NULL,
+          relationship VARCHAR(100) NOT NULL,
+          phone VARCHAR(20) NOT NULL,
+          email VARCHAR(255),
+          notifications_enabled BOOLEAN DEFAULT TRUE,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
 
-    if (error) throw new Error(`Failed to get user by email: ${error.message}`);
-    return data;
-  }
+      // Create conversations table
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS conversations (
+          id SERIAL PRIMARY KEY,
+          patient_id INTEGER REFERENCES patients(id),
+          session_id VARCHAR(255),
+          message_type VARCHAR(50) NOT NULL,
+          content TEXT NOT NULL,
+          response TEXT,
+          sentiment VARCHAR(50),
+          crisis_level VARCHAR(50) DEFAULT 'normal',
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
 
-  async updateUser(_userId: string, updates: Partial<Users>) {
-    const { data, error } = await this.supabase
-      .from("users")
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq("id", userId)
-      .select()
-      .single();
+      // Create message_templates table
+      await this.pool.query(`
+        CREATE TABLE IF NOT EXISTS message_templates (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          category VARCHAR(100) NOT NULL,
+          content TEXT NOT NULL,
+          variables TEXT[],
+          approved BOOLEAN DEFAULT FALSE,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+      `);
 
-    if (error) throw new Error(`Failed to update user: ${error.message}`);
-    return data;
+      this.isConnected = true;
+    } catch (error) {
+      this.isConnected = false;
+    }
   }
 
   // Patient Management
-  async createPatient(
-    patientData: Omit<Patients, "id" | "created_at" | "updated_at">,
-  ) {
-    const { data, error } = await this.supabase
-      .from("patients")
-      .insert([patientData])
-      .select()
-      .single();
+  async createPatient(patientData: {
+    name: string;
+    age: number;
+    phone: string;
+    email?: string;
+    emergencyContact?: string;
+    medicalHistory?: string[];
+  }) {
+    const query = `
+      INSERT INTO patients (name, age, phone, email, emergency_contact, medical_history)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING id, name, age, phone, email, emergency_contact, medical_history, created_at
+    `;
 
-    if (error) throw new Error(`Failed to create patient: ${error.message}`);
-    return data;
+    const values = [
+      patientData.name,
+      patientData.age,
+      patientData.phone,
+      patientData.email,
+      patientData.emergencyContact,
+      patientData.medicalHistory || [],
+    ];
+
+    const result = await this.pool.query(query, values);
+    return result.rows[0];
   }
 
-  async getPatient(_patientId: string) {
-    const { data, error } = await this.supabase
-      .from("patients")
-      .select("*")
-      .eq("id", patientId)
-      .single();
-
-    if (error) throw new Error(`Failed to get patient: ${error.message}`);
-    return data;
+  async getPatient(patientId: number) {
+    const query = 'SELECT * FROM patients WHERE id = $1';
+    const result = await this.pool.query(query, [patientId]);
+    return result.rows[0];
   }
 
-  async getPatients(
-    filters: {
-      assigned_doctor_id?: string;
-      status?: string;
-      limit?: number;
-      offset?: number;
-    } = {},
-  ) {
-    let query = this.supabase
-      .from("patients")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (filters.assigned_doctor_id) {
-      query = query.eq("assigned_doctor_id", filters.assigned_doctor_id);
-    }
-
-    if (filters.status) {
-      query = query.eq("status", filters.status);
-    }
-
-    if (filters.limit) {
-      query = query.limit(filters.limit);
-    }
-
-    if (filters.offset) {
-      query = query.range(
-        filters.offset,
-        filters.offset + (filters.limit || 10) - 1,
-      );
-    }
-
-    const { data, error } = await query;
-
-    if (error) throw new Error(`Failed to get patients: ${error.message}`);
-    return data;
+  async getPatientByPhone(phone: string) {
+    const query = 'SELECT * FROM patients WHERE phone = $1';
+    const result = await this.pool.query(query, [phone]);
+    return result.rows[0];
   }
 
-  async updatePatient(_patientId: string, updates: Partial<Patients>) {
-    const { data, error } = await this.supabase
-      .from("patients")
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq("id", patientId)
-      .select()
-      .single();
+  async updatePatient(patientId: number, updates: any) {
+    const fields = Object.keys(updates);
+    const values = Object.values(updates);
+    const setClause = fields
+      .map((field, index) => `${field} = $${index + 2}`)
+      .join(', ');
 
-    if (error) throw new Error(`Failed to update patient: ${error.message}`);
-    return data;
-  }
+    const query = `
+      UPDATE patients 
+      SET ${setClause}, updated_at = CURRENT_TIMESTAMP 
+      WHERE id = $1 
+      RETURNING *
+    `;
 
-  // Doctor Management
-  async createDoctor(
-    doctorData: Omit<Doctors, "id" | "created_at" | "updated_at">,
-  ) {
-    const { data, error } = await this.supabase
-      .from("doctors")
-      .insert([doctorData])
-      .select()
-      .single();
-
-    if (error) throw new Error(`Failed to create doctor: ${error.message}`);
-    return data;
-  }
-
-  async getDoctor(_doctorId: string) {
-    const { data, error } = await this.supabase
-      .from("doctors")
-      .select("*")
-      .eq("id", doctorId)
-      .single();
-
-    if (error) throw new Error(`Failed to get doctor: ${error.message}`);
-    return data;
-  }
-
-  async getDoctors(
-    filters: {
-      specialty?: string;
-      is_available?: boolean;
-      limit?: number;
-      offset?: number;
-    } = {},
-  ) {
-    let query = this.supabase
-      .from("doctors")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (filters.specialty) {
-      query = query.eq("specialty", filters.specialty);
-    }
-
-    if (filters.is_available !== undefined) {
-      query = query.eq("is_available", filters.is_available);
-    }
-
-    if (filters.limit) {
-      query = query.limit(filters.limit);
-    }
-
-    if (filters.offset) {
-      query = query.range(
-        filters.offset,
-        filters.offset + (filters.limit || 10) - 1,
-      );
-    }
-
-    const { data, error } = await query;
-
-    if (error) throw new Error(`Failed to get doctors: ${error.message}`);
-    return data;
+    const result = await this.pool.query(query, [patientId, ...values]);
+    return result.rows[0];
   }
 
   // Appointment Management
-  async createAppointment(
-    appointmentData: Omit<Appointments, "id" | "created_at" | "updated_at">,
-  ) {
-    const { data, error } = await this.supabase
-      .from("appointments")
-      .insert([appointmentData])
-      .select()
-      .single();
+  async createAppointment(appointmentData: {
+    patientId: number;
+    doctorId: number;
+    appointmentDate: string;
+    appointmentTime: string;
+    type?: string;
+    notes?: string;
+  }) {
+    const query = `
+      INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time, type, notes)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *
+    `;
 
-    if (error)
-      throw new Error(`Failed to create appointment: ${error.message}`);
-    return data;
+    const values = [
+      appointmentData.patientId,
+      appointmentData.doctorId,
+      appointmentData.appointmentDate,
+      appointmentData.appointmentTime,
+      appointmentData.type || 'treatment',
+      appointmentData.notes,
+    ];
+
+    const result = await this.pool.query(query, values);
+    return result.rows[0];
   }
 
-  async getAppointment(_appointmentId: string) {
-    const { data, error } = await this.supabase
-      .from("appointments")
-      .select(
-        `
-        *,
-        patients!appointments_patient_id_fkey(*),
-        doctors!appointments_doctor_id_fkey(*)
-      `,
-      )
-      .eq("id", appointmentId)
-      .single();
+  async getAppointments(patientId?: number, doctorId?: number, date?: string) {
+    let query =
+      'SELECT a.*, p.name as patient_name, d.name as doctor_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctor_id = d.id';
+    const conditions = [];
+    const values = [];
+    let paramCount = 1;
 
-    if (error) throw new Error(`Failed to get appointment: ${error.message}`);
-    return data;
-  }
-
-  async getAppointments(
-    filters: {
-      patient_id?: string;
-      doctor_id?: string;
-      status?: string;
-      date_from?: string;
-      date_to?: string;
-      limit?: number;
-      offset?: number;
-    } = {},
-  ) {
-    let query = this.supabase
-      .from("appointments")
-      .select(
-        `
-        *,
-        patients!appointments_patient_id_fkey(*),
-        doctors!appointments_doctor_id_fkey(*)
-      `,
-      )
-      .order("appointment_date", { ascending: true });
-
-    if (filters.patient_id) {
-      query = query.eq("patient_id", filters.patient_id);
+    if (patientId) {
+      conditions.push(`a.patient_id = $${paramCount}`);
+      values.push(patientId);
+      paramCount++;
     }
 
-    if (filters.doctor_id) {
-      query = query.eq("doctor_id", filters.doctor_id);
+    if (doctorId) {
+      conditions.push(`a.doctor_id = $${paramCount}`);
+      values.push(doctorId);
+      paramCount++;
     }
 
-    if (filters.status) {
-      query = query.eq("status", filters.status);
+    if (date) {
+      conditions.push(`a.appointment_date = $${paramCount}`);
+      values.push(date);
+      paramCount++;
     }
 
-    if (filters.date_from) {
-      query = query.gte("appointment_date", filters.date_from);
+    if (conditions.length > 0) {
+      query += ` WHERE ${conditions.join(' AND ')}`;
     }
 
-    if (filters.date_to) {
-      query = query.lte("appointment_date", filters.date_to);
-    }
+    query += ' ORDER BY a.appointment_date, a.appointment_time';
 
-    if (filters.limit) {
-      query = query.limit(filters.limit);
-    }
-
-    if (filters.offset) {
-      query = query.range(
-        filters.offset,
-        filters.offset + (filters.limit || 10) - 1,
-      );
-    }
-
-    const { data, error } = await query;
-
-    if (error) throw new Error(`Failed to get appointments: ${error.message}`);
-    return data;
-  }
-
-  async updateAppointment(
-    appointmentId: string,
-    updates: Partial<Appointments>,
-  ) {
-    const { data, error } = await this.supabase
-      .from("appointments")
-      .update({ ...updates, updated_at: new Date().toISOString() })
-      .eq("id", appointmentId)
-      .select()
-      .single();
-
-    if (error)
-      throw new Error(`Failed to update appointment: ${error.message}`);
-    return data;
+    const result = await this.pool.query(query, values);
+    return result.rows;
   }
 
   // Session Management
-  async createSession(
-    sessionData: Omit<Sessions, "id" | "created_at" | "updated_at">,
-  ) {
-    const { data, error } = await this.supabase
-      .from("sessions")
-      .insert([sessionData])
-      .select()
-      .single();
+  async createSession(sessionData: {
+    patientId: number;
+    doctorId: number;
+    sessionDate: string;
+    sessionTime: string;
+    type: string;
+    notes?: string;
+    exercises?: any;
+  }) {
+    const query = `
+      INSERT INTO sessions (patient_id, doctor_id, session_date, session_time, type, notes, exercises)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *
+    `;
 
-    if (error) throw new Error(`Failed to create session: ${error.message}`);
-    return data;
+    const values = [
+      sessionData.patientId,
+      sessionData.doctorId,
+      sessionData.sessionDate,
+      sessionData.sessionTime,
+      sessionData.type,
+      sessionData.notes,
+      JSON.stringify(sessionData.exercises || []),
+    ];
+
+    const result = await this.pool.query(query, values);
+    return result.rows[0];
   }
 
-  async getSessions(
-    filters: {
-      patient_id?: string;
-      doctor_id?: string;
-      appointment_id?: string;
-      completed?: boolean;
-      limit?: number;
-      offset?: number;
-    } = {},
-  ) {
-    let query = this.supabase
-      .from("sessions")
-      .select(
-        `
-        *,
-        patients!sessions_patient_id_fkey(*),
-        doctors!sessions_doctor_id_fkey(*)
-      `,
-      )
-      .order("session_date", { ascending: false });
+  // Conversation Logging
+  async logConversation(conversationData: {
+    patientId: number;
+    sessionId: string;
+    messageType: string;
+    content: string;
+    response?: string;
+    sentiment?: string;
+    crisisLevel?: string;
+  }) {
+    const query = `
+      INSERT INTO conversations (patient_id, session_id, message_type, content, response, sentiment, crisis_level)
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      RETURNING *
+    `;
 
-    if (filters.patient_id) {
-      query = query.eq("patient_id", filters.patient_id);
-    }
+    const values = [
+      conversationData.patientId,
+      conversationData.sessionId,
+      conversationData.messageType,
+      conversationData.content,
+      conversationData.response,
+      conversationData.sentiment || 'neutral',
+      conversationData.crisisLevel || 'normal',
+    ];
 
-    if (filters.doctor_id) {
-      query = query.eq("doctor_id", filters.doctor_id);
-    }
-
-    if (filters.appointment_id) {
-      query = query.eq("appointment_id", filters.appointment_id);
-    }
-
-    if (filters.completed !== undefined) {
-      query = query.eq("completed", filters.completed);
-    }
-
-    if (filters.limit) {
-      query = query.limit(filters.limit);
-    }
-
-    if (filters.offset) {
-      query = query.range(
-        filters.offset,
-        filters.offset + (filters.limit || 10) - 1,
-      );
-    }
-
-    const { data, error } = await query;
-
-    if (error) throw new Error(`Failed to get sessions: ${error.message}`);
-    return data;
+    const result = await this.pool.query(query, values);
+    return result.rows[0];
   }
 
-  // Insurance Claims
-  async createInsuranceClaim(
-    claimData: Omit<InsuranceClaims, "id" | "created_at" | "updated_at">,
-  ) {
-    const { data, error } = await this.supabase
-      .from("insurance_claims")
-      .insert([claimData])
-      .select()
-      .single();
-
-    if (error)
-      throw new Error(`Failed to create insurance claim: ${error.message}`);
-    return data;
-  }
-
-  async getInsuranceClaims(
-    filters: {
-      patient_id?: string;
-      status?: string;
-      limit?: number;
-      offset?: number;
-    } = {},
-  ) {
-    let query = this.supabase
-      .from("insurance_claims")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (filters.patient_id) {
-      query = query.eq("patient_id", filters.patient_id);
-    }
-
-    if (filters.status) {
-      query = query.eq("status", filters.status);
-    }
-
-    if (filters.limit) {
-      query = query.limit(filters.limit);
-    }
-
-    if (filters.offset) {
-      query = query.range(
-        filters.offset,
-        filters.offset + (filters.limit || 10) - 1,
-      );
-    }
-
-    const { data, error } = await query;
-
-    if (error)
-      throw new Error(`Failed to get insurance claims: ${error.message}`);
-    return data;
-  }
-
-  // Analytics and Statistics
+  // Analytics
   async getPatientStats() {
-    const { data, error } = await this.supabase
-      .from("patients")
-      .select("id, created_at, status");
+    const query = `
+      SELECT 
+        COUNT(*) as total_patients,
+        COUNT(CASE WHEN created_at >= CURRENT_DATE - INTERVAL '30 days' THEN 1 END) as new_patients_30_days,
+        COUNT(CASE WHEN created_at >= CURRENT_DATE - INTERVAL '7 days' THEN 1 END) as new_patients_7_days
+      FROM patients
+    `;
 
-    if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
-
-    const __total = data.length;
-    const __active = data.filter((p) => p.status === "active").length;
-    const __newLast30Days = data.filter((p) => {
-      const __createdAt = new Date(p.created_at);
-      const __thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      return createdAt >= thirtyDaysAgo;
-    }).length;
-
-    return { total, active, newLast30Days };
+    const result = await this.pool.query(query);
+    return result.rows[0];
   }
 
-  async getAppointmentStats() {
-    const { data, error } = await this.supabase
-      .from("appointments")
-      .select("status, appointment_date, created_at");
+  async getConversationStats() {
+    const query = `
+      SELECT 
+        COUNT(*) as total_conversations,
+        COUNT(CASE WHEN crisis_level = 'crisis' THEN 1 END) as crisis_conversations,
+        COUNT(CASE WHEN created_at >= CURRENT_DATE - INTERVAL '7 days' THEN 1 END) as conversations_7_days
+      FROM conversations
+    `;
 
-    if (error)
-      throw new Error(`Failed to get appointment stats: ${error.message}`);
-
-    const __total = data.length;
-    const __completed = data.filter((a) => a.status === "completed").length;
-    const __cancelled = data.filter((a) => a.status === "cancelled").length;
-    const __upcoming = data.filter((a) => {
-      const __appointmentDate = new Date(a.appointment_date);
-      return appointmentDate >= new Date() && a.status === "scheduled";
-    }).length;
-
-    return { total, completed, cancelled, upcoming };
+    const result = await this.pool.query(query);
+    return result.rows[0];
   }
 
   // Health Check
   async healthCheck() {
     try {
-      const { data, error } = await this.supabase
-        .from("users")
-        .select("id")
-        .limit(1);
-
-      if (error) throw error;
-
-      return {
-        status: "healthy",
-        connected: true,
-        timestamp: new Date().toISOString(),
-      };
+      await this.pool.query('SELECT 1');
+      return { status: 'healthy', connected: this.isConnected };
     } catch (error) {
-      const __err = error as Error;
-      return {
-        status: "unhealthy",
-        connected: false,
-        error: err.message,
-        timestamp: new Date().toISOString(),
-      };
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      return { status: 'unhealthy', error: message };
     }
   }
-}
 
-// Export default instance
-export const __db = new DatabaseManager(true); // Use service client by default
-export default db;
+  // Close connection
+  async close() {
+    await this.pool.end();
+  }
+}

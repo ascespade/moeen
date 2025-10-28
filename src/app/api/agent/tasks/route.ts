@@ -1,13 +1,12 @@
-import fs from "fs";
-import path from "path";
+import { NextRequest, NextResponse } from 'next/server';
+import fs from 'fs';
+import path from 'path';
 
-import { _NextRequest, NextResponse } from "next/server";
+const LOG_DIR = '/home/ubuntu/workspace/projects/moeen/logs';
 
-const __LOG_DIR = "/home/ubuntu/workspace/projects/moeen/logs";
-
-export async function __GET(_request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const __taskFile = path.join(LOG_DIR, "tasks.json");
+    const taskFile = path.join(LOG_DIR, 'tasks.json');
 
     if (!fs.existsSync(taskFile)) {
       return NextResponse.json({
@@ -16,18 +15,18 @@ export async function __GET(_request: NextRequest) {
         completed_tasks: 0,
         failed_tasks: 0,
         progress_percentage: 0,
-        status: "not_started",
+        status: 'not_started',
         last_update: new Date().toISOString(),
         estimated_completion: null,
       });
     }
 
-    const __taskData = JSON.parse(fs.readFileSync(taskFile, "utf8"));
+    const taskData = JSON.parse(fs.readFileSync(taskFile, 'utf8'));
     return NextResponse.json(taskData);
   } catch (error) {
     return NextResponse.json(
-      { error: "Failed to read task status" },
-      { status: 500 },
+      { error: 'Failed to read task status' },
+      { status: 500 }
     );
   }
 }

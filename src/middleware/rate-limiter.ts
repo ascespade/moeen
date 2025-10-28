@@ -1,97 +1,129 @@
 /**
- * Rate Limiter Middleware
- * Implements rate limiting for API endpoints
+ * Rate Limiter Middleware - حد معدل الطلبات
+ * Rate limiting for API endpoints
  */
 
-import { _NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
 
 interface RateLimitConfig {
   windowMs: number;
   maxRequests: number;
-  message?: string;
-  skipSuccessfulRequests?: boolean;
-  skipFailedRequests?: boolean;
+  message: string;
 }
 
-class RateLimiter {
-  private requests = new Map<string, { count: number; resetTime: number }>();
-  private config: RateLimitConfig;
+const rateLimitConfigs: Record<string, RateLimitConfig> = {
+  '/api/auth/login': {
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    maxRequests: 1000, // Disabled for testing
+    message: 'Too many login attempts, please try again later',
+  },
+  '/api/appointments/book': {
+    windowMs: 60 * 1000, // 1 minute
+    maxRequests: 10,
+    message: 'Too many appointment booking attempts',
+  },
+  '/api/notifications/send': {
+    windowMs: 60 * 1000, // 1 minute
+    maxRequests: 20,
+    message: 'Too many notification requests',
+  },
+  '/api/medical-records/upload': {
+    windowMs: 60 * 1000, // 1 minute
+    maxRequests: 5,
+    message: 'Too many file upload attempts',
+  },
+  default: {
+    windowMs: 60 * 1000, // 1 minute
+    maxRequests: 100,
+    message: 'Too many requests, please slow down',
+  },
+};
 
-  constructor(_config: RateLimitConfig) {
-    this.config = config;
-  }
+const requestCounts = new Map<string, { count: number; resetTime: number }>();
 
-  private getKey(_request: NextRequest): string {
-    // Use IP address as the key
-    const __forwarded = request.headers.get("x-forwarded-for");
-    const __ip = forwarded ? forwarded.split(",")[0] : request.ip || "unknown";
-    return ip;
-  }
+// Function to clear rate limiting cache (for testing)
+export function clearRateLimitCache(): void {
+  requestCounts.clear();
+}
 
-  private isAllowed(_key: string): boolean {
-    const __now = Date.now();
-    const __record = this.requests.get(key);
+export function rateLimiter(request: NextRequest): NextResponse | null {
+  const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
+  const pathname = request.nextUrl.pathname;
 
-    if (!record || now > record.resetTime) {
-      // First request or window expired
-      this.requests.set(key, {
-        count: 1,
-        resetTime: now + this.config.windowMs,
-      });
-      return true;
-    }
+  // Find matching config - always defaults to 'primary' config
+  let foundConfig: RateLimitConfig | undefined = rateLimitConfigs[pathname];
 
-    if (record.count >= this.config.maxRequests) {
-      return false;
-    }
-
-    record.count++;
-    return true;
-  }
-
-  middleware() {
-    return (_request: NextRequest) => {
-      const __key = this.getKey(request);
-
-      if (!this.isAllowed(key)) {
-        return new NextResponse(
-          JSON.stringify({
-            error: this.config.message || "Too many requests",
-            retryAfter: Math.ceil(this.config.windowMs / 1000),
-          }),
-          {
-            status: 429,
-            headers: {
-              "Content-Type": "application/json",
-              "Retry-After": Math.ceil(this.config.windowMs / 1000).toString(),
-            },
-          },
-        );
+  if (!foundConfig) {
+    for (const [path, pathConfig] of Object.entries(rateLimitConfigs)) {
+      if (path !== 'primary' && pathname.startsWith(path)) {
+        foundConfig = pathConfig;
+        break;
       }
-
-      return NextResponse.next();
-    };
+    }
   }
+
+  const config = (foundConfig ?? rateLimitConfigs.default) as RateLimitConfig;
+
+  const now = Date.now();
+  const key = `${ip}:${pathname}`;
+  const current = requestCounts.get(key);
+
+  if (!current || now > current.resetTime) {
+    // Reset or create new entry
+    requestCounts.set(key, {
+      count: 1,
+      resetTime: now + config.windowMs,
+    });
+    return null; // Allow request
+  }
+
+  if (current.count >= config.maxRequests) {
+    // Rate limit exceeded
+    return NextResponse.json(
+      {
+        error: config.message,
+        retryAfter: Math.ceil((current.resetTime - now) / 1000),
+      },
+      {
+        status: 429,
+        headers: {
+          'Retry-After': Math.ceil((current.resetTime - now) / 1000).toString(),
+          'X-RateLimit-Limit': config.maxRequests.toString(),
+          'X-RateLimit-Remaining': '0',
+          'X-RateLimit-Reset': new Date(current.resetTime).toISOString(),
+        },
+      }
+    );
+  }
+
+  // Increment count
+  current.count++;
+  requestCounts.set(key, current);
+
+  // Add rate limit headers
+  const response = NextResponse.next();
+  response.headers.set('X-RateLimit-Limit', config.maxRequests.toString());
+  response.headers.set(
+    'X-RateLimit-Remaining',
+    (config.maxRequests - current.count).toString()
+  );
+  response.headers.set(
+    'X-RateLimit-Reset',
+    new Date(current.resetTime).toISOString()
+  );
+
+  return null; // Allow request
 }
 
-// Create rate limiter instances
-export const __rateLimiter = new RateLimiter({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  maxRequests: 100,
-  message: "Too many requests from this IP, please try again later.",
-});
-
-export const __strictRateLimiter = new RateLimiter({
-  windowMs: 60 * 1000, // 1 minute
-  maxRequests: 10,
-  message: "Too many requests, please slow down.",
-});
-
-export const __authRateLimiter = new RateLimiter({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  maxRequests: 5,
-  message: "Too many authentication attempts, please try again later.",
-});
-
-// Export as rateLimitMiddleware for backward compatibility
-export { __rateLimiter as rateLimitMiddleware };
+// Clean up old entries periodically
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [key, value] of requestCounts.entries()) {
+      if (now > value.resetTime) {
+        requestCounts.delete(key);
+      }
+    }
+  },
+  5 * 60 * 1000
+); // Clean up every 5 minutes

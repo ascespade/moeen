@@ -1,34 +1,63 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
+    "strictNullChecks": true,
     "noEmit": true,
-    "incremental": true,
-    "module": "esnext",
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "exactOptionalPropertyTypes": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["node", "playwright"]
   },
   "include": [
     "next-env.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/types/shims.d.ts",
     ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "scripts/**/*.ts",
+    "scripts/**/*.mjs"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".next",
+    "temp_complex",
+    "src/__tests__",
+    "src/scripts",
+    "src/lib/security-enhanced.ts",
+    "src/lib/websocket-server.ts",
+    "src/lib/database.ts",
+    "src/lib/real-time-notifications.ts",
+    "src/lib/supabase-real.ts",
+    "src/lib/supabase.ts",
+    "src/lib/supabase/client.ts",
+    "src/lib/supabaseClient.ts",
+    "src/lib/translations-manager.ts",
+    "src/middleware.prod.ts"
   ]
 }

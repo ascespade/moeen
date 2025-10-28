@@ -1,19 +1,19 @@
-import { _useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from 'react';
 // Throttle hooks
 
-export const __useThrottle = <T>(_value: T, delay: number): T => {
+export const useThrottle = <T>(value: T, delay: number): T => {
   const [throttledValue, setThrottledValue] = useState<T>(value);
-  const __lastExecuted = useRef<number>(Date.now());
+  const lastExecuted = useRef<number>(Date.now());
 
   useEffect(() => {
-    const __now = Date.now();
-    const __timeSinceLastExecution = now - lastExecuted.current;
+    const now = Date.now();
+    const timeSinceLastExecution = now - lastExecuted.current;
 
     if (timeSinceLastExecution >= delay) {
       setThrottledValue(value);
       lastExecuted.current = now;
     } else {
-      const __timer = setTimeout(() => {
+      const timer = setTimeout(() => {
         setThrottledValue(value);
         lastExecuted.current = Date.now();
       }, delay - timeSinceLastExecution);
@@ -27,17 +27,17 @@ export const __useThrottle = <T>(_value: T, delay: number): T => {
   return throttledValue;
 };
 
-export const __useThrottledCallback = <T extends (...args: unknown[]) => any>(
+export const useThrottledCallback = <T extends (...args: any[]) => any>(
   callback: T,
-  delay: number,
+  delay: number
 ): T => {
-  const __lastExecuted = useRef<number>(0);
-  const __timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastExecuted = useRef<number>(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const __throttledCallback = useCallback(
+  const throttledCallback = useCallback(
     (...args: Parameters<T>) => {
-      const __now = Date.now();
-      const __timeSinceLastExecution = now - lastExecuted.current;
+      const now = Date.now();
+      const timeSinceLastExecution = now - lastExecuted.current;
 
       if (timeSinceLastExecution >= delay) {
         callback(...args);
@@ -53,7 +53,7 @@ export const __useThrottledCallback = <T extends (...args: unknown[]) => any>(
         }, delay - timeSinceLastExecution);
       }
     },
-    [callback, delay],
+    [callback, delay]
   );
 
   useEffect(() => {
@@ -67,21 +67,21 @@ export const __useThrottledCallback = <T extends (...args: unknown[]) => any>(
   return throttledCallback as T;
 };
 
-export const __useThrottledValue = <T>(
+export const useThrottledValue = <T>(
   initialValue: T,
-  delay: number,
-): [T, (_value: T) => void, T] => {
+  delay: number
+): [T, (value: T) => void, T] => {
   const [value, setValue] = useState<T>(initialValue);
   const [throttledValue, setThrottledValue] = useState<T>(initialValue);
-  const __lastExecuted = useRef<number>(0);
-  const __timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastExecuted = useRef<number>(0);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const __updateValue = useCallback(
-    (_newValue: T) => {
+  const updateValue = useCallback(
+    (newValue: T) => {
       setValue(newValue);
 
-      const __now = Date.now();
-      const __timeSinceLastExecution = now - lastExecuted.current;
+      const now = Date.now();
+      const timeSinceLastExecution = now - lastExecuted.current;
 
       if (timeSinceLastExecution >= delay) {
         setThrottledValue(newValue);
@@ -97,7 +97,7 @@ export const __useThrottledValue = <T>(
         }, delay - timeSinceLastExecution);
       }
     },
-    [delay],
+    [delay]
   );
 
   useEffect(() => {

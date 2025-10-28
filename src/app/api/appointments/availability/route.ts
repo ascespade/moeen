@@ -3,89 +3,108 @@
  * Get doctor availability for specific date range
  */
 
-import { _NextRequest, NextResponse } from "next/server";
-import { _z } from "zod";
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+import { createClient } from '@/lib/supabase/server';
+import { ValidationHelper } from '@/core/validation';
+import { ErrorHandler } from '@/core/errors';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 
-import { _ErrorHandler } from "@/core/errors";
-import { _ValidationHelper } from "@/core/validation";
-import { _createClient } from "@/lib/supabase/server";
-
-const __availabilitySchema = z.object({
-  doctorId: z.string().uuid("Invalid doctor ID"),
-  date: z.string().date("Invalid date format"),
+const availabilitySchema = z.object({
+  doctorId: z.string().uuid('Invalid doctor ID'),
+  date: z.string().date('Invalid date format'),
   duration: z.number().min(15).max(240).default(30),
 });
 
-export async function __GET(_request: NextRequest) {
+export async function GET(request: NextRequest) {
+  const startTime = Date.now();
+  const { ipAddress, userAgent } = getClientInfo(request);
+
   try {
-    const __supabase = createClient();
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
 
-    const __validation = ValidationHelper.validate(availabilitySchema, {
-      doctorId: searchParams.get("doctorId"),
-      date: searchParams.get("date"),
-      duration: parseInt(searchParams.get("duration") || "30"),
+    const validation = ValidationHelper.validate(availabilitySchema, {
+      doctorId: searchParams.get('doctorId'),
+      date: searchParams.get('date'),
+      duration: parseInt(searchParams.get('duration') || '30'),
     });
 
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.message },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
-    const { doctorId, date, duration } = validation.data;
+    const { doctorId, date, duration } = validation.data!;
 
     // Get doctor's schedule
     const { data: doctor, error: doctorError } = await supabase
-      .from("doctors")
-      .select("schedule, speciality")
-      .eq("id", doctorId)
+      .from('doctors')
+      .select('schedule, speciality')
+      .eq('id', doctorId)
       .single();
 
     if (doctorError || !doctor) {
-      return NextResponse.json({ error: "Doctor not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
     }
 
-    const __requestedDate = new Date(date);
-    const __dayOfWeek = requestedDate.getDay();
-    const __schedule = doctor.schedule?.[dayOfWeek];
+    const requestedDate = new Date(date);
+    const dayOfWeek = requestedDate.getDay();
+    const schedule = doctor.schedule?.[dayOfWeek];
 
     if (!schedule || !schedule.isWorking) {
       return NextResponse.json({
         available: false,
         slots: [],
-        message: "Doctor not working on this day",
+        message: 'Doctor not working on this day',
       });
     }
 
     // Generate time slots
-    const __slots = generateTimeSlots(
+    const slots = generateTimeSlots(
       schedule.startTime,
       schedule.endTime,
-      duration || 30,
+      duration!
     );
 
     // Check existing appointments
     const { data: existingAppointments } = await supabase
-      .from("appointments")
-      .select("scheduledAt, duration")
-      .eq("doctorId", doctorId)
-      .eq("scheduledAt", date)
-      .in("status", ["pending", "confirmed", "in_progress"]);
+      .from('appointments')
+      .select('scheduledAt, duration')
+      .eq('doctorId', doctorId)
+      .eq('scheduledAt', date)
+      .in('status', ['pending', 'confirmed', 'in_progress']);
 
     // Filter out occupied slots
-    const __slotDuration = duration || 30;
-    const __availableSlots = slots.filter((slot) => {
-      const __slotStart = new Date(`${date}T${slot.time}`);
-      const __slotEnd = new Date(slotStart.getTime() + slotDuration * 60000);
+    const availableSlots = slots.filter(slot => {
+      const slotStart = new Date(`${date}T${slot.time}`);
+      const slotEnd = new Date(slotStart.getTime() + duration! * 60000);
 
-      return !existingAppointments?.some((_apt: unknown) => {
-        const __aptStart = new Date(apt.scheduledAt);
-        const __aptEnd = new Date(aptStart.getTime() + apt.duration * 60000);
+      return !existingAppointments?.some(apt => {
+        const aptStart = new Date(apt.scheduledAt);
+        const aptEnd = new Date(aptStart.getTime() + apt.duration * 60000);
 
         return slotStart < aptEnd && slotEnd > aptStart;
       });
+    });
+
+    // Log availability check
+    await supabase.from('audit_logs').insert({
+      action: 'appointment_availability_checked',
+      resourceType: 'appointment',
+      ipAddress,
+      userAgent,
+      status: 'success',
+      severity: 'secondary',
+      metadata: {
+        doctorId,
+        date,
+        duration,
+        availableSlotsCount: availableSlots.length,
+      },
+      durationMs: Date.now() - startTime,
     });
 
     return NextResponse.json({
@@ -99,18 +118,18 @@ export async function __GET(_request: NextRequest) {
       duration,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return ErrorHandler.getInstance().handle(error);
   }
 }
 
-function __generateTimeSlots(
+function generateTimeSlots(
   startTime: string,
   endTime: string,
-  duration: number,
-): { time: string; available: boolean }[] {
-  const slots: { time: string; available: boolean }[] = [];
-  const __start = timeToMinutes(startTime);
-  const __end = timeToMinutes(endTime);
+  duration: number
+): Array<{ time: string; available: boolean }> {
+  const slots: Array<{ time: string; available: boolean }> = [];
+  const start = timeToMinutes(startTime);
+  const end = timeToMinutes(endTime);
 
   for (let time = start; time < end; time += duration) {
     slots.push({
@@ -122,13 +141,13 @@ function __generateTimeSlots(
   return slots;
 }
 
-function __timeToMinutes(_time: string): number {
-  const [hours = 0, minutes = 0] = time.split(":").map(Number);
-  return hours * 60 + minutes;
+function timeToMinutes(time: string): number {
+  const [hours, minutes] = time.split(':').map(Number);
+  return (hours || 0) * 60 + (minutes || 0);
 }
 
-function __minutesToTime(_minutes: number): string {
-  const __hours = Math.floor(minutes / 60);
-  const __mins = minutes % 60;
-  return `${hours.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}`;
+function minutesToTime(minutes: number): string {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
 }

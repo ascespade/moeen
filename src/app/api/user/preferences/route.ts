@@ -1,10 +1,9 @@
-import { _NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSupabase } from '@/lib/supabaseClient';
 
-import { _getServerSupabase } from "@/lib/supabaseClient";
-
-export async function __GET() {
+export async function GET() {
   try {
-    const __supabase = await getServerSupabase();
+    const supabase = await getServerSupabase();
 
     // Get current user
     const {
@@ -13,44 +12,44 @@ export async function __GET() {
     } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // Fetch user preferences
     const { data: preferences, error } = await supabase
-      .from("user_preferences")
-      .select("theme, language, timezone, notifications_enabled")
-      .eq("user_id", user.id)
+      .from('user_preferences')
+      .select('theme, language, timezone, notifications_enabled')
+      .eq('user_id', user.id)
       .single();
 
-    if (error && error.code !== "PGRST116") {
+    if (error && error.code !== 'PGRST116') {
       // PGRST116 = no rows returned
       return NextResponse.json(
-        { error: "Failed to fetch preferences" },
-        { status: 500 },
+        { error: 'Failed to fetch preferences' },
+        { status: 500 }
       );
     }
 
     // Return default preferences if none exist
-    const __defaultPreferences = {
-      theme: "light",
-      language: "ar",
-      timezone: "Asia/Riyadh",
+    const defaultPreferences = {
+      theme: 'light',
+      language: 'ar',
+      timezone: 'Asia/Riyadh',
       notifications_enabled: true,
     };
 
     return NextResponse.json(preferences || defaultPreferences);
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
 
-export async function __POST(_request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const __supabase = await getServerSupabase();
+    const supabase = await getServerSupabase();
 
     // Get current user
     const {
@@ -59,72 +58,72 @@ export async function __POST(_request: NextRequest) {
     } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const { key, value } = await request.json();
 
     if (!key || value === undefined) {
       return NextResponse.json(
-        { error: "Key and value are required" },
-        { status: 400 },
+        { error: 'Key and value are required' },
+        { status: 400 }
       );
     }
 
     // Validate key
-    const __validKeys = [
-      "theme",
-      "language",
-      "timezone",
-      "notifications_enabled",
+    const validKeys = [
+      'theme',
+      'language',
+      'timezone',
+      'notifications_enabled',
     ];
     if (!validKeys.includes(key)) {
       return NextResponse.json(
-        { error: "Invalid preference key" },
-        { status: 400 },
+        { error: 'Invalid preference key' },
+        { status: 400 }
       );
     }
 
     // Validate theme value
-    if (key === "theme" && !["light", "dark", "system"].includes(value)) {
+    if (key === 'theme' && !['light', 'dark', 'system'].includes(value)) {
       return NextResponse.json(
-        { error: "Invalid theme value" },
-        { status: 400 },
+        { error: 'Invalid theme value' },
+        { status: 400 }
       );
     }
 
     // Validate language value
-    if (key === "language" && !["ar", "en"].includes(value)) {
+    if (key === 'language' && !['ar', 'en'].includes(value)) {
       return NextResponse.json(
-        { error: "Invalid language value" },
-        { status: 400 },
+        { error: 'Invalid language value' },
+        { status: 400 }
       );
     }
 
     // Upsert user preference
-    const { error } = await supabase.from("user_preferences").upsert(
+    const { error } = await supabase.from('user_preferences').upsert(
       {
         user_id: user.id,
         [key]: value,
         updated_at: new Date().toISOString(),
       },
       {
-        onConflict: "user_id",
-      },
+        onConflict: 'user_id',
+      }
     );
 
     if (error) {
       return NextResponse.json(
-        { error: "Failed to save preference" },
-        { status: 500 },
+        { error: 'Failed to save preference' },
+        { status: 500 }
       );
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 },
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
 }
