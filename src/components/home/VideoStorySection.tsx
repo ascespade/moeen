@@ -1,12 +1,14 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
+import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import { ArrowRight, Award, Heart, Play, Users } from 'lucide-react';
 import Image from 'next/image';
 import { memo, useState } from 'react';
 
 const VideoStorySection = memo(function VideoStorySection() {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const localizedNumber = useLocalizedNumber();
 
   return (
     <section className='py-20 relative overflow-hidden bg-gradient-to-br from-white via-[var(--brand-surface)] to-white'>
@@ -49,7 +51,7 @@ const VideoStorySection = memo(function VideoStorySection() {
                 <div key={index} className='text-center'>
                   <stat.icon className='w-6 h-6 text-[var(--brand-primary)] mx-auto mb-2' />
                   <div className='text-2xl font-bold text-[var(--text-primary)]'>
-                    {stat.value}
+                    {localizedNumber(stat.value)}
                   </div>
                   <div className='text-xs text-[var(--text-secondary)]'>
                     {stat.label}
@@ -84,7 +86,7 @@ const VideoStorySection = memo(function VideoStorySection() {
             <div className='space-y-4 pt-4'>
               {[
                 {
-                  title: 'خبرة 15+ سنة',
+                  title: `خبرة ${localizedNumber('15+')} سنة`,
                   description: 'سنوات من الخبرة في الرعاية المتخصصة',
                 },
                 {

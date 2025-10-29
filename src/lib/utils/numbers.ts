@@ -50,3 +50,4 @@ export function formatDate(date: Date | string, useArabic: boolean = true): stri
   return useArabic ? toArabicNumbers(dateStr) : dateStr;
 }
 
+

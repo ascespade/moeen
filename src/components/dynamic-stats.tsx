@@ -1,5 +1,6 @@
 'use client';
 import { memo, useEffect, useState } from 'react';
+import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 
 interface DynamicStats {
   id: number;
@@ -44,6 +45,7 @@ const DynamicStats = memo(function DynamicStats() {
   const [stats, setStats] = useState<DynamicStats[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasFetched, setHasFetched] = useState(false);
+  const localizedNumber = useLocalizedNumber();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -121,7 +123,7 @@ const DynamicStats = memo(function DynamicStats() {
         <div key={stat.id} className='text-center'>
           <div className='text-4xl mb-2'>{stat.icon}</div>
           <div className={`text-3xl font-bold ${stat.color} mb-2`}>
-            {stat.value}
+            {localizedNumber(stat.value)}
           </div>
           <div className='text-muted-foreground'>{stat.label}</div>
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
+import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import { Calendar, Play } from 'lucide-react';
 import Image from 'next/image';
 import { memo, useEffect, useState } from 'react';
@@ -19,6 +20,7 @@ const ModernHero = memo(function ModernHero({
   onLearnMoreClick: () => void;
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const localizedNumber = useLocalizedNumber();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -64,14 +66,14 @@ const ModernHero = memo(function ModernHero({
               </span>
             </div>
             
-            <h1 className='text-5xl md:text-6xl lg:text-7xl font-bold leading-tight'>
+            <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight'>
               مركز الهمم
               <span className='block text-[var(--brand-primary)] mt-2'>
                 لرعاية ذوي الاحتياجات الخاصة
               </span>
             </h1>
             
-            <p className='text-xl md:text-2xl leading-relaxed text-white/90 max-w-lg'>
+            <p className='text-lg sm:text-xl md:text-2xl leading-relaxed text-white/90 max-w-lg'>
               في جدة، نقدم رعاية متخصصة وشاملة لذوي الاحتياجات الخاصة. نوفر خدمات
               تأهيلية عالية الجودة تشمل العلاج الطبيعي والوظيفي والنطق والسمع
               وبرامج التدخل المبكر.
@@ -98,18 +100,24 @@ const ModernHero = memo(function ModernHero({
             </div>
 
             {/* Trust Indicators */}
-            <div className='flex items-center gap-8 pt-4'>
-              <div>
-                <div className='text-3xl font-bold text-[var(--brand-primary)]'>98%</div>
-                <div className='text-sm text-white/80'>معدل الرضا</div>
+            <div className='flex flex-wrap items-center gap-6 md:gap-8 pt-4'>
+              <div className='flex-1 min-w-[100px]'>
+                <div className='text-2xl md:text-3xl font-bold text-[var(--brand-primary)]'>
+                  {localizedNumber('98%')}
+                </div>
+                <div className='text-xs md:text-sm text-white/80'>معدل الرضا</div>
               </div>
-              <div>
-                <div className='text-3xl font-bold text-[var(--brand-primary)]'>1,247+</div>
-                <div className='text-sm text-white/80'>مريض نشط</div>
+              <div className='flex-1 min-w-[100px]'>
+                <div className='text-2xl md:text-3xl font-bold text-[var(--brand-primary)]'>
+                  {localizedNumber('1,247+')}
+                </div>
+                <div className='text-xs md:text-sm text-white/80'>مريض نشط</div>
               </div>
-              <div>
-                <div className='text-3xl font-bold text-[var(--brand-primary)]'>24/7</div>
-                <div className='text-sm text-white/80'>دعم مستمر</div>
+              <div className='flex-1 min-w-[100px]'>
+                <div className='text-2xl md:text-3xl font-bold text-[var(--brand-primary)]'>
+                  {localizedNumber('24/7')}
+                </div>
+                <div className='text-xs md:text-sm text-white/80'>دعم مستمر</div>
               </div>
             </div>
           </div>

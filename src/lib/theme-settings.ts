@@ -86,18 +86,18 @@ export const defaultThemeSettings: AdvancedThemeSettings = {
         description: 'الوضع الفاتح يستخدم البرتقالي كاللون الأساسي مع ألوان ثانوية متناسقة.',
       },
       dark: {
-        primaryColor: '#ff9800', /* برتقالي أفتح للوضع الداكن */
-        secondaryColor: '#181818',
-        accentColors: ['#ffb400', '#ff6b6b', '#ff8a65'], /* ألوان ثانوية متناسقة */
-        backgroundColor: '#121212',
-        textColor: '#e8eaed',
+        primaryColor: '#ff6633', /* Orange-red for interactive elements - matches image (#FF6633 or #F05030) */
+        secondaryColor: '#282828', /* Dark panel for cards - matches image (#282828 or #2C2C2C) */
+        accentColors: ['#ff6633', '#ff9800', '#ff854d'], /* Orange-red accents matching image */
+        backgroundColor: '#1a1a1a', /* Very dark background - matches image (#1A1A1A or #1C1C1C) */
+        textColor: '#ffffff', /* Pure white text - matches image */
         contrastMinRatio: 4.5,
         ensureVisibility: true,
         handleHiddenComponents: true,
         avoidColors: ['#000080', '#00008b', '#222222'],
         dynamicShadows: true,
         gradientSupport: true,
-        description: 'الوضع الداكن يستخدم البرتقالي كاللون الأساسي مع ألوان ثانوية متناسقة وعصرية.',
+        description: 'الوضع الداكن يستخدم خلفية داكنة جداً (#1A1A1A) مع نص أبيض نقي (#FFFFFF) وألوان تفاعلية برتقالية محمرة (#FF6633) لتطابق التصميم المرجعي.',
       },
     },
     centralizedColorSystem: true,

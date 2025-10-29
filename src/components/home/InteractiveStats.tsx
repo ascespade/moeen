@@ -1,6 +1,7 @@
 'use client';
 
 import { memo, useEffect, useRef, useState } from 'react';
+import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import { Users, Calendar, Star, Clock } from 'lucide-react';
 
 interface Stat {
@@ -51,6 +52,7 @@ const InteractiveStats = memo(function InteractiveStats() {
   const [counters, setCounters] = useState(stats.map(() => 0));
   const [hasStarted, setHasStarted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const localizedNumber = useLocalizedNumber();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -123,8 +125,7 @@ const InteractiveStats = memo(function InteractiveStats() {
                   <Icon className='w-10 h-10' />
                 </div>
                 <div className={`text-5xl md:text-6xl font-bold mb-3 ${stat.color === 'text-yellow-500' ? 'text-yellow-300' : 'text-white'}`}>
-                  {counters[index]}
-                  {stat.suffix}
+                  {localizedNumber(`${counters[index]}${stat.suffix}`)}
                 </div>
                 <div className='text-lg text-white/90 font-medium'>
                   {stat.label}

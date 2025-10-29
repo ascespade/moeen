@@ -4,13 +4,6 @@ import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/Card';
-import {
     Dialog,
     DialogContent,
     DialogDescription,
@@ -25,40 +18,25 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
-import { Input } from '@/components/ui/Input';
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/Select';
-import {
-    Table,
     TableBody,
     TableCell,
-    TableHead,
-    TableHeader,
     TableRow,
 } from '@/components/ui/Table';
 import { usePermissions } from '@/hooks/usePermissions';
+import { AdminHeader, AdminStatsCard, AdminFilterBar, AdminTable } from '@/components/admin/ui';
 import {
     Activity,
     Award,
-    ChevronLeft,
-    ChevronRight,
     Copy,
     Crown,
     Download,
     Edit,
     Eye,
-    Filter,
-    Key,
     MoreHorizontal,
     PhoneCall,
     Plus,
     RefreshCw,
-    Search,
     Shield,
     Trash2,
     TrendingUp,
@@ -69,6 +47,7 @@ import {
     UserX
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 interface User {
   id: string;
@@ -443,142 +422,103 @@ export default function UsersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container-app py-6">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold">إدارة المستخدمين</h1>
-            <p className="text-muted-foreground">
-              إدارة وتنظيم مستخدمي النظام وصلاحياتهم
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Button variant="outline">
-              <Download className="h-4 w-4 mr-2" />
-              تصدير
-            </Button>
-            <Button onClick={() => setIsCreateDialogOpen(true)}>
-              <Plus className="h-4 w-4 mr-2" />
-              مستخدم جديد
-            </Button>
-          </div>
+    <div className="min-h-screen bg-[var(--background)]">
+      <AdminHeader
+        title="إدارة المستخدمين"
+        description="إدارة وتنظيم مستخدمي النظام وصلاحياتهم"
+      >
+        <Button variant="outline" className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'>
+          <Download className="h-4 w-4 ml-2" />
+          تصدير
+        </Button>
+        <Button 
+          onClick={() => setIsCreateDialogOpen(true)}
+          className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'
+        >
+          <Plus className="h-4 w-4 ml-2" />
+          مستخدم جديد
+        </Button>
+      </AdminHeader>
+      
+      <main className="container-app py-8 space-y-8">
+
+        {/* Stats Cards - Modern Design */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <AdminStatsCard
+            title="إجمالي المستخدمين"
+            value={users.length}
+            subtitle="مستخدمين مسجلين"
+            icon={Users}
+            iconColor="var(--brand-primary)"
+            trend={{
+              value: 8,
+              isPositive: true
+            }}
+          />
+          
+          <AdminStatsCard
+            title="نشط"
+            value={users.filter(u => u.status === 'active').length}
+            subtitle={`${Math.round((users.filter(u => u.status === 'active').length / users.length) * 100)}% من الإجمالي`}
+            icon={UserCheck}
+            iconColor="#10b981"
+          />
+          
+          <AdminStatsCard
+            title="موثق"
+            value={users.filter(u => u.isVerified).length}
+            subtitle="مستخدمين موثقين"
+            icon={Shield}
+            iconColor="#3b82f6"
+          />
+          
+          <AdminStatsCard
+            title="آخر نشاط"
+            value={users.filter(u => u.lastLoginAt && new Date(u.lastLoginAt) > new Date(Date.now() - 24 * 60 * 60 * 1000)).length}
+            subtitle="نشط خلال 24 ساعة"
+            icon={Activity}
+            iconColor="#f59e0b"
+          />
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">إجمالي المستخدمين</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{users.length}</div>
-              <p className="text-xs text-muted-foreground">
-                مستخدمين مسجلين
-              </p>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">نشط</CardTitle>
-              <UserCheck className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {users.filter(u => u.status === 'active').length}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                {Math.round((users.filter(u => u.status === 'active').length / users.length) * 100)}% من الإجمالي
-              </p>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">موثق</CardTitle>
-              <Shield className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {users.filter(u => u.isVerified).length}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                مستخدمين موثقين
-              </p>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">آخر نشاط</CardTitle>
-              <Activity className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {users.filter(u => u.lastLoginAt && new Date(u.lastLoginAt) > new Date(Date.now() - 24 * 60 * 60 * 1000)).length}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                نشط خلال 24 ساعة
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Filters */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="البحث في المستخدمين..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Select value={roleFilter} onValueChange={setRoleFilter}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="الدور" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">جميع الأدوار</SelectItem>
-                    <SelectItem value="admin">مدير النظام</SelectItem>
-                    <SelectItem value="manager">مدير</SelectItem>
-                    <SelectItem value="supervisor">مشرف</SelectItem>
-                    <SelectItem value="doctor">طبيب</SelectItem>
-                    <SelectItem value="nurse">ممرض</SelectItem>
-                    <SelectItem value="staff">موظف</SelectItem>
-                    <SelectItem value="agent">وكيل</SelectItem>
-                    <SelectItem value="patient">مريض</SelectItem>
-                    <SelectItem value="demo">تجريبي</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="الحالة" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">جميع الحالات</SelectItem>
-                    <SelectItem value="active">نشط</SelectItem>
-                    <SelectItem value="inactive">غير نشط</SelectItem>
-                    <SelectItem value="suspended">معلق</SelectItem>
-                    <SelectItem value="pending">في الانتظار</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Button variant="outline">
-                  <Filter className="h-4 w-4 mr-2" />
-                  فلتر
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Filters - Enhanced Design */}
+        <AdminFilterBar
+          searchValue={searchTerm}
+          onSearchChange={setSearchTerm}
+          searchPlaceholder="البحث في المستخدمين..."
+          filters={[
+            {
+              label: "الدور",
+              value: roleFilter,
+              options: [
+                { label: "جميع الأدوار", value: "all" },
+                { label: "مدير النظام", value: "admin" },
+                { label: "مدير", value: "manager" },
+                { label: "مشرف", value: "supervisor" },
+                { label: "طبيب", value: "doctor" },
+                { label: "ممرض", value: "nurse" },
+                { label: "موظف", value: "staff" },
+                { label: "وكيل", value: "agent" },
+                { label: "مريض", value: "patient" },
+                { label: "تجريبي", value: "demo" }
+              ],
+              onChange: setRoleFilter
+            },
+            {
+              label: "الحالة",
+              value: statusFilter,
+              options: [
+                { label: "جميع الحالات", value: "all" },
+                { label: "نشط", value: "active" },
+                { label: "غير نشط", value: "inactive" },
+                { label: "محظور", value: "suspended" },
+                { label: "قيد الانتظار", value: "pending" }
+              ],
+              onChange: setStatusFilter
+            }
+          ]}
+          onRefresh={loadUsersData}
+        />
 
         {/* Users Table */}
         <Card>

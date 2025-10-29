@@ -3,13 +3,15 @@
  * Re-export commonly used utilities for the design system
  */
 
+import { formatNumberByLanguage } from '@/hooks/useLocalizedNumber';
+
 // Basic utility functions
 export const formatDate = (date: Date | string) =>
   new Date(date).toLocaleDateString('ar-SA');
 export const formatTime = (date: Date | string) =>
   new Date(date).toLocaleTimeString('ar-SA');
-export const formatCurrency = (amount: number) =>
-  `${amount.toLocaleString('ar-SA')} ريال`;
+export const formatCurrency = (amount: number, language: 'ar' | 'en' = 'ar') =>
+  `${formatNumberByLanguage(amount.toLocaleString('ar-SA'), language)} ريال`;
 export const formatPhone = (phone: string) =>
   phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
 export const formatNationalId = (id: string) =>

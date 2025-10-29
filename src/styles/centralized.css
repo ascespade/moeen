@@ -85,29 +85,58 @@
     transparent 40%
   );
 
-  /* Spacing Scale */
+  /* Spacing Scale - Complete unified scale */
+  --space-0: 0; /* 0px */
   --space-1: 0.25rem; /* 4px */
   --space-2: 0.5rem; /* 8px */
   --space-3: 0.75rem; /* 12px */
   --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
   --space-6: 1.5rem; /* 24px */
   --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
   --space-12: 3rem; /* 48px */
   --space-16: 4rem; /* 64px */
+  --space-20: 5rem; /* 80px */
+  --space-24: 6rem; /* 96px */
+  --space-32: 8rem; /* 128px */
+  --space-40: 10rem; /* 160px */
+  --space-48: 12rem; /* 192px */
+  --space-56: 14rem; /* 224px */
+  --space-64: 16rem; /* 256px */
+  --space-80: 20rem; /* 320px */
+  --space-96: 24rem; /* 384px */
 
-  /* Border Radius */
-  --radius-sm: 0.375rem; /* 6px */
-  --radius-md: 0.5rem; /* 8px */
-  --radius-lg: 0.75rem; /* 12px */
-  --radius-xl: 1rem; /* 16px */
+  /* Border Radius - Complete unified scale */
+  --radius-none: 0;
+  --radius-xs: 0.125rem; /* 2px */
+  --radius-sm: 0.25rem; /* 4px */
+  --radius-md: 0.375rem; /* 6px */
+  --radius-lg: 0.5rem; /* 8px */
+  --radius-xl: 0.75rem; /* 12px */
+  --radius-2xl: 1rem; /* 16px */
+  --radius-3xl: 1.5rem; /* 24px */
+  --radius-full: 9999px; /* Full rounded */
 
-  /* Shadows */
+  /* Shadows - Complete unified scale */
+  --shadow-none: none;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 5%);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
-  --shadow-lg:
-    0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
-  --shadow-xl:
-    0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 10%), 0 8px 10px -6px rgb(0 0 0 / 10%);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 25%);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 5%);
+
+  /* Breakpoints - Complete unified scale */
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet: 1024px;
+  --breakpoint-desktop: 1440px;
+  --breakpoint-large-desktop: 1920px;
+
+  /* Animation Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
 
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
@@ -124,11 +153,28 @@
     'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
     monospace;
 
-  /* Font Weights */
+  /* Font Sizes - Complete unified scale */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-5xl: 3rem;      /* 48px */
+  --font-size-6xl: 3.75rem;   /* 60px */
+
+  /* Font Weights - Complete unified scale */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
 
   /* Z-Index Scale */
   --z-dropdown: 1000;
@@ -142,23 +188,29 @@
 }
 
 /* Dark Theme Variables - Use .dark class instead of media query */
+/* Updated based on image reference: deep dark background with high contrast */
 .dark {
-  --background: #0d1117; /* Dark navy */
-  --foreground: #e5eef7; /* Light text */
-  --brand-primary: #e46c0a; /* Keep solid brand consistent */
-  --brand-primary-hover: #d45f08; /* Darker orange for dark mode */
-  --brand-secondary: #6b4e16; /* Keep solid secondary consistent */
+  --background: #1a1a1a; /* Very dark background - matches image (#1A1A1A or #1C1C1C) */
+  --foreground: #ffffff; /* Pure white text - matches image */
+  --brand-primary: #ff6633; /* Orange-red for interactive elements - matches image (#FF6633 or #F05030) */
+  --brand-primary-hover: #ff854d; /* Lighter orange-red on hover */
+  --brand-secondary: #ff9800; /* Brighter orange secondary */
   --brand-neutral-beige: #2a2520; /* Darker beige for dark mode */
-  --brand-accent: #007bff; /* Keep accent consistent */
-  --brand-accent-deep: #c93c00; /* Keep accent deep consistent */
+  --brand-accent: #ff6633; /* Orange-red accent - matches interactive color */
+  --brand-accent-deep: #f05030; /* Deeper orange-red */
   --brand-success: #00b39b; /* Lighter green for dark mode */
   --brand-warning: #fbbf24; /* Lighter yellow for dark mode */
   --brand-error: #f87171; /* Lighter red for dark mode */
   --brand-info: #38bdf8; /* Lighter sky blue for dark mode */
-  --brand-border: #1f2937; /* Dark border */
-  --brand-surface: #0d1117; /* Dark surface */
-  --panel: #111827; /* Dark panel */
-  --focus-ring: #007bff; /* Keep focus ring consistent */
+  --brand-border: #404040; /* Medium dark border for visibility */
+  --brand-surface: #1a1a1a; /* Same as background for consistency */
+  --panel: #282828; /* Dark panel for cards - matches image (#282828 or #2C2C2C) */
+  --focus-ring: #ff6633; /* Orange-red focus ring - matches interactive color */
+
+  /* Text colors with high contrast - matches image */
+  --text-primary: #ffffff; /* Pure white for primary text - matches image */
+  --text-secondary: #a0a0a0; /* Medium gray for secondary text - matches image (#A0A0A0 or #B0B0B0) */
+  --text-muted: #808080; /* Darker gray for muted text */
 
   /* Dark mode gradients - minimal use */
   --brand-gradient: linear-gradient(
@@ -291,18 +343,19 @@ body {
 }
 
 /* Dark Theme - Enhanced Visibility */
+/* Updated to match image reference colors */
 .dark {
-  --text-contrast-high: #f8fafc; /* Highest contrast */
-  --text-contrast-medium: #e5eef7; /* Medium contrast */
-  --text-contrast-low: #cbd5e1; /* Lower contrast */
+  --text-contrast-high: #ffffff; /* Highest contrast - pure white - matches image */
+  --text-contrast-medium: #ffffff; /* Medium contrast - pure white */
+  --text-contrast-low: #a0a0a0; /* Lower contrast - medium gray - matches image (#A0A0A0 or #B0B0B0) */
   
-  /* Force visibility for all text elements */
-  --ensure-text-visible: #e5eef7;
-  --ensure-icon-visible: #e5eef7;
-  --ensure-border-visible: #475569;
+  /* Force visibility for all text elements - matches image */
+  --ensure-text-visible: #ffffff; /* Pure white for text */
+  --ensure-icon-visible: #ffffff; /* Pure white for icons */
+  --ensure-border-visible: #404040; /* Medium dark border for visibility */
   
   /* Auto-adjust for components that might blend */
-  --auto-adjust-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2);
+  --auto-adjust-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 /* Auto-adjustment rules for low visibility components */

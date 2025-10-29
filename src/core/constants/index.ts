@@ -8,22 +8,27 @@ import { USER_ROLES as CANONICAL_ROLES } from '@/constants/roles';
 
 // API Endpoints
 export const API_ENDPOINTS = {
-  // Authentication
+  // Authentication - Enhanced from constants/api.ts merge
   AUTH: {
     LOGIN: '/api/auth/login',
     REGISTER: '/api/auth/register',
     LOGOUT: '/api/auth/logout',
     REFRESH: '/api/auth/refresh',
     ME: '/api/auth/me',
+    PROFILE: '/api/auth/profile',
+    CHANGE_PASSWORD: '/api/auth/change-password',
+    FORGOT_PASSWORD: '/api/auth/forgot-password',
+    RESET_PASSWORD: '/api/auth/reset-password',
   },
 
-  // Users
+  // Users - Enhanced from constants/api.ts merge  
   USERS: {
     LIST: '/api/users',
     CREATE: '/api/users',
     GET: (id: string) => `/api/users/${id}`,
     UPDATE: (id: string) => `/api/users/${id}`,
     DELETE: (id: string) => `/api/users/${id}`,
+    SEARCH: '/api/users/search',
   },
 
   // Patients
@@ -84,6 +89,79 @@ export const API_ENDPOINTS = {
     PATIENTS: '/api/reports/patients',
     APPOINTMENTS: '/api/reports/appointments',
     PAYMENTS: '/api/reports/payments',
+  },
+
+  // Channels - Added from constants/api.ts merge
+  CHANNELS: {
+    LIST: '/api/channels',
+    CREATE: '/api/channels',
+    GET: (id: string) => `/api/channels/${id}`,
+    UPDATE: (id: string) => `/api/channels/${id}`,
+    DELETE: (id: string) => `/api/channels/${id}`,
+    JOIN: (id: string) => `/api/channels/${id}/join`,
+    LEAVE: (id: string) => `/api/channels/${id}/leave`,
+    MEMBERS: (id: string) => `/api/channels/${id}/members`,
+  },
+
+  // Messages - Added from constants/api.ts merge
+  MESSAGES: {
+    LIST: (channelId: string) => `/api/channels/${channelId}/messages`,
+    CREATE: (channelId: string) => `/api/channels/${channelId}/messages`,
+    GET: (id: string) => `/api/messages/${id}`,
+    UPDATE: (id: string) => `/api/messages/${id}`,
+    DELETE: (id: string) => `/api/messages/${id}`,
+    SEARCH: '/api/messages/search',
+  },
+
+  // Conversations - Added from constants/api.ts merge
+  CONVERSATIONS: {
+    LIST: '/api/conversations',
+    GET: (id: string) => `/api/conversations/${id}`,
+    CREATE: '/api/conversations',
+    UPDATE: (id: string) => `/api/conversations/${id}`,
+    DELETE: (id: string) => `/api/conversations/${id}`,
+  },
+
+  // Settings - Enhanced from constants/api.ts merge
+  SETTINGS: {
+    GET: '/api/settings',
+    UPDATE: '/api/settings',
+    THEME: '/api/settings/theme',
+    NOTIFICATIONS: '/api/settings/notifications',
+    PRIVACY: '/api/settings/privacy',
+  },
+
+  // Webhooks - Added from constants/api.ts merge
+  WEBHOOKS: {
+    LIST: '/api/webhooks',
+    CREATE: '/api/webhooks',
+    GET: (id: string) => `/api/webhooks/${id}`,
+    UPDATE: (id: string) => `/api/webhooks/${id}`,
+    DELETE: (id: string) => `/api/webhooks/${id}`,
+    TEST: (id: string) => `/api/webhooks/${id}/test`,
+  },
+
+  // AI - Added from constants/api.ts merge
+  AI: {
+    CHAT: '/api/ai/chat',
+    COMPLETE: '/api/ai/complete',
+    TRANSLATE: '/api/ai/translate',
+    SUMMARIZE: '/api/ai/summarize',
+  },
+
+  // Logs - Added from constants/api.ts merge
+  LOGS: {
+    LIST: '/api/logs',
+    GET: (id: string) => `/api/logs/${id}`,
+    SEARCH: '/api/logs/search',
+    EXPORT: '/api/logs/export',
+  },
+
+  // Dashboard - Added from constants/api.ts merge
+  DASHBOARD: {
+    STATS: '/api/dashboard/stats',
+    CHARTS: '/api/dashboard/charts',
+    ACTIVITY: '/api/dashboard/activity',
   },
 
   // File Upload

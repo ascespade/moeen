@@ -1,11 +1,11 @@
 'use client';
 import {
-    createContext,
-    ReactNode,
-    useCallback,
-    useContext,
-    useEffect,
-    useState,
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
 } from 'react';
 
 interface I18nContextType {

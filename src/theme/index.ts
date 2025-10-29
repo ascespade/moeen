@@ -297,16 +297,16 @@ export const lightTheme: ColorPalette = {
 };
 
 export const darkTheme: ColorPalette = {
-  // Brand Colors
-  primary: '#E46C0A',
-  primaryHover: '#F4A261',
-  primaryLight: '#F4A261',
-  primaryDark: '#B8540A',
-  secondary: '#6B4E16',
-  secondaryHover: '#7A5A1A',
-  accent: '#3b82f6',
-  accentHover: '#60a5fa',
-  accentDeep: '#C93C00',
+  // Brand Colors - Updated to match image reference
+  primary: '#ff6633', // Orange-red for interactive elements - matches image (#FF6633 or #F05030)
+  primaryHover: '#ff854d', // Lighter orange-red on hover
+  primaryLight: '#ff9800', // Brighter orange
+  primaryDark: '#f05030', // Deeper orange-red
+  secondary: '#ff9800', // Brighter orange secondary
+  secondaryHover: '#ffb366', // Lighter orange on hover
+  accent: '#ff6633', // Orange-red accent - matches interactive color
+  accentHover: '#ff854d', // Lighter orange-red accent hover
+  accentDeep: '#f05030', // Deeper orange-red
 
   // Neutral Colors
   neutral: {
@@ -336,61 +336,65 @@ export const darkTheme: ColorPalette = {
   infoLight: '#93c5fd',
   infoDark: '#3b82f6',
 
-  // Surface Colors - محسنة للتباين
-  background: '#0f0f0f', // أغمق للخلفية الأساسية
-  foreground: '#f9fafb', // أفتح للنص الأساسي
-  surface: '#1a1a1a', // أغمق للأسطح
-  surfaceHover: '#262626', // أغمق عند التمرير
-  panel: '#1a1a1a', // أغمق للوحات
-  border: '#404040', // أفتح للحدود
-  divider: '#2a2a2a', // أفتح للفواصل
+  // Surface Colors - محسنة للتباين - Updated to match image reference
+  background: '#1a1a1a', // Very dark background - matches image (#1A1A1A or #1C1C1C)
+  foreground: '#ffffff', // Pure white text - matches image
+  surface: '#1a1a1a', // Same as background for consistency
+  surfaceHover: '#2c2c2c', // Slightly lighter on hover
+  panel: '#282828', // Dark panel for cards - matches image (#282828 or #2C2C2C)
+  border: '#404040', // Medium dark border for visibility
+  divider: '#404040', // Medium dark divider
 
-  // Text Colors - محسنة للتباين
+  // Text Colors - محسنة للتباين - Updated to match image reference
   text: {
-    primary: '#f9fafb', // أفتح للنص الأساسي
-    secondary: '#e5e7eb', // أفتح للنص الثانوي
-    tertiary: '#d1d5db', // أفتح للنص الثالثي
-    disabled: '#9ca3af', // أفتح للنص المعطل
-    inverse: '#111827', // أغمق للنص على الخلفيات الفاتحة
+    primary: '#ffffff', // Pure white for primary text - matches image
+    secondary: '#a0a0a0', // Medium gray for secondary text - matches image (#A0A0A0 or #B0B0B0)
+    tertiary: '#808080', // Darker gray for tertiary text
+    disabled: '#666666', // Darker gray for disabled text
+    inverse: '#1a1a1a', // Dark text for light backgrounds
   },
 
-  // Interactive Colors
+  // Interactive Colors - Updated to match image reference
   interactive: {
-    hover: '#262626', // أفتح عند التمرير
-    active: '#333333', // أفتح عند النقر
-    focus: '#3b82f6',
-    disabled: '#262626', // أفتح للحالات المعطلة
+    hover: '#2c2c2c', // Slightly lighter on hover
+    active: '#333333', // Active state
+    focus: '#ff6633', // Orange-red focus - matches interactive color
+    disabled: '#404040', // Disabled state
   },
 };
 
+// Typography moved to centralized.css as CSS variables
+// Use var(--font-size-*), var(--font-weight-*), var(--font-family-*) instead
 export const typography: Typography = {
   fontFamily: {
-    sans: ['Inter', 'system-ui', 'sans-serif'],
+    sans: ['var(--font-family-sans)'],
     serif: ['Georgia', 'Times New Roman', 'serif'],
-    mono: ['Fira Code', 'Monaco', 'Consolas', 'monospace'],
-    arabic: ['Noto Sans Arabic', 'Tajawal', 'Cairo', 'sans-serif'],
+    mono: ['var(--font-family-mono)'],
+    arabic: ['var(--font-family-sans)'], // Arabic fonts included in --font-family-sans
   },
   fontSize: {
-    xs: '0.75rem', // 12px
-    sm: '0.875rem', // 14px
-    base: '1rem', // 16px
-    lg: '1.125rem', // 18px
-    xl: '1.25rem', // 20px
-    '2xl': '1.5rem', // 24px
-    '3xl': '1.875rem', // 30px
-    '4xl': '2.25rem', // 36px
-    '5xl': '3rem', // 48px
-    '6xl': '3.75rem', // 60px
+    // Deprecated: Use CSS variables from centralized.css instead
+    xs: 'var(--font-size-xs)',
+    sm: 'var(--font-size-sm)',
+    base: 'var(--font-size-base)',
+    lg: 'var(--font-size-lg)',
+    xl: 'var(--font-size-xl)',
+    '2xl': 'var(--font-size-2xl)',
+    '3xl': 'var(--font-size-3xl)',
+    '4xl': 'var(--font-size-4xl)',
+    '5xl': 'var(--font-size-5xl)',
+    '6xl': 'var(--font-size-6xl)',
   },
   fontWeight: {
-    thin: 100,
-    light: 300,
-    normal: 400,
-    medium: 500,
-    semibold: 600,
-    bold: 700,
-    extrabold: 800,
-    black: 900,
+    // Deprecated: Use CSS variables from centralized.css instead
+    thin: 'var(--font-weight-thin)',
+    light: 'var(--font-weight-light)',
+    normal: 'var(--font-weight-normal)',
+    medium: 'var(--font-weight-medium)',
+    semibold: 'var(--font-weight-semibold)',
+    bold: 'var(--font-weight-bold)',
+    extrabold: 'var(--font-weight-extrabold)',
+    black: 'var(--font-weight-black)',
   },
   lineHeight: {
     none: 1,
@@ -410,49 +414,55 @@ export const typography: Typography = {
   },
 };
 
+// Spacing moved to centralized.css as CSS variables --space-*
+// Use var(--space-1), var(--space-2), etc. instead
 export const spacing: Spacing = {
   space: {
-    0: '0px',
-    1: '0.25rem', // 4px
-    2: '0.5rem', // 8px
-    3: '0.75rem', // 12px
-    4: '1rem', // 16px
-    5: '1.25rem', // 20px
-    6: '1.5rem', // 24px
-    8: '2rem', // 32px
-    10: '2.5rem', // 40px
-    12: '3rem', // 48px
-    16: '4rem', // 64px
-    20: '5rem', // 80px
-    24: '6rem', // 96px
-    32: '8rem', // 128px
-    40: '10rem', // 160px
-    48: '12rem', // 192px
-    56: '14rem', // 224px
-    64: '16rem', // 256px
-    80: '20rem', // 320px
-    96: '24rem', // 384px
+    // Deprecated: Use CSS variables from centralized.css instead
+    // Example: var(--space-1), var(--space-2), etc.
+    0: 'var(--space-0)',
+    1: 'var(--space-1)',
+    2: 'var(--space-2)',
+    3: 'var(--space-3)',
+    4: 'var(--space-4)',
+    5: 'var(--space-5)',
+    6: 'var(--space-6)',
+    8: 'var(--space-8)',
+    10: 'var(--space-10)',
+    12: 'var(--space-12)',
+    16: 'var(--space-16)',
+    20: 'var(--space-20)',
+    24: 'var(--space-24)',
+    32: 'var(--space-32)',
+    40: 'var(--space-40)',
+    48: 'var(--space-48)',
+    56: 'var(--space-56)',
+    64: 'var(--space-64)',
+    80: 'var(--space-80)',
+    96: 'var(--space-96)',
   },
+  // Border radius moved to centralized.css as CSS variables --radius-*
   borderRadius: {
-    none: '0px',
-    sm: '0.125rem', // 2px
-    base: '0.25rem', // 4px
-    md: '0.375rem', // 6px
-    lg: '0.5rem', // 8px
-    xl: '0.75rem', // 12px
-    '2xl': '1rem', // 16px
-    '3xl': '1.5rem', // 24px
-    full: '9999px',
+    none: 'var(--radius-none)',
+    sm: 'var(--radius-xs)', // 2px
+    base: 'var(--radius-sm)', // 4px
+    md: 'var(--radius-md)', // 6px
+    lg: 'var(--radius-lg)', // 8px
+    xl: 'var(--radius-xl)', // 12px
+    '2xl': 'var(--radius-2xl)', // 16px
+    '3xl': 'var(--radius-3xl)', // 24px
+    full: 'var(--radius-full)',
   },
+  // Box shadows moved to centralized.css as CSS variables --shadow-*
   boxShadow: {
-    none: 'none',
-    sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-    base: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
-    md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-    lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
-    xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
-    '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
-    inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
+    none: 'var(--shadow-none)',
+    sm: 'var(--shadow-sm)',
+    base: 'var(--shadow-md)', // Using md as base equivalent
+    md: 'var(--shadow-md)',
+    lg: 'var(--shadow-lg)',
+    xl: 'var(--shadow-xl)',
+    '2xl': 'var(--shadow-2xl)',
+    inner: 'var(--shadow-inner)',
   },
 };
 

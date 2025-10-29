@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 
 // Dynamic Chart Components using SVG and CSS
 interface ChartData {
@@ -16,7 +17,7 @@ interface DynamicChartsProps {
 export function DynamicLineChart({
   data,
   title,
-  color = '#2563eb',
+  color = 'var(--brand-accent)', // Changed from hardcoded #2563eb to CSS variable
 }: {
   data: Array<{ month: string; count: number }>;
   title: string;
@@ -56,7 +57,7 @@ export function DynamicLineChart({
               y1={height - padding}
               x2={width - padding}
               y2={height - padding}
-              stroke='#e5e7eb'
+              stroke='var(--brand-border)' // Changed from hardcoded #e5e7eb to CSS variable
               strokeWidth='1'
             />
             <line
@@ -64,7 +65,7 @@ export function DynamicLineChart({
               y1={padding}
               x2={padding}
               y2={height - padding}
-              stroke='#e5e7eb'
+              stroke='var(--brand-border)' // Changed from hardcoded #e5e7eb to CSS variable
               strokeWidth='1'
             />
 
@@ -110,7 +111,7 @@ export function DynamicLineChart({
 export function DynamicBarChart({
   data,
   title,
-  color = '#10b981',
+  color = 'var(--brand-success)', // Changed from hardcoded #10b981 to CSS variable
 }: {
   data: Array<{ name: string; count: number }>;
   title: string;
@@ -175,13 +176,14 @@ export function DynamicPieChart({
   }
 
   const total = data.reduce((sum, item) => sum + item.count, 0);
+  // Updated to use CSS variables instead of hardcoded colors
   const colors = [
-    '#2563eb',
-    '#10b981',
-    '#f59e0b',
-    '#ef4444',
-    '#8b5cf6',
-    '#06b6d4',
+    'var(--brand-accent)',    // Blue - #2563eb equivalent
+    'var(--brand-success)',   // Green - #10b981 equivalent
+    'var(--brand-warning)',   // Amber - #f59e0b equivalent
+    'var(--brand-error)',     // Red - #ef4444 equivalent
+    'var(--brand-primary)',   // Orange - primary brand color
+    'var(--brand-info)',      // Sky blue - #06b6d4 equivalent
   ];
 
   let currentAngle = 0;
@@ -240,6 +242,7 @@ export function DynamicPieChart({
 
 // Statistics Cards Component
 export function DynamicStatsCards({ data }: { data: any }) {
+  const localizedNumber = useLocalizedNumber();
   if (!data?.statistics) {
     return (
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
@@ -260,28 +263,28 @@ export function DynamicStatsCards({ data }: { data: any }) {
   const statCards = [
     {
       title: 'إجمالي المرضى',
-      value: stats.total_patients || 0,
+      value: localizedNumber((stats.total_patients || 0).toString()),
       icon: '👥',
       color: 'text-blue-600',
       bgColor: 'bg-blue-50 dark:bg-blue-900/20',
     },
     {
       title: 'إجمالي المواعيد',
-      value: stats.total_appointments || 0,
+      value: localizedNumber((stats.total_appointments || 0).toString()),
       icon: '📅',
       color: 'text-green-600',
       bgColor: 'bg-green-50 dark:bg-green-900/20',
     },
     {
       title: 'إجمالي الأطباء',
-      value: stats.total_doctors || 0,
+      value: localizedNumber((stats.total_doctors || 0).toString()),
       icon: '👨‍⚕️',
       color: 'text-purple-600',
       bgColor: 'bg-purple-50 dark:bg-purple-900/20',
     },
     {
       title: 'إجمالي الإيرادات',
-      value: `${(stats.total_revenue || 0).toLocaleString()} ريال`,
+      value: `${localizedNumber((stats.total_revenue || 0).toLocaleString())} ريال`,
       icon: '💰',
       color: 'text-yellow-600',
       bgColor: 'bg-yellow-50 dark:bg-yellow-900/20',
@@ -301,7 +304,9 @@ export function DynamicStatsCards({ data }: { data: any }) {
                 {card.title}
               </p>
               <p className='text-2xl font-bold text-gray-900 dark:text-white'>
-                {card.value}
+                {typeof card.value === 'number' 
+                  ? localizedNumber(card.value.toString())
+                  : localizedNumber(card.value)}
               </p>
             </div>
             <div className={`p-3 rounded-full ${card.bgColor}`}>
@@ -429,7 +434,7 @@ export function DynamicDashboardCharts({ data, loading }: DynamicChartsProps) {
         <DynamicBarChart
           data={data.patient_analytics?.by_age || []}
           title='توزيع المرضى حسب العمر'
-          color='#2563eb'
+          color='var(--brand-accent)' // Changed from hardcoded #2563eb
         />
 
         {/* Patient Analytics by Gender */}
@@ -442,14 +447,14 @@ export function DynamicDashboardCharts({ data, loading }: DynamicChartsProps) {
         <DynamicLineChart
           data={data.appointment_trends || []}
           title='اتجاهات المواعيد الشهرية'
-          color='#10b981'
+          color='var(--brand-success)' // Changed from hardcoded #10b981
         />
 
         {/* Doctor Specialties */}
         <DynamicBarChart
           data={data.doctor_specialties || []}
           title='تخصصات الأطباء'
-          color='#8b5cf6'
+          color='var(--brand-primary)' // Changed from hardcoded #8b5cf6 to primary brand color
         />
       </div>
 

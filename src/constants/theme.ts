@@ -42,38 +42,11 @@ export const FONT_FAMILIES = {
 
 // FONT_SIZES moved to ui.ts to avoid duplication
 
-export const SPACING_SCALE = {
-  0: '0',
-  1: '0.25rem',
-  2: '0.5rem',
-  3: '0.75rem',
-  4: '1rem',
-  5: '1.25rem',
-  6: '1.5rem',
-  8: '2rem',
-  10: '2.5rem',
-  12: '3rem',
-  16: '4rem',
-  20: '5rem',
-  24: '6rem',
-  32: '8rem',
-  40: '10rem',
-  48: '12rem',
-  56: '14rem',
-  64: '16rem',
-} as const;
+// SPACING_SCALE moved to centralized.css as CSS variables
+// Use var(--space-0), var(--space-1), etc. instead
 
-export const BORDER_RADIUS_SCALE = {
-  NONE: '0',
-  SM: '0.125rem',
-  DEFAULT: '0.25rem',
-  MD: '0.375rem',
-  LG: '0.5rem',
-  XL: '0.75rem',
-  '2XL': '1rem',
-  '3XL': '1.5rem',
-  FULL: '9999px',
-} as const;
+// BORDER_RADIUS_SCALE moved to centralized.css as CSS variables
+// Use var(--radius-none), var(--radius-sm), etc. instead
 
 export const SHADOW_SCALE = {
   NONE: 'none',

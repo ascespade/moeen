@@ -3,6 +3,7 @@
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
+import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import {
     Award,
     BarChart3,
@@ -14,6 +15,39 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { memo } from 'react';
+
+const BusinessStats = memo(function BusinessStats() {
+  const localizedNumber = useLocalizedNumber();
+  
+  return (
+    <>
+      <div className='bg-[var(--panel)] rounded-xl p-6 text-center border border-[var(--brand-border)]'>
+        <div className='text-4xl font-bold text-[var(--brand-primary)] mb-2'>
+          {localizedNumber('15+')}
+        </div>
+        <div className='text-[var(--text-secondary)]'>سنة خبرة</div>
+      </div>
+      <div className='bg-[var(--panel)] rounded-xl p-6 text-center border border-[var(--brand-border)]'>
+        <div className='text-4xl font-bold text-[var(--brand-success)] mb-2'>
+          {localizedNumber('98%')}
+        </div>
+        <div className='text-[var(--text-secondary)]'>معدل الرضا</div>
+      </div>
+      <div className='bg-[var(--panel)] rounded-xl p-6 text-center border border-[var(--brand-border)]'>
+        <div className='text-4xl font-bold text-[var(--brand-info)] mb-2'>
+          {localizedNumber('50+')}
+        </div>
+        <div className='text-[var(--text-secondary)]'>متخصص</div>
+      </div>
+      <div className='bg-[var(--panel)] rounded-xl p-6 text-center border border-[var(--brand-border)]'>
+        <div className='text-4xl font-bold text-[var(--brand-accent)] mb-2'>
+          {localizedNumber('1K+')}
+        </div>
+        <div className='text-[var(--text-secondary)]'>مريض نشط</div>
+      </div>
+    </>
+  );
+});
 
 const features = [
   {
@@ -130,22 +164,7 @@ const BusinessSection = memo(function BusinessSection() {
               </Button>
             </div>
             <div className='grid grid-cols-2 gap-6'>
-              <div className='bg-[var(--panel)] rounded-xl p-6 text-center border border-[var(--brand-border)]'>
-                <div className='text-4xl font-bold text-[var(--brand-primary)] mb-2'>15+</div>
-                <div className='text-[var(--text-secondary)]'>سنة خبرة</div>
-              </div>
-              <div className='bg-[var(--panel)] rounded-xl p-6 text-center border border-[var(--brand-border)]'>
-                <div className='text-4xl font-bold text-[var(--brand-success)] mb-2'>98%</div>
-                <div className='text-[var(--text-secondary)]'>معدل الرضا</div>
-              </div>
-              <div className='bg-[var(--panel)] rounded-xl p-6 text-center border border-[var(--brand-border)]'>
-                <div className='text-4xl font-bold text-[var(--brand-info)] mb-2'>50+</div>
-                <div className='text-[var(--text-secondary)]'>متخصص</div>
-              </div>
-              <div className='bg-[var(--panel)] rounded-xl p-6 text-center border border-[var(--brand-border)]'>
-                <div className='text-4xl font-bold text-[var(--brand-accent)] mb-2'>1K+</div>
-                <div className='text-[var(--text-secondary)]'>مريض نشط</div>
-              </div>
+              <BusinessStats />
             </div>
           </div>
         </div>
@@ -156,4 +175,5 @@ const BusinessSection = memo(function BusinessSection() {
 
 BusinessSection.displayName = 'BusinessSection';
 export default BusinessSection;
+
 

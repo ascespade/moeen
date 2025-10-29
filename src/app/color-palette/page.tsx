@@ -1,51 +1,78 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
+// Updated to use centralized CSS variables from centralized.css
 const colorPalette = [
   {
     name: 'البرتقالي الأساسي',
-    value: '#f58220',
+    value: 'var(--brand-primary)',
     description: 'اللون الرئيسي للمنصة',
     usage: 'الأزرار، الروابط، العناصر التفاعلية',
+    cssVar: '--brand-primary',
   },
   {
-    name: 'الأخضر الثانوي',
-    value: '#009688',
+    name: 'البرتقالي الثانوي',
+    value: 'var(--brand-secondary)',
     description: 'لون ثانوي للتمييز',
-    usage: 'الحالات الإيجابية، التأكيدات',
+    usage: 'الخلفيات الثانوية، التباين',
+    cssVar: '--brand-secondary',
   },
   {
     name: 'الأزرق المميز',
-    value: '#007bff',
+    value: 'var(--brand-accent)',
     description: 'لون مميز للمعلومات',
     usage: 'الروابط، المعلومات المهمة',
+    cssVar: '--brand-accent',
   },
   {
     name: 'الأخضر للنجاح',
-    value: '#28a745',
+    value: 'var(--brand-success)',
     description: 'لون النجاح والموافقة',
     usage: 'رسائل النجاح، حالات الإكمال',
+    cssVar: '--brand-success',
   },
   {
     name: 'الأصفر للتحذير',
-    value: '#ffc107',
+    value: 'var(--brand-warning)',
     description: 'لون التحذير والتنبيه',
     usage: 'رسائل التحذير، التنبيهات',
+    cssVar: '--brand-warning',
   },
   {
     name: 'الأحمر للخطأ',
-    value: '#dc3545',
+    value: 'var(--brand-error)',
     description: 'لون الخطأ والرفض',
     usage: 'رسائل الخطأ، حالات الفشل',
+    cssVar: '--brand-error',
   },
   {
     name: 'الأزرق للمعلومات',
-    value: '#17a2b8',
+    value: 'var(--brand-info)',
     description: 'لون المعلومات العامة',
     usage: 'التلميحات، المعلومات الإضافية',
+    cssVar: '--brand-info',
   },
 ];
 
 export default function ColorPalettePage() {
+  const [computedColors, setComputedColors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    // Get computed values of CSS variables
+    const root = document.documentElement;
+    const computed: Record<string, string> = {};
+    
+    colorPalette.forEach(color => {
+      if (color.cssVar) {
+        const computedValue = getComputedStyle(root).getPropertyValue(color.cssVar).trim();
+        computed[color.cssVar] = computedValue || color.value;
+      }
+    });
+    
+    setComputedColors(computed);
+  }, []);
+
   return (
     <div className='min-h-screen bg-background text-foreground'>
       {/* Header */}
@@ -70,14 +97,17 @@ export default function ColorPalettePage() {
                 <div className='flex items-center gap-4 mb-4'>
                   <div
                     className='w-16 h-16 rounded-lg shadow-md'
-                    style={{ backgroundColor: color.value }}
+                    style={{ backgroundColor: color.cssVar ? computedColors[color.cssVar] || color.value : color.value }}
                   ></div>
                   <div>
                     <h3 className='text-lg font-bold text-foreground'>
                       {color.name}
                     </h3>
+                    <p className='text-xs text-muted-foreground font-mono mb-1'>
+                      {color.cssVar || 'N/A'}
+                    </p>
                     <p className='text-sm text-muted-foreground font-mono'>
-                      {color.value}
+                      {color.cssVar ? computedColors[color.cssVar] || 'جاري التحميل...' : color.value}
                     </p>
                   </div>
                 </div>

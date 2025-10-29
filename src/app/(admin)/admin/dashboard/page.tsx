@@ -1,176 +1,29 @@
 'use client';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
+import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
+import { AdminHeader, AdminStatsCard, AdminCard } from '@/components/admin/ui';
+import { useAdminDashboard } from '@/hooks/useAdminDashboard';
+import { 
+  Users, 
+  Calendar, 
+  DollarSign, 
+  UserCheck,
+  Activity,
+  FileText,
+  Settings,
+  Download,
+  Plus,
+  TrendingUp,
+  AlertTriangle,
+  Clock,
+  RefreshCw
+} from 'lucide-react';
 
-interface DashboardStats {
-  totalPatients: number;
-  activePatients: number;
-  blockedPatients: number;
-  totalAppointments: number;
-  completedAppointments: number;
-  pendingAppointments: number;
-  totalRevenue: number;
-  monthlyRevenue: number;
-  totalClaims: number;
-  approvedClaims: number;
-  pendingClaims: number;
-  rejectedClaims: number;
-  totalStaff: number;
-  activeStaff: number;
-  onDutyStaff: number;
-  totalSessions: number;
-  completedSessions: number;
-  upcomingSessions: number;
-}
+// Types are now imported from the hook
 
-interface RecentActivity {
-  id: string;
-  type: 'appointment' | 'claim' | 'patient' | 'staff' | 'payment';
-  title: string;
-  description: string;
-  timestamp: string;
-  status: 'success' | 'warning' | 'error' | 'info';
-}
-
-interface StaffWorkHours {
-  id: string;
-  name: string;
-  position: string;
-  totalHours: number;
-  todayHours: number;
-  thisWeekHours: number;
-  thisMonthHours: number;
-  isOnDuty: boolean;
-  lastCheckIn?: string;
-  lastCheckOut?: string;
-}
-
-// Default stats if API fails
-const defaultStats: DashboardStats = {
-  totalPatients: 0,
-  activePatients: 0,
-  blockedPatients: 0,
-  totalAppointments: 0,
-  completedAppointments: 0,
-  pendingAppointments: 0,
-  totalRevenue: 0,
-  monthlyRevenue: 0,
-  totalClaims: 0,
-  approvedClaims: 0,
-  pendingClaims: 0,
-  rejectedClaims: 0,
-  totalStaff: 0,
-  activeStaff: 0,
-  onDutyStaff: 0,
-  totalSessions: 0,
-  completedSessions: 0,
-  upcomingSessions: 0,
-};
-
-const mockRecentActivities: RecentActivity[] = [
-  {
-    id: '1',
-    type: 'appointment',
-    title: 'موعد جديد',
-    description: 'تم حجز موعد جديد للمريض أحمد العتيبي مع د. سارة أحمد',
-    timestamp: 'منذ 5 دقائق',
-    status: 'success',
-  },
-  {
-    id: '2',
-    type: 'claim',
-    title: 'مطالبة تأمين',
-    description: 'تمت الموافقة على مطالبة تأمين بقيمة 1,500 ريال',
-    timestamp: 'منذ 15 دقيقة',
-    status: 'success',
-  },
-  {
-    id: '3',
-    type: 'patient',
-    title: 'مريض محظور',
-    description: 'تم حظر المريض محمد القحطاني بسبب عدم السداد',
-    timestamp: 'منذ 30 دقيقة',
-    status: 'error',
-  },
-  {
-    id: '4',
-    type: 'staff',
-    title: 'تسجيل دخول',
-    description: 'د. نورا محمد سجلت دخولها في الساعة 8:00 صباحاً',
-    timestamp: 'منذ ساعة',
-    status: 'info',
-  },
-  {
-    id: '5',
-    type: 'payment',
-    title: 'دفعة مستلمة',
-    description: 'تم استلام دفعة بقيمة 2,500 ريال من المريض فاطمة السعيد',
-    timestamp: 'منذ ساعتين',
-    status: 'success',
-  },
-];
-
-const mockStaffWorkHours: StaffWorkHours[] = [
-  {
-    id: '1',
-    name: 'د. سارة أحمد',
-    position: 'طبيبة علاج طبيعي',
-    totalHours: 168,
-    todayHours: 6.5,
-    thisWeekHours: 32,
-    thisMonthHours: 140,
-    isOnDuty: true,
-    lastCheckIn: '08:00',
-  },
-  {
-    id: '2',
-    name: 'د. محمد حسن',
-    position: 'طبيب نفسي',
-    totalHours: 156,
-    todayHours: 7,
-    thisWeekHours: 28,
-    thisMonthHours: 132,
-    isOnDuty: true,
-    lastCheckIn: '07:30',
-  },
-  {
-    id: '3',
-    name: 'د. نورا محمد',
-    position: 'طبيبة علاج وظيفي',
-    totalHours: 144,
-    todayHours: 0,
-    thisWeekHours: 24,
-    thisMonthHours: 120,
-    isOnDuty: false,
-    lastCheckIn: '08:00',
-    lastCheckOut: '16:00',
-  },
-  {
-    id: '4',
-    name: 'د. خالد العتيبي',
-    position: 'طبيب علاج طبيعي',
-    totalHours: 160,
-    todayHours: 5.5,
-    thisWeekHours: 30,
-    thisMonthHours: 135,
-    isOnDuty: true,
-    lastCheckIn: '09:00',
-  },
-  {
-    id: '5',
-    name: 'أ. فاطمة السعيد',
-    position: 'ممرضة',
-    totalHours: 152,
-    todayHours: 8,
-    thisWeekHours: 40,
-    thisMonthHours: 160,
-    isOnDuty: true,
-    lastCheckIn: '07:00',
-  },
-];
 
 const activityTypeConfig = {
   appointment: { icon: '📅', color: 'blue', bg: 'bg-blue-50' },
@@ -191,50 +44,18 @@ export default function AdminDashboard() {
   const [selectedPeriod, setSelectedPeriod] = useState<
     'today' | 'week' | 'month' | 'year'
   >('month');
-  const [stats, setStats] = useState<DashboardStats>(defaultStats);
-  const [loading, setLoading] = useState(true);
-
-  // Load real data from API
-  useEffect(() => {
-    const loadDashboardData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/dashboard/statistics');
-        const result = await response.json();
-        
-        if (result.success && result.data) {
-          // Map API data to our stats structure
-          setStats({
-            totalPatients: result.data.total_patients || 0,
-            activePatients: result.data.active_patients || 0,
-            blockedPatients: result.data.blocked_patients || 0,
-            totalAppointments: result.data.total_appointments || 0,
-            completedAppointments: result.data.completed_appointments || 0,
-            pendingAppointments: result.data.pending_appointments || 0,
-            totalRevenue: result.data.total_revenue || 0,
-            monthlyRevenue: result.data.monthly_revenue || 0,
-            totalClaims: result.data.total_claims || 0,
-            approvedClaims: result.data.approved_claims || 0,
-            pendingClaims: result.data.pending_claims || 0,
-            rejectedClaims: result.data.rejected_claims || 0,
-            totalStaff: result.data.total_staff || 0,
-            activeStaff: result.data.active_staff || 0,
-            onDutyStaff: result.data.on_duty_staff || 0,
-            totalSessions: result.data.total_sessions || 0,
-            completedSessions: result.data.completed_sessions || 0,
-            upcomingSessions: result.data.upcoming_sessions || 0,
-          });
-        }
-      } catch (error) {
-        console.error('Failed to load dashboard statistics:', error);
-        // Keep default stats on error
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadDashboardData();
-  }, [selectedPeriod]);
+  
+  const localizedNumber = useLocalizedNumber();
+  
+  // Use the new hook for real data
+  const { 
+    stats, 
+    activities, 
+    staffWorkHours, 
+    loading, 
+    error,
+    refetch 
+  } = useAdminDashboard(selectedPeriod);
 
   const getActivityIcon = (type: RecentActivity['type']) => {
     const config = activityTypeConfig[type];
@@ -272,311 +93,336 @@ export default function AdminDashboard() {
   // Show loading state
   if (loading) {
     return (
-      <div className='flex min-h-screen items-center justify-center bg-[var(--brand-surface)]'>
+      <div className='flex min-h-screen items-center justify-center bg-[var(--background)]'>
         <div className='text-center'>
-          <div className='mb-4 h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600 mx-auto'></div>
-          <p className='text-gray-600'>جاري تحميل البيانات...</p>
+          <div className='mb-4 h-12 w-12 animate-spin rounded-full border-4 border-gray-300 border-t-[var(--brand-primary)] mx-auto'></div>
+          <p className='text-[var(--text-secondary)]'>جاري تحميل لوحة التحكم...</p>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className='min-h-screen bg-[var(--brand-surface)]'>
-      {/* Header */}
-      <header className='border-brand sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
-        <div className='container-app py-6'>
-          <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-4'>
-              <Image
-                src='/logo.png'
-                alt='مركز الهمم'
-                width={50}
-                height={50}
-                className='rounded-lg'
-              />
-              <div>
-                <h1 className='text-brand text-2xl font-bold'>
-                  لوحة تحكم الإدارة
-                </h1>
-                <p className='text-gray-600 dark:text-gray-300'>
-                  مركز الهمم للرعاية الصحية المتخصصة
-                </p>
-              </div>
-            </div>
-            <div className='flex items-center gap-3'>
-              <select
-                value={selectedPeriod}
-                onChange={e => setSelectedPeriod(e.target.value as any)}
-                className='rounded-lg border border-gray-300 px-3 py-2 text-sm'
-              >
-                <option value='today'>اليوم</option>
-                <option value='week'>هذا الأسبوع</option>
-                <option value='month'>هذا الشهر</option>
-                <option value='year'>هذا العام</option>
-              </select>
-              <Button variant='outline' size='sm'>
-                تصدير التقرير
-              </Button>
-              <Button variant='primary' size='sm'>
-                إعدادات
-              </Button>
-            </div>
+  // Show error state
+  if (error) {
+    return (
+      <div className='min-h-screen bg-[var(--background)]'>
+        <AdminHeader
+          title="لوحة تحكم الإدارة"
+          description="حدث خطأ في تحميل البيانات"
+        >
+          <Button 
+            onClick={refetch}
+            className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'
+          >
+            <RefreshCw className='w-4 h-4 ml-2' />
+            إعادة المحاولة
+          </Button>
+        </AdminHeader>
+        
+        <main className='container-app py-8'>
+          <div className='text-center py-16'>
+            <AlertTriangle className='w-16 h-16 text-red-500 mx-auto mb-4' />
+            <h3 className='text-lg font-semibold text-[var(--text-primary)] mb-2'>
+              فشل في تحميل البيانات
+            </h3>
+            <p className='text-[var(--text-secondary)] mb-4'>{error}</p>
+            <Button onClick={refetch}>
+              <RefreshCw className='w-4 h-4 ml-2' />
+              إعادة المحاولة
+            </Button>
           </div>
+        </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className='min-h-screen bg-[var(--background)]'>
+      {/* Modern Header */}
+      <AdminHeader
+        title="لوحة تحكم الإدارة"
+        description="مركز الهمم للرعاية الصحية المتخصصة"
+      >
+        <select
+          value={selectedPeriod}
+          onChange={e => setSelectedPeriod(e.target.value as any)}
+          className='rounded-lg border border-[var(--brand-border)] px-4 py-2 text-sm bg-[var(--panel)] text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)]/20'
+        >
+          <option value='today'>اليوم</option>
+          <option value='week'>هذا الأسبوع</option>
+          <option value='month'>هذا الشهر</option>
+          <option value='year'>هذا العام</option>
+        </select>
+        <Button variant='outline' size='sm' className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'>
+          <Download className='w-4 h-4 ml-2' />
+          تصدير التقرير
+        </Button>
+        <Button asChild className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'>
+          <Link href="/admin/settings">
+            <Settings className='w-4 h-4 ml-2' />
+            إعدادات
+          </Link>
+        </Button>
+      </AdminHeader>
+
+      <main className='container-app py-8 space-y-8'>
+        {/* Main Stats Grid - Modern Design */}
+        <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
+          <AdminStatsCard
+            title="إجمالي المرضى"
+            value={localizedNumber(stats.totalPatients.toLocaleString())}
+            subtitle={`${localizedNumber(stats.activePatients.toString())} نشط • ${stats.blockedPatients} محظور`}
+            icon={Users}
+            iconColor="var(--brand-primary)"
+            trend={{
+              value: 12,
+              isPositive: true
+            }}
+          />
+          
+          <AdminStatsCard
+            title="إجمالي المواعيد"
+            value={localizedNumber(stats.totalAppointments.toLocaleString())}
+            subtitle={`${localizedNumber(stats.completedAppointments.toString())} مكتمل • ${localizedNumber(stats.pendingAppointments.toString())} قيد الانتظار`}
+            icon={Calendar}
+            iconColor="var(--brand-success)" // Changed from hardcoded #10b981
+            trend={{
+              value: 8,
+              isPositive: true
+            }}
+          />
+          
+          <AdminStatsCard
+            title="إجمالي الإيرادات"
+            value={`${localizedNumber(stats.totalRevenue.toLocaleString())} ريال`}
+            subtitle={`${localizedNumber(stats.monthlyRevenue.toLocaleString())} ريال هذا الشهر`}
+            icon={DollarSign}
+            iconColor="var(--brand-primary)" // Changed from hardcoded #8b5cf6
+            trend={{
+              value: 15,
+              isPositive: true
+            }}
+          />
+          
+          <AdminStatsCard
+            title="إجمالي الموظفين"
+            value={localizedNumber(stats.totalStaff.toString())}
+            subtitle={`${localizedNumber(stats.activeStaff.toString())} نشط • ${stats.onDutyStaff} في الخدمة الآن`}
+            icon={UserCheck}
+            iconColor="var(--brand-warning)" // Changed from hardcoded #f59e0b
+          />
         </div>
-      </header>
 
-      <main className='container-app py-8'>
-        {/* Main Stats Grid */}
-        <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
-          <Card className='p-6 text-center'>
-            <div className='text-brand mb-2 text-3xl font-bold'>
-              {stats.totalPatients.toLocaleString()}
-            </div>
-            <div className='mb-2 text-gray-600 dark:text-gray-300'>
-              إجمالي المرضى
-            </div>
-            <div className='text-sm text-green-600'>
-              {stats.activePatients} نشط • {stats.blockedPatients} محظور
-            </div>
-          </Card>
-          <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-green-600'>
-              {stats.totalAppointments.toLocaleString()}
-            </div>
-            <div className='mb-2 text-gray-600 dark:text-gray-300'>
-              إجمالي المواعيد
-            </div>
-            <div className='text-sm text-blue-600'>
-              {stats.completedAppointments} مكتمل •{' '}
-              {stats.pendingAppointments} قيد الانتظار
-            </div>
-          </Card>
-          <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-purple-600'>
-              {stats.totalRevenue.toLocaleString()} ريال
-            </div>
-            <div className='mb-2 text-gray-600 dark:text-gray-300'>
-              إجمالي الإيرادات
-            </div>
-            <div className='text-sm text-green-600'>
-              {stats.monthlyRevenue.toLocaleString()} ريال هذا الشهر
-            </div>
-          </Card>
-          <Card className='p-6 text-center'>
-            <div className='mb-2 text-3xl font-bold text-orange-600'>
-              {stats.totalStaff}
-            </div>
-            <div className='mb-2 text-gray-600 dark:text-gray-300'>
-              إجمالي الموظفين
-            </div>
-            <div className='text-sm text-blue-600'>
-              {stats.activeStaff} نشط • {stats.onDutyStaff} في الخدمة
-              الآن
-            </div>
-          </Card>
-        </div>
-
-        {/* Secondary Stats */}
-        <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-3'>
-          <Card className='p-6'>
-            <h3 className='mb-4 text-lg font-semibold'>المطالبات التأمينية</h3>
-            <div className='space-y-3'>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>
-                  إجمالي المطالبات:
-                </span>
-                <span className='font-semibold'>{stats.totalClaims}</span>
+        {/* Secondary Stats - Enhanced Design */}
+        <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
+          <AdminCard className='space-y-6'>
+            <div className='flex items-center gap-3'>
+              <div className='w-12 h-12 rounded-xl bg-[var(--brand-primary)]/10 border border-[var(--brand-primary)]/20 flex items-center justify-center'>
+                <FileText className='w-6 h-6 text-[var(--brand-primary)]' />
               </div>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>
-                  موافق عليها:
+              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>المطالبات التأمينية</h3>
+            </div>
+            <div className='space-y-4'>
+              <div className='flex justify-between items-center py-2 border-b border-[var(--brand-border)]/50'>
+                <span className='text-[var(--text-secondary)]'>إجمالي المطالبات:</span>
+                <span className='font-semibold text-[var(--text-primary)]'>{stats.totalClaims}</span>
+              </div>
+              <div className='flex justify-between items-center py-2'>
+                <span className='text-[var(--text-secondary)]'>موافق عليها:</span>
+                <span className='font-semibold text-green-600'>{stats.approvedClaims}</span>
+              </div>
+              <div className='flex justify-between items-center py-2'>
+                <span className='text-[var(--text-secondary)]'>قيد المراجعة:</span>
+                <span className='font-semibold text-yellow-600'>{stats.pendingClaims}</span>
+              </div>
+              <div className='flex justify-between items-center py-2'>
+                <span className='text-[var(--text-secondary)]'>مرفوضة:</span>
+                <span className='font-semibold text-red-600'>{stats.rejectedClaims}</span>
+              </div>
+            </div>
+          </AdminCard>
+
+          <AdminCard className='space-y-6'>
+            <div className='flex items-center gap-3'>
+              <div className='w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center'>
+                <Activity className='w-6 h-6 text-blue-600' />
+              </div>
+              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>الجلسات العلاجية</h3>
+            </div>
+            <div className='space-y-4'>
+              <div className='flex justify-between items-center py-2 border-b border-[var(--brand-border)]/50'>
+                <span className='text-[var(--text-secondary)]'>إجمالي الجلسات:</span>
+                <span className='font-semibold text-[var(--text-primary)]'>
+                  {localizedNumber(stats.totalSessions.toLocaleString())}
                 </span>
+              </div>
+              <div className='flex justify-between items-center py-2'>
+                <span className='text-[var(--text-secondary)]'>مكتملة:</span>
                 <span className='font-semibold text-green-600'>
-                  {stats.approvedClaims}
+                  {localizedNumber(stats.completedSessions.toLocaleString())}
                 </span>
               </div>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>
-                  قيد المراجعة:
-                </span>
-                <span className='font-semibold text-yellow-600'>
-                  {stats.pendingClaims}
-                </span>
-              </div>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>
-                  مرفوضة:
-                </span>
-                <span className='font-semibold text-red-600'>
-                  {stats.rejectedClaims}
-                </span>
-              </div>
-            </div>
-          </Card>
-
-          <Card className='p-6'>
-            <h3 className='mb-4 text-lg font-semibold'>الجلسات العلاجية</h3>
-            <div className='space-y-3'>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>
-                  إجمالي الجلسات:
-                </span>
-                <span className='font-semibold'>
-                  {stats.totalSessions.toLocaleString()}
-                </span>
-              </div>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>
-                  مكتملة:
-                </span>
-                <span className='font-semibold text-green-600'>
-                  {stats.completedSessions.toLocaleString()}
-                </span>
-              </div>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>قادمة:</span>
+              <div className='flex justify-between items-center py-2'>
+                <span className='text-[var(--text-secondary)]'>قادمة:</span>
                 <span className='font-semibold text-blue-600'>
-                  {stats.upcomingSessions.toLocaleString()}
+                  {localizedNumber(stats.upcomingSessions.toLocaleString())}
                 </span>
               </div>
             </div>
-          </Card>
+          </AdminCard>
 
-          <Card className='p-6'>
-            <h3 className='mb-4 text-lg font-semibold'>معدلات الأداء</h3>
-            <div className='space-y-3'>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>
-                  معدل إكمال المواعيد:
-                </span>
+          <AdminCard className='space-y-6'>
+            <div className='flex items-center gap-3'>
+              <div className='w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center'>
+                <TrendingUp className='w-6 h-6 text-purple-600' />
+              </div>
+              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>معدلات الأداء</h3>
+            </div>
+            <div className='space-y-4'>
+              <div className='flex justify-between items-center py-2 border-b border-[var(--brand-border)]/50'>
+                <span className='text-[var(--text-secondary)]'>معدل إكمال المواعيد:</span>
                 <span className='font-semibold text-green-600'>
-                  {Math.round(
-                    (stats.completedAppointments /
-                      stats.totalAppointments) *
-                      100
-                  )}
-                  %
+                  {Math.round((stats.completedAppointments / stats.totalAppointments) * 100)}%
                 </span>
               </div>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>
-                  معدل الموافقة على المطالبات:
-                </span>
+              <div className='flex justify-between items-center py-2'>
+                <span className='text-[var(--text-secondary)]'>معدل الموافقة على المطالبات:</span>
                 <span className='font-semibold text-green-600'>
-                  {Math.round(
-                    (stats.approvedClaims / stats.totalClaims) * 100
-                  )}
-                  %
+                  {Math.round((stats.approvedClaims / stats.totalClaims) * 100)}%
                 </span>
               </div>
-              <div className='flex justify-between'>
-                <span className='text-gray-600 dark:text-gray-300'>
-                  معدل إكمال الجلسات:
-                </span>
+              <div className='flex justify-between items-center py-2'>
+                <span className='text-[var(--text-secondary)]'>معدل إكمال الجلسات:</span>
                 <span className='font-semibold text-green-600'>
-                  {Math.round(
-                    (stats.completedSessions / stats.totalSessions) *
-                      100
-                  )}
-                  %
+                  {Math.round((stats.completedSessions / stats.totalSessions) * 100)}%
                 </span>
               </div>
             </div>
-          </Card>
+          </AdminCard>
         </div>
 
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-2'>
-          {/* Recent Activities */}
-          <Card className='p-6'>
-            <div className='mb-6 flex items-center justify-between'>
-              <h3 className='text-lg font-semibold'>النشاطات الأخيرة</h3>
-              <Button variant='outline' size='sm'>
-                عرض الكل
+          {/* Recent Activities - Enhanced */}
+          <AdminCard className='space-y-6'>
+            <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-3'>
+                <div className='w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center'>
+                  <Clock className='w-5 h-5 text-green-600' />
+                </div>
+                <h3 className='text-xl font-semibold text-[var(--text-primary)]'>النشاطات الأخيرة</h3>
+              </div>
+              <Button 
+                asChild
+                variant='outline' 
+                size='sm'
+                className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
+              >
+                <Link href="/admin/audit-logs">
+                  عرض الكل
+                </Link>
               </Button>
             </div>
-            <div className='space-y-4'>
-              {mockRecentActivities.map(activity => (
+            <div className='space-y-3'>
+              {activities.map(activity => (
                 <div
                   key={activity.id}
-                  className='flex items-start gap-3 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-800'
+                  className='group flex items-start gap-4 p-4 rounded-xl border border-[var(--brand-border)]/50 hover:border-[var(--brand-primary)]/30 hover:bg-[var(--brand-primary)]/5 transition-all duration-200'
                 >
                   {getActivityIcon(activity.type)}
                   <div className='flex-1'>
-                    <div className='flex items-center justify-between'>
-                      <h4 className='font-medium text-gray-900 dark:text-white'>
+                    <div className='flex items-center justify-between mb-1'>
+                      <h4 className='font-semibold text-[var(--text-primary)] group-hover:text-[var(--brand-primary)]'>
                         {activity.title}
                       </h4>
-                      <span className='text-xs text-gray-500'>
+                      <span className='text-xs text-[var(--text-secondary)] bg-[var(--brand-surface)] px-2 py-1 rounded-md'>
                         {activity.timestamp}
                       </span>
                     </div>
-                    <p className='mt-1 text-sm text-gray-600 dark:text-gray-300'>
+                    <p className='text-sm text-[var(--text-secondary)] leading-relaxed'>
                       {activity.description}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-          </Card>
+          </AdminCard>
 
-          {/* Staff Work Hours */}
-          <Card className='p-6'>
-            <div className='mb-6 flex items-center justify-between'>
-              <h3 className='text-lg font-semibold'>ساعات عمل الموظفين</h3>
-              <Button variant='outline' size='sm'>
-                عرض التقرير الكامل
+          {/* Staff Work Hours - Enhanced */}
+          <AdminCard className='space-y-6'>
+            <div className='flex items-center justify-between'>
+              <div className='flex items-center gap-3'>
+                <div className='w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center'>
+                  <Users className='w-5 h-5 text-blue-600' />
+                </div>
+                <h3 className='text-xl font-semibold text-[var(--text-primary)]'>ساعات عمل الموظفين</h3>
+              </div>
+              <Button 
+                asChild
+                variant='outline' 
+                size='sm'
+                className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
+              >
+                <Link href="/admin/therapists/schedules">
+                  عرض التقرير الكامل
+                </Link>
               </Button>
             </div>
             <div className='space-y-4'>
-              {mockStaffWorkHours.map(staff => (
-                <div key={staff.id} className='rounded-lg border p-4'>
-                  <div className='mb-3 flex items-center justify-between'>
-                    <div>
-                      <h4 className='font-medium text-gray-900 dark:text-white'>
-                        {staff.name}
-                      </h4>
-                      <p className='text-sm text-gray-600 dark:text-gray-300'>
-                        {staff.position}
-                      </p>
+              {staffWorkHours.map(staff => (
+                <div key={staff.id} className='group p-4 rounded-xl border border-[var(--brand-border)]/50 hover:border-[var(--brand-primary)]/30 hover:bg-[var(--brand-primary)]/5 transition-all duration-200'>
+                  <div className='flex items-center justify-between mb-4'>
+                    <div className='flex items-center gap-3'>
+                      <div className='w-10 h-10 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center'>
+                        <span className='text-sm font-semibold text-[var(--brand-primary)]'>
+                          {staff.name.split(' ')[0].charAt(0)}
+                        </span>
+                      </div>
+                      <div>
+                        <h4 className='font-semibold text-[var(--text-primary)]'>
+                          {staff.name}
+                        </h4>
+                        <p className='text-sm text-[var(--text-secondary)]'>
+                          {staff.position}
+                        </p>
+                      </div>
                     </div>
                     {getOnDutyStatus(staff)}
                   </div>
-                  <div className='grid grid-cols-3 gap-4 text-sm'>
-                    <div className='text-center'>
-                      <div className='text-brand font-semibold'>
+                  <div className='grid grid-cols-3 gap-4'>
+                    <div className='text-center p-3 bg-[var(--brand-surface)] rounded-lg'>
+                      <div className='text-lg font-bold text-[var(--brand-primary)]'>
                         {staff.todayHours}س
                       </div>
-                      <div className='text-gray-600 dark:text-gray-300'>
+                      <div className='text-xs text-[var(--text-secondary)]'>
                         اليوم
                       </div>
                     </div>
-                    <div className='text-center'>
-                      <div className='font-semibold text-blue-600'>
+                    <div className='text-center p-3 bg-[var(--brand-surface)] rounded-lg'>
+                      <div className='text-lg font-bold text-blue-600'>
                         {staff.thisWeekHours}س
                       </div>
-                      <div className='text-gray-600 dark:text-gray-300'>
+                      <div className='text-xs text-[var(--text-secondary)]'>
                         هذا الأسبوع
                       </div>
                     </div>
-                    <div className='text-center'>
-                      <div className='font-semibold text-green-600'>
+                    <div className='text-center p-3 bg-[var(--brand-surface)] rounded-lg'>
+                      <div className='text-lg font-bold text-green-600'>
                         {staff.thisMonthHours}س
                       </div>
-                      <div className='text-gray-600 dark:text-gray-300'>
+                      <div className='text-xs text-[var(--text-secondary)]'>
                         هذا الشهر
                       </div>
                     </div>
                   </div>
                   {staff.isOnDuty && staff.lastCheckIn && (
-                    <div className='mt-2 text-xs text-gray-500'>
+                    <div className='mt-3 text-xs text-[var(--text-secondary)] bg-[var(--brand-surface)] px-3 py-1 rounded-md inline-block'>
                       آخر تسجيل دخول: {staff.lastCheckIn}
                     </div>
                   )}
                 </div>
               ))}
             </div>
-          </Card>
+          </AdminCard>
         </div>
 
         {/* Quick Actions */}

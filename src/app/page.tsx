@@ -7,6 +7,7 @@ import ModernHero from '@/components/home/ModernHero';
 import ServicesWithImages from '@/components/home/ServicesWithImages';
 import Footer from '@/components/layout/Footer';
 import GlobalHeader from '@/components/layout/GlobalHeader';
+import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import {
@@ -19,7 +20,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { lazy, memo, Suspense, useCallback, useRef } from 'react';
+import React, { lazy, memo, Suspense, useCallback } from 'react';
 
 // Lazy load heavy components for better performance
 const InteractiveGallery = lazy(() => import('@/components/home/InteractiveGallery'));
@@ -31,7 +32,7 @@ const VisionMission = lazy(() => import('@/components/home/VisionMission'));
 const HomePage = memo(function HomePage() {
   const [isReady, setIsReady] = React.useState(false);
   const router = useRouter();
-  const chatbotRef = useRef<{ setIsOpen: (open: boolean) => void; handleQuickAction: (action: string) => void } | null>(null);
+  const localizedNumber = useLocalizedNumber();
 
   React.useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 200);
@@ -68,29 +69,45 @@ const HomePage = memo(function HomePage() {
   );
 
   const handleAppointmentBooking = useCallback(() => {
-    if (chatbotRef.current) {
-      chatbotRef.current.setIsOpen(true);
+    // Try to find chatbot button and open it
+    const chatbotButton = document.querySelector('[aria-label*="مساعد"]') as HTMLButtonElement || 
+                         document.querySelector('button[class*="chatbot"]') as HTMLButtonElement ||
+                         document.querySelector('[data-chatbot-trigger]') as HTMLButtonElement;
+    
+    if (chatbotButton) {
+      chatbotButton.click();
+      // Wait for chatbot to open, then trigger appointment booking
       setTimeout(() => {
-        chatbotRef.current?.handleQuickAction('book_appointment');
-      }, 500);
-    } else {
-      const chatbotButton = document.querySelector('[aria-label="فتح مساعد معين"]') as HTMLButtonElement;
-      if (chatbotButton) {
-        chatbotButton.click();
-        setTimeout(() => {
-          const input = document.querySelector('input[placeholder*="رسالتك"]') as HTMLInputElement;
+        // Try to find and click the quick action button for booking
+        const quickActionButton = Array.from(document.querySelectorAll('button')).find(
+          btn => btn.textContent?.includes('احجز موعد') || btn.textContent?.includes('حجز موعد')
+        );
+        
+        if (quickActionButton) {
+          quickActionButton.click();
+        } else {
+          // Fallback: try to send message directly
+          const input = document.querySelector('input[placeholder*="رسال"], textarea[placeholder*="رسال"]') as HTMLInputElement | HTMLTextAreaElement;
           if (input) {
+            input.focus();
             input.value = 'أريد حجز موعد';
             input.dispatchEvent(new Event('input', { bubbles: true }));
-            const sendButton = document.querySelector('[aria-label="إرسال"]') as HTMLButtonElement;
-            if (sendButton) {
-              sendButton.click();
-            }
+            // Try to find send button
+            setTimeout(() => {
+              const sendButton = document.querySelector('button[type="submit"]') as HTMLButtonElement ||
+                               document.querySelector('[aria-label*="إرسال"]') as HTMLButtonElement;
+              if (sendButton) {
+                sendButton.click();
+              }
+            }, 300);
           }
-        }, 500);
-      }
+        }
+      }, 800);
+    } else {
+      // If chatbot button not found, navigate to booking page directly
+      router.push('/health/sessions/book');
     }
-  }, []);
+  }, [router]);
 
   if (!isReady) {
     return (
@@ -321,7 +338,7 @@ const HomePage = memo(function HomePage() {
               className='border-2 border-white text-white hover:bg-white hover:text-[var(--brand-primary)] hover:scale-105 transition-all duration-300 font-semibold px-8 py-6 text-lg backdrop-blur-sm bg-white/10 animate-fadeInUp'
               style={{ animationDelay: '0.3s' }}
             >
-              <Link href='/contact' data-testid='contact-us-button'>
+              <Link href='#contact' data-testid='contact-us-button'>
                 <MessageCircle className='w-5 h-5 ml-2' />
                 تواصل معنا
               </Link>
@@ -357,7 +374,9 @@ const HomePage = memo(function HomePage() {
                     <Award className='w-8 h-8 text-white' />
                   </div>
                   <div>
-                    <div className='text-2xl font-bold text-[var(--text-primary)]'>98%</div>
+                    <div className='text-2xl font-bold text-[var(--text-primary)]'>
+                      {localizedNumber('98%')}
+                    </div>
                     <div className='text-sm text-[var(--text-secondary)]'>معدل الرضا</div>
                   </div>
                 </div>
@@ -369,7 +388,9 @@ const HomePage = memo(function HomePage() {
                     <Users className='w-8 h-8 text-white' />
                   </div>
                   <div>
-                    <div className='text-2xl font-bold text-[var(--text-primary)]'>1,247+</div>
+                    <div className='text-2xl font-bold text-[var(--text-primary)]'>
+                      {localizedNumber('1,247+')}
+                    </div>
                     <div className='text-sm text-[var(--text-secondary)]'>مريض نشط</div>
                   </div>
                 </div>
@@ -461,6 +482,7 @@ const HomePage = memo(function HomePage() {
 
       {/* Floating Chatbot */}
       <MoeenChatbot position='bottom-left' />
+      
     </div>
   );
 });
