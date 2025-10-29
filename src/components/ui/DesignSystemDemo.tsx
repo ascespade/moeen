@@ -4,7 +4,7 @@ import React from 'react';
 import CTAButton from './CTAButton';
 import FeatureCard from './FeatureCard';
 import StatCard from './StatCard';
-import ThemeToggle from './ThemeToggle';
+// import ThemeToggle from './ThemeToggle';
 import RTLToggle from './RTLToggle';
 import { cn } from '@/lib/cn';
 
@@ -24,7 +24,7 @@ export default function DesignSystemDemo() {
 
         <div className='ds-card-content'>
           <div className='ds-flex ds-justify-center ds-gap-4 mb-6'>
-            <ThemeToggle showLabel={true} />
+            {/* <ThemeToggle showLabel={true} /> */}
             <RTLToggle showLabel={true} />
           </div>
         </div>

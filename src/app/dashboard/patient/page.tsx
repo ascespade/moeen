@@ -17,7 +17,7 @@ import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { useTheme } from '@/context/ThemeContext';
+// import { useTheme } from '@/context/ThemeContext';
 
 interface PatientData {
   id: string;
@@ -48,7 +48,8 @@ interface PatientData {
 
 export default function PatientDashboard() {
   const { t } = useT();
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
+  const theme = 'light'; // Default theme
   const [patientData, setPatientData] = useState<PatientData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
