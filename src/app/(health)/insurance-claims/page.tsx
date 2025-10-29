@@ -193,7 +193,7 @@ export default function InsuranceClaimsPage() {
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-default'>
-              {mockClaims.length}
+              {claims.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
               إجمالي المطالبات
@@ -201,19 +201,19 @@ export default function InsuranceClaimsPage() {
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-yellow-600'>
-              {mockClaims.filter(c => c.status === 'pending').length}
+              {claims.filter(c => c.status === 'pending').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>قيد الانتظار</div>
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-success'>
-              {mockClaims.filter(c => c.status === 'approved').length}
+              {claims.filter(c => c.status === 'approved').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>موافق عليها</div>
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-error'>
-              {mockClaims.filter(c => c.status === 'rejected').length}
+              {claims.filter(c => c.status === 'rejected').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>مرفوضة</div>
           </div>
@@ -592,7 +592,7 @@ export default function InsuranceClaimsPage() {
               </p>
             </div>
 
-            {selectedClaim.attachments.length > 0 && (
+            {selectedClaim.attachments && selectedClaim.attachments.length > 0 && (
               <div className='mt-6'>
                 <h4 className='mb-4 font-semibold'>المرفقات</h4>
                 <div className='grid grid-cols-2 gap-4 md:grid-cols-3'>

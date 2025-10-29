@@ -11,7 +11,7 @@ export interface DatabaseConfig {
 }
 
 export class DatabaseManager {
-  private pool: Pool;
+  private pool: InstanceType<typeof Pool>;
   private isConnected: boolean = false;
 
   constructor(config: DatabaseConfig) {
@@ -227,8 +227,8 @@ export class DatabaseManager {
   async getAppointments(patientId?: number, doctorId?: number, date?: string) {
     let query =
       'SELECT a.*, p.name as patient_name, d.name as doctor_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctor_id = d.id';
-    const conditions = [];
-    const values = [];
+    const conditions: string[] = [];
+    const values: any[] = [];
     let paramCount = 1;
 
     if (patientId) {

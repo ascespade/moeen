@@ -171,6 +171,7 @@ export default function ApprovalsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
   const [typeFilter, setTypeFilter] = useState<'all' | Approval['requestType']>('all');
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
     loadApprovals();

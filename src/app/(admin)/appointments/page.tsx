@@ -282,8 +282,8 @@ export default function AppointmentsPage() {
       confirmed: { label: 'مؤكد', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
       in_progress: { label: 'جاري', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
       completed: { label: 'مكتمل', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-      cancelled: { label: 'ملغي', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' },
-      no_show: { label: 'لم يحضر', variant: 'destructive' as const, className: 'bg-gray-100 text-gray-800' }
+      cancelled: { label: 'ملغي', variant: 'error' as const, className: 'bg-red-100 text-red-800' },
+      no_show: { label: 'لم يحضر', variant: 'error' as const, className: 'bg-gray-100 text-gray-800' }
     };
     
     const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: 'outline' as const, className: '' };

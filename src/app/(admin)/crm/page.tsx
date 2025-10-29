@@ -369,12 +369,12 @@ export default function CRMPage() {
         proposal: { label: 'عرض', variant: 'secondary' as const, className: 'bg-purple-100 text-purple-800' },
         negotiation: { label: 'تفاوض', variant: 'outline' as const, className: 'bg-orange-100 text-orange-800' },
         closed_won: { label: 'مكتمل', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-        closed_lost: { label: 'مرفوض', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' }
+        closed_lost: { label: 'مرفوض', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
       },
       contact: {
         active: { label: 'نشط', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
         inactive: { label: 'غير نشط', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' },
-        unsubscribed: { label: 'ملغي الاشتراك', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' }
+        unsubscribed: { label: 'ملغي الاشتراك', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
       },
       deal: {
         lead: { label: 'عميل محتمل', variant: 'outline' as const, className: 'bg-blue-100 text-blue-800' },
@@ -382,11 +382,11 @@ export default function CRMPage() {
         proposal: { label: 'عرض', variant: 'secondary' as const, className: 'bg-purple-100 text-purple-800' },
         negotiation: { label: 'تفاوض', variant: 'outline' as const, className: 'bg-orange-100 text-orange-800' },
         closed_won: { label: 'مكتمل', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-        closed_lost: { label: 'مرفوض', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' }
+        closed_lost: { label: 'مرفوض', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
       }
     };
     
-    const config = statusConfigs[type][status as keyof typeof statusConfigs[typeof type]] || 
+    const config = (statusConfigs as any)[type]?.[status] ||
                   { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -396,7 +396,7 @@ export default function CRMPage() {
       low: { label: 'منخفض', variant: 'outline' as const, className: 'bg-gray-100 text-gray-800' },
       medium: { label: 'متوسط', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
       high: { label: 'عالي', variant: 'default' as const, className: 'bg-orange-100 text-orange-800' },
-      urgent: { label: 'عاجل', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' }
+      urgent: { label: 'عاجل', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
     
     const config = priorityConfig[priority as keyof typeof priorityConfig] || 

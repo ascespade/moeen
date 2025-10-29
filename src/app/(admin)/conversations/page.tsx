@@ -362,7 +362,7 @@ export default function ConversationsPage() {
       resolved: { label: 'محلول', variant: 'secondary' as const, className: 'bg-blue-100 text-blue-800' },
       pending: { label: 'في الانتظار', variant: 'outline' as const, className: 'bg-yellow-100 text-yellow-800' },
       archived: { label: 'مؤرشف', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' },
-      escalated: { label: 'مرفوع', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' }
+      escalated: { label: 'مرفوع', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
     
     const config = statusConfig[status as keyof typeof statusConfig] || 
@@ -375,7 +375,7 @@ export default function ConversationsPage() {
       low: { label: 'منخفض', variant: 'outline' as const, className: 'bg-gray-100 text-gray-800' },
       medium: { label: 'متوسط', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
       high: { label: 'عالي', variant: 'default' as const, className: 'bg-orange-100 text-orange-800' },
-      urgent: { label: 'عاجل', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' }
+      urgent: { label: 'عاجل', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
     
     const config = priorityConfig[priority as keyof typeof priorityConfig] || 

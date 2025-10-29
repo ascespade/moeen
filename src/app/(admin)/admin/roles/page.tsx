@@ -429,7 +429,7 @@ export default function RolesPage() {
       if (!acc[permission.category]) {
         acc[permission.category] = [];
       }
-      acc[permission.category].push(permission);
+      acc[permission.category]?.push(permission);
       return acc;
     }, {} as Record<string, Permission[]>);
     
