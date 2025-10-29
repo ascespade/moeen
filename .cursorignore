@@ -5,6 +5,63 @@ node_modules/
 .next/
 out/
 build/
+dist/
+.turbo/
+.cache/
+
+# Testing & Reports
+tests/
+test-results/
+playwright-report/
+coverage/
+*.test.ts
+*.spec.ts
+*test*.ts
+
+# Documentation & Reports (exclude non-critical docs)
+docs/audits-and-reports/
+reports/
+*.report.md
+*_REPORT.md
+*_SUMMARY.md
+*_COMPLETE.md
+COMPREHENSIVE_*.md
+CRITICAL_*.md
+SYSTEM_*.md
+QUALITY_*.md
+DATABASE_*.md
+IMPLEMENTATION_*.md
+CLEANUP*.md
+HOW-TO-*.md
+QUICK-*.md
+VIEW-*.md
+MONITOR-*.md
+README-*.md
+check-*.md
+ci-*.md
+BUILD_*.md
+DESIGN_*.md
+THEME_*.md
+HEADER_*.md
+ONE_*.md
+PLAN_*.md
+PROJECT_*.md
+DOCTORS_*.md
+SELF_*.md
+ROOT_*.md
+ultimate-*.md
+cursor_background_*.json
+
+# Scripts (usually not needed for code indexing)
+scripts/
+
+# Archived files
+_archived/
+tmp/
+.isolated_trash/
+.agent-system/
+.cursor/
+.agent-work/
 
 # IDE files
 .vscode/
@@ -16,7 +73,40 @@ Thumbs.db
 
 # Logs
 *.log
+logs/
+ai_logs.db
+dashboard/logs.json
 
 # Temporary files
 *.tmp
 *.temp
+*.tgz
+*.backup
+
+# Migration files (usually not needed for code completion)
+migrations/
+
+# Supabase local
+.supabase/
+
+# Generated files
+*.tsbuildinfo
+workflow-monitor-dashboard.html
+
+# Other large directories
+playwright-report/
+vitest.config.*
+jest.config.*
+jest.setup.*
+
+# Large generated files
+tsconfig.tsbuildinfo
+
+# Documentation (too many files slow down indexing)
+docs/audits-and-reports/
+*.md
+!README.md
+!docs/README.md
+
+# GitHub workflows (not needed for code completion)
+.github/workflows/

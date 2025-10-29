@@ -13,7 +13,7 @@ export abstract class BaseError extends Error {
 
   constructor(
     message: string,
-    public readonly context?: Record<string, any>
+    public readonly context?: Record<string, unknown>
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -25,7 +25,7 @@ export abstract class BaseError extends Error {
     message: string;
     code: string;
     statusCode: number;
-    context?: Record<string, any>;
+    context?: Record<string, unknown>;
     timestamp: string;
   };
 }
@@ -39,7 +39,7 @@ export class ValidationError extends BaseError {
   constructor(
     message: string = ERROR_MESSAGES.REQUIRED,
     public readonly field?: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ) {
     super(message, context);
   }
@@ -65,7 +65,7 @@ export class AuthenticationError extends BaseError {
 
   constructor(
     message: string = ERROR_MESSAGES.UNAUTHORIZED,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ) {
     super(message, context);
   }
@@ -90,7 +90,7 @@ export class AuthorizationError extends BaseError {
 
   constructor(
     message: string = ERROR_MESSAGES.FORBIDDEN,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ) {
     super(message, context);
   }
@@ -115,7 +115,7 @@ export class NotFoundError extends BaseError {
 
   constructor(
     message: string = ERROR_MESSAGES.NOT_FOUND,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ) {
     super(message, context);
   }
@@ -138,7 +138,7 @@ export class ConflictError extends BaseError {
   readonly isOperational = true;
   readonly code = 'CONFLICT_ERROR';
 
-  constructor(message: string, context?: Record<string, any>) {
+  constructor(message: string, context?: Record<string, unknown>) {
     super(message, context);
   }
 
@@ -162,7 +162,7 @@ export class RateLimitError extends BaseError {
 
   constructor(
     message: string = 'تم تجاوز الحد المسموح من الطلبات',
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ) {
     super(message, context);
   }
@@ -187,7 +187,7 @@ export class InternalServerError extends BaseError {
 
   constructor(
     message: string = ERROR_MESSAGES.INTERNAL_ERROR,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ) {
     super(message, context);
   }
@@ -212,7 +212,7 @@ export class DatabaseError extends BaseError {
 
   constructor(
     message: string = 'خطأ في قاعدة البيانات',
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ) {
     super(message, context);
   }
@@ -238,7 +238,7 @@ export class ExternalServiceError extends BaseError {
   constructor(
     message: string = 'خطأ في الخدمة الخارجية',
     public readonly serviceName?: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ) {
     super(message, context);
   }
@@ -262,7 +262,7 @@ export class BusinessLogicError extends BaseError {
   readonly isOperational = true;
   readonly code = 'BUSINESS_LOGIC_ERROR';
 
-  constructor(message: string, context?: Record<string, any>) {
+  constructor(message: string, context?: Record<string, unknown>) {
     super(message, context);
   }
 
@@ -281,11 +281,19 @@ export class BusinessLogicError extends BaseError {
 // Error Handler Class
 export class ErrorHandler {
   private static instance: ErrorHandler;
-  private logger: any;
+  private logger: { error: (message: string, data?: unknown) => void };
 
   private constructor() {
-    // Initialize logger
-    this.logger = console; // Replace with actual logger
+    // Initialize logger - import from logger utility
+    try {
+      // Try to use centralized logger
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      const { logger } = require('@/lib/logger');
+      this.logger = logger;
+    } catch {
+      // Fallback to console
+      this.logger = console;
+    }
   }
 
   public static getInstance(): ErrorHandler {
@@ -297,7 +305,7 @@ export class ErrorHandler {
 
   public handle(
     error: Error | BaseError,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): {
     statusCode: number;
     message: string;
@@ -328,7 +336,7 @@ export class ErrorHandler {
 
   private logError(
     error: Error | BaseError,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): void {
     const errorInfo = {
       name: error.name,
@@ -358,49 +366,49 @@ export class ErrorFactory {
   public static createValidationError(
     message: string,
     field?: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): ValidationError {
     return new ValidationError(message, field, context);
   }
 
   public static createAuthenticationError(
     message?: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): AuthenticationError {
     return new AuthenticationError(message, context);
   }
 
   public static createAuthorizationError(
     message?: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): AuthorizationError {
     return new AuthorizationError(message, context);
   }
 
   public static createNotFoundError(
     message?: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): NotFoundError {
     return new NotFoundError(message, context);
   }
 
   public static createConflictError(
     message: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): ConflictError {
     return new ConflictError(message, context);
   }
 
   public static createBusinessLogicError(
     message: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): BusinessLogicError {
     return new BusinessLogicError(message, context);
   }
 
   public static createDatabaseError(
     message?: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): DatabaseError {
     return new DatabaseError(message, context);
   }
@@ -408,7 +416,7 @@ export class ErrorFactory {
   public static createExternalServiceError(
     message?: string,
     serviceName?: string,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): ExternalServiceError {
     return new ExternalServiceError(message, serviceName, context);
   }
@@ -418,7 +426,7 @@ export class ErrorFactory {
 export class ErrorResponseFormatter {
   public static format(
     error: Error | BaseError,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): {
     success: false;
     error: {
@@ -426,7 +434,7 @@ export class ErrorResponseFormatter {
       message: string;
       code: string;
       statusCode: number;
-      context?: Record<string, any>;
+      context?: Record<string, unknown>;
       timestamp: string;
     };
   } {
@@ -449,8 +457,10 @@ export class ErrorResponseFormatter {
 }
 
 // Async Error Wrapper
-export const asyncHandler = (fn: Function) => {
-  return (req: any, res: any, next: any) => {
+export const asyncHandler = (
+  fn: (req: unknown, res: unknown, next: (error?: Error) => void) => Promise<unknown> | unknown
+) => {
+  return (req: unknown, res: unknown, next: (error?: Error) => void) => {
     Promise.resolve(fn(req, res, next)).catch(next);
   };
 };
@@ -460,7 +470,7 @@ export class ErrorBoundary extends Error {
   constructor(
     message: string,
     public readonly componentStack?: string,
-    public readonly errorInfo?: any
+    public readonly errorInfo?: Record<string, unknown>
   ) {
     super(message);
     this.name = 'ErrorBoundary';

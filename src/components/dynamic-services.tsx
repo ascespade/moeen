@@ -82,7 +82,7 @@ const DynamicServices = memo(function DynamicServices() {
           setServices(defaultServices);
         }
       } catch (error) {
-        console.error('Error fetching services:', error);
+        // Silently fail - use default services
         setServices(defaultServices);
       } finally {
         setLoading(false);

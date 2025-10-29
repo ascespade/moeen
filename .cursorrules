@@ -1,0 +1,129 @@
+# Cursor AI Agent Rules - قواعد الوكيل الذكي
+
+## Performance Optimization Rules
+
+### Context Management
+- Focus only on relevant files for the current task
+- Avoid loading entire directories unless necessary
+- Prefer specific file paths over broad searches
+- Limit context to 20-30 files maximum per operation
+
+### Code Generation
+- Generate concise, focused code snippets
+- Avoid creating overly large files (>300 lines)
+- Split large components into smaller, focused modules
+- Use lazy loading for heavy components
+
+### Search Strategies
+- Use specific queries rather than broad searches
+- Target specific directories when possible
+- Avoid searching in node_modules, tests, or build outputs
+- Limit search results to what's actually needed
+
+## STRICT PROJECT RULES - قواعد صارمة لا يمكن كسرها
+
+### 1. No Fake Data (ممنوع البيانات الوهمية)
+- ❌ FORBIDDEN: Hardcoded data, mock data, fake data, placeholders
+- ✅ REQUIRED: All data must come from real database queries
+- ✅ Use Supabase client to fetch real data
+- Action: Any violation will REJECT the change immediately
+
+### 2. Preserve Primary Colors (حماية الألوان الأساسية)
+- ❌ FORBIDDEN: Changing `--brand-primary`, `--brand-secondary` or core brand colors
+- ✅ ALLOWED: Modifying secondary component colors for contrast only
+- ✅ Use centralized color system from `src/styles/centralized.css`
+- Action: Color changes to primary colors will be REJECTED
+
+### 3. Link Integrity (سلامة الروابط)
+- ❌ FORBIDDEN: Empty href="#", broken links, unconnected buttons
+- ✅ REQUIRED: All buttons and links must be properly connected
+- ✅ Use Next.js Link component for navigation
+- Action: Unlinked elements will be REJECTED
+
+### 4. No Duplicate Files (ممنوع الملفات المكررة)
+- ❌ FORBIDDEN: Creating duplicate components or files
+- ✅ REQUIRED: Check if file exists before creating new one
+- ✅ Modify existing file or create new one only if not exists
+- Action: Duplicate creation will be REJECTED
+
+### 5. Pre-Check Existence (التحقق قبل الإنشاء)
+- ✅ REQUIRED: Check file/component existence before creating
+- ✅ Use grep or glob_file_search to verify
+- ✅ Read existing files before modifying
+
+### 6. Centralized Color Palette (لوحة الألوان المركزية)
+- ✅ REQUIRED: Use only colors from centralized palette
+- ❌ FORBIDDEN: Custom colors not in palette
+- ✅ Colors defined in: `src/styles/centralized.css`
+- ✅ Use CSS variables: `var(--brand-primary)`, `var(--text-primary)`, etc.
+
+## Modern Design Guidelines - إرشادات التصميم العصري
+
+### Color System
+- Use centralized color system with Primary & Secondary Colors preserved
+- Apply smart gradients and shadows for secondary components only
+- Ensure WCAG AA contrast ratio (minimum 4.5:1) for text, icons, buttons
+- Avoid non-modern colors or colors not in centralized palette
+- Support light and dark themes without breaking primary colors
+
+### Responsive Design
+- Design must be responsive for all devices
+- Use Tailwind responsive classes: `md:`, `lg:`, `xl:`
+- Test on mobile, tablet, desktop viewports
+
+### Component Design
+- Modern, clean lines and harmonious colors
+- Calculated gradients and shadows
+- Smooth interactions and animations
+- Follow latest design trends while maintaining consistency
+
+## Auto-Adjustment Rules
+
+### Accessibility (إمكانية الوصول)
+- Auto-adjust contrast to meet WCAG AA standards
+- Ensure readable text sizes
+- Provide screen reader support
+- Proper ARIA labels for interactive elements
+
+### Theme Compatibility (التوافق مع الثيمات)
+- Auto-adjust for light and dark themes
+- Preserve primary colors across themes
+- Maintain contrast ratios in both modes
+
+### Real-Time Monitoring
+- Monitor new components immediately after creation
+- Auto-adjust secondary colors and contrast
+- Do NOT affect primary colors
+
+## Enforcement Actions
+
+1. **ERROR Level**: Changes will be REJECTED immediately
+   - Fake data usage
+   - Primary color changes
+   - Empty/broken links
+   - Duplicate files
+
+2. **WARNING Level**: Changes will be corrected automatically
+   - Accessibility issues
+   - Theme compatibility
+   - Gradient/shadow adjustments
+
+3. **INFO Level**: Changes will be logged and reported
+   - Component monitoring
+   - Design improvements
+
+## Before Making Changes - قبل أي تعديل
+
+1. ✅ Check if file/component exists
+2. ✅ Verify color palette compliance
+3. ✅ Ensure no fake data
+4. ✅ Check all links are connected
+5. ✅ Verify accessibility standards
+6. ✅ Test theme compatibility
+
+## Report Generation
+- Generate real-time report for any modification
+- Confirm primary colors were not changed
+- List all rule violations
+- Suggest corrections for warnings
+

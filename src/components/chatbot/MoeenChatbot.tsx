@@ -23,7 +23,7 @@ export default function MoeenChatbot({
       id: 'welcome',
       role: 'assistant',
       content:
-        'أهلاً بك في مركز الهمم 👋\n\nأنا مُعين، مساعدك الرقمي. نحن هنا لتقديم الدعم لكل فرد.\n\nكيف يمكنني مساعدتك اليوم؟',
+        'أهلاً بك في مركز الهمم 👋\n\nأنا معين، مساعدك الرقمي. نحن هنا لتقديم الدعم لكل فرد.\n\nكيف يمكنني مساعدتك اليوم؟',
       timestamp: new Date(),
     },
   ]);
@@ -183,21 +183,21 @@ export default function MoeenChatbot({
   };
 
   const positionClasses =
-    position === 'bottom-right' ? 'bottom-6 right-6' : 'bottom-6 left-6';
+    position === 'bottom-right' ? 'bottom-4 right-4' : 'bottom-4 left-4';
 
   return (
     <>
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed ${positionClasses} z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-purple-600 text-white shadow-2xl transition-all hover:scale-110 hover:shadow-3xl ${
+        className={`fixed ${positionClasses} z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-primary)] text-white shadow-lg border-2 border-white transition-all hover:scale-110 hover:shadow-xl ${
           isOpen ? 'rotate-90' : ''
         }`}
         aria-label='فتح مساعد معين'
       >
         {isOpen ? (
           <svg
-            className='h-8 w-8'
+            className='h-6 w-6'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -211,8 +211,8 @@ export default function MoeenChatbot({
           </svg>
         ) : (
           <div className='text-center'>
-            <div className='text-3xl mb-1'>🤖</div>
-            <div className='text-xs font-bold'>معين</div>
+            <div className='text-2xl mb-0.5'>🤖</div>
+            <div className='text-[10px] font-bold leading-tight'>معين</div>
           </div>
         )}
       </button>
@@ -220,9 +220,9 @@ export default function MoeenChatbot({
       {/* Notification Badge */}
       {!isOpen && messages.length > 1 && (
         <div
-          className={`fixed ${positionClasses} z-40 translate-x-8 -translate-y-8`}
+          className={`fixed ${positionClasses} z-40 translate-x-10 -translate-y-2`}
         >
-          <div className='h-6 w-6 rounded-full bg-red-500 flex items-center justify-center text-xs font-bold animate-bounce'>
+          <div className='h-5 w-5 rounded-full bg-[var(--brand-error)] flex items-center justify-center text-[10px] font-bold text-white animate-pulse shadow-md'>
             {messages.filter(m => m.role === 'assistant').length - 1}
           </div>
         </div>
@@ -231,49 +231,49 @@ export default function MoeenChatbot({
       {/* Chat Window */}
       {isOpen && (
         <div
-          className={`fixed ${positionClasses} z-40 mb-20 h-[600px] w-[400px] overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-800 flex flex-col`}
+          className={`fixed ${positionClasses} z-40 mb-16 h-[500px] w-[360px] overflow-hidden rounded-xl bg-[var(--panel)] shadow-2xl border border-[var(--brand-border)] flex flex-col`}
         >
           {/* Header */}
-          <div className='bg-gradient-to-r from-[var(--brand-primary)] to-purple-600 p-4 text-white'>
+          <div className='bg-[var(--brand-primary)] p-3 text-white'>
             <div className='flex items-center justify-between'>
-              <div className='flex items-center gap-3'>
-                <div className='h-12 w-12 rounded-full bg-white/20 flex items-center justify-center text-2xl backdrop-blur'>
+              <div className='flex items-center gap-2'>
+                <div className='h-10 w-10 rounded-full bg-white/20 flex items-center justify-center text-xl backdrop-blur'>
                   🤖
                 </div>
                 <div>
-                  <h3 className='text-xl font-bold'>مُعين</h3>
-                  <p className='text-sm text-white/80'>مساعدك الرقمي</p>
+                  <h3 className='text-lg font-bold'>معين</h3>
+                  <p className='text-xs text-white/80'>مساعدك الرقمي</p>
                 </div>
               </div>
-              <div className='flex items-center gap-2'>
-                <div className='h-3 w-3 rounded-full bg-green-400 animate-pulse'></div>
+              <div className='flex items-center gap-1.5'>
+                <div className='h-2 w-2 rounded-full bg-[var(--brand-success)] animate-pulse'></div>
                 <span className='text-xs'>متصل</span>
               </div>
             </div>
           </div>
 
           {/* Messages */}
-          <div className='flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50 dark:bg-gray-900'>
+          <div className='flex-1 overflow-y-auto p-3 space-y-3 bg-[var(--background)]'>
             {messages.map(message => (
               <div
                 key={message.id}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                  className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
                     message.role === 'user'
                       ? 'bg-[var(--brand-primary)] text-white'
-                      : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-md'
+                      : 'bg-[var(--panel)] text-[var(--text-primary)] border border-[var(--brand-border)] shadow-sm'
                   }`}
                 >
-                  <p className='whitespace-pre-wrap leading-relaxed'>
+                  <p className='whitespace-pre-wrap leading-relaxed text-sm'>
                     {message.content}
                   </p>
                   <p
-                    className={`mt-2 text-xs ${
+                    className={`mt-1 text-[10px] ${
                       message.role === 'user'
                         ? 'text-white/70'
-                        : 'text-gray-500'
+                        : 'text-[var(--text-muted)]'
                     }`}
                   >
                     {message.timestamp.toLocaleTimeString('ar-SA', {
@@ -287,15 +287,15 @@ export default function MoeenChatbot({
 
             {isLoading && (
               <div className='flex justify-start'>
-                <div className='bg-white dark:bg-gray-800 rounded-2xl px-4 py-3 shadow-md'>
-                  <div className='flex gap-2'>
-                    <div className='h-2 w-2 rounded-full bg-gray-400 animate-bounce'></div>
+                <div className='bg-[var(--panel)] rounded-lg px-3 py-2 border border-[var(--brand-border)]'>
+                  <div className='flex gap-1.5'>
+                    <div className='h-1.5 w-1.5 rounded-full bg-[var(--brand-primary)] animate-bounce'></div>
                     <div
-                      className='h-2 w-2 rounded-full bg-gray-400 animate-bounce'
+                      className='h-1.5 w-1.5 rounded-full bg-[var(--brand-primary)] animate-bounce'
                       style={{ animationDelay: '0.2s' }}
                     ></div>
                     <div
-                      className='h-2 w-2 rounded-full bg-gray-400 animate-bounce'
+                      className='h-1.5 w-1.5 rounded-full bg-[var(--brand-primary)] animate-bounce'
                       style={{ animationDelay: '0.4s' }}
                     ></div>
                   </div>
@@ -308,8 +308,8 @@ export default function MoeenChatbot({
 
           {/* Quick Actions */}
           {messages.length === 1 && (
-            <div className='border-t dark:border-gray-700 p-4 bg-white dark:bg-gray-800'>
-              <p className='text-sm text-gray-600 dark:text-gray-400 mb-3'>
+            <div className='border-t border-[var(--brand-border)] p-3 bg-[var(--panel)]'>
+              <p className='text-xs text-[var(--text-secondary)] mb-2'>
                 اختصارات سريعة:
               </p>
               <div className='grid grid-cols-2 gap-2'>
@@ -317,7 +317,7 @@ export default function MoeenChatbot({
                   <button
                     key={action.id}
                     onClick={() => handleQuickAction(action.action)}
-                    className='rounded-lg bg-gray-100 dark:bg-gray-700 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 transition-all hover:bg-[var(--brand-primary)] hover:text-white'
+                    className='rounded-md bg-[var(--brand-surface)] px-2 py-1.5 text-xs text-[var(--text-primary)] transition-all hover:bg-[var(--brand-primary)] hover:text-white border border-[var(--brand-border)]'
                   >
                     {action.text}
                   </button>
@@ -327,25 +327,25 @@ export default function MoeenChatbot({
           )}
 
           {/* Input */}
-          <div className='border-t dark:border-gray-700 p-4 bg-white dark:bg-gray-800'>
+          <div className='border-t border-[var(--brand-border)] p-3 bg-[var(--panel)]'>
             <div className='flex gap-2'>
               <input
                 type='text'
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder='اكتب رسالتك هنا...'
-                className='flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-white focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20'
+                placeholder='اكتب رسالتك...'
+                className='flex-1 rounded-md border border-[var(--brand-border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20'
                 disabled={isLoading}
               />
               <button
                 onClick={() => handleSendMessage()}
                 disabled={isLoading || !input.trim()}
-                className='rounded-lg bg-[var(--brand-primary)] px-4 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed'
+                className='rounded-md bg-[var(--brand-primary)] px-3 py-2 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed'
                 aria-label='إرسال'
               >
                 <svg
-                  className='h-6 w-6'
+                  className='h-5 w-5'
                   fill='none'
                   stroke='currentColor'
                   viewBox='0 0 24 24'

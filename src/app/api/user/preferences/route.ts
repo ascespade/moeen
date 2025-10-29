@@ -11,8 +11,16 @@ export async function GET() {
       error: authError,
     } = await supabase.auth.getUser();
 
+    // Return default preferences for unauthenticated users
+    const defaultPreferences = {
+      theme: 'light',
+      language: 'ar',
+      timezone: 'Asia/Riyadh',
+      notifications_enabled: true,
+    };
+
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json(defaultPreferences);
     }
 
     // Fetch user preferences
@@ -29,14 +37,6 @@ export async function GET() {
         { status: 500 }
       );
     }
-
-    // Return default preferences if none exist
-    const defaultPreferences = {
-      theme: 'light',
-      language: 'ar',
-      timezone: 'Asia/Riyadh',
-      notifications_enabled: true,
-    };
 
     return NextResponse.json(preferences || defaultPreferences);
   } catch (error) {
@@ -57,11 +57,14 @@ export async function POST(request: NextRequest) {
       error: authError,
     } = await supabase.auth.getUser();
 
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
+    // Allow saving preferences for unauthenticated users (they use localStorage)
+    // Only save to DB if authenticated
     const { key, value } = await request.json();
+
+    if (authError || !user) {
+      // Unauthenticated users - return success (they use localStorage)
+      return NextResponse.json({ success: true, source: 'localStorage' });
+    }
 
     if (!key || value === undefined) {
       return NextResponse.json(

@@ -1,107 +1,107 @@
-// Logger implementation
+/**
+ * Centralized logging utility
+ * Replaces direct console calls with a configurable logger
+ */
 
-interface LogLevel {
-  ERROR: 'error';
-  WARN: 'warn';
-  INFO: 'secondary';
-  DEBUG: 'debug';
-}
+type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
-const LOG_LEVELS: LogLevel = {
-  ERROR: 'error',
-  WARN: 'warn',
-  INFO: 'secondary',
-  DEBUG: 'debug',
-};
-
-interface LogEntry {
-  level: string;
-  message: string;
-  timestamp: string;
-  context?: any;
-  userId?: string;
-  requestId?: string;
+interface LogContext {
+  [key: string]: unknown;
 }
 
 class Logger {
-  private isDevelopment = process.env.NODE_ENV === 'development';
   private isProduction = process.env.NODE_ENV === 'production';
+  private minLevel: LogLevel;
 
-  private formatMessage(
-    level: string,
-    message: string,
-    context?: any
-  ): LogEntry {
-    return {
-      level,
-      message,
-      timestamp: new Date().toISOString(),
-      context,
-      userId: context?.userId,
-      requestId: context?.requestId,
-    };
+  constructor() {
+    // In production, only show warnings and errors
+    this.minLevel = this.isProduction ? 'warn' : 'debug';
   }
 
-  private shouldLog(level: string): boolean {
-    if (this.isDevelopment) return true;
-    if (this.isProduction) return level !== 'debug';
-    return true;
+  private shouldLog(level: LogLevel): boolean {
+    const levels: LogLevel[] = ['debug', 'info', 'warn', 'error'];
+    return levels.indexOf(level) >= levels.indexOf(this.minLevel);
   }
 
-  private log(level: string, message: string, context?: any) {
-    if (!this.shouldLog(level)) return;
+  private formatMessage(message: string, context?: LogContext): string {
+    if (!context || Object.keys(context).length === 0) {
+      return message;
+    }
+    return `${message} ${JSON.stringify(context)}`;
+  }
 
-    const logEntry = this.formatMessage(level, message, context);
-
-    // Console logging
-    const consoleMethod =
-      level === 'error'
-        ? 'error'
-        : level === 'warn'
-          ? 'warn'
-          : level === 'secondary'
-            ? 'secondary'
-            : 'log';
-
-    console[consoleMethod](
-      `[${logEntry.timestamp}] ${level.toUpperCase()}: ${message}`,
-      context || ''
-    );
-
-    // Send to external service in production
-    if (this.isProduction && level === 'error') {
-      this.sendToExternalService(logEntry);
+  debug(message: string, context?: LogContext): void {
+    if (this.shouldLog('debug')) {
+      console.debug(`[DEBUG] ${this.formatMessage(message, context)}`);
     }
   }
 
-  private async sendToExternalService(logEntry: LogEntry) {
+  info(message: string, context?: LogContext): void {
+    if (this.shouldLog('info')) {
+      console.info(`[INFO] ${this.formatMessage(message, context)}`);
+    }
+  }
+
+  warn(message: string, context?: LogContext): void {
+    if (this.shouldLog('warn')) {
+      console.warn(`[WARN] ${this.formatMessage(message, context)}`);
+    }
+  }
+
+  error(message: string, error?: Error | unknown, context?: LogContext): void {
+    if (this.shouldLog('error')) {
+      const errorInfo =
+        error instanceof Error
+          ? { message: error.message, stack: error.stack, ...context }
+          : { error, ...context };
+
+      console.error(`[ERROR] ${this.formatMessage(message, errorInfo)}`);
+    }
+
+    // In production, send errors to logging service
+    if (this.isProduction && error instanceof Error) {
+      this.sendToLoggingService(message, error, context);
+    }
+  }
+
+  private async sendToLoggingService(
+    message: string,
+    error: Error,
+    context?: LogContext
+  ): Promise<void> {
     try {
-      await fetch('/api/logs', {
+      await fetch('/api/errors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(logEntry),
+        body: JSON.stringify({
+          message,
+          error: {
+            name: error.name,
+            message: error.message,
+            stack: error.stack,
+          },
+          context,
+          timestamp: new Date().toISOString(),
+          userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'server',
+          url:
+            typeof window !== 'undefined' ? window.location.href : 'server-side',
+        }),
       });
-    } catch (error) {
-      // Fallback to console if external service fails
-      logger.error('Failed to send log to external service:', error);
+    } catch (sendError) {
+      // Fail silently if logging service is unavailable
+      console.error('Failed to send error to logging service', sendError);
     }
-  }
-
-  error(message: string, context?: any) {
-    this.log(LOG_LEVELS.ERROR, message, context);
-  }
-
-  warn(message: string, context?: any) {
-    this.log(LOG_LEVELS.WARN, message, context);
-  }
-
-  info(message: string, context?: any) {
-    this.log(LOG_LEVELS.INFO, message, context);
-  }
-
-  debug(message: string, context?: any) {
-    this.log(LOG_LEVELS.DEBUG, message, context);
   }
 }
 
+// Export singleton instance
 export const logger = new Logger();
+
+// Export convenience functions
+export const log = {
+  debug: (message: string, context?: LogContext) => logger.debug(message, context),
+  info: (message: string, context?: LogContext) => logger.info(message, context),
+  warn: (message: string, context?: LogContext) => logger.warn(message, context),
+  error: (message: string, error?: Error | unknown, context?: LogContext) =>
+    logger.error(message, error, context),
+};

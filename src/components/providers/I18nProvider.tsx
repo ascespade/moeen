@@ -1,10 +1,11 @@
 'use client';
 import {
-  createContext,
-  useContext,
-  ReactNode,
-  useState,
-  useCallback,
+    createContext,
+    ReactNode,
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
 } from 'react';
 
 interface I18nContextType {
@@ -29,7 +30,27 @@ interface I18nProviderProps {
 
 export default function I18nProvider({ children }: I18nProviderProps) {
   const [language, setLanguage] = useState<'ar' | 'en'>('ar');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load language from localStorage only (avoid duplicate API calls)
+  // usePreferences hook handles API loading centrally
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem('moeen_user_preferences');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed.language) {
+            setLanguage(parsed.language);
+          }
+        }
+      } catch (error) {
+        // Ignore errors
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, []);
 
   const t = (key: string, fallback?: string) => {
     // Simple translation function - in real app, this would use a proper i18n library

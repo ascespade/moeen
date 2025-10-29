@@ -9,19 +9,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Brand colors for CSS compatibility - must match centralized.css
+        // Brand colors - must match centralized.css
         'brand-primary': '#e46c0a',
-        'brand-primary-hover': '#d45f08',
-        'brand-secondary': '#ffa500',
-        'brand-accent': '#007bff',
-        'brand-success': '#009688',
-        'brand-warning': '#f59e0b',
-        'brand-error': '#ef4444',
-        'brand-info': '#0ea5e9',
-        'brand-border': '#e5e7eb',
-        'brand-surface': '#f9fafb',
+        'brand-primary-hover': '#c55d0a',
+        'brand-secondary': '#ff9800',
+        'brand-accent': '#0066cc',
+        'brand-success': '#008a7a',
+        'brand-warning': '#e68900',
+        'brand-error': '#dc2626',
+        'brand-info': '#0284c7',
+        'brand-border': '#cbd5e1',
+        'brand-surface': '#f1f5f9',
+        // Text colors with better contrast
+        'text-primary': '#1e293b',
+        'text-secondary': '#475569',
+        'text-muted': '#64748b',
+      },
+      fontFamily: {
+        sans: [
+          'Tajawal',
+          'Noto Sans Arabic',
+          'Cairo',
+          'Amiri',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Inter',
+          'Roboto',
+          'system-ui',
+          'sans-serif',
+        ],
       },
     },
   },
   plugins: [],
+  corePlugins: {
+    // Disable default focus outline that may cause boxes
+    outline: true,
+  },
 };

@@ -54,11 +54,24 @@ export async function authMiddleware(request: NextRequest) {
   const token = request.cookies.get('auth_token')?.value || 
                 request.headers.get('authorization')?.replace('Bearer ', '');
 
-  // No token = redirect to login
+  // No token = redirect to login or register for admin routes
   if (!token) {
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('redirect', pathname);
-    return NextResponse.redirect(loginUrl);
+    // For admin routes, offer both login and register
+    const isAdminRoute = pathname.startsWith('/admin') || 
+                        Object.keys(PROTECTED_ROUTES).some(route => pathname.startsWith(route));
+    
+    if (isAdminRoute) {
+      // Redirect to login (user can navigate to register from there)
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      loginUrl.searchParams.set('register', 'true'); // Flag to show register option
+      return NextResponse.redirect(loginUrl);
+    } else {
+      // For other protected routes, redirect to login
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
   // Verify token and get user data (simplified for now)
@@ -66,9 +79,20 @@ export async function authMiddleware(request: NextRequest) {
   const userData = verifyToken(token);
   
   if (!userData) {
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('redirect', pathname);
-    return NextResponse.redirect(loginUrl);
+    // Invalid token - redirect to login
+    const isAdminRoute = pathname.startsWith('/admin') || 
+                        Object.keys(PROTECTED_ROUTES).some(route => pathname.startsWith(route));
+    
+    if (isAdminRoute) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      loginUrl.searchParams.set('register', 'true');
+      return NextResponse.redirect(loginUrl);
+    } else {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
   // Check role-based access

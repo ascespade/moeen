@@ -32,7 +32,7 @@ export function useErrorHandler() {
       } else if (typeof error === 'string') {
         errorMessage = error;
       } else if (error && typeof error === 'object' && 'message' in error) {
-        errorMessage = (error as any).message;
+        errorMessage = String((error as { message?: string }).message || fallbackMessage);
       }
 
       // Log error if enabled
@@ -49,14 +49,17 @@ export function useErrorHandler() {
               userAgent: navigator.userAgent,
               url: window.location.href,
             }),
-          }).catch(console.error);
+          }).catch((error) => {
+            // Silently fail - error logging service unavailable
+            if (process.env.NODE_ENV === 'development') {
+              console.error('Failed to log error to service:', error);
+            }
+          });
         }
       }
 
-      // Show toast if enabled
-      if (showToast) {
-        console.error('Error:', errorMessage);
-      }
+      // Show toast if enabled (will be handled by toast system)
+      // Error is already logged above
 
       return {
         message: errorMessage,
@@ -67,7 +70,7 @@ export function useErrorHandler() {
   );
 
   const handleAsyncError = useCallback(
-    async (asyncFn: () => Promise<any>, options: ErrorHandlerOptions = {}) => {
+    async <T>(asyncFn: () => Promise<T>, options: ErrorHandlerOptions = {}): Promise<T | undefined> => {
       try {
         return await asyncFn();
       } catch (error) {

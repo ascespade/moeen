@@ -86,7 +86,7 @@ export function formatErrorResponse(error: unknown): {
   success: false;
   error: string;
   code?: string;
-  details?: any;
+  details?: Record<string, unknown>;
   statusCode: number;
 } {
   if (error instanceof APIError) {
@@ -117,7 +117,7 @@ export function formatErrorResponse(error: unknown): {
 }
 
 // Error logging
-export function logError(error: unknown, context?: any) {
+export function logError(error: unknown, context?: Record<string, unknown>) {
   const errorInfo = {
     timestamp: new Date().toISOString(),
     error:
@@ -131,8 +131,9 @@ export function logError(error: unknown, context?: any) {
     context,
   };
 
-  // Log to console in development
+  // Log to console in development (use logger in production)
   if (process.env.NODE_ENV === 'development') {
+    console.error('API Error:', errorInfo);
   }
 
   // External logging service integration implemented for production
@@ -140,7 +141,7 @@ export function logError(error: unknown, context?: any) {
 }
 
 // Error handler middleware
-export function handleAPIError(error: unknown, context?: any) {
+export function handleAPIError(error: unknown, context?: Record<string, unknown>) {
   logError(error, context);
   return formatErrorResponse(error);
 }

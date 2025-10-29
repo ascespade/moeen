@@ -91,7 +91,7 @@ const DynamicStats = memo(function DynamicStats() {
           setStats(defaultStats);
         }
       } catch (error) {
-        console.error('Error fetching stats:', error);
+        // Silently fail - use default stats
         setStats(defaultStats);
       } finally {
         setLoading(false);
