@@ -5,7 +5,7 @@
  */
 
 export { default as ErrorBoundary } from './ErrorBoundary';
-export { default as OptimizedImage } from './OptimizedImage';
+export { default as OptimizedImage } from '../shared/OptimizedImage';
 export { default as PerformanceOptimizedImage } from './PerformanceOptimizedImage';
 export { default as LiveDot } from './LiveDot';
 export { default as StatusBanner } from './StatusBanner';

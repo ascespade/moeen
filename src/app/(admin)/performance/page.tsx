@@ -78,6 +78,7 @@ import {
   Meh,
   Heart,
   Star,
+  Bell,
   Flag,
   Archive,
   Copy,
@@ -91,12 +92,12 @@ import {
   Medal,
   Crown,
   Flame,
-  Thunder,
+  Zap as Thunder,
   Rocket,
   Gauge,
-  Speedometer,
+  Gauge as Speedometer,
   Timer,
-  Stopwatch,
+  Timer as Stopwatch,
   Play,
   Pause,
   Square,
@@ -124,7 +125,7 @@ import {
   Battery,
   BatteryLow,
   BatteryMedium,
-  BatteryHigh,
+  Battery as BatteryHigh,
   Cpu,
   HardDrive,
   MemoryStick,
@@ -385,7 +386,7 @@ export default function PerformancePage() {
       excellent: { label: 'ممتاز', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
       good: { label: 'جيد', variant: 'default' as const, className: 'bg-blue-100 text-blue-800' },
       warning: { label: 'تحذير', variant: 'outline' as const, className: 'bg-yellow-100 text-yellow-800' },
-      critical: { label: 'حرج', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' },
+      critical: { label: 'حرج', variant: 'error' as const, className: 'bg-red-100 text-red-800' },
       unknown: { label: 'غير معروف', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' }
     };
     
@@ -452,7 +453,7 @@ export default function PerformancePage() {
       low: { label: 'منخفض', variant: 'outline' as const, className: 'bg-gray-100 text-gray-800' },
       medium: { label: 'متوسط', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
       high: { label: 'عالي', variant: 'default' as const, className: 'bg-orange-100 text-orange-800' },
-      critical: { label: 'حرج', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' }
+      critical: { label: 'حرج', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
     
     const config = severityConfig[severity as keyof typeof severityConfig] || 

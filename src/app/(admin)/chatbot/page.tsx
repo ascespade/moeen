@@ -275,7 +275,7 @@ export default function ChatbotPage() {
         id: '3',
         name: 'معلومات الخدمات',
         description: 'قائمة بالخدمات الطبية المتاحة',
-        category: 'information',
+        category: 'general',
         language: 'ar',
         content: 'نقدم في مركز الهمم: الطب العام، أمراض القلب، الجراحة، طب الأطفال، والطب النفسي',
         variables: [],

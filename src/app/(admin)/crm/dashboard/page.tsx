@@ -158,12 +158,12 @@ const CRMDashboard: React.FC = () => {
       },
       cancelled: {
         label: 'ملغي',
-        variant: 'destructive' as const,
+        variant: 'error' as const,
         color: 'bg-red-100 text-red-800',
       },
       no_show: {
         label: 'لم يحضر',
-        variant: 'destructive' as const,
+        variant: 'error' as const,
         color: 'bg-orange-100 text-orange-800',
       },
     };

@@ -1,0 +1,268 @@
+{
+  "name": "Hemam Center Healthcare Management System - Background Audit Agent",
+  "version": "1.0.0",
+  "description": "Autonomous self-healing agent for مركز الهمم للإعاقات الذهنية والتوحد",
+  "mode": "aggressive",
+  "execution": {
+    "parallel": true,
+    "self_healing": true,
+    "auto_commit": true,
+    "max_iterations": 10,
+    "clean_passes_required": 10
+  },
+  "objectives": {
+    "build_success": true,
+    "zero_type_errors": true,
+    "zero_lint_errors": true,
+    "all_tests_pass": true,
+    "dynamic_system": "100%",
+    "theme_default": "light",
+    "database_connected": true
+  },
+  "project": {
+    "root": "./",
+    "language": "typescript",
+    "framework": "nextjs",
+    "version": "14.2.33",
+    "database": "supabase",
+    "styling": "tailwindcss",
+    "components": "shadcn-ui"
+  },
+  "theme": {
+    "default_mode": "light",
+    "dark_mode_enabled": true,
+    "system_detection": true,
+    "primary_color": "#e46c0a",
+    "secondary_color": "#ffa500",
+    "accent_color": "#007bff",
+    "border_radius": "md",
+    "font_family": "sans",
+    "rtl_support": true
+  },
+  "localization": {
+    "primary_language": "ar",
+    "secondary_language": "en",
+    "rtl_enabled": true,
+    "translation_files": [
+      "src/locales/ar.json",
+      "src/locales/en.json"
+    ]
+  },
+  "database": {
+    "platform": "supabase",
+    "tables_count": 50,
+    "migrations_path": "migrations/",
+    "rls_enabled": true,
+    "real_time_enabled": true,
+    "features": [
+      "authentication",
+      "row_level_security",
+      "real_time_subscriptions",
+      "storage",
+      "edge_functions"
+    ]
+  },
+  "modules": [
+    {
+      "name": "Admin Dashboard",
+      "path": "src/app/(admin)",
+      "status": "active",
+      "features": ["users", "roles", "audit_logs", "settings"]
+    },
+    {
+      "name": "CRM System",
+      "path": "src/app/(admin)/crm",
+      "status": "active",
+      "features": ["leads", "contacts", "deals", "activities", "flows"]
+    },
+    {
+      "name": "Chatbot & AI",
+      "path": "src/app/(admin)/chatbot",
+      "status": "active",
+      "features": ["conversations", "templates", "flows", "analytics", "integrations"]
+    },
+    {
+      "name": "Appointments Management",
+      "path": "src/app/(admin)/appointments",
+      "status": "active",
+      "features": ["scheduling", "calendar", "reminders", "notifications"]
+    },
+    {
+      "name": "Healthcare Modules",
+      "path": "src/app/(health)",
+      "status": "active",
+      "features": [
+        "patients",
+        "medical_records",
+        "insurance_claims",
+        "approvals",
+        "family_support",
+        "therapy",
+        "progress_tracking"
+      ]
+    },
+    {
+      "name": "Authentication",
+      "path": "src/app/(auth)",
+      "status": "active",
+      "features": ["login", "register", "forgot_password", "reset_password", "verify_email"]
+    },
+    {
+      "name": "Analytics & Reports",
+      "path": "src/app/(admin)/reports",
+      "status": "active",
+      "features": ["analytics", "reports", "performance", "insights"]
+    },
+    {
+      "name": "Payments & Billing",
+      "path": "src/app/(admin)/payments",
+      "status": "active",
+      "features": ["invoices", "transactions", "billing"]
+    },
+    {
+      "name": "Notifications",
+      "path": "src/app/(admin)/notifications",
+      "status": "active",
+      "features": ["real_time", "email", "sms", "push"]
+    },
+    {
+      "name": "Security & Audit",
+      "path": "src/app/(admin)/security",
+      "status": "active",
+      "features": ["audit_logs", "security_events", "permissions"]
+    }
+  ],
+  "self_healing": {
+    "enabled": true,
+    "strategies": [
+      {
+        "name": "type_errors",
+        "action": "fix_typescript_errors",
+        "priority": "high",
+        "auto_fix": true
+      },
+      {
+        "name": "missing_imports",
+        "action": "add_missing_imports",
+        "priority": "high",
+        "auto_fix": true
+      },
+      {
+        "name": "route_conflicts",
+        "action": "resolve_duplicate_routes",
+        "priority": "high",
+        "auto_fix": true
+      },
+      {
+        "name": "missing_components",
+        "action": "create_missing_components",
+        "priority": "medium",
+        "auto_fix": true
+      },
+      {
+        "name": "linting_errors",
+        "action": "fix_eslint_errors",
+        "priority": "medium",
+        "auto_fix": true
+      },
+      {
+        "name": "test_failures",
+        "action": "fix_failing_tests",
+        "priority": "medium",
+        "auto_fix": true
+      },
+      {
+        "name": "build_errors",
+        "action": "resolve_build_issues",
+        "priority": "critical",
+        "auto_fix": true
+      }
+    ],
+    "max_retries": 10,
+    "retry_delay_seconds": 5,
+    "success_criteria": {
+      "consecutive_clean_passes": 10,
+      "build_success": true,
+      "tests_passing": true,
+      "no_type_errors": true,
+      "no_lint_errors": true
+    }
+  },
+  "testing": {
+    "framework": "playwright",
+    "e2e_tests": 147,
+    "unit_tests": 15,
+    "test_paths": [
+      "tests/e2e/**/*.spec.ts",
+      "tests/modules/**/*.spec.ts",
+      "src/__tests__/**/*.test.{ts,tsx}"
+    ],
+    "parallel_execution": true,
+    "headless": true,
+    "retries": 2
+  },
+  "build": {
+    "command": "npm run build",
+    "output_directory": ".next",
+    "static_pages": 186,
+    "optimization": {
+      "code_splitting": true,
+      "tree_shaking": true,
+      "minification": true,
+      "image_optimization": true
+    }
+  },
+  "deployment": {
+    "platform": "vercel",
+    "production_branch": "main",
+    "auto_deploy": true,
+    "environment_variables": [
+      "NEXT_PUBLIC_SUPABASE_URL",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+      "SUPABASE_SERVICE_ROLE_KEY",
+      "NEXT_PUBLIC_SITE_URL",
+      "DATABASE_URL"
+    ]
+  },
+  "monitoring": {
+    "error_tracking": "sentry",
+    "performance": "lighthouse",
+    "analytics": "google_analytics",
+    "logging": {
+      "directory": ".cursor_audit_logs",
+      "backup_directory": ".cursor_audit_backups",
+      "retention_days": 30
+    }
+  },
+  "quality_gates": {
+    "min_test_coverage": 70,
+    "max_bundle_size_mb": 5,
+    "lighthouse_performance": 90,
+    "lighthouse_accessibility": 90,
+    "lighthouse_best_practices": 90,
+    "lighthouse_seo": 90
+  },
+  "git": {
+    "auto_commit": true,
+    "commit_message_prefix": "fix: Self-healing -",
+    "auto_push": false,
+    "branch_protection": ["main", "production"],
+    "merge_to_main": true
+  },
+  "notifications": {
+    "on_success": true,
+    "on_failure": true,
+    "channels": ["log_file", "console"],
+    "success_message": "✅ Self-healing complete - System is production ready",
+    "failure_message": "❌ Self-healing failed - Manual intervention required"
+  },
+  "metadata": {
+    "project_name": "Hemam Center Healthcare Management",
+    "organization": "مركز الهمم للإعاقات الذهنية والتوحد",
+    "created_at": "2025-10-29",
+    "last_updated": "2025-10-29",
+    "maintainers": ["Cursor AI Agent"],
+    "license": "MIT",
+    "repository": "https://github.com/your-org/hemam-center"
+  }
+}

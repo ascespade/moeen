@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
-import type { Database } from '@/types/supabase';
+// import type { Database } from '@/types/supabase';
 
-type Tables = Database['public']['Tables'];
+// type Tables = Database['public']['Tables'];'];
 
 /**
  * Unified database query helpers for healthcare system

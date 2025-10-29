@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
 import { Server } from 'socket.io';
 // Real-time Notifications System
-import { Server } from 'socket.io';
 
 export interface NotificationConfig {
   email: {
@@ -34,7 +33,7 @@ export interface Notification {
 }
 
 export interface EmergencyAlert {
-  patientId: string;
+  patientIdStr: string;
   patientName: string;
   crisisLevel: 'urgent' | 'crisis';
   message: string;
@@ -43,13 +42,13 @@ export interface EmergencyAlert {
 }
 
 export class RealTimeNotificationSystem {
-  private io: Server;
-  private emailTransporter: nodemailer.Transporter;
+  private io: InstanceType<typeof Server>;
+  private emailTransporter: ReturnType<typeof nodemailer.createTransport>;
   private notifications: Map<string, Notification> = new Map();
   private emergencyContacts: Map<string, string[]> = new Map();
 
-  constructor(_io: Server, config: NotificationConfig) {
-    this.io = io;
+  constructor(_io: InstanceType<typeof Server>, config: NotificationConfig) {
+    this.io = _io;
 
     // Initialize email transporter
     this.emailTransporter = nodemailer.createTransport({
@@ -81,18 +80,18 @@ export class RealTimeNotificationSystem {
   private setupSocketHandlers() {
     this.io.on('connection', socket => {
       // Join user to specific rooms
-      socket.on('join-room', (_room: string) => {
-        socket.join(room);
+      socket.on('join-room', (roomName: string) => {
+        socket.join(roomName);
       });
 
       // Handle emergency alerts
-      socket.on('emergency-alert', (_alert: EmergencyAlert) => {
-        this.handleEmergencyAlert(alert);
+      socket.on('emergency-alert', (alertData: EmergencyAlert) => {
+        this.handleEmergencyAlert(alertData);
       });
 
       // Handle notification preferences
-      socket.on('notification-preferences', (_preferences: unknown) => {
-        this.updateNotificationPreferences(socket.id, preferences);
+      socket.on('notification-preferences', (preferencesData: unknown) => {
+        this.updateNotificationPreferences(socket.id, preferencesData);
       });
 
       socket.on('disconnect', () => {});
@@ -111,7 +110,7 @@ export class RealTimeNotificationSystem {
       title: `🚨 Emergency Alert - ${alert.patientName}`,
       message: alert.message,
       data: {
-        patientId: alert.patientId,
+        patientIdStr: alert.patientIdStr,
         patientName: alert.patientName,
         crisisLevel: alert.crisisLevel,
         timestamp: alert.timestamp,
@@ -160,7 +159,7 @@ export class RealTimeNotificationSystem {
 
   // Appointment Notifications
   async sendAppointmentNotification(
-    _patientId: string,
+    _patientIdStr: string,
     appointmentData: unknown
   ) {
     const notificationId = this.generateNotificationId();
@@ -169,7 +168,7 @@ export class RealTimeNotificationSystem {
       id: notificationId,
       type: 'appointment',
       priority: 'medium',
-      recipient: patientId,
+      recipient: patientIdStr,
       title: 'موعد جديد - مركز الهمم',
       message: `تم تأكيد موعدك بتاريخ ${appointmentData.date} في الساعة ${appointmentData.time}`,
       data: appointmentData,
@@ -188,7 +187,7 @@ export class RealTimeNotificationSystem {
 
     // Notify medical team
     this.io.to('medical_team').emit('appointment-scheduled', {
-      patientId,
+      patientIdStr,
       appointmentData,
       timestamp: new Date(),
     });
@@ -200,14 +199,14 @@ export class RealTimeNotificationSystem {
   }
 
   // Reminder Notifications
-  async sendReminderNotification(_patientId: string, reminderData: unknown) {
+  async sendReminderNotification(_patientIdStr: string, reminderData: unknown) {
     const notificationId = this.generateNotificationId();
 
     const notification: Notification = {
       id: notificationId,
       type: 'reminder',
       priority: 'low',
-      recipient: patientId,
+      recipient: patientIdStr,
       title: 'تذكير - مركز الهمم',
       message: reminderData.message,
       data: reminderData,
@@ -231,7 +230,7 @@ export class RealTimeNotificationSystem {
   }
 
   // Crisis Intervention Notifications
-  async sendCrisisNotification(_patientId: string, crisisData: unknown) {
+  async sendCrisisNotification(_patientIdStr: string, crisisData: unknown) {
     const notificationId = this.generateNotificationId();
 
     const notification: Notification = {
@@ -257,7 +256,7 @@ export class RealTimeNotificationSystem {
     // Broadcast to crisis team room
     this.io.to('crisis_team').emit('crisis-intervention', {
       id: notificationId,
-      patientId,
+      patientIdStr,
       crisisData,
       timestamp: new Date(),
     });

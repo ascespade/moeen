@@ -372,7 +372,7 @@ export default function UsersPage() {
     const statusConfig = {
       active: { label: 'نشط', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
       inactive: { label: 'غير نشط', variant: 'outline' as const, className: 'bg-gray-100 text-gray-800' },
-      suspended: { label: 'معلق', variant: 'destructive' as const, className: 'bg-red-100 text-red-800' },
+      suspended: { label: 'معلق', variant: 'error' as const, className: 'bg-red-100 text-red-800' },
       pending: { label: 'في الانتظار', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' }
     };
     
