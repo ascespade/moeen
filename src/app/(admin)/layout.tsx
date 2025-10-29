@@ -1,3 +1,5 @@
+'use client';
+
 import Sidebar from '@/components/shell/Sidebar';
 import Header from '@/components/shell/Header';
 

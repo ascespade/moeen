@@ -1,25 +1,30 @@
 // src/app/layout.tsx
 import I18nProvider from '@/components/providers/I18nProvider';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import '@/styles/centralized.css';
 import type { Metadata } from 'next';
 
+// Force dynamic rendering for all pages
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+
 export const metadata: Metadata = {
-  title: 'Ultimate E2E Self-Healing Runner',
+  title: 'مركز الهمم للإعاقات الذهنية والتوحد - Hemam Center',
   description:
-    'Comprehensive testing system with Playwright and Supawright. AI-powered auto-healing and intelligent test management.',
+    'نظام إدارة رعاية صحية شامل لمركز الهمم. منصة متكاملة لإدارة المرضى، المواعيد، السجلات الطبية، والمزيد.',
   keywords:
-    'E2E testing, Playwright, Supawright, auto-healing, testing automation, AI testing',
-  authors: [{ name: 'Ultimate E2E Team' }],
+    'مركز الهمم, رعاية صحية, إعاقات ذهنية, توحد, إدارة طبية, healthcare, autism, special needs',
+  authors: [{ name: 'Hemam Center Development Team' }],
   openGraph: {
-    title: 'Ultimate E2E Self-Healing Runner',
-    description: 'Comprehensive testing system with Playwright and Supawright',
+    title: 'مركز الهمم للإعاقات الذهنية والتوحد',
+    description: 'نظام إدارة رعاية صحية شامل',
     type: 'website',
-    locale: 'en_US',
+    locale: 'ar_SA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ultimate E2E Self-Healing Runner',
-    description: 'Comprehensive testing system with Playwright and Supawright',
+    title: 'مركز الهمم للإعاقات الذهنية والتوحد',
+    description: 'نظام إدارة رعاية صحية شامل',
   },
   robots: {
     index: true,
@@ -30,7 +35,7 @@ export const metadata: Metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#f8fafc',
+  themeColor: '#e46c0a',
 };
 
 export default function RootLayout({
@@ -39,12 +44,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang='en' className='scroll-smooth'>
+    <html lang='ar' dir='rtl' className='scroll-smooth'>
       <head>
         <link rel='icon' href='/favicon.ico' />
       </head>
       <body className='antialiased bg-background text-foreground'>
-        <I18nProvider>{children}</I18nProvider>
+        <ThemeProvider>
+          <I18nProvider>{children}</I18nProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

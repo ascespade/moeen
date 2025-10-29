@@ -4,6 +4,8 @@ import { ArrowLeft, HelpCircle, Home, Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default function NotFound() {
   return (
     <div className='min-h-screen bg-surface dark:bg-gray-900 flex items-center justify-center p-4'>
