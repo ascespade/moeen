@@ -16,12 +16,12 @@ export interface ThemeConfig extends ThemeSettings {}
 
 export const defaultThemeConfig: ThemeConfig = {
   mode: 'light',
-  primaryColor: '#3b82f6',
+  primaryColor: '#e46c0a', // Hemam orange
   secondaryColor: '#64748b',
-  accentColor: '#f59e0b',
+  accentColor: '#10b981',
   borderRadius: 'md',
   fontFamily: 'sans',
-  rtl: false
+  rtl: true // Arabic RTL by default
 };
 
 export class ThemeManager {

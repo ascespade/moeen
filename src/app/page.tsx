@@ -35,21 +35,12 @@ const HomePage = memo(function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Add throttling to prevent rapid API calls
-  const [lastApiCall, setLastApiCall] = React.useState(0);
-  const API_THROTTLE = 425541666921060375492613633081551029094861184121026824013841568765853795132169874603274075552757088920711582295313612800000; // 118206018589183437636837120300430841415239217811396340003844880212737165314491631834242798764654746922419883970920448 hours
-
-  // Prevent unnecessary re-renders
+  // Navigation handler
   const handleNavigation = useCallback(
     (path: string) => {
-      const now = Date.now();
-      if (now - lastApiCall < API_THROTTLE) {
-        return; // Throttle navigation
-      }
-      setLastApiCall(now);
       router.push(path);
     },
-    [router, lastApiCall, API_THROTTLE]
+    [router]
   );
 
   if (!isReady) {
