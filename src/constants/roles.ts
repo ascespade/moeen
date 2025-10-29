@@ -1,93 +1,108 @@
 /**
- * User Roles System - نظام الأدوار
- * Canonical definition of all user roles in the system
- * This file is the single source of truth for role definitions
+ * User Roles and Permissions System
+ * نظام الأدوار والصلاحيات
  */
 
-// Role hierarchy levels (higher number = more permissions)
-export const ROLE_HIERARCHY = {
-  admin: 100,
-  manager: 80,
-  supervisor: 60,
-  doctor: 40,
-  nurse: 30,
-  staff: 20,
-  agent: 15,
-  patient: 10,
-  demo: 5,
-} as const;
+export type UserRole = 'admin' | 'doctor' | 'patient' | 'staff' | 'supervisor';
 
-// Role Arabic display names
-export const ROLE_DISPLAY_NAMES = {
-  admin: 'مدير النظام',
-  manager: 'مدير',
-  supervisor: 'مشرف',
-  doctor: 'طبيب',
-  nurse: 'ممرض',
-  staff: 'موظف',
-  agent: 'وكيل',
-  patient: 'مريض',
-  demo: 'تجريبي',
-} as const;
-
-// Role descriptions
-export const ROLE_DESCRIPTIONS = {
-  admin: 'مدير النظام - صلاحيات كاملة على جميع الوحدات',
-  manager: 'مدير - صلاحيات إدارية شاملة',
-  supervisor: 'مشرف - صلاحيات إشرافية وإدارية محدودة',
-  doctor: 'طبيب/معالج - إدارة المرضى والجلسات',
-  nurse: 'ممرض - إدارة المرضى والجلسات محدودة',
-  staff: 'موظف - صلاحيات أساسية للعمليات اليومية',
-  agent: 'وكيل خدمة العملاء - إدارة المحادثات والطلبات',
-  patient: 'مريض - الوصول إلى البيانات الخاصة',
-  demo: 'مستخدم تجريبي - صلاحيات عرض فقط',
-} as const;
-
-// User roles enumeration - THE CANONICAL SOURCE OF TRUTH
-export const USER_ROLES = {
-  ADMIN: 'admin',
-  MANAGER: 'manager',
-  SUPERVISOR: 'supervisor',
-  DOCTOR: 'doctor',
-  NURSE: 'nurse',
-  STAFF: 'staff',
-  AGENT: 'agent',
-  PATIENT: 'patient',
-  DEMO: 'demo',
-} as const;
-
-// Export the UserRole type
-export type UserRole = (typeof USER_ROLES)[keyof typeof USER_ROLES];
-
-// Role permission mappings (basic structure - detailed permissions in permissions system)
-export const ROLE_PERMISSIONS = {
-  [USER_ROLES.ADMIN]: ['*'], // Full access
-  [USER_ROLES.MANAGER]: ['read:*', 'write:*', 'manage:users', 'manage:appointments'],
-  [USER_ROLES.SUPERVISOR]: ['read:*', 'write:appointments', 'manage:patients'],
-  [USER_ROLES.DOCTOR]: ['read:patients', 'write:appointments', 'read:medical_records', 'manage:sessions'],
-  [USER_ROLES.NURSE]: ['read:patients', 'read:appointments', 'read:medical_records'],
-  [USER_ROLES.STAFF]: ['read:appointments', 'write:appointments', 'manage:booking'],
-  [USER_ROLES.AGENT]: ['read:appointments', 'write:appointments', 'manage:conversations'],
-  [USER_ROLES.PATIENT]: ['read:own_data', 'write:own_appointments', 'read:own_records'],
-  [USER_ROLES.DEMO]: ['read:*'], // Read-only
-} as const;
-
-// Helper function to get role level
-export function getRoleLevel(role: UserRole): number {
-  return ROLE_HIERARCHY[role] || 0;
+export interface Permission {
+  resource: string;
+  actions: ('create' | 'read' | 'update' | 'delete' | 'manage')[];
 }
 
-// Helper function to get role display name
-export function getRoleDisplayName(role: UserRole): string {
-  return ROLE_DISPLAY_NAMES[role] || role;
+export const ROLES: Record<UserRole, { label: string; labelAr: string; permissions: Permission[] }> = {
+  admin: {
+    label: 'Administrator',
+    labelAr: 'مدير النظام',
+    permissions: [
+      { resource: '*', actions: ['create', 'read', 'update', 'delete', 'manage'] },
+    ],
+  },
+  doctor: {
+    label: 'Doctor',
+    labelAr: 'طبيب',
+    permissions: [
+      { resource: 'patients', actions: ['create', 'read', 'update'] },
+      { resource: 'appointments', actions: ['create', 'read', 'update', 'delete'] },
+      { resource: 'medical-records', actions: ['create', 'read', 'update'] },
+      { resource: 'prescriptions', actions: ['create', 'read', 'update'] },
+      { resource: 'messages', actions: ['create', 'read'] },
+      { resource: 'profile', actions: ['read', 'update'] },
+    ],
+  },
+  patient: {
+    label: 'Patient',
+    labelAr: 'مريض',
+    permissions: [
+      { resource: 'own-medical-records', actions: ['read'] },
+      { resource: 'own-appointments', actions: ['create', 'read'] },
+      { resource: 'own-profile', actions: ['read', 'update'] },
+      { resource: 'messages', actions: ['create', 'read'] },
+    ],
+  },
+  staff: {
+    label: 'Staff',
+    labelAr: 'موظف',
+    permissions: [
+      { resource: 'patients', actions: ['create', 'read', 'update'] },
+      { resource: 'appointments', actions: ['create', 'read', 'update', 'delete'] },
+      { resource: 'payments', actions: ['create', 'read', 'update'] },
+      { resource: 'insurance', actions: ['create', 'read', 'update'] },
+      { resource: 'messages', actions: ['create', 'read'] },
+    ],
+  },
+  supervisor: {
+    label: 'Supervisor',
+    labelAr: 'مشرف',
+    permissions: [
+      { resource: 'reports', actions: ['read'] },
+      { resource: 'analytics', actions: ['read'] },
+      { resource: 'patients', actions: ['read'] },
+      { resource: 'appointments', actions: ['read'] },
+      { resource: 'performance', actions: ['read'] },
+    ],
+  },
+};
+
+// Default routes for each role after login
+export const DEFAULT_ROUTES: Record<UserRole, string> = {
+  admin: '/dashboard',
+  doctor: '/dashboard/doctor',
+  patient: '/dashboard/patient',
+  staff: '/dashboard/staff',
+  supervisor: '/dashboard/supervisor',
+};
+
+// Check if a role has a specific permission
+export function hasPermission(
+  role: UserRole,
+  resource: string,
+  action: 'create' | 'read' | 'update' | 'delete' | 'manage'
+): boolean {
+  const roleData = ROLES[role];
+  
+  if (!roleData) return false;
+
+  // Admin has all permissions
+  if (role === 'admin') return true;
+
+  // Check specific permissions
+  return roleData.permissions.some(
+    p => (p.resource === resource || p.resource === '*') && p.actions.includes(action)
+  );
 }
 
-// Helper function to get role description
-export function getRoleDescription(role: UserRole): string {
-  return ROLE_DESCRIPTIONS[role] || '';
+// Get all permissions for a role
+export function getRolePermissions(role: UserRole): Permission[] {
+  return ROLES[role]?.permissions || [];
 }
 
-// Check if role has higher or equal permission level
-export function hasRoleLevel(userRole: UserRole, requiredRole: UserRole): boolean {
-  return getRoleLevel(userRole) >= getRoleLevel(requiredRole);
+// Get role display name
+export function getRoleLabel(role: UserRole, lang: 'en' | 'ar' = 'ar'): string {
+  const roleData = ROLES[role];
+  if (!roleData) return role;
+  return lang === 'ar' ? roleData.labelAr : roleData.label;
 }
+
+// Export USER_ROLES for backwards compatibility
+export const USER_ROLES = ROLES;

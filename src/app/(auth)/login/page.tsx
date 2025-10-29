@@ -16,6 +16,7 @@ export default function LoginPage() {
     email: '',
     password: '',
     rememberMe: false,
+    role: 'admin', // Default role
   });
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -32,17 +33,39 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
     try {
-      await loginWithCredentials(
-        formData.email,
-        formData.password,
-        formData.rememberMe
-      );
-      // after login, compute default route (role-aware)
-      window.location.href = getDefaultRouteForUser({
-        id: 'temp',
-        email: formData.email,
-        role: 'user',
-      } as any);
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+          rememberMe: formData.rememberMe,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'فشل تسجيل الدخول');
+      }
+
+      if (data.success) {
+        // Store user data
+        localStorage.setItem('user', JSON.stringify(data.data.user));
+        localStorage.setItem('token', data.data.token);
+        
+        // Redirect based on role
+        const roleRoutes: any = {
+          admin: '/dashboard',
+          doctor: '/dashboard/doctor',
+          patient: '/dashboard/patient',
+          staff: '/dashboard/staff',
+          supervisor: '/dashboard/supervisor',
+        };
+        
+        window.location.href = roleRoutes[data.data.user.role] || '/dashboard';
+      }
     } catch (err: any) {
       setError(err?.message || t('auth.login.error', 'فشل تسجيل الدخول'));
     } finally {
@@ -129,6 +152,37 @@ export default function LoginPage() {
 
               <div>
                 <label className='form-label'>
+                  نوع المستخدم / User Role
+                </label>
+                <div className='relative'>
+                  <select
+                    name='role'
+                    value={formData.role}
+                    onChange={handleInputChange as any}
+                    className='form-input pr-10 w-full'
+                    data-testid='role-select'
+                  >
+                    <option value='admin'>مدير النظام - Admin (Full Access)</option>
+                    <option value='doctor'>طبيب - Doctor</option>
+                    <option value='patient'>مريض - Patient</option>
+                    <option value='staff'>موظف - Staff</option>
+                    <option value='supervisor'>مشرف - Supervisor</option>
+                  </select>
+                  <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3'>
+                    <span className='text-sm text-gray-400'>👤</span>
+                  </div>
+                </div>
+                <p className='mt-1 text-xs text-gray-500'>
+                  {formData.role === 'admin' && '✅ يمكنه رؤية والتحكم بكل شيء'}
+                  {formData.role === 'doctor' && '👨‍⚕️ الوصول إلى المرضى والمواعيد'}
+                  {formData.role === 'patient' && '🏥 الوصول إلى سجلاته الطبية فقط'}
+                  {formData.role === 'staff' && '👔 إدارة المواعيد والملفات'}
+                  {formData.role === 'supervisor' && '📊 عرض التقارير والإحصائيات'}
+                </p>
+              </div>
+
+              <div>
+                <label className='form-label'>
                   {t('auth.password', 'كلمة المرور')}
                 </label>
                 <div className='relative'>
@@ -187,8 +241,24 @@ export default function LoginPage() {
               </button>
             </form>
 
+            {/* CRUD Test Button */}
+            <div className='mt-6 border-t border-gray-200 pt-6'>
+              <button
+                type='button'
+                onClick={() => router.push('/test-crud')}
+                className='btn btn-outline btn-sm w-full font-semibold border-2 border-blue-500 text-blue-600 hover:bg-blue-50'
+                data-testid='crud-test-button'
+              >
+                <span>🧪</span>
+                Test CRUD & Database Connection
+              </button>
+              <p className='mt-2 text-center text-xs text-gray-500'>
+                اختبار اتصال قاعدة البيانات وجميع عمليات CRUD
+              </p>
+            </div>
+
             {/* Quick Test Login Button */}
-            <div className='mt-6'>
+            <div className='mt-4'>
               <button
                 type='button'
                 onClick={handleQuickTestLogin}

@@ -27,11 +27,14 @@ export function ThemeProvider({
   initialSettings,
 }: ThemeProviderProps) {
   const [settings, setSettings] = useState<ThemeSettings>(() => {
+    // Always default to light mode on first load
+    const defaultSettings = { mode: 'light' as ThemeMode, rtl: true };
     const saved = ThemeManager.getSettings();
+    
     if (initialSettings) {
-      return { ...saved, ...initialSettings };
+      return { ...saved, ...defaultSettings, ...initialSettings };
     }
-    return saved;
+    return { ...saved, ...defaultSettings };
   });
 
   useEffect(() => {

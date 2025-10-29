@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { rateLimiter } from './middleware/rate-limiter';
 import { securityMiddleware } from './middleware/security';
+import { authMiddleware } from './middleware/auth';
 
 export async function middleware(request: NextRequest) {
   const startTime = Date.now();
@@ -25,13 +26,19 @@ export async function middleware(request: NextRequest) {
       return rateLimitResponse;
     }
 
-    // 3. Continue with the request
-    const response = NextResponse.next();
+    // 3. Authentication & Authorization
+    const authResponse = await authMiddleware(request);
+    if (authResponse && authResponse.status !== 200) {
+      return authResponse;
+    }
 
-    // 4. Add security headers to response
+    // 4. Continue with the request
+    const response = authResponse || NextResponse.next();
+
+    // 5. Add security headers to response
     _addSecurityHeaders(response, requestId);
 
-    // 5. Add performance headers
+    // 6. Add performance headers
     _addPerformanceHeaders(response, startTime);
 
     return response;

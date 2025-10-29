@@ -1,4 +1,4 @@
-import { USER_ROLES, type UserRole } from '@/constants/roles';
+import { type UserRole } from '@/constants/roles';
 import DOMPurify from 'isomorphic-dompurify';
 import { z } from 'zod';
 
@@ -109,17 +109,7 @@ export const validationSchemas = {
       .min(2, 'Name must be at least 2 characters')
       .max(100, 'Name must be less than 100 characters')
       .transform(sanitizeText),
-    role: z.enum([
-      USER_ROLES.ADMIN, 
-      USER_ROLES.MANAGER, 
-      USER_ROLES.SUPERVISOR, 
-      USER_ROLES.DOCTOR,
-      USER_ROLES.NURSE,
-      USER_ROLES.STAFF,
-      USER_ROLES.AGENT,
-      USER_ROLES.PATIENT,
-      USER_ROLES.DEMO
-    ] as [UserRole, ...UserRole[]]),
+    role: z.enum(['admin', 'doctor', 'patient', 'staff', 'supervisor'] as [UserRole, ...UserRole[]]),
   }),
 
   // CSRF token validation
