@@ -92,23 +92,36 @@
   --brand-info: var(--color-info-500);
 
   /* Background Colors - Enhanced contrast for light theme */
-  --background: #ffffff; /* Pure white background */
-  --foreground: #1e293b; /* Darker text for better contrast (was #0f172a) */
-  --brand-surface: #f1f5f9; /* Lighter surface with more contrast (was #f9fafb) */
-  --panel: #ffffff; /* Pure white panel */
-  --brand-border: #cbd5e1; /* Darker border for better visibility (was #e5e7eb) */
-  
+  --background: #ffffff; /* Page background remains white */
+  --foreground: #1e293b; /* Dark text for better contrast (not pure black) */
+  --brand-surface: #f1f5f9; /* Lighter surface with more contrast */
+  --panel: #f8faf9; /* Soft panel background - avoid pure black/white clashes in light mode */
+  --brand-border: #cbd5e1; /* Darker border for better visibility */
+
   /* Text colors with better contrast - WCAG AA compliant (4.5:1 minimum) */
-  --text-primary: #1e293b; /* Primary text - 15:1 contrast ratio (excellent) */
-  --text-secondary: #475569; /* Secondary text - 8:1 contrast ratio (good) */
-  --text-muted: #64748b; /* Muted text - 6:1 contrast ratio (acceptable) */
-  
+  --text-primary: #1e293b; /* Primary text - dark slate (not pure black) */
+  --text-secondary: #475569; /* Secondary text */
+  --text-muted: #64748b; /* Muted text */
+
   /* Visibility enhancement variables */
   --min-contrast-ratio: 4.5; /* WCAG AA standard */
   --text-on-light-bg: #1e293b; /* Ensures visibility on light backgrounds */
   --text-on-dark-bg: #e5eef7; /* Ensures visibility on dark backgrounds */
   --border-visibility-light: #94a3b8; /* Border visible on light backgrounds */
   --border-visibility-dark: #475569; /* Border visible on dark backgrounds */
+
+  /* ========================================
+     LIGHT MODE UTILITY OVERRIDES
+     Ensure components and utility classes rely on centralized tokens
+     ======================================== */
+  /* Map common Tailwind utility classes to centralized tokens in light mode */
+  .light .bg-white { background-color: var(--panel) !important; }
+  .light .text-gray-900 { color: var(--text-primary) !important; }
+  .light .bg-black { background-color: var(--panel) !important; }
+  .light .border-gray-200 { border-color: var(--brand-border) !important; }
+  .light .text-gray-700 { color: var(--text-secondary) !important; }
+  .light .text-gray-600 { color: var(--text-muted) !important; }
+  .light .bg-gray-100 { background-color: var(--brand-surface) !important; }
 
   /* Focus and Interactive States */
   --focus-ring: var(--brand-primary); /* Focus ring color - use brand primary */
