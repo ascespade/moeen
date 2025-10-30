@@ -5,9 +5,11 @@ import { PermissionManager } from '@/lib/permissions';
 export async function GET(request: NextRequest) {
   try {
     const { user, error } = await authorize(request);
+    console.log('[api/auth/me] authorize result', { userId: user?.id, error });
 
     // Primary path: Supabase auth session
     if (user && !error) {
+      console.log('[api/auth/me] authenticated user', { id: user.id, email: user.email, role: user.role });
       const userPermissions = PermissionManager.getRolePermissions(user.role);
 
       return NextResponse.json({
@@ -27,6 +29,7 @@ export async function GET(request: NextRequest) {
     // Fallback path: demo email header for quick login (still reads from DB, no mock data)
     const demoEmail = request.headers.get('x-demo-email');
     if (demoEmail) {
+      console.log('[api/auth/me] demo email header present', demoEmail);
       try {
         const { createClient } = await import('@/lib/supabase/server');
         const supabase = await createClient();
@@ -35,6 +38,8 @@ export async function GET(request: NextRequest) {
           .select('id, email, role, full_name, avatar_url, status')
           .eq('email', demoEmail)
           .single();
+
+        console.log('[api/auth/me] demo user fetch', { userData, userError: userError?.message || null });
 
         if (!userError && userData) {
           const userPermissions = PermissionManager.getRolePermissions(
@@ -55,10 +60,12 @@ export async function GET(request: NextRequest) {
           });
         }
       } catch (e) {
+        console.error('[api/auth/me] error fetching demo user', e);
         // ignore and fallthrough to 401
       }
     }
 
+    console.log('[api/auth/me] returning 401 unauthorized', { error });
     return NextResponse.json(
       {
         success: false,
@@ -68,7 +75,7 @@ export async function GET(request: NextRequest) {
       { status: 401 }
     );
   } catch (error) {
-    console.error('Auth me error:', error);
+    console.error('[api/auth/me] unexpected error:', error);
     return NextResponse.json(
       {
         success: false,
