@@ -86,7 +86,23 @@ class ApiClient {
   }
 
   private buildURL(endpoint: string, params?: Record<string, any>): string {
-    const url = new URL(endpoint, this.baseURL);
+    // Ensure we always construct an absolute URL. If baseURL is a relative path
+    // (e.g. '/api'), resolve it against the current origin on the client or the
+    // configured public app URL on the server.
+    let base = this.baseURL;
+
+    if (base.startsWith('/')) {
+      if (typeof window !== 'undefined' && window.location && window.location.origin) {
+        base = window.location.origin + base;
+      } else if (process.env.NEXT_PUBLIC_APP_URL) {
+        base = `${process.env.NEXT_PUBLIC_APP_URL}${base}`;
+      } else {
+        // Fallback to localhost for server-side environments during development
+        base = `http://localhost:3000${base}`;
+      }
+    }
+
+    const url = new URL(endpoint, base);
 
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
