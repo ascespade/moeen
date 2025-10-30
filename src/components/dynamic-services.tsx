@@ -119,7 +119,7 @@ const DynamicServices = memo(function DynamicServices() {
           className='card card-interactive p-8 text-center group'
         >
           <div
-            className={`h-16 w-16 ${service.bgColor} mx-auto mb-6 flex items-center justify-center rounded-full text-3xl transition-transform group-hover:scale-110 ${service.color}`}
+            className={`h-16 w-16 ${service.bgColor} mx-auto mb-6 flex items-center justify-center rounded-full transition-transform group-hover:scale-110 ${service.color}`}
           >
             {service.icon}
           </div>
