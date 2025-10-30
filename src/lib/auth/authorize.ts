@@ -16,9 +16,38 @@ export interface AuthResult {
 
 export async function authorize(request: NextRequest): Promise<AuthResult> {
   try {
+    // First: check for our JWT auth-token cookie
+    try {
+      const token = request.cookies?.get?.('auth-token')?.value || null;
+      if (token) {
+        const jwtSecret = process.env.JWT_SECRET;
+        if (jwtSecret) {
+          try {
+            const decoded = jwt.verify(token, jwtSecret) as any;
+            // decoded should contain userId, email, role, perms
+            const perms = decoded?.perms || decoded?.permissions || [];
+            return {
+              user: {
+                id: decoded.userId,
+                email: decoded.email,
+                role: decoded.role as User['role'],
+                meta: { permissions: perms },
+              },
+              error: null,
+            };
+          } catch (e) {
+            // invalid token - fallthrough to supabase session
+            console.warn('[authorize] invalid auth-token JWT', e);
+          }
+        }
+      }
+    } catch (e) {
+      // ignore cookie parsing errors
+    }
+
     const supabase = await createClient();
 
-    // Get session from cookies
+    // Get session from cookies (Supabase)
     const {
       data: { session },
       error: sessionError,
