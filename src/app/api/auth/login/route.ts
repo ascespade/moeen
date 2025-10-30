@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { supabaseAdmin } from '@/lib/supabase/admin';
 import { PermissionManager } from '@/lib/permissions';
+
+const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,15 +22,19 @@ export async function POST(req: NextRequest) {
 
     const supabase = await createClient();
 
+    const isDev = process.env.NODE_ENV !== 'production';
+    const debugAllow = process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true';
+
     // If a demo email header is provided, allow a direct DB lookup for development convenience.
-    // This avoids relying on Supabase auth when using the test password or when running in debug environments.
+    // Also auto-create demo users in dev/debug when they don't exist yet.
     try {
-      const fallbackPassword = process.env.TEST_USERS_PASSWORD || 'A123456';
-      const allowDemoHeader = !!demoEmailHeader && (password === fallbackPassword || !!internalSecretHeader || process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true');
+      const allowDemoHeader = !!demoEmailHeader && (password === DEFAULT_PASSWORD || !!internalSecretHeader || debugAllow || isDev);
 
       if (allowDemoHeader) {
         const targetEmail = demoEmailHeader || email;
         console.log('[api/auth/login] demo/header fallback active for', targetEmail);
+
+        // Try to find existing user row
         const { data: userRow, error: userRowErr } = await supabase
           .from('users')
           .select('id, email, full_name, role, status, avatar_url')
@@ -35,6 +42,47 @@ export async function POST(req: NextRequest) {
           .single();
 
         console.log('[api/auth/login] demo/header user lookup', { userRow, userRowErr: userRowErr?.message || null });
+
+        if (!userRow && (isDev || debugAllow || !!internalSecretHeader)) {
+          // Auto-create auth user via service role in dev/debug
+          try {
+            console.log('[api/auth/login] demo/header creating auth user for', targetEmail);
+            const { data: createdUser, error: createErr } = await supabaseAdmin.auth.admin.createUser({
+              email: targetEmail,
+              password: DEFAULT_PASSWORD,
+              email_confirm: true,
+            } as any);
+
+            if (createErr || !createdUser?.user) {
+              console.error('[api/auth/login] demo/header createUser failed', createErr?.message);
+            } else {
+              const authId = createdUser.user.id;
+              // Upsert into users table using server client
+              const { data: up, error: upErr } = await supabase
+                .from('users')
+                .upsert({ id: authId, email: targetEmail, full_name: targetEmail.split('@')[0], role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
+                .select('id, email, full_name, role, status, avatar_url')
+                .single();
+
+              console.log('[api/auth/login] demo/header upsert users result', { up, upErr: upErr?.message || null });
+
+              if (up && !upErr) {
+                const rolePermissions = PermissionManager.getRolePermissions(up.role);
+                const userResponse = {
+                  id: up.id,
+                  email: up.email,
+                  name: up.full_name,
+                  role: up.role,
+                  avatar: up.avatar_url,
+                  status: up.status,
+                };
+                return NextResponse.json({ success: true, data: { user: userResponse, token: null, permissions: rolePermissions, fallbackLogin: true } });
+              }
+            }
+          } catch (e) {
+            console.error('[api/auth/login] demo/header auto-create error', e);
+          }
+        }
 
         if (userRow && !userRowErr) {
           if (userRow.status !== 'active') {
@@ -83,8 +131,7 @@ export async function POST(req: NextRequest) {
 
       // Fallback: allow login with TEST_USERS_PASSWORD if a users row exists (development convenience only)
       try {
-        const fallbackPassword = process.env.TEST_USERS_PASSWORD || 'A123456';
-        if (password === fallbackPassword) {
+        if (password === DEFAULT_PASSWORD) {
           const { data: userRow, error: userRowErr } = await supabase
             .from('users')
             .select('id, email, full_name, role, status, avatar_url')
@@ -92,6 +139,56 @@ export async function POST(req: NextRequest) {
             .single();
 
           console.log('[api/auth/login] fallback user lookup', { userRow, userRowErr: userRowErr?.message || null });
+
+          if (!userRow && (isDev || debugAllow || !!internalSecretHeader)) {
+            // attempt to create user using supabaseAdmin
+            try {
+              console.log('[api/auth/login] fallback creating auth user for', email);
+              const { data: createdUser, error: createErr } = await supabaseAdmin.auth.admin.createUser({
+                email,
+                password: DEFAULT_PASSWORD,
+                email_confirm: true,
+              } as any);
+
+              if (!createErr && createdUser?.user) {
+                const authId = createdUser.user.id;
+                const { data: up, error: upErr } = await supabase
+                  .from('users')
+                  .upsert({ id: authId, email, full_name: email.split('@')[0], role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
+                  .select('id, email, full_name, role, status, avatar_url')
+                  .single();
+
+                console.log('[api/auth/login] fallback upsert users result', { up, upErr: upErr?.message || null });
+
+                if (up && !upErr) {
+                  const rolePermissions = PermissionManager.getRolePermissions(up.role);
+                  const userResponse = {
+                    id: up.id,
+                    email: up.email,
+                    name: up.full_name,
+                    role: up.role,
+                    avatar: up.avatar_url,
+                    status: up.status,
+                  };
+
+                  const resBody = {
+                    success: true,
+                    data: {
+                      user: userResponse,
+                      token: null,
+                      permissions: rolePermissions,
+                      fallbackLogin: true,
+                    },
+                  };
+
+                  console.log('[api/auth/login] fallback auto-create login succeeded for', email);
+                  return NextResponse.json(resBody);
+                }
+              }
+            } catch (e) {
+              console.error('[api/auth/login] fallback create error', e);
+            }
+          }
 
           if (userRow && !userRowErr) {
             if (userRow.status !== 'active') {
