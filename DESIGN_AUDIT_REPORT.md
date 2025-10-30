@@ -6,6 +6,7 @@ Date: Generated automatically
 Summary
 - Applied global skin (compact UI) via DesignSystemProvider and centralized data-attribute controls.
 - Unified Button to centralized design system (.btn variants using CSS variables). Removed duplicate unused Button.
+- Replaced homepage dynamic-data API to fetch all homepage content from Supabase (no local/fake data). Dynamic keys pulled from `settings` table (homepage_hero_slides, homepage_services, homepage_testimonials, homepage_gallery) and `center_info` table.
 - Enhanced centralized.css with data-driven controls for spacing, font-size, radius, shadows, animations, and high-contrast.
 - Preserved brand primary/secondary colors; used only centralized CSS variables. No fake data introduced. All links intact.
 
