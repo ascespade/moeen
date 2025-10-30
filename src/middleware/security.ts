@@ -152,10 +152,14 @@ export class SecurityMiddleware {
 
     // Check if origin is allowed
     if (origin && !this.isOriginAllowed(origin)) {
-      return NextResponse.json(
-        { error: 'CORS policy violation: Origin not allowed' },
-        { status: 403 }
-      );
+      const debugAllow = process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true' || process.env.NODE_ENV !== 'production';
+      if (!debugAllow) {
+        return NextResponse.json(
+          { error: 'CORS policy violation: Origin not allowed' },
+          { status: 403 }
+        );
+      }
+      // In debug/dev mode allow the request origin to ease local/dev testing
     }
 
     // Check if method is allowed
