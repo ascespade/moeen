@@ -12,7 +12,7 @@ export default defineConfig({
   reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
 });
 
-import { defineConfig, devices } from '@playwright/test';
+import { devices } from '@playwright/test';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
