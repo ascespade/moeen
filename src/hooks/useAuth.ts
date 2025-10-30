@@ -45,13 +45,15 @@ export const useAuth = (): AuthState & AuthActions => {
         try {
           const res = await fetch('/api/auth/me', { method: 'GET', credentials: 'include' });
           if (res.ok) {
-            const payload = await res.json();
-            if (payload.success && payload.data?.user) {
-              setUserState(payload.data.user);
-              setPermissions(payload.data.permissions || []);
+            const payload = await res.json().catch(() => ({} as any));
+            const foundUser = payload?.data?.user || payload?.user || null;
+            const foundPermissions = payload?.data?.permissions || payload?.permissions || [];
+            if (payload.success && foundUser) {
+              setUserState(foundUser);
+              setPermissions(foundPermissions || []);
               // persist user for fast client-side loads
-              setUser(payload.data.user);
-              localStorage.setItem('permissions', JSON.stringify(payload.data.permissions || []));
+              setUser(foundUser);
+              localStorage.setItem('permissions', JSON.stringify(foundPermissions || []));
             } else {
               // clear if session invalid
               clearAuth();
