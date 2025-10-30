@@ -16,7 +16,6 @@ export default function LoginPage() {
     email: '',
     password: '',
     rememberMe: false,
-    role: 'admin', // Default role
   });
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
