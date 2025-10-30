@@ -212,7 +212,7 @@ export const useAuth = (): AuthState & AuthActions => {
     user,
     token,
     permissions,
-    isAuthenticated: !!user && !!token,
+    isAuthenticated: !!user,
     isLoading,
     login,
     loginWithCredentials,
