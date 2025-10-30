@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useT } from '@/hooks/useT';
+import { useT } from '@/components/providers/I18nProvider';
 import { LoadingSpinner } from '@/components/ui';
 import { useAuth, usePermission } from '@/hooks/useAuth';
 
