@@ -49,22 +49,8 @@ export async function POST(req: NextRequest) {
     // Get user permissions based on role
     const rolePermissions = PermissionManager.getRolePermissions(userData.role);
 
-    // Generate JWT token with user role and permissions
-    const jwtSecret = process.env.JWT_SECRET;
-    if (!jwtSecret) {
-      throw new Error('JWT_SECRET not configured');
-    }
-
-    const token = jwt.sign(
-      {
-        userId: userData.id,
-        email: userData.email,
-        role: userData.role,
-        permissions: rolePermissions,
-      },
-      jwtSecret,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
-    );
+    // Use Supabase session token if available (server client will have set cookies)
+    const sessionToken = (data as any).session?.access_token || null;
 
     // Prepare user response object
     const userResponse = {
@@ -76,46 +62,16 @@ export async function POST(req: NextRequest) {
       status: userData.status,
     };
 
-    // Create HttpOnly cookie for token
-    const parseExpiryToSeconds = (exp: string | undefined) => {
-      if (!exp) return 60 * 60 * 24 * 7; // default 7 days
-      try {
-        if (exp.endsWith('d')) {
-          const days = parseInt(exp.slice(0, -1), 10);
-          return days * 24 * 60 * 60;
-        }
-        if (exp.endsWith('h')) {
-          const hours = parseInt(exp.slice(0, -1), 10);
-          return hours * 60 * 60;
-        }
-        const asNum = parseInt(exp, 10);
-        if (!isNaN(asNum)) return asNum;
-      } catch (e) {}
-      return 60 * 60 * 24 * 7;
-    };
-
-    const maxAge = parseExpiryToSeconds(process.env.JWT_EXPIRES_IN);
-    const isProd = process.env.NODE_ENV === 'production';
-    const cookieParts = [
-      `token=${token}`,
-      `HttpOnly`,
-      `Path=/`,
-      `Max-Age=${maxAge}`,
-      `SameSite=Lax`,
-    ];
-    if (isProd) cookieParts.push('Secure');
-    const cookie = cookieParts.join('; ');
-
     const resBody = {
       success: true,
       data: {
         user: userResponse,
-        token,
+        token: sessionToken,
         permissions: rolePermissions,
       },
     };
 
-    return NextResponse.json(resBody, { headers: { 'Set-Cookie': cookie } });
+    return NextResponse.json(resBody);
   } catch (e: any) {
     console.error('Login error:', e);
     return NextResponse.json(
