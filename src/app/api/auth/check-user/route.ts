@@ -30,7 +30,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, found: false });
     }
 
-    return NextResponse.json({ success: true, found: true, user: data });
+    // Compute role permissions if role present
+    try {
+      const { PermissionManager } = await import('@/lib/permissions');
+      const perms = data?.role ? PermissionManager.getRolePermissions(data.role) : [];
+      return NextResponse.json({ success: true, found: true, user: data, permissions: perms });
+    } catch (e) {
+      return NextResponse.json({ success: true, found: true, user: data });
+    }
   } catch (e: any) {
     console.error('[api/auth/check-user] unexpected error', e);
     return NextResponse.json({ success: false, error: e?.message || 'Internal error' }, { status: 500 });
