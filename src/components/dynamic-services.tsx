@@ -1,11 +1,20 @@
 'use client';
 import { memo, useEffect, useState } from 'react';
+import {
+  Calendar,
+  User,
+  Clipboard,
+  MessageCircle,
+  Users,
+  BarChart3,
+} from 'lucide-react';
+import React from 'react';
 
 interface DynamicService {
   id: number;
   title: string;
   description: string;
-  icon: string;
+  icon: React.ReactNode;
   color: string;
   bgColor: string;
 }
@@ -15,7 +24,7 @@ const defaultServices: DynamicService[] = [
     id: 1,
     title: 'إدارة المواعيد',
     description: 'نظام تقويم متطور لإدارة المواعيد والجلسات العلاجية',
-    icon: '📅',
+    icon: <Calendar className='w-6 h-6' />,
     color: 'text-[var(--brand-accent)]',
     bgColor: 'bg-[var(--brand-accent)]/10',
   },
@@ -23,7 +32,7 @@ const defaultServices: DynamicService[] = [
     id: 2,
     title: 'إدارة المرضى',
     description: 'ملفات مرضى شاملة مع سجل طبي مفصل',
-    icon: '👤',
+    icon: <User className='w-6 h-6' />,
     color: 'text-[var(--brand-success)]',
     bgColor: 'bg-[var(--brand-success)]/10',
   },
@@ -31,7 +40,7 @@ const defaultServices: DynamicService[] = [
     id: 3,
     title: 'المطالبات التأمينية',
     description: 'إدارة وتتبع المطالبات التأمينية بسهولة',
-    icon: '📋',
+    icon: <Clipboard className='w-6 h-6' />,
     color: 'text-purple-600',
     bgColor: 'bg-purple-50',
   },
@@ -39,7 +48,7 @@ const defaultServices: DynamicService[] = [
     id: 4,
     title: 'الشات بوت الذكي',
     description: 'مساعد ذكي للرد على استفسارات المرضى',
-    icon: '🤖',
+    icon: <MessageCircle className='w-6 h-6' />,
     color: 'text-[var(--brand-primary)]',
     bgColor: 'bg-[var(--brand-primary)]/10',
   },
@@ -47,7 +56,7 @@ const defaultServices: DynamicService[] = [
     id: 5,
     title: 'إدارة الموظفين',
     description: 'تتبع ساعات العمل والأداء للموظفين',
-    icon: '👨‍⚕️',
+    icon: <Users className='w-6 h-6' />,
     color: 'text-[var(--brand-error)]',
     bgColor: 'bg-[var(--brand-error)]/10',
   },
@@ -55,7 +64,7 @@ const defaultServices: DynamicService[] = [
     id: 6,
     title: 'التقارير والتحليلات',
     description: 'تقارير شاملة وإحصائيات مفصلة',
-    icon: '📊',
+    icon: <BarChart3 className='w-6 h-6' />,
     color: 'text-[var(--brand-accent)]',
     bgColor: 'bg-[var(--brand-accent)]/10',
   },
@@ -117,7 +126,7 @@ const DynamicServices = memo(function DynamicServices() {
           className='card card-interactive p-8 text-center group'
         >
           <div
-            className={`h-16 w-16 ${service.bgColor} mx-auto mb-6 flex items-center justify-center rounded-full text-3xl transition-transform group-hover:scale-110 ${service.color}`}
+            className={`h-16 w-16 ${service.bgColor} mx-auto mb-6 flex items-center justify-center rounded-full transition-transform group-hover:scale-110 ${service.color}`}
           >
             {service.icon}
           </div>

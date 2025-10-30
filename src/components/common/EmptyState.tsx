@@ -1,7 +1,10 @@
 'use client';
 
+import { Clipboard } from 'lucide-react';
+import React from 'react';
+
 interface EmptyStateProps {
-  icon?: string;
+  icon?: React.ReactNode;
   title: string;
   description: string;
   action?: {
@@ -13,7 +16,7 @@ interface EmptyStateProps {
 }
 
 export default function EmptyState({
-  icon = '📋',
+  icon = <Clipboard className='w-10 h-10' />,
   title,
   description,
   action,

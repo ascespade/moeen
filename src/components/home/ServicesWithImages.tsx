@@ -15,52 +15,54 @@ interface Service {
   link?: string;
 }
 
-const services: Service[] = [
-  {
-    id: 1,
-    title: 'جلسات التخاطب وعلاج التأتأة',
-    description: 'برامج متخصصة لعلاج مشاكل النطق والتأتأة وتحسين مهارات التواصل لدى الأطفال والكبار',
-    image: '/gallery-1.jpg',
-    gradient: 'from-[var(--brand-primary)]/20 to-[var(--brand-secondary)]/20',
-  },
-  {
-    id: 2,
-    title: 'التأهيل السمعي',
-    description: 'خدمات متخصصة لعلاج مشاكل الصوت والتأهيل السمعي باستخدام أحدث التقنيات',
-    image: '/gallery-2.jpg',
-    gradient: 'from-[var(--brand-secondary)]/20 to-[var(--brand-primary)]/20',
-  },
-  {
-    id: 3,
-    title: 'العلاج الوظيفي',
-    description: 'برامج علاج وظيفي متخصصة لتحسين المهارات الحياتية اليومية والاستقلالية',
-    image: '/gallery-3.jpg',
-    gradient: 'from-[var(--brand-success)]/20 to-[var(--brand-primary)]/20',
-  },
-  {
-    id: 4,
-    title: 'تعديل السلوك',
-    description: 'برامج شاملة ومتخصصة لتعديل السلوك وتحسين التفاعل الاجتماعي',
-    image: '/gallery-4.jpg',
-    gradient: 'from-[var(--brand-primary)]/20 to-[var(--brand-accent-deep)]/20',
-  },
-  {
-    id: 5,
-    title: 'التكامل الحسي',
-    description: 'جلسات تكامل حسي متخصصة لتنمية المهارات الحسية والحركية',
-    image: '/gallery-5.jpg',
-    gradient: 'from-[var(--brand-secondary)]/20 to-[var(--brand-primary)]/20',
-  },
-  {
-    id: 6,
-    title: 'برامج التدخل المبكر',
-    description: 'برامج تدخل مبكر متخصصة للأطفال لتحقيق أفضل النتائج في مراحل النمو الأولى',
-    image: '/gallery-6.jpg',
-    gradient: 'from-[var(--brand-primary)]/20 to-[var(--brand-secondary)]/20',
-  },
-];
+// Services are loaded dynamically from database via /api/dynamic-data?type=services
+// Component will fetch services on mount and display them
+import { useEffect, useState } from 'react';
 
 const ServicesWithImages = memo(function ServicesWithImages() {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    const fetchServices = async () => {
+      try {
+        const res = await fetch('/api/dynamic-data?type=services');
+        if (!res.ok) throw new Error('Failed to fetch services');
+        const data = await res.json();
+        if (cancelled) return;
+        // Expect array of services; normalize to Service[] shape
+        const items: Service[] = (data.services || data || []).map(
+          (s: any, idx: number) => ({
+            id: s.id ?? idx + 1,
+            title: s.title ?? s.name ?? `خدمة ${idx + 1}`,
+            description: s.description ?? s.subtitle ?? '',
+            image: s.image ?? s.src ?? `/gallery-${(idx % 6) + 1}.jpg`,
+            gradient:
+              s.gradient ??
+              'from-[var(--brand-primary)]/20 to-[var(--brand-secondary)]/20',
+            link: s.link,
+          })
+        );
+        setServices(items);
+      } catch (err) {
+        // keep empty list if fetch fails
+        console.warn('Failed to load services:', err);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    fetchServices();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loading) {
+    return <div className='text-center py-12'>جاري تحميل الخدمات...</div>;
+  }
+
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
       {services.map((service, index) => (
@@ -78,8 +80,10 @@ const ServicesWithImages = memo(function ServicesWithImages() {
                 className='object-cover transition-transform duration-500 group-hover:scale-110'
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
               />
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-              
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+              />
+
               {/* Badge */}
               <div className='absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg'>
                 <span className='text-sm font-semibold text-gray-900'>
@@ -95,13 +99,13 @@ const ServicesWithImages = memo(function ServicesWithImages() {
                 </div>
               </div>
             </div>
-            
+
             <CardHeader className='p-6'>
               <CardTitle className='text-xl font-bold text-[var(--text-primary)] mb-2 group-hover:text-[var(--brand-primary)] transition-colors'>
                 {service.title}
               </CardTitle>
             </CardHeader>
-            
+
             <CardContent className='p-6 pt-0'>
               <p className='text-[var(--text-secondary)] leading-relaxed'>
                 {service.description}
@@ -116,4 +120,3 @@ const ServicesWithImages = memo(function ServicesWithImages() {
 
 ServicesWithImages.displayName = 'ServicesWithImages';
 export default ServicesWithImages;
-
