@@ -8,7 +8,17 @@ import { useAuth, usePermission } from '@/hooks/useAuth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: ('patient' | 'doctor' | 'staff' | 'supervisor' | 'admin' | 'manager' | 'agent' | 'nurse' | 'therapist')[];
+  allowedRoles?: (
+    | 'patient'
+    | 'doctor'
+    | 'staff'
+    | 'supervisor'
+    | 'admin'
+    | 'manager'
+    | 'agent'
+    | 'nurse'
+    | 'therapist'
+  )[];
   requiredPermissions?: string | string[];
   fallback?: React.ReactNode;
 }
@@ -57,7 +67,15 @@ export default function ProtectedRoute({
     if (!isLoading) {
       checkAuth();
     }
-  }, [isAuthenticated, isLoading, user, allowedRoles, requiredPermissions, hasAnyPermission, router]);
+  }, [
+    isAuthenticated,
+    isLoading,
+    user,
+    allowedRoles,
+    requiredPermissions,
+    hasAnyPermission,
+    router,
+  ]);
 
   if (isLoading) {
     return (

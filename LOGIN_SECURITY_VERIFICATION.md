@@ -1,18 +1,22 @@
 # Login Process Security & Privilege Verification Guide
 
 ## Overview
+
 This document verifies that the login process is professional, dynamic, reads all privileges from the database with real data, and tests all quick-login functionality.
 
 ## Architecture
 
 ### 1. **Login Flow (Professional & Dynamic)**
+
 ✅ **Database-Driven Authentication**
+
 - User credentials validated against Supabase Auth
 - User role and permissions fetched from `users` table (real data)
 - User status verified (must be 'active')
 - JWT token generated server-side with role and permissions
 
 ✅ **API Endpoint: `/api/auth/login`** (src/app/api/auth/login/route.ts)
+
 - Accepts: `{ email, password, rememberMe }`
 - Does NOT accept role from client (prevents privilege escalation)
 - Returns:
@@ -35,7 +39,9 @@ This document verifies that the login process is professional, dynamic, reads al
   ```
 
 ### 2. **Privilege Management (Real Database Data)**
+
 ✅ **Permission System** (src/lib/permissions/index.ts)
+
 - 9 Role Types with granular permissions:
   - **Admin**: Full system access (level 100)
   - **Manager**: Management level (level 80)
@@ -48,13 +54,16 @@ This document verifies that the login process is professional, dynamic, reads al
   - **Demo**: Read-only (level 5)
 
 ✅ **Permissions Fetched from Database**
+
 - PermissionManager.getRolePermissions(role) returns array of permissions
 - Permissions stored in JWT token for quick access
 - Permissions stored in localStorage for client-side checks
 - Permissions passed in response headers for API validation
 
 ### 3. **Frontend Authentication**
+
 ✅ **useAuth Hook** (src/hooks/useAuth.ts)
+
 - Manages: user, token, permissions, isAuthenticated, isLoading
 - Methods:
   - `loginWithCredentials(email, password, rememberMe)` - calls /api/auth/login
@@ -62,17 +71,21 @@ This document verifies that the login process is professional, dynamic, reads al
   - `updateUser(userData)` - updates user object
 
 ✅ **usePermission Hook** (src/hooks/useAuth.ts)
+
 - `hasPermission(permission)` - check single permission
 - `hasAnyPermission(perms[])` - check multiple (OR logic)
 - `hasAllPermissions(perms[])` - check all required (AND logic)
 
 ✅ **useRole Hook** (src/hooks/useAuth.ts)
+
 - `hasRole(role)` - check specific role
 - `hasAnyRole(roles[])` - check multiple roles
 - `canAccess()` - evaluate required roles
 
 ### 4. **Route Protection (Professional Security)**
+
 ✅ **Middleware-Level Protection** (src/middleware/auth.ts)
+
 - Session verification via Supabase
 - User data fetched from database
 - Role-based route access control
@@ -81,6 +94,7 @@ This document verifies that the login process is professional, dynamic, reads al
 - Permissions passed in headers for downstream use
 
 ✅ **Component-Level Protection** (src/components/auth/ProtectedRoute.tsx)
+
 - Role-based access control (allowedRoles prop)
 - Permission-based access control (requiredPermissions prop)
 - Proper redirect to unauthorized page on denied access
@@ -89,18 +103,19 @@ This document verifies that the login process is professional, dynamic, reads al
 
 Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users don't exist.
 
-| Role | Email | Password | Permissions Level |
-|------|-------|----------|-------------------|
-| Admin | admin@test.local | A123456 | 100 - Full Access |
-| Manager | manager@test.local | A123456 | 80 - Management |
-| Supervisor | supervisor@test.local | A123456 | 60 - Supervisory |
-| Agent | agent@test.local | A123456 | 15 - Customer Service |
+| Role       | Email                 | Password | Permissions Level     |
+| ---------- | --------------------- | -------- | --------------------- |
+| Admin      | admin@test.local      | A123456  | 100 - Full Access     |
+| Manager    | manager@test.local    | A123456  | 80 - Management       |
+| Supervisor | supervisor@test.local | A123456  | 60 - Supervisory      |
+| Agent      | agent@test.local      | A123456  | 15 - Customer Service |
 
 **Passwords stored in environment: `TEST_USERS_PASSWORD=A123456`**
 
 ## Testing Checklist
 
 ### Test 1: Login with Email/Password
+
 - [ ] Navigate to /login
 - [ ] Enter valid credentials (admin@test.local / A123456)
 - [ ] Verify success response includes:
@@ -115,12 +130,14 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
 - [ ] Verify redirect to admin/dashboard (based on admin role)
 
 ### Test 2: Login with Invalid Credentials
+
 - [ ] Enter wrong password
 - [ ] Verify error message: "Unauthorized"
 - [ ] Verify no token stored
 - [ ] Verify user stays on login page
 
 ### Test 3: Login with Inactive User
+
 - [ ] Create test user with status='inactive'
 - [ ] Attempt login
 - [ ] Verify error: "User account is inactive"
@@ -128,6 +145,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
 ### Test 4: Quick-Login Buttons (Professional Dynamic Test)
 
 #### 4a: Admin Quick-Login
+
 - [ ] Click "👑 دخول تجريبي (Admin)"
 - [ ] Verify:
   - If users don't exist: seed-defaults endpoint called
@@ -142,6 +160,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
   - All protected routes
 
 #### 4b: Manager Quick-Login
+
 - [ ] Click "🧭 دخول تجريبي (Manager)"
 - [ ] Verify:
   - Login succeeds
@@ -153,6 +172,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
   - Cannot access /admin/roles (admin-only)
 
 #### 4c: Supervisor Quick-Login
+
 - [ ] Click "🛰️ دخول تجريبي (Supervisor)"
 - [ ] Verify:
   - Login succeeds
@@ -164,6 +184,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
   - Cannot access /admin/users (manager+ only)
 
 #### 4d: Agent Quick-Login
+
 - [ ] Click "🎧 دخول تجريبي (Agent)"
 - [ ] Verify:
   - Login succeeds
@@ -175,6 +196,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
   - Cannot access /admin paths
 
 ### Test 5: Permission-Based Access Control
+
 - [ ] After each login, verify permissions in localStorage
 - [ ] Check that usePermission hook correctly evaluates:
   - Single permission check
@@ -186,6 +208,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
   - Blocks access with insufficient permissions
 
 ### Test 6: Middleware Route Protection
+
 - [ ] Try accessing /admin/users as patient
   - Verify: Middleware redirects to /unauthorized
 - [ ] Try accessing /appointments as patient
@@ -194,6 +217,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
   - Verify: Middleware redirects to /unauthorized (admin-only)
 
 ### Test 7: Session Management
+
 - [ ] Login successfully
 - [ ] Refresh page
   - Verify: Auth state persists from localStorage
@@ -203,6 +227,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
   - Verify: App initializes with previous user
 
 ### Test 8: Logout
+
 - [ ] Login as any user
 - [ ] Click logout button
 - [ ] Verify:
@@ -212,6 +237,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
   - useAuth hook clears state
 
 ### Test 9: Role-Specific Dashboards
+
 - [ ] Admin login → redirects to /admin/dashboard ✓
 - [ ] Manager login → redirects to /admin/dashboard ✓
 - [ ] Supervisor login → redirects to /admin/dashboard ✓
@@ -221,6 +247,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
 - [ ] Agent login → redirects to /crm/dashboard ✓
 
 ### Test 10: Database Verification
+
 - [ ] Query users table in Supabase
   - Verify: Test users exist with correct roles
   - Verify: Test users have status='active'
@@ -234,29 +261,34 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
 ## Security Verification
 
 ✅ **No Client-Side Role Manipulation**
+
 - Role selection removed from client
 - Role always comes from database via /api/auth/login
 - JWT token signed server-side with role and permissions
 
 ✅ **JWT Token Security**
+
 - Token generated with: userId, email, role, permissions
 - Token signed with JWT_SECRET
 - Token expiry: 7 days (configurable)
 - Token validated on protected routes
 
 ✅ **Privilege Escalation Prevention**
+
 - Client cannot change role
 - Client cannot modify permissions array
 - Middleware validates role from database (not token)
 - Admin-only routes strictly enforced
 
 ✅ **Session Security**
+
 - Supabase auth session required for protected routes
 - User status verified ('active' only)
 - Session refreshed if expiring soon (within 5 minutes)
 - Logout properly clears Supabase session
 
 ✅ **Database Data Protection**
+
 - Real data from database (not hardcoded/mocked)
 - User permissions always fetched from PermissionManager
 - Role permissions mapped from ROLES constant (single source of truth)
@@ -264,19 +296,19 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
 
 ## Expected Behavior Summary
 
-| Scenario | Expected Result |
-|----------|-----------------|
-| Admin logs in | Gets all permissions, redirects to /admin/dashboard |
-| Manager logs in | Gets management permissions, redirects to /admin/dashboard |
-| Supervisor logs in | Gets supervisory permissions, redirects to /admin/dashboard |
-| Doctor logs in | Gets doctor permissions, redirects to /dashboard/doctor |
-| Patient logs in | Gets patient permissions, redirects to /dashboard/patient |
-| Invalid credentials | Error message, stays on /login |
-| Inactive user | Error: "User account is inactive" |
-| Access /admin/users as patient | Middleware redirects to /unauthorized |
-| Access /patients as patient | Success (patient role allowed) |
-| Logout | Clears auth, redirects to /login |
-| Refresh page | Auth state persists from localStorage |
+| Scenario                       | Expected Result                                             |
+| ------------------------------ | ----------------------------------------------------------- |
+| Admin logs in                  | Gets all permissions, redirects to /admin/dashboard         |
+| Manager logs in                | Gets management permissions, redirects to /admin/dashboard  |
+| Supervisor logs in             | Gets supervisory permissions, redirects to /admin/dashboard |
+| Doctor logs in                 | Gets doctor permissions, redirects to /dashboard/doctor     |
+| Patient logs in                | Gets patient permissions, redirects to /dashboard/patient   |
+| Invalid credentials            | Error message, stays on /login                              |
+| Inactive user                  | Error: "User account is inactive"                           |
+| Access /admin/users as patient | Middleware redirects to /unauthorized                       |
+| Access /patients as patient    | Success (patient role allowed)                              |
+| Logout                         | Clears auth, redirects to /login                            |
+| Refresh page                   | Auth state persists from localStorage                       |
 
 ## Files Modified
 
@@ -314,6 +346,7 @@ Quick-login buttons automatically call `/api/admin/auth/seed-defaults` if users 
 ## Deployment Notes
 
 For production deployment:
+
 1. Ensure `JWT_SECRET` environment variable is set (strong random value)
 2. Ensure `TEST_USERS_PASSWORD` is set for seed-defaults
 3. Disable `/api/admin/auth/seed-defaults` in production (or require admin-secret header)

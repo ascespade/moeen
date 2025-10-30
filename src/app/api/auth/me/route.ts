@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
           avatar: user.avatar_url,
           status: user.status,
           permissions: userPermissions,
-        }
+        },
       });
     }
 
@@ -37,7 +37,9 @@ export async function GET(request: NextRequest) {
           .single();
 
         if (!userError && userData) {
-          const userPermissions = PermissionManager.getRolePermissions(userData.role);
+          const userPermissions = PermissionManager.getRolePermissions(
+            userData.role
+          );
 
           return NextResponse.json({
             success: true,
@@ -49,7 +51,7 @@ export async function GET(request: NextRequest) {
               avatar: userData.avatar_url,
               status: userData.status,
               permissions: userPermissions,
-            }
+            },
           });
         }
       } catch (e) {
@@ -57,18 +59,21 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    return NextResponse.json({
-      success: false,
-      error: error || 'Unauthorized',
-      user: null
-    }, { status: 401 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: error || 'Unauthorized',
+        user: null,
+      },
+      { status: 401 }
+    );
   } catch (error) {
     console.error('Auth me error:', error);
     return NextResponse.json(
       {
         success: false,
         error: 'Internal server error',
-        user: null
+        user: null,
       },
       { status: 500 }
     );

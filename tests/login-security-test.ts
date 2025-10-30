@@ -9,8 +9,16 @@ import { describe, it, expect, beforeAll, afterAll } from '@jest/globals';
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3001';
 const TEST_USERS = {
   admin: { email: 'admin@test.local', password: 'A123456', role: 'admin' },
-  manager: { email: 'manager@test.local', password: 'A123456', role: 'manager' },
-  supervisor: { email: 'supervisor@test.local', password: 'A123456', role: 'supervisor' },
+  manager: {
+    email: 'manager@test.local',
+    password: 'A123456',
+    role: 'manager',
+  },
+  supervisor: {
+    email: 'supervisor@test.local',
+    password: 'A123456',
+    role: 'supervisor',
+  },
   agent: { email: 'agent@test.local', password: 'A123456', role: 'agent' },
 };
 
@@ -30,10 +38,10 @@ describe('Professional Login System - End-to-End Tests', () => {
 
       expect(response.status).toBe(200);
       const data = await response.json();
-      
+
       expect(data.success).toBe(true);
       expect(data.users).toHaveLength(4);
-      
+
       // Verify all roles are created
       const roles = data.users.map((u: any) => u.role);
       expect(roles).toContain('admin');
@@ -59,7 +67,7 @@ describe('Professional Login System - End-to-End Tests', () => {
 
       expect(response.status).toBe(200);
       const data = await response.json();
-      
+
       // Verify response structure
       expect(data.success).toBe(true);
       expect(data.data).toBeDefined();
@@ -67,7 +75,7 @@ describe('Professional Login System - End-to-End Tests', () => {
       expect(data.data.token).toBeDefined();
       expect(data.data.permissions).toBeDefined();
       expect(Array.isArray(data.data.permissions)).toBe(true);
-      
+
       // Store for other tests
       adminToken = data.data.token;
       adminPermissions = data.data.permissions;
@@ -97,7 +105,7 @@ describe('Professional Login System - End-to-End Tests', () => {
     it('should return admin permissions array', () => {
       // Admin should have all permissions (100 level)
       expect(adminPermissions.length).toBeGreaterThan(50); // Admin has most permissions
-      
+
       // Verify key admin permissions
       expect(adminPermissions).toContain('users:view');
       expect(adminPermissions).toContain('users:create');
@@ -111,10 +119,10 @@ describe('Professional Login System - End-to-End Tests', () => {
       // Decode JWT (simple base64 decode - in real test would verify signature)
       const parts = adminToken.split('.');
       expect(parts.length).toBe(3);
-      
+
       // Decode payload
       const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
-      
+
       expect(payload.userId).toBeDefined();
       expect(payload.email).toBe(TEST_USERS.admin.email);
       expect(payload.role).toBe('admin');
@@ -158,7 +166,7 @@ describe('Professional Login System - End-to-End Tests', () => {
       // Manager should have management permissions
       expect(permissions).toContain('users:view');
       expect(permissions).toContain('users:create');
-      
+
       // Manager should NOT have admin-only permissions
       expect(permissions).not.toContain('roles:delete');
       expect(permissions).not.toContain('settings:edit');
@@ -200,7 +208,7 @@ describe('Professional Login System - End-to-End Tests', () => {
       // Supervisor should have supervisory permissions
       expect(permissions).toContain('analytics:view');
       expect(permissions).toContain('reports:view');
-      
+
       // Supervisor should NOT have user management
       expect(permissions).not.toContain('users:delete');
     });
@@ -353,13 +361,13 @@ describe('Professional Login System - End-to-End Tests', () => {
       // Get user via /api/auth/me
       const meResponse = await fetch(`${BASE_URL}/api/auth/me`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       expect(meResponse.status).toBe(200);
       const meData = await meResponse.json();
-      
+
       expect(meData.user.role).toBe('admin');
       expect(meData.user.permissions).toBeDefined();
       expect(Array.isArray(meData.user.permissions)).toBe(true);
@@ -383,9 +391,12 @@ describe('Professional Login System - End-to-End Tests', () => {
 
       // If not found, seed defaults
       if (response.status === 401) {
-        const seedResponse = await fetch(`${BASE_URL}/api/admin/auth/seed-defaults`, {
-          method: 'POST',
-        });
+        const seedResponse = await fetch(
+          `${BASE_URL}/api/admin/auth/seed-defaults`,
+          {
+            method: 'POST',
+          }
+        );
         expect(seedResponse.status).toBe(200);
 
         // Retry login
@@ -426,7 +437,7 @@ describe('Professional Login System - End-to-End Tests', () => {
         expect(response.status).toBe(200);
         const data = await response.json();
         const expectedDashboard = redirectMapping[roleName] || '/dashboard';
-        
+
         // Verify role matches expected
         expect(data.data.user.role).toBe(testUser.role);
       }

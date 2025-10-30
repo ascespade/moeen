@@ -5,7 +5,7 @@ export async function POST(_req: NextRequest) {
   try {
     const supabase = await createClient();
     await supabase.auth.signOut();
-    
+
     const response = NextResponse.json({
       success: true,
       message: 'تم تسجيل الخروج بنجاح',

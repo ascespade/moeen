@@ -10,7 +10,17 @@ import { PermissionManager } from '@/lib/permissions';
 
 // Define protected routes and their required roles
 const PROTECTED_ROUTES: Record<string, string[]> = {
-  '/dashboard': ['admin', 'doctor', 'patient', 'staff', 'supervisor', 'manager', 'nurse', 'agent', 'therapist'],
+  '/dashboard': [
+    'admin',
+    'doctor',
+    'patient',
+    'staff',
+    'supervisor',
+    'manager',
+    'nurse',
+    'agent',
+    'therapist',
+  ],
   '/admin': ['admin', 'manager', 'supervisor'],
   '/admin/admin': ['admin', 'manager'],
   '/admin/dashboard': ['admin', 'manager', 'supervisor'],
@@ -26,8 +36,28 @@ const PROTECTED_ROUTES: Record<string, string[]> = {
   '/crm': ['admin', 'manager', 'staff', 'agent'],
   '/analytics': ['admin', 'supervisor', 'manager'],
   '/messages': ['admin', 'doctor', 'staff', 'nurse', 'agent'],
-  '/notifications': ['admin', 'doctor', 'patient', 'staff', 'supervisor', 'manager', 'nurse', 'agent', 'therapist'],
-  '/profile': ['admin', 'doctor', 'patient', 'staff', 'supervisor', 'manager', 'nurse', 'agent', 'therapist'],
+  '/notifications': [
+    'admin',
+    'doctor',
+    'patient',
+    'staff',
+    'supervisor',
+    'manager',
+    'nurse',
+    'agent',
+    'therapist',
+  ],
+  '/profile': [
+    'admin',
+    'doctor',
+    'patient',
+    'staff',
+    'supervisor',
+    'manager',
+    'nurse',
+    'agent',
+    'therapist',
+  ],
 };
 
 // Admin-only routes (strict access)
@@ -62,9 +92,13 @@ export async function authMiddleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow public routes and API auth routes
-  if (PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith(route)) ||
-      pathname.startsWith('/_next') ||
-      pathname.startsWith('/api/public')) {
+  if (
+    PUBLIC_ROUTES.some(
+      route => pathname === route || pathname.startsWith(route)
+    ) ||
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/api/public')
+  ) {
     return NextResponse.next();
   }
 
@@ -138,7 +172,9 @@ export async function authMiddleware(request: NextRequest) {
     response.headers.set('x-session-id', session.access_token);
 
     // Refresh session if close to expiry (within 5 minutes)
-    const expiresAt = session.expires_at ? new Date(session.expires_at * 1000) : null;
+    const expiresAt = session.expires_at
+      ? new Date(session.expires_at * 1000)
+      : null;
     if (expiresAt && expiresAt.getTime() - Date.now() < 5 * 60 * 1000) {
       // Session will expire soon, refresh it
       await supabase.auth.refreshSession();
@@ -163,7 +199,10 @@ export async function verifySession(request: NextRequest): Promise<{
 }> {
   try {
     const supabase = await createClient();
-    const { data: { session }, error } = await supabase.auth.getSession();
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.getSession();
 
     if (error || !session) {
       return { valid: false, error: 'No valid session' };
@@ -193,17 +232,19 @@ export async function verifySession(request: NextRequest): Promise<{
 }
 
 // Legacy function for backward compatibility (uses localStorage token)
-function verifyToken(token: string): { id: string; email: string; role: string } | null {
+function verifyToken(
+  token: string
+): { id: string; email: string; role: string } | null {
   try {
     // For testing purposes, decode a simple format
     if (token === 'test-token') {
       return {
         id: 'test-user-id',
         email: 'test@moeen.com',
-        role: 'admin'
+        role: 'admin',
       };
     }
-    
+
     // Try to parse as JSON (temporary solution)
     const decoded = JSON.parse(atob(token));
     return decoded;
@@ -212,7 +253,11 @@ function verifyToken(token: string): { id: string; email: string; role: string }
   }
 }
 
-export function generateToken(user: { id: string; email: string; role: string }): string {
+export function generateToken(user: {
+  id: string;
+  email: string;
+  role: string;
+}): string {
   // Simple token generation (replace with JWT in production)
   return btoa(JSON.stringify(user));
 }

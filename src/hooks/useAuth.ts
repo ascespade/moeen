@@ -62,16 +62,19 @@ export const useAuth = (): AuthState & AuthActions => {
     initializeAuth();
   }, []);
 
-  const login = useCallback((userData: User, tokenData: string, perms: string[] = []) => {
-    setUser(userData);
-    setToken(tokenData);
-    setPermissions(perms);
-    setUserState(userData);
-    setTokenState(tokenData);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', tokenData);
-    localStorage.setItem('permissions', JSON.stringify(perms));
-  }, []);
+  const login = useCallback(
+    (userData: User, tokenData: string, perms: string[] = []) => {
+      setUser(userData);
+      setToken(tokenData);
+      setPermissions(perms);
+      setUserState(userData);
+      setTokenState(tokenData);
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', tokenData);
+      localStorage.setItem('permissions', JSON.stringify(perms));
+    },
+    []
+  );
 
   const loginWithCredentials = useCallback(
     async (email: string, password: string, rememberMe: boolean = false) => {

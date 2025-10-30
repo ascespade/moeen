@@ -14,7 +14,10 @@ export async function POST(req: NextRequest) {
     }
 
     const supabase = await createClient();
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     if (error || !data?.user) {
       return NextResponse.json(
         { success: false, error: error?.message || 'Unauthorized' },
