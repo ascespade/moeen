@@ -105,9 +105,11 @@ export const useAuth = (): AuthState & AuthActions => {
         try {
           const meRes = await fetch('/api/auth/me', { method: 'GET', credentials: 'include' });
           if (meRes.ok) {
-            const meData = await meRes.json();
-            if (meData.success && meData.data?.user) {
-              login(meData.data.user, meData.data.token || null, meData.data.permissions || []);
+            const meData = await meRes.json().catch(() => ({} as any));
+            const meUser = meData?.data?.user || meData?.user;
+            const mePerms = meData?.data?.permissions || meData?.permissions || [];
+            if (meData.success && meUser) {
+              login(meUser, meData?.data?.token || null, mePerms || []);
               return { success: true };
             }
           }
