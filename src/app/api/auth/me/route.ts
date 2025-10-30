@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authorize } from '@/lib/auth/authorize';
+import { PermissionManager } from '@/lib/permissions';
 
 export async function GET(request: NextRequest) {
   try {
@@ -7,13 +8,18 @@ export async function GET(request: NextRequest) {
 
     // Primary path: Supabase auth session
     if (user && !error) {
+      const userPermissions = PermissionManager.getRolePermissions(user.role);
+
       return NextResponse.json({
         success: true,
         user: {
           id: user.id,
           email: user.email,
           role: user.role,
-          permissions: user.meta?.permissions || []
+          name: user.full_name,
+          avatar: user.avatar_url,
+          status: user.status,
+          permissions: userPermissions,
         }
       });
     }
@@ -26,27 +32,32 @@ export async function GET(request: NextRequest) {
         const supabase = await createClient();
         const { data: userData, error: userError } = await supabase
           .from('users')
-          .select('id, email, role, metadata')
+          .select('id, email, role, full_name, avatar_url, status')
           .eq('email', demoEmail)
           .single();
 
         if (!userError && userData) {
+          const userPermissions = PermissionManager.getRolePermissions(userData.role);
+
           return NextResponse.json({
             success: true,
             user: {
               id: userData.id,
               email: userData.email,
               role: userData.role,
-              permissions: (userData as any).metadata?.permissions || []
+              name: userData.full_name,
+              avatar: userData.avatar_url,
+              status: userData.status,
+              permissions: userPermissions,
             }
           });
-    }
+        }
       } catch (e) {
         // ignore and fallthrough to 401
       }
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: false,
       error: error || 'Unauthorized',
       user: null
@@ -54,7 +65,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Auth me error:', error);
     return NextResponse.json(
-      { 
+      {
         success: false,
         error: 'Internal server error',
         user: null
