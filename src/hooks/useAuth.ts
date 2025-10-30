@@ -88,24 +88,37 @@ export const useAuth = (): AuthState & AuthActions => {
       try {
         const response = await fetch('/api/auth/login', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password, rememberMe }),
+          credentials: 'include',
         });
 
-        const data = await response.json();
+        const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
           throw new Error(data.error || 'Login failed');
         }
 
-        if (data.success && data.data?.user && data.data?.token) {
-          login(data.data.user, data.data.token, data.data.permissions || []);
-          return { success: true };
-        } else {
-          throw new Error(data.error || 'Login failed');
+        // Prefer to fetch /me to get canonical user object and permissions
+        try {
+          const meRes = await fetch('/api/auth/me', { method: 'GET', credentials: 'include' });
+          if (meRes.ok) {
+            const meData = await meRes.json();
+            if (meData.success && meData.data?.user) {
+              login(meData.data.user, meData.data.token || null, meData.data.permissions || []);
+              return { success: true };
+            }
+          }
+        } catch (e) {
+          // fallback to using returned data
         }
+
+        if (data.success && data.data?.user) {
+          login(data.data.user, data.data.token || null, data.data.permissions || []);
+          return { success: true };
+        }
+
+        throw new Error(data.error || 'Login failed');
       } catch (error) {
         throw error;
       }
