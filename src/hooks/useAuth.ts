@@ -193,3 +193,46 @@ export const useRole = (requiredRole: string | string[]) => {
     userRole: user?.role,
   };
 };
+
+export const usePermission = (requiredPermissions: string | string[]) => {
+  const { permissions, user } = useAuth();
+
+  const hasPermission = useCallback(
+    (permission: string) => {
+      return permissions.includes(permission) || permissions.includes('*');
+    },
+    [permissions]
+  );
+
+  const hasAnyPermission = useCallback(
+    (perms: string[]) => {
+      return perms.some(permission => hasPermission(permission));
+    },
+    [hasPermission]
+  );
+
+  const hasAllPermissions = useCallback(
+    (perms: string[]) => {
+      return perms.every(permission => hasPermission(permission));
+    },
+    [hasPermission]
+  );
+
+  const canAccess = useCallback(() => {
+    if (!user || !permissions.length) return false;
+
+    if (Array.isArray(requiredPermissions)) {
+      return hasAnyPermission(requiredPermissions);
+    }
+
+    return hasPermission(requiredPermissions);
+  }, [user, requiredPermissions, permissions, hasPermission, hasAnyPermission]);
+
+  return {
+    hasPermission,
+    hasAnyPermission,
+    hasAllPermissions,
+    canAccess: canAccess(),
+    userPermissions: permissions,
+  };
+};
