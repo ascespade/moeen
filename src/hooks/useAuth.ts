@@ -37,56 +37,50 @@ export const useAuth = (): AuthState & AuthActions => {
   // Initialize auth state: prefer server session via /api/auth/me, fallback to local storage
   useEffect(() => {
     const initializeAuth = async () => {
-      console.log('[useAuth] initializeAuth start');
       try {
-        // If we have a stored user, use it immediately for fast render
+        // Use stored user for fast render
         const storedUser = getUser();
         if (storedUser) {
           setUserState(storedUser);
-          console.log('[useAuth] found storedUser', storedUser);
         }
 
-        // Attempt to get server session (uses HttpOnly cookie set by login endpoint)
+        // Check Supabase client session first; skip network call if none
+        const supabase = getBrowserSupabase();
+        const { data: sessionData } = await supabase.auth.getSession();
+        const hasSession = !!sessionData?.session?.user?.id;
+        if (!hasSession) {
+          // No session; ensure cleared and finish quietly
+          clearAuth();
+          return;
+        }
+
+        // Fetch canonical user + permissions from API
         try {
-          console.log('[useAuth] fetching /api/auth/me');
           const res = await fetch('/api/auth/me', {
             method: 'GET',
             credentials: 'include',
           });
-          console.log('[useAuth] /api/auth/me status', res.status);
           if (res.ok) {
             const payload = await res.json().catch(() => ({}) as any);
-            console.log('[useAuth] /api/auth/me payload', payload);
             const foundUser = payload?.data?.user || payload?.user || null;
             const foundPermissions =
               payload?.data?.permissions || payload?.permissions || [];
             if (payload.success && foundUser) {
               setUserState(foundUser);
               setPermissions(foundPermissions || []);
-              // persist user for fast client-side loads
               setUser(foundUser);
               localStorage.setItem(
                 'permissions',
                 JSON.stringify(foundPermissions || [])
               );
             } else {
-              // clear if session invalid
-              console.log(
-                '[useAuth] /api/auth/me did not return a valid session, clearing auth'
-              );
               clearAuth();
             }
-          } else {
-            console.log('[useAuth] /api/auth/me response not ok', res.status);
           }
-        } catch (e) {
-          console.error(
-            '[useAuth] initializeAuth /api/auth/me fetch error:',
-            e
-          );
+        } catch (_e) {
+          // Silently ignore transient network errors in non-authenticated states
         }
-      } catch (error) {
-        console.error('[useAuth] initializeAuth error', error);
+      } catch (_error) {
         clearAuth();
       } finally {
         setIsLoading(false);
@@ -249,16 +243,12 @@ export const useAuth = (): AuthState & AuthActions => {
 
   const logout = useCallback(async () => {
     try {
-      // Call logout API to clear server-side session
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-      });
-    } catch (error) {
-      // Ignore logout API errors
+      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+    } catch (_error) {
+      // ignore
     } finally {
-      // Clear local storage regardless of API call result
       clearAuth();
-      localStorage.removeItem('permissions');
+      try { localStorage.removeItem('permissions'); } catch {}
       setUserState(null);
       setTokenState(null);
       setPermissions([]);
