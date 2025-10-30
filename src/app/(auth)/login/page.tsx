@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getBrowserSupabase } from '@/lib/supabaseClient';
+export const dynamic = 'force-dynamic';
 
 const ROLE_REDIRECTS: Record<string, string> = {
   admin: '/admin/dashboard',
