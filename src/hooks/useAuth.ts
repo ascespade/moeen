@@ -33,24 +33,32 @@ export const useAuth = (): AuthState & AuthActions => {
   const [permissions, setPermissions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize auth state from storage
+  // Initialize auth state: prefer server session via /api/auth/me, fallback to local storage
   useEffect(() => {
-    const initializeAuth = () => {
+    const initializeAuth = async () => {
       try {
+        // If we have a stored user, use it immediately for fast render
         const storedUser = getUser();
-        const storedToken = getToken();
-        const storedPermissions = localStorage.getItem('permissions');
+        if (storedUser) setUserState(storedUser);
 
-        if (storedUser && storedToken) {
-          setUserState(storedUser);
-          setTokenState(storedToken);
-          if (storedPermissions) {
-            try {
-              setPermissions(JSON.parse(storedPermissions));
-            } catch (e) {
-              setPermissions([]);
+        // Attempt to get server session (uses HttpOnly cookie set by login endpoint)
+        try {
+          const res = await fetch('/api/auth/me', { method: 'GET', credentials: 'include' });
+          if (res.ok) {
+            const payload = await res.json();
+            if (payload.success && payload.data?.user) {
+              setUserState(payload.data.user);
+              setPermissions(payload.data.permissions || []);
+              // persist user for fast client-side loads
+              setUser(payload.data.user);
+              localStorage.setItem('permissions', JSON.stringify(payload.data.permissions || []));
+            } else {
+              // clear if session invalid
+              clearAuth();
             }
           }
+        } catch (e) {
+          // network error: keep existing stored user if any
         }
       } catch (error) {
         clearAuth();
