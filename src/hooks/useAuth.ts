@@ -100,9 +100,17 @@ export const useAuth = (): AuthState & AuthActions => {
     async (email: string, password: string, rememberMe: boolean = false) => {
       try {
         console.log('[useAuth] loginWithCredentials request', { email, rememberMe });
+        const fallbackPassword = process.env.NEXT_PUBLIC_TEST_PASSWORD || process.env.TEST_USERS_PASSWORD || 'A123456';
+
+        const loginHeaders: Record<string, string> = { 'Content-Type': 'application/json' };
+        // If using the test fallback password, set x-demo-email so the server can perform a DB lookup fallback
+        if (password === fallbackPassword) {
+          loginHeaders['x-demo-email'] = email;
+        }
+
         const response = await fetch('/api/auth/login', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: loginHeaders,
           body: JSON.stringify({ email, password, rememberMe }),
           credentials: 'include',
         });
