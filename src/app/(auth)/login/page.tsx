@@ -39,7 +39,6 @@ export default function LoginPage() {
         body: JSON.stringify({
           email: formData.email,
           password: formData.password,
-          role: formData.role,
           rememberMe: formData.rememberMe,
         }),
       });
@@ -50,24 +49,28 @@ export default function LoginPage() {
         throw new Error(data.error || 'فشل تسجيل الدخول');
       }
 
-      if (data.success) {
-        // Store user data
+      if (data.success && data.data?.user && data.data?.token) {
+        // Store user data with token and permissions
         localStorage.setItem('user', JSON.stringify(data.data.user));
         localStorage.setItem('token', data.data.token);
-        
-        // Redirect based on role
-        const roleRoutes: any = {
+        localStorage.setItem('permissions', JSON.stringify(data.data.permissions || []));
+
+        // Redirect based on actual user role from server
+        const userRole = data.data.user.role;
+        const roleRoutes: Record<string, string> = {
           admin: '/admin/dashboard',
+          manager: '/admin/dashboard',
+          supervisor: '/dashboard/supervisor',
           doctor: '/dashboard/doctor',
           patient: '/dashboard/patient',
           staff: '/dashboard/staff',
-          supervisor: '/dashboard/supervisor',
-          manager: '/admin/dashboard',
           nurse: '/dashboard/staff',
           agent: '/crm/dashboard',
+          therapist: '/dashboard/staff',
         };
-        
-        window.location.href = roleRoutes[data.data.user.role] || '/dashboard';
+
+        const redirectUrl = roleRoutes[userRole] || '/dashboard';
+        window.location.href = redirectUrl;
       }
     } catch (err: any) {
       setError(err?.message || t('auth.login.error', 'فشل تسجيل الدخول'));
