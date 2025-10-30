@@ -36,16 +36,23 @@ export const useAuth = (): AuthState & AuthActions => {
   // Initialize auth state: prefer server session via /api/auth/me, fallback to local storage
   useEffect(() => {
     const initializeAuth = async () => {
+        console.log('[useAuth] initializeAuth start');
       try {
         // If we have a stored user, use it immediately for fast render
         const storedUser = getUser();
-        if (storedUser) setUserState(storedUser);
+        if (storedUser) {
+            setUserState(storedUser);
+            console.log('[useAuth] found storedUser', storedUser);
+          }
 
         // Attempt to get server session (uses HttpOnly cookie set by login endpoint)
         try {
+          console.log('[useAuth] fetching /api/auth/me');
           const res = await fetch('/api/auth/me', { method: 'GET', credentials: 'include' });
+          console.log('[useAuth] /api/auth/me status', res.status);
           if (res.ok) {
             const payload = await res.json().catch(() => ({} as any));
+            console.log('[useAuth] /api/auth/me payload', payload);
             const foundUser = payload?.data?.user || payload?.user || null;
             const foundPermissions = payload?.data?.permissions || payload?.permissions || [];
             if (payload.success && foundUser) {
@@ -56,13 +63,17 @@ export const useAuth = (): AuthState & AuthActions => {
               localStorage.setItem('permissions', JSON.stringify(foundPermissions || []));
             } else {
               // clear if session invalid
+              console.log('[useAuth] /api/auth/me did not return a valid session, clearing auth');
               clearAuth();
             }
+          } else {
+            console.log('[useAuth] /api/auth/me response not ok', res.status);
           }
         } catch (e) {
-          // network error: keep existing stored user if any
+          console.error('[useAuth] initializeAuth /api/auth/me fetch error:', e);
         }
       } catch (error) {
+        console.error('[useAuth] initializeAuth error', error);
         clearAuth();
       } finally {
         setIsLoading(false);
@@ -88,6 +99,7 @@ export const useAuth = (): AuthState & AuthActions => {
   const loginWithCredentials = useCallback(
     async (email: string, password: string, rememberMe: boolean = false) => {
       try {
+        console.log('[useAuth] loginWithCredentials request', { email, rememberMe });
         const response = await fetch('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -96,24 +108,32 @@ export const useAuth = (): AuthState & AuthActions => {
         });
 
         const data = await response.json().catch(() => ({}));
+        console.log('[useAuth] /api/auth/login response status', response.status, 'data:', data);
 
         if (!response.ok) {
+          console.error('[useAuth] login failed', response.status, data);
           throw new Error(data.error || 'Login failed');
         }
 
         // Prefer to fetch /me to get canonical user object and permissions
         try {
+          console.log('[useAuth] fetching /api/auth/me after login');
           const meRes = await fetch('/api/auth/me', { method: 'GET', credentials: 'include' });
+          console.log('[useAuth] /api/auth/me after login status', meRes.status);
           if (meRes.ok) {
             const meData = await meRes.json().catch(() => ({} as any));
+            console.log('[useAuth] /api/auth/me after login payload', meData);
             const meUser = meData?.data?.user || meData?.user;
             const mePerms = meData?.data?.permissions || meData?.permissions || [];
             if (meData.success && meUser) {
               login(meUser, meData?.data?.token || null, mePerms || []);
               return { success: true };
             }
+          } else {
+            console.log('[useAuth] /api/auth/me after login not ok', meRes.status);
           }
         } catch (e) {
+          console.error('[useAuth] error fetching /api/auth/me after login', e);
           // fallback to using returned data
         }
 
@@ -122,8 +142,10 @@ export const useAuth = (): AuthState & AuthActions => {
           return { success: true };
         }
 
+        console.error('[useAuth] loginWithCredentials final fallback failed', data);
         throw new Error(data.error || 'Login failed');
       } catch (error) {
+        console.error('[useAuth] loginWithCredentials error', error);
         throw error;
       }
     },
