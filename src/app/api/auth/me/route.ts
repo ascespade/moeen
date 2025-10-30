@@ -45,20 +45,26 @@ export async function GET(request: NextRequest) {
               .from('role_permissions')
               .select('permission_id')
               .eq('role_id', ur.role_id);
-            const ids = (rolePermRows || []).map(rp => rp.permission_id).filter(Boolean);
+            const ids = (rolePermRows || [])
+              .map(rp => rp.permission_id)
+              .filter(Boolean);
             if (ids.length) {
               const { data: permRows } = await supabase
                 .from('permissions')
                 .select('code')
                 .in('id', ids as string[]);
-              permCodes = (permRows || []).map(p => p.code).filter(Boolean) as string[];
+              permCodes = (permRows || [])
+                .map(p => p.code)
+                .filter(Boolean) as string[];
             }
           }
           const { data: userPermRows } = await supabase
             .from('user_permissions')
             .select('permission_id')
             .eq('user_id', userData.id);
-          const uids = (userPermRows || []).map(up => up.permission_id).filter(Boolean);
+          const uids = (userPermRows || [])
+            .map(up => up.permission_id)
+            .filter(Boolean);
           if (uids.length) {
             const { data: permRows } = await supabase
               .from('permissions')

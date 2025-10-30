@@ -35,7 +35,10 @@ export default function LoginPage() {
       const { data } = await supabase.auth.getSession();
       const session = data?.session;
       if (mounted && session?.user?.id) {
-        const redirect = await resolveRedirectAfterLogin(session.user.id, session.user.email || undefined);
+        const redirect = await resolveRedirectAfterLogin(
+          session.user.id,
+          session.user.email || undefined
+        );
         router.replace(redirect);
       }
     })();
@@ -44,7 +47,10 @@ export default function LoginPage() {
     };
   }, [router, supabase]);
 
-  async function fetchPermissions(userId: string, roleId?: string | null): Promise<string[]> {
+  async function fetchPermissions(
+    userId: string,
+    roleId?: string | null
+  ): Promise<string[]> {
     const perms = new Set<string>();
 
     // Role permissions
@@ -62,7 +68,9 @@ export default function LoginPage() {
         .from('role_permissions')
         .select('permission_id')
         .eq('role_id', roleIdToUse);
-      const rolePermIds = (rolePermRows || []).map(rp => rp.permission_id).filter(Boolean);
+      const rolePermIds = (rolePermRows || [])
+        .map(rp => rp.permission_id)
+        .filter(Boolean);
       if (rolePermIds.length) {
         const { data: permRows } = await supabase
           .from('permissions')
@@ -77,7 +85,9 @@ export default function LoginPage() {
       .from('user_permissions')
       .select('permission_id')
       .eq('user_id', userId);
-    const userPermIds = (userPermRows || []).map(up => up.permission_id).filter(Boolean);
+    const userPermIds = (userPermRows || [])
+      .map(up => up.permission_id)
+      .filter(Boolean);
     if (userPermIds.length) {
       const { data: permRows } = await supabase
         .from('permissions')
@@ -89,7 +99,10 @@ export default function LoginPage() {
     return Array.from(perms);
   }
 
-  async function resolveRedirectAfterLogin(userId: string, userEmail?: string): Promise<string> {
+  async function resolveRedirectAfterLogin(
+    userId: string,
+    userEmail?: string
+  ): Promise<string> {
     // Check user status and resolve role
     const { data: userRow, error: userErr } = await supabase
       .from('users')
@@ -140,7 +153,12 @@ export default function LoginPage() {
         .eq('name', 'patient')
         .maybeSingle();
       if (patientRole?.id) {
-        await supabase.from('user_roles').upsert({ user_id: userId, role_id: patientRole.id, is_active: true }, { onConflict: 'user_id,role_id' });
+        await supabase
+          .from('user_roles')
+          .upsert(
+            { user_id: userId, role_id: patientRole.id, is_active: true },
+            { onConflict: 'user_id,role_id' }
+          );
         roleName = 'patient';
       }
     }
@@ -172,10 +190,11 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
     try {
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const { data, error: signInError } =
+        await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
       if (signInError || !data?.user) {
         setError('بيانات الاعتماد غير صحيحة.');
@@ -183,7 +202,10 @@ export default function LoginPage() {
         return;
       }
 
-      const redirectTo = await resolveRedirectAfterLogin(data.user.id, data.user.email || undefined);
+      const redirectTo = await resolveRedirectAfterLogin(
+        data.user.id,
+        data.user.email || undefined
+      );
       if (redirectTo === '/login') {
         setSubmitting(false);
         return;

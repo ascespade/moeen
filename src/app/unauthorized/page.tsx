@@ -31,27 +31,19 @@ export default function UnauthorizedPage() {
             الصلاحيات المطلوبة / Required Permissions
           </h3>
           <p className='text-sm text-amber-800 dark:text-amber-200'>
-            هذه الصفحة مخصصة للمستخدمين ذوي الصلاحيات الخاصة فقط. إذا كنت تعتقد أن
-            هذا خطأ، يرجى الاتصال بمدير النظام.
+            هذه الصفحة مخصصة للمستخدمين ذوي الصلاحيات الخاصة فقط. إذا كنت تعتقد
+            أن هذا خطأ، يرجى الاتصال بمدير النظام.
           </p>
         </div>
 
         <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-          <Button
-            asChild
-            size='lg'
-            className='btn-default'
-          >
+          <Button asChild size='lg' className='btn-default'>
             <Link href='/'>
               <Home className='w-5 h-5 mr-2' />
               الصفحة الرئيسية
             </Link>
           </Button>
-          <Button
-            asChild
-            variant='outline'
-            size='lg'
-          >
+          <Button asChild variant='outline' size='lg'>
             <Link href='/login' prefetch={false}>
               <ArrowLeft className='w-5 h-5 mr-2' />
               تسجيل الدخول
@@ -64,11 +56,21 @@ export default function UnauthorizedPage() {
             أنواع المستخدمين / User Roles:
           </h4>
           <div className='space-y-1 text-xs text-muted-foreground'>
-            <p>👑 <strong>Admin:</strong> صلاحيات كاملة - Full Access</p>
-            <p>👨‍⚕️ <strong>Doctor:</strong> إدارة المرضى والمواعيد</p>
-            <p>👔 <strong>Staff:</strong> إدارة المواعيد والملفات</p>
-            <p>📊 <strong>Supervisor:</strong> عرض التقارير والإحصائيات</p>
-            <p>🏥 <strong>Patient:</strong> الوصول إلى السجلات الطبية</p>
+            <p>
+              👑 <strong>Admin:</strong> صلاحيات كاملة - Full Access
+            </p>
+            <p>
+              👨‍⚕️ <strong>Doctor:</strong> إدارة المرضى والمواعيد
+            </p>
+            <p>
+              👔 <strong>Staff:</strong> إدارة المواعيد والملفات
+            </p>
+            <p>
+              📊 <strong>Supervisor:</strong> عرض التقارير والإحصائيات
+            </p>
+            <p>
+              🏥 <strong>Patient:</strong> الوصول إلى السجلات الطبية
+            </p>
           </div>
         </div>
       </div>

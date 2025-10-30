@@ -253,12 +253,17 @@ export const useAuth = (): AuthState & AuthActions => {
 
   const logout = useCallback(async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
     } catch (_error) {
       // ignore
     } finally {
       clearAuth();
-      try { localStorage.removeItem('permissions'); } catch {}
+      try {
+        localStorage.removeItem('permissions');
+      } catch {}
       setUserState(null);
       setTokenState(null);
       setPermissions([]);
