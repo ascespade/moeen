@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/Button';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
-import { Calendar, Play } from 'lucide-react';
+import { Calendar, Play, MapPin, Star, Heart } from 'lucide-react';
 import Image from 'next/image';
 import { memo, useEffect, useState } from 'react';
 
@@ -286,4 +286,3 @@ const ModernHero = memo(function ModernHero({
 
 ModernHero.displayName = 'ModernHero';
 export default ModernHero;
-
