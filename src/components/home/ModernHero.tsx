@@ -200,11 +200,11 @@ const ModernHero = memo(function ModernHero({
 
               {/* Decorative Elements */}
               <div className='absolute bottom-6 right-6 flex flex-col gap-3'>
-                <div className='bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover-lift'>
-                  <span className='text-2xl'>🏥</span>
+                <div className='bg-[var(--panel)]/90 dark:bg-[var(--panel)]/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover-lift'>
+                  <MapPin className='w-6 h-6' />
                 </div>
                 <div className='bg-primary-500/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover-lift'>
-                  <span className='text-white text-xl'>❤️</span>
+                  <Heart className='text-white w-5 h-5' />
                 </div>
               </div>
 
