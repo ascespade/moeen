@@ -521,7 +521,7 @@ function AdminDashboardContent() {
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <User className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
+              <UserCheck className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
               <span className='text-sm text-[var(--text-primary)]'>إضافة مريض</span>
             </Button>
             <Button
