@@ -44,10 +44,13 @@ export default function LoginPage() {
       console.log('[login page] /api/auth/check-user response', res.status, data);
       if (res.ok && data.success) {
         if (data.found) {
-          // Show success message — don't create a session yet
+          // Set in-page success state — don't create a session yet
           setError(null);
-          alert('User found in database — success');
+          setFoundUser(data.user || null);
+          setFoundPermissions(data.permissions || []);
         } else {
+          setFoundUser(null);
+          setFoundPermissions([]);
           setError('المستخدم غير موجود');
         }
       } else {
