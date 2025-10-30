@@ -19,6 +19,8 @@ export default function LoginPage() {
   });
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [foundUser, setFoundUser] = useState<any | null>(null);
+  const [foundPermissions, setFoundPermissions] = useState<string[]>([]);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -172,7 +174,7 @@ export default function LoginPage() {
                   href='/forgot-password'
                   className='text-default text-sm font-medium transition-colors hover:text-[var(--default-default-hover)]'
                 >
-                  نسيت كلمة المرور؟
+                  نس��ت كلمة المرور؟
                 </Link>
               </div>
 
