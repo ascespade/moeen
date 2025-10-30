@@ -35,6 +35,8 @@ export class ApiClient {
         ...defaultHeaders,
         ...options.headers,
       },
+      // send cookies for same-origin requests
+      credentials: (options && (options as any).credentials) || 'include',
     };
 
     try {
