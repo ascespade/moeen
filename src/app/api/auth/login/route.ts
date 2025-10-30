@@ -5,6 +5,7 @@ import { PermissionManager } from '@/lib/permissions';
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
+    try { console.log('[api/auth/login] incoming login request email:', email); } catch(e){}
     if (!email || !password) {
       return NextResponse.json(
         { success: false, error: 'Missing credentials' },
@@ -17,7 +18,9 @@ export async function POST(req: NextRequest) {
       email,
       password,
     });
+    console.log('[api/auth/login] signInWithPassword result', { error: error?.message || null, userId: data?.user?.id });
     if (error || !data?.user) {
+      console.error('[api/auth/login] auth error', error?.message);
       return NextResponse.json(
         { success: false, error: error?.message || 'Unauthorized' },
         { status: 401 }
@@ -31,7 +34,10 @@ export async function POST(req: NextRequest) {
       .eq('id', data.user.id)
       .single();
 
+    console.log('[api/auth/login] fetched userData', { userData, userError: userError?.message || null });
+
     if (userError || !userData) {
+      console.error('[api/auth/login] user data not found for', data.user.id, userError?.message);
       return NextResponse.json(
         { success: false, error: 'User data not found' },
         { status: 401 }
@@ -70,6 +76,8 @@ export async function POST(req: NextRequest) {
         permissions: rolePermissions,
       },
     };
+
+    console.log('[api/auth/login] login successful', { userId: userResponse.id, sessionToken: !!sessionToken });
 
     return NextResponse.json(resBody);
   } catch (e: any) {
