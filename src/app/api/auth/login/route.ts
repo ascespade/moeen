@@ -77,14 +77,46 @@ export async function POST(req: NextRequest) {
       status: userData.status,
     };
 
-    return NextResponse.json({
+    // Create HttpOnly cookie for token
+    const parseExpiryToSeconds = (exp: string | undefined) => {
+      if (!exp) return 60 * 60 * 24 * 7; // default 7 days
+      try {
+        if (exp.endsWith('d')) {
+          const days = parseInt(exp.slice(0, -1), 10);
+          return days * 24 * 60 * 60;
+        }
+        if (exp.endsWith('h')) {
+          const hours = parseInt(exp.slice(0, -1), 10);
+          return hours * 60 * 60;
+        }
+        const asNum = parseInt(exp, 10);
+        if (!isNaN(asNum)) return asNum;
+      } catch (e) {}
+      return 60 * 60 * 24 * 7;
+    };
+
+    const maxAge = parseExpiryToSeconds(process.env.JWT_EXPIRES_IN);
+    const isProd = process.env.NODE_ENV === 'production';
+    const cookieParts = [
+      `token=${token}`,
+      `HttpOnly`,
+      `Path=/`,
+      `Max-Age=${maxAge}`,
+      `SameSite=Lax`,
+    ];
+    if (isProd) cookieParts.push('Secure');
+    const cookie = cookieParts.join('; ');
+
+    const resBody = {
       success: true,
       data: {
         user: userResponse,
         token,
         permissions: rolePermissions,
       },
-    });
+    };
+
+    return NextResponse.json(resBody, { headers: { 'Set-Cookie': cookie } });
   } catch (e: any) {
     console.error('Login error:', e);
     return NextResponse.json(
