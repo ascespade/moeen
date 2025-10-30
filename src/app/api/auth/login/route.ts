@@ -239,11 +239,30 @@ export async function POST(req: NextRequest) {
     console.log('[api/auth/login] fetched userData', { userData, userError: userError?.message || null });
 
     if (userError || !userData) {
-      console.error('[api/auth/login] user data not found for', data.user.id, userError?.message);
-      return NextResponse.json(
-        { success: false, error: 'User data not found' },
-        { status: 401 }
-      );
+      console.warn('[api/auth/login] user data not found for', data.user.id, userError?.message);
+
+      // Attempt to upsert an application user record if Supabase auth user exists
+      try {
+        const fallbackFullName = (data.user.user_metadata && (data.user.user_metadata.full_name || data.user.user_metadata.name)) || data.user.email.split('@')[0];
+        const { data: upserted, error: upsertErr } = await supabase
+          .from('users')
+          .upsert({ id: data.user.id, email: data.user.email, full_name: fallbackFullName, role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
+          .select('id, email, full_name, role, status, avatar_url')
+          .single();
+
+        console.log('[api/auth/login] upserted missing user row', { upserted, upsertErr: upsertErr?.message || null });
+
+        if (!upsertErr && upserted) {
+          // replace userData for further processing
+          userData = upserted as any;
+        } else {
+          console.error('[api/auth/login] upsert failed for user', data.user.id, upsertErr?.message);
+          return NextResponse.json({ success: false, error: 'User data not found' }, { status: 401 });
+        }
+      } catch (e) {
+        console.error('[api/auth/login] error upserting missing user', e);
+        return NextResponse.json({ success: false, error: 'User data not found' }, { status: 401 });
+      }
     }
 
     // Check if user is active
