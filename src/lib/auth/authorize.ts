@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import jwt from 'jsonwebtoken';
 
 export interface User {
   id: string;
