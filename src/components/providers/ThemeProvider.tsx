@@ -55,16 +55,9 @@ export function ThemeProvider({
   useThemeMonitor({
     enabled: advancedSettings.themeManagement.colorIntelligence.realTimeUpdate,
     mode: resolvedMode as 'light' | 'dark',
-    onAdjustment: (element, adjustments) => {
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Theme adjustment applied:', { element: element.tagName, adjustments });
-      }
-    },
-    onReport: (report) => {
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Theme adjustment report:', report);
-      }
-    },
+    // Silence logs to reduce console noise; enable only if explicitly needed
+    onAdjustment: undefined,
+    onReport: undefined,
   });
 
   // Apply advanced theme colors to CSS variables

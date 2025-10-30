@@ -14,18 +14,82 @@
    ======================================== */
 
 :root {
-  /* Import design system tokens */
-  /* Brand Colors - Enhanced contrast and clarity */
-  --brand-primary: #e46c0a; /* Solid Orange - Primary brand color */
-  --brand-primary-hover: #c55d0a; /* Darker orange for hover (better contrast) */
-  --brand-secondary: #ff9800; /* Brighter orange - Secondary (better visibility) */
-  --brand-neutral-beige: #f5ede0; /* Lighter beige (better contrast) */
-  --brand-accent: #0066cc; /* Deeper blue - Accent (better readability) */
-  --brand-accent-deep: #b8320a; /* Deeper red-orange - Accent */
-  --brand-success: #008a7a; /* Deeper green - Success (better contrast) */
-  --brand-warning: #e68900; /* Deeper yellow - Warning (better visibility) */
-  --brand-error: #dc2626; /* Deeper red - Error (better visibility) */
-  --brand-info: #0284c7; /* Deeper sky blue - Info (better contrast) */
+  /* ========================================
+     ENHANCED DESIGN SYSTEM - مُعين
+     ======================================== */
+
+  /* Primary Color Palette - Complete Gradient Scale */
+  --color-primary-50: #fff7ed;   /* Lightest */
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #f97316;  /* Base - Main brand color */
+  --color-primary-600: #ea580c;  /* Hover state */
+  --color-primary-700: #c2410c;  /* Active state */
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;   /* Darkest */
+
+  /* Secondary Colors - Enhanced */
+  --color-secondary-50: #fefce8;
+  --color-secondary-100: #fef9c3;
+  --color-secondary-200: #fef08a;
+  --color-secondary-300: #fde047;
+  --color-secondary-400: #facc15;
+  --color-secondary-500: #eab308; /* Base secondary */
+  --color-secondary-600: #ca8a04;
+  --color-secondary-700: #a16207;
+  --color-secondary-800: #854d0e;
+  --color-secondary-900: #713f12;
+
+  /* Neutral Gray Palette - Improved Contrast */
+  --color-neutral-50: #fafafa;   /* Lightest backgrounds */
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;  /* Base text */
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;  /* Dark text */
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;  /* Darkest backgrounds */
+
+  /* Semantic Colors - Enhanced for Accessibility */
+  --color-success: #10b981;      /* Green - Success */
+  --color-success-50: #ecfdf5;
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+
+  --color-warning: #f59e0b;      /* Amber - Warning */
+  --color-warning-50: #fffbeb;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+
+  --color-error: #ef4444;        /* Red - Error */
+  --color-error-50: #fef2f2;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+
+  --color-info: #3b82f6;         /* Blue - Info */
+  --color-info-50: #eff6ff;
+  --color-info-500: #3b82f6;
+  --color-info-600: #2563eb;
+  --color-info-700: #1d4ed8;
+
+  /* Backward Compatibility - Keep old brand variables */
+  --brand-primary: var(--color-primary-500);
+  --brand-primary-hover: var(--color-primary-600);
+  --brand-secondary: var(--color-secondary-500);
+  --brand-neutral-beige: var(--color-primary-50);
+  --brand-accent: var(--color-info-500);
+  --brand-accent-deep: var(--color-primary-700);
+  --brand-success: var(--color-success-500);
+  --brand-warning: var(--color-warning-500);
+  --brand-error: var(--color-error-500);
+  --brand-info: var(--color-info-500);
 
   /* Background Colors - Enhanced contrast for light theme */
   --background: #ffffff; /* Pure white background */
@@ -133,15 +197,29 @@
   --breakpoint-desktop: 1440px;
   --breakpoint-large-desktop: 1920px;
 
-  /* Animation Durations */
-  --duration-fast: 150ms;
-  --duration-normal: 300ms;
-  --duration-slow: 500ms;
+  /* Animation Durations - Enhanced scale */
+  --duration-0: 0ms;
+  --duration-75: 75ms;
+  --duration-100: 100ms;
+  --duration-150: 150ms;    /* --duration-fast */
+  --duration-200: 200ms;
+  --duration-300: 300ms;    /* --duration-normal */
+  --duration-500: 500ms;    /* --duration-slow */
+  --duration-700: 700ms;
+  --duration-1000: 1000ms;
 
-  /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-normal: 300ms ease-in-out;
-  --transition-slow: 500ms ease-in-out;
+  /* Easing Functions - Modern curves */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Transitions - Enhanced */
+  --transition-fast: var(--duration-150) var(--ease-out);
+  --transition-normal: var(--duration-300) var(--ease-out);
+  --transition-slow: var(--duration-500) var(--ease-out);
+  --transition-spring: var(--duration-500) var(--ease-spring);
 
   /* Typography - Optimized for Arabic & English */
   /* Modern Arabic font stack - أفضل خطوط عربية حديثة */
@@ -153,17 +231,21 @@
     'Fira Code', 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
     monospace;
 
-  /* Font Sizes - Complete unified scale */
-  --font-size-xs: 0.75rem;    /* 12px */
-  --font-size-sm: 0.875rem;   /* 14px */
-  --font-size-base: 1rem;     /* 16px */
-  --font-size-lg: 1.125rem;   /* 18px */
-  --font-size-xl: 1.25rem;    /* 20px */
-  --font-size-2xl: 1.5rem;    /* 24px */
-  --font-size-3xl: 1.875rem;  /* 30px */
-  --font-size-4xl: 2.25rem;   /* 36px */
-  --font-size-5xl: 3rem;      /* 48px */
-  --font-size-6xl: 3.75rem;   /* 60px */
+  /* Font Sizes - Complete unified scale (Perfect Fourth: 1.333) */
+  --font-size-2xs: 0.625rem;  /* 10px - Small labels */
+  --font-size-xs: 0.75rem;    /* 12px - Captions */
+  --font-size-sm: 0.875rem;   /* 14px - Small text */
+  --font-size-base: 1rem;     /* 16px - Base text */
+  --font-size-lg: 1.125rem;   /* 18px - Large text */
+  --font-size-xl: 1.25rem;    /* 20px - Lead text */
+  --font-size-2xl: 1.5rem;    /* 24px - Section headings */
+  --font-size-3xl: 1.875rem;  /* 30px - Page headings */
+  --font-size-4xl: 2.25rem;   /* 36px - Hero headings */
+  --font-size-5xl: 3rem;      /* 48px - Large hero headings */
+  --font-size-6xl: 3.75rem;   /* 60px - Extra large headings */
+  --font-size-7xl: 4.5rem;    /* 72px - Marketing headings */
+  --font-size-8xl: 6rem;      /* 96px - Impact headings */
+  --font-size-9xl: 8rem;      /* 128px - Massive headings */
 
   /* Font Weights - Complete unified scale */
   --font-weight-thin: 100;
@@ -175,6 +257,22 @@
   --font-weight-bold: 700;
   --font-weight-extrabold: 800;
   --font-weight-black: 900;
+
+  /* Line Heights - Optimized for readability */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
 
   /* Z-Index Scale */
   --z-dropdown: 1000;
@@ -190,27 +288,97 @@
 /* Dark Theme Variables - Use .dark class instead of media query */
 /* Updated based on image reference: deep dark background with high contrast */
 .dark {
-  --background: #1a1a1a; /* Very dark background - matches image (#1A1A1A or #1C1C1C) */
-  --foreground: #ffffff; /* Pure white text - matches image */
-  --brand-primary: #ff6633; /* Orange-red for interactive elements - matches image (#FF6633 or #F05030) */
-  --brand-primary-hover: #ff854d; /* Lighter orange-red on hover */
-  --brand-secondary: #ff9800; /* Brighter orange secondary */
-  --brand-neutral-beige: #2a2520; /* Darker beige for dark mode */
-  --brand-accent: #ff6633; /* Orange-red accent - matches interactive color */
-  --brand-accent-deep: #f05030; /* Deeper orange-red */
-  --brand-success: #00b39b; /* Lighter green for dark mode */
-  --brand-warning: #fbbf24; /* Lighter yellow for dark mode */
-  --brand-error: #f87171; /* Lighter red for dark mode */
-  --brand-info: #38bdf8; /* Lighter sky blue for dark mode */
-  --brand-border: #404040; /* Medium dark border for visibility */
-  --brand-surface: #1a1a1a; /* Same as background for consistency */
-  --panel: #282828; /* Dark panel for cards - matches image (#282828 or #2C2C2C) */
-  --focus-ring: #ff6633; /* Orange-red focus ring - matches interactive color */
+  /* ========================================
+     DARK THEME - Enhanced Design System
+     ======================================== */
 
-  /* Text colors with high contrast - matches image */
-  --text-primary: #ffffff; /* Pure white for primary text - matches image */
-  --text-secondary: #a0a0a0; /* Medium gray for secondary text - matches image (#A0A0A0 or #B0B0B0) */
-  --text-muted: #808080; /* Darker gray for muted text */
+  /* Primary Colors - Enhanced for Dark Mode */
+  --color-primary-50: #2a1810;   /* Darkest primary backgrounds */
+  --color-primary-100: #451a11;
+  --color-primary-200: #783218;
+  --color-primary-300: #a53d1a;
+  --color-primary-400: #d1490f;
+  --color-primary-500: #f97316;  /* Same as light for brand consistency */
+  --color-primary-600: #ea580c;  /* Hover state */
+  --color-primary-700: #c2410c;  /* Active state */
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;
+
+  /* Secondary Colors - Adapted for Dark */
+  --color-secondary-50: #292003;
+  --color-secondary-100: #3d2a04;
+  --color-secondary-200: #714205;
+  --color-secondary-300: #a16207;
+  --color-secondary-400: #ca8a04;
+  --color-secondary-500: #eab308;
+  --color-secondary-600: #d97706;
+  --color-secondary-700: #b45309;
+  --color-secondary-800: #92400e;
+  --color-secondary-900: #78350f;
+
+  /* Neutral Grays - Optimized for Dark Mode */
+  --color-neutral-50: #171717;   /* Darkest backgrounds */
+  --color-neutral-100: #262626;
+  --color-neutral-200: #404040;
+  --color-neutral-300: #525252;
+  --color-neutral-400: #737373;
+  --color-neutral-500: #a3a3a3;  /* Base text */
+  --color-neutral-600: #d4d4d4;  /* Secondary text */
+  --color-neutral-700: #e5e5e5;  /* Light text */
+  --color-neutral-800: #f5f5f5;
+  --color-neutral-900: #fafafa;  /* Lightest */
+
+  /* Semantic Colors - Enhanced for Dark Mode */
+  --color-success: #34d399;      /* Brighter green for dark backgrounds */
+  --color-success-50: #0f2419;
+  --color-success-500: #34d399;
+  --color-success-600: #10b981;
+  --color-success-700: #059669;
+
+  --color-warning: #fbbf24;      /* Brighter amber for visibility */
+  --color-warning-50: #2a1902;
+  --color-warning-500: #fbbf24;
+  --color-warning-600: #f59e0b;
+  --color-warning-700: #d97706;
+
+  --color-error: #f87171;        /* Brighter red for visibility */
+  --color-error-50: #2a0f0f;
+  --color-error-500: #f87171;
+  --color-error-600: #ef4444;
+  --color-error-700: #dc2626;
+
+  --color-info: #60a5fa;         /* Brighter blue for visibility */
+  --color-info-50: #0f172a;
+  --color-info-500: #60a5fa;
+  --color-info-600: #3b82f6;
+  --color-info-700: #2563eb;
+
+  /* Background & Surface Colors - Enhanced */
+  --background: var(--color-neutral-900);     /* Pure dark background */
+  --foreground: var(--color-neutral-50);      /* Pure light text */
+  --brand-surface: var(--color-neutral-800);  /* Card backgrounds */
+  --panel: var(--color-neutral-800);          /* Panel backgrounds */
+  --brand-border: var(--color-neutral-600);   /* Subtle borders */
+
+  /* Text Colors - High Contrast */
+  --text-primary: var(--color-neutral-50);    /* Pure white for headings */
+  --text-secondary: var(--color-neutral-300); /* Medium gray for body */
+  --text-muted: var(--color-neutral-400);     /* Lighter gray for muted */
+
+  /* Focus & Interactive States */
+  --focus-ring: var(--color-primary-400);     /* Bright focus ring */
+
+  /* Backward Compatibility - Keep old brand variables */
+  --brand-primary: var(--color-primary-500);
+  --brand-primary-hover: var(--color-primary-600);
+  --brand-secondary: var(--color-secondary-500);
+  --brand-neutral-beige: var(--color-primary-100);
+  --brand-accent: var(--color-info-500);
+  --brand-accent-deep: var(--color-primary-700);
+  --brand-success: var(--color-success-500);
+  --brand-warning: var(--color-warning-500);
+  --brand-error: var(--color-error-500);
+  --brand-info: var(--color-info-500);
 
   /* Dark mode gradients - minimal use */
   --brand-gradient: linear-gradient(
@@ -231,11 +399,328 @@
 }
 
 /* ========================================
+   UTILITY CLASSES - Enhanced Layout System
+   ======================================== */
+
+/* Container System - Enhanced */
+.container-xs { max-width: 20rem; margin: 0 auto; }
+.container-sm { max-width: 24rem; margin: 0 auto; }
+.container-md { max-width: 28rem; margin: 0 auto; }
+.container-lg { max-width: 32rem; margin: 0 auto; }
+.container-xl { max-width: 36rem; margin: 0 auto; }
+.container-2xl { max-width: 42rem; margin: 0 auto; }
+.container-3xl { max-width: 48rem; margin: 0 auto; }
+.container-4xl { max-width: 56rem; margin: 0 auto; }
+.container-5xl { max-width: 64rem; margin: 0 auto; }
+.container-6xl { max-width: 72rem; margin: 0 auto; }
+.container-7xl { max-width: 80rem; margin: 0 auto; }
+.container-full { max-width: 100%; }
+
+/* Responsive Containers */
+@media (min-width: 640px) {
+  .container-xs { max-width: 24rem; }
+  .container-sm { max-width: 28rem; }
+  .container-md { max-width: 32rem; }
+  .container-lg { max-width: 36rem; }
+  .container-xl { max-width: 42rem; }
+}
+
+@media (min-width: 768px) {
+  .container-xs { max-width: 28rem; }
+  .container-sm { max-width: 32rem; }
+  .container-md { max-width: 36rem; }
+  .container-lg { max-width: 42rem; }
+  .container-xl { max-width: 48rem; }
+  .container-2xl { max-width: 56rem; }
+}
+
+@media (min-width: 1024px) {
+  .container-xs { max-width: 32rem; }
+  .container-sm { max-width: 36rem; }
+  .container-md { max-width: 42rem; }
+  .container-lg { max-width: 48rem; }
+  .container-xl { max-width: 56rem; }
+  .container-2xl { max-width: 64rem; }
+  .container-3xl { max-width: 72rem; }
+}
+
+/* Spacing Utilities - Enhanced */
+.m-space-1 { margin: var(--space-1); }
+.m-space-2 { margin: var(--space-2); }
+.m-space-3 { margin: var(--space-3); }
+.m-space-4 { margin: var(--space-4); }
+.m-space-6 { margin: var(--space-6); }
+.m-space-8 { margin: var(--space-8); }
+.m-space-12 { margin: var(--space-12); }
+.m-space-16 { margin: var(--space-16); }
+
+.p-space-1 { padding: var(--space-1); }
+.p-space-2 { padding: var(--space-2); }
+.p-space-3 { padding: var(--space-3); }
+.p-space-4 { padding: var(--space-4); }
+.p-space-6 { padding: var(--space-6); }
+.p-space-8 { padding: var(--space-8); }
+.p-space-12 { padding: var(--space-12); }
+.p-space-16 { padding: var(--space-16); }
+
+/* Typography Utilities - Enhanced */
+.text-display-2xs { font-size: var(--font-size-2xs); line-height: var(--leading-tight); }
+.text-display-xs { font-size: var(--font-size-xs); line-height: var(--leading-tight); }
+.text-display-sm { font-size: var(--font-size-sm); line-height: var(--leading-tight); }
+.text-display-base { font-size: var(--font-size-base); line-height: var(--leading-tight); }
+.text-display-lg { font-size: var(--font-size-lg); line-height: var(--leading-tight); }
+.text-display-xl { font-size: var(--font-size-xl); line-height: var(--leading-tight); }
+.text-display-2xl { font-size: var(--font-size-2xl); line-height: var(--leading-tight); }
+.text-display-3xl { font-size: var(--font-size-3xl); line-height: var(--leading-tight); }
+.text-display-4xl { font-size: var(--font-size-4xl); line-height: var(--leading-tight); }
+.text-display-5xl { font-size: var(--font-size-5xl); line-height: var(--leading-tight); }
+.text-display-6xl { font-size: var(--font-size-6xl); line-height: var(--leading-tight); }
+
+/* Color Utilities - Enhanced */
+.bg-primary-subtle { background-color: var(--color-primary-50); }
+.bg-primary-soft { background-color: var(--color-primary-100); }
+.bg-primary-muted { background-color: var(--color-primary-200); }
+
+.text-primary-subtle { color: var(--color-primary-600); }
+.text-primary-soft { color: var(--color-primary-500); }
+.text-primary-muted { color: var(--color-primary-400); }
+
+.dark .bg-primary-subtle { background-color: var(--color-primary-950); }
+.dark .bg-primary-soft { background-color: var(--color-primary-900); }
+.dark .bg-primary-muted { background-color: var(--color-primary-800); }
+
+.dark .text-primary-subtle { color: var(--color-primary-400); }
+.dark .text-primary-soft { color: var(--color-primary-300); }
+.dark .text-primary-muted { color: var(--color-primary-200); }
+
+/* Interaction States - Enhanced */
+.hover-lift {
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-glow {
+  transition: box-shadow var(--duration-normal) var(--ease-out);
+}
+.hover-glow:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.hover-scale {
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  --tw-ring-color: var(--color-primary-400);
+}
+
+.focus-ring-inset {
+  @apply focus:outline-none focus:ring-2 focus:ring-inset;
+  --tw-ring-color: var(--color-primary-400);
+}
+
+/* Animation Classes - Enhanced */
+.animate-fade-in {
+  animation: fade-in var(--duration-normal) var(--ease-out);
+}
+
+.animate-slide-up {
+  animation: slide-up var(--duration-normal) var(--ease-out);
+}
+
+.animate-slide-down {
+  animation: slide-down var(--duration-normal) var(--ease-out);
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle var(--duration-normal) var(--ease-spring);
+}
+
+/* Keyframe Definitions */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+/* GPU Acceleration for smooth animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Optimize animations for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Optimize for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .hover-lift:hover,
+  .hover-glow:hover,
+  .hover-scale:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* ========================================
    BASE STYLES
    ======================================== */
 
 * {
   box-sizing: border-box;
+}
+
+/* Performance: Optimize text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Performance: Optimize image rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* ========================================
+   ACCESSIBILITY ENHANCEMENTS - WCAG 2.1 AA
+   ======================================== */
+
+/* Focus indicators - Enhanced visibility */
+.focus-visible,
+*:focus-visible {
+  outline: 3px solid var(--color-primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* High contrast focus for better visibility */
+@media (prefers-contrast: high) {
+  .focus-visible,
+  *:focus-visible {
+    outline: 4px solid var(--color-primary-600);
+    outline-offset: 3px;
+  }
+}
+
+/* Skip links for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--color-primary-600);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  z-index: var(--z-tooltip);
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-neutral-900: #000000;
+    --color-neutral-50: #ffffff;
+    --color-neutral-300: #ffffff;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-slide-down,
+  .animate-bounce-gentle {
+    animation: none;
+  }
+
+  .hover-lift:hover,
+  .hover-scale:hover {
+    transform: none;
+  }
+}
+
+/* Color blindness support - Deuteranopia */
+@media (prefers-color-scheme: dark) {
+  /* Ensure sufficient contrast for color blind users */
+  .text-success {
+    border-bottom: 2px solid currentColor;
+  }
+  .text-error {
+    text-decoration: underline;
+  }
+  .text-warning {
+    font-weight: bold;
+  }
 }
 
 /* Remove all outlines and borders from non-interactive text elements globally */

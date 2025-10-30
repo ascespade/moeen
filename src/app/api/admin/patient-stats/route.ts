@@ -3,9 +3,9 @@
  * Detailed patient analytics for admin dashboard
  */
 
-import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {

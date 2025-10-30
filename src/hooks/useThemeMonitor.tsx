@@ -29,6 +29,8 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
   const observerRef = useRef<MutationObserver | null>(null);
   const settingsRef = useRef<AdvancedThemeSettings>(loadThemeSettings());
   const reportsRef = useRef<ThemeAdjustmentReport[]>([]);
+  // Track last adjustment per element to avoid re-applying too frequently
+  const lastAdjustedRef = useRef<WeakMap<HTMLElement, number>>(new WeakMap());
 
   const applyThemeAdjustments = useCallback(
     (element: HTMLElement) => {
@@ -38,6 +40,17 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
       if (!settings.themeManagement.colorIntelligence.realTimeUpdate) {
         return;
       }
+
+      // Throttle adjustments per element (once per 10s)
+      const now = Date.now();
+      const last = lastAdjustedRef.current.get(element) || 0;
+      if (now - last < 10000) {
+        return;
+      }
+
+      // Skip known noisy elements
+      if (element.tagName === 'SVG' || element.closest('svg')) return;
+      if (element.tagName === 'A' && element.classList.contains('group')) return;
 
       // Skip non-interactive text elements - don't add shadows or borders to them
       const isTextElement = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'LABEL', 'LI', 'SECTION', 'ARTICLE', 'HEADER', 'FOOTER', 'MAIN', 'ASIDE'].includes(element.tagName);
@@ -74,9 +87,26 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
           }
 
           // Generate report
+          // Handle className safely - it might be SVGAnimatedString or other types
+          let classNameStr = '';
+          try {
+            if (element.className) {
+              if (typeof element.className === 'string') {
+                classNameStr = element.className.split(' ')[0] || '';
+              } else if (typeof element.className === 'object' && 'baseVal' in element.className) {
+                // SVGAnimatedString case
+                classNameStr = (element.className as any).baseVal?.split(' ')[0] || '';
+              } else if (typeof element.className === 'object' && 'value' in element.className) {
+                classNameStr = (element.className as any).value?.split(' ')[0] || '';
+              }
+            }
+          } catch (e) {
+            // Ignore className errors
+          }
+          
           const report: ThemeAdjustmentReport = {
             timestamp: new Date(),
-            component: element.tagName.toLowerCase() + (element.className ? `.${element.className.split(' ')[0]}` : ''),
+            component: element.tagName.toLowerCase() + (classNameStr ? `.${classNameStr}` : ''),
             adjustments: analysis.adjustments,
             contrastRatio: analysis.contrastRatio,
             meetsStandard: analysis.meetsStandard,
@@ -86,6 +116,9 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
           if (onReport) {
             onReport(report);
           }
+
+          // mark as recently adjusted
+          lastAdjustedRef.current.set(element, now);
         }
       } catch (error) {
         console.warn('Failed to apply theme adjustments:', error);
@@ -169,7 +202,7 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
     // Periodic scan for elements that might have changed styles
     const interval = setInterval(() => {
       scanAndAdjustComponents();
-    }, 2000); // Scan every 2 seconds
+    }, 8000); // Scan every 8 seconds to reduce noise
 
     return () => {
       if (observerRef.current) {

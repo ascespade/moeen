@@ -1,8 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { RouteGuard } from '@/components/admin/RouteGuard';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
+import { useAdminPatients } from '@/hooks/useAdminPatients';
+import { AdminHeader, AdminCard, AdminStatsCard } from '@/components/admin/ui';
 import {
   Card,
   CardContent,
@@ -95,160 +98,74 @@ interface Patient {
   bmi?: number;
 }
 
-export default function PatientsPage() {
+function PatientsPageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
-  const [patients, setPatients] = useState<Patient[]>([]);
-  const [loading, setLoading] = useState(true);
+  // Use the real hook for data fetching
+  const {
+    patients: hookPatients,
+    filteredPatients,
+    loading,
+    error: hookError,
+    filters: hookFilters,
+    pagination: hookPagination,
+    updateFilters,
+    setPage,
+    refetch,
+    deletePatient,
+    updatePatient,
+    createPatient,
+    activatePatient,
+    blockPatient
+  } = useAdminPatients();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [genderFilter, setGenderFilter] = useState('all');
   const [selectedPatients, setSelectedPatients] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
-  // Mock data
+  // Update hook filters when local filters change
   useEffect(() => {
-    const mockPatients: Patient[] = [
-      {
-        id: '1',
-        name: 'أحمد محمد العلي',
-        email: 'ahmed.ali@email.com',
-        phone: '+966501234567',
-        nationalId: '1234567890',
-        dateOfBirth: '1985-03-15',
-        gender: 'male',
-        status: 'active',
-        lastVisit: '2024-01-15T10:30:00Z',
-        createdAt: '2023-06-15T08:00:00Z',
-        address: 'الرياض، حي النخيل',
-        emergencyContact: '+966501234568',
-        medicalHistory: ['ضغط الدم', 'السكري'],
-        allergies: ['البنسلين'],
-        currentMedications: ['ميتفورمين', 'لوسارتان'],
-        insuranceProvider: 'شركة التأمين الوطنية',
-        insuranceNumber: 'INS123456789',
-        bloodType: 'O+',
-        height: 175,
-        weight: 80,
-        bmi: 26.1
-      },
-      {
-        id: '2',
-        name: 'فاطمة أحمد السعد',
-        email: 'fatima.saad@email.com',
-        phone: '+966502345678',
-        nationalId: '2345678901',
-        dateOfBirth: '1990-07-22',
-        gender: 'female',
-        status: 'active',
-        lastVisit: '2024-01-14T14:20:00Z',
-        createdAt: '2023-07-20T08:00:00Z',
-        address: 'جدة، حي الروضة',
-        emergencyContact: '+966502345679',
-        medicalHistory: ['الربو'],
-        allergies: ['الغبار'],
-        currentMedications: ['فينتولين'],
-        insuranceProvider: 'شركة التأمين التعاوني',
-        insuranceNumber: 'INS234567890',
-        bloodType: 'A+',
-        height: 160,
-        weight: 55,
-        bmi: 21.5
-      },
-      {
-        id: '3',
-        name: 'محمد عبدالله القحطاني',
-        email: 'mohammed.qhtani@email.com',
-        phone: '+966503456789',
-        nationalId: '3456789012',
-        dateOfBirth: '1978-11-08',
-        gender: 'male',
-        status: 'inactive',
-        lastVisit: '2023-12-20T09:15:00Z',
-        createdAt: '2023-08-10T08:00:00Z',
-        address: 'الدمام، حي الفيصلية',
-        emergencyContact: '+966503456790',
-        medicalHistory: ['أمراض القلب'],
-        allergies: ['المأكولات البحرية'],
-        currentMedications: ['أتورفاستاتين', 'أسبرين'],
-        insuranceProvider: 'شركة التأمين الأهلية',
-        insuranceNumber: 'INS345678901',
-        bloodType: 'B+',
-        height: 180,
-        weight: 90,
-        bmi: 27.8
-      },
-      {
-        id: '4',
-        name: 'نورا سعد المطيري',
-        email: 'nora.mutairi@email.com',
-        phone: '+966504567890',
-        nationalId: '4567890123',
-        dateOfBirth: '1995-05-12',
-        gender: 'female',
-        status: 'pending',
-        lastVisit: '2024-01-10T16:45:00Z',
-        createdAt: '2024-01-01T08:00:00Z',
-        address: 'الرياض، حي العليا',
-        emergencyContact: '+966504567891',
-        medicalHistory: [],
-        allergies: [],
-        currentMedications: [],
-        insuranceProvider: 'شركة التأمين الوطنية',
-        insuranceNumber: 'INS456789012',
-        bloodType: 'AB+',
-        height: 165,
-        weight: 60,
-        bmi: 22.0
-      },
-      {
-        id: '5',
-        name: 'خالد فيصل الشمري',
-        email: 'khalid.shamri@email.com',
-        phone: '+966505678901',
-        nationalId: '5678901234',
-        dateOfBirth: '1982-09-30',
-        gender: 'male',
-        status: 'active',
-        lastVisit: '2024-01-13T11:30:00Z',
-        createdAt: '2023-09-15T08:00:00Z',
-        address: 'الطائف، حي الشهداء',
-        emergencyContact: '+966505678902',
-        medicalHistory: ['الربو', 'الحساسية'],
-        allergies: ['حبوب اللقاح', 'الغبار'],
-        currentMedications: ['مونتيلوكاست', 'لوراتادين'],
-        insuranceProvider: 'شركة التأمين التعاوني',
-        insuranceNumber: 'INS567890123',
-        bloodType: 'O-',
-        height: 170,
-        weight: 75,
-        bmi: 25.9
-      }
-    ];
+    updateFilters({
+      search: searchTerm,
+      status: statusFilter === 'all' ? 'all' : statusFilter,
+      gender: genderFilter === 'all' ? 'all' : genderFilter,
+    });
+  }, [searchTerm, statusFilter, genderFilter, updateFilters]);
 
-    setPatients(mockPatients);
-    setTotalPages(Math.ceil(mockPatients.length / 10));
-    setLoading(false);
-  }, []);
+  // Map hook data (snake_case) to page data (camelCase) for compatibility
+  const mappedPatients = (filteredPatients || []).map(patient => ({
+    ...patient,
+    name: patient.full_name || '',
+    nationalId: patient.national_id || '',
+    dateOfBirth: patient.date_of_birth || '',
+    lastVisit: patient.last_visit || '',
+    createdAt: patient.created_at || '',
+    emergencyContact: patient.emergency_contact || '',
+    medicalHistory: patient.medical_history || [],
+    allergies: patient.allergies || [],
+    currentMedications: patient.current_medications || [],
+    insuranceProvider: patient.insurance_provider || '',
+    insuranceNumber: patient.insurance_number || '',
+    bloodType: patient.blood_type || '',
+    // Calculate BMI if height and weight are available
+    bmi: patient.height && patient.weight ? 
+      (patient.weight / Math.pow((patient.height / 100), 2)) : undefined
+  }));
 
-  const filteredPatients = patients.filter(patient => {
-    const matchesSearch = patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         patient.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         patient.phone.includes(searchTerm) ||
-                         patient.nationalId.includes(searchTerm);
-    const matchesStatus = statusFilter === 'all' || patient.status === statusFilter;
-    const matchesGender = genderFilter === 'all' || patient.gender === genderFilter;
-    
-    return matchesSearch && matchesStatus && matchesGender;
-  });
+  // Use mapped patients (convert snake_case to camelCase)
+  const patients = mappedPatients;
+  
+  // Calculate total pages from pagination
+  const totalPages = hookPagination?.totalPages || 1;
+  const currentPageForPagination = hookPagination?.currentPage || 1;
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      active: { label: 'نشط', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-      inactive: { label: 'غير نشط', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' },
-      pending: { label: 'في الانتظار', variant: 'outline' as const, className: 'bg-yellow-100 text-yellow-800' }
+      active: { label: 'نشط', variant: 'default' as const, className: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]' },
+      inactive: { label: 'غير نشط', variant: 'secondary' as const, className: 'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]' },
+      pending: { label: 'في الانتظار', variant: 'outline' as const, className: 'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]' }
     };
     
     const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: 'outline' as const, className: '' };
@@ -257,9 +174,9 @@ export default function PatientsPage() {
 
   const getGenderBadge = (gender: string) => {
     return gender === 'male' ? (
-      <Badge variant="outline" className="bg-blue-100 text-blue-800">ذكر</Badge>
+      <Badge variant="outline" className="bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]">ذكر</Badge>
     ) : (
-      <Badge variant="outline" className="bg-pink-100 text-pink-800">أنثى</Badge>
+      <Badge variant="outline" className="bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]">أنثى</Badge>
     );
   };
 
@@ -284,17 +201,32 @@ export default function PatientsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-[var(--background)]">
         <div className="text-center">
-          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" />
-          <p>جاري تحميل المرضى...</p>
+          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" style={{ color: 'var(--brand-primary)' }} />
+          <p className="text-[var(--text-secondary)]">جاري تحميل المرضى...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (hookError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[var(--background)]">
+        <div className="text-center max-w-md">
+          <AlertTriangle className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--brand-error)' }} />
+          <p className="mb-4" style={{ color: 'var(--brand-error)' }}>{hookError}</p>
+          <Button onClick={refetch} className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'>
+            <RefreshCw className="w-4 h-4 ml-2" />
+            إعادة المحاولة
+          </Button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[var(--background)]">
       <div className="container-app py-6">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -414,7 +346,14 @@ export default function PatientsPage() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">23</div>
+              <div className="text-2xl font-bold">
+                {patients.filter(p => {
+                  if (!p.lastVisit) return false;
+                  const lastVisitDate = new Date(p.lastVisit);
+                  const today = new Date();
+                  return lastVisitDate.toDateString() === today.toDateString();
+                }).length}
+              </div>
               <p className="text-xs text-muted-foreground">
                 مواعيد مجدولة
               </p>
@@ -498,10 +437,10 @@ export default function PatientsPage() {
                   <TableHead className="w-12">
                     <input
                       type="checkbox"
-                      className="rounded border-gray-300"
+                      className="rounded border-[var(--brand-border)]"
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedPatients(filteredPatients.map(p => p.id));
+                          setSelectedPatients(patients.map(p => p.id));
                         } else {
                           setSelectedPatients([]);
                         }
@@ -518,12 +457,12 @@ export default function PatientsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredPatients.map((patient) => (
+                {patients.map((patient) => (
                   <TableRow key={patient.id}>
                     <TableCell>
                       <input
                         type="checkbox"
-                        className="rounded border-gray-300"
+                        className="rounded border-[var(--brand-border)]"
                         checked={selectedPatients.includes(patient.id)}
                         onChange={(e) => {
                           if (e.target.checked) {
@@ -571,13 +510,13 @@ export default function PatientsPage() {
                           <div className="flex items-center gap-1">
                             <span>{patient.bmi.toFixed(1)}</span>
                             {patient.bmi < 18.5 ? (
-                              <Badge variant="outline" className="text-xs bg-blue-100 text-blue-800">نحيف</Badge>
+                              <Badge variant="outline" className="text-xs bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]">نحيف</Badge>
                             ) : patient.bmi < 25 ? (
-                              <Badge variant="outline" className="text-xs bg-green-100 text-green-800">طبيعي</Badge>
+                              <Badge variant="outline" className="text-xs bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]">طبيعي</Badge>
                             ) : patient.bmi < 30 ? (
-                              <Badge variant="outline" className="text-xs bg-yellow-100 text-yellow-800">زائد</Badge>
+                              <Badge variant="outline" className="text-xs bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]">زائد</Badge>
                             ) : (
-                              <Badge variant="outline" className="text-xs bg-red-100 text-red-800">سمنة</Badge>
+                              <Badge variant="outline" className="text-xs bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] text-[var(--brand-error)] border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]">سمنة</Badge>
                             )}
                           </div>
                         ) : (
@@ -643,14 +582,14 @@ export default function PatientsPage() {
             {/* Pagination */}
             <div className="flex items-center justify-between mt-6">
               <div className="text-sm text-muted-foreground">
-                عرض {filteredPatients.length} من {patients.length} مريض
+                عرض {patients.length > 0 ? ((currentPageForPagination - 1) * 10 + 1) : 0} - {Math.min(currentPageForPagination * 10, patients.length)} من {hookPagination?.totalItems || patients.length} مريض
               </div>
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                  disabled={currentPage === 1}
+                  onClick={() => setPage(Math.max(1, currentPageForPagination - 1))}
+                  disabled={currentPageForPagination === 1}
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
@@ -658,9 +597,9 @@ export default function PatientsPage() {
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <Button
                       key={page}
-                      variant={currentPage === page ? "default" : "outline"}
+                      variant={currentPageForPagination === page ? "default" : "outline"}
                       size="sm"
-                      onClick={() => setCurrentPage(page)}
+                      onClick={() => setPage(page)}
                       className="w-8 h-8 p-0"
                     >
                       {page}
@@ -670,8 +609,8 @@ export default function PatientsPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                  disabled={currentPage === totalPages}
+                  onClick={() => setPage(Math.min(totalPages, currentPageForPagination + 1))}
+                  disabled={currentPageForPagination === totalPages}
                 >
                   <ChevronRight className="h-4 w-4" />
                 </Button>
@@ -681,5 +620,16 @@ export default function PatientsPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function PatientsPage() {
+  return (
+    <RouteGuard
+      requiredRoles={['admin', 'manager', 'supervisor', 'doctor', 'staff']}
+      requiredPermissions={['patients:view']}
+    >
+      <PatientsPageContent />
+    </RouteGuard>
   );
 }

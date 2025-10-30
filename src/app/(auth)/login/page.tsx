@@ -57,11 +57,14 @@ export default function LoginPage() {
         
         // Redirect based on role
         const roleRoutes: any = {
-          admin: '/dashboard',
+          admin: '/admin/dashboard',
           doctor: '/dashboard/doctor',
           patient: '/dashboard/patient',
           staff: '/dashboard/staff',
           supervisor: '/dashboard/supervisor',
+          manager: '/admin/dashboard',
+          nurse: '/dashboard/staff',
+          agent: '/crm/dashboard',
         };
         
         window.location.href = roleRoutes[data.data.user.role] || '/dashboard';
@@ -240,6 +243,58 @@ export default function LoginPage() {
                 )}
               </button>
             </form>
+
+            {/* Quick Role Logins */}
+            <div className='mt-6 grid grid-cols-1 gap-2'>
+              <button
+                type='button'
+                onClick={async () => { 
+                  setSubmitting(true); setError(null); 
+                  const attempt = async () => fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify({ email:'admin@test.local', password:'A123456' })});
+                  let r = await attempt();
+                  if (r.status === 401) { try { await fetch('/api/admin/auth/seed-defaults', { method:'POST' }); } catch {} r = await attempt(); }
+                  const d = await r.json().catch(() => ({})); if(!r.ok) { setError(d.error||'فشل'); setSubmitting(false); return; }
+                  window.location.href='/admin/dashboard';
+                }}
+                className='btn btn-outline w-full'
+              >👑 دخول تجريبي (Admin)</button>
+              <button
+                type='button'
+                onClick={async () => { 
+                  setSubmitting(true); setError(null); 
+                  const attempt = async () => fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify({ email:'manager@test.local', password:'A123456' })});
+                  let r = await attempt();
+                  if (r.status === 401) { try { await fetch('/api/admin/auth/seed-defaults', { method:'POST' }); } catch {} r = await attempt(); }
+                  const d = await r.json().catch(() => ({})); if(!r.ok) { setError(d.error||'فشل'); setSubmitting(false); return; }
+                  window.location.href='/admin/dashboard';
+                }}
+                className='btn btn-outline w-full'
+              >🧭 دخول تجريبي (Manager)</button>
+              <button
+                type='button'
+                onClick={async () => { 
+                  setSubmitting(true); setError(null); 
+                  const attempt = async () => fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify({ email:'supervisor@test.local', password:'A123456' })});
+                  let r = await attempt();
+                  if (r.status === 401) { try { await fetch('/api/admin/auth/seed-defaults', { method:'POST' }); } catch {} r = await attempt(); }
+                  const d = await r.json().catch(() => ({})); if(!r.ok) { setError(d.error||'فشل'); setSubmitting(false); return; }
+                  window.location.href='/admin/dashboard';
+                }}
+                className='btn btn-outline w-full'
+              >🛰️ دخول تجريبي (Supervisor)</button>
+              <button
+                type='button'
+                onClick={async () => { 
+                  setSubmitting(true); setError(null); 
+                  const attempt = async () => fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body: JSON.stringify({ email:'agent@test.local', password:'A123456' })});
+                  let r = await attempt();
+                  if (r.status === 401) { try { await fetch('/api/admin/auth/seed-defaults', { method:'POST' }); } catch {} r = await attempt(); }
+                  const d = await r.json().catch(() => ({})); if(!r.ok) { setError(d.error||'فشل'); setSubmitting(false); return; }
+                  window.location.href='/crm/dashboard';
+                }}
+                className='btn btn-outline w-full'
+              >🎧 دخول تجريبي (Agent)</button>
+            </div>
 
             {/* CRUD Test Button */}
             <div className='mt-6 border-t border-gray-200 pt-6'>

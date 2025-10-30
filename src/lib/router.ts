@@ -27,7 +27,7 @@ export function getDefaultRouteForUser(user: User | null): string {
 
   switch (user.role) {
     case 'admin':
-      return ROUTES.ADMIN.DASHBOARD;
+      return ROUTES.ADMIN.DASHBOARD || '/admin/dashboard';
     case 'doctor':
       return '/dashboard/doctor';
     case 'nurse':
@@ -38,7 +38,9 @@ export function getDefaultRouteForUser(user: User | null): string {
     case 'patient':
       return '/dashboard/patient';
     case 'agent':
+      return '/crm/dashboard';
     case 'manager':
+      return '/admin/dashboard';
     case 'demo':
       return '/dashboard';
     case 'user':

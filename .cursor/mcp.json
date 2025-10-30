@@ -1,11 +1,3 @@
 {
-  "mcpServers": {
-    "supabase": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-supabase@latest"
-      ]
-    }
-  }
+  "mcpServers": {}
 }

@@ -66,7 +66,7 @@ export const ROLES: Record<UserRole, { label: string; labelAr: string; permissio
 
 // Default routes for each role after login
 export const DEFAULT_ROUTES: Record<UserRole, string> = {
-  admin: '/dashboard',
+  admin: '/admin/dashboard',
   doctor: '/dashboard/doctor',
   patient: '/dashboard/patient',
   staff: '/dashboard/staff',

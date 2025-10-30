@@ -1,5 +1,6 @@
 'use client';
 
+import { RouteGuard } from '@/components/admin/RouteGuard';
 import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -19,20 +20,33 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import {
+    Table,
     TableBody,
     TableCell,
+    TableHead,
+    TableHeader,
     TableRow,
 } from '@/components/ui/Table';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/Card';
 import { usePermissions } from '@/hooks/usePermissions';
-import { AdminHeader, AdminStatsCard, AdminFilterBar, AdminTable } from '@/components/admin/ui';
+import { AdminHeader, AdminStatsCard, AdminFilterBar } from '@/components/admin/ui';
 import {
     Activity,
     Award,
+    ChevronLeft,
+    ChevronRight,
     Copy,
     Crown,
     Download,
     Edit,
     Eye,
+    Key,
     MoreHorizontal,
     PhoneCall,
     Plus,
@@ -46,8 +60,7 @@ import {
     Users,
     UserX
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useEffect, useState, useCallback } from 'react';
 
 interface User {
   id: string;
@@ -87,7 +100,7 @@ interface User {
   notes?: string;
 }
 
-export default function UsersPage() {
+function UsersPageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [users, setUsers] = useState<User[]>([]);
@@ -102,31 +115,61 @@ export default function UsersPage() {
   const [isUserDialogOpen, setIsUserDialogOpen] = useState(false);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Mock data
-  useEffect(() => {
-    const mockUsers: User[] = [
-      {
-        id: '1',
-        username: 'admin',
-        email: 'admin@hemam.com',
-        firstName: 'أحمد',
-        lastName: 'التقني',
-        displayName: 'أحمد التقني',
-        phone: '+966501234567',
-        avatar: '/avatars/admin.jpg',
-        role: 'admin',
-        roleDisplayName: 'مدير النظام',
-        status: 'active',
+  const getRoleDisplayName = (role: string): string => {
+    const roleMap: Record<string, string> = {
+      admin: 'مدير النظام',
+      manager: 'مدير',
+      supervisor: 'مشرف',
+      doctor: 'طبيب',
+      nurse: 'ممرض',
+      staff: 'موظف',
+      agent: 'وكيل',
+      patient: 'مريض',
+      demo: 'تجريبي'
+    };
+    return roleMap[role] || role;
+  };
+
+  // Load users data from API
+  const loadUsersData = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const params = new URLSearch<｜place▁holder▁no▁463｜>ams({
+        page: currentPage.toString(),
+        limit: '20',
+        ...(roleFilter !== 'all' && { role: roleFilter }),
+        ...(statusFilter !== 'all' && { isActive: statusFilter === 'active' ? 'true' : 'false' }),
+      });
+
+      const response = await fetch(`/api/admin/users?${params}`);
+      const result = await response.json();
+      
+      if (result.success) {
+        // Transform API data to match our User interface
+        const transformedUsers: User[] = (result.data || []).map((user: any) => ({
+          id: user.id,
+          username: user.email.split('@')[0],
+          email: user.email,
+          firstName: user.profile?.fullName?.split(' ')[0] || '',
+          lastName: user.profile?.fullName?.split(' ').slice(1).join(' ') || '',
+          displayName: user.profile?.fullName || user.email,
+          phone: user.profile?.phone,
+          avatar: user.avatar,
+          role: user.role,
+          roleDisplayName: getRoleDisplayName(user.role),
+          status: user.isActive ? 'active' : 'inactive',
         isVerified: true,
-        lastLoginAt: '2024-01-15T14:30:00Z',
-        createdAt: '2024-01-01T00:00:00Z',
-        updatedAt: '2024-01-15T14:30:00Z',
-        createdBy: 'system',
-        createdByName: 'النظام',
-        department: 'التقنية',
-        position: 'مدير النظام',
-        permissions: ['users:view', 'users:create', 'users:edit', 'users:delete', 'roles:view', 'roles:create', 'roles:edit', 'roles:delete'],
+          lastLoginAt: user.lastLoginAt,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+          createdBy: user.createdBy || 'system',
+          createdByName: user.createdBy || 'النظام',
+          department: user.profile?.department,
+          position: user.profile?.position,
+          permissions: user.permissions || [],
         preferences: {
           language: 'ar',
           theme: 'light',
@@ -135,224 +178,46 @@ export default function UsersPage() {
           smsNotifications: false
         },
         statistics: {
-          totalLogins: 156,
-          lastActivity: '2024-01-15T14:30:00Z',
-          sessionsCount: 45,
-          averageSessionDuration: 120
-        },
-        tags: ['مدير', 'نظام', 'تقني'],
-        notes: 'المدير الرئيسي للنظام'
-      },
-      {
-        id: '2',
-        username: 'dr.fatima',
-        email: 'fatima.ahmed@hemam.com',
-        firstName: 'فاطمة',
-        lastName: 'أحمد العلي',
-        displayName: 'د. فاطمة أحمد العلي',
-        phone: '+966502345678',
-        avatar: '/avatars/dr-fatima.jpg',
-        role: 'doctor',
-        roleDisplayName: 'طبيب',
-        status: 'active',
-        isVerified: true,
-        lastLoginAt: '2024-01-15T13:45:00Z',
-        createdAt: '2024-01-02T09:00:00Z',
-        updatedAt: '2024-01-15T13:45:00Z',
-        createdBy: 'admin1',
-        createdByName: 'أحمد التقني',
-        department: 'الطب العام',
-        position: 'طبيب استشاري',
-        permissions: ['patients:view', 'patients:create', 'patients:edit', 'appointments:view', 'appointments:create', 'appointments:edit'],
-        preferences: {
-          language: 'ar',
-          theme: 'light',
-          notifications: true,
-          emailNotifications: true,
-          smsNotifications: true
-        },
-        statistics: {
-          totalLogins: 89,
-          lastActivity: '2024-01-15T13:45:00Z',
-          sessionsCount: 32,
-          averageSessionDuration: 95
-        },
-        tags: ['طبيب', 'استشاري', 'طب عام'],
-        notes: 'طبيب استشاري في الطب العام'
-      },
-      {
-        id: '3',
-        username: 'nurse.sara',
-        email: 'sara.nurse@hemam.com',
-        firstName: 'سارة',
-        lastName: 'أحمد السعد',
-        displayName: 'سارة أحمد السعد',
-        phone: '+966503456789',
-        avatar: '/avatars/nurse-sara.jpg',
-        role: 'nurse',
-        roleDisplayName: 'ممرض',
-        status: 'active',
-        isVerified: true,
-        lastLoginAt: '2024-01-15T12:20:00Z',
-        createdAt: '2024-01-03T10:00:00Z',
-        updatedAt: '2024-01-15T12:20:00Z',
-        createdBy: 'admin1',
-        createdByName: 'أحمد التقني',
-        department: 'التمريض',
-        position: 'ممرض أول',
-        permissions: ['patients:view', 'patients:edit', 'appointments:view', 'appointments:edit'],
-        preferences: {
-          language: 'ar',
-          theme: 'dark',
-          notifications: true,
-          emailNotifications: true,
-          smsNotifications: true
-        },
-        statistics: {
-          totalLogins: 67,
-          lastActivity: '2024-01-15T12:20:00Z',
-          sessionsCount: 28,
-          averageSessionDuration: 75
-        },
-        tags: ['ممرض', 'تمريض', 'أول'],
-        notes: 'ممرض أول في قسم التمريض'
-      },
-      {
-        id: '4',
-        username: 'reception.ahmed',
-        email: 'ahmed.reception@hemam.com',
-        firstName: 'أحمد',
-        lastName: 'محمد القحطاني',
-        displayName: 'أحمد محمد القحطاني',
-        phone: '+966504567890',
-        avatar: '/avatars/reception-ahmed.jpg',
-        role: 'staff',
-        roleDisplayName: 'موظف',
-        status: 'active',
-        isVerified: true,
-        lastLoginAt: '2024-01-15T11:15:00Z',
-        createdAt: '2024-01-04T08:00:00Z',
-        updatedAt: '2024-01-15T11:15:00Z',
-        createdBy: 'admin1',
-        createdByName: 'أحمد التقني',
-        department: 'الاستقبال',
-        position: 'موظف استقبال',
-        permissions: ['patients:view', 'patients:create', 'patients:edit', 'appointments:view', 'appointments:create', 'appointments:edit', 'appointments:delete'],
-        preferences: {
-          language: 'ar',
-          theme: 'light',
-          notifications: true,
-          emailNotifications: true,
-          smsNotifications: false
-        },
-        statistics: {
-          totalLogins: 45,
-          lastActivity: '2024-01-15T11:15:00Z',
-          sessionsCount: 18,
-          averageSessionDuration: 180
-        },
-        tags: ['استقبال', 'إداري', 'موظف'],
-        notes: 'موظف استقبال في القسم الإداري'
-      },
-      {
-        id: '5',
-        username: 'finance.nora',
-        email: 'nora.finance@hemam.com',
-        firstName: 'نورا',
-        lastName: 'سعد المطيري',
-        displayName: 'نورا سعد المطيري',
-        phone: '+966505678901',
-        avatar: '/avatars/finance-nora.jpg',
-        role: 'manager',
-        roleDisplayName: 'مدير',
-        status: 'active',
-        isVerified: true,
-        lastLoginAt: '2024-01-15T10:30:00Z',
-        createdAt: '2024-01-10T09:00:00Z',
-        updatedAt: '2024-01-15T10:30:00Z',
-        createdBy: 'admin1',
-        createdByName: 'أحمد التقني',
-        department: 'المالية',
-        position: 'مدير مالي',
-        permissions: ['payments:view', 'payments:create', 'payments:edit', 'payments:delete', 'reports:view', 'reports:create'],
-        preferences: {
-          language: 'ar',
-          theme: 'light',
-          notifications: true,
-          emailNotifications: true,
-          smsNotifications: false
-        },
-        statistics: {
-          totalLogins: 34,
-          lastActivity: '2024-01-15T10:30:00Z',
-          sessionsCount: 15,
-          averageSessionDuration: 110
-        },
-        tags: ['مالي', 'مدير', 'إدارة'],
-        notes: 'مدير الشؤون المالية'
-      },
-      {
-        id: '6',
-        username: 'patient.ahmed',
-        email: 'ahmed.patient@email.com',
-        firstName: 'أحمد',
-        lastName: 'محمد العلي',
-        displayName: 'أحمد محمد العلي',
-        phone: '+966506789012',
-        avatar: '/avatars/patient-ahmed.jpg',
-        role: 'patient',
-        roleDisplayName: 'مريض',
-        status: 'active',
-        isVerified: true,
-        lastLoginAt: '2024-01-15T09:45:00Z',
-        createdAt: '2024-01-05T14:00:00Z',
-        updatedAt: '2024-01-15T09:45:00Z',
-        createdBy: 'reception1',
-        createdByName: 'أحمد القحطاني',
-        department: 'المرضى',
-        position: 'مريض',
-        permissions: ['patients:view_own', 'appointments:view_own', 'appointments:create_own', 'medical_records:view_own'],
-        preferences: {
-          language: 'ar',
-          theme: 'light',
-          notifications: true,
-          emailNotifications: true,
-          smsNotifications: true
-        },
-        statistics: {
-          totalLogins: 23,
-          lastActivity: '2024-01-15T09:45:00Z',
-          sessionsCount: 12,
-          averageSessionDuration: 45
-        },
-        tags: ['مريض', 'عام', 'مستخدم'],
-        notes: 'مريض مسجل في النظام'
+            totalLogins: 0,
+            lastActivity: user.updatedAt || user.createdAt,
+            sessionsCount: 0,
+            averageSessionDuration: 0
+          }
+        }));
+        setUsers(transformedUsers);
+        setTotalPages(result.pagination?.pages || Math.ceil(transformedUsers.length / 20) || 1);
+      } else {
+        setError('فشل في تحميل المستخدمين');
       }
-    ];
-
-    setUsers(mockUsers);
-    setTotalPages(Math.ceil(mockUsers.length / 10));
+    } catch (err) {
+      console.error('Error loading users:', err);
+      setError('حدث خطأ أثناء تحميل المستخدمين');
+    } finally {
     setLoading(false);
-  }, []);
+    }
+  }, [currentPage, roleFilter, statusFilter, getRoleDisplayName]);
 
+  useEffect(() => {
+    loadUsersData();
+  }, [loadUsersData]);
+
+  // Filter users client-side for search only (API handles role and status)
   const filteredUsers = users.filter(user => {
-    const matchesSearch = user.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.lastName.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesRole = roleFilter === 'all' || user.role === roleFilter;
-    const matchesStatus = statusFilter === 'all' || user.status === statusFilter;
-    
-    return matchesSearch && matchesRole && matchesStatus;
+    if (!searchTerm) return true;
+    const searchLower = searchTerm.toLowerCase();
+    return user.displayName.toLowerCase().includes(searchLower) ||
+           user.email.toLowerCase().includes(searchLower) ||
+           user.username.toLowerCase().includes(searchLower) ||
+           (user.firstName && user.firstName.toLowerCase().includes(searchLower)) ||
+           (user.lastName && user.lastName.toLowerCase().includes(searchLower));
   });
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      active: { label: 'نشط', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-      inactive: { label: 'غير نشط', variant: 'outline' as const, className: 'bg-gray-100 text-gray-800' },
-      suspended: { label: 'معلق', variant: 'error' as const, className: 'bg-red-100 text-red-800' },
-      pending: { label: 'في الانتظار', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' }
+      active: { label: 'نشط', variant: 'default' as const, className: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]' },
+      inactive: { label: 'غير نشط', variant: 'outline' as const, className: 'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]' },
+      suspended: { label: 'معلق', variant: 'error' as const, className: 'bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] text-[var(--brand-error)] border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]' },
+      pending: { label: 'في الانتظار', variant: 'secondary' as const, className: 'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]' }
     };
     
     const config = statusConfig[status as keyof typeof statusConfig] || 
@@ -362,15 +227,15 @@ export default function UsersPage() {
 
   const getRoleBadge = (role: string) => {
     const roleConfig = {
-      admin: { label: 'مدير النظام', icon: <Crown className="h-3 w-3" />, className: 'bg-red-100 text-red-800' },
-      manager: { label: 'مدير', icon: <TrendingUp className="h-3 w-3" />, className: 'bg-cyan-100 text-cyan-800' },
-      supervisor: { label: 'مشرف', icon: <Award className="h-3 w-3" />, className: 'bg-orange-100 text-orange-800' },
-      doctor: { label: 'طبيب', icon: <User className="h-3 w-3" />, className: 'bg-blue-100 text-blue-800' },
-      nurse: { label: 'ممرض', icon: <User className="h-3 w-3" />, className: 'bg-green-100 text-green-800' },
-      staff: { label: 'موظف', icon: <User className="h-3 w-3" />, className: 'bg-yellow-100 text-yellow-800' },
-      agent: { label: 'وكيل', icon: <PhoneCall className="h-3 w-3" />, className: 'bg-indigo-100 text-indigo-800' },
-      patient: { label: 'مريض', icon: <User className="h-3 w-3" />, className: 'bg-purple-100 text-purple-800' },
-      demo: { label: 'تجريبي', icon: <Eye className="h-3 w-3" />, className: 'bg-gray-100 text-gray-800' }
+      admin: { label: 'مدير النظام', icon: <Crown className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] text-[var(--brand-error)] border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]' },
+      manager: { label: 'مدير', icon: <TrendingUp className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]' },
+      supervisor: { label: 'مشرف', icon: <Award className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]' },
+      doctor: { label: 'طبيب', icon: <User className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]' },
+      nurse: { label: 'ممرض', icon: <User className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]' },
+      staff: { label: 'موظف', icon: <User className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]' },
+      agent: { label: 'وكيل', icon: <PhoneCall className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]' },
+      patient: { label: 'مريض', icon: <User className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]' },
+      demo: { label: 'تجريبي', icon: <Eye className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]' }
     };
     
     const config = roleConfig[role as keyof typeof roleConfig] || 
@@ -421,6 +286,17 @@ export default function UsersPage() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="mb-4" style={{ color: 'var(--brand-error)' }}>{error}</p>
+          <Button onClick={loadUsersData}>إعادة المحاولة</Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[var(--background)]">
       <AdminHeader
@@ -429,15 +305,15 @@ export default function UsersPage() {
       >
         <Button variant="outline" className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'>
           <Download className="h-4 w-4 ml-2" />
-          تصدير
-        </Button>
+              تصدير
+            </Button>
         <Button 
           onClick={() => setIsCreateDialogOpen(true)}
           className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'
         >
           <Plus className="h-4 w-4 ml-2" />
-          مستخدم جديد
-        </Button>
+              مستخدم جديد
+            </Button>
       </AdminHeader>
       
       <main className="container-app py-8 space-y-8">
@@ -459,7 +335,7 @@ export default function UsersPage() {
           <AdminStatsCard
             title="نشط"
             value={users.filter(u => u.status === 'active').length}
-            subtitle={`${Math.round((users.filter(u => u.status === 'active').length / users.length) * 100)}% من الإجمالي`}
+            subtitle={users.length > 0 ? `${Math.round((users.filter(u => u.status === 'active').length / users.length) * 100)}% من الإجمالي` : '0% من الإجمالي'}
             icon={UserCheck}
             iconColor="#10b981"
           />
@@ -529,6 +405,13 @@ export default function UsersPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
+            {filteredUsers.length === 0 ? (
+              <div className="text-center py-12">
+                <Users className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground">لا توجد مستخدمين</p>
+              </div>
+            ) : (
+              <>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -559,7 +442,7 @@ export default function UsersPage() {
                   <TableRow key={user.id}>
                     <TableCell>
                       <input
-                        type="checkbox"
+เขา type="checkbox"
                         className="rounded border-gray-300"
                         checked={selectedUsers.includes(user.id)}
                         onChange={(e) => {
@@ -579,7 +462,7 @@ export default function UsersPage() {
                         <div>
                           <div className="font-medium flex items-center gap-2">
                             {user.displayName}
-                            {user.isVerified && <Shield className="h-3 w-3 text-green-500" />}
+                                {user.isVerified && <Shield className="h-3 w-3" style={{ color: 'var(--brand-success)' }} />}
                           </div>
                           <div className="text-sm text-muted-foreground">@{user.username}</div>
                         </div>
@@ -703,6 +586,8 @@ export default function UsersPage() {
                 </Button>
               </div>
             </div>
+              </>
+            )}
           </CardContent>
         </Card>
 
@@ -785,7 +670,18 @@ export default function UsersPage() {
             )}
           </DialogContent>
         </Dialog>
-      </div>
+      </main>
     </div>
+  );
+}
+
+export default function UsersPage() {
+  return (
+    <RouteGuard
+      requiredRoles={['admin', 'manager']}
+      requiredPermissions={['users:view']}
+    >
+      <UsersPageContent />
+    </RouteGuard>
   );
 }

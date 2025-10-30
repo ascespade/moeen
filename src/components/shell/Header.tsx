@@ -216,7 +216,14 @@ export default function Header() {
                 <button className='w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800'>
                   {t('header.settings')}
                 </button>
-                <button className='w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 text-red-600'>
+                <button 
+                  className='w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 text-red-600'
+                  onClick={async () => {
+                    try { await fetch('/api/auth/logout', { method: 'POST', cache: 'no-store', credentials: 'include' }); } catch {}
+                    try { localStorage.removeItem('user'); } catch {}
+                    window.location.replace('/login');
+                  }}
+                >
                   {t('header.logout')}
                 </button>
               </div>

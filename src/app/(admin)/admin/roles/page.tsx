@@ -1,5 +1,6 @@
 'use client';
 
+import { RouteGuard } from '@/components/admin/RouteGuard';
 import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -94,7 +95,7 @@ interface Permission {
   isSystem: boolean;
 }
 
-export default function RolesPage() {
+function RolesPageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [roles, setRoles] = useState<Role[]>([]);
@@ -368,17 +369,17 @@ export default function RolesPage() {
 
   const getStatusBadge = (isActive: boolean) => {
     if (isActive) {
-      return <Badge variant="default" className="bg-green-100 text-green-800">نشط</Badge>;
+      return <Badge variant="default" className="bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]">نشط</Badge>;
     } else {
-      return <Badge variant="outline" className="bg-gray-100 text-gray-800">غير نشط</Badge>;
+      return <Badge variant="outline" className="bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]">غير نشط</Badge>;
     }
   };
 
   const getSystemBadge = (isSystem: boolean) => {
     if (isSystem) {
-      return <Badge variant="secondary" className="bg-blue-100 text-blue-800">نظام</Badge>;
+      return <Badge variant="secondary" className="bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]">نظام</Badge>;
     } else {
-      return <Badge variant="outline" className="bg-gray-100 text-gray-800">مخصص</Badge>;
+      return <Badge variant="outline" className="bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]">مخصص</Badge>;
     }
   };
 
@@ -860,5 +861,16 @@ export default function RolesPage() {
         </Dialog>
       </div>
     </div>
+  );
+}
+
+export default function RolesPage() {
+  return (
+    <RouteGuard
+      requiredRoles={['admin']}
+      requiredPermissions={['roles:view']}
+    >
+      <RolesPageContent />
+    </RouteGuard>
   );
 }

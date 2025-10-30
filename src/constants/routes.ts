@@ -18,7 +18,7 @@ export const ROUTES = {
 
   // Admin routes
   ADMIN: {
-    DASHBOARD: '/admin/dashboard',
+    DASHBOARD: '/admin/admin-dashboard',
     USERS: '/admin/users',
     CHANNELS: '/admin/channels',
     CONVERSATIONS: '/admin/conversations',

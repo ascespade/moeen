@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 export interface User {
   id: string;
   email: string;
-  role: 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin';
+  role: 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin' | 'manager' | 'agent' | 'demo';
   meta?: Record<string, any>;
 }
 
@@ -30,7 +30,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
     // Get user data with role
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id, email, role, meta')
+      .select('id, email, role, metadata')
       .eq('id', session.user.id)
       .single();
 
@@ -38,12 +38,37 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
       return { user: null, error: 'User not found' };
     }
 
+    // Aggregate permissions from role_permissions and user_permissions
+    const { data: rolePerms } = await supabase
+      .from('user_roles')
+      .select('role_id, roles:role_id(id, name), role_permissions:role_id(role_id, permission_id, permissions:permission_id(code))')
+      .eq('user_id', userData.id)
+      .eq('is_active', true);
+
+    const { data: userPerms } = await supabase
+      .from('user_permissions')
+      .select('permission_id, permissions:permission_id(code)')
+      .eq('user_id', userData.id)
+      .eq('is_active', true);
+
+    const codes = new Set<string>();
+    (rolePerms || []).forEach((rp: any) => {
+      (rp.role_permissions || []).forEach((x: any) => {
+        if (x?.permissions?.code) codes.add(x.permissions.code);
+      });
+    });
+    (userPerms || []).forEach((up: any) => {
+      if (up?.permissions?.code) codes.add(up.permissions.code);
+    });
+
+    const mergedMeta = { ...(userData as any).metadata, permissions: Array.from(codes) };
+
     return {
       user: {
         id: userData.id,
         email: userData.email,
         role: userData.role as User['role'],
-        meta: userData.meta || {},
+        meta: mergedMeta,
       },
       error: null,
     };
