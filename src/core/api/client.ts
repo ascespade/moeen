@@ -48,6 +48,8 @@ class ApiClient {
       method,
       headers: requestHeaders,
       body: body ? JSON.stringify(body) : undefined,
+      // Ensure cookies are sent for same-origin requests (e.g., session cookies)
+      credentials: 'include',
     };
 
     try {
