@@ -52,7 +52,7 @@ export default function UnauthorizedPage() {
             variant='outline'
             size='lg'
           >
-            <Link href='/login'>
+            <Link href='/login' prefetch={false}>
               <ArrowLeft className='w-5 h-5 mr-2' />
               تسجيل الدخول
             </Link>
