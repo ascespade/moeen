@@ -39,7 +39,9 @@ export default function AdminHomepageEditor() {
       }
     };
     load();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const addService = () => {
@@ -47,7 +49,9 @@ export default function AdminHomepageEditor() {
   };
 
   const updateService = (index: number, patch: Partial<ServiceItem>) => {
-    setServices(prev => prev.map((s, i) => (i === index ? { ...s, ...patch } : s)));
+    setServices(prev =>
+      prev.map((s, i) => (i === index ? { ...s, ...patch } : s))
+    );
   };
 
   const removeService = (index: number) => {
@@ -57,13 +61,18 @@ export default function AdminHomepageEditor() {
   const uploadImage = async (file: File) => {
     const supabase = getBrowserSupabase();
     const path = `homepage/${Date.now()}_${file.name}`;
-    const { data, error } = await supabase.storage.from('public').upload(path, file, { upsert: true });
+    const { data, error } = await supabase.storage
+      .from('public')
+      .upload(path, file, { upsert: true });
     if (error) throw error;
     const { publicURL } = supabase.storage.from('public').getPublicUrl(path);
     return publicURL;
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+  const handleFileChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const file = e.target.files?.[0];
     if (!file) return;
     try {
@@ -104,8 +113,12 @@ export default function AdminHomepageEditor() {
         <div className='flex justify-between items-center'>
           <h3 className='font-semibold'>الخدمات</h3>
           <div className='flex gap-2'>
-            <Button variant='outline' size='sm' onClick={addService}>إضافة خدمة</Button>
-            <Button onClick={save} size='sm' disabled={saving}>{saving ? 'جاري الحفظ...' : 'حفظ التغييرات'}</Button>
+            <Button variant='outline' size='sm' onClick={addService}>
+              إضافة خدمة
+            </Button>
+            <Button onClick={save} size='sm' disabled={saving}>
+              {saving ? 'جاري الحفظ...' : 'حفظ التغييرات'}
+            </Button>
           </div>
         </div>
 
@@ -113,36 +126,75 @@ export default function AdminHomepageEditor() {
           <div>جاري تحميل الخدمات...</div>
         ) : (
           services.map((s, idx) => (
-            <div key={idx} className='p-4 border rounded-lg bg-[var(--panel)] shadow-sm'>
+            <div
+              key={idx}
+              className='p-4 border rounded-lg bg-[var(--panel)] shadow-sm'
+            >
               <div className='grid grid-cols-1 md:grid-cols-6 gap-4 items-center'>
                 <div className='md:col-span-3'>
-                  <label className='block text-sm font-medium mb-1'>العنوان</label>
-                  <input className='form-input w-full' value={s.title} onChange={e => updateService(idx, { title: e.target.value })} />
+                  <label className='block text-sm font-medium mb-1'>
+                    العنوان
+                  </label>
+                  <input
+                    className='form-input w-full'
+                    value={s.title}
+                    onChange={e =>
+                      updateService(idx, { title: e.target.value })
+                    }
+                  />
                 </div>
                 <div className='md:col-span-3'>
-                  <label className='block text-sm font-medium mb-1'>الوصف</label>
-                  <input className='form-input w-full' value={s.description} onChange={e => updateService(idx, { description: e.target.value })} />
+                  <label className='block text-sm font-medium mb-1'>
+                    الوصف
+                  </label>
+                  <input
+                    className='form-input w-full'
+                    value={s.description}
+                    onChange={e =>
+                      updateService(idx, { description: e.target.value })
+                    }
+                  />
                 </div>
 
                 <div className='md:col-span-2'>
-                  <label className='block text-sm font-medium mb-1'>رابط (اختياري)</label>
-                  <input className='form-input w-full' value={s.link || ''} onChange={e => updateService(idx, { link: e.target.value })} />
+                  <label className='block text-sm font-medium mb-1'>
+                    رابط (اختياري)
+                  </label>
+                  <input
+                    className='form-input w-full'
+                    value={s.link || ''}
+                    onChange={e => updateService(idx, { link: e.target.value })}
+                  />
                 </div>
 
                 <div className='md:col-span-2'>
                   <label className='block text-sm font-medium mb-1'>صورة</label>
                   <div className='flex items-center gap-2'>
-                    <input type='file' accept='image/*' onChange={e => handleFileChange(e, idx)} />
+                    <input
+                      type='file'
+                      accept='image/*'
+                      onChange={e => handleFileChange(e, idx)}
+                    />
                     {s.image && s.image !== 'uploading' && (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={s.image} alt='preview' className='w-20 h-12 object-cover rounded' />
+                      <img
+                        src={s.image}
+                        alt='preview'
+                        className='w-20 h-12 object-cover rounded'
+                      />
                     )}
                     {s.image === 'uploading' && <span>جاري رفع الصورة...</span>}
                   </div>
                 </div>
 
                 <div className='md:col-span-2 text-right'>
-                  <Button variant='ghost' size='sm' onClick={() => removeService(idx)}>حذف</Button>
+                  <Button
+                    variant='ghost'
+                    size='sm'
+                    onClick={() => removeService(idx)}
+                  >
+                    حذف
+                  </Button>
                 </div>
               </div>
             </div>

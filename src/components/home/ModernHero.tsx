@@ -6,11 +6,7 @@ import { Calendar, Play, MapPin, Star, Heart } from 'lucide-react';
 import Image from 'next/image';
 import { memo, useEffect, useState } from 'react';
 
-const heroImages = [
-  '/hero-1.jpg',
-  '/hero-2.jpg',
-  '/hero-3.jpg',
-];
+const heroImages = ['/hero-1.jpg', '/hero-2.jpg', '/hero-3.jpg'];
 
 const ModernHero = memo(function ModernHero({
   onAppointmentClick,
@@ -25,7 +21,7 @@ const ModernHero = memo(function ModernHero({
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+      setCurrentImageIndex(prev => (prev + 1) % heroImages.length);
     }, 6000);
     return () => clearInterval(timer);
   }, []);
@@ -43,7 +39,9 @@ const ModernHero = memo(function ModernHero({
           <div
             key={img}
             className={`absolute inset-0 transition-all duration-1000 ease-out ${
-              index === currentImageIndex ? 'opacity-100 scale-105' : 'opacity-0 scale-100'
+              index === currentImageIndex
+                ? 'opacity-100 scale-105'
+                : 'opacity-0 scale-100'
             }`}
           >
             <Image
@@ -69,18 +67,22 @@ const ModernHero = memo(function ModernHero({
 
         {/* Pattern Overlay */}
         <div className='absolute inset-0 opacity-5 dark:opacity-10'>
-          <div className='absolute inset-0' style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f97316' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }} />
+          <div
+            className='absolute inset-0'
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f97316' fill-opacity='0.1'%3E%3Ccircle cx='7' cy='7' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}
+          />
         </div>
       </div>
-
 
       {/* Content */}
       <div className='container-2xl relative z-10 py-20 px-4 sm:px-6 lg:px-8'>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]'>
           {/* Left: Text Content */}
-          <div className={`text-neutral-900 dark:text-white space-y-8 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}>
+          <div
+            className={`text-neutral-900 dark:text-white space-y-8 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}
+          >
             {/* Enhanced Badge */}
             <div className='inline-block'>
               <span className='inline-flex items-center gap-2 px-4 py-2 bg-primary-500/90 text-white backdrop-blur-sm rounded-full text-sm font-semibold shadow-lg hover-lift'>
@@ -99,8 +101,12 @@ const ModernHero = memo(function ModernHero({
 
             {/* Enhanced Description */}
             <p className='text-display-lg sm:text-display-xl leading-relaxed text-neutral-700 dark:text-neutral-200 max-w-2xl font-medium'>
-              في جدة، نقدم رعاية متخصصة وشاملة لذوي الاحتياجات الخاصة. نوفر خدمات
-              <span className='text-primary-600 dark:text-primary-400 font-semibold'> تأهيلية عالية الجودة </span>
+              في جدة، نقدم رعاية متخصصة وشاملة لذوي الاحتياجات الخاصة. نوفر
+              خدمات
+              <span className='text-primary-600 dark:text-primary-400 font-semibold'>
+                {' '}
+                تأهيلية عالية الجودة{' '}
+              </span>
               تشمل العلاج الطبيعي والوظيفي والنطق والسمع وبرامج التدخل المبكر.
             </p>
 
@@ -121,7 +127,9 @@ const ModernHero = memo(function ModernHero({
                 size='lg'
                 className='group border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white font-bold px-8 py-4 text-lg backdrop-blur-sm bg-white/80 dark:bg-neutral-800/80 shadow-lg hover:shadow-xl hover-lift focus-ring transition-all duration-300'
               >
-                <span className='group-hover:scale-110 transition-transform inline-block mr-2'><Star className='w-5 h-5' /></span>
+                <span className='group-hover:scale-110 transition-transform inline-block mr-2'>
+                  <Star className='w-5 h-5' />
+                </span>
                 شاهد قصص النجاح
                 <Play className='w-5 h-5 mr-2 group-hover:translate-x-1 transition-transform' />
               </Button>
@@ -137,7 +145,10 @@ const ModernHero = memo(function ModernHero({
                   معدل الرضا
                 </div>
                 <div className='w-full bg-primary-500/30 rounded-full h-1 mt-2 overflow-hidden'>
-                  <div className='bg-primary-400 h-full rounded-full animate-pulse' style={{width: '98%'}}></div>
+                  <div
+                    className='bg-primary-400 h-full rounded-full animate-pulse'
+                    style={{ width: '98%' }}
+                  ></div>
                 </div>
               </div>
 
@@ -164,8 +175,12 @@ const ModernHero = memo(function ModernHero({
                 </div>
                 <div className='flex items-center gap-1 mt-2'>
                   <span className='text-info-400 animate-pulse'>💙</span>
-                  <span className='text-info-400 animate-pulse delay-300'>💙</span>
-                  <span className='text-info-400 animate-pulse delay-600'>💙</span>
+                  <span className='text-info-400 animate-pulse delay-300'>
+                    💙
+                  </span>
+                  <span className='text-info-400 animate-pulse delay-600'>
+                    💙
+                  </span>
                 </div>
               </div>
             </div>
@@ -213,7 +228,9 @@ const ModernHero = memo(function ModernHero({
                 <div className='bg-black/20 backdrop-blur-sm rounded-full h-1 overflow-hidden'>
                   <div
                     className='bg-primary-400 h-full rounded-full transition-all duration-1000 ease-out'
-                    style={{ width: `${((currentImageIndex + 1) / heroImages.length) * 100}%` }}
+                    style={{
+                      width: `${((currentImageIndex + 1) / heroImages.length) * 100}%`,
+                    }}
                   />
                 </div>
               </div>
@@ -223,8 +240,12 @@ const ModernHero = memo(function ModernHero({
             <div className='absolute -left-8 top-1/4 transform -translate-y-1/2'>
               <div className='bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl rounded-2xl p-4 shadow-xl hover-lift border border-white/20 dark:border-neutral-700/50'>
                 <div className='text-center'>
-                  <div className='text-2xl font-black text-primary-600'>{localizedNumber('15+')}</div>
-                  <div className='text-xs font-medium text-neutral-600 dark:text-neutral-300'>سنوات خبرة</div>
+                  <div className='text-2xl font-black text-primary-600'>
+                    {localizedNumber('15+')}
+                  </div>
+                  <div className='text-xs font-medium text-neutral-600 dark:text-neutral-300'>
+                    سنوات خبرة
+                  </div>
                 </div>
               </div>
             </div>

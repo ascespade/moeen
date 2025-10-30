@@ -9,13 +9,20 @@ export async function PUT(request: NextRequest) {
     // Expect body like { services: [...], heroSlides: [...], testimonials: [...], gallery: [...] }
     const entries: { key: string; value: any }[] = [];
 
-    if (body.services) entries.push({ key: 'homepage_services', value: body.services });
-    if (body.heroSlides) entries.push({ key: 'homepage_hero_slides', value: body.heroSlides });
-    if (body.testimonials) entries.push({ key: 'homepage_testimonials', value: body.testimonials });
-    if (body.gallery) entries.push({ key: 'homepage_gallery', value: body.gallery });
+    if (body.services)
+      entries.push({ key: 'homepage_services', value: body.services });
+    if (body.heroSlides)
+      entries.push({ key: 'homepage_hero_slides', value: body.heroSlides });
+    if (body.testimonials)
+      entries.push({ key: 'homepage_testimonials', value: body.testimonials });
+    if (body.gallery)
+      entries.push({ key: 'homepage_gallery', value: body.gallery });
 
     if (entries.length === 0) {
-      return NextResponse.json({ error: 'No content provided' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'No content provided' },
+        { status: 400 }
+      );
     }
 
     // Upsert each entry into settings table
@@ -26,7 +33,10 @@ export async function PUT(request: NextRequest) {
       is_public: true,
     }));
 
-    const { data, error } = await supabase.from('settings').upsert(updates).select();
+    const { data, error } = await supabase
+      .from('settings')
+      .upsert(updates)
+      .select();
 
     if (error) {
       console.error('Failed to upsert settings:', error.message);
@@ -36,7 +46,10 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ success: true, data });
   } catch (err) {
     console.error('Error in admin/homepage PUT:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 

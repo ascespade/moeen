@@ -32,14 +32,18 @@ const ServicesWithImages = memo(function ServicesWithImages() {
         const data = await res.json();
         if (cancelled) return;
         // Expect array of services; normalize to Service[] shape
-        const items: Service[] = (data.services || data || []).map((s: any, idx: number) => ({
-          id: s.id ?? idx + 1,
-          title: s.title ?? s.name ?? `خدمة ${idx + 1}`,
-          description: s.description ?? s.subtitle ?? '',
-          image: s.image ?? s.src ?? `/gallery-${(idx % 6) + 1}.jpg`,
-          gradient: s.gradient ?? 'from-[var(--brand-primary)]/20 to-[var(--brand-secondary)]/20',
-          link: s.link,
-        }));
+        const items: Service[] = (data.services || data || []).map(
+          (s: any, idx: number) => ({
+            id: s.id ?? idx + 1,
+            title: s.title ?? s.name ?? `خدمة ${idx + 1}`,
+            description: s.description ?? s.subtitle ?? '',
+            image: s.image ?? s.src ?? `/gallery-${(idx % 6) + 1}.jpg`,
+            gradient:
+              s.gradient ??
+              'from-[var(--brand-primary)]/20 to-[var(--brand-secondary)]/20',
+            link: s.link,
+          })
+        );
         setServices(items);
       } catch (err) {
         // keep empty list if fetch fails
@@ -76,7 +80,9 @@ const ServicesWithImages = memo(function ServicesWithImages() {
                 className='object-cover transition-transform duration-500 group-hover:scale-110'
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
               />
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+              />
 
               {/* Badge */}
               <div className='absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg'>

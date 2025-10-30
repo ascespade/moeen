@@ -19,7 +19,8 @@ export async function GET(request: NextRequest) {
       .limit(1)
       .maybeSingle();
 
-    if (centerError) console.warn('center_info fetch error:', centerError.message);
+    if (centerError)
+      console.warn('center_info fetch error:', centerError.message);
 
     // Fetch homepage-related settings from settings table (keys stored as JSON)
     const keys = [
@@ -35,12 +36,14 @@ export async function GET(request: NextRequest) {
       .select('key, value')
       .in('key', keys);
 
-    if (settingsError) console.warn('settings fetch error:', settingsError.message);
+    if (settingsError)
+      console.warn('settings fetch error:', settingsError.message);
 
     const settingsMap: Record<string, any> = {};
     (settingsData || []).forEach((item: any) => {
       try {
-        settingsMap[item.key] = typeof item.value === 'string' ? JSON.parse(item.value) : item.value;
+        settingsMap[item.key] =
+          typeof item.value === 'string' ? JSON.parse(item.value) : item.value;
       } catch {
         settingsMap[item.key] = item.value;
       }
@@ -50,13 +53,22 @@ export async function GET(request: NextRequest) {
     let contactInfo: any[] = [];
     if (centerData) {
       contactInfo = [
-        { type: 'phone', value: centerData.phone, link: `tel:${centerData.phone}` },
-        { type: 'email', value: centerData.email, link: `mailto:${centerData.email}` },
+        {
+          type: 'phone',
+          value: centerData.phone,
+          link: `tel:${centerData.phone}`,
+        },
+        {
+          type: 'email',
+          value: centerData.email,
+          link: `mailto:${centerData.email}`,
+        },
         { type: 'location', value: centerData.address, link: '/contact' },
       ].filter(Boolean);
     } else {
       // Try fallback to settings table (no fake data)
-      if (settingsMap['contact_info']) contactInfo = settingsMap['contact_info'];
+      if (settingsMap['contact_info'])
+        contactInfo = settingsMap['contact_info'];
     }
 
     // Services, heroSlides, testimonials, gallery come from settingsMap keys
@@ -68,7 +80,11 @@ export async function GET(request: NextRequest) {
     // Basic stats: attempt to query analytics/dashboard stats table if exists
     let stats: Record<string, any> = {};
     try {
-      const { data: statsData } = await supabase.from('dashboard_stats').select('*').limit(1).maybeSingle();
+      const { data: statsData } = await supabase
+        .from('dashboard_stats')
+        .select('*')
+        .limit(1)
+        .maybeSingle();
       if (statsData) stats = statsData;
     } catch (e) {
       // ignore if table doesn't exist
@@ -84,14 +100,21 @@ export async function GET(request: NextRequest) {
       stats,
     };
 
-    if (type === 'contact') return NextResponse.json({ contact_info: dynamicData.contact_info });
-    if (type === 'services') return NextResponse.json({ services: dynamicData.services });
-    if (type === 'hero') return NextResponse.json({ heroSlides: dynamicData.heroSlides });
-    if (type === 'testimonials') return NextResponse.json({ testimonials: dynamicData.testimonials });
+    if (type === 'contact')
+      return NextResponse.json({ contact_info: dynamicData.contact_info });
+    if (type === 'services')
+      return NextResponse.json({ services: dynamicData.services });
+    if (type === 'hero')
+      return NextResponse.json({ heroSlides: dynamicData.heroSlides });
+    if (type === 'testimonials')
+      return NextResponse.json({ testimonials: dynamicData.testimonials });
 
     return NextResponse.json(dynamicData);
   } catch (error) {
     console.error('Error in dynamic-data API:', error);
-    return NextResponse.json({ error: 'فشل في جلب البيانات الديناميكية' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'فشل في جلب البيانات الديناميكية' },
+      { status: 500 }
+    );
   }
 }

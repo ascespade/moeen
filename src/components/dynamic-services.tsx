@@ -1,6 +1,13 @@
 'use client';
 import { memo, useEffect, useState } from 'react';
-import { Calendar, User, Clipboard, MessageCircle, Users, BarChart3 } from 'lucide-react';
+import {
+  Calendar,
+  User,
+  Clipboard,
+  MessageCircle,
+  Users,
+  BarChart3,
+} from 'lucide-react';
 import React from 'react';
 
 interface DynamicService {
