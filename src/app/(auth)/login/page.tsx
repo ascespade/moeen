@@ -1,97 +1,124 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { ROUTES } from '@/constants/routes';
-import { getDefaultRouteForUser } from '@/lib/router';
-import { useT } from '@/components/providers/I18nProvider';
+import { useState, useEffect, useMemo, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
+import { getBrowserSupabase } from '@/lib/supabaseClient';
+
+const ROLE_REDIRECTS: Record<string, string> = {
+  admin: '/dashboard/admin',
+  doctor: '/dashboard/doctor',
+  staff: '/dashboard/staff',
+  patient: '/dashboard/patient',
+  customer: '/dashboard/customer',
+};
+
+function getRedirectForRole(role?: string | null) {
+  if (!role) return '/dashboard';
+  return ROLE_REDIRECTS[role] || '/dashboard';
+}
 
 export default function LoginPage() {
-  const { loginWithCredentials, isLoading, isAuthenticated } = useAuth();
-  const { t } = useT();
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    rememberMe: false,
-  });
+  const supabase = useMemo(() => getBrowserSupabase(), []);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [foundUser, setFoundUser] = useState<any | null>(null);
-  const [foundPermissions, setFoundPermissions] = useState<string[]>([]);
 
-  // Redirect if already authenticated
+  // If session already exists, resolve role and redirect
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/dashboard');
-    }
-  }, [isAuthenticated, router]);
+    let mounted = true;
+    (async () => {
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
+      if (mounted && session?.user?.id) {
+        const redirect = await resolveRedirectAfterLogin(session.user.id);
+        router.replace(redirect);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [router, supabase]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function resolveRedirectAfterLogin(userId: string): Promise<string> {
+    // Check user status
+    const { data: userRow, error: userErr } = await supabase
+      .from('users')
+      .select('status, role')
+      .eq('id', userId)
+      .maybeSingle();
+
+    if (userErr) {
+      // In case of metadata table missing or error, keep user signed in but send to default dashboard
+      return '/dashboard';
+    }
+
+    if (userRow && userRow.status && userRow.status !== 'active') {
+      // Block inactive
+      await supabase.auth.signOut();
+      setError('⚠️ حسابك قيد المراجعة. يرجى التواصل مع المشرف.');
+      return '/login';
+    }
+
+    // Try user_roles -> roles join (two-step to avoid FK dependency issues)
+    let roleName: string | null = null;
+    const { data: ur } = await supabase
+      .from('user_roles')
+      .select('role_id')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (ur?.role_id) {
+      const { data: role } = await supabase
+        .from('roles')
+        .select('name')
+        .eq('id', ur.role_id as string)
+        .maybeSingle();
+      roleName = role?.name ?? null;
+    }
+
+    if (!roleName && userRow?.role) {
+      roleName = userRow.role as string;
+    }
+
+    if (!roleName) {
+      await supabase.auth.signOut();
+      setError('⚠️ لا توجد صلاحية مرتبطة بحسابك. يرجى التواصل مع المشرف.');
+      return '/login';
+    }
+
+    return getRedirectForRole(roleName);
+  }
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
     try {
-      console.log('[login page] checking users table for', {
-        email: formData.email,
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
-      const res = await fetch('/api/auth/check-user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email }),
-      });
-      const data = await res.json().catch(() => ({}));
-      console.log(
-        '[login page] /api/auth/check-user response',
-        res.status,
-        data
-      );
-      if (res.ok && data.success) {
-        if (data.found) {
-          // Set in-page success state — don't create a session yet
-          setError(null);
-          setFoundUser(data.user || null);
-          setFoundPermissions(data.permissions || []);
-        } else {
-          setFoundUser(null);
-          setFoundPermissions([]);
-          setError('المستخدم غير موجود');
-        }
-      } else {
-        setError(data?.error || 'فشل الاتصال');
+
+      if (signInError || !data?.user) {
+        setError('بيانات الاعتماد غير صحيحة.');
+        setSubmitting(false);
+        return;
       }
-    } catch (err: any) {
-      console.error('[login page] check-user error', err);
-      setError(err?.message || 'فشل في التحقق');
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
+      const redirectTo = await resolveRedirectAfterLogin(data.user.id);
+      if (redirectTo === '/login') {
+        // resolveRedirectAfterLogin already set error and signed out
+        setSubmitting(false);
+        return;
+      }
 
-  const handleQuickTestLogin = async () => {
-    setError(null);
-    setSubmitting(true);
-    try {
-      // Use test credentials for quick login
-      await loginWithCredentials('test@moeen.com', 'test123', false);
-      // Redirect to dashboard
-      window.location.href = getDefaultRouteForUser({
-        id: 'test-user',
-        email: 'test@moeen.com',
-        role: 'user',
-      } as any);
+      router.replace(redirectTo);
     } catch (err: any) {
-      setError(err?.message || 'Quick test login failed');
+      setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
     } finally {
       setSubmitting(false);
     }
@@ -100,7 +127,6 @@ export default function LoginPage() {
   return (
     <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--default-surface)] via-white to-[var(--bg-gray-50)] p-4'>
       <div className='w-full max-w-md'>
-        {/* Logo and Header */}
         <div className='mb-8 text-center'>
           <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-[var(--default-default)] to-[var(--default-info)] shadow-lg'>
             <span className='text-2xl font-bold text-white'>م</span>
@@ -109,11 +135,10 @@ export default function LoginPage() {
             مرحباً بعودتك
           </h1>
           <p className='text-gray-600 dark:text-gray-400'>
-            سجل دخولك للوصول إلى ل��حة التحكم
+            سجل دخولك للوصول إلى لوحة التحكم
           </p>
         </div>
 
-        {/* Login Form */}
         <div className='card shadow-xl'>
           <div className='p-8'>
             {error && (
@@ -125,92 +150,15 @@ export default function LoginPage() {
               </div>
             )}
 
-            {foundUser && (
-              <div className='status-success mb-6 p-4'>
-                <div className='flex flex-col gap-2'>
-                  <div className='flex items-center gap-2'>
-                    <span className='text-lg'>✅</span>
-                    <p className='text-sm font-medium'>
-                      تم العثور على المستخدم: {foundUser.email}
-                    </p>
-                  </div>
-                  <div className='mt-2'>
-                    <p className='text-xs font-medium text-gray-600'>
-                      الصلاحيات المعيّنة:
-                    </p>
-                    <ul className='mt-1 grid grid-cols-2 gap-2 text-xs'>
-                      {foundPermissions.length ? (
-                        foundPermissions.map(p => (
-                          <li
-                            key={p}
-                            className='rounded border px-2 py-1 bg-white'
-                          >
-                            {p}
-                          </li>
-                        ))
-                      ) : (
-                        <li className='text-xs text-gray-500'>
-                          لا توجد صلاحيات محددة
-                        </li>
-                      )}
-                    </ul>
-                  </div>
-
-                  {/* Sign-in action: create session cookie using provided password */}
-                  <div className='mt-4'>
-                    <button
-                      type='button'
-                      onClick={async () => {
-                        setSubmitting(true);
-                        setError(null);
-                        try {
-                          const res = await fetch('/api/auth/simple-login', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                              email: foundUser.email,
-                              password: formData.password,
-                            }),
-                            credentials: 'include',
-                          });
-                          const data = await res.json().catch(() => ({}));
-                          console.log(
-                            '[login page] simple-login',
-                            res.status,
-                            data
-                          );
-                          if (res.ok && data.success) {
-                            window.location.href =
-                              data.redirectTo || '/dashboard';
-                          } else {
-                            setError(data?.error || 'فشل تسجيل الدخول');
-                          }
-                        } catch (e: any) {
-                          setError(e?.message || 'فشل تسجيل الدخول');
-                        } finally {
-                          setSubmitting(false);
-                        }
-                      }}
-                      className='btn btn-primary w-full'
-                    >
-                      تسجيل الدخول (إنشاء جلسة)
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
             <form onSubmit={handleSubmit} className='space-y-6'>
               <div>
-                <label className='form-label'>
-                  {t('auth.email', 'البريد الإلكتروني')}
-                </label>
+                <label className='form-label'>البريد الإلكتروني</label>
                 <div className='relative'>
                   <input
                     type='email'
                     name='email'
-                    value={formData.email}
-                    onChange={handleInputChange}
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                     required
                     className='form-input pr-10'
                     placeholder='you@example.com'
@@ -223,15 +171,13 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <label className='form-label'>
-                  {t('auth.password', 'كلمة المرور')}
-                </label>
+                <label className='form-label'>كلمة المرور</label>
                 <div className='relative'>
                   <input
                     type='password'
                     name='password'
-                    value={formData.password}
-                    onChange={handleInputChange}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
                     required
                     className='form-input pr-10'
                     placeholder='••••••••'
@@ -242,17 +188,18 @@ export default function LoginPage() {
                   </div>
                 </div>
               </div>
+
               <div className='flex items-center justify-between'>
                 <label className='inline-flex items-center gap-3 text-sm font-medium'>
                   <input
                     type='checkbox'
                     name='rememberMe'
-                    checked={formData.rememberMe}
-                    onChange={handleInputChange}
+                    checked={rememberMe}
+                    onChange={e => setRememberMe(e.target.checked)}
                     className='text-default focus:ring-default h-4 w-4 rounded border-gray-300 focus:ring-2'
                     data-testid='remember-me-checkbox'
                   />
-                  {t('auth.rememberMe', 'تذكرني')}
+                  تذكرني
                 </label>
                 <Link
                   href='/forgot-password'
@@ -264,7 +211,7 @@ export default function LoginPage() {
 
               <button
                 type='submit'
-                disabled={submitting || isLoading}
+                disabled={submitting}
                 className='btn btn-default btn-lg w-full font-semibold'
                 data-testid='login-button'
               >
@@ -275,171 +222,18 @@ export default function LoginPage() {
                   </>
                 ) : (
                   <>
-                    <span>🔑</span>
+                    <span>����</span>
                     تسجيل الدخول
                   </>
                 )}
               </button>
             </form>
 
-            {/* Quick Role Logins */}
-            <div className='mt-6 grid grid-cols-1 gap-2'>
-              {/* helper to attempt login and seed if needed */}
-              {(() => {
-                const quickRoleLogin = async (
-                  email: string,
-                  redirectTo: string
-                ) => {
-                  setSubmitting(true);
-                  setError(null);
-                  try {
-                    const testPassword =
-                      process.env.NEXT_PUBLIC_TEST_PASSWORD || 'A123456';
-                    let res = null as any;
-                    try {
-                      res = await loginWithCredentials(
-                        email,
-                        testPassword,
-                        false
-                      );
-                      if (res?.success) {
-                        window.location.href = redirectTo;
-                        return;
-                      }
-                    } catch (err: any) {
-                      // If unauthorized, try seeding defaults and retry once
-                      console.warn(
-                        '[login page] quickRoleLogin first attempt failed',
-                        err?.message || err
-                      );
-                      try {
-                        await fetch('/api/admin/auth/seed-defaults', {
-                          method: 'POST',
-                        });
-                      } catch (e) {
-                        console.warn('[login page] seed-defaults failed', e);
-                      }
-                      // Retry
-                      try {
-                        res = await loginWithCredentials(
-                          email,
-                          testPassword,
-                          false
-                        );
-                        if (res?.success) {
-                          window.location.href = redirectTo;
-                          return;
-                        }
-                      } catch (err2: any) {
-                        setError(err2?.message || 'فشل');
-                        return;
-                      }
-                    }
-
-                    setError('فشل');
-                  } catch (e: any) {
-                    setError(e?.message || 'فشل: اتصال الشبكة');
-                  } finally {
-                    setSubmitting(false);
-                  }
-                };
-
-                return (
-                  <>
-                    <button
-                      type='button'
-                      onClick={() =>
-                        quickRoleLogin('admin@test.local', '/admin/dashboard')
-                      }
-                      className='btn btn-outline w-full'
-                    >
-                      👑 دخول تجريبي (Admin)
-                    </button>
-
-                    <button
-                      type='button'
-                      onClick={() =>
-                        quickRoleLogin('manager@test.local', '/admin/dashboard')
-                      }
-                      className='btn btn-outline w-full'
-                    >
-                      🧭 دخول تجريبي (Manager)
-                    </button>
-
-                    <button
-                      type='button'
-                      onClick={() =>
-                        quickRoleLogin(
-                          'supervisor@test.local',
-                          '/admin/dashboard'
-                        )
-                      }
-                      className='btn btn-outline w-full'
-                    >
-                      🛰️ دخول تجريبي (Supervisor)
-                    </button>
-
-                    <button
-                      type='button'
-                      onClick={() =>
-                        quickRoleLogin('agent@test.local', '/crm/dashboard')
-                      }
-                      className='btn btn-outline w-full'
-                    >
-                      🎧 دخول تجريبي (Agent)
-                    </button>
-                  </>
-                );
-              })()}
-            </div>
-
-            {/* CRUD Test Button */}
-            <div className='mt-6 border-t border-gray-200 pt-6'>
-              <button
-                type='button'
-                onClick={() => router.push('/test-crud')}
-                className='btn btn-outline btn-sm w-full font-semibold border-2 border-blue-500 text-blue-600 hover:bg-blue-50'
-                data-testid='crud-test-button'
-              >
-                <span>🧪</span>
-                Test CRUD & Database Connection
-              </button>
-              <p className='mt-2 text-center text-xs text-gray-500'>
-                اختبار اتصال قاعدة البيانات وجميع عمليات CRUD
-              </p>
-            </div>
-
-            {/* Quick Test Login Button */}
-            <div className='mt-4'>
-              <button
-                type='button'
-                onClick={handleQuickTestLogin}
-                disabled={submitting || isLoading}
-                className='btn btn-outline btn-lg w-full font-semibold'
-                data-testid='quick-test-login-button'
-              >
-                {submitting ? (
-                  <>
-                    <div className='h-4 w-4 animate-spin rounded-full border-2 border-[var(--default-default)] border-t-transparent'></div>
-                    جارٍ تسجيل الدخول...
-                  </>
-                ) : (
-                  <>
-                    <span>⚡</span>
-                    تسجيل دخول سريع (اختبار)
-                  </>
-                )}
-              </button>
-              <p className='mt-2 text-center text-xs text-gray-500'>
-                اختبار سريع باستخدام بيانات تجريبية
-              </p>
-            </div>
-
             <div className='border-default mt-6 border-t pt-6'>
               <p className='text-center text-sm text-gray-600 dark:text-gray-400'>
                 ليس لديك حساب؟{' '}
                 <Link
-                  href={ROUTES.REGISTER}
+                  href='/register'
                   className='text-default font-medium transition-colors hover:text-[var(--default-default-hover)]'
                 >
                   إنشاء حساب جديد
