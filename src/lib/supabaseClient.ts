@@ -1,16 +1,16 @@
-import { createBrowserClient, createServerClient } from '@supabase/ssr';
-import { cookies, headers } from 'next/headers';
+import { createBrowserClient } from '@supabase/ssr';
+
 export function getBrowserSupabase() {
-  const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
   return createBrowserClient(url, anon);
 }
 
 export async function getServerSupabase() {
-  const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+  const { createServerClient } = await import('@supabase/ssr');
+  const { cookies } = await import('next/headers');
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
   const cookieStore = await cookies();
   return createServerClient(url, anon, {
     cookies: {
@@ -18,9 +18,13 @@ export async function getServerSupabase() {
         return cookieStore.getAll();
       },
       setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value, options }) => {
-          cookieStore.set(name, value, options);
-        });
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            cookieStore.set(name, value, options);
+          });
+        } catch {
+          // ignore when called from Server Component
+        }
       },
     },
   });
@@ -28,9 +32,7 @@ export async function getServerSupabase() {
 
 export function getServiceSupabase() {
   const { createClient } = require('@supabase/supabase-js');
-  const url =
-    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-  const service =
-    process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-service-key';
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const service = process.env.SUPABASE_SERVICE_ROLE_KEY!;
   return createClient(url, service);
 }

@@ -1,10 +1,19 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import jwt from 'jsonwebtoken';
 
 export interface User {
   id: string;
   email: string;
-  role: 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin' | 'manager' | 'agent' | 'demo';
+  role:
+    | 'patient'
+    | 'doctor'
+    | 'staff'
+    | 'supervisor'
+    | 'admin'
+    | 'manager'
+    | 'agent'
+    | 'demo';
   meta?: Record<string, any>;
 }
 
@@ -15,9 +24,38 @@ export interface AuthResult {
 
 export async function authorize(request: NextRequest): Promise<AuthResult> {
   try {
+    // First: check for our JWT auth-token cookie
+    try {
+      const token = request.cookies?.get?.('auth-token')?.value || null;
+      if (token) {
+        const jwtSecret = process.env.JWT_SECRET;
+        if (jwtSecret) {
+          try {
+            const decoded = jwt.verify(token, jwtSecret) as any;
+            // decoded should contain userId, email, role, perms
+            const perms = decoded?.perms || decoded?.permissions || [];
+            return {
+              user: {
+                id: decoded.userId,
+                email: decoded.email,
+                role: decoded.role as User['role'],
+                meta: { permissions: perms },
+              },
+              error: null,
+            };
+          } catch (e) {
+            // invalid token - fallthrough to supabase session
+            console.warn('[authorize] invalid auth-token JWT', e);
+          }
+        }
+      }
+    } catch (e) {
+      // ignore cookie parsing errors
+    }
+
     const supabase = await createClient();
 
-    // Get session from cookies
+    // Get session from cookies (Supabase)
     const {
       data: { session },
       error: sessionError,
@@ -30,18 +68,23 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
     // Get user data with role
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id, email, role, metadata')
+      .select('id, email, role, status')
       .eq('id', session.user.id)
-      .single();
+      .maybeSingle();
 
     if (userError || !userData) {
       return { user: null, error: 'User not found' };
+    }
+    if (userData.status && userData.status !== 'active') {
+      return { user: null, error: 'Inactive user' };
     }
 
     // Aggregate permissions from role_permissions and user_permissions
     const { data: rolePerms } = await supabase
       .from('user_roles')
-      .select('role_id, roles:role_id(id, name), role_permissions:role_id(role_id, permission_id, permissions:permission_id(code))')
+      .select(
+        'role_id, roles:role_id(id, name), role_permissions:role_id(role_id, permission_id, permissions:permission_id(code))'
+      )
       .eq('user_id', userData.id)
       .eq('is_active', true);
 
@@ -61,14 +104,14 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
       if (up?.permissions?.code) codes.add(up.permissions.code);
     });
 
-    const mergedMeta = { ...(userData as any).metadata, permissions: Array.from(codes) };
+    const meta = { permissions: Array.from(codes) };
 
     return {
       user: {
         id: userData.id,
         email: userData.email,
         role: userData.role as User['role'],
-        meta: mergedMeta,
+        meta,
       },
       error: null,
     };

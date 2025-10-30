@@ -69,12 +69,14 @@ export default function Header() {
           <div className='hidden md:flex items-center space-x-4'>
             <Link
               href='/login'
+              prefetch={false}
               className='text-gray-700 hover:text-blue-600 font-medium transition-colors'
             >
               Sign In
             </Link>
             <Link
               href='/register'
+              prefetch={false}
               className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl'
             >
               Get Started
@@ -153,6 +155,7 @@ export default function Header() {
               <div className='pt-4 border-t border-blue-200/30 flex flex-col space-y-3'>
                 <Link
                   href='/login'
+                  prefetch={false}
                   className='text-gray-700 hover:text-blue-600 font-medium transition-colors py-2'
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -160,6 +163,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href='/register'
+                  prefetch={false}
                   className='bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 text-center'
                   onClick={() => setIsMenuOpen(false)}
                 >

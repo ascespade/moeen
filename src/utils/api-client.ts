@@ -10,7 +10,24 @@ export class ApiClient {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const url = `${this.baseURL}${endpoint}`;
+    // Resolve base URL to an absolute URL. If baseURL is relative (starts with '/'),
+    // use the current window origin on the client or NEXT_PUBLIC_APP_URL on the server.
+    let base = this.baseURL;
+    if (base.startsWith('/')) {
+      if (
+        typeof window !== 'undefined' &&
+        window.location &&
+        window.location.origin
+      ) {
+        base = window.location.origin + base;
+      } else if (process.env.NEXT_PUBLIC_APP_URL) {
+        base = `${process.env.NEXT_PUBLIC_APP_URL}${base}`;
+      } else {
+        base = `http://localhost:3000${base}`;
+      }
+    }
+
+    const url = new URL(endpoint, base).toString();
 
     const defaultHeaders = {
       'Content-Type': 'application/json',
@@ -22,6 +39,8 @@ export class ApiClient {
         ...defaultHeaders,
         ...options.headers,
       },
+      // send cookies for same-origin requests
+      credentials: (options && (options as any).credentials) || 'include',
     };
 
     try {
