@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
         // Try to find existing user row
         const { data: userRow, error: userRowErr } = await supabase
           .from('users')
-          .select('id, email, full_name, role, status, avatar_url')
+          .select('id, email, name, role, status, avatar_url')
           .eq('email', targetEmail)
           .single();
 
@@ -60,8 +60,8 @@ export async function POST(req: NextRequest) {
               // Upsert into users table using server client
               const { data: up, error: upErr } = await supabase
                 .from('users')
-                .upsert({ id: authId, email: targetEmail, full_name: targetEmail.split('@')[0], role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
-                .select('id, email, full_name, role, status, avatar_url')
+                .upsert({ id: authId, email: targetEmail, name: targetEmail.split('@')[0], role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
+                .select('id, email, name, role, status, avatar_url')
                 .single();
 
               console.log('[api/auth/login] demo/header upsert users result', { up, upErr: upErr?.message || null });
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
                 const userResponse = {
                   id: up.id,
                   email: up.email,
-                  name: up.full_name,
+                  name: up.name,
                   role: up.role,
                   avatar: up.avatar_url,
                   status: up.status,
@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
           const userResponse = {
             id: userRow.id,
             email: userRow.email,
-            name: userRow.full_name,
+            name: userRow.name,
             role: userRow.role,
             avatar: userRow.avatar_url,
             status: userRow.status,
@@ -134,7 +134,7 @@ export async function POST(req: NextRequest) {
         if (password === DEFAULT_PASSWORD) {
           const { data: userRow, error: userRowErr } = await supabase
             .from('users')
-            .select('id, email, full_name, role, status, avatar_url')
+            .select('id, email, name, role, status, avatar_url')
             .eq('email', email)
             .single();
 
@@ -154,8 +154,8 @@ export async function POST(req: NextRequest) {
                 const authId = createdUser.user.id;
                 const { data: up, error: upErr } = await supabase
                   .from('users')
-                  .upsert({ id: authId, email, full_name: email.split('@')[0], role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
-                  .select('id, email, full_name, role, status, avatar_url')
+                  .upsert({ id: authId, email, name: email.split('@')[0], role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
+                  .select('id, email, name, role, status, avatar_url')
                   .single();
 
                 console.log('[api/auth/login] fallback upsert users result', { up, upErr: upErr?.message || null });
@@ -165,7 +165,7 @@ export async function POST(req: NextRequest) {
                   const userResponse = {
                     id: up.id,
                     email: up.email,
-                    name: up.full_name,
+                    name: up.name,
                     role: up.role,
                     avatar: up.avatar_url,
                     status: up.status,
@@ -199,7 +199,7 @@ export async function POST(req: NextRequest) {
             const userResponse = {
               id: userRow.id,
               email: userRow.email,
-              name: userRow.full_name,
+              name: userRow.name,
               role: userRow.role,
               avatar: userRow.avatar_url,
               status: userRow.status,
@@ -232,7 +232,7 @@ export async function POST(req: NextRequest) {
     // Fetch user data with role and status from database
     let { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id, email, full_name, role, status, avatar_url')
+      .select('id, email, name, role, status, avatar_url')
       .eq('id', data.user.id)
       .single();
 
@@ -243,11 +243,11 @@ export async function POST(req: NextRequest) {
 
       // Attempt to upsert an application user record if Supabase auth user exists
       try {
-        const fallbackFullName = (data.user.user_metadata && (data.user.user_metadata.full_name || data.user.user_metadata.name)) || data.user.email.split('@')[0];
+        const fallbackFullName = (data.user.user_metadata && (data.user.user_metadata.name || data.user.user_metadata.name)) || data.user.email.split('@')[0];
         const { data: upserted, error: upsertErr } = await supabase
           .from('users')
-          .upsert({ id: data.user.id, email: data.user.email, full_name: fallbackFullName, role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
-          .select('id, email, full_name, role, status, avatar_url')
+          .upsert({ id: data.user.id, email: data.user.email, name: fallbackFullName, role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
+          .select('id, email, name, role, status, avatar_url')
           .single();
 
         console.log('[api/auth/login] upserted missing user row', { upserted, upsertErr: upsertErr?.message || null });
@@ -283,7 +283,7 @@ export async function POST(req: NextRequest) {
     const userResponse = {
       id: userData.id,
       email: userData.email,
-      name: userData.full_name,
+      name: userData.name,
       role: userData.role,
       avatar: userData.avatar_url,
       status: userData.status,
