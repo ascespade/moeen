@@ -155,36 +155,6 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <div>
-                <label className='form-label'>
-                  نوع المستخدم / User Role
-                </label>
-                <div className='relative'>
-                  <select
-                    name='role'
-                    value={formData.role}
-                    onChange={handleInputChange as any}
-                    className='form-input pr-10 w-full'
-                    data-testid='role-select'
-                  >
-                    <option value='admin'>مدير النظام - Admin (Full Access)</option>
-                    <option value='doctor'>طبيب - Doctor</option>
-                    <option value='patient'>مريض - Patient</option>
-                    <option value='staff'>موظف - Staff</option>
-                    <option value='supervisor'>مشرف - Supervisor</option>
-                  </select>
-                  <div className='pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3'>
-                    <span className='text-sm text-gray-400'>👤</span>
-                  </div>
-                </div>
-                <p className='mt-1 text-xs text-gray-500'>
-                  {formData.role === 'admin' && '✅ يمكنه رؤية والتحكم بكل شيء'}
-                  {formData.role === 'doctor' && '👨‍⚕️ الوصول إلى المرضى والمواعيد'}
-                  {formData.role === 'patient' && '🏥 الوصول إلى سجلاته الطبية فقط'}
-                  {formData.role === 'staff' && '👔 إدارة المواعيد والملفات'}
-                  {formData.role === 'supervisor' && '📊 عرض التقارير والإحصائيات'}
-                </p>
-              </div>
 
               <div>
                 <label className='form-label'>
