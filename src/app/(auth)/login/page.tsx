@@ -100,7 +100,7 @@ export default function LoginPage() {
             مرحباً بعودتك
           </h1>
           <p className='text-gray-600 dark:text-gray-400'>
-            سجل دخولك للوصول إلى لوحة التحكم
+            سجل دخولك للوصول إلى ل��حة التحكم
           </p>
         </div>
 
@@ -112,6 +112,31 @@ export default function LoginPage() {
                 <div className='flex items-center gap-2'>
                   <span className='text-lg'>⚠️</span>
                   <p className='text-sm font-medium'>{error}</p>
+                </div>
+              </div>
+            )}
+
+            {foundUser && (
+              <div className='status-success mb-6 p-4'>
+                <div className='flex flex-col gap-2'>
+                  <div className='flex items-center gap-2'>
+                    <span className='text-lg'>✅</span>
+                    <p className='text-sm font-medium'>تم العثور على المستخدم: {foundUser.email}</p>
+                  </div>
+                  <div className='mt-2'>
+                    <p className='text-xs font-medium text-gray-600'>الصلاحيات المعيّنة:</p>
+                    <ul className='mt-1 grid grid-cols-2 gap-2 text-xs'>
+                      {foundPermissions.length ? (
+                        foundPermissions.map((p) => (
+                          <li key={p} className='rounded border px-2 py-1 bg-white'>
+                            {p}
+                          </li>
+                        ))
+                      ) : (
+                        <li className='text-xs text-gray-500'>لا توجد صلاحيات محددة</li>
+                      )}
+                    </ul>
+                  </div>
                 </div>
               </div>
             )}
@@ -174,7 +199,7 @@ export default function LoginPage() {
                   href='/forgot-password'
                   className='text-default text-sm font-medium transition-colors hover:text-[var(--default-default-hover)]'
                 >
-                  نس��ت كلمة المرور؟
+                  نسيت كلمة المرور؟
                 </Link>
               </div>
 
