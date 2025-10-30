@@ -193,32 +193,36 @@ export default function LoginPage() {
                   setSubmitting(true);
                   setError(null);
                   try {
-                    const attempt = async () =>
-                      fetch('/api/auth/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password: process.env.NEXT_PUBLIC_TEST_PASSWORD || 'A123456' }),
-                      });
-
-                    let r = await attempt();
-                    if (r.status === 401) {
-                      // Try seeding default users (best-effort)
+                    const testPassword = process.env.NEXT_PUBLIC_TEST_PASSWORD || 'A123456';
+                    let res = null as any;
+                    try {
+                      res = await loginWithCredentials(email, testPassword, false);
+                      if (res?.success) {
+                        window.location.href = redirectTo;
+                        return;
+                      }
+                    } catch (err: any) {
+                      // If unauthorized, try seeding defaults and retry once
+                      console.warn('[login page] quickRoleLogin first attempt failed', err?.message || err);
                       try {
                         await fetch('/api/admin/auth/seed-defaults', { method: 'POST' });
                       } catch (e) {
-                        // ignore seeding errors, but continue to re-attempt login
+                        console.warn('[login page] seed-defaults failed', e);
                       }
-                      r = await attempt();
+                      // Retry
+                      try {
+                        res = await loginWithCredentials(email, testPassword, false);
+                        if (res?.success) {
+                          window.location.href = redirectTo;
+                          return;
+                        }
+                      } catch (err2: any) {
+                        setError(err2?.message || 'فشل');
+                        return;
+                      }
                     }
 
-                    const d = await r.json().catch(() => ({}));
-                    if (!r.ok) {
-                      setError(d.error || 'فشل');
-                      return;
-                    }
-
-                    // Success
-                    window.location.href = redirectTo;
+                    setError('فشل');
                   } catch (e: any) {
                     setError(e?.message || 'فشل: اتصال الشبكة');
                   } finally {
