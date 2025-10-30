@@ -360,7 +360,7 @@ function AdminDashboardContent() {
                 </span>
               </div>
               <div className='flex justify-between items-center py-2'>
-                <span className='text-[var(--text-secondary)]'>معدل إكمال الجلسات:</span>
+                <span className='text-[var(--text-secondary)]'>معدل إكمال الج��سات:</span>
                 <span className='font-semibold text-[var(--brand-success)]'>
                   {stats?.totalSessions ? Math.round(((stats.completedSessions || 0) / stats.totalSessions) * 100) : 0}%
                 </span>
@@ -521,42 +521,42 @@ function AdminDashboardContent() {
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>👤</span>
+              <User className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
               <span className='text-sm text-[var(--text-primary)]'>إضافة مريض</span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>📅</span>
+              <Calendar className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
               <span className='text-sm text-[var(--text-primary)]'>حجز موعد</span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>📋</span>
+              <Clipboard className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
               <span className='text-sm text-[var(--text-primary)]'>مطالبة تأمين</span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>👨‍⚕️</span>
+              <Users className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
               <span className='text-sm text-[var(--text-primary)]'>إضافة موظف</span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>📊</span>
+              <BarChart3 className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
               <span className='text-sm text-[var(--text-primary)]'>تقرير مالي</span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>⚙️</span>
+              <Settings className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
               <span className='text-sm text-[var(--text-primary)]'>الإعدادات</span>
             </Button>
           </div>
