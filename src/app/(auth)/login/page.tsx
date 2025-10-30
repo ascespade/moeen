@@ -32,17 +32,28 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
     try {
-      console.log('[login page] attempting login', { email: formData.email });
-      const result = await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
-      if (result?.success) {
-        // Redirect to default dashboard (use server canonical user later via /api/auth/me)
-        window.location.href = '/dashboard';
+      console.log('[login page] checking users table for', { email: formData.email });
+      const res = await fetch('/api/auth/check-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email }),
+      });
+      const data = await res.json().catch(() => ({}));
+      console.log('[login page] /api/auth/check-user response', res.status, data);
+      if (res.ok && data.success) {
+        if (data.found) {
+          // Show success message — don't create a session yet
+          setError(null);
+          alert('User found in database — success');
+        } else {
+          setError('المستخدم غير موجود');
+        }
       } else {
-        setError('فشل تسجيل الدخول');
+        setError(data?.error || 'فشل الاتصال');
       }
     } catch (err: any) {
-      console.error('[login page] login error', err);
-      setError(err?.message || t('auth.login.error', 'فشل تسجيل الدخول'));
+      console.error('[login page] check-user error', err);
+      setError(err?.message || 'فشل في التحقق');
     } finally {
       setSubmitting(false);
     }
