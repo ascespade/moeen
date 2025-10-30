@@ -32,49 +32,16 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          rememberMe: formData.rememberMe,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'فشل تسجيل الدخول');
-      }
-
-      if (data.success && data.data?.user && data.data?.token) {
-        // Store user data with token and permissions
-        localStorage.setItem('user', JSON.stringify(data.data.user));
-        localStorage.setItem('token', data.data.token);
-        localStorage.setItem(
-          'permissions',
-          JSON.stringify(data.data.permissions || [])
-        );
-
-        // Redirect based on actual user role from server
-        const userRole = data.data.user.role;
-        const roleRoutes: Record<string, string> = {
-          admin: '/admin/dashboard',
-          manager: '/admin/dashboard',
-          supervisor: '/dashboard/supervisor',
-          doctor: '/dashboard/doctor',
-          patient: '/dashboard/patient',
-          staff: '/dashboard/staff',
-          nurse: '/dashboard/staff',
-          agent: '/crm/dashboard',
-          therapist: '/dashboard/staff',
-        };
-
-        const redirectUrl = roleRoutes[userRole] || '/dashboard';
-        window.location.href = redirectUrl;
+      console.log('[login page] attempting login', { email: formData.email });
+      const result = await loginWithCredentials(formData.email, formData.password, formData.rememberMe);
+      if (result?.success) {
+        // Redirect to default dashboard (use server canonical user later via /api/auth/me)
+        window.location.href = '/dashboard';
+      } else {
+        setError('فشل تسجيل الدخول');
       }
     } catch (err: any) {
+      console.error('[login page] login error', err);
       setError(err?.message || t('auth.login.error', 'فشل تسجيل الدخول'));
     } finally {
       setSubmitting(false);
