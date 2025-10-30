@@ -7,6 +7,7 @@ import {
   setToken,
   clearAuth,
 } from '@/utils/storage';
+import { getBrowserSupabase } from '@/lib/supabaseClient';
 
 interface AuthState {
   user: User | null;
