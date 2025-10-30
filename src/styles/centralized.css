@@ -1,18 +1,136 @@
-/* Dark theme overrides to avoid navy and use near-black backgrounds */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Core Brand Tokens */
+  --brand-primary: #f97316;
+  --brand-primary-hover: #ea580c;
+  --brand-secondary: #eab308;
+  --brand-accent: #0284c7;
+
+  /* Neutrals (light theme) */
+  --background: #ffffff;
+  --panel: #f8faf9; /* soft panel */
+  --brand-surface: #f1f5f9;
+  --brand-border: #cbd5e1;
+
+  --text-primary: #1e293b; /* dark slate */
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(16,24,40,0.05);
+  --shadow-md: 0 4px 6px rgba(2,6,23,0.08);
+  --shadow-lg: 0 10px 15px rgba(2,6,23,0.12);
+
+  /* Transitions */
+  --transition-fast: 150ms ease-out;
+  --transition-normal: 300ms ease-out;
+}
+
+/* Ensure common utilities map to centralized tokens in light mode (no .light class required) */
+:root:not(.dark) .bg-white {
+  background-color: var(--panel) !important;
+}
+:root:not(.dark) .bg-black {
+  background-color: var(--panel) !important;
+}
+:root:not(.dark) .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+:root:not(.dark) .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+:root:not(.dark) .border-gray-200 {
+  border-color: var(--brand-border) !important;
+}
+
+/* Dark theme: use near-black background (avoid navy) */
 .dark {
   --background: #0b0b0b !important;
-  --brand-surface: #0f0f0f !important;
   --panel: #0f0f0f !important;
+  --brand-surface: #121212 !important;
   --brand-border: #1f1f1f !important;
-  --text-primary: #e6eef7 !important;
+
+  --text-primary: #e6eef7 !important; /* light text */
   --text-secondary: #cbd5e1 !important;
   --text-muted: #94a3b8 !important;
 }
 
-/* Map common Tailwind utility classes in dark mode to centralized tokens */
+/* Map common utilities in dark mode */
 .dark .bg-white { background-color: var(--panel) !important; }
-.dark .text-gray-900 { color: var(--text-primary) !important; }
 .dark .bg-gray-900 { background-color: var(--background) !important; }
 .dark .bg-gray-800 { background-color: var(--brand-surface) !important; }
+.dark .text-gray-900 { color: var(--text-primary) !important; }
 .dark .text-gray-700 { color: var(--text-secondary) !important; }
 .dark .border-gray-700 { border-color: var(--brand-border) !important; }
+
+/* Basic component tokens */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.btn-default {
+  background: var(--brand-primary);
+  color: white;
+}
+.btn-outline {
+  background: transparent;
+  color: var(--brand-primary);
+  border: 2px solid var(--brand-primary);
+}
+.btn-secondary {
+  background: var(--brand-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--brand-border);
+}
+
+.card {
+  background: var(--panel);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--brand-border);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+.nav { background: var(--panel); border-bottom: 1px solid var(--brand-border); }
+.nav-link { color: var(--text-primary); text-decoration: none; padding: 0.5rem 0.75rem; }
+.nav-link:hover { color: var(--brand-primary); }
+
+/* Utility for ensuring text contrasts */
+.ensure-visible { color: var(--text-primary) !important; }
+
+/* Accessibility: focus styles */
+:where(button, a):focus-visible { outline: 3px solid var(--brand-primary); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+/* Responsive container */
+.container-app { max-width: 1200px; margin-inline: auto; padding-inline: 1rem; }
+
+/* Small animations */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.animate-fade-in { animation: fade-in 300ms ease-out; }
+
+/* Preserve selection */
+::selection { background: var(--brand-primary); color: white; }
