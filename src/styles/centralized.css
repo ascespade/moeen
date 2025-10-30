@@ -18,6 +18,7 @@
   --text-primary: #1e293b; /* dark slate */
   --text-secondary: #475569;
   --text-muted: #64748b;
+  --foreground: var(--text-primary);
 
   /* Spacing */
   --space-1: 0.25rem;
