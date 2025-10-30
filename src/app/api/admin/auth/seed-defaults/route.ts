@@ -15,12 +15,17 @@ const USERS = [
 export async function POST(req: NextRequest) {
   const isDev = process.env.NODE_ENV !== 'production';
   const referer = req.headers.get('referer') || '';
-  const fromLocalhost = /localhost|127\.0\.0\.1/.test(referer);
+  const origin = req.headers.get('origin') || '';
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+
+  const fromLocalhost = /localhost|127\.0\.0\.1/.test(referer || origin);
 
   const headerOk = INTERNAL_SECRET && (req.headers.get('x-admin-secret') || '') === INTERNAL_SECRET;
-  const devOk = isDev && fromLocalhost;
+  const originOk = appUrl && (origin.includes(appUrl) || referer.includes(appUrl));
+  const debugAllow = process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true';
 
-  if (!headerOk && !devOk) {
+  // Allow when: header matches, or running in dev from localhost, or origin matches configured app url, or debug mode enabled
+  if (!headerOk && !isDev && !fromLocalhost && !originOk && !debugAllow) {
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -60,5 +65,3 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({ success: true, users: created, password: DEFAULT_PASSWORD });
 }
-
-
