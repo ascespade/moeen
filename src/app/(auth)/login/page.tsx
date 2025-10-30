@@ -153,6 +153,7 @@ export default function LoginPage() {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ email: foundUser.email, password: formData.password }),
+                            credentials: 'include',
                           });
                           const data = await res.json().catch(() => ({}));
                           console.log('[login page] simple-login', res.status, data);
