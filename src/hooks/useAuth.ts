@@ -7,17 +7,17 @@ import {
   setToken,
   clearAuth,
 } from '@/utils/storage';
-// Authentication hooks
 
 interface AuthState {
   user: User | null;
   token: string | null;
+  permissions: string[];
   isAuthenticated: boolean;
   isLoading: boolean;
 }
 
 interface AuthActions {
-  login: (user: User, token: string) => void;
+  login: (user: User, token: string, permissions?: string[]) => void;
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
   loginWithCredentials: (
@@ -30,6 +30,7 @@ interface AuthActions {
 export const useAuth = (): AuthState & AuthActions => {
   const [user, setUserState] = useState<User | null>(null);
   const [token, setTokenState] = useState<string | null>(null);
+  const [permissions, setPermissions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Initialize auth state from storage
@@ -38,10 +39,18 @@ export const useAuth = (): AuthState & AuthActions => {
       try {
         const storedUser = getUser();
         const storedToken = getToken();
+        const storedPermissions = localStorage.getItem('permissions');
 
         if (storedUser && storedToken) {
           setUserState(storedUser);
           setTokenState(storedToken);
+          if (storedPermissions) {
+            try {
+              setPermissions(JSON.parse(storedPermissions));
+            } catch (e) {
+              setPermissions([]);
+            }
+          }
         }
       } catch (error) {
         clearAuth();
@@ -53,11 +62,15 @@ export const useAuth = (): AuthState & AuthActions => {
     initializeAuth();
   }, []);
 
-  const login = useCallback((userData: User, tokenData: string) => {
+  const login = useCallback((userData: User, tokenData: string, perms: string[] = []) => {
     setUser(userData);
     setToken(tokenData);
+    setPermissions(perms);
     setUserState(userData);
     setTokenState(tokenData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('token', tokenData);
+    localStorage.setItem('permissions', JSON.stringify(perms));
   }, []);
 
   const loginWithCredentials = useCallback(
@@ -77,8 +90,8 @@ export const useAuth = (): AuthState & AuthActions => {
           throw new Error(data.error || 'Login failed');
         }
 
-        if (data.success) {
-          login(data.data.user, data.data.token);
+        if (data.success && data.data?.user && data.data?.token) {
+          login(data.data.user, data.data.token, data.data.permissions || []);
           return { success: true };
         } else {
           throw new Error(data.error || 'Login failed');
@@ -97,11 +110,14 @@ export const useAuth = (): AuthState & AuthActions => {
         method: 'POST',
       });
     } catch (error) {
+      // Ignore logout API errors
     } finally {
       // Clear local storage regardless of API call result
       clearAuth();
+      localStorage.removeItem('permissions');
       setUserState(null);
       setTokenState(null);
+      setPermissions([]);
     }
   }, []);
 
@@ -111,6 +127,7 @@ export const useAuth = (): AuthState & AuthActions => {
         const updatedUser = { ...user, ...userData };
         setUser(updatedUser);
         setUserState(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
       }
     },
     [user]
@@ -119,6 +136,7 @@ export const useAuth = (): AuthState & AuthActions => {
   return {
     user,
     token,
+    permissions,
     isAuthenticated: !!user && !!token,
     isLoading,
     login,
