@@ -70,6 +70,7 @@
   --text-primary: #e6eef7 !important; /* light text */
   --text-secondary: #cbd5e1 !important;
   --text-muted: #94a3b8 !important;
+  --foreground: var(--text-primary) !important;
 }
 
 /* Map common utilities in dark mode */
