@@ -220,146 +220,81 @@ export default function LoginPage() {
 
             {/* Quick Role Logins */}
             <div className='mt-6 grid grid-cols-1 gap-2'>
-              <button
-                type='button'
-                onClick={async () => {
+              {/* helper to attempt login and seed if needed */}
+              {(() => {
+                const quickRoleLogin = async (email: string, redirectTo: string) => {
                   setSubmitting(true);
                   setError(null);
-                  const attempt = async () =>
-                    fetch('/api/auth/login', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({
-                        email: 'admin@test.local',
-                        password: 'A123456',
-                      }),
-                    });
-                  let r = await attempt();
-                  if (r.status === 401) {
-                    try {
-                      await fetch('/api/admin/auth/seed-defaults', {
+                  try {
+                    const attempt = async () =>
+                      fetch('/api/auth/login', {
                         method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password: process.env.NEXT_PUBLIC_TEST_PASSWORD || 'A123456' }),
                       });
-                    } catch {}
-                    r = await attempt();
-                  }
-                  const d = await r.json().catch(() => ({}));
-                  if (!r.ok) {
-                    setError(d.error || 'فشل');
+
+                    let r = await attempt();
+                    if (r.status === 401) {
+                      // Try seeding default users (best-effort)
+                      try {
+                        await fetch('/api/admin/auth/seed-defaults', { method: 'POST' });
+                      } catch (e) {
+                        // ignore seeding errors, but continue to re-attempt login
+                      }
+                      r = await attempt();
+                    }
+
+                    const d = await r.json().catch(() => ({}));
+                    if (!r.ok) {
+                      setError(d.error || 'فشل');
+                      return;
+                    }
+
+                    // Success
+                    window.location.href = redirectTo;
+                  } catch (e: any) {
+                    setError(e?.message || 'فشل: اتصال الشبكة');
+                  } finally {
                     setSubmitting(false);
-                    return;
                   }
-                  window.location.href = '/admin/dashboard';
-                }}
-                className='btn btn-outline w-full'
-              >
-                👑 دخول تجريبي (Admin)
-              </button>
-              <button
-                type='button'
-                onClick={async () => {
-                  setSubmitting(true);
-                  setError(null);
-                  const attempt = async () =>
-                    fetch('/api/auth/login', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({
-                        email: 'manager@test.local',
-                        password: 'A123456',
-                      }),
-                    });
-                  let r = await attempt();
-                  if (r.status === 401) {
-                    try {
-                      await fetch('/api/admin/auth/seed-defaults', {
-                        method: 'POST',
-                      });
-                    } catch {}
-                    r = await attempt();
-                  }
-                  const d = await r.json().catch(() => ({}));
-                  if (!r.ok) {
-                    setError(d.error || 'فشل');
-                    setSubmitting(false);
-                    return;
-                  }
-                  window.location.href = '/admin/dashboard';
-                }}
-                className='btn btn-outline w-full'
-              >
-                🧭 دخول تجريبي (Manager)
-              </button>
-              <button
-                type='button'
-                onClick={async () => {
-                  setSubmitting(true);
-                  setError(null);
-                  const attempt = async () =>
-                    fetch('/api/auth/login', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({
-                        email: 'supervisor@test.local',
-                        password: 'A123456',
-                      }),
-                    });
-                  let r = await attempt();
-                  if (r.status === 401) {
-                    try {
-                      await fetch('/api/admin/auth/seed-defaults', {
-                        method: 'POST',
-                      });
-                    } catch {}
-                    r = await attempt();
-                  }
-                  const d = await r.json().catch(() => ({}));
-                  if (!r.ok) {
-                    setError(d.error || 'فشل');
-                    setSubmitting(false);
-                    return;
-                  }
-                  window.location.href = '/admin/dashboard';
-                }}
-                className='btn btn-outline w-full'
-              >
-                🛰️ دخول تجريبي (Supervisor)
-              </button>
-              <button
-                type='button'
-                onClick={async () => {
-                  setSubmitting(true);
-                  setError(null);
-                  const attempt = async () =>
-                    fetch('/api/auth/login', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({
-                        email: 'agent@test.local',
-                        password: 'A123456',
-                      }),
-                    });
-                  let r = await attempt();
-                  if (r.status === 401) {
-                    try {
-                      await fetch('/api/admin/auth/seed-defaults', {
-                        method: 'POST',
-                      });
-                    } catch {}
-                    r = await attempt();
-                  }
-                  const d = await r.json().catch(() => ({}));
-                  if (!r.ok) {
-                    setError(d.error || 'فشل');
-                    setSubmitting(false);
-                    return;
-                  }
-                  window.location.href = '/crm/dashboard';
-                }}
-                className='btn btn-outline w-full'
-              >
-                🎧 دخول تجريبي (Agent)
-              </button>
+                };
+
+                return (
+                  <>
+                    <button
+                      type='button'
+                      onClick={() => quickRoleLogin('admin@test.local', '/admin/dashboard')}
+                      className='btn btn-outline w-full'
+                    >
+                      👑 دخول تجريبي (Admin)
+                    </button>
+
+                    <button
+                      type='button'
+                      onClick={() => quickRoleLogin('manager@test.local', '/admin/dashboard')}
+                      className='btn btn-outline w-full'
+                    >
+                      🧭 دخول تجريبي (Manager)
+                    </button>
+
+                    <button
+                      type='button'
+                      onClick={() => quickRoleLogin('supervisor@test.local', '/admin/dashboard')}
+                      className='btn btn-outline w-full'
+                    >
+                      🛰️ دخول تجريبي (Supervisor)
+                    </button>
+
+                    <button
+                      type='button'
+                      onClick={() => quickRoleLogin('agent@test.local', '/crm/dashboard')}
+                      className='btn btn-outline w-full'
+                    >
+                      🎧 دخول تجريبي (Agent)
+                    </button>
+                  </>
+                );
+              })()}
             </div>
 
             {/* CRUD Test Button */}
