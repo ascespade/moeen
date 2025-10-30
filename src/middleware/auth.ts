@@ -6,23 +6,28 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { PermissionManager } from '@/lib/permissions';
 
 // Define protected routes and their required roles
 const PROTECTED_ROUTES: Record<string, string[]> = {
-  '/dashboard': ['admin', 'doctor', 'patient', 'staff', 'supervisor', 'manager'],
+  '/dashboard': ['admin', 'doctor', 'patient', 'staff', 'supervisor', 'manager', 'nurse', 'agent', 'therapist'],
   '/admin': ['admin', 'manager', 'supervisor'],
   '/admin/admin': ['admin', 'manager'],
-  '/appointments': ['admin', 'doctor', 'staff'],
-  '/patients': ['admin', 'doctor', 'staff'],
-  '/doctors': ['admin', 'staff'],
-  '/reports': ['admin', 'supervisor'],
-  '/settings': ['admin'],
-  '/chatbot': ['admin'],
-  '/crm': ['admin', 'staff', 'agent'],
-  '/analytics': ['admin', 'supervisor'],
-  '/messages': ['admin', 'doctor', 'staff'],
-  '/notifications': ['admin', 'doctor', 'patient', 'staff', 'supervisor'],
-  '/profile': ['admin', 'doctor', 'patient', 'staff', 'supervisor'],
+  '/admin/dashboard': ['admin', 'manager', 'supervisor'],
+  '/admin/users': ['admin', 'manager'],
+  '/admin/roles': ['admin'],
+  '/admin/settings': ['admin'],
+  '/appointments': ['admin', 'doctor', 'staff', 'nurse', 'therapist'],
+  '/patients': ['admin', 'doctor', 'staff', 'nurse', 'supervisor'],
+  '/doctors': ['admin', 'manager', 'staff'],
+  '/reports': ['admin', 'supervisor', 'manager'],
+  '/settings': ['admin', 'manager'],
+  '/chatbot': ['admin', 'manager'],
+  '/crm': ['admin', 'manager', 'staff', 'agent'],
+  '/analytics': ['admin', 'supervisor', 'manager'],
+  '/messages': ['admin', 'doctor', 'staff', 'nurse', 'agent'],
+  '/notifications': ['admin', 'doctor', 'patient', 'staff', 'supervisor', 'manager', 'nurse', 'agent', 'therapist'],
+  '/profile': ['admin', 'doctor', 'patient', 'staff', 'supervisor', 'manager', 'nurse', 'agent', 'therapist'],
 };
 
 // Admin-only routes (strict access)
@@ -50,14 +55,15 @@ const PUBLIC_ROUTES = [
   '/api/auth/login',
   '/api/auth/register',
   '/api/auth/logout',
+  '/unauthorized',
 ];
 
 export async function authMiddleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Allow public routes and API auth routes
-  if (PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith(route)) || 
-      pathname.startsWith('/_next') || 
+  if (PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith(route)) ||
+      pathname.startsWith('/_next') ||
       pathname.startsWith('/api/public')) {
     return NextResponse.next();
   }
@@ -74,27 +80,18 @@ export async function authMiddleware(request: NextRequest) {
 
     // No session = redirect to login
     if (!session || sessionError) {
-    const isAdminRoute = pathname.startsWith('/admin') || 
-                        Object.keys(PROTECTED_ROUTES).some(route => pathname.startsWith(route));
-    
-    if (isAdminRoute) {
-      const loginUrl = new URL('/login', request.url);
-      loginUrl.searchParams.set('redirect', pathname);
-      return NextResponse.redirect(loginUrl);
-    } else {
       const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('redirect', pathname);
       return NextResponse.redirect(loginUrl);
     }
-  }
 
     // Get user data with role from database
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id, email, role, status')
+      .select('id, email, role, status, full_name')
       .eq('id', session.user.id)
       .single();
-    
+
     if (userError || !userData) {
       // User not found in database
       const loginUrl = new URL('/login', request.url);
@@ -116,23 +113,28 @@ export async function authMiddleware(request: NextRequest) {
       if (userData.role !== 'admin') {
         return NextResponse.redirect(new URL('/unauthorized', request.url));
       }
-  }
+    }
 
     // Check role-based access for protected routes
-  for (const [route, allowedRoles] of Object.entries(PROTECTED_ROUTES)) {
-    if (pathname.startsWith(route)) {
-      if (!allowedRoles.includes(userData.role)) {
-        // User doesn't have permission
-        return NextResponse.redirect(new URL('/unauthorized', request.url));
+    for (const [route, allowedRoles] of Object.entries(PROTECTED_ROUTES)) {
+      if (pathname.startsWith(route)) {
+        if (!allowedRoles.includes(userData.role)) {
+          // User doesn't have permission
+          return NextResponse.redirect(new URL('/unauthorized', request.url));
+        }
       }
     }
-  }
 
-  // Add user data to headers for downstream use
-  const response = NextResponse.next();
-  response.headers.set('x-user-id', userData.id);
-  response.headers.set('x-user-role', userData.role);
-  response.headers.set('x-user-email', userData.email);
+    // Get user permissions
+    const userPermissions = PermissionManager.getRolePermissions(userData.role);
+
+    // Add user data to headers for downstream use
+    const response = NextResponse.next();
+    response.headers.set('x-user-id', userData.id);
+    response.headers.set('x-user-role', userData.role);
+    response.headers.set('x-user-email', userData.email);
+    response.headers.set('x-user-name', userData.full_name || '');
+    response.headers.set('x-user-permissions', JSON.stringify(userPermissions));
     response.headers.set('x-session-id', session.access_token);
 
     // Refresh session if close to expiry (within 5 minutes)
@@ -142,7 +144,7 @@ export async function authMiddleware(request: NextRequest) {
       await supabase.auth.refreshSession();
     }
 
-  return response;
+    return response;
   } catch (error) {
     console.error('Auth middleware error:', error);
     // On error, redirect to login
