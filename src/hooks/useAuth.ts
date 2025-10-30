@@ -56,10 +56,15 @@ export const useAuth = (): AuthState & AuthActions => {
 
         // Fetch canonical user + permissions from API
         try {
+          const controller = new AbortController();
+          const t = setTimeout(() => controller.abort(), 5000);
           const res = await fetch('/api/auth/me', {
             method: 'GET',
             credentials: 'include',
+            cache: 'no-store',
+            signal: controller.signal,
           });
+          clearTimeout(t);
           if (res.ok) {
             const payload = await res.json().catch(() => ({}) as any);
             const foundUser = payload?.data?.user || payload?.user || null;
@@ -190,10 +195,15 @@ export const useAuth = (): AuthState & AuthActions => {
         // Prefer to fetch /me to get canonical user object and permissions
         try {
           console.log('[useAuth] fetching /api/auth/me after login');
+          const controller = new AbortController();
+          const t = setTimeout(() => controller.abort(), 5000);
           const meRes = await fetch('/api/auth/me', {
             method: 'GET',
             credentials: 'include',
+            cache: 'no-store',
+            signal: controller.signal,
           });
+          clearTimeout(t);
           console.log(
             '[useAuth] /api/auth/me after login status',
             meRes.status
