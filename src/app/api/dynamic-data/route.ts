@@ -1,9 +1,5 @@
 import { realDB } from '@/lib/supabase-real';
 import { NextRequest, NextResponse } from 'next/server';
-
-export const dynamic = 'force-dynamic';
-
-import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
 
 export const dynamic = 'force-dynamic';
