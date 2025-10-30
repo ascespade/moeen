@@ -115,13 +115,17 @@
      Ensure components and utility classes rely on centralized tokens
      ======================================== */
   /* Map common Tailwind utility classes to centralized tokens in light mode */
-  .light .bg-white { background-color: var(--panel) !important; }
-  .light .text-gray-900 { color: var(--text-primary) !important; }
-  .light .bg-black { background-color: var(--panel) !important; }
-  .light .border-gray-200 { border-color: var(--brand-border) !important; }
-  .light .text-gray-700 { color: var(--text-secondary) !important; }
-  .light .text-gray-600 { color: var(--text-muted) !important; }
-  .light .bg-gray-100 { background-color: var(--brand-surface) !important; }
+  :root:not(.dark) .bg-white { background-color: var(--panel) !important; }
+  :root:not(.dark) .text-gray-900 { color: var(--text-primary) !important; }
+  :root:not(.dark) .bg-black { background-color: var(--panel) !important; }
+  :root:not(.dark) .border-gray-200 { border-color: var(--brand-border) !important; }
+  :root:not(.dark) .text-gray-700 { color: var(--text-secondary) !important; }
+  :root:not(.dark) .text-gray-600 { color: var(--text-muted) !important; }
+  :root:not(.dark) .bg-gray-100 { background-color: var(--brand-surface) !important; }
+
+  /* Also apply generic fallbacks (in case components use utility classes without root-level scoping) */
+  .bg-white:not(.dark .bg-white) { background-color: var(--panel) !important; }
+  .text-gray-900:not(.dark .text-gray-900) { color: var(--text-primary) !important; }
 
   /* Focus and Interactive States */
   --focus-ring: var(--brand-primary); /* Focus ring color - use brand primary */
