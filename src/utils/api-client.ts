@@ -14,7 +14,11 @@ export class ApiClient {
     // use the current window origin on the client or NEXT_PUBLIC_APP_URL on the server.
     let base = this.baseURL;
     if (base.startsWith('/')) {
-      if (typeof window !== 'undefined' && window.location && window.location.origin) {
+      if (
+        typeof window !== 'undefined' &&
+        window.location &&
+        window.location.origin
+      ) {
         base = window.location.origin + base;
       } else if (process.env.NEXT_PUBLIC_APP_URL) {
         base = `${process.env.NEXT_PUBLIC_APP_URL}${base}`;

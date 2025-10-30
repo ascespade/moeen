@@ -34,14 +34,20 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
     try {
-      console.log('[login page] checking users table for', { email: formData.email });
+      console.log('[login page] checking users table for', {
+        email: formData.email,
+      });
       const res = await fetch('/api/auth/check-user', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: formData.email }),
       });
       const data = await res.json().catch(() => ({}));
-      console.log('[login page] /api/auth/check-user response', res.status, data);
+      console.log(
+        '[login page] /api/auth/check-user response',
+        res.status,
+        data
+      );
       if (res.ok && data.success) {
         if (data.found) {
           // Set in-page success state — don't create a session yet
@@ -124,19 +130,28 @@ export default function LoginPage() {
                 <div className='flex flex-col gap-2'>
                   <div className='flex items-center gap-2'>
                     <span className='text-lg'>✅</span>
-                    <p className='text-sm font-medium'>تم العثور على المستخدم: {foundUser.email}</p>
+                    <p className='text-sm font-medium'>
+                      تم العثور على المستخدم: {foundUser.email}
+                    </p>
                   </div>
                   <div className='mt-2'>
-                    <p className='text-xs font-medium text-gray-600'>الصلاحيات المعيّنة:</p>
+                    <p className='text-xs font-medium text-gray-600'>
+                      الصلاحيات المعيّنة:
+                    </p>
                     <ul className='mt-1 grid grid-cols-2 gap-2 text-xs'>
                       {foundPermissions.length ? (
-                        foundPermissions.map((p) => (
-                          <li key={p} className='rounded border px-2 py-1 bg-white'>
+                        foundPermissions.map(p => (
+                          <li
+                            key={p}
+                            className='rounded border px-2 py-1 bg-white'
+                          >
                             {p}
                           </li>
                         ))
                       ) : (
-                        <li className='text-xs text-gray-500'>لا توجد صلاحيات محددة</li>
+                        <li className='text-xs text-gray-500'>
+                          لا توجد صلاحيات محددة
+                        </li>
                       )}
                     </ul>
                   </div>
@@ -152,13 +167,21 @@ export default function LoginPage() {
                           const res = await fetch('/api/auth/simple-login', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ email: foundUser.email, password: formData.password }),
+                            body: JSON.stringify({
+                              email: foundUser.email,
+                              password: formData.password,
+                            }),
                             credentials: 'include',
                           });
                           const data = await res.json().catch(() => ({}));
-                          console.log('[login page] simple-login', res.status, data);
+                          console.log(
+                            '[login page] simple-login',
+                            res.status,
+                            data
+                          );
                           if (res.ok && data.success) {
-                            window.location.href = data.redirectTo || '/dashboard';
+                            window.location.href =
+                              data.redirectTo || '/dashboard';
                           } else {
                             setError(data?.error || 'فشل تسجيل الدخول');
                           }
@@ -263,29 +286,46 @@ export default function LoginPage() {
             <div className='mt-6 grid grid-cols-1 gap-2'>
               {/* helper to attempt login and seed if needed */}
               {(() => {
-                const quickRoleLogin = async (email: string, redirectTo: string) => {
+                const quickRoleLogin = async (
+                  email: string,
+                  redirectTo: string
+                ) => {
                   setSubmitting(true);
                   setError(null);
                   try {
-                    const testPassword = process.env.NEXT_PUBLIC_TEST_PASSWORD || 'A123456';
+                    const testPassword =
+                      process.env.NEXT_PUBLIC_TEST_PASSWORD || 'A123456';
                     let res = null as any;
                     try {
-                      res = await loginWithCredentials(email, testPassword, false);
+                      res = await loginWithCredentials(
+                        email,
+                        testPassword,
+                        false
+                      );
                       if (res?.success) {
                         window.location.href = redirectTo;
                         return;
                       }
                     } catch (err: any) {
                       // If unauthorized, try seeding defaults and retry once
-                      console.warn('[login page] quickRoleLogin first attempt failed', err?.message || err);
+                      console.warn(
+                        '[login page] quickRoleLogin first attempt failed',
+                        err?.message || err
+                      );
                       try {
-                        await fetch('/api/admin/auth/seed-defaults', { method: 'POST' });
+                        await fetch('/api/admin/auth/seed-defaults', {
+                          method: 'POST',
+                        });
                       } catch (e) {
                         console.warn('[login page] seed-defaults failed', e);
                       }
                       // Retry
                       try {
-                        res = await loginWithCredentials(email, testPassword, false);
+                        res = await loginWithCredentials(
+                          email,
+                          testPassword,
+                          false
+                        );
                         if (res?.success) {
                           window.location.href = redirectTo;
                           return;
@@ -308,7 +348,9 @@ export default function LoginPage() {
                   <>
                     <button
                       type='button'
-                      onClick={() => quickRoleLogin('admin@test.local', '/admin/dashboard')}
+                      onClick={() =>
+                        quickRoleLogin('admin@test.local', '/admin/dashboard')
+                      }
                       className='btn btn-outline w-full'
                     >
                       👑 دخول تجريبي (Admin)
@@ -316,7 +358,9 @@ export default function LoginPage() {
 
                     <button
                       type='button'
-                      onClick={() => quickRoleLogin('manager@test.local', '/admin/dashboard')}
+                      onClick={() =>
+                        quickRoleLogin('manager@test.local', '/admin/dashboard')
+                      }
                       className='btn btn-outline w-full'
                     >
                       🧭 دخول تجريبي (Manager)
@@ -324,7 +368,12 @@ export default function LoginPage() {
 
                     <button
                       type='button'
-                      onClick={() => quickRoleLogin('supervisor@test.local', '/admin/dashboard')}
+                      onClick={() =>
+                        quickRoleLogin(
+                          'supervisor@test.local',
+                          '/admin/dashboard'
+                        )
+                      }
                       className='btn btn-outline w-full'
                     >
                       🛰️ دخول تجريبي (Supervisor)
@@ -332,7 +381,9 @@ export default function LoginPage() {
 
                     <button
                       type='button'
-                      onClick={() => quickRoleLogin('agent@test.local', '/crm/dashboard')}
+                      onClick={() =>
+                        quickRoleLogin('agent@test.local', '/crm/dashboard')
+                      }
                       className='btn btn-outline w-full'
                     >
                       🎧 دخول تجريبي (Agent)

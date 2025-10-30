@@ -9,7 +9,11 @@ export async function GET(request: NextRequest) {
 
     // Primary path: Supabase auth session
     if (user && !error) {
-      console.log('[api/auth/me] authenticated user', { id: user.id, email: user.email, role: user.role });
+      console.log('[api/auth/me] authenticated user', {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      });
       const userPermissions = PermissionManager.getRolePermissions(user.role);
 
       return NextResponse.json({
@@ -39,7 +43,10 @@ export async function GET(request: NextRequest) {
           .eq('email', demoEmail)
           .single();
 
-        console.log('[api/auth/me] demo user fetch', { userData, userError: userError?.message || null });
+        console.log('[api/auth/me] demo user fetch', {
+          userData,
+          userError: userError?.message || null,
+        });
 
         if (!userError && userData) {
           const userPermissions = PermissionManager.getRolePermissions(

@@ -152,7 +152,9 @@ export class SecurityMiddleware {
 
     // Check if origin is allowed
     if (origin && !this.isOriginAllowed(origin)) {
-      const debugAllow = process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true' || process.env.NODE_ENV !== 'production';
+      const debugAllow =
+        process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true' ||
+        process.env.NODE_ENV !== 'production';
       if (!debugAllow) {
         return NextResponse.json(
           { error: 'CORS policy violation: Origin not allowed' },
@@ -199,7 +201,9 @@ export class SecurityMiddleware {
 
     // Check origin
     if (!origin || !this.isOriginAllowed(origin)) {
-      const debugAllow = process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true' || process.env.NODE_ENV !== 'production';
+      const debugAllow =
+        process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true' ||
+        process.env.NODE_ENV !== 'production';
       if (!debugAllow) {
         return NextResponse.json(
           { error: 'CORS policy violation: Origin not allowed' },

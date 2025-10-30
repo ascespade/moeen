@@ -5,7 +5,15 @@ import jwt from 'jsonwebtoken';
 export interface User {
   id: string;
   email: string;
-  role: 'patient' | 'doctor' | 'staff' | 'supervisor' | 'admin' | 'manager' | 'agent' | 'demo';
+  role:
+    | 'patient'
+    | 'doctor'
+    | 'staff'
+    | 'supervisor'
+    | 'admin'
+    | 'manager'
+    | 'agent'
+    | 'demo';
   meta?: Record<string, any>;
 }
 
@@ -71,7 +79,9 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
     // Aggregate permissions from role_permissions and user_permissions
     const { data: rolePerms } = await supabase
       .from('user_roles')
-      .select('role_id, roles:role_id(id, name), role_permissions:role_id(role_id, permission_id, permissions:permission_id(code))')
+      .select(
+        'role_id, roles:role_id(id, name), role_permissions:role_id(role_id, permission_id, permissions:permission_id(code))'
+      )
       .eq('user_id', userData.id)
       .eq('is_active', true);
 
@@ -91,7 +101,10 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
       if (up?.permissions?.code) codes.add(up.permissions.code);
     });
 
-    const mergedMeta = { ...(userData as any).metadata, permissions: Array.from(codes) };
+    const mergedMeta = {
+      ...(userData as any).metadata,
+      permissions: Array.from(codes),
+    };
 
     return {
       user: {

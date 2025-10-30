@@ -21,10 +21,13 @@ function parseMaxAgeSeconds(expiresIn: string): number {
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password } = await req.json().catch(() => ({} as any));
+    const { email, password } = await req.json().catch(() => ({}) as any);
     console.log('[api/auth/simple-login] request', { email });
     if (!email || !password) {
-      return NextResponse.json({ success: false, error: 'Missing credentials' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: 'Missing credentials' },
+        { status: 400 }
+      );
     }
 
     const supabase = await createClient();
@@ -37,12 +40,21 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (userErr || !userRow) {
-      console.warn('[api/auth/simple-login] user not found in users table', userErr?.message || null);
-      return NextResponse.json({ success: false, error: 'Invalid credentials' }, { status: 401 });
+      console.warn(
+        '[api/auth/simple-login] user not found in users table',
+        userErr?.message || null
+      );
+      return NextResponse.json(
+        { success: false, error: 'Invalid credentials' },
+        { status: 401 }
+      );
     }
 
     if (userRow.status !== 'active') {
-      return NextResponse.json({ success: false, error: 'User inactive' }, { status: 403 });
+      return NextResponse.json(
+        { success: false, error: 'User inactive' },
+        { status: 403 }
+      );
     }
 
     // Verify password: allow test password for dev, otherwise try Supabase auth
@@ -51,7 +63,10 @@ export async function POST(req: NextRequest) {
       authOk = true;
     } else {
       try {
-        const supaAuth = await (supabase as any).auth.signInWithPassword({ email, password });
+        const supaAuth = await (supabase as any).auth.signInWithPassword({
+          email,
+          password,
+        });
         if (!supaAuth.error && supaAuth.data?.user) authOk = true;
       } catch (e) {
         console.warn('[api/auth/simple-login] supabase auth attempt failed', e);
@@ -59,7 +74,10 @@ export async function POST(req: NextRequest) {
     }
 
     if (!authOk) {
-      return NextResponse.json({ success: false, error: 'Invalid credentials' }, { status: 401 });
+      return NextResponse.json(
+        { success: false, error: 'Invalid credentials' },
+        { status: 401 }
+      );
     }
 
     const permissions = PermissionManager.getRolePermissions(userRow.role);
@@ -67,7 +85,10 @@ export async function POST(req: NextRequest) {
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) {
       console.error('[api/auth/simple-login] JWT_SECRET missing');
-      return NextResponse.json({ success: false, error: 'Server misconfigured' }, { status: 500 });
+      return NextResponse.json(
+        { success: false, error: 'Server misconfigured' },
+        { status: 500 }
+      );
     }
 
     const payload = {
@@ -79,7 +100,10 @@ export async function POST(req: NextRequest) {
 
     const token = jwt.sign(payload, jwtSecret, { expiresIn: JWT_EXPIRES_IN });
 
-    const response = NextResponse.json({ success: true, redirectTo: '/dashboard' });
+    const response = NextResponse.json({
+      success: true,
+      redirectTo: '/dashboard',
+    });
     const maxAge = parseMaxAgeSeconds(JWT_EXPIRES_IN);
 
     response.cookies.set('auth-token', token, {
@@ -93,6 +117,9 @@ export async function POST(req: NextRequest) {
     return response;
   } catch (e: any) {
     console.error('[api/auth/simple-login] error', e);
-    return NextResponse.json({ success: false, error: e?.message || 'Internal error' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: e?.message || 'Internal error' },
+      { status: 500 }
+    );
   }
 }

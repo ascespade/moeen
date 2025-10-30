@@ -7,8 +7,10 @@ const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password } = await req.json().catch(() => ({} as any));
-    try { console.log('[api/auth/login] incoming login request email:', email); } catch(e){}
+    const { email, password } = await req.json().catch(() => ({}) as any);
+    try {
+      console.log('[api/auth/login] incoming login request email:', email);
+    } catch (e) {}
 
     const demoEmailHeader = req.headers.get('x-demo-email');
     const internalSecretHeader = req.headers.get('x-admin-secret');
@@ -28,11 +30,19 @@ export async function POST(req: NextRequest) {
     // If a demo email header is provided, allow a direct DB lookup for development convenience.
     // Also auto-create demo users in dev/debug when they don't exist yet.
     try {
-      const allowDemoHeader = !!demoEmailHeader && (password === DEFAULT_PASSWORD || !!internalSecretHeader || debugAllow || isDev);
+      const allowDemoHeader =
+        !!demoEmailHeader &&
+        (password === DEFAULT_PASSWORD ||
+          !!internalSecretHeader ||
+          debugAllow ||
+          isDev);
 
       if (allowDemoHeader) {
         const targetEmail = demoEmailHeader || email;
-        console.log('[api/auth/login] demo/header fallback active for', targetEmail);
+        console.log(
+          '[api/auth/login] demo/header fallback active for',
+          targetEmail
+        );
 
         // Try to find existing user row
         const { data: userRow, error: userRowErr } = await supabase
@@ -41,33 +51,58 @@ export async function POST(req: NextRequest) {
           .eq('email', targetEmail)
           .single();
 
-        console.log('[api/auth/login] demo/header user lookup', { userRow, userRowErr: userRowErr?.message || null });
+        console.log('[api/auth/login] demo/header user lookup', {
+          userRow,
+          userRowErr: userRowErr?.message || null,
+        });
 
         if (!userRow && (isDev || debugAllow || !!internalSecretHeader)) {
           // Auto-create auth user via service role in dev/debug
           try {
-            console.log('[api/auth/login] demo/header creating auth user for', targetEmail);
-            const { data: createdUser, error: createErr } = await supabaseAdmin.auth.admin.createUser({
-              email: targetEmail,
-              password: DEFAULT_PASSWORD,
-              email_confirm: true,
-            } as any);
+            console.log(
+              '[api/auth/login] demo/header creating auth user for',
+              targetEmail
+            );
+            const { data: createdUser, error: createErr } =
+              await supabaseAdmin.auth.admin.createUser({
+                email: targetEmail,
+                password: DEFAULT_PASSWORD,
+                email_confirm: true,
+              } as any);
 
             if (createErr || !createdUser?.user) {
-              console.error('[api/auth/login] demo/header createUser failed', createErr?.message);
+              console.error(
+                '[api/auth/login] demo/header createUser failed',
+                createErr?.message
+              );
             } else {
               const authId = createdUser.user.id;
               // Upsert into users table using server client
               const { data: up, error: upErr } = await supabase
                 .from('users')
-                .upsert({ id: authId, email: targetEmail, name: targetEmail.split('@')[0], role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
+                .upsert(
+                  {
+                    id: authId,
+                    email: targetEmail,
+                    name: targetEmail.split('@')[0],
+                    role: 'agent',
+                    status: 'active',
+                    is_active: true,
+                  },
+                  { onConflict: 'id' }
+                )
                 .select('id, email, name, role, status, avatar_url')
                 .single();
 
-              console.log('[api/auth/login] demo/header upsert users result', { up, upErr: upErr?.message || null });
+              console.log('[api/auth/login] demo/header upsert users result', {
+                up,
+                upErr: upErr?.message || null,
+              });
 
               if (up && !upErr) {
-                const rolePermissions = PermissionManager.getRolePermissions(up.role);
+                const rolePermissions = PermissionManager.getRolePermissions(
+                  up.role
+                );
                 const userResponse = {
                   id: up.id,
                   email: up.email,
@@ -76,7 +111,15 @@ export async function POST(req: NextRequest) {
                   avatar: up.avatar_url,
                   status: up.status,
                 };
-                return NextResponse.json({ success: true, data: { user: userResponse, token: null, permissions: rolePermissions, fallbackLogin: true } });
+                return NextResponse.json({
+                  success: true,
+                  data: {
+                    user: userResponse,
+                    token: null,
+                    permissions: rolePermissions,
+                    fallbackLogin: true,
+                  },
+                });
               }
             }
           } catch (e) {
@@ -86,10 +129,15 @@ export async function POST(req: NextRequest) {
 
         if (userRow && !userRowErr) {
           if (userRow.status !== 'active') {
-            return NextResponse.json({ success: false, error: 'User account is inactive' }, { status: 403 });
+            return NextResponse.json(
+              { success: false, error: 'User account is inactive' },
+              { status: 403 }
+            );
           }
 
-          const rolePermissions = PermissionManager.getRolePermissions(userRow.role);
+          const rolePermissions = PermissionManager.getRolePermissions(
+            userRow.role
+          );
           const userResponse = {
             id: userRow.id,
             email: userRow.email,
@@ -109,7 +157,10 @@ export async function POST(req: NextRequest) {
             },
           };
 
-          console.log('[api/auth/login] demo/header fallback login succeeded for', targetEmail);
+          console.log(
+            '[api/auth/login] demo/header fallback login succeeded for',
+            targetEmail
+          );
           return NextResponse.json(resBody);
         }
       }
@@ -124,10 +175,16 @@ export async function POST(req: NextRequest) {
       password,
     });
 
-    console.log('[api/auth/login] signInWithPassword result', { error: error?.message || null, userId: data?.user?.id });
+    console.log('[api/auth/login] signInWithPassword result', {
+      error: error?.message || null,
+      userId: data?.user?.id,
+    });
 
     if (error || !data?.user) {
-      console.warn('[api/auth/login] signInWithPassword failed', error?.message);
+      console.warn(
+        '[api/auth/login] signInWithPassword failed',
+        error?.message
+      );
 
       // Fallback: allow login with TEST_USERS_PASSWORD if a users row exists (development convenience only)
       try {
@@ -138,30 +195,52 @@ export async function POST(req: NextRequest) {
             .eq('email', email)
             .single();
 
-          console.log('[api/auth/login] fallback user lookup', { userRow, userRowErr: userRowErr?.message || null });
+          console.log('[api/auth/login] fallback user lookup', {
+            userRow,
+            userRowErr: userRowErr?.message || null,
+          });
 
           if (!userRow && (isDev || debugAllow || !!internalSecretHeader)) {
             // attempt to create user using supabaseAdmin
             try {
-              console.log('[api/auth/login] fallback creating auth user for', email);
-              const { data: createdUser, error: createErr } = await supabaseAdmin.auth.admin.createUser({
-                email,
-                password: DEFAULT_PASSWORD,
-                email_confirm: true,
-              } as any);
+              console.log(
+                '[api/auth/login] fallback creating auth user for',
+                email
+              );
+              const { data: createdUser, error: createErr } =
+                await supabaseAdmin.auth.admin.createUser({
+                  email,
+                  password: DEFAULT_PASSWORD,
+                  email_confirm: true,
+                } as any);
 
               if (!createErr && createdUser?.user) {
                 const authId = createdUser.user.id;
                 const { data: up, error: upErr } = await supabase
                   .from('users')
-                  .upsert({ id: authId, email, name: email.split('@')[0], role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
+                  .upsert(
+                    {
+                      id: authId,
+                      email,
+                      name: email.split('@')[0],
+                      role: 'agent',
+                      status: 'active',
+                      is_active: true,
+                    },
+                    { onConflict: 'id' }
+                  )
                   .select('id, email, name, role, status, avatar_url')
                   .single();
 
-                console.log('[api/auth/login] fallback upsert users result', { up, upErr: upErr?.message || null });
+                console.log('[api/auth/login] fallback upsert users result', {
+                  up,
+                  upErr: upErr?.message || null,
+                });
 
                 if (up && !upErr) {
-                  const rolePermissions = PermissionManager.getRolePermissions(up.role);
+                  const rolePermissions = PermissionManager.getRolePermissions(
+                    up.role
+                  );
                   const userResponse = {
                     id: up.id,
                     email: up.email,
@@ -181,7 +260,10 @@ export async function POST(req: NextRequest) {
                     },
                   };
 
-                  console.log('[api/auth/login] fallback auto-create login succeeded for', email);
+                  console.log(
+                    '[api/auth/login] fallback auto-create login succeeded for',
+                    email
+                  );
                   return NextResponse.json(resBody);
                 }
               }
@@ -192,10 +274,15 @@ export async function POST(req: NextRequest) {
 
           if (userRow && !userRowErr) {
             if (userRow.status !== 'active') {
-              return NextResponse.json({ success: false, error: 'User account is inactive' }, { status: 403 });
+              return NextResponse.json(
+                { success: false, error: 'User account is inactive' },
+                { status: 403 }
+              );
             }
 
-            const rolePermissions = PermissionManager.getRolePermissions(userRow.role);
+            const rolePermissions = PermissionManager.getRolePermissions(
+              userRow.role
+            );
             const userResponse = {
               id: userRow.id,
               email: userRow.email,
@@ -236,32 +323,65 @@ export async function POST(req: NextRequest) {
       .eq('id', data.user.id)
       .single();
 
-    console.log('[api/auth/login] fetched userData', { userData, userError: userError?.message || null });
+    console.log('[api/auth/login] fetched userData', {
+      userData,
+      userError: userError?.message || null,
+    });
 
     if (userError || !userData) {
-      console.warn('[api/auth/login] user data not found for', data.user.id, userError?.message);
+      console.warn(
+        '[api/auth/login] user data not found for',
+        data.user.id,
+        userError?.message
+      );
 
       // Attempt to upsert an application user record if Supabase auth user exists
       try {
-        const fallbackFullName = (data.user.user_metadata && (data.user.user_metadata.name || data.user.user_metadata.name)) || data.user.email.split('@')[0];
+        const fallbackFullName =
+          (data.user.user_metadata &&
+            (data.user.user_metadata.name || data.user.user_metadata.name)) ||
+          data.user.email.split('@')[0];
         const { data: upserted, error: upsertErr } = await supabase
           .from('users')
-          .upsert({ id: data.user.id, email: data.user.email, name: fallbackFullName, role: 'agent', status: 'active', is_active: true }, { onConflict: 'id' })
+          .upsert(
+            {
+              id: data.user.id,
+              email: data.user.email,
+              name: fallbackFullName,
+              role: 'agent',
+              status: 'active',
+              is_active: true,
+            },
+            { onConflict: 'id' }
+          )
           .select('id, email, name, role, status, avatar_url')
           .single();
 
-        console.log('[api/auth/login] upserted missing user row', { upserted, upsertErr: upsertErr?.message || null });
+        console.log('[api/auth/login] upserted missing user row', {
+          upserted,
+          upsertErr: upsertErr?.message || null,
+        });
 
         if (!upsertErr && upserted) {
           // replace userData for further processing
           userData = upserted as any;
         } else {
-          console.error('[api/auth/login] upsert failed for user', data.user.id, upsertErr?.message);
-          return NextResponse.json({ success: false, error: 'User data not found' }, { status: 401 });
+          console.error(
+            '[api/auth/login] upsert failed for user',
+            data.user.id,
+            upsertErr?.message
+          );
+          return NextResponse.json(
+            { success: false, error: 'User data not found' },
+            { status: 401 }
+          );
         }
       } catch (e) {
         console.error('[api/auth/login] error upserting missing user', e);
-        return NextResponse.json({ success: false, error: 'User data not found' }, { status: 401 });
+        return NextResponse.json(
+          { success: false, error: 'User data not found' },
+          { status: 401 }
+        );
       }
     }
 
@@ -298,7 +418,10 @@ export async function POST(req: NextRequest) {
       },
     };
 
-    console.log('[api/auth/login] login successful', { userId: userResponse.id, sessionToken: !!sessionToken });
+    console.log('[api/auth/login] login successful', {
+      userId: userResponse.id,
+      sessionToken: !!sessionToken,
+    });
 
     return NextResponse.json(resBody);
   } catch (e: any) {
