@@ -71,14 +71,13 @@ export const useAuth = (): AuthState & AuthActions => {
   }, []);
 
   const login = useCallback(
-    (userData: User, tokenData: string, perms: string[] = []) => {
+    (userData: User, tokenData: string | null = null, perms: string[] = []) => {
+      // Persist only user and permissions on client side. Token is stored as HttpOnly cookie by server.
       setUser(userData);
-      setToken(tokenData);
+      if (tokenData) setTokenState(tokenData); // keep in-memory token if provided
       setPermissions(perms);
       setUserState(userData);
-      setTokenState(tokenData);
       localStorage.setItem('user', JSON.stringify(userData));
-      localStorage.setItem('token', tokenData);
       localStorage.setItem('permissions', JSON.stringify(perms));
     },
     []
