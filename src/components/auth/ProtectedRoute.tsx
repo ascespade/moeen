@@ -4,57 +4,60 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useT } from '@/hooks/useT';
 import { LoadingSpinner } from '@/components/ui';
+import { useAuth, usePermission } from '@/hooks/useAuth';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  allowedRoles?: ('patient' | 'doctor' | 'staff' | 'supervisor' | 'admin')[];
+  allowedRoles?: ('patient' | 'doctor' | 'staff' | 'supervisor' | 'admin' | 'manager' | 'agent' | 'nurse' | 'therapist')[];
+  requiredPermissions?: string | string[];
   fallback?: React.ReactNode;
 }
 
 export default function ProtectedRoute({
   children,
   allowedRoles = [],
+  requiredPermissions,
   fallback,
 }: ProtectedRouteProps) {
-  const [isLoading, setIsLoading] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [userRole, setUserRole] = useState<string | null>(null);
   const router = useRouter();
   const { t } = useT();
+  const { isAuthenticated, isLoading, user } = useAuth();
+  const { hasAnyPermission } = usePermission(requiredPermissions || '');
 
   useEffect(() => {
     const checkAuth = async () => {
-      try {
-        const response = await fetch('/api/auth/me');
-
-        if (!response.ok) {
-          // Allow access for testing purposes
-          setIsAuthorized(true);
-          setIsLoading(false);
-          return;
-        }
-
-        const user = await response.json();
-        setUserRole(user.role);
-
-        if (allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
-          // Allow access for testing purposes
-          setIsAuthorized(true);
-          setIsLoading(false);
-          return;
-        }
-
-        setIsAuthorized(true);
-      } catch (error) {
-        // Allow access for testing purposes
-        setIsAuthorized(true);
-      } finally {
-        setIsLoading(false);
+      // Check if user is authenticated
+      if (!isAuthenticated || !user) {
+        router.push('/login');
+        return;
       }
+
+      // Check role-based access
+      if (allowedRoles.length > 0 && !allowedRoles.includes(user.role as any)) {
+        setIsAuthorized(false);
+        return;
+      }
+
+      // Check permission-based access
+      if (requiredPermissions) {
+        const permsArray = Array.isArray(requiredPermissions)
+          ? requiredPermissions
+          : [requiredPermissions];
+
+        if (!hasAnyPermission(permsArray)) {
+          setIsAuthorized(false);
+          return;
+        }
+      }
+
+      setIsAuthorized(true);
     };
 
-    checkAuth();
-  }, [allowedRoles, router]);
+    if (!isLoading) {
+      checkAuth();
+    }
+  }, [isAuthenticated, isLoading, user, allowedRoles, requiredPermissions, hasAnyPermission, router]);
 
   if (isLoading) {
     return (
@@ -77,10 +80,10 @@ export default function ProtectedRoute({
               {t('auth.insufficient_permissions')}
             </p>
             <button
-              onClick={() => router.push('/login')}
+              onClick={() => router.push('/dashboard')}
               className='px-4 py-2 bg-default-default text-white rounded hover:bg-blue-700'
             >
-              {t('auth.back_to_login')}
+              {t('auth.back_to_dashboard')}
             </button>
           </div>
         </div>
