@@ -89,9 +89,10 @@ export default function VerifyEmailPage() {
 
               <Link
                 href='/login'
+                prefetch={false}
                 className='block w-full py-2 text-center text-sm text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
               >
-                العودة لتسجيل الدخول
+                العودة لتسجيل الدخ��ل
               </Link>
             </div>
           </div>
