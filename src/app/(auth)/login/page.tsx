@@ -66,9 +66,9 @@ export default function LoginPage() {
       if (rolePermIds.length) {
         const { data: permRows } = await supabase
           .from('permissions')
-          .select('name')
+          .select('code')
           .in('id', rolePermIds as string[]);
-        (permRows || []).forEach(p => p?.name && perms.add(p.name));
+        (permRows || []).forEach(p => p?.code && perms.add(p.code));
       }
     }
 
@@ -81,9 +81,9 @@ export default function LoginPage() {
     if (userPermIds.length) {
       const { data: permRows } = await supabase
         .from('permissions')
-        .select('name')
+        .select('code')
         .in('id', userPermIds as string[]);
-      (permRows || []).forEach(p => p?.name && perms.add(p.name));
+      (permRows || []).forEach(p => p?.code && perms.add(p.code));
     }
 
     return Array.from(perms);
@@ -93,7 +93,7 @@ export default function LoginPage() {
     // Check user status and resolve role
     const { data: userRow, error: userErr } = await supabase
       .from('users')
-      .select('status, is_active, role, full_name')
+      .select('status, role')
       .eq('id', userId)
       .maybeSingle();
 
@@ -102,8 +102,7 @@ export default function LoginPage() {
     }
 
     const inactiveByStatus = userRow?.status && userRow.status !== 'active';
-    const inactiveByFlag = typeof userRow?.is_active === 'boolean' ? userRow.is_active === false : false;
-    if (inactiveByStatus || inactiveByFlag) {
+    if (inactiveByStatus) {
       await supabase.auth.signOut();
       setError('⚠️ حسابك قيد المراجعة. يرجى التواصل مع المشرف.');
       return '/login';
@@ -134,6 +133,18 @@ export default function LoginPage() {
     }
 
     if (!roleName) {
+      // Try to auto-assign patient role if available
+      const { data: patientRole } = await supabase
+        .from('roles')
+        .select('id, name')
+        .eq('name', 'patient')
+        .maybeSingle();
+      if (patientRole?.id) {
+        await supabase.from('user_roles').upsert({ user_id: userId, role_id: patientRole.id, is_active: true }, { onConflict: 'user_id,role_id' });
+        roleName = 'patient';
+      }
+    }
+    if (!roleName) {
       await supabase.auth.signOut();
       setError('⚠️ لا توجد صلاحية مرتبطة بحسابك. يرجى التواصل مع المشرف.');
       return '/login';
@@ -146,7 +157,6 @@ export default function LoginPage() {
       const clientUser = {
         id: userId,
         email: userEmail || '',
-        name: userRow?.full_name || '',
         role: roleName,
       } as any;
       localStorage.setItem('user', JSON.stringify(clientUser));

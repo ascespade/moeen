@@ -68,12 +68,15 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
     // Get user data with role
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id, email, role, metadata')
+      .select('id, email, role, status')
       .eq('id', session.user.id)
-      .single();
+      .maybeSingle();
 
     if (userError || !userData) {
       return { user: null, error: 'User not found' };
+    }
+    if (userData.status && userData.status !== 'active') {
+      return { user: null, error: 'Inactive user' };
     }
 
     // Aggregate permissions from role_permissions and user_permissions
@@ -101,17 +104,14 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
       if (up?.permissions?.code) codes.add(up.permissions.code);
     });
 
-    const mergedMeta = {
-      ...(userData as any).metadata,
-      permissions: Array.from(codes),
-    };
+    const meta = { permissions: Array.from(codes) };
 
     return {
       user: {
         id: userData.id,
         email: userData.email,
         role: userData.role as User['role'],
-        meta: mergedMeta,
+        meta,
       },
       error: null,
     };

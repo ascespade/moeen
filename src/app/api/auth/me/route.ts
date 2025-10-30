@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authorize } from '@/lib/auth/authorize';
-import { PermissionManager } from '@/lib/permissions';
 
 export async function GET(request: NextRequest) {
   try {
@@ -9,23 +8,13 @@ export async function GET(request: NextRequest) {
 
     // Primary path: Supabase auth session
     if (user && !error) {
-      console.log('[api/auth/me] authenticated user', {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-      });
-      const userPermissions = PermissionManager.getRolePermissions(user.role);
-
       return NextResponse.json({
         success: true,
         user: {
           id: user.id,
           email: user.email,
           role: user.role,
-          name: user.full_name,
-          avatar: user.avatar_url,
-          status: user.status,
-          permissions: userPermissions,
+          permissions: user.meta?.permissions || [],
         },
       });
     }
@@ -33,25 +22,52 @@ export async function GET(request: NextRequest) {
     // Fallback path: demo email header for quick login (still reads from DB, no mock data)
     const demoEmail = request.headers.get('x-demo-email');
     if (demoEmail) {
-      console.log('[api/auth/me] demo email header present', demoEmail);
       try {
         const { createClient } = await import('@/lib/supabase/server');
         const supabase = await createClient();
-        const { data: userData, error: userError } = await supabase
+        const { data: userData } = await supabase
           .from('users')
-          .select('id, email, role, full_name, avatar_url, status')
+          .select('id, email, role, status')
           .eq('email', demoEmail)
-          .single();
+          .maybeSingle();
 
-        console.log('[api/auth/me] demo user fetch', {
-          userData,
-          userError: userError?.message || null,
-        });
+        if (userData) {
+          // Aggregate real permissions
+          const { data: ur } = await supabase
+            .from('user_roles')
+            .select('role_id')
+            .eq('user_id', userData.id)
+            .maybeSingle();
 
-        if (!userError && userData) {
-          const userPermissions = PermissionManager.getRolePermissions(
-            userData.role
-          );
+          let permCodes: string[] = [];
+          if (ur?.role_id) {
+            const { data: rolePermRows } = await supabase
+              .from('role_permissions')
+              .select('permission_id')
+              .eq('role_id', ur.role_id);
+            const ids = (rolePermRows || []).map(rp => rp.permission_id).filter(Boolean);
+            if (ids.length) {
+              const { data: permRows } = await supabase
+                .from('permissions')
+                .select('code')
+                .in('id', ids as string[]);
+              permCodes = (permRows || []).map(p => p.code).filter(Boolean) as string[];
+            }
+          }
+          const { data: userPermRows } = await supabase
+            .from('user_permissions')
+            .select('permission_id')
+            .eq('user_id', userData.id);
+          const uids = (userPermRows || []).map(up => up.permission_id).filter(Boolean);
+          if (uids.length) {
+            const { data: permRows } = await supabase
+              .from('permissions')
+              .select('code')
+              .in('id', uids as string[]);
+            permCodes.push(
+              ...((permRows || []).map(p => p.code).filter(Boolean) as string[])
+            );
+          }
 
           return NextResponse.json({
             success: true,
@@ -59,15 +75,12 @@ export async function GET(request: NextRequest) {
               id: userData.id,
               email: userData.email,
               role: userData.role,
-              name: userData.full_name,
-              avatar: userData.avatar_url,
               status: userData.status,
-              permissions: userPermissions,
+              permissions: Array.from(new Set(permCodes)),
             },
           });
         }
       } catch (e) {
-        console.error('[api/auth/me] error fetching demo user', e);
         // ignore and fallthrough to 401
       }
     }

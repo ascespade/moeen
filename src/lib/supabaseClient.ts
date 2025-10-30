@@ -1,9 +1,9 @@
-import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import { createBrowserClient } from '@supabase/ssr';
 
 export function getBrowserSupabase() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-  return createSupabaseClient(url, anon);
+  return createBrowserClient(url, anon);
 }
 
 export async function getServerSupabase() {
@@ -31,7 +31,8 @@ export async function getServerSupabase() {
 }
 
 export function getServiceSupabase() {
+  const { createClient } = require('@supabase/supabase-js');
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   const service = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-  return createSupabaseClient(url, service);
+  return createClient(url, service);
 }
