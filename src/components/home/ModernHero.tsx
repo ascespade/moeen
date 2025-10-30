@@ -223,7 +223,7 @@ const ModernHero = memo(function ModernHero({
             <div className='absolute -left-8 top-1/4 transform -translate-y-1/2'>
               <div className='bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl rounded-2xl p-4 shadow-xl hover-lift border border-white/20 dark:border-neutral-700/50'>
                 <div className='text-center'>
-                  <div className='text-2xl font-black text-primary-600'>15+</div>
+                  <div className='text-2xl font-black text-primary-600'>{localizedNumber('15+')}</div>
                   <div className='text-xs font-medium text-neutral-600 dark:text-neutral-300'>سنوات خبرة</div>
                 </div>
               </div>
