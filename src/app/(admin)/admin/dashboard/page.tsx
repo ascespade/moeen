@@ -20,7 +20,7 @@ import {
   Settings,
   TrendingUp,
   UserCheck,
-  Users
+  Users,
 } from 'lucide-react';
 
 // Types from hook
@@ -51,35 +51,40 @@ interface StaffWorkHours {
 }
 
 const activityTypeConfig = {
-  appointment: { 
-    icon: '📅', 
-    color: 'var(--brand-info)', 
+  appointment: {
+    icon: '📅',
+    color: 'var(--brand-info)',
     bgStyle: 'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)]',
-    borderStyle: 'border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]'
+    borderStyle:
+      'border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]',
   },
-  claim: { 
-    icon: '📋', 
-    color: 'var(--brand-success)', 
+  claim: {
+    icon: '📋',
+    color: 'var(--brand-success)',
     bgStyle: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)]',
-    borderStyle: 'border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]'
+    borderStyle:
+      'border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]',
   },
-  patient: { 
-    icon: '👤', 
-    color: 'var(--brand-error)', 
+  patient: {
+    icon: '👤',
+    color: 'var(--brand-error)',
     bgStyle: 'bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)]',
-    borderStyle: 'border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]'
+    borderStyle:
+      'border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]',
   },
-  staff: { 
-    icon: '👨‍⚕️', 
-    color: 'var(--brand-primary)', 
+  staff: {
+    icon: '👨‍⚕️',
+    color: 'var(--brand-primary)',
     bgStyle: 'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)]',
-    borderStyle: 'border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]'
+    borderStyle:
+      'border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]',
   },
-  payment: { 
-    icon: '💰', 
-    color: 'var(--brand-success)', 
+  payment: {
+    icon: '💰',
+    color: 'var(--brand-success)',
     bgStyle: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)]',
-    borderStyle: 'border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]'
+    borderStyle:
+      'border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]',
   },
 } as const;
 
@@ -90,17 +95,13 @@ function AdminDashboardContent() {
 
   const localizedNumber = useLocalizedNumber();
 
-  const {
-    stats,
-    activities,
-    staffWorkHours,
-    loading,
-    error,
-    refetch
-  } = useAdminDashboard(selectedPeriod);
+  const { stats, activities, staffWorkHours, loading, error, refetch } =
+    useAdminDashboard(selectedPeriod);
 
   const getActivityIcon = (type: string) => {
-    const config = activityTypeConfig[type as keyof typeof activityTypeConfig] || activityTypeConfig.appointment;
+    const config =
+      activityTypeConfig[type as keyof typeof activityTypeConfig] ||
+      activityTypeConfig.appointment;
     return (
       <div
         className={cn(
@@ -117,8 +118,11 @@ function AdminDashboardContent() {
   const getOnDutyStatus = (staff: StaffWorkHours) => {
     if (staff.isOnDuty) {
       return (
-        <div className='flex items-center gap-2' style={{ color: 'var(--brand-success)' }}>
-          <span 
+        <div
+          className='flex items-center gap-2'
+          style={{ color: 'var(--brand-success)' }}
+        >
+          <span
             className='h-2 w-2 animate-pulse rounded-full'
             style={{ backgroundColor: 'var(--brand-success)' }}
           ></span>
@@ -140,7 +144,9 @@ function AdminDashboardContent() {
       <div className='flex min-h-screen items-center justify-center bg-[var(--background)]'>
         <div className='text-center'>
           <div className='mb-4 h-12 w-12 animate-spin rounded-full border-4 border-[var(--brand-border)] border-t-[var(--brand-primary)] mx-auto'></div>
-          <p className='text-[var(--text-secondary)]'>جاري تحميل لوحة التحكم...</p>
+          <p className='text-[var(--text-secondary)]'>
+            جاري تحميل لوحة التحكم...
+          </p>
         </div>
       </div>
     );
@@ -151,10 +157,10 @@ function AdminDashboardContent() {
     return (
       <div className='min-h-screen bg-[var(--background)]'>
         <AdminHeader
-          title="لوحة تحكم الإدارة"
-          description="حدث خطأ في تحميل البيانات"
+          title='لوحة تحكم الإدارة'
+          description='حدث خطأ في تحميل البيانات'
         >
-          <Button 
+          <Button
             onClick={refetch}
             className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'
           >
@@ -162,10 +168,13 @@ function AdminDashboardContent() {
             إعادة المحاولة
           </Button>
         </AdminHeader>
-        
+
         <main className='container-app py-8'>
           <div className='text-center py-16'>
-            <AlertTriangle className='w-16 h-16 mx-auto mb-4' style={{ color: 'var(--brand-error)' }} />
+            <AlertTriangle
+              className='w-16 h-16 mx-auto mb-4'
+              style={{ color: 'var(--brand-error)' }}
+            />
             <h3 className='text-lg font-semibold text-[var(--text-primary)] mb-2'>
               فشل في تحميل البيانات
             </h3>
@@ -183,16 +192,20 @@ function AdminDashboardContent() {
   return (
     <div className='min-h-screen bg-[var(--background)]'>
       <AdminHeader
-        title="لوحة تحكم الإدارة"
-        description="مركز الهمم للرعاية الصحية المتخصصة"
+        title='لوحة تحكم الإدارة'
+        description='مركز الهمم للرعاية الصحية المتخصصة'
       >
-        <Button 
-          variant='outline' 
-          size='sm' 
+        <Button
+          variant='outline'
+          size='sm'
           className='border-[var(--brand-border)] hover:bg-[var(--brand-error)]/10'
           onClick={async () => {
             try {
-              await fetch('/api/auth/logout', { method: 'POST', cache: 'no-store', credentials: 'include' });
+              await fetch('/api/auth/logout', {
+                method: 'POST',
+                cache: 'no-store',
+                credentials: 'include',
+              });
             } catch {}
             try {
               localStorage.removeItem('user');
@@ -202,64 +215,75 @@ function AdminDashboardContent() {
         >
           خروج
         </Button>
-              <select
-                value={selectedPeriod}
-                onChange={e => setSelectedPeriod(e.target.value as any)}
+        <select
+          value={selectedPeriod}
+          onChange={e => setSelectedPeriod(e.target.value as any)}
           className='rounded-lg border border-[var(--brand-border)] px-4 py-2 text-sm bg-[var(--panel)] text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)]/20'
-              >
-                <option value='today'>اليوم</option>
-                <option value='week'>هذا الأسبوع</option>
-                <option value='month'>هذا الشهر</option>
-                <option value='year'>هذا العام</option>
-              </select>
-        <Button variant='outline' size='sm' className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'>
+        >
+          <option value='today'>اليوم</option>
+          <option value='week'>هذا الأسبوع</option>
+          <option value='month'>هذا الشهر</option>
+          <option value='year'>هذا العام</option>
+        </select>
+        <Button
+          variant='outline'
+          size='sm'
+          className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
+        >
           <Download className='w-4 h-4 ml-2' />
-                تصدير التقرير
-              </Button>
-        <Button asChild className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'>
-          <Link href="/admin/settings">
+          تصدير التقرير
+        </Button>
+        <Button
+          asChild
+          className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'
+        >
+          <Link href='/admin/settings'>
             <Settings className='w-4 h-4 ml-2' />
-                إعدادات
+            إعدادات
           </Link>
-              </Button>
+        </Button>
       </AdminHeader>
 
       <main className='container-app py-8 space-y-8'>
         {/* Main Stats Grid */}
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
           <AdminStatsCard
-            title="إجمالي المرضى"
-            value={localizedNumber((stats?.totalPatients || 0).toLocaleString())}
+            title='إجمالي المرضى'
+            value={localizedNumber(
+              (stats?.totalPatients || 0).toLocaleString()
+            )}
             subtitle={`${localizedNumber((stats?.activePatients || 0).toString())} نشط • ${stats?.blockedPatients || 0} محظور`}
             icon={Users}
-            iconColor="var(--brand-primary)"
+            iconColor='var(--brand-primary)'
             trend={{ value: 12, isPositive: true }}
           />
-          
+
           <AdminStatsCard
-            title="إجمالي المواعيد"
-            value={localizedNumber((stats?.totalAppointments || 0).toLocaleString())}
+            title='إجمالي المواعيد'
+            value={localizedNumber(
+              (stats?.totalAppointments || 0).toLocaleString()
+            )}
             subtitle={`${localizedNumber((stats?.completedAppointments || 0).toString())} مكتمل • ${localizedNumber((stats?.pendingAppointments || 0).toString())} قيد الانتظار`}
             icon={Calendar}
-            iconColor="var(--brand-success)"
+            iconColor='var(--brand-success)'
             trend={{ value: 8, isPositive: true }}
           />
-          
+
           <AdminStatsCard
-            title="إجمالي الإيرادات"
+            title='إجمالي الإيرادات'
             value={`${localizedNumber((stats?.totalRevenue || 0).toLocaleString())} ريال`}
             subtitle={`${localizedNumber((stats?.monthlyRevenue || 0).toLocaleString())} ريال هذا الشهر`}
             icon={DollarSign}
-            iconColor="var(--brand-primary)"
+            iconColor='var(--brand-primary)'
             trend={{ value: 15, isPositive: true }}
           />
-          
+
           <AdminStatsCard
-            title="إجمالي الموظفين"
+            title='إجمالي الموظفين'
             value={localizedNumber((stats?.totalStaff || 0).toString())}
             subtitle={`${localizedNumber((stats?.activeStaff || 0).toString())} نشط • ${stats?.onDutyStaff || 0} في الخدمة الآن`}
             icon={UserCheck}
-            iconColor="var(--brand-warning)"
+            iconColor='var(--brand-warning)'
           />
         </div>
 
@@ -267,67 +291,103 @@ function AdminDashboardContent() {
         <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
           <AdminCard className='space-y-6'>
             <div className='flex items-center gap-3'>
-              <div 
+              <div
                 className='w-12 h-12 rounded-xl border flex items-center justify-center'
                 style={{
-                  backgroundColor: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)',
-                  borderColor: 'color-mix(in srgb, var(--brand-primary) 20%, transparent)'
+                  backgroundColor:
+                    'color-mix(in srgb, var(--brand-primary) 10%, transparent)',
+                  borderColor:
+                    'color-mix(in srgb, var(--brand-primary) 20%, transparent)',
                 }}
               >
-                <FileText className='w-6 h-6' style={{ color: 'var(--brand-primary)' }} />
+                <FileText
+                  className='w-6 h-6'
+                  style={{ color: 'var(--brand-primary)' }}
+                />
               </div>
-              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>المطالبات التأمينية</h3>
+              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>
+                المطالبات التأمينية
+              </h3>
             </div>
             <div className='space-y-4'>
               <div className='flex justify-between items-center py-2 border-b border-[var(--brand-border)]/50'>
-                <span className='text-[var(--text-secondary)]'>إجمالي المطالبات:</span>
-                <span className='font-semibold text-[var(--text-primary)]'>{stats?.totalClaims || 0}</span>
+                <span className='text-[var(--text-secondary)]'>
+                  إجمالي المطالبات:
+                </span>
+                <span className='font-semibold text-[var(--text-primary)]'>
+                  {stats?.totalClaims || 0}
+                </span>
               </div>
               <div className='flex justify-between items-center py-2'>
-                <span className='text-[var(--text-secondary)]'>موافق عليها:</span>
-                <span className='font-semibold text-[var(--brand-success)]'>{stats?.approvedClaims || 0}</span>
+                <span className='text-[var(--text-secondary)]'>
+                  موافق عليها:
+                </span>
+                <span className='font-semibold text-[var(--brand-success)]'>
+                  {stats?.approvedClaims || 0}
+                </span>
               </div>
               <div className='flex justify-between items-center py-2'>
-                <span className='text-[var(--text-secondary)]'>قيد المراجعة:</span>
-                <span className='font-semibold text-[var(--brand-warning)]'>{stats?.pendingClaims || 0}</span>
+                <span className='text-[var(--text-secondary)]'>
+                  قيد المراجعة:
+                </span>
+                <span className='font-semibold text-[var(--brand-warning)]'>
+                  {stats?.pendingClaims || 0}
+                </span>
               </div>
               <div className='flex justify-between items-center py-2'>
                 <span className='text-[var(--text-secondary)]'>مرفوضة:</span>
-                <span className='font-semibold text-[var(--brand-error)]'>{stats?.rejectedClaims || 0}</span>
+                <span className='font-semibold text-[var(--brand-error)]'>
+                  {stats?.rejectedClaims || 0}
+                </span>
               </div>
             </div>
           </AdminCard>
 
           <AdminCard className='space-y-6'>
             <div className='flex items-center gap-3'>
-              <div 
+              <div
                 className='w-12 h-12 rounded-xl border flex items-center justify-center'
                 style={{
-                  backgroundColor: 'color-mix(in srgb, var(--brand-info) 10%, transparent)',
-                  borderColor: 'color-mix(in srgb, var(--brand-info) 20%, transparent)'
+                  backgroundColor:
+                    'color-mix(in srgb, var(--brand-info) 10%, transparent)',
+                  borderColor:
+                    'color-mix(in srgb, var(--brand-info) 20%, transparent)',
                 }}
               >
-                <Activity className='w-6 h-6' style={{ color: 'var(--brand-info)' }} />
+                <Activity
+                  className='w-6 h-6'
+                  style={{ color: 'var(--brand-info)' }}
+                />
               </div>
-              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>الجلسات العلاجية</h3>
+              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>
+                الجلسات العلاجية
+              </h3>
             </div>
             <div className='space-y-4'>
               <div className='flex justify-between items-center py-2 border-b border-[var(--brand-border)]/50'>
-                <span className='text-[var(--text-secondary)]'>إجمالي الجلسات:</span>
+                <span className='text-[var(--text-secondary)]'>
+                  إجمالي الجلسات:
+                </span>
                 <span className='font-semibold text-[var(--text-primary)]'>
-                  {localizedNumber((stats?.totalSessions || 0).toLocaleString())}
+                  {localizedNumber(
+                    (stats?.totalSessions || 0).toLocaleString()
+                  )}
                 </span>
               </div>
               <div className='flex justify-between items-center py-2'>
                 <span className='text-[var(--text-secondary)]'>مكتملة:</span>
                 <span className='font-semibold text-[var(--brand-success)]'>
-                  {localizedNumber((stats?.completedSessions || 0).toLocaleString())}
+                  {localizedNumber(
+                    (stats?.completedSessions || 0).toLocaleString()
+                  )}
                 </span>
               </div>
               <div className='flex justify-between items-center py-2'>
                 <span className='text-[var(--text-secondary)]'>قادمة:</span>
                 <span className='font-semibold text-[var(--brand-info)]'>
-                  {localizedNumber((stats?.upcomingSessions || 0).toLocaleString())}
+                  {localizedNumber(
+                    (stats?.upcomingSessions || 0).toLocaleString()
+                  )}
                 </span>
               </div>
             </div>
@@ -335,34 +395,65 @@ function AdminDashboardContent() {
 
           <AdminCard className='space-y-6'>
             <div className='flex items-center gap-3'>
-              <div 
+              <div
                 className='w-12 h-12 rounded-xl border flex items-center justify-center'
                 style={{
-                  backgroundColor: 'color-mix(in srgb, var(--brand-primary) 10%, transparent)',
-                  borderColor: 'color-mix(in srgb, var(--brand-primary) 20%, transparent)'
+                  backgroundColor:
+                    'color-mix(in srgb, var(--brand-primary) 10%, transparent)',
+                  borderColor:
+                    'color-mix(in srgb, var(--brand-primary) 20%, transparent)',
                 }}
               >
-                <TrendingUp className='w-6 h-6' style={{ color: 'var(--brand-primary)' }} />
+                <TrendingUp
+                  className='w-6 h-6'
+                  style={{ color: 'var(--brand-primary)' }}
+                />
               </div>
-              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>معدلات الأداء</h3>
+              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>
+                معدلات الأداء
+              </h3>
             </div>
             <div className='space-y-4'>
               <div className='flex justify-between items-center py-2 border-b border-[var(--brand-border)]/50'>
-                <span className='text-[var(--text-secondary)]'>معدل إكمال المواعيد:</span>
+                <span className='text-[var(--text-secondary)]'>
+                  معدل إكمال المواعيد:
+                </span>
                 <span className='font-semibold text-[var(--brand-success)]'>
-                  {stats?.totalAppointments ? Math.round(((stats.completedAppointments || 0) / stats.totalAppointments) * 100) : 0}%
+                  {stats?.totalAppointments
+                    ? Math.round(
+                        ((stats.completedAppointments || 0) /
+                          stats.totalAppointments) *
+                          100
+                      )
+                    : 0}
+                  %
                 </span>
               </div>
               <div className='flex justify-between items-center py-2'>
-                <span className='text-[var(--text-secondary)]'>معدل الموافقة على المطالبات:</span>
+                <span className='text-[var(--text-secondary)]'>
+                  معدل الموافقة على المطالبات:
+                </span>
                 <span className='font-semibold text-[var(--brand-success)]'>
-                  {stats?.totalClaims ? Math.round(((stats.approvedClaims || 0) / stats.totalClaims) * 100) : 0}%
+                  {stats?.totalClaims
+                    ? Math.round(
+                        ((stats.approvedClaims || 0) / stats.totalClaims) * 100
+                      )
+                    : 0}
+                  %
                 </span>
               </div>
               <div className='flex justify-between items-center py-2'>
-                <span className='text-[var(--text-secondary)]'>معدل إكمال الجلسات:</span>
+                <span className='text-[var(--text-secondary)]'>
+                  معدل إكمال الج��سات:
+                </span>
                 <span className='font-semibold text-[var(--brand-success)]'>
-                  {stats?.totalSessions ? Math.round(((stats.completedSessions || 0) / stats.totalSessions) * 100) : 0}%
+                  {stats?.totalSessions
+                    ? Math.round(
+                        ((stats.completedSessions || 0) / stats.totalSessions) *
+                          100
+                      )
+                    : 0}
+                  %
                 </span>
               </div>
             </div>
@@ -374,50 +465,57 @@ function AdminDashboardContent() {
           <AdminCard className='space-y-6'>
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-3'>
-                <div 
+                <div
                   className='w-10 h-10 rounded-xl border flex items-center justify-center'
                   style={{
-                    backgroundColor: 'color-mix(in srgb, var(--brand-success) 10%, transparent)',
-                    borderColor: 'color-mix(in srgb, var(--brand-success) 20%, transparent)'
+                    backgroundColor:
+                      'color-mix(in srgb, var(--brand-success) 10%, transparent)',
+                    borderColor:
+                      'color-mix(in srgb, var(--brand-success) 20%, transparent)',
                   }}
                 >
-                  <Clock className='w-5 h-5' style={{ color: 'var(--brand-success)' }} />
+                  <Clock
+                    className='w-5 h-5'
+                    style={{ color: 'var(--brand-success)' }}
+                  />
                 </div>
-                <h3 className='text-xl font-semibold text-[var(--text-primary)]'>النشاطات الأخيرة</h3>
+                <h3 className='text-xl font-semibold text-[var(--text-primary)]'>
+                  النشاطات الأخيرة
+                </h3>
               </div>
-              <Button 
+              <Button
                 asChild
-                variant='outline' 
+                variant='outline'
                 size='sm'
                 className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
               >
-                <Link href="/admin/audit-logs">
-                عرض الكل
-                </Link>
+                <Link href='/admin/audit-logs'>عرض الكل</Link>
               </Button>
             </div>
             <div className='space-y-3'>
-              {activities && activities.length > 0 ? activities.map(activity => (
-                <div
-                  key={activity.id}
-                  className='group flex items-start gap-4 p-4 rounded-xl border border-[var(--brand-border)]/50 hover:border-[var(--brand-primary)]/30 hover:bg-[var(--brand-primary)]/5 transition-all duration-200'
-                >
-                  {getActivityIcon(activity.type)}
-                  <div className='flex-1'>
-                    <div className='flex items-center justify-between mb-1'>
-                      <h4 className='font-semibold text-[var(--text-primary)] group-hover:text-[var(--brand-primary)]'>
-                        {activity.title}
-                      </h4>
-                      <span className='text-xs text-[var(--text-secondary)] bg-[var(--brand-surface)] px-2 py-1 rounded-md'>
-                        {activity.timestamp}
-                      </span>
+              {activities && activities.length > 0 ? (
+                activities.map(activity => (
+                  <div
+                    key={activity.id}
+                    className='group flex items-start gap-4 p-4 rounded-xl border border-[var(--brand-border)]/50 hover:border-[var(--brand-primary)]/30 hover:bg-[var(--brand-primary)]/5 transition-all duration-200'
+                  >
+                    {getActivityIcon(activity.type)}
+                    <div className='flex-1'>
+                      <div className='flex items-center justify-between mb-1'>
+                        <h4 className='font-semibold text-[var(--text-primary)] group-hover:text-[var(--brand-primary)]'>
+                          {activity.title}
+                        </h4>
+                        <span className='text-xs text-[var(--text-secondary)] bg-[var(--brand-surface)] px-2 py-1 rounded-md'>
+                          {activity.timestamp}
+                        </span>
+                      </div>
+                      <p className='text-sm text-[var(--text-secondary)] leading-relaxed'>
+                        {activity.description}
+                      </p>
                     </div>
-                    <p className='text-sm text-[var(--text-secondary)] leading-relaxed'>
-                      {activity.description}
-                    </p>
                   </div>
-                </div>
-              )) : (
+                ))
+              ) : (
                 <div className='text-center py-8 text-[var(--text-secondary)]'>
                   لا توجد نشاطات حديثة
                 </div>
@@ -429,82 +527,94 @@ function AdminDashboardContent() {
           <AdminCard className='space-y-6'>
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-3'>
-                <div 
+                <div
                   className='w-10 h-10 rounded-xl border flex items-center justify-center'
                   style={{
-                    backgroundColor: 'color-mix(in srgb, var(--brand-info) 10%, transparent)',
-                    borderColor: 'color-mix(in srgb, var(--brand-info) 20%, transparent)'
+                    backgroundColor:
+                      'color-mix(in srgb, var(--brand-info) 10%, transparent)',
+                    borderColor:
+                      'color-mix(in srgb, var(--brand-info) 20%, transparent)',
                   }}
                 >
-                  <Users className='w-5 h-5' style={{ color: 'var(--brand-info)' }} />
+                  <Users
+                    className='w-5 h-5'
+                    style={{ color: 'var(--brand-info)' }}
+                  />
                 </div>
-                <h3 className='text-xl font-semibold text-[var(--text-primary)]'>ساعات عمل الموظفين</h3>
+                <h3 className='text-xl font-semibold text-[var(--text-primary)]'>
+                  ساعات عمل الموظفين
+                </h3>
               </div>
-              <Button 
+              <Button
                 asChild
-                variant='outline' 
+                variant='outline'
                 size='sm'
                 className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
               >
-                <Link href="/admin/therapists/schedules">
-                عرض التقرير الكامل
+                <Link href='/admin/therapists/schedules'>
+                  عرض التقرير الكامل
                 </Link>
               </Button>
             </div>
             <div className='space-y-4'>
-              {staffWorkHours && staffWorkHours.length > 0 ? staffWorkHours.map(staff => (
-                <div key={staff.id} className='group p-4 rounded-xl border border-[var(--brand-border)]/50 hover:border-[var(--brand-primary)]/30 hover:bg-[var(--brand-primary)]/5 transition-all duration-200'>
-                  <div className='flex items-center justify-between mb-4'>
-                    <div className='flex items-center gap-3'>
-                      <div className='w-10 h-10 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center'>
-                        <span className='text-sm font-semibold text-[var(--brand-primary)]'>
-                          {staff.name.split(' ')[0].charAt(0)}
-                        </span>
+              {staffWorkHours && staffWorkHours.length > 0 ? (
+                staffWorkHours.map(staff => (
+                  <div
+                    key={staff.id}
+                    className='group p-4 rounded-xl border border-[var(--brand-border)]/50 hover:border-[var(--brand-primary)]/30 hover:bg-[var(--brand-primary)]/5 transition-all duration-200'
+                  >
+                    <div className='flex items-center justify-between mb-4'>
+                      <div className='flex items-center gap-3'>
+                        <div className='w-10 h-10 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center'>
+                          <span className='text-sm font-semibold text-[var(--brand-primary)]'>
+                            {staff.name.split(' ')[0].charAt(0)}
+                          </span>
+                        </div>
+                        <div>
+                          <h4 className='font-semibold text-[var(--text-primary)]'>
+                            {staff.name}
+                          </h4>
+                          <p className='text-sm text-[var(--text-secondary)]'>
+                            {staff.position}
+                          </p>
+                        </div>
                       </div>
-                    <div>
-                        <h4 className='font-semibold text-[var(--text-primary)]'>
-                        {staff.name}
-                      </h4>
-                        <p className='text-sm text-[var(--text-secondary)]'>
-                        {staff.position}
-                      </p>
+                      {getOnDutyStatus(staff)}
+                    </div>
+                    <div className='grid grid-cols-3 gap-4'>
+                      <div className='text-center p-3 bg-[var(--brand-surface)] rounded-lg'>
+                        <div className='text-lg font-bold text-[var(--brand-primary)]'>
+                          {staff.todayHours}س
+                        </div>
+                        <div className='text-xs text-[var(--text-secondary)]'>
+                          اليوم
+                        </div>
+                      </div>
+                      <div className='text-center p-3 bg-[var(--brand-surface)] rounded-lg'>
+                        <div className='text-lg font-bold text-[var(--brand-info)]'>
+                          {staff.thisWeekHours}س
+                        </div>
+                        <div className='text-xs text-[var(--text-secondary)]'>
+                          هذا الأسبوع
+                        </div>
+                      </div>
+                      <div className='text-center p-3 bg-[var(--brand-surface)] rounded-lg'>
+                        <div className='text-lg font-bold text-[var(--brand-success)]'>
+                          {staff.thisMonthHours}س
+                        </div>
+                        <div className='text-xs text-[var(--text-secondary)]'>
+                          هذا الشهر
+                        </div>
                       </div>
                     </div>
-                    {getOnDutyStatus(staff)}
+                    {staff.isOnDuty && staff.lastCheckIn && (
+                      <div className='mt-3 text-xs text-[var(--text-secondary)] bg-[var(--brand-surface)] px-3 py-1 rounded-md inline-block'>
+                        آخر تسجيل دخول: {staff.lastCheckIn}
+                      </div>
+                    )}
                   </div>
-                  <div className='grid grid-cols-3 gap-4'>
-                    <div className='text-center p-3 bg-[var(--brand-surface)] rounded-lg'>
-                      <div className='text-lg font-bold text-[var(--brand-primary)]'>
-                        {staff.todayHours}س
-                      </div>
-                      <div className='text-xs text-[var(--text-secondary)]'>
-                        اليوم
-                      </div>
-                    </div>
-                    <div className='text-center p-3 bg-[var(--brand-surface)] rounded-lg'>
-                      <div className='text-lg font-bold text-[var(--brand-info)]'>
-                        {staff.thisWeekHours}س
-                      </div>
-                      <div className='text-xs text-[var(--text-secondary)]'>
-                        هذا الأسبوع
-                      </div>
-                    </div>
-                    <div className='text-center p-3 bg-[var(--brand-surface)] rounded-lg'>
-                      <div className='text-lg font-bold text-[var(--brand-success)]'>
-                        {staff.thisMonthHours}س
-                      </div>
-                      <div className='text-xs text-[var(--text-secondary)]'>
-                        هذا الشهر
-                      </div>
-                    </div>
-                  </div>
-                  {staff.isOnDuty && staff.lastCheckIn && (
-                    <div className='mt-3 text-xs text-[var(--text-secondary)] bg-[var(--brand-surface)] px-3 py-1 rounded-md inline-block'>
-                      آخر تسجيل دخول: {staff.lastCheckIn}
-                    </div>
-                  )}
-                </div>
-              )) : (
+                ))
+              ) : (
                 <div className='text-center py-8 text-[var(--text-secondary)]'>
                   لا توجد بيانات للموظفين
                 </div>
@@ -515,49 +625,63 @@ function AdminDashboardContent() {
 
         {/* Quick Actions */}
         <Card className='mt-8 p-6'>
-          <h3 className='mb-6 text-lg font-semibold text-[var(--text-primary)]'>إجراءات سريعة</h3>
+          <h3 className='mb-6 text-lg font-semibold text-[var(--text-primary)]'>
+            إجراءات سريعة
+          </h3>
           <div className='grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6'>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>👤</span>
-              <span className='text-sm text-[var(--text-primary)]'>إضافة مريض</span>
+              <UserCheck className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
+              <span className='text-sm text-[var(--text-primary)]'>
+                إضافة مريض
+              </span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>📅</span>
-              <span className='text-sm text-[var(--text-primary)]'>حجز موعد</span>
+              <Calendar className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
+              <span className='text-sm text-[var(--text-primary)]'>
+                حجز موعد
+              </span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>📋</span>
-              <span className='text-sm text-[var(--text-primary)]'>مطالبة تأمين</span>
+              <FileText className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
+              <span className='text-sm text-[var(--text-primary)]'>
+                مطالبة تأمين
+              </span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>👨‍⚕️</span>
-              <span className='text-sm text-[var(--text-primary)]'>إضافة موظف</span>
+              <Users className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
+              <span className='text-sm text-[var(--text-primary)]'>
+                إضافة موظف
+              </span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>📊</span>
-              <span className='text-sm text-[var(--text-primary)]'>تقرير مالي</span>
+              <TrendingUp className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
+              <span className='text-sm text-[var(--text-primary)]'>
+                تقرير مالي
+              </span>
             </Button>
             <Button
               variant='outline'
               className='flex h-20 flex-col items-center justify-center border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
             >
-              <span className='mb-2 text-2xl'>⚙️</span>
-              <span className='text-sm text-[var(--text-primary)]'>الإعدادات</span>
+              <Settings className='mb-2 w-6 h-6 text-[var(--brand-primary)]' />
+              <span className='text-sm text-[var(--text-primary)]'>
+                الإعدادات
+              </span>
             </Button>
           </div>
         </Card>

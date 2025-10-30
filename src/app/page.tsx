@@ -30,6 +30,7 @@ const VideoStorySection = lazy(() => import('@/components/home/VideoStorySection
 const VisionMission = lazy(() => import('@/components/home/VisionMission'));
 
 const HomePage = memo(function HomePage() {
+  const uiVariant = process.env.NEXT_PUBLIC_UI_VARIANT;
   const [isReady, setIsReady] = React.useState(false);
   const router = useRouter();
   const localizedNumber = useLocalizedNumber();
@@ -199,7 +200,7 @@ const HomePage = memo(function HomePage() {
   }
 
   return (
-    <div className='min-h-screen bg-background text-foreground font-sans antialiased'>
+    <div className='min-h-screen bg-background text-foreground font-sans antialiased' data-ui-variant={uiVariant || 'default'}>
       {/* Header */}
       <GlobalHeader />
 

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 
@@ -14,9 +14,9 @@ const USERS = [
     role: 'supervisor',
   },
   { email: 'agent@test.local', name: 'Agent User', role: 'agent' },
-] as const;
+];
 
-export async function POST(req: NextRequest) {
+export async function POST(req) {
   const isDev = process.env.NODE_ENV !== 'production';
   const referer = req.headers.get('referer') || '';
   const origin = req.headers.get('origin') || '';
@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = await createClient();
-  const created: any[] = [];
+  const created = JSON.parse('[]');
 
   for (const u of USERS) {
     console.log('[admin/seed-defaults] processing user', u.email, u.role);
@@ -63,8 +63,8 @@ export async function POST(req: NextRequest) {
       page: 1,
       perPage: 1,
       filter: { email: u.email },
-    } as any);
-    let authId = listed?.users?.[0]?.id as string | undefined;
+    });
+    let authId = listed?.users?.[0]?.id;
     if (!authId) {
       const { data: createdUser, error: cErr } =
         await supabaseAdmin.auth.admin.createUser({
