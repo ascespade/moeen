@@ -5,11 +5,11 @@ import Link from 'next/link';
 import { getBrowserSupabase } from '@/lib/supabaseClient';
 
 const ROLE_REDIRECTS: Record<string, string> = {
-  admin: '/dashboard/admin',
+  admin: '/admin/dashboard',
   doctor: '/dashboard/doctor',
   staff: '/dashboard/staff',
   patient: '/dashboard/patient',
-  customer: '/dashboard/customer',
+  customer: '/dashboard',
 };
 
 function getRedirectForRole(role?: string | null) {
@@ -34,7 +34,7 @@ export default function LoginPage() {
       const { data } = await supabase.auth.getSession();
       const session = data?.session;
       if (mounted && session?.user?.id) {
-        const redirect = await resolveRedirectAfterLogin(session.user.id);
+        const redirect = await resolveRedirectAfterLogin(session.user.id, session.user.email || undefined);
         router.replace(redirect);
       }
     })();
@@ -43,28 +43,75 @@ export default function LoginPage() {
     };
   }, [router, supabase]);
 
-  async function resolveRedirectAfterLogin(userId: string): Promise<string> {
-    // Check user status
+  async function fetchPermissions(userId: string, roleId?: string | null): Promise<string[]> {
+    const perms = new Set<string>();
+
+    // Role permissions
+    let roleIdToUse: string | undefined | null = roleId ?? null;
+    if (!roleIdToUse) {
+      const { data: ur } = await supabase
+        .from('user_roles')
+        .select('role_id')
+        .eq('user_id', userId)
+        .maybeSingle();
+      roleIdToUse = ur?.role_id as string | undefined;
+    }
+    if (roleIdToUse) {
+      const { data: rolePermRows } = await supabase
+        .from('role_permissions')
+        .select('permission_id')
+        .eq('role_id', roleIdToUse);
+      const rolePermIds = (rolePermRows || []).map(rp => rp.permission_id).filter(Boolean);
+      if (rolePermIds.length) {
+        const { data: permRows } = await supabase
+          .from('permissions')
+          .select('name')
+          .in('id', rolePermIds as string[]);
+        (permRows || []).forEach(p => p?.name && perms.add(p.name));
+      }
+    }
+
+    // User direct permissions
+    const { data: userPermRows } = await supabase
+      .from('user_permissions')
+      .select('permission_id')
+      .eq('user_id', userId);
+    const userPermIds = (userPermRows || []).map(up => up.permission_id).filter(Boolean);
+    if (userPermIds.length) {
+      const { data: permRows } = await supabase
+        .from('permissions')
+        .select('name')
+        .in('id', userPermIds as string[]);
+      (permRows || []).forEach(p => p?.name && perms.add(p.name));
+    }
+
+    return Array.from(perms);
+  }
+
+  async function resolveRedirectAfterLogin(userId: string, userEmail?: string): Promise<string> {
+    // Check user status and resolve role
     const { data: userRow, error: userErr } = await supabase
       .from('users')
-      .select('status, role')
+      .select('status, is_active, role, full_name')
       .eq('id', userId)
       .maybeSingle();
 
     if (userErr) {
-      // In case of metadata table missing or error, keep user signed in but send to default dashboard
       return '/dashboard';
     }
 
-    if (userRow && userRow.status && userRow.status !== 'active') {
-      // Block inactive
+    const inactiveByStatus = userRow?.status && userRow.status !== 'active';
+    const inactiveByFlag = typeof userRow?.is_active === 'boolean' ? userRow.is_active === false : false;
+    if (inactiveByStatus || inactiveByFlag) {
       await supabase.auth.signOut();
       setError('⚠️ حسابك قيد المراجعة. يرجى التواصل مع المشرف.');
       return '/login';
     }
 
-    // Try user_roles -> roles join (two-step to avoid FK dependency issues)
+    // Determine role (via user_roles -> roles, fallback users.role)
+    let roleId: string | null = null;
     let roleName: string | null = null;
+
     const { data: ur } = await supabase
       .from('user_roles')
       .select('role_id')
@@ -72,10 +119,11 @@ export default function LoginPage() {
       .maybeSingle();
 
     if (ur?.role_id) {
+      roleId = ur.role_id as string;
       const { data: role } = await supabase
         .from('roles')
         .select('name')
-        .eq('id', ur.role_id as string)
+        .eq('id', roleId)
         .maybeSingle();
       roleName = role?.name ?? null;
     }
@@ -88,6 +136,21 @@ export default function LoginPage() {
       await supabase.auth.signOut();
       setError('⚠️ لا توجد صلاحية مرتبطة بحسابك. يرجى التواصل مع المشرف.');
       return '/login';
+    }
+
+    // Fetch permissions and persist locally for client-side checks
+    try {
+      const permissions = await fetchPermissions(userId, roleId);
+      localStorage.setItem('permissions', JSON.stringify(permissions));
+      const clientUser = {
+        id: userId,
+        email: userEmail || '',
+        name: userRow?.full_name || '',
+        role: roleName,
+      } as any;
+      localStorage.setItem('user', JSON.stringify(clientUser));
+    } catch (e) {
+      // Ignore permission fetch errors but continue redirect
     }
 
     return getRedirectForRole(roleName);
@@ -109,9 +172,8 @@ export default function LoginPage() {
         return;
       }
 
-      const redirectTo = await resolveRedirectAfterLogin(data.user.id);
+      const redirectTo = await resolveRedirectAfterLogin(data.user.id, data.user.email || undefined);
       if (redirectTo === '/login') {
-        // resolveRedirectAfterLogin already set error and signed out
         setSubmitting(false);
         return;
       }
@@ -222,7 +284,7 @@ export default function LoginPage() {
                   </>
                 ) : (
                   <>
-                    <span>����</span>
+                    <span>🔑</span>
                     تسجيل الدخول
                   </>
                 )}
