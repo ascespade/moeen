@@ -140,6 +140,38 @@ export default function LoginPage() {
                       )}
                     </ul>
                   </div>
+
+                  {/* Sign-in action: create session cookie using provided password */}
+                  <div className='mt-4'>
+                    <button
+                      type='button'
+                      onClick={async () => {
+                        setSubmitting(true);
+                        setError(null);
+                        try {
+                          const res = await fetch('/api/auth/simple-login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: foundUser.email, password: formData.password }),
+                          });
+                          const data = await res.json().catch(() => ({}));
+                          console.log('[login page] simple-login', res.status, data);
+                          if (res.ok && data.success) {
+                            window.location.href = data.redirectTo || '/dashboard';
+                          } else {
+                            setError(data?.error || 'فشل تسجيل الدخول');
+                          }
+                        } catch (e: any) {
+                          setError(e?.message || 'فشل تسجيل الدخول');
+                        } finally {
+                          setSubmitting(false);
+                        }
+                      }}
+                      className='btn btn-primary w-full'
+                    >
+                      تسجيل الدخول (إنشاء جلسة)
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
