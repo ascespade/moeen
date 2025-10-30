@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const supabase = await createClient();
     const { data, error } = await supabase
       .from('users')
-      .select('id, email, full_name, role, status')
+      .select('id, email, name, role, status')
       .eq('email', email)
       .single();
 
