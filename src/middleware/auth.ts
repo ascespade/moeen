@@ -6,7 +6,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { PermissionManager } from '@/lib/permissions';
 
 // Define protected routes and their required roles
 const PROTECTED_ROUTES: Record<string, string[]> = {
@@ -14,49 +13,46 @@ const PROTECTED_ROUTES: Record<string, string[]> = {
     'admin',
     'doctor',
     'patient',
+    'patient_responsible',
     'staff',
+    'employee',
     'supervisor',
-    'manager',
-    'nurse',
-    'agent',
-    'therapist',
+    'other',
   ],
-  '/admin': ['admin', 'manager', 'supervisor'],
-  '/admin/admin': ['admin', 'manager'],
-  '/admin/dashboard': ['admin', 'manager', 'supervisor'],
-  '/admin/users': ['admin', 'manager'],
+  '/admin': ['admin', 'supervisor'],
+  '/admin/admin': ['admin'],
+  '/admin/dashboard': ['admin', 'supervisor'],
+  '/admin/users': ['admin'],
   '/admin/roles': ['admin'],
   '/admin/settings': ['admin'],
-  '/appointments': ['admin', 'doctor', 'staff', 'nurse', 'therapist'],
-  '/patients': ['admin', 'doctor', 'staff', 'nurse', 'supervisor'],
-  '/doctors': ['admin', 'manager', 'staff'],
-  '/reports': ['admin', 'supervisor', 'manager'],
-  '/settings': ['admin', 'manager'],
-  '/chatbot': ['admin', 'manager'],
-  '/crm': ['admin', 'manager', 'staff', 'agent'],
-  '/analytics': ['admin', 'supervisor', 'manager'],
-  '/messages': ['admin', 'doctor', 'staff', 'nurse', 'agent'],
+  '/appointments': ['admin', 'doctor', 'staff', 'employee'],
+  '/patients': ['admin', 'doctor', 'staff', 'employee', 'supervisor'],
+  '/doctors': ['admin', 'staff', 'employee'],
+  '/reports': ['admin', 'supervisor'],
+  '/settings': ['admin', 'supervisor'],
+  '/chatbot': ['admin', 'supervisor'],
+  '/crm': ['admin', 'supervisor', 'staff', 'employee'],
+  '/analytics': ['admin', 'supervisor'],
+  '/messages': ['admin', 'doctor', 'staff', 'employee'],
   '/notifications': [
     'admin',
     'doctor',
     'patient',
+    'patient_responsible',
     'staff',
+    'employee',
     'supervisor',
-    'manager',
-    'nurse',
-    'agent',
-    'therapist',
+    'other',
   ],
   '/profile': [
     'admin',
     'doctor',
     'patient',
+    'patient_responsible',
     'staff',
+    'employee',
     'supervisor',
-    'manager',
-    'nurse',
-    'agent',
-    'therapist',
+    'other',
   ],
 };
 
@@ -122,9 +118,9 @@ export async function authMiddleware(request: NextRequest) {
     // Get user data with role from database
     const { data: userData, error: userError } = await supabase
       .from('users')
-      .select('id, email, role, status, full_name')
+      .select('id, email, role, status')
       .eq('id', session.user.id)
-      .single();
+      .maybeSingle();
 
     if (userError || !userData) {
       // User not found in database
@@ -159,16 +155,11 @@ export async function authMiddleware(request: NextRequest) {
       }
     }
 
-    // Get user permissions
-    const userPermissions = PermissionManager.getRolePermissions(userData.role);
-
     // Add user data to headers for downstream use
     const response = NextResponse.next();
     response.headers.set('x-user-id', userData.id);
     response.headers.set('x-user-role', userData.role);
     response.headers.set('x-user-email', userData.email);
-    response.headers.set('x-user-name', userData.full_name || '');
-    response.headers.set('x-user-permissions', JSON.stringify(userPermissions));
     response.headers.set('x-session-id', session.access_token);
 
     // Refresh session if close to expiry (within 5 minutes)
