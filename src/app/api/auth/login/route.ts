@@ -230,7 +230,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Fetch user data with role and status from database
-    const { data: userData, error: userError } = await supabase
+    let { data: userData, error: userError } = await supabase
       .from('users')
       .select('id, email, full_name, role, status, avatar_url')
       .eq('id', data.user.id)
