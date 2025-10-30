@@ -84,8 +84,8 @@ const ModernHero = memo(function ModernHero({
             {/* Enhanced Badge */}
             <div className='inline-block'>
               <span className='inline-flex items-center gap-2 px-4 py-2 bg-primary-500/90 text-white backdrop-blur-sm rounded-full text-sm font-semibold shadow-lg hover-lift'>
-                <span className='w-2 h-2 bg-success-400 rounded-full animate-pulse'></span>
-                🏥 جدة - حي الصفا
+                <MapPin className='w-4 h-4' />
+                جدة - حي الصفا
               </span>
             </div>
 
