@@ -186,7 +186,7 @@ const ModernHero = memo(function ModernHero({
               <div className='absolute inset-0 bg-gradient-to-t from-primary-900/30 via-transparent to-transparent' />
 
               {/* Enhanced Floating Badge */}
-              <div className='absolute top-6 left-6 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-xl rounded-2xl px-4 py-3 shadow-xl hover-lift border border-white/20 dark:border-neutral-700/50'>
+              <div className='absolute top-6 left-6 bg-[var(--panel)]/95 dark:bg-[var(--panel)]/95 backdrop-blur-xl rounded-2xl px-4 py-3 shadow-xl hover-lift border border-[var(--brand-border)]'>
                 <div className='flex items-center gap-2'>
                   <div className='relative'>
                     <div className='w-3 h-3 bg-success-500 rounded-full animate-pulse' />
