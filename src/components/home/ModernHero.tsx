@@ -113,7 +113,7 @@ const ModernHero = memo(function ModernHero({
               >
                 <Calendar className='w-5 h-5 ml-2 group-hover:rotate-12 transition-transform' />
                 احجز موعدك الآن
-                <span className='inline-block ml-2 animate-bounce-gentle'>✨</span>
+                <Star className='w-5 h-5 ml-2 text-yellow-300 animate-bounce-gentle' />
               </Button>
               <Button
                 onClick={onLearnMoreClick}
