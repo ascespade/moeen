@@ -1,18 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ROLES } from '@/constants/roles';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
 export async function GET(request: NextRequest) {
   try {
-    // Get user role from headers (set by auth middleware)
-    const userRole = request.headers.get('x-user-role') as any;
-    const userEmail = request.headers.get('x-user-email');
-
-    if (!userRole) {
+    // Properly authenticate user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { success: false, error: 'Not authenticated' },
         { status: 401 }
       );
     }
+
+    const userRole = authResult.user.role;
+    const userEmail = authResult.user.email;
 
     const roleData = ROLES[userRole as keyof typeof ROLES];
 
@@ -27,9 +30,6 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    return NextResponse.json(
-      { success: false, error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
