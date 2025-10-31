@@ -1,0 +1,295 @@
+{
+  "timestamp": "2025-10-31T09:36:19.670Z",
+  "summary": {
+    "totalTasks": 24,
+    "successful": 11,
+    "warnings": 10,
+    "errors": 2,
+    "skipped": 1
+  },
+  "results": [
+    {
+      "taskName": "error-detection",
+      "action": "check-api-security",
+      "status": "warning",
+      "message": "Found 73 potentially unprotected API routes",
+      "details": {
+        "unprotected": [
+          "/workspace/src/__tests__/api/appointments.test.ts",
+          "/workspace/src/__tests__/api/patients.test.ts",
+          "/workspace/src/app/api/admin/dashboard/route.ts",
+          "/workspace/src/app/api/admin/homepage/route.ts",
+          "/workspace/src/app/api/admin/route.ts",
+          "/workspace/src/app/api/admin/staff-hours/route.ts",
+          "/workspace/src/app/api/agent/completion/route.ts",
+          "/workspace/src/app/api/agent/logs/route.ts",
+          "/workspace/src/app/api/agent/status/route.ts",
+          "/workspace/src/app/api/agent/tasks/route.ts"
+        ]
+      },
+      "timestamp": "2025-10-31T09:36:19.197Z"
+    },
+    {
+      "taskName": "error-detection",
+      "action": "check-api-security",
+      "status": "warning",
+      "message": "Found 73 potentially unprotected API routes",
+      "details": {
+        "unprotected": [
+          "/workspace/src/__tests__/api/appointments.test.ts",
+          "/workspace/src/__tests__/api/patients.test.ts",
+          "/workspace/src/app/api/admin/dashboard/route.ts",
+          "/workspace/src/app/api/admin/homepage/route.ts",
+          "/workspace/src/app/api/admin/route.ts",
+          "/workspace/src/app/api/admin/staff-hours/route.ts",
+          "/workspace/src/app/api/agent/completion/route.ts",
+          "/workspace/src/app/api/agent/logs/route.ts",
+          "/workspace/src/app/api/agent/status/route.ts",
+          "/workspace/src/app/api/agent/tasks/route.ts"
+        ]
+      },
+      "timestamp": "2025-10-31T09:36:19.220Z"
+    },
+    {
+      "taskName": "error-detection",
+      "action": "scan-typescript-errors",
+      "status": "error",
+      "message": "TypeScript errors detected",
+      "details": "\n> moeen@0.1.0 type:check\n> tsc --noEmit\n\n",
+      "timestamp": "2025-10-31T09:36:19.238Z"
+    },
+    {
+      "taskName": "error-detection",
+      "action": "scan-security-vulnerabilities",
+      "status": "warning",
+      "message": "Found 6 potential security issues",
+      "details": {
+        "issues": [
+          "Potential hardcoded secret in /workspace/src/__tests__/api/auth/login.test.ts",
+          "Potential hardcoded secret in /workspace/src/app/(admin)/admin/page.tsx",
+          "Potential SQL injection risk in /workspace/src/app/(admin)/test-crud/page.tsx",
+          "Potential hardcoded secret in /workspace/src/app/(auth)/register/page.tsx",
+          "Potential hardcoded secret in /workspace/src/app/(auth)/reset-password/page.tsx",
+          "Potential hardcoded secret in /workspace/src/app/api/admin/configs/route.ts"
+        ]
+      },
+      "timestamp": "2025-10-31T09:36:19.316Z"
+    },
+    {
+      "taskName": "security-scan",
+      "action": "scan-api-endpoints",
+      "status": "success",
+      "message": "Scanned 546 API endpoints",
+      "details": {
+        "endpointsFound": 546
+      },
+      "timestamp": "2025-10-31T09:36:19.325Z"
+    },
+    {
+      "taskName": "security-scan",
+      "action": "check-authentication-middleware",
+      "status": "success",
+      "message": "Found 0 middleware files",
+      "details": {
+        "middlewareFiles": []
+      },
+      "timestamp": "2025-10-31T09:36:19.329Z"
+    },
+    {
+      "taskName": "security-scan",
+      "action": "validate-input-sanitization",
+      "status": "success",
+      "message": "Input sanitization validation completed",
+      "timestamp": "2025-10-31T09:36:19.332Z"
+    },
+    {
+      "taskName": "security-scan",
+      "action": "scan-security-vulnerabilities",
+      "status": "warning",
+      "message": "Found 6 potential security issues",
+      "details": {
+        "issues": [
+          "Potential hardcoded secret in /workspace/src/__tests__/api/auth/login.test.ts",
+          "Potential hardcoded secret in /workspace/src/app/(admin)/admin/page.tsx",
+          "Potential SQL injection risk in /workspace/src/app/(admin)/test-crud/page.tsx",
+          "Potential hardcoded secret in /workspace/src/app/(auth)/register/page.tsx",
+          "Potential hardcoded secret in /workspace/src/app/(auth)/reset-password/page.tsx",
+          "Potential hardcoded secret in /workspace/src/app/api/admin/configs/route.ts"
+        ]
+      },
+      "timestamp": "2025-10-31T09:36:19.332Z"
+    },
+    {
+      "taskName": "code-analysis",
+      "action": "scan-typescript-errors",
+      "status": "error",
+      "message": "TypeScript errors detected",
+      "details": "\n> moeen@0.1.0 type:check\n> tsc --noEmit\n\n",
+      "timestamp": "2025-10-31T09:36:19.342Z"
+    },
+    {
+      "taskName": "code-analysis",
+      "action": "scan-eslint-errors",
+      "status": "warning",
+      "message": "ESLint errors detected",
+      "details": "\n> moeen@0.1.0 lint:check\n> eslint . --max-warnings 0\n\n",
+      "timestamp": "2025-10-31T09:36:19.417Z"
+    },
+    {
+      "taskName": "code-analysis",
+      "action": "detect-duplicate-code",
+      "status": "success",
+      "message": "Scanned 546 files for duplicates",
+      "details": {
+        "filesScanned": 546,
+        "duplicatesFound": 0
+      },
+      "timestamp": "2025-10-31T09:36:19.490Z"
+    },
+    {
+      "taskName": "code-analysis",
+      "action": "analyze-performance-issues",
+      "status": "warning",
+      "message": "Found 1 potential performance issues",
+      "details": {
+        "issues": [
+          "Found 58 large files (>500 lines)"
+        ],
+        "largeFiles": [
+          "/workspace/src/app/(admin)/admin/dashboard/page.tsx (696 lines)",
+          "/workspace/src/app/(admin)/admin/page.tsx (648 lines)",
+          "/workspace/src/app/(admin)/admin/patients/page.tsx (635 lines)",
+          "/workspace/src/app/(admin)/admin/roles/page.tsx (877 lines)",
+          "/workspace/src/app/(admin)/admin/users/page.tsx (708 lines)",
+          "/workspace/src/app/(admin)/admin-dashboard/page.tsx (803 lines)",
+          "/workspace/src/app/(admin)/analytics/page.tsx (753 lines)",
+          "/workspace/src/app/(admin)/appointments/page.tsx (789 lines)",
+          "/workspace/src/app/(admin)/chatbot/flows/[flowId]/page.tsx (532 lines)",
+          "/workspace/src/app/(admin)/chatbot/page.tsx (975 lines)"
+        ]
+      },
+      "timestamp": "2025-10-31T09:36:19.493Z"
+    },
+    {
+      "taskName": "test-coverage-check",
+      "action": "run-test-coverage",
+      "status": "warning",
+      "message": "Test coverage run completed with issues",
+      "details": "Command failed: npm run test:coverage\nsh: 1: vitest: not found\n",
+      "timestamp": "2025-10-31T09:36:19.508Z"
+    },
+    {
+      "taskName": "test-coverage-check",
+      "action": "identify-untested-files",
+      "status": "warning",
+      "message": "Found 546 potentially untested files",
+      "details": {
+        "untested": [
+          "/workspace/src/__tests__/ai-assistant.test.ts",
+          "/workspace/src/__tests__/api/appointments.test.ts",
+          "/workspace/src/__tests__/api/auth/login.test.ts",
+          "/workspace/src/__tests__/api/patients.test.ts",
+          "/workspace/src/__tests__/auth/forgot-password.test.tsx",
+          "/workspace/src/__tests__/auth/login.test.tsx",
+          "/workspace/src/__tests__/auth/register.test.tsx",
+          "/workspace/src/__tests__/auth/reset-password.test.tsx",
+          "/workspace/src/__tests__/saudi-health-integration.test.ts",
+          "/workspace/src/__tests__/setup.ts",
+          "/workspace/src/__tests__/whatsapp-business-api.test.ts",
+          "/workspace/src/__tests__/whatsapp-integration.test.ts",
+          "/workspace/src/app/(admin)/admin/audit-logs/page.tsx",
+          "/workspace/src/app/(admin)/admin/channels/page.tsx",
+          "/workspace/src/app/(admin)/admin/dashboard/page.tsx",
+          "/workspace/src/app/(admin)/admin/homepage/page.tsx",
+          "/workspace/src/app/(admin)/admin/layout.tsx",
+          "/workspace/src/app/(admin)/admin/logs/page.tsx",
+          "/workspace/src/app/(admin)/admin/page.tsx",
+          "/workspace/src/app/(admin)/admin/patients/page.tsx"
+        ]
+      },
+      "timestamp": "2025-10-31T09:36:19.580Z"
+    },
+    {
+      "taskName": "test-coverage-check",
+      "action": "suggest-test-cases",
+      "status": "success",
+      "message": "Test case suggestions generated (manual review recommended)",
+      "timestamp": "2025-10-31T09:36:19.587Z"
+    },
+    {
+      "taskName": "test-coverage-check",
+      "action": "generate-test-templates",
+      "status": "success",
+      "message": "Test templates ready for generation",
+      "timestamp": "2025-10-31T09:36:19.587Z"
+    },
+    {
+      "taskName": "performance-optimization",
+      "action": "analyze-bundle-size",
+      "status": "warning",
+      "message": "Build directory not found. Run build first.",
+      "timestamp": "2025-10-31T09:36:19.587Z"
+    },
+    {
+      "taskName": "performance-optimization",
+      "action": "detect-memory-leaks",
+      "status": "success",
+      "message": "Static analysis completed (runtime testing recommended)",
+      "timestamp": "2025-10-31T09:36:19.587Z"
+    },
+    {
+      "taskName": "performance-optimization",
+      "action": "optimize-database-queries",
+      "status": "success",
+      "message": "Analyzed 0 database-related files",
+      "details": {
+        "filesAnalyzed": 0
+      },
+      "timestamp": "2025-10-31T09:36:19.587Z"
+    },
+    {
+      "taskName": "performance-optimization",
+      "action": "suggest-performance-improvements",
+      "status": "success",
+      "message": "Performance suggestions compiled",
+      "timestamp": "2025-10-31T09:36:19.590Z"
+    },
+    {
+      "taskName": "code-quality",
+      "action": "remove-console-logs",
+      "status": "success",
+      "message": "Removed 13 console logs from 6 files",
+      "details": {
+        "filesModified": 6,
+        "logsRemoved": 13
+      },
+      "timestamp": "2025-10-31T09:36:19.590Z"
+    },
+    {
+      "taskName": "code-quality",
+      "action": "fix-linting-errors",
+      "status": "warning",
+      "message": "Some linting errors could not be auto-fixed",
+      "details": "Command failed: npm run lint:fix\nsh: 1: eslint: not found\n",
+      "timestamp": "2025-10-31T09:36:19.595Z"
+    },
+    {
+      "taskName": "code-quality",
+      "action": "remove-todo-comments",
+      "status": "skipped",
+      "message": "TODO comment removal skipped (manual review recommended)",
+      "timestamp": "2025-10-31T09:36:19.668Z"
+    },
+    {
+      "taskName": "code-quality",
+      "action": "cleanup-temporary-files",
+      "status": "success",
+      "message": "Removed 0 temporary files",
+      "details": {
+        "filesRemoved": 0
+      },
+      "timestamp": "2025-10-31T09:36:19.668Z"
+    }
+  ],
+  "autoFixes": []
+}

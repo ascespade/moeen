@@ -121,7 +121,7 @@ export default function AdminPage() {
       setCurrentUser(usersData.currentUser || null);
       setError(null);
     } catch (err) {
-      console.error('Error loading admin data:', err);
+      
       // Set mock data if APIs fail
       setUsers([
         {

@@ -91,7 +91,7 @@ function AuditLogsPageContent() {
         throw new Error(result.error || 'Failed to fetch audit logs');
       }
     } catch (err) {
-      console.error('Error fetching audit logs:', err);
+      
       setError(err instanceof Error ? err.message : 'Failed to fetch audit logs');
       setAuditLogs([]);
     } finally {

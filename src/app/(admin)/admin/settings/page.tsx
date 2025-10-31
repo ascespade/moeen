@@ -118,7 +118,7 @@ function AdminSettingsPageContent() {
         throw new Error('Failed to save settings');
       }
     } catch (error) {
-      console.error('Error saving settings:', error);
+      
       alert('حدث خطأ أثناء حفظ الإعدادات. يرجى المحاولة مرة أخرى.');
     } finally {
       setIsSaving(false);

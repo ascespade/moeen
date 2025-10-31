@@ -210,7 +210,7 @@ function UsersPageContent() {
         setError('فشل في تحميل المستخدمين');
       }
     } catch (err) {
-      console.error('Error loading users:', err);
+      
       setError('حدث خطأ أثناء تحميل المستخدمين');
     } finally {
     setLoading(false);

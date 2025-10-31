@@ -229,9 +229,9 @@ export default function ModernAdminDashboard() {
       props: {
         notifications: mockNotifications,
         maxHeight: 400,
-        onMarkAsRead: (id: string) => console.log('Mark as read:', id),
-        onMarkAllAsRead: () => console.log('Mark all as read'),
-        onActionClick: (notification: any) => console.log('Action:', notification)
+        onMarkAsRead: (id: string) => ,
+        onMarkAllAsRead: () => ,
+        onActionClick: (notification: any) => 
       }
     }
   ], [stats, localizedNumber]);
@@ -295,15 +295,15 @@ export default function ModernAdminDashboard() {
             isEditable={isGridEditable}
             onItemChange={(items) => {
               // Handle layout changes
-              console.log('Layout changed:', items);
+              
             }}
             onItemAdd={() => {
               // Handle adding new widget
-              console.log('Add new widget');
+              
             }}
             onItemRemove={(id) => {
               // Handle removing widget
-              console.log('Remove widget:', id);
+              
             }}
             className='mb-8'
           />

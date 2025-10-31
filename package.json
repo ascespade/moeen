@@ -41,6 +41,7 @@
     "agent:cursor": "node scripts/ai_self_test_and_fix.mjs --agent-mode=cursor",
     "agent:openai": "node scripts/ai_self_test_and_fix.mjs --agent-mode=openai",
     "agent:ollama": "node scripts/ai_self_test_and_fix.mjs --agent-mode=ollama",
+    "agent:cursor-background": "node scripts/cursor-background-agent.mjs",
     "watch:fix": "node scripts/auto-fix-watcher.js",
     "setup:env": "./scripts/setup-environment.sh",
     "backup:create": "node scripts/backup-system.mjs backup",

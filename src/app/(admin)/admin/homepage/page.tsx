@@ -33,7 +33,7 @@ export default function AdminHomepageEditor() {
         }));
         if (!cancelled) setServices(items);
       } catch (err) {
-        console.warn('Failed to load services', err);
+        
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -80,7 +80,7 @@ export default function AdminHomepageEditor() {
       const url = await uploadImage(file);
       updateService(index, { image: url });
     } catch (err) {
-      console.error('Upload failed', err);
+      
       updateService(index, { image: '' });
       alert('فشل رفع الصورة');
     }
@@ -99,7 +99,7 @@ export default function AdminHomepageEditor() {
       if (!res.ok) throw new Error(data?.error || 'Save failed');
       alert('تم حفظ المحتوى بنجاح');
     } catch (err) {
-      console.error('Save error', err);
+      
       alert('فشل الحفظ');
     } finally {
       setSaving(false);
