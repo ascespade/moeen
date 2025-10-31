@@ -31,6 +31,8 @@ interface I18nProviderProps {
 export default function I18nProvider({ children }: I18nProviderProps) {
   const [language, setLanguage] = useState<'ar' | 'en'>('ar');
   const [isLoading, setIsLoading] = useState(true);
+  const [translations, setTranslations] = useState<Record<string, string>>({});
+  const [translationsLoading, setTranslationsLoading] = useState(true);
 
   // Load language from localStorage only (avoid duplicate API calls)
   // usePreferences hook handles API loading centrally
@@ -52,10 +54,44 @@ export default function I18nProvider({ children }: I18nProviderProps) {
     }
   }, []);
 
-  const t = (key: string, fallback?: string) => {
-    // Simple translation function - in real app, this would use a proper i18n library
+  // Fetch translations from database
+  useEffect(() => {
+    const fetchTranslations = async () => {
+      try {
+        const response = await fetch(`/api/translations/${language}`, {
+          cache: 'no-store',
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setTranslations(data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch translations:', error);
+      } finally {
+        setTranslationsLoading(false);
+      }
+    };
+
+    if (!isLoading) {
+      fetchTranslations();
+    }
+  }, [language, isLoading]);
+
+  const t = useCallback((key: string, fallback?: string): string => {
+    // Try to get translation from database
+    if (translations[key]) {
+      return translations[key];
+    }
+    // Try with namespace.key format if key doesn't include namespace
+    if (!key.includes('.')) {
+      const commonKey = `common.${key}`;
+      if (translations[commonKey]) {
+        return translations[commonKey];
+      }
+    }
+    // Return fallback or key
     return fallback || key;
-  };
+  }, [translations]);
 
   const toggleLanguage = useCallback(() => {
     setLanguage(prev => (prev === 'ar' ? 'en' : 'ar'));
@@ -73,7 +109,7 @@ export default function I18nProvider({ children }: I18nProviderProps) {
     t,
     language,
     direction: language === 'ar' ? ('rtl' as const) : ('ltr' as const),
-    isLoading,
+    isLoading: isLoading || translationsLoading,
     toggleLanguage,
     setArabic,
     setEnglish,

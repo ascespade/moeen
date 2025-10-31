@@ -749,6 +749,262 @@ class TranslationSeeder {
         en: 'Previous',
         module: 'common',
       },
+      { key: 'common.excellent', ar: 'ممتاز', en: 'Excellent', module: 'common' },
+      { key: 'common.good', ar: 'جيد', en: 'Good', module: 'common' },
+      {
+        key: 'common.needs_improvement',
+        ar: 'يحتاج تحسين',
+        en: 'Needs Improvement',
+        module: 'common',
+      },
+      {
+        key: 'common.searchPlaceholder',
+        ar: 'ابحث في النظام...',
+        en: 'Search in system...',
+        module: 'common',
+      },
+      {
+        key: 'common.systemName',
+        ar: 'مركز الهمم',
+        en: 'Al-Himam Center',
+        module: 'common',
+      },
+      {
+        key: 'common.openMenu',
+        ar: 'فتح القائمة',
+        en: 'Open Menu',
+        module: 'common',
+      },
+    ]);
+
+    // Supervisor Dashboard Module
+    this.addTranslations([
+      {
+        key: 'supervisor.dashboard.welcome',
+        ar: 'مرحباً',
+        en: 'Welcome',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.subtitle',
+        ar: 'لوحة تحكم المشرف',
+        en: 'Supervisor Dashboard',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.total_patients',
+        ar: 'إجمالي المرضى',
+        en: 'Total Patients',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.total_appointments',
+        ar: 'إجمالي المواعيد',
+        en: 'Total Appointments',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.revenue',
+        ar: 'الإيرادات',
+        en: 'Revenue',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.claims_processed',
+        ar: 'المطالبات المعالجة',
+        en: 'Claims Processed',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.staff_performance',
+        ar: 'أداء الموظفين',
+        en: 'Staff Performance',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.system_alerts',
+        ar: 'تنبيهات النظام',
+        en: 'System Alerts',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.no_alerts',
+        ar: 'لا توجد تنبيهات',
+        en: 'No alerts',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.no_staff_data',
+        ar: 'لا توجد بيانات للموظفين',
+        en: 'No staff data',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.reports',
+        ar: 'التقارير',
+        en: 'Reports',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.tasks',
+        ar: 'المهام',
+        en: 'Tasks',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.efficiency',
+        ar: 'الكفاءة',
+        en: 'Efficiency',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.dashboard.recent_reports',
+        ar: 'التقارير الأخيرة',
+        en: 'Recent Reports',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.actions.daily_report',
+        ar: 'تقرير يومي',
+        en: 'Daily Report',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.actions.monthly_report',
+        ar: 'تقرير شهري',
+        en: 'Monthly Report',
+        module: 'supervisor',
+      },
+      {
+        key: 'supervisor.actions.staff_report',
+        ar: 'تقرير الموظفين',
+        en: 'Staff Report',
+        module: 'supervisor',
+      },
+      {
+        key: 'report.status.ready',
+        ar: 'جاهز',
+        en: 'Ready',
+        module: 'supervisor',
+      },
+      {
+        key: 'report.status.processing',
+        ar: 'قيد المعالجة',
+        en: 'Processing',
+        module: 'supervisor',
+      },
+      {
+        key: 'report.status.failed',
+        ar: 'فشل',
+        en: 'Failed',
+        module: 'supervisor',
+      },
+    ]);
+
+    // Header Module
+    this.addTranslations([
+      {
+        key: 'header.welcome',
+        ar: 'مرحباً',
+        en: 'Welcome',
+        module: 'common',
+      },
+      {
+        key: 'header.profile',
+        ar: 'الملف الشخصي',
+        en: 'Profile',
+        module: 'common',
+      },
+      {
+        key: 'header.settings',
+        ar: 'الإعدادات',
+        en: 'Settings',
+        module: 'common',
+      },
+      {
+        key: 'header.logout',
+        ar: 'تسجيل الخروج',
+        en: 'Logout',
+        module: 'common',
+      },
+      {
+        key: 'header.notifications',
+        ar: 'الإشعارات',
+        en: 'Notifications',
+        module: 'common',
+      },
+      {
+        key: 'header.noNotifications',
+        ar: 'لا توجد إشعارات',
+        en: 'No notifications',
+        module: 'common',
+      },
+      {
+        key: 'header.notification',
+        ar: 'إشعار {number}',
+        en: 'Notification {number}',
+        module: 'common',
+      },
+      {
+        key: 'header.markAsRead',
+        ar: 'تعليم كمقروء',
+        en: 'Mark as read',
+        module: 'common',
+      },
+      {
+        key: 'header.aiFeatures',
+        ar: 'ميزات الذكاء الاصطناعي',
+        en: 'AI Features',
+        module: 'common',
+      },
+      {
+        key: 'header.chatbot',
+        ar: 'المساعد الذكي',
+        en: 'Chatbot',
+        module: 'common',
+      },
+      {
+        key: 'header.chatbotStatus',
+        ar: 'نشط',
+        en: 'Active',
+        module: 'common',
+      },
+      {
+        key: 'header.voiceBot',
+        ar: 'المساعد الصوتي',
+        en: 'Voice Bot',
+        module: 'common',
+      },
+      {
+        key: 'header.voiceBotStatus',
+        ar: 'نشط',
+        en: 'Active',
+        module: 'common',
+      },
+      {
+        key: 'header.emotionAnalytics',
+        ar: 'تحليل المشاعر',
+        en: 'Emotion Analytics',
+        module: 'common',
+      },
+      {
+        key: 'header.emotionAnalyticsStatus',
+        ar: 'نشط',
+        en: 'Active',
+        module: 'common',
+      },
+      {
+        key: 'header.earlyDiagnosis',
+        ar: 'التشخيص المبكر',
+        en: 'Early Diagnosis',
+        module: 'common',
+      },
+      {
+        key: 'header.earlyDiagnosisStatus',
+        ar: 'نشط',
+        en: 'Active',
+        module: 'common',
+      },
     ]);
   }
 

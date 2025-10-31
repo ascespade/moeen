@@ -3,6 +3,58 @@ import { authorize } from '@/lib/auth/authorize';
 
 export async function GET(request: NextRequest) {
   try {
+    // Try to get user from headers (sent from client localStorage)
+    const clientUserId = request.headers.get('x-user-id');
+    const clientUserEmail = request.headers.get('x-user-email');
+    const clientUserRole = request.headers.get('x-user-role');
+
+    if (clientUserId && clientUserEmail && clientUserRole) {
+      console.log('[api/auth/me] Using client-provided user info', { clientUserEmail });
+      try {
+        const { createClient } = await import('@/lib/supabase/server');
+        const supabase = await createClient();
+
+        // Verify user exists in DB
+        const { data: userData } = await supabase
+          .from('users')
+          .select('id, email, role, status')
+          .eq('id', clientUserId)
+          .eq('email', clientUserEmail)
+          .maybeSingle();
+
+        if (userData && userData.status === 'active') {
+          // Get permissions using PermissionManager (faster than DB queries)
+          try {
+            const { PermissionManager } = await import('@/lib/permissions');
+            const permissions = PermissionManager.getRolePermissions(userData.role);
+
+            return NextResponse.json({
+              success: true,
+              user: {
+                id: userData.id,
+                email: userData.email,
+                role: userData.role,
+                permissions: Array.isArray(permissions) ? permissions : [],
+              },
+            });
+          } catch (e) {
+            // Fallback to basic permissions
+            return NextResponse.json({
+              success: true,
+              user: {
+                id: userData.id,
+                email: userData.email,
+                role: userData.role,
+                permissions: userData.role === 'admin' ? ['*', 'dashboard:view'] : ['dashboard:view'],
+              },
+            });
+          }
+        }
+      } catch (e) {
+        console.warn('[api/auth/me] Client user verification failed:', e);
+      }
+    }
+
     const { user, error } = await authorize(request);
     console.log('[api/auth/me] authorize result', { userId: user?.id, error });
 

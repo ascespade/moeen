@@ -2,6 +2,7 @@
 import I18nProvider from '@/components/providers/I18nProvider';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { DesignSystemProvider } from '@/components/providers/DesignSystemProvider';
+import PrelineInit from '@/components/preline/PrelineInit';
 import '@/styles/centralized.css';
 import type { Metadata } from 'next';
 import ScrollRestoration from './scroll-restoration';
@@ -75,6 +76,7 @@ export default function RootLayout({
           <DesignSystemProvider initialConfig={{ spacing: 'compact' }}>
             <I18nProvider>
               <ScrollRestoration />
+              <PrelineInit />
               {children}
             </I18nProvider>
           </DesignSystemProvider>

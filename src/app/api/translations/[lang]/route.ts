@@ -38,9 +38,10 @@ export async function GET(
     if (tableError) throw tableError;
 
     // Get translations for the requested language
+    // Format: namespace.key -> namespace.key in database
     const { data: translations, error: translationsError } = await supabase
       .from('translations')
-      .select('key, value')
+      .select('namespace, key, value')
       .eq('locale', lang);
 
     if (translationsError) throw translationsError;
@@ -49,7 +50,7 @@ export async function GET(
     if (!translations || translations.length === 0) {
       const { data: defaultTranslations, error: defaultError } = await supabase
         .from('translations')
-        .select('key, value')
+        .select('namespace, key, value')
         .eq('locale', 'ar'); // Default to Arabic
 
       if (defaultError) throw defaultError;
@@ -57,20 +58,23 @@ export async function GET(
       // Log missing translation keys
       await logMissingTranslationKeys(lang, []);
 
-      return NextResponse.json(
-        defaultTranslations.reduce(
-          (acc, t) => ({ ...acc, [t.key]: t.value }),
-          {}
-        ),
-        { headers }
+      // Convert to namespace.key format
+      const translationObject = (defaultTranslations || []).reduce(
+        (acc, t) => ({
+          ...acc,
+          [`${t.namespace}.${t.key}`]: t.value,
+        }),
+        {}
       );
+
+      return NextResponse.json(translationObject, { headers });
     }
 
-    // Convert to key-value object
+    // Convert to namespace.key format for compatibility
     const translationObject = translations.reduce(
       (acc, t) => ({
         ...acc,
-        [t.key]: t.value,
+        [`${t.namespace}.${t.key}`]: t.value,
       }),
       {}
     );

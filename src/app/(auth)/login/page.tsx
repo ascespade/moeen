@@ -10,12 +10,15 @@ const ROLE_REDIRECTS: Record<string, string> = {
   doctor: '/dashboard/doctor',
   staff: '/dashboard/staff',
   patient: '/dashboard/patient',
+  supervisor: '/dashboard/supervisor',
   customer: '/dashboard',
 };
 
 function getRedirectForRole(role?: string | null) {
   if (!role) return '/dashboard';
-  return ROLE_REDIRECTS[role] || '/dashboard';
+  // Normalize role name (handle both 'admin' and 'Administrator' etc.)
+  const normalizedRole = role.toLowerCase().trim();
+  return ROLE_REDIRECTS[normalizedRole] || ROLE_REDIRECTS[role] || '/dashboard';
 }
 
 export default function LoginPage() {
@@ -125,10 +128,12 @@ export default function LoginPage() {
     let roleId: string | null = null;
     let roleName: string | null = null;
 
+    // First, try to get role from user_roles table (new system)
     const { data: ur } = await supabase
       .from('user_roles')
-      .select('role_id')
+      .select('role_id, is_active')
       .eq('user_id', userId)
+      .eq('is_active', true)
       .maybeSingle();
 
     if (ur?.role_id) {
@@ -141,27 +146,39 @@ export default function LoginPage() {
       roleName = role?.name ?? null;
     }
 
+    // Fallback to users.role column if no role found in user_roles
     if (!roleName && userRow?.role) {
       roleName = userRow.role as string;
     }
 
+    // Normalize role name (handle variations)
+    if (roleName) {
+      roleName = roleName.toLowerCase().trim();
+    }
+
+    // If still no role, try to auto-assign patient role (only as last resort)
     if (!roleName) {
-      // Try to auto-assign patient role if available
       const { data: patientRole } = await supabase
         .from('roles')
         .select('id, name')
         .eq('name', 'patient')
         .maybeSingle();
       if (patientRole?.id) {
-        await supabase
-          .from('user_roles')
-          .upsert(
-            { user_id: userId, role_id: patientRole.id, is_active: true },
-            { onConflict: 'user_id,role_id' }
-          );
-        roleName = 'patient';
+        try {
+          await supabase
+            .from('user_roles')
+            .upsert(
+              { user_id: userId, role_id: patientRole.id, is_active: true },
+              { onConflict: 'user_id,role_id' }
+            );
+          roleName = 'patient';
+        } catch (e) {
+          console.error('Failed to auto-assign patient role:', e);
+        }
       }
     }
+
+    // If still no role found, reject login
     if (!roleName) {
       await supabase.auth.signOut();
       setError('⚠️ لا توجد صلاحية مرتبطة بحسابك. يرجى التواصل مع المشرف.');
@@ -202,6 +219,9 @@ export default function LoginPage() {
         return;
       }
 
+      // Wait a bit for session to be saved to cookies
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       const redirectTo = await resolveRedirectAfterLogin(
         data.user.id,
         data.user.email || undefined
@@ -210,6 +230,9 @@ export default function LoginPage() {
         setSubmitting(false);
         return;
       }
+
+      // Ensure session is persisted before redirect
+      await supabase.auth.getSession();
 
       router.replace(redirectTo);
     } catch (err: any) {
@@ -323,6 +346,86 @@ export default function LoginPage() {
                 )}
               </button>
             </form>
+
+            {/* Quick Login Buttons for Testing */}
+            {process.env.NODE_ENV !== 'production' && (
+              <div className='border-default mt-6 border-t pt-6'>
+                <p className='mb-4 text-center text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400'>
+                  🔧 تسجيل دخول سريع (للتجربة)
+                </p>
+                <div className='grid grid-cols-2 gap-2'>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setEmail('admin@test.local');
+                      setPassword('A123456');
+                    }}
+                    className='btn btn-sm btn-outline text-xs hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                    title='Admin Dashboard'
+                  >
+                    👑 Admin
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setEmail('doctor@test.local');
+                      setPassword('A123456');
+                    }}
+                    className='btn btn-sm btn-outline text-xs hover:bg-green-50 dark:hover:bg-green-900/20'
+                    title='Doctor Dashboard'
+                  >
+                    🩺 Doctor
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setEmail('patient@test.local');
+                      setPassword('A123456');
+                    }}
+                    className='btn btn-sm btn-outline text-xs hover:bg-purple-50 dark:hover:bg-purple-900/20'
+                    title='Patient Dashboard'
+                  >
+                    👤 Patient
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setEmail('staff@test.local');
+                      setPassword('A123456');
+                    }}
+                    className='btn btn-sm btn-outline text-xs hover:bg-orange-50 dark:hover:bg-orange-900/20'
+                    title='Staff Dashboard'
+                  >
+                    🏥 Staff
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setEmail('supervisor@test.local');
+                      setPassword('A123456');
+                    }}
+                    className='btn btn-sm btn-outline text-xs hover:bg-indigo-50 dark:hover:bg-indigo-900/20'
+                    title='Supervisor Dashboard'
+                  >
+                    👔 Supervisor
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      setEmail('manager@test.local');
+                      setPassword('A123456');
+                    }}
+                    className='btn btn-sm btn-outline text-xs hover:bg-teal-50 dark:hover:bg-teal-900/20'
+                    title='Manager Dashboard'
+                  >
+                    📊 Manager
+                  </button>
+                </div>
+                <p className='mt-3 text-center text-xs text-gray-500 dark:text-gray-400'>
+                  كلمة المرور: <code className='rounded bg-gray-100 px-1 py-0.5 dark:bg-gray-800'>A123456</code>
+                </p>
+              </div>
+            )}
 
             <div className='border-default mt-6 border-t pt-6'>
               <p className='text-center text-sm text-gray-600 dark:text-gray-400'>

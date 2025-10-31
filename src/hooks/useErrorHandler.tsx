@@ -69,13 +69,23 @@ export function useErrorHandler() {
     [t]
   );
 
+  // Extract generic function outside useCallback to avoid TypeScript limitation
+  async function handleAsyncErrorImpl<T>(
+    asyncFn: () => Promise<T>,
+    options: ErrorHandlerOptions,
+    errorHandler: (error: unknown, options: ErrorHandlerOptions) => { message: string; code: string }
+  ): Promise<T | undefined> {
+    try {
+      return await asyncFn();
+    } catch (error) {
+      errorHandler(error, options);
+      return undefined;
+    }
+  }
+
   const handleAsyncError = useCallback(
-    async <T>(asyncFn: () => Promise<T>, options: ErrorHandlerOptions = {}): Promise<T | undefined> => {
-      try {
-        return await asyncFn();
-      } catch (error) {
-        return handleError(error, options);
-      }
+    <T,>(asyncFn: () => Promise<T>, options: ErrorHandlerOptions = {}): Promise<T | undefined> => {
+      return handleAsyncErrorImpl(asyncFn, options, handleError);
     },
     [handleError]
   );

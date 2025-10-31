@@ -13,9 +13,9 @@ interface RouteGuardProps {
   fallbackPath?: string;
 }
 
-export default function RouteGuard({ 
-  children, 
-  requiredPermissions = [], 
+export default function RouteGuard({
+  children,
+  requiredPermissions = [],
   requiredRoles = [],
   fallbackPath = '/unauthorized'
 }: RouteGuardProps) {
@@ -29,13 +29,13 @@ export default function RouteGuard({
   useEffect(() => {
     // Prevent multiple checks
     if (hasCheckedRef.current) return;
-    
+
     let isMounted = true;
-    
+
     const checkAuthorization = async () => {
       try {
         hasCheckedRef.current = true;
-        
+
         // Try to get user from localStorage as fallback (for development/testing)
         let userFromStorage = null;
         try {
@@ -46,21 +46,40 @@ export default function RouteGuard({
         } catch (e) {
           // Ignore localStorage errors
         }
-        
+
         // Get current user info with timeout
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000); // increase timeout to 8s to avoid premature aborts
-        
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+
+        // Get user from localStorage to send with request
+        let localUser = null;
+        try {
+          const userStr = localStorage.getItem('user');
+          if (userStr) {
+            localUser = JSON.parse(userStr);
+          }
+        } catch (e) {
+          // Ignore
+        }
+
         let response;
         try {
-          // First try normal auth
+          // First try normal auth with client user info as fallback
+          const headers: Record<string, string> = {};
+          if (localUser?.id && localUser?.email && localUser?.role) {
+            headers['x-user-id'] = localUser.id;
+            headers['x-user-email'] = localUser.email;
+            headers['x-user-role'] = localUser.role;
+          }
+
           response = await fetch('/api/auth/me', {
             signal: controller.signal,
             cache: 'no-store',
-            credentials: 'include'
+            credentials: 'include',
+            headers
           });
           clearTimeout(timeoutId);
-          
+
           if (!response.ok) {
             // If 401 and we have user in storage, use that as fallback
             if (response.status === 401 && userFromStorage) {
@@ -117,7 +136,7 @@ export default function RouteGuard({
               }
               // Permissions
               if (requiredPermissions.length > 0) {
-                const hasAllPermissions = requiredPermissions.every(permission => 
+                const hasAllPermissions = requiredPermissions.every(permission =>
                   fallbackUser.permissions.includes(permission)
                 );
                 if (!hasAllPermissions) {
@@ -130,11 +149,11 @@ export default function RouteGuard({
             }
             throw new Error(`HTTP ${response.status}`);
           }
-          
+
           const result = await response.json();
-          
+
           if (!isMounted) return;
-          
+
           if (!result.success || !result.user) {
             // User not authenticated - redirect to login
             if (!redirectingRef.current) {
@@ -147,7 +166,7 @@ export default function RouteGuard({
 
           const user = result.user;
           if (!isMounted) return;
-          
+
           setUserRole(user.role);
 
           // Check role-based access
@@ -184,14 +203,39 @@ export default function RouteGuard({
               }
             })
           }).catch(() => {}); // Ignore errors
-        
+
         } catch (fetchError: any) {
           clearTimeout(timeoutId);
           if (fetchError.name === 'AbortError') {
-            console.error('Auth check timeout after 8 seconds');
-            if (isMounted) {
-              // avoid flashing error if we can authorize via fallback immediately
+            console.error('Auth check timeout after 10 seconds');
+            if (isMounted && userFromStorage) {
+              // Use localStorage fallback immediately on timeout
+              const fallbackUser = {
+                role: userFromStorage.role || 'admin',
+                permissions: userFromStorage.permissions || []
+              };
+              setUserRole(fallbackUser.role);
+
+              if (requiredRoles.length > 0 && !requiredRoles.includes(fallbackUser.role)) {
+                setIsAuthorized(false);
+                return;
+              }
+
+              if (requiredPermissions.length > 0) {
+                const roleAllows = ['admin', 'manager', 'supervisor'].includes(fallbackUser.role);
+                const hasAllPermissions = requiredPermissions.every(permission => fallbackUser.permissions.includes(permission));
+                if (!hasAllPermissions && !roleAllows) {
+                  setIsAuthorized(false);
+                  return;
+                }
+              }
+
+              setIsAuthorized(true);
               setErrorMessage('');
+              return;
+            }
+            if (isMounted) {
+              setErrorMessage('انتهت مهلة التحقق. جاري استخدام البيانات المحفوظة...');
             }
           } else {
             console.error('Auth fetch error:', fetchError);
@@ -199,7 +243,7 @@ export default function RouteGuard({
               setErrorMessage('فشل في التحقق من الصلاحيات. يرجى التأكد من اتصالك بالإنترنت.');
             }
           }
-          
+
           // Use localStorage fallback if available
           if (userFromStorage && !redirectingRef.current) {
             console.warn('Using localStorage fallback for auth');
@@ -209,12 +253,12 @@ export default function RouteGuard({
               permissions: userFromStorage.permissions || []
             };
             setUserRole(fallbackUser.role);
-            
+
             if (requiredRoles.length > 0 && !requiredRoles.includes(fallbackUser.role)) {
               setIsAuthorized(false);
               return;
             }
-            
+
             if (requiredPermissions.length > 0) {
               const roleAllows = ['admin', 'manager', 'supervisor'].includes(fallbackUser.role);
               const hasAllPermissions = requiredPermissions.every(permission => fallbackUser.permissions.includes(permission));
@@ -223,12 +267,12 @@ export default function RouteGuard({
                 return;
               }
             }
-            
+
             setIsAuthorized(true);
             setErrorMessage('');
             return;
           }
-          
+
           if (!isMounted) return;
           if (!redirectingRef.current) {
             redirectingRef.current = true;
@@ -254,7 +298,7 @@ export default function RouteGuard({
     };
 
     checkAuthorization();
-    
+
     return () => {
       isMounted = false;
     };
@@ -270,7 +314,7 @@ export default function RouteGuard({
           <div className='w-12 h-12 border-4 border-[var(--brand-border)] border-t-[var(--brand-primary)] rounded-full animate-spin mx-auto mb-4'></div>
           <p className='text-[var(--text-secondary)] mb-2'>جاري التحقق من الصلاحيات...</p>
           {errorMessage && (
-            <div 
+            <div
               className='mt-4 p-4 rounded-lg border'
               style={{
                 backgroundColor: 'color-mix(in srgb, var(--brand-error) 10%, transparent)',
@@ -291,7 +335,7 @@ export default function RouteGuard({
       <div className='min-h-screen bg-[var(--background)] flex items-center justify-center'>
         <div className='max-w-md mx-auto p-6'>
           <AdminCard className='text-center space-y-6'>
-            <div 
+            <div
               className='w-20 h-20 mx-auto rounded-full flex items-center justify-center border'
               style={{
                 backgroundColor: 'color-mix(in srgb, var(--brand-error) 10%, transparent)',
@@ -300,7 +344,7 @@ export default function RouteGuard({
             >
               <Lock className='w-10 h-10' style={{ color: 'var(--brand-error)' }} />
             </div>
-            
+
             <div>
               <h2 className='text-2xl font-bold text-[var(--text-primary)] mb-2'>
                 غير مصرح بالوصول
@@ -308,7 +352,7 @@ export default function RouteGuard({
               <p className='text-[var(--text-secondary)] mb-4'>
                 ليس لديك الصلاحيات اللازمة للوصول إلى هذه الصفحة.
               </p>
-              
+
               <div className='text-sm text-[var(--text-secondary)] space-y-1'>
                 {requiredRoles.length > 0 && (
                   <p>الأدوار المطلوبة: {requiredRoles.join(', ')}</p>
@@ -335,9 +379,9 @@ export default function RouteGuard({
                 الصفحة الرئيسية
               </Button>
             </div>
-            
+
             {/* Warning */}
-            <div 
+            <div
               className='border rounded-lg p-4'
               style={{
                 backgroundColor: 'color-mix(in srgb, var(--brand-warning) 10%, transparent)',

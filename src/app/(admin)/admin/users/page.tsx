@@ -1,9 +1,17 @@
 'use client';
 
 import { RouteGuard } from '@/components/admin/RouteGuard';
+import { AdminFilterBar, AdminHeader, AdminStatsCard } from '@/components/admin/ui';
 import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/Card';
 import {
     Dialog,
     DialogContent,
@@ -27,15 +35,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/Table';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/Card';
 import { usePermissions } from '@/hooks/usePermissions';
-import { AdminHeader, AdminStatsCard, AdminFilterBar } from '@/components/admin/ui';
 import {
     Activity,
     Award,
@@ -60,7 +60,7 @@ import {
     Users,
     UserX
 } from 'lucide-react';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface User {
   id: string;
@@ -100,6 +100,24 @@ interface User {
   notes?: string;
 }
 
+interface ApiUserResponse {
+  id: string;
+  email: string;
+  role: string;
+  profile?: {
+    fullName?: string;
+    phone?: string;
+    department?: string;
+    position?: string;
+  };
+  isActive: boolean;
+  permissions?: string[];
+  createdAt: string;
+  updatedAt?: string;
+  createdBy?: string;
+  lastLoginAt?: string;
+}
+
 function UsersPageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
@@ -137,19 +155,21 @@ function UsersPageContent() {
     try {
       setLoading(true);
       setError(null);
-      const params = new URLSearch<｜place▁holder▁no▁463｜>ams({
-        page: currentPage.toString(),
-        limit: '20',
-        ...(roleFilter !== 'all' && { role: roleFilter }),
-        ...(statusFilter !== 'all' && { isActive: statusFilter === 'active' ? 'true' : 'false' }),
-      });
-
-      const response = await fetch(`/api/admin/users?${params}`);
+      const searchParams = new URLSearchParams();
+      searchParams.set('page', currentPage.toString());
+      searchParams.set('limit', '20');
+      if (roleFilter !== 'all') {
+        searchParams.set('role', roleFilter);
+      }
+      if (statusFilter !== 'all') {
+        searchParams.set('isActive', statusFilter === 'active' ? 'true' : 'false');
+      }
+      const response = await fetch(`/api/admin/users?${searchParams.toString()}`);
       const result = await response.json();
-      
+
       if (result.success) {
         // Transform API data to match our User interface
-        const transformedUsers: User[] = (result.data || []).map((user: any) => ({
+        const transformedUsers: User[] = (result.data || []).map((user: ApiUserResponse) => ({
           id: user.id,
           username: user.email.split('@')[0],
           email: user.email,
@@ -164,7 +184,7 @@ function UsersPageContent() {
         isVerified: true,
           lastLoginAt: user.lastLoginAt,
           createdAt: user.createdAt,
-          updatedAt: user.updatedAt,
+          updatedAt: user.updatedAt || user.createdAt,
           createdBy: user.createdBy || 'system',
           createdByName: user.createdBy || 'النظام',
           department: user.profile?.department,
@@ -219,8 +239,8 @@ function UsersPageContent() {
       suspended: { label: 'معلق', variant: 'error' as const, className: 'bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] text-[var(--brand-error)] border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]' },
       pending: { label: 'في الانتظار', variant: 'secondary' as const, className: 'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]' }
     };
-    
-    const config = statusConfig[status as keyof typeof statusConfig] || 
+
+    const config = statusConfig[status as keyof typeof statusConfig] ||
                   { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -237,8 +257,8 @@ function UsersPageContent() {
       patient: { label: 'مريض', icon: <User className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]' },
       demo: { label: 'تجريبي', icon: <Eye className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]' }
     };
-    
-    const config = roleConfig[role as keyof typeof roleConfig] || 
+
+    const config = roleConfig[role as keyof typeof roleConfig] ||
                   { label: role, icon: null, className: '' };
     return (
       <Badge variant="outline" className={config.className}>
@@ -307,7 +327,7 @@ function UsersPageContent() {
           <Download className="h-4 w-4 ml-2" />
               تصدير
             </Button>
-        <Button 
+        <Button
           onClick={() => setIsCreateDialogOpen(true)}
           className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'
         >
@@ -315,7 +335,7 @@ function UsersPageContent() {
               مستخدم جديد
             </Button>
       </AdminHeader>
-      
+
       <main className="container-app py-8 space-y-8">
 
         {/* Stats Cards - Modern Design */}
@@ -331,7 +351,7 @@ function UsersPageContent() {
               isPositive: true
             }}
           />
-          
+
           <AdminStatsCard
             title="نشط"
             value={users.filter(u => u.status === 'active').length}
@@ -339,7 +359,7 @@ function UsersPageContent() {
             icon={UserCheck}
             iconColor="#10b981"
           />
-          
+
           <AdminStatsCard
             title="موثق"
             value={users.filter(u => u.isVerified).length}
@@ -347,7 +367,7 @@ function UsersPageContent() {
             icon={Shield}
             iconColor="#3b82f6"
           />
-          
+
           <AdminStatsCard
             title="آخر نشاط"
             value={users.filter(u => u.lastLoginAt && new Date(u.lastLoginAt) > new Date(Date.now() - 24 * 60 * 60 * 1000)).length}
@@ -442,7 +462,7 @@ function UsersPageContent() {
                   <TableRow key={user.id}>
                     <TableCell>
                       <input
-เขา type="checkbox"
+                        type="checkbox"
                         className="rounded border-gray-300"
                         checked={selectedUsers.includes(user.id)}
                         onChange={(e) => {
@@ -602,7 +622,7 @@ function UsersPageContent() {
                 تفاصيل المستخدم
               </DialogDescription>
             </DialogHeader>
-            
+
             {selectedUser && (
               <div className="space-y-4">
                 {/* User Info */}

@@ -34,7 +34,7 @@ export default function Header() {
     .map(([name, config]) => ({ name, ...config }));
 
   // Get AI features status
-  const aiFeaturesEnabled = Object.values(systemConfig.ai_features).some(feature => 
+  const aiFeaturesEnabled = Object.values(systemConfig.ai_features).some(feature =>
     typeof feature === 'object' && 'enabled' in feature && feature.enabled
   );
 
@@ -195,38 +195,74 @@ export default function Header() {
               </div>
             </div>
 
-            {/* User Menu */}
-            <div className='hs-dropdown relative inline-flex'>
+            {/* User Menu with Logout */}
+            <div className='hs-dropdown [--trigger:hover] relative inline-flex'>
               <button
-                className='h-9 w-9 rounded-full bg-[var(--brand-surface)] dark:bg-gray-700 focus:outline-none focus:ring-2'
+                className='h-9 w-9 rounded-full bg-[var(--brand-surface)] dark:bg-gray-700 focus:outline-none focus:ring-2 border border-[var(--brand-border)] dark:border-gray-600'
                 style={{ outlineColor: 'var(--brand-primary)' }}
                 aria-haspopup='menu'
                 aria-expanded='false'
-              />
-              <div
-                className='hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-44 bg-white dark:bg-gray-900 shadow-md rounded-lg p-1 border border-gray-200 dark:border-gray-700'
-                role='menu'
+                onClick={() => setShowUserDropdown(!showUserDropdown)}
               >
-                <div className='px-3 py-2 text-sm text-gray-500 dark:text-gray-400'>
-                  {t('header.welcome')}
-                </div>
-                <button className='w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800'>
-                  {t('header.profile')}
-                </button>
-                <button className='w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800'>
-                  {t('header.settings')}
-                </button>
-                <button 
-                  className='w-full text-start px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800 text-red-600'
-                  onClick={async () => {
-                    try { await fetch('/api/auth/logout', { method: 'POST', cache: 'no-store', credentials: 'include' }); } catch {}
-                    try { localStorage.removeItem('user'); } catch {}
-                    window.location.replace('/login');
-                  }}
+                <svg className='w-5 h-5 text-gray-600 dark:text-gray-300' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                  <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z' />
+                </svg>
+              </button>
+              {showUserDropdown && (
+                <div
+                  className='absolute right-0 mt-2 min-w-44 bg-white dark:bg-gray-900 shadow-lg rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden z-50'
+                  role='menu'
                 >
-                  {t('header.logout')}
-                </button>
-              </div>
+                  <div className='px-4 py-3 border-b border-gray-200 dark:border-gray-700'>
+                    <p className='text-sm font-medium text-gray-900 dark:text-white'>{t('header.welcome')}</p>
+                  </div>
+                  <div className='py-1'>
+                    <button
+                      className='w-full text-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
+                      onClick={() => setShowUserDropdown(false)}
+                    >
+                      👤 {t('header.profile')}
+                    </button>
+                    <button
+                      className='w-full text-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
+                      onClick={() => setShowUserDropdown(false)}
+                    >
+                      ⚙️ {t('header.settings')}
+                    </button>
+                  </div>
+                  <div className='border-t border-gray-200 dark:border-gray-700 py-1'>
+                    <button
+                      className='w-full text-start px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium flex items-center gap-2'
+                      onClick={async () => {
+                        try {
+                          // Sign out from Supabase
+                          const { getBrowserSupabase } = await import('@/lib/supabaseClient');
+                          const supabase = getBrowserSupabase();
+                          await supabase.auth.signOut();
+                        } catch {}
+                        try {
+                          await fetch('/api/auth/logout', {
+                            method: 'POST',
+                            cache: 'no-store',
+                            credentials: 'include'
+                          });
+                        } catch {}
+                        try {
+                          localStorage.removeItem('user');
+                          localStorage.removeItem('permissions');
+                        } catch {}
+                        setShowUserDropdown(false);
+                        window.location.replace('/login');
+                      }}
+                    >
+                      <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+                        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1' />
+                      </svg>
+                      {t('header.logout')}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

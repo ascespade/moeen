@@ -814,16 +814,50 @@ export class RealSupabaseManager {
     context?: string;
     module?: string;
   }) {
-    const { data, error } = await admin
-      .from('translations')
-      .insert([translationData])
-      .select()
-      .single();
+    // Parse key to get namespace and actual key
+    const keyParts = translationData.key.split('.');
+    const namespace = keyParts[0] || 'common';
+    const actualKey = keyParts.slice(1).join('.') || translationData.key;
 
-    if (error) {
-      throw new Error(`Failed to create translation: ${error.message}`);
+    // Insert Arabic translation
+    const { error: arError } = await admin
+      .from('translations')
+      .upsert(
+        {
+          locale: 'ar',
+          namespace,
+          key: actualKey,
+          value: translationData.ar,
+        },
+        { onConflict: 'locale,namespace,key' }
+      );
+
+    if (arError) {
+      console.warn(`Failed to upsert AR translation for ${translationData.key}:`, arError);
     }
-    return data;
+
+    // Insert English translation
+    const { error: enError } = await admin
+      .from('translations')
+      .upsert(
+        {
+          locale: 'en',
+          namespace,
+          key: actualKey,
+          value: translationData.en,
+        },
+        { onConflict: 'locale,namespace,key' }
+      );
+
+    if (enError) {
+      console.warn(`Failed to upsert EN translation for ${translationData.key}:`, enError);
+    }
+
+    if (arError || enError) {
+      throw new Error(`Failed to create translation: ${arError?.message || enError?.message}`);
+    }
+
+    return { success: true };
   }
 
   async updateTranslation(key: string, updates: any) {

@@ -5,6 +5,7 @@ export default {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/preline/preline.js',
   ],
   theme: {
     extend: {
@@ -42,7 +43,10 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Preline plugin removed - using JavaScript initialization instead
+    // require('preline/plugin'),
+  ],
   corePlugins: {
     // Disable default focus outline that may cause boxes
     outline: true,

@@ -10,7 +10,7 @@ import {
   BarChart3,
   Settings,
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
@@ -104,8 +104,7 @@ export default function SupervisorDashboard() {
 
   return (
     <ProtectedRoute allowedRoles={['supervisor', 'admin']}>
-      <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+      <div className='space-y-6'>
           {/* Header */}
           <div className='mb-8'>
             <h1 className='text-3xl font-bold text-gray-900 dark:text-white'>
@@ -176,11 +175,11 @@ export default function SupervisorDashboard() {
           </div>
 
           {/* Main Content Grid */}
-          <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
+          <div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
             {/* Staff Performance */}
             <div className='lg:col-span-2'>
               <Card className='p-6'>
-                <h2 className='text-xl font-semibold text-gray-900 dark:text-white mb-4'>
+                <h2 className='text-xl font-semibold text-[var(--text-primary)] mb-4'>
                   {t('supervisor.dashboard.staff_performance')}
                 </h2>
                 {supervisorData?.staffActivity &&
