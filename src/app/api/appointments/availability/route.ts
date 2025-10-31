@@ -6,6 +6,7 @@
 import { ErrorHandler } from '@/core/errors';
 import { ValidationHelper } from '@/core/validation';
 import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
@@ -21,6 +22,12 @@ export async function GET(request: NextRequest) {
   const { ipAddress, userAgent } = getClientInfo(request);
 
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
 

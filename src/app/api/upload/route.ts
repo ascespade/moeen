@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { authorize } from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
 export async function POST(request: NextRequest) {
   try {
-    const { user, error: authError } = await authorize(request);
-
-    if (authError || !user) {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const user = authResult.user;
 
     const formData = await request.formData();
     const file = formData.get('file') as File;
@@ -141,20 +143,18 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
-    const { user, error: authError } = await authorize(request);
-
-    if (authError || !user) {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const user = authResult.user;
 
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId');
@@ -198,9 +198,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ files: files || [] });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

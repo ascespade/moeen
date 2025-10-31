@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { authorize } from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 import { validateData, appointmentSchema } from '@/lib/validation/schemas';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 
@@ -8,11 +10,12 @@ export async function GET(request: NextRequest) {
   const startTime = Date.now();
 
   try {
-    const { user, error: authError } = await authorize(request);
-
-    if (authError || !user) {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const user = authResult.user;
 
     const { ipAddress, userAgent } = getClientInfo(request);
 
@@ -98,10 +101,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ appointments: appointments || [] });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -109,11 +109,12 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
 
   try {
-    const { user, error: authError } = await authorize(request);
-
-    if (authError || !user) {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const user = authResult.user;
 
     const { ipAddress, userAgent } = getClientInfo(request);
     const body = await request.json();
@@ -259,9 +260,6 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
