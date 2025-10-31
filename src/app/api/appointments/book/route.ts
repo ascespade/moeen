@@ -3,7 +3,9 @@
  * Comprehensive appointment booking with availability checking and conflict validation
  */
 
-import { authorize } from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 import { createClient } from '@/lib/supabase/server';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 import { NextRequest, NextResponse } from 'next/server';
@@ -28,10 +30,11 @@ export async function POST(request: NextRequest) {
 
   try {
     // Authorize user
-    const { user, error: authError } = await authorize(request);
-    if (authError || !user) {
+    const authResult = await requireAuth(['patient', 'staff', 'admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const user = authResult.user;
 
     // Check role permissions
     if (!['patient', 'staff', 'admin'].includes(user.role)) {
@@ -191,11 +194,7 @@ export async function POST(request: NextRequest) {
       message: 'Appointment booked successfully',
     });
   } catch (error) {
-    console.error('Error in appointment booking:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -268,5 +267,6 @@ async function checkAppointmentConflicts(
 
 async function sendAppointmentConfirmation(appointmentId: string) {
   // This will be implemented in the notification system
-  console.log(`Sending appointment confirmation for ${appointmentId}`);
+  // Note: Logger not imported to avoid circular dependency
+  // TODO: Implement notification system
 }

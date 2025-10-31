@@ -1,13 +1,17 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
 export async function GET(request: NextRequest) {
   try {
+    // Authorize admin or supervisor
+    const authResult = await requireAuth(['admin', 'supervisor'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     // Get doctors as staff for now
     const { data: staff, error } = await supabase
       .from('doctors')
@@ -16,30 +20,35 @@ export async function GET(request: NextRequest) {
 
     if (error) throw error;
 
-    // Generate mock work hours data
-    const staffWorkHours = staff.map((member: any) => ({
-      id: member.id,
-      name: `${member.first_name} ${member.last_name}`,
-      position: member.specialization || 'طبيب',
-      totalHours: Math.floor(Math.random() * 200) + 100,
-      todayHours: Math.floor(Math.random() * 8) + 1,
-      thisWeekHours: Math.floor(Math.random() * 40) + 20,
-      thisMonthHours: Math.floor(Math.random() * 160) + 80,
-      isOnDuty: Math.random() > 0.5,
-      lastCheckIn: '08:00',
-      lastCheckOut: '17:00',
-    }));
+    // Get real work hours data from database
+    const { data: workHoursData } = await supabase
+      .from('staff_work_hours')
+      .select('*')
+      .in('staff_id', staff.map((s: any) => s.id));
+
+    // Map staff with their real work hours
+    const staffWorkHours = staff.map((member: any) => {
+      const hoursData = workHoursData?.find((wh: any) => wh.staff_id === member.id);
+      return {
+        id: member.id,
+        name: `${member.first_name} ${member.last_name}`,
+        position: member.specialization || 'طبيب',
+        totalHours: hoursData?.total_hours || 0,
+        todayHours: hoursData?.today_hours || 0,
+        thisWeekHours: hoursData?.this_week_hours || 0,
+        thisMonthHours: hoursData?.this_month_hours || 0,
+        isOnDuty: hoursData?.is_on_duty || false,
+        lastCheckIn: hoursData?.last_check_in || null,
+        lastCheckOut: hoursData?.last_check_out || null,
+      };
+    });
 
     return NextResponse.json({
       success: true,
       data: staffWorkHours,
     });
   } catch (error) {
-    console.error('Staff hours API error:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch staff hours data' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

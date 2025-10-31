@@ -1,17 +1,28 @@
 import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function GET() {
   try {
-    // Simulate database connection check
-    const dbConnected = true; // Replace with actual DB check
+    // Real database connection check
+    const supabase = await createClient();
+    const { error: dbError } = await supabase
+      .from('users')
+      .select('count')
+      .limit(1);
+    
+    const dbConnected = !dbError;
     const timestamp = new Date().toISOString();
 
     if (!dbConnected) {
+      logger.error('Health check: Database connection failed', dbError);
       return NextResponse.json(
         {
           success: false,
           error: 'Database connection failed',
           timestamp,
+          details: dbError?.message,
         },
         { status: 503 }
       );
@@ -28,13 +39,7 @@ export async function GET() {
       message: 'System is healthy',
     });
   } catch (error) {
-    return NextResponse.json(
-      {
-        success: false,
-        error: 'Health check failed',
-        timestamp: new Date().toISOString(),
-      },
-      { status: 500 }
-    );
+    logger.error('Health check failed', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

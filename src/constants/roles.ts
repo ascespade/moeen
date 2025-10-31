@@ -3,7 +3,19 @@
  * نظام الأدوار والصلاحيات
  */
 
-export type UserRole = 'admin' | 'doctor' | 'patient' | 'staff' | 'supervisor';
+export type UserRole = 
+  | 'admin' 
+  | 'doctor' 
+  | 'patient' 
+  | 'staff' 
+  | 'supervisor'
+  | 'manager'
+  | 'agent'
+  | 'demo'
+  | 'nurse'
+  | 'employee'
+  | 'patient_responsible'
+  | 'other';
 
 export interface Permission {
   resource: string;
@@ -65,12 +77,19 @@ export const ROLES: Record<UserRole, { label: string; labelAr: string; permissio
 };
 
 // Default routes for each role after login
-export const DEFAULT_ROUTES: Record<UserRole, string> = {
+export const DEFAULT_ROUTES: Partial<Record<UserRole, string>> = {
   admin: '/admin/dashboard',
   doctor: '/dashboard/doctor',
   patient: '/dashboard/patient',
   staff: '/dashboard/staff',
   supervisor: '/dashboard/supervisor',
+  manager: '/admin/dashboard',
+  agent: '/dashboard/agent',
+  demo: '/dashboard',
+  nurse: '/dashboard/nurse',
+  employee: '/dashboard/employee',
+  patient_responsible: '/dashboard/patient',
+  other: '/dashboard',
 };
 
 // Check if a role has a specific permission

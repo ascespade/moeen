@@ -1,14 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
 // API لجلب جهات الاتصال الطارئة
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type');
     const priority = searchParams.get('priority');
@@ -31,21 +35,25 @@ export async function GET(request: NextRequest) {
     const { data, error } = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ emergencyContacts: data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // API لإضافة جهة اتصال طارئة جديدة (للمدراء فقط)
 export async function POST(request: NextRequest) {
   try {
+    // Authorize supervisor or admin only
+    const authResult = await requireAuth(['supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     const body = await request.json();
     const {
       name,
@@ -81,21 +89,25 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // API لتحديث جهة اتصال طارئة (للمدراء فقط)
 export async function PUT(request: NextRequest) {
   try {
+    // Authorize supervisor or admin only
+    const authResult = await requireAuth(['supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     const body = await request.json();
     const { id, ...updateData } = body;
 
@@ -114,21 +126,25 @@ export async function PUT(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // API لحذف جهة اتصال طارئة (للمدراء فقط)
 export async function DELETE(request: NextRequest) {
   try {
+    // Authorize supervisor or admin only
+    const authResult = await requireAuth(['supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
@@ -142,14 +158,11 @@ export async function DELETE(request: NextRequest) {
       .eq('id', id);
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

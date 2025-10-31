@@ -75,7 +75,7 @@ export default [
       ...reactHooks.configs.recommended.rules,
       ...next.configs.recommended.rules,
       'no-unused-vars': 'warn',
-      'no-console': 'warn',
+      'no-console': 'error', // Error in source files, allowed in scripts
       'prefer-const': 'error',
       'no-var': 'error',
       'object-shorthand': 'error',
@@ -86,7 +86,7 @@ export default [
         'warn',
         { argsIgnorePattern: '^_' },
       ],
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'error', // Enforce type safety
     },
   },
   {

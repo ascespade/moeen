@@ -9,8 +9,9 @@ import { z } from 'zod';
 
 import { ErrorHandler } from '@/core/errors';
 import { ValidationHelper } from '@/core/validation';
-import { authorize, requireRole } from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
+import { env } from '@/config/env';
 
 const paymentSchema = z.object({
   appointmentId: z.string().uuid('Invalid appointment ID'),
@@ -22,21 +23,18 @@ const paymentSchema = z.object({
   metadata: z.record(z.string(), z.any()).optional(),
 });
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-10-16',
 });
 
 export async function POST(_request: NextRequest) {
   try {
     // Authorize user
-    const { user: authUser, error: authError } = await authorize(_request);
-    if (
-      authError ||
-      !authUser ||
-      !requireRole(['patient', 'staff', 'admin'])(authUser)
-    ) {
+    const authResult = await requireAuth(['patient', 'staff', 'admin'])(_request);
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const authUser = authResult.user;
 
     const supabase = await createClient();
     const body = await _request.json();
@@ -255,7 +253,7 @@ async function __processMoyasarPayment(
     const moyasarResponse = await fetch('https://api.moyasar.com/v1/payments', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.MOYASAR_SECRET_KEY}`,
+        Authorization: `Bearer ${env.MOYASAR_SECRET_KEY || ''}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

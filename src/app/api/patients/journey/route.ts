@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/logger';
 
 const activationSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
@@ -366,7 +367,7 @@ async function createPatientFile(patientId: string, supabase: any) {
   });
 
   if (error) {
-    console.error('Failed to create patient file:', error);
+    logger.warn('Failed to create patient file', { patientId, error });
   }
 }
 

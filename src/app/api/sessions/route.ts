@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 const sessionSchema = z.object({
   patient_id: z.string().uuid('Invalid patient ID'),
@@ -17,6 +20,11 @@ const sessionSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId') || '';
     const doctorId = searchParams.get('doctorId') || '';
@@ -47,16 +55,18 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Error fetching sessions:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch sessions' },
-      { status: 500 }
-    );
+    logger.error('Error fetching sessions', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
+    // Authorize staff, doctor, supervisor, or admin
+    const authResult = await requireAuth(['staff', 'doctor', 'supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const body = await request.json();
     const validation = sessionSchema.safeParse(body);
 
@@ -75,10 +85,7 @@ export async function POST(request: NextRequest) {
       message: 'Session created successfully',
     });
   } catch (error) {
-    console.error('Error creating session:', error);
-    return NextResponse.json(
-      { error: 'Failed to create session' },
-      { status: 500 }
-    );
+    logger.error('Error creating session', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

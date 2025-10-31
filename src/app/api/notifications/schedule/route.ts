@@ -8,7 +8,7 @@ import { z } from 'zod';
 
 import { ErrorHandler } from '@/core/errors';
 import { ValidationHelper } from '@/core/validation';
-import { authorize, requireRole } from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
 
 const scheduleSchema = z.object({
@@ -33,11 +33,12 @@ const scheduleSchema = z.object({
 
 export async function POST(_request: NextRequest) {
   try {
-    // Authorize user
-    const { user: authUser, error: authError } = await authorize(_request);
-    if (authError || !authUser || !requireRole(['staff', 'admin'])(authUser)) {
+    // Authorize staff or admin
+    const authResult = await requireAuth(['staff', 'admin'])(_request);
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+    const authUser = authResult.user;
 
     const supabase = await createClient();
     const body = await _request.json();
@@ -141,6 +142,12 @@ export async function POST(_request: NextRequest) {
 
 export async function GET(_request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(_request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const supabase = await createClient();
     const { searchParams } = new URL(_request.url);
     const status = searchParams.get('status');
@@ -170,10 +177,7 @@ export async function GET(_request: NextRequest) {
     const { data: notifications, error } = await query;
 
     if (error) {
-      return NextResponse.json(
-        { error: 'Failed to fetch notifications' },
-        { status: 500 }
-      );
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({

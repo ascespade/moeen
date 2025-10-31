@@ -1,19 +1,27 @@
 import { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import jwt from 'jsonwebtoken';
+import { logger } from '@/lib/logger';
+import { env } from '@/config/env';
+
+export type UserRole =
+  | 'patient'
+  | 'doctor'
+  | 'staff'
+  | 'supervisor'
+  | 'admin'
+  | 'manager'
+  | 'agent'
+  | 'demo'
+  | 'nurse'
+  | 'employee'
+  | 'patient_responsible'
+  | 'other';
 
 export interface User {
   id: string;
   email: string;
-  role:
-    | 'patient'
-    | 'doctor'
-    | 'staff'
-    | 'supervisor'
-    | 'admin'
-    | 'manager'
-    | 'agent'
-    | 'demo';
+  role: UserRole;
   meta?: Record<string, any>;
 }
 
@@ -28,7 +36,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
     try {
       const token = request.cookies?.get?.('auth-token')?.value || null;
       if (token) {
-        const jwtSecret = process.env.JWT_SECRET;
+        const jwtSecret = env.JWT_SECRET;
         if (jwtSecret) {
           try {
             const decoded = jwt.verify(token, jwtSecret) as any;
@@ -45,7 +53,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
             };
           } catch (e) {
             // invalid token - fallthrough to supabase session
-            console.warn('[authorize] invalid auth-token JWT', e);
+            logger.debug('Invalid auth-token JWT, falling back to Supabase session', { error: e });
           }
         }
       }
@@ -111,12 +119,12 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
 
           rolePerms = { role_permissions: permResult?.data || [] };
         } catch (e) {
-          console.warn('[authorize] Failed to fetch role permissions:', e);
+          logger.warn('Failed to fetch role permissions', { error: e });
           rolePerms = null;
         }
       }
     } catch (e) {
-      console.warn('[authorize] Failed to fetch user_roles:', e);
+      logger.warn('Failed to fetch user_roles', { error: e });
       rolePerms = null;
     }
 
@@ -132,7 +140,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
 
       userPerms = userPermsResult?.data || [];
     } catch (e) {
-      console.warn('[authorize] Failed to fetch user_permissions:', e);
+      logger.warn('Failed to fetch user_permissions', { error: e });
       userPerms = [];
     }
 
@@ -158,7 +166,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
         if (up?.permissions?.code) codes.add(up.permissions.code);
       });
     } catch (error) {
-      console.warn('[authorize] Error processing permissions:', error);
+      logger.warn('Error processing permissions', { error });
     }
 
     // Fallback: If no permissions found, use PermissionManager
@@ -169,23 +177,15 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
         if (Array.isArray(rolePermsList)) {
           rolePermsList.forEach((p: string) => codes.add(p));
         } else {
-          // Ultimate fallback: basic permissions
-          if (userData.role === 'admin') {
-            codes.add('dashboard:view');
-            codes.add('*');
-          } else {
-            codes.add('dashboard:view');
-          }
+          // Ultimate fallback: basic permissions based on role
+          const fallbackPerms = getDefaultPermissionsForRole(userData.role);
+          fallbackPerms.forEach((p: string) => codes.add(p));
         }
       } catch (e) {
-        console.warn('[authorize] PermissionManager fallback failed:', e);
+        logger.warn('PermissionManager fallback failed', { error: e });
         // Ultimate fallback: basic permissions based on role
-        if (userData.role === 'admin' || userData.role === 'manager') {
-          codes.add('dashboard:view');
-          codes.add('*');
-        } else {
-          codes.add('dashboard:view');
-        }
+        const fallbackPerms = getDefaultPermissionsForRole(userData.role);
+        fallbackPerms.forEach((p: string) => codes.add(p));
       }
     }
 
@@ -211,7 +211,27 @@ export function requireRole(
   return (user: User) => allowedRoles.includes(user.role);
 }
 
-export function requireAuth(allowedRoles?: User['role'][]) {
+// Helper function to get default permissions for a role
+function getDefaultPermissionsForRole(role: string): string[] {
+  const rolePermMap: Record<string, string[]> = {
+    admin: ['dashboard:view', '*'],
+    manager: ['dashboard:view', '*'],
+    supervisor: ['dashboard:view', 'reports:view', 'analytics:view'],
+    doctor: ['dashboard:view', 'patients:view', 'appointments:manage', 'medical_records:view'],
+    nurse: ['dashboard:view', 'patients:view', 'appointments:view'],
+    staff: ['dashboard:view', 'appointments:view'],
+    employee: ['dashboard:view', 'appointments:view'],
+    agent: ['dashboard:view', 'crm:view', 'conversations:manage'],
+    patient: ['dashboard:view', 'profile:view', 'appointments:create'],
+    patient_responsible: ['dashboard:view', 'profile:view'],
+    demo: ['dashboard:view'],
+    other: ['dashboard:view'],
+  };
+
+  return rolePermMap[role] || ['dashboard:view'];
+}
+
+export function requireAuth(allowedRoles?: UserRole[]) {
   return async (request: NextRequest) => {
     const { user, error } = await authorize(request);
 
@@ -219,7 +239,7 @@ export function requireAuth(allowedRoles?: User['role'][]) {
       return { authorized: false, user: null, error };
     }
 
-    if (allowedRoles && !allowedRoles.includes(user.role)) {
+    if (allowedRoles && allowedRoles.length > 0 && !allowedRoles.includes(user.role)) {
       return { authorized: false, user, error: 'Insufficient permissions' };
     }
 

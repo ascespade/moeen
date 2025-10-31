@@ -3,10 +3,12 @@
  * Real Supabase password reset with full tracking
  */
 
-import logger from '@/lib/monitoring/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { getServiceSupabase } from '@/lib/supabaseClient';
+import { env } from '@/config/env';
+import { logger } from '@/lib/logger';
+import { ErrorHandler } from '@/core/errors';
 import { z } from 'zod';
 
 // Helper to extract IP address from request
@@ -64,14 +66,14 @@ export async function POST(request: NextRequest) {
       .single();
 
     // Send password reset email
-    const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3002'}/reset-password`;
+    const redirectUrl = `${env.NEXT_PUBLIC_APP_URL || 'http://localhost:3002'}/reset-password`;
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: redirectUrl,
     });
 
     if (error) {
-      console.error('Password reset error:', error);
+      logger.error('Password reset error', error);
       // Don't reveal if email exists or not for security
       return NextResponse.json({
         success: true,
@@ -81,16 +83,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create comprehensive audit log
-    const supabaseAdmin = createServiceClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
-      {
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false,
-        },
-      }
-    );
+    const supabaseAdmin = getServiceSupabase();
 
     if (user) {
       try {
@@ -111,7 +104,7 @@ export async function POST(request: NextRequest) {
           duration_ms: Date.now() - startTime,
         });
       } catch (auditError) {
-        console.error('Audit log error (non-critical):', auditError);
+        logger.warn('Audit log error (non-critical)', { error: auditError });
       }
     } else {
       // Log attempt for non-existent user
@@ -130,7 +123,7 @@ export async function POST(request: NextRequest) {
           duration_ms: Date.now() - startTime,
         });
       } catch (auditError) {
-        console.error('Audit log error (non-critical):', auditError);
+        logger.warn('Audit log error (non-critical)', { error: auditError });
       }
     }
 
@@ -139,13 +132,7 @@ export async function POST(request: NextRequest) {
       message: 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني',
     });
   } catch (error) {
-    console.error('Forgot password error:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: 'حدث خطأ أثناء معالجة طلبك',
-      },
-      { status: 500 }
-    );
+    logger.error('Forgot password error', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

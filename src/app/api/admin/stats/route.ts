@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
   try {
@@ -24,7 +25,7 @@ export async function GET(request: NextRequest) {
       .select('role, isActive, createdAt');
 
     if (usersError) {
-      console.error('Error fetching users:', usersError);
+      logger.error('Error fetching users', usersError);
     }
 
     // Calculate user stats
@@ -84,7 +85,7 @@ export async function GET(request: NextRequest) {
         };
       }
     } catch (error) {
-      console.log('Appointments table not found, using default stats');
+      logger.debug('Appointments table not found, using default stats');
     }
 
     // Get system configuration
@@ -125,7 +126,7 @@ export async function GET(request: NextRequest) {
         });
       }
     } catch (error) {
-      console.log('System config table not found, using default config');
+      logger.debug('System config table not found, using default config');
     }
 
     const stats = {

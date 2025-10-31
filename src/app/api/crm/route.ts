@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
 export async function GET(request: NextRequest) {
   try {
+    // Authorize staff, supervisor, or admin
+    const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const searchTerm = searchParams.get('search') || '';
     const limit = parseInt(searchParams.get('limit') || '50');
@@ -21,12 +29,18 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch crm' }, { status: 500 });
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
+    // Authorize supervisor or admin only
+    const authResult = await requireAuth(['supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const body = await request.json();
     const data = await realDB.createUser({
       ...body,
@@ -39,9 +53,6 @@ export async function POST(request: NextRequest) {
       message: 'crm created successfully',
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to create crm' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

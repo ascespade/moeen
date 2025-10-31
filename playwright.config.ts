@@ -1,18 +1,4 @@
-import { defineConfig } from '@playwright/test';
-
-export default defineConfig({
-  timeout: 60_000,
-  testDir: 'tests',
-  use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001',
-    headless: true,
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
-  },
-  reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
-});
-
-import { devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -115,10 +101,12 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run dev',
-  //   url: 'http://localhost:3001',
-  //   reuseExistingServer: true, // Always reuse existing server
-  //   timeout: 120 * 1000,
-  // },
+  webServer: {
+    command: 'npm run dev',
+    url: 'http://localhost:3001',
+    reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
+    stdout: 'pipe',
+    stderr: 'pipe',
+  },
 });

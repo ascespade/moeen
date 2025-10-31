@@ -4,29 +4,19 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 const supabase = getServiceSupabase();
 
 export async function GET(request: NextRequest) {
-  const logError = (error: any, context: string) => {
-    const timestamp = new Date().toISOString();
-    const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${error.message || error}`;
-    // Log to file if possible
-    try {
-      const fs = require('fs');
-      const path = require('path');
-      const logFile = path.join(
-        process.cwd(),
-        'logs',
-        'dashboard_refactor.log'
-      );
-      fs.appendFileSync(logFile, `${errorMessage}\n`);
-    } catch (logError) {
-      // Ignore logging errors
-    }
-  };
-
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     // Check if database is accessible first
     const { data: healthCheck, error: healthError } = await supabase
       .from('system_health')
@@ -34,7 +24,7 @@ export async function GET(request: NextRequest) {
       .limit(1);
 
     if (healthError) {
-      logError(healthError, 'database_connection');
+      logger.error('Dashboard metrics database connection error', healthError);
       // Return fallback data when DB is down
       return NextResponse.json({
         timestamp: new Date().toISOString(),
@@ -205,7 +195,7 @@ export async function GET(request: NextRequest) {
           'healthcareMetrics',
           'crmMetrics',
         ];
-        logError(result.reason, contexts[index] || 'unknown');
+        logger.error(`Failed to fetch ${contexts[index] || 'unknown'} metrics`, result.reason);
       }
     });
 
@@ -234,16 +224,8 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(metrics);
   } catch (error) {
-    logError(error, 'main_handler');
-    return NextResponse.json(
-      {
-        error: 'Failed to fetch metrics',
-        timestamp: new Date().toISOString(),
-        fallback: true,
-        message: 'System error occurred, returning fallback data',
-      },
-      { status: 500 }
-    );
+    logger.error('Failed to fetch dashboard metrics', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -535,7 +517,7 @@ async function getHealthcareMetrics() {
 
     // Group doctors by specialty
     const specialties = doctors.reduce((acc: any, doctor: any) => {
-      const specialty = doctor.specialty || 'غير محدد';
+      const specialty = doctor.specialty || '??? ????';
       acc[specialty] = (acc[specialty] || 0) + 1;
       return acc;
     }, {});

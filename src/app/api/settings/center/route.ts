@@ -1,14 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
 // API لجلب معلومات المركز
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user (center info can be public)
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const includeStaff = searchParams.get('include_staff') === 'true';
     const includeEmergencyContacts =
@@ -22,7 +26,7 @@ export async function GET(request: NextRequest) {
       .single();
 
     if (centerError) {
-      return NextResponse.json({ error: centerError.message }, { status: 500 });
+      return ErrorHandler.getInstance().handle(centerError as Error);
     }
 
     const response: any = { center: centerInfo };
@@ -74,16 +78,20 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(response);
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // API لتحديث معلومات المركز (للمدراء فقط)
 export async function PUT(request: NextRequest) {
   try {
+    // Authorize admin only
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     const body = await request.json();
     const {
       name,
@@ -133,14 +141,11 @@ export async function PUT(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

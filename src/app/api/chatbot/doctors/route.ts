@@ -1,13 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const specialty = searchParams.get('specialty');
     const date = searchParams.get('date');
@@ -25,10 +30,8 @@ export async function GET(request: NextRequest) {
     const { data: doctors, error } = await query;
 
     if (error) {
-      return NextResponse.json(
-        { error: 'Failed to fetch doctors' },
-        { status: 500 }
-      );
+      logger.error('Error fetching doctors', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     // Get available time slots for each doctor
@@ -50,14 +53,13 @@ export async function GET(request: NextRequest) {
       doctors: doctorsWithSlots,
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in chatbot doctors GET', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 async function getAvailableTimeSlots(doctorId: string, date?: string) {
+  const supabase = await createClient();
   const appointmentDate = date || new Date().toISOString().split('T')[0];
 
   // Get existing appointments for this doctor on this date

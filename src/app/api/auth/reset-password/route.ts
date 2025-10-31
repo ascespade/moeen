@@ -3,10 +3,11 @@
  * Real Supabase password update - no mocks
  */
 
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
+import { ErrorHandler } from '@/core/errors';
 
 const resetPasswordSchema = z
   .object({
@@ -62,7 +63,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (updateError) {
-      console.error('Password update error:', updateError);
+      logger.error('Password update error', updateError);
       return NextResponse.json(
         {
           success: false,
@@ -93,7 +94,7 @@ export async function POST(request: NextRequest) {
         },
       });
     } catch (auditError) {
-      console.error('Audit log error (non-critical):', auditError);
+      logger.warn('Audit log error (non-critical)', { error: auditError });
     }
 
     return NextResponse.json({
@@ -101,13 +102,7 @@ export async function POST(request: NextRequest) {
       message: 'تم تحديث كلمة المرور بنجاح',
     });
   } catch (error) {
-    console.error('Reset password error:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: 'حدث خطأ أثناء معالجة طلبك',
-      },
-      { status: 500 }
-    );
+    logger.error('Reset password error', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

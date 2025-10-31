@@ -1,11 +1,19 @@
 import { realDB } from '@/lib/supabase-real';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'all';
 
@@ -20,7 +28,7 @@ export async function GET(request: NextRequest) {
       .maybeSingle();
 
     if (centerError)
-      console.warn('center_info fetch error:', centerError.message);
+      logger.warn('Center info fetch error', { error: centerError.message });
 
     // Fetch homepage-related settings from settings table (keys stored as JSON)
     const keys = [
@@ -37,7 +45,7 @@ export async function GET(request: NextRequest) {
       .in('key', keys);
 
     if (settingsError)
-      console.warn('settings fetch error:', settingsError.message);
+      logger.warn('Settings fetch error', { error: settingsError.message });
 
     const settingsMap: Record<string, any> = {};
     (settingsData || []).forEach((item: any) => {
@@ -111,10 +119,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(dynamicData);
   } catch (error) {
-    console.error('Error in dynamic-data API:', error);
-    return NextResponse.json(
-      { error: 'فشل في جلب البيانات الديناميكية' },
-      { status: 500 }
-    );
+    logger.error('Error in dynamic-data API', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

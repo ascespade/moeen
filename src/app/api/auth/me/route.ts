@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authorize } from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/logger';
+import { ErrorHandler } from '@/core/errors';
 
 export async function GET(request: NextRequest) {
   try {
@@ -9,7 +11,7 @@ export async function GET(request: NextRequest) {
     const clientUserRole = request.headers.get('x-user-role');
 
     if (clientUserId && clientUserEmail && clientUserRole) {
-      console.log('[api/auth/me] Using client-provided user info', { clientUserEmail });
+      logger.debug('Using client-provided user info', { email: clientUserEmail });
       try {
         const { createClient } = await import('@/lib/supabase/server');
         const supabase = await createClient();
@@ -51,12 +53,15 @@ export async function GET(request: NextRequest) {
           }
         }
       } catch (e) {
-        console.warn('[api/auth/me] Client user verification failed:', e);
+        logger.warn('Client user verification failed', { error: e });
       }
     }
 
-    const { user, error } = await authorize(request);
-    console.log('[api/auth/me] authorize result', { userId: user?.id, error });
+    // Use requireAuth for proper authentication
+    const authResult = await requireAuth()(request);
+    const user = authResult.user;
+    const error = authResult.error;
+    logger.debug('Auth result', { userId: user?.id, authorized: authResult.authorized, error });
 
     // Primary path: Supabase auth session
     if (user && !error) {
@@ -143,7 +148,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    console.log('[api/auth/me] returning 401 unauthorized', { error });
+    logger.debug('Returning 401 unauthorized', { error });
     return NextResponse.json(
       {
         success: false,
@@ -153,14 +158,7 @@ export async function GET(request: NextRequest) {
       { status: 401 }
     );
   } catch (error) {
-    console.error('[api/auth/me] unexpected error:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: 'Internal server error',
-        user: null,
-      },
-      { status: 500 }
-    );
+    logger.error('Unexpected error in /api/auth/me', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

@@ -16,6 +16,8 @@
     "type:watch": "tsc --noEmit --watch",
     "test": "playwright test",
     "test:unit": "vitest run --reporter=verbose",
+    "test:agent": "node scripts/run-agent-tasks.mjs",
+    "test:agent:watch": "node scripts/run-agent-tasks.mjs --watch",
     "test:integration": "vitest run --config vitest.integration.config.js",
     "test:e2e": "playwright test --config=playwright-auto.config.ts",
     "test:e2e:headed": "playwright test --config=playwright-auto.config.ts --headed",
@@ -130,6 +132,7 @@
     "jsdom": "^27.0.1",
     "lighthouse": "^12.1.0",
     "prettier": "^3.6.2",
-    "vitest": "^4.0.4"
+    "vitest": "^4.0.4",
+    "wait-on": "^9.0.1"
   }
 }

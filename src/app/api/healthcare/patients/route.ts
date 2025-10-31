@@ -1,14 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 // GET /api/healthcare/patients - جلب المرضى
 export async function GET(request: NextRequest) {
   try {
+    // Authorize staff, supervisor, doctor, or admin
+    const authResult = await requireAuth(['staff', 'supervisor', 'doctor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const { searchParams } = new URL(request.url);
     const search = searchParams.get('search');
     const gender = searchParams.get('gender');
@@ -17,7 +24,7 @@ export async function GET(request: NextRequest) {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
 
-    let query = supabase
+    let query = supabaseAdmin
       .from('patients')
       .select(
         `
@@ -63,7 +70,8 @@ export async function GET(request: NextRequest) {
     const { data: patients, error, count } = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error fetching patients', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({
@@ -76,16 +84,22 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in healthcare patients GET', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // POST /api/healthcare/patients - إنشاء مريض جديد
 export async function POST(request: NextRequest) {
   try {
+    // Authorize staff, supervisor, doctor, or admin
+    const authResult = await requireAuth(['staff', 'supervisor', 'doctor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const body = await request.json();
     const {
       first_name,
@@ -103,7 +117,7 @@ export async function POST(request: NextRequest) {
       customer_id,
     } = body;
 
-    const { data: patient, error } = await supabase
+    const { data: patient, error } = await supabaseAdmin
       .from('patients')
       .insert({
         first_name,
@@ -125,14 +139,13 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error creating patient', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ patient }, { status: 201 });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in healthcare patients POST', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

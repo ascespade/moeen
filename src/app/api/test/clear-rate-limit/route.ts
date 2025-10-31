@@ -5,10 +5,12 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { clearRateLimitCache } from '@/middleware/rate-limiter';
+import { ErrorHandler } from '@/core/errors';
+import { env } from '@/config/env';
 
 export async function POST(request: NextRequest) {
   // Only allow in development/testing environment
-  if (process.env.NODE_ENV === 'production') {
+  if (env.NODE_ENV === 'production') {
     return NextResponse.json(
       { error: 'Not available in production' },
       { status: 403 }
@@ -22,9 +24,6 @@ export async function POST(request: NextRequest) {
       message: 'Rate limit cache cleared',
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to clear rate limit cache' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

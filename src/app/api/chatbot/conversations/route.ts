@@ -1,19 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 // GET /api/chatbot/conversations - جلب المحادثات
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     const { searchParams } = new URL(request.url);
     const whatsapp_number = searchParams.get('whatsapp_number');
     const status = searchParams.get('status');
 
-    let query = supabase
+    let query = supabaseAdmin
       .from('chatbot_conversations')
       .select(
         `
@@ -39,21 +45,28 @@ export async function GET(request: NextRequest) {
     const { data: conversations, error } = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error fetching conversations', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ conversations });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in chatbot conversations GET', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // POST /api/chatbot/conversations - إنشاء محادثة جديدة
 export async function POST(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const body = await request.json();
     const {
       whatsapp_number,
@@ -62,7 +75,7 @@ export async function POST(request: NextRequest) {
       context_data = {},
     } = body;
 
-    const { data: conversation, error } = await supabase
+    const { data: conversation, error } = await supabaseAdmin
       .from('chatbot_conversations')
       .insert({
         whatsapp_number,
@@ -75,14 +88,13 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error creating conversation', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ conversation }, { status: 201 });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in chatbot conversations POST', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function POST(request: NextRequest) {
   try {
+    // Authorize any authenticated user (chatbot can create appointments for users)
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const {
       doctorId,
       appointmentTime,
@@ -56,7 +64,7 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (createError) {
-        console.error('Patient creation error:', createError);
+        logger.error('Patient creation error', createError);
         return NextResponse.json(
           { error: `Failed to create patient: ${createError.message}` },
           { status: 500 }
@@ -144,7 +152,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (appointmentError) {
-      console.error('Appointment creation error:', appointmentError);
+      logger.error('Appointment creation error', appointmentError);
       return NextResponse.json(
         { error: `Failed to create appointment: ${appointmentError.message}` },
         { status: 500 }
@@ -189,15 +197,18 @@ export async function POST(request: NextRequest) {
       message: 'تم حجز الموعد بنجاح!',
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId');
     const doctorId = searchParams.get('doctorId');
@@ -244,10 +255,7 @@ export async function GET(request: NextRequest) {
     const { data: appointments, error } = await query;
 
     if (error) {
-      return NextResponse.json(
-        { error: 'Failed to fetch appointments' },
-        { status: 500 }
-      );
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({
@@ -255,10 +263,7 @@ export async function GET(request: NextRequest) {
       appointments: appointments || [],
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
