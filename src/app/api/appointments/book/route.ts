@@ -6,9 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
-import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
-import { requireAuth } from '@/lib/auth/authorize';
+import { authorize } from '@/lib/auth/authorize';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 
 const bookingSchema = z.object({
@@ -30,24 +28,30 @@ export async function POST(request: NextRequest) {
 
   try {
     // Authorize user
-    const authResult = await requireAuth(['patient', 'staff', 'admin'])(
-      request
-    );
-    if (!authResult.authorized) {
+    const { user, error: authError } = await authorize(request);
+    if (authError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    // Check role permissions
+    if (!['patient', 'staff', 'admin'].includes(user.role)) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
     const supabase = await createClient();
     const body = await request.json();
 
     // Validate input
-    const validation = await ValidationHelper.validateAsync(
-      bookingSchema,
-      body
-    );
+    const validation = bookingSchema.safeParse(body);
     if (!validation.success) {
       return NextResponse.json(
-        { error: validation.error.message },
+        {
+          error: 'Validation failed',
+          details: validation.error.issues.map((err: any) => ({
+            path: err.path.join('.'),
+            message: err.message,
+          })),
+        },
         { status: 400 }
       );
     }
@@ -61,7 +65,7 @@ export async function POST(request: NextRequest) {
       duration,
       isVirtual,
       insuranceClaimId,
-    } = validation.data!;
+    } = validation.data;
 
     // Check doctor availability
     const doctorAvailability = await checkDoctorAvailability(
@@ -141,7 +145,7 @@ export async function POST(request: NextRequest) {
         status: 'pending',
         payment_status: 'unpaid',
         insurance_claim_id: insuranceClaimId,
-        created_by: authResult.user!.id,
+        created_by: user.id,
         booking_source: 'web',
         last_activity_at: new Date().toISOString(),
       })
@@ -161,7 +165,7 @@ export async function POST(request: NextRequest) {
       action: 'appointment_created',
       resource_type: 'appointment',
       resource_id: appointment.id,
-      user_id: authResult.user!.id,
+      user_id: user.id,
       ip_address: ipAddress,
       user_agent: userAgent,
       status: 'success',
@@ -187,7 +191,11 @@ export async function POST(request: NextRequest) {
       message: 'Appointment booked successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    console.error('Error in appointment booking:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
