@@ -72,14 +72,14 @@ export default function LoginPage() {
         .select('permission_id')
         .eq('role_id', roleIdToUse);
       const rolePermIds = (rolePermRows || [])
-        .map(rp => rp.permission_id)
+        .map((rp: { permission_id: string }) => rp.permission_id)
         .filter(Boolean);
       if (rolePermIds.length) {
         const { data: permRows } = await supabase
           .from('permissions')
           .select('code')
           .in('id', rolePermIds as string[]);
-        (permRows || []).forEach(p => p?.code && perms.add(p.code));
+        (permRows || []).forEach((p: { code?: string }) => p?.code && perms.add(p.code));
       }
     }
 
@@ -89,14 +89,14 @@ export default function LoginPage() {
       .select('permission_id')
       .eq('user_id', userId);
     const userPermIds = (userPermRows || [])
-      .map(up => up.permission_id)
+      .map((up: { permission_id: string }) => up.permission_id)
       .filter(Boolean);
     if (userPermIds.length) {
       const { data: permRows } = await supabase
         .from('permissions')
         .select('code')
         .in('id', userPermIds as string[]);
-      (permRows || []).forEach(p => p?.code && perms.add(p.code));
+      (permRows || []).forEach((p: { code?: string }) => p?.code && perms.add(p.code));
     }
 
     return Array.from(perms);

@@ -230,9 +230,9 @@ export default function ModernAdminDashboard() {
       props: {
         notifications: mockNotifications,
         maxHeight: 400,
-        onMarkAsRead: (id) => console.log('Mark as read:', id),
+        onMarkAsRead: (id: string) => console.log('Mark as read:', id),
         onMarkAllAsRead: () => console.log('Mark all as read'),
-        onActionClick: (notification) => console.log('Action:', notification)
+        onActionClick: (notification: Notification) => console.log('Action:', notification)
       }
     }
   ], [stats, localizedNumber]);
@@ -241,29 +241,25 @@ export default function ModernAdminDashboard() {
     <div className='flex h-screen flex-col bg-neutral-50 dark:bg-neutral-950'>
       <AdminHeader
         title='لوحة التحكم الإدارية المحدثة'
-        breadcrumbs={[
-          { label: 'الرئيسية', href: '/' },
-          { label: 'لوحة التحكم', href: '/admin/admin-dashboard' },
-          { label: 'النسخة المحدثة', href: '/admin/dashboard-modern' },
-        ]}
-        actions={
-          <div className='flex gap-2'>
-            <Button
-              variant='outline'
-              icon={Settings}
-              onClick={() => setIsGridEditable(!isGridEditable)}
-            >
-              {isGridEditable ? 'إنهاء التخصيص' : 'تخصيص الداشبورد'}
-            </Button>
-            <Button variant='outline' icon={Download}>
-              تصدير البيانات
-            </Button>
-            <Button variant='primary' icon={RefreshCw} onClick={refetch}>
-              تحديث
-            </Button>
-          </div>
-        }
-      />
+      >
+        <div className='flex items-center gap-4'>
+          <Button
+            variant='outline'
+            onClick={() => setIsGridEditable(!isGridEditable)}
+          >
+            <Settings className='w-4 h-4 ml-2' />
+            {isGridEditable ? 'إنهاء التخصيص' : 'تخصيص الداشبورد'}
+          </Button>
+          <Button variant='outline'>
+            <Download className='w-4 h-4 ml-2' />
+            تصدير البيانات
+          </Button>
+          <Button variant='primary' onClick={refetch}>
+            <RefreshCw className='w-4 h-4 ml-2' />
+            تحديث
+          </Button>
+        </div>
+      </AdminHeader>
 
       <main className='flex-1 overflow-auto'>
         {/* Period Selector */}
@@ -305,7 +301,7 @@ export default function ModernAdminDashboard() {
               // Handle adding new widget
               console.log('Add new widget');
             }}
-            onItemRemove={(id) => {
+            onItemRemove={(id: string) => {
               // Handle removing widget
               console.log('Remove widget:', id);
             }}
@@ -315,7 +311,7 @@ export default function ModernAdminDashboard() {
 
         {/* Quick Actions */}
         <div className='px-6 pb-6'>
-          <Card variant="elevated">
+          <Card>
             <div className='p-6'>
               <h3 className='text-lg font-semibold text-neutral-900 dark:text-neutral-50 mb-4'>
                 الإجراءات السريعة
@@ -323,42 +319,42 @@ export default function ModernAdminDashboard() {
               <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4'>
                 <Button
                   variant='outline'
-                  className='flex h-20 flex-col items-center justify-center hover-lift'
+                  className='flex h-20 flex-col items-center justify-center hover:scale-105 transition-transform'
                 >
                   <Users className='w-6 h-6 mb-2 text-primary-600' />
                   <span className='text-sm'>إضافة مريض</span>
                 </Button>
                 <Button
                   variant='outline'
-                  className='flex h-20 flex-col items-center justify-center hover-lift'
+                  className='flex h-20 flex-col items-center justify-center hover:scale-105 transition-transform'
                 >
                   <Calendar className='w-6 h-6 mb-2 text-primary-600' />
                   <span className='text-sm'>حجز موعد</span>
                 </Button>
                 <Button
                   variant='outline'
-                  className='flex h-20 flex-col items-center justify-center hover-lift'
+                  className='flex h-20 flex-col items-center justify-center hover:scale-105 transition-transform'
                 >
                   <FileText className='w-6 h-6 mb-2 text-primary-600' />
                   <span className='text-sm'>مطالبة تأمين</span>
                 </Button>
                 <Button
                   variant='outline'
-                  className='flex h-20 flex-col items-center justify-center hover-lift'
+                  className='flex h-20 flex-col items-center justify-center hover:scale-105 transition-transform'
                 >
                   <Stethoscope className='w-6 h-6 mb-2 text-primary-600' />
                   <span className='text-sm'>إضافة موظف</span>
                 </Button>
                 <Button
                   variant='outline'
-                  className='flex h-20 flex-col items-center justify-center hover-lift'
+                  className='flex h-20 flex-col items-center justify-center hover:scale-105 transition-transform'
                 >
                   <BarChart3 className='w-6 h-6 mb-2 text-primary-600' />
                   <span className='text-sm'>تقرير مالي</span>
                 </Button>
                 <Button
                   variant='outline'
-                  className='flex h-20 flex-col items-center justify-center hover-lift'
+                  className='flex h-20 flex-col items-center justify-center hover:scale-105 transition-transform'
                 >
                   <Settings className='w-6 h-6 mb-2 text-primary-600' />
                   <span className='text-sm'>الإعدادات</span>

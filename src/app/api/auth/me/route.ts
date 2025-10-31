@@ -98,7 +98,7 @@ export async function GET(request: NextRequest) {
               .select('permission_id')
               .eq('role_id', ur.role_id);
             const ids = (rolePermRows || [])
-              .map(rp => rp.permission_id)
+              .map((rp: { permission_id: string }) => rp.permission_id)
               .filter(Boolean);
             if (ids.length) {
               const { data: permRows } = await supabase

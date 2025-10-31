@@ -64,35 +64,31 @@ const doctorNavigation = [
 export default function DoctorDashboardPage() {
   return (
     <DashboardLayout
-      header={
-        <DashboardHeader
-          title="د. أحمد محمد"
-          subtitle="طبيب أسرة - عيادة الهمم"
-          user={{
-            name: "د. أحمد محمد",
-            role: "طبيب أسرة",
-            avatar: undefined // يمكن إضافة صورة لاحقاً
-          }}
-          onThemeToggle={() => console.log('Toggle theme')}
-          isDarkMode={false}
-          onSearch={(query) => console.log('Search:', query)}
-          showNotifications={true}
-          notificationCount={3}
-          onNotificationsClick={() => console.log('Show notifications')}
-        />
-      }
-      sidebar={
-        <DashboardSidebar
-          navigation={doctorNavigation}
-          activeItem="dashboard"
-          collapsed={false}
-        />
-      }
-      content={
-        <DashboardContent>
-          <DoctorDashboard doctorId="doctor-123" />
-        </DashboardContent>
-      }
+      header={{
+        title: "د. أحمد محمد",
+        subtitle: "طبيب أسرة - عيادة الهمم",
+        user: {
+          name: "د. أحمد محمد",
+          role: "طبيب أسرة",
+          avatar: undefined
+        },
+        onSearch: (query) => console.log('Search:', query),
+        showNotifications: true,
+        notificationCount: 3,
+        onNotificationsClick: () => console.log('Show notifications')
+      }}
+      sidebar={{
+        navigation: doctorNavigation,
+        activeItem: "dashboard",
+        collapsed: false
+      }}
+      content={{
+        children: (
+          <DashboardContent>
+            <DoctorDashboard doctorId="doctor-123" />
+          </DashboardContent>
+        )
+      }}
     />
   );
 }

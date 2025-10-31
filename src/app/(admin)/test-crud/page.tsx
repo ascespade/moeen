@@ -306,10 +306,18 @@ export default function CRUDTestPage() {
     const updatedTests = [...tests];
 
     for (let i = 0; i < updatedTests.length; i++) {
-      updatedTests[i] = { ...updatedTests[i], status: 'running' };
+      const currentTest = updatedTests[i];
+      if (!currentTest) continue;
+      updatedTests[i] = { 
+        ...currentTest, 
+        status: 'running' as const,
+        id: currentTest.id,
+        name: currentTest.name,
+        category: currentTest.category
+      };
       setTests([...updatedTests]);
 
-      const result = await runTest(updatedTests[i].id);
+      const result = await runTest(currentTest.id);
       updatedTests[i] = result;
       setTests([...updatedTests]);
 
@@ -329,7 +337,15 @@ export default function CRUDTestPage() {
       const index = updatedTests.findIndex(t => t.id === categoryTest.id);
       if (index === -1) continue;
 
-      updatedTests[index] = { ...updatedTests[index], status: 'running' };
+      const currentTest = updatedTests[index];
+      if (!currentTest) continue;
+      updatedTests[index] = { 
+        ...currentTest, 
+        status: 'running' as const,
+        id: currentTest.id,
+        name: currentTest.name,
+        category: currentTest.category
+      };
       setTests([...updatedTests]);
 
       const result = await runTest(categoryTest.id);
