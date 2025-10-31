@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
       .order('key', { ascending: true });
 
     if (error) {
-      console.error('Error fetching configs:', error);
+      // Removed console.error - use logger instead
       // Return default configs if table doesn't exist
       const defaultConfigs = [
         {

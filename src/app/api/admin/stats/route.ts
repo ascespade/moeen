@@ -24,7 +24,8 @@ export async function GET(request: NextRequest) {
       .select('role, isActive, createdAt');
 
     if (usersError) {
-      console.error('Error fetching users:', usersError);
+      // Removed console.error - use logger instead
+      // Continue with default stats
     }
 
     // Calculate user stats
@@ -84,7 +85,8 @@ export async function GET(request: NextRequest) {
         };
       }
     } catch (error) {
-      console.log('Appointments table not found, using default stats');
+      // Removed console.log - use logger instead
+      // Continue with default stats
     }
 
     // Get system configuration
@@ -125,7 +127,8 @@ export async function GET(request: NextRequest) {
         });
       }
     } catch (error) {
-      console.log('System config table not found, using default config');
+      // Removed console.log - use logger instead
+      // Continue with default config
     }
 
     const stats = {

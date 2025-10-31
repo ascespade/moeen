@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,6 +9,14 @@ const supabase = createClient(
 
 export async function GET(request: NextRequest) {
   try {
+    // Security: Require authentication for admin dashboard
+    const authResult = await requireAuth(['admin', 'supervisor'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json(
+        { error: 'Unauthorized. Authentication required to access dashboard data.' },
+        { status: 401 }
+      );
+    }
     // Get basic statistics
     const { count: totalPatients } = await supabase
       .from('patients')
@@ -68,7 +77,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Dashboard API error:', error);
+    // Removed console.error - use logger instead
     return NextResponse.json(
       { error: 'Failed to fetch dashboard data' },
       { status: 500 }
