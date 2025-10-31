@@ -112,49 +112,47 @@ export async function GET(request: NextRequest) {
       .lte('created_at', previousDates.endDate);
 
     const patientGrowth = calculateGrowthRate(
-      newPatients.length, 
+      newPatients.length,
       (previousNewPatients || []).length
     );
 
-    const stats = {
-      // Basic counts
-      totalPatients: totalPatients.length,
-      activePatients: [...new Set(activePatients.map(p => p.id))].length,
-      newPatients: newPatients.length,
-      blockedPatients: totalPatients.filter(p => p.status === 'blocked').length,
-      
-      // Demographics
-      demographics,
-      
-      // Appointments
-      appointments: appointmentStats,
-      
-      // Sessions
-      sessions: sessionStats,
-      
-      // Financial
-      financial: financialStats,
-      
-      // Trends
-      trends: {
-        patientGrowth,
-        period,
-        comparedToPrevious: previousDates.label
-      },
-      
-      // Metadata
-      meta: {
-        period,
-        startDate: dates.startDate,
-        endDate: dates.endDate,
-        department,
-        lastUpdated: new Date().toISOString()
-      }
-    };
-
     return NextResponse.json({
       success: true,
-      data: stats
+      data: {
+        // Basic counts
+        totalPatients: totalPatients.length,
+        activePatients: [...new Set(activePatients.map((p: any) => p.id))].length,
+        newPatients: newPatients.length,
+        blockedPatients: totalPatients.filter((p: any) => p.status === 'blocked').length,
+        
+        // Demographics
+        demographics,
+        
+        // Appointments
+        appointments: appointmentStats,
+        
+        // Sessions
+        sessions: sessionStats,
+        
+        // Financial
+        financial: financialStats,
+        
+        // Trends
+        trends: {
+          patientGrowth,
+          period,
+          comparedToPrevious: previousDates.label
+        },
+        
+        // Metadata
+        meta: {
+          period,
+          startDate: dates.startDate,
+          endDate: dates.endDate,
+          department,
+          lastUpdated: new Date().toISOString()
+        }
+      }
     });
 
   } catch (error) {
@@ -225,21 +223,21 @@ function getPreviousDateRanges(period: string) {
 }
 
 function calculateDemographics(patients: any[]) {
-  const maleCount = patients.filter(p => p.gender === 'male').length;
-  const femaleCount = patients.filter(p => p.gender === 'female').length;
+  const maleCount = patients.filter((p: any) => p.gender === 'male').length;
+  const femaleCount = patients.filter((p: any) => p.gender === 'female').length;
   
   const ageGroups = {
-    children: patients.filter(p => p.age < 18).length,
-    adults: patients.filter(p => p.age >= 18 && p.age < 60).length,
-    seniors: patients.filter(p => p.age >= 60).length
+    children: patients.filter((p: any) => p.age < 18).length,
+    adults: patients.filter((p: any) => p.age >= 18 && p.age < 60).length,
+    seniors: patients.filter((p: any) => p.age >= 60).length
   };
 
   return {
     gender: {
       male: maleCount,
       female: femaleCount,
-      malePercentage: maleCount / patients.length * 100,
-      femalePercentage: femaleCount / patients.length * 100
+      malePercentage: patients.length > 0 ? maleCount / patients.length * 100 : 0,
+      femalePercentage: patients.length > 0 ? femaleCount / patients.length * 100 : 0
     },
     ageGroups,
     total: patients.length
@@ -247,25 +245,25 @@ function calculateDemographics(patients: any[]) {
 }
 
 function calculateAppointmentStats(appointments: any[]) {
-  const completed = appointments.filter(a => a.status === 'completed').length;
-  const pending = appointments.filter(a => a.status === 'scheduled').length;
-  const cancelled = appointments.filter(a => a.status === 'cancelled').length;
+  const completed = appointments.filter((a: any) => a.status === 'completed').length;
+  const pending = appointments.filter((a: any) => a.status === 'scheduled').length;
+  const cancelled = appointments.filter((a: any) => a.status === 'cancelled').length;
 
   return {
     total: appointments.length,
     completed,
     pending,
     cancelled,
-    completionRate: completed / appointments.length * 100,
-    cancellationRate: cancelled / appointments.length * 100
+    completionRate: appointments.length > 0 ? completed / appointments.length * 100 : 0,
+    cancellationRate: appointments.length > 0 ? cancelled / appointments.length * 100 : 0
   };
 }
 
 function calculateSessionStats(sessions: any[]) {
-  const completed = sessions.filter(s => s.status === 'completed').length;
-  const upcoming = sessions.filter(s => s.status === 'scheduled').length;
+  const completed = sessions.filter((s: any) => s.status === 'completed').length;
+  const upcoming = sessions.filter((s: any) => s.status === 'scheduled').length;
   
-  const sessionTypes = sessions.reduce((acc: Record<string, number>, session) => {
+  const sessionTypes = sessions.reduce((acc: Record<string, number>, session: any) => {
     acc[session.session_type] = (acc[session.session_type] || 0) + 1;
     return acc;
   }, {});
@@ -274,26 +272,26 @@ function calculateSessionStats(sessions: any[]) {
     total: sessions.length,
     completed,
     upcoming,
-    completionRate: completed / sessions.length * 100,
+    completionRate: sessions.length > 0 ? completed / sessions.length * 100 : 0,
     sessionTypes
   };
 }
 
 function calculateFinancialStats(payments: any[]) {
-  const totalAmount = payments.reduce((sum, p) => sum + (p.amount || 0), 0);
+  const totalAmount = payments.reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
   const paidAmount = payments
-    .filter(p => p.status === 'paid')
-    .reduce((sum, p) => sum + (p.amount || 0), 0);
+    .filter((p: any) => p.status === 'paid')
+    .reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
   const pendingAmount = payments
-    .filter(p => p.status === 'pending')
-    .reduce((sum, p) => sum + (p.amount || 0), 0);
+    .filter((p: any) => p.status === 'pending')
+    .reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
 
   return {
     totalRevenue: totalAmount,
     paidRevenue: paidAmount,
     pendingRevenue: pendingAmount,
-    averagePerPatient: totalAmount / payments.length || 0,
-    collectionRate: paidAmount / totalAmount * 100
+    averagePerPatient: payments.length > 0 ? totalAmount / payments.length : 0,
+    collectionRate: totalAmount > 0 ? paidAmount / totalAmount * 100 : 0
   };
 }
 

@@ -98,7 +98,7 @@ export default function PatientIEPPage() {
 
         // Load progress for each goal
         const goalsWithProgress = await Promise.all(
-          (goalsData || []).map(async goal => {
+          (goalsData || []).map(async (goal: any) => {
             const { data: progressData } = await supabase.rpc(
               'calculate_goal_progress',
               { p_goal_id: goal.id }

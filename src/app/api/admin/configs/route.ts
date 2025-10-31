@@ -102,7 +102,7 @@ export async function GET(request: NextRequest) {
       data: configs || [],
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -180,7 +180,7 @@ export async function POST(request: NextRequest) {
       message: 'Configuration created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -253,7 +253,7 @@ export async function PUT(request: NextRequest) {
       message: 'Configuration updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -303,6 +303,6 @@ export async function DELETE(request: NextRequest) {
       message: 'Configuration deleted successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

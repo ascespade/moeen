@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
                 .select('code')
                 .in('id', ids as string[]);
               permCodes = (permRows || [])
-                .map(p => p.code)
+                .map((p: { code?: string }) => p.code)
                 .filter(Boolean) as string[];
             }
           }
@@ -114,17 +114,17 @@ export async function GET(request: NextRequest) {
             .from('user_permissions')
             .select('permission_id')
             .eq('user_id', userData.id);
-          const uids = (userPermRows || [])
-            .map(up => up.permission_id)
+            const uids = (userPermRows || [])
+            .map((up: { permission_id: string }) => up.permission_id)
             .filter(Boolean);
           if (uids.length) {
             const { data: permRows } = await supabase
               .from('permissions')
               .select('code')
               .in('id', uids as string[]);
-            permCodes.push(
-              ...((permRows || []).map(p => p.code).filter(Boolean) as string[])
-            );
+              permCodes.push(
+                ...((permRows || []).map((p: { code?: string }) => p.code).filter(Boolean) as string[])
+              );
           }
 
           return NextResponse.json({

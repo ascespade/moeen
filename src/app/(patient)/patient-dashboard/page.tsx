@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { DashboardLayout, DashboardHeader, DashboardSidebar, DashboardContent } from '@/components/dashboard/layouts/DashboardLayout';
+import { DashboardLayout } from '@/components/dashboard/layouts/DashboardLayout';
 import PatientDashboard from '@/components/dashboard/widgets/PatientDashboard';
 import {
   Heart,
@@ -70,35 +70,31 @@ const patientNavigation = [
 export default function PatientDashboardPage() {
   return (
     <DashboardLayout
-      header={
-        <DashboardHeader
-          title="أحمد محمد علي"
-          subtitle="مريض - رقم الملف: 12345"
-          user={{
-            name: "أحمد محمد علي",
-            role: "مريض",
-            avatar: undefined // يمكن إضافة صورة لاحقاً
-          }}
-          onThemeToggle={() => console.log('Toggle theme')}
-          isDarkMode={false}
-          onSearch={(query) => console.log('Search:', query)}
-          showNotifications={true}
-          notificationCount={2}
-          onNotificationsClick={() => console.log('Show notifications')}
-        />
-      }
-      sidebar={
-        <DashboardSidebar
-          navigation={patientNavigation}
-          activeItem="dashboard"
-          collapsed={false}
-        />
-      }
-      content={
-        <DashboardContent>
-          <PatientDashboard patientId="patient-123" />
-        </DashboardContent>
-      }
+      header={{
+        title: "أحمد محمد علي",
+        subtitle: "مريض - رقم الملف: 12345",
+        user: {
+          name: "أحمد محمد علي",
+          role: "مريض",
+          avatar: undefined
+        },
+        onSearch: (query) => console.log('Search:', query),
+        showNotifications: true,
+        notificationCount: 2,
+        onNotificationsClick: () => console.log('Show notifications')
+      }}
+      sidebar={{
+        navigation: patientNavigation,
+        activeItem: "dashboard",
+        collapsed: false
+      }}
+      content={{
+        children: (
+          <div>
+            <PatientDashboard patientId="patient-123" />
+          </div>
+        )
+      }}
     />
   );
 }

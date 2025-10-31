@@ -101,6 +101,6 @@ export async function POST(request: NextRequest) {
       message: hasConflicts ? 'Conflicts found' : 'No conflicts found',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

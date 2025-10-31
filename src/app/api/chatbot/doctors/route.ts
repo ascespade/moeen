@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
     // Get available time slots for each doctor
     const doctorsWithSlots = await Promise.all(
-      doctors.map(async doctor => {
+      doctors.map(async (doctor: any) => {
         const availableSlots = await getAvailableTimeSlots(
           doctor.id,
           date || undefined

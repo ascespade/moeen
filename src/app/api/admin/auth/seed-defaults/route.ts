@@ -19,7 +19,7 @@ const USERS = [
   { email: 'agent@test.local', name: 'Agent User', role: 'agent' },
 ];
 
-export async function POST(req) {
+export async function POST(req: any) {
   const isDev = process.env.NODE_ENV !== 'production';
   const referer = req.headers.get('referer') || '';
   const origin = req.headers.get('origin') || '';

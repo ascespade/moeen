@@ -78,13 +78,13 @@ export async function GET(request: NextRequest) {
       .in('status', ['pending', 'confirmed', 'in_progress']);
 
     // Filter out occupied slots
-    const availableSlots = slots.filter(slot => {
+    const availableSlots = slots.filter((slot: any) => {
       const slotStart = new Date(`${date}T${slot.time}`);
       const slotEnd = new Date(slotStart.getTime() + duration! * 60000);
 
-      return !existingAppointments?.some(apt => {
+      return !existingAppointments?.some((apt: any) => {
         const aptStart = new Date(apt.scheduledAt);
-        const aptEnd = new Date(aptStart.getTime() + apt.duration * 60000);
+        const aptEnd = new Date(aptStart.getTime() + (apt.duration || 30) * 60000);
 
         return slotStart < aptEnd && slotEnd > aptStart;
       });
@@ -118,7 +118,7 @@ export async function GET(request: NextRequest) {
       duration,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

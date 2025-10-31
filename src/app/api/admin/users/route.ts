@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
       message: 'User created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -209,7 +209,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -279,7 +279,7 @@ export async function PUT(request: NextRequest) {
       message: 'User updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -338,7 +338,7 @@ export async function DELETE(request: NextRequest) {
       message: 'User deleted successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

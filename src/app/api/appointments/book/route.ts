@@ -183,7 +183,7 @@ export async function POST(request: NextRequest) {
       message: 'Appointment booked successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const roleData = ROLES[userRole];
+    const roleData = ROLES[userRole as keyof typeof ROLES];
 
     return NextResponse.json({
       success: true,

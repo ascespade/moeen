@@ -6,7 +6,8 @@ import { PermissionManager } from '@/lib/permissions';
 const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 
-function parseMaxAgeSeconds(expiresIn: string): number {
+function parseMaxAgeSeconds(expiresIn: string | undefined): number {
+  if (!expiresIn) return 60 * 60 * 24 * 7;
   // Support values like '7d', '30d', '24h', '3600s'
   const m = expiresIn.match(/^(\d+)([smhd])$/);
   if (!m) return 60 * 60 * 24 * 7; // default 7 days
@@ -98,13 +99,13 @@ export async function POST(req: NextRequest) {
       perms: permissions,
     } as any;
 
-    const token = jwt.sign(payload, jwtSecret, { expiresIn: JWT_EXPIRES_IN });
+    const token = jwt.sign(payload, jwtSecret, { expiresIn: JWT_EXPIRES_IN || '7d' });
 
     const response = NextResponse.json({
       success: true,
       redirectTo: '/dashboard',
     });
-    const maxAge = parseMaxAgeSeconds(JWT_EXPIRES_IN);
+    const maxAge = parseMaxAgeSeconds(JWT_EXPIRES_IN || '7d');
 
     response.cookies.set('auth-token', token, {
       httpOnly: true,

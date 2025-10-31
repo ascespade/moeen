@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
       message: 'Configuration saved successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -108,6 +108,6 @@ export async function GET(request: NextRequest) {
       count: configs?.length || 0,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

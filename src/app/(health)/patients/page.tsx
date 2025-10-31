@@ -119,7 +119,7 @@ export default function PatientsPage() {
 
         // Transform data to include stats
         const patientsWithStats: PatientWithStats[] = (patientsData || []).map(
-          patient => ({
+          (patient: any) => ({
             ...patient,
             name: `${patient.first_name} ${patient.last_name}`,
             age: patient.date_of_birth
@@ -337,7 +337,7 @@ export default function PatientsPage() {
 
         {/* Patients Grid */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {filteredPatients.map(patient => (
+          {filteredPatients.map((patient: any) => (
             <div
               key={patient.id}
               className='bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow'

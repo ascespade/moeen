@@ -270,7 +270,7 @@ async function getSystemHealth() {
 
     if (healthError) throw healthError;
 
-    return healthData.map(service => ({
+    return healthData.map((service: any) => ({
       service: service.service_name,
       status: service.is_healthy ? 'healthy' : 'unhealthy',
       lastCheck: service.last_check,

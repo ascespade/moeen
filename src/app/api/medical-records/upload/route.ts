@@ -176,7 +176,7 @@ export async function POST(request: NextRequest) {
       message: 'File uploaded successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -224,6 +224,6 @@ export async function GET(request: NextRequest) {
       count: records?.length || 0,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

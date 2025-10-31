@@ -76,7 +76,7 @@ export default function SessionNotesPage() {
 
         // Get current progress for each goal
         const goalsWithProgress = await Promise.all(
-          (goalsData || []).map(async (goal: Goal) => {
+          (goalsData || []).map(async (goal: any) => {
             const { data: progressData } = await supabase.rpc(
               'calculate_goal_progress',
               { p_goal_id: goal.id }
