@@ -6,7 +6,7 @@ import { AdminHeader } from '@/components/admin/ui';
 import { DashboardGrid, GridItem } from '@/components/dashboard/DashboardGrid';
 import ChartWidget from '@/components/dashboard/widgets/ChartWidget';
 import KPICard from '@/components/dashboard/widgets/KPICard';
-import { Notification } from '@/components/dashboard/widgets/NotificationPanel';
+import NotificationPanel, { Notification } from '@/components/dashboard/widgets/NotificationPanel';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';

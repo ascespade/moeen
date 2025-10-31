@@ -545,7 +545,7 @@ export default function ChatbotPage() {
           ].map((tab) => (
             <Button
               key={tab.id}
-              variant={activeTab === tab.id ? 'default' : 'outline'}
+              variant={activeTab === tab.id ? 'primary' : 'outline'}
               onClick={() => setActiveTab(tab.id as any)}
               className="flex items-center gap-2"
             >
