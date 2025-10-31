@@ -136,3 +136,4 @@ $$ LANGUAGE plpgsql;
 
 COMMENT ON FUNCTION safe_update_user_role IS 'Safely updates user role in both users.role and user_roles table';
 
+

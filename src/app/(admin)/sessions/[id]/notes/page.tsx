@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 import logger from '@/lib/monitoring/logger';
+import { createClient } from '@/lib/supabase/client';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface Goal {
   id: string;
@@ -76,7 +76,7 @@ export default function SessionNotesPage() {
 
         // Get current progress for each goal
         const goalsWithProgress = await Promise.all(
-          (goalsData || []).map(async goal => {
+          (goalsData || []).map(async (goal: any) => {
             const { data: progressData } = await supabase.rpc(
               'calculate_goal_progress',
               { p_goal_id: goal.id }

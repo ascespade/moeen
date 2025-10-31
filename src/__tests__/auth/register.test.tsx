@@ -1,20 +1,19 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { useRouter } from 'next/navigation';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import RegisterPage from '@/app/(auth)/register/page';
 
 // Mock dependencies
-jest.mock('next/navigation', () => ({
-  useRouter: jest.fn(),
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
 }));
 
 const mockRouter = {
-  push: jest.fn(),
+  push: vi.fn(),
 };
 
 describe('RegisterPage', () => {
   beforeEach(() => {
-    (useRouter as jest.Mock).mockReturnValue(mockRouter);
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders registration form correctly', () => {

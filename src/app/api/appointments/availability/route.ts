@@ -3,12 +3,12 @@
  * Get doctor availability for specific date range
  */
 
+import { ErrorHandler } from '@/core/errors';
+import { ValidationHelper } from '@/core/validation';
+import { createClient } from '@/lib/supabase/server';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
-import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
-import { getClientInfo } from '@/lib/utils/request-helpers';
 
 const availabilitySchema = z.object({
   doctorId: z.string().uuid('Invalid doctor ID'),
@@ -70,32 +70,36 @@ export async function GET(request: NextRequest) {
     );
 
     // Check existing appointments
+    // IMPORTANT: Database uses snake_case
     const { data: existingAppointments } = await supabase
       .from('appointments')
-      .select('scheduledAt, duration')
-      .eq('doctorId', doctorId)
-      .eq('scheduledAt', date)
+      .select('scheduled_at, duration')
+      .eq('doctor_id', doctorId)
+      .gte('scheduled_at', `${date}T00:00:00`)
+      .lt('scheduled_at', `${date}T23:59:59`)
       .in('status', ['pending', 'confirmed', 'in_progress']);
 
     // Filter out occupied slots
-    const availableSlots = slots.filter(slot => {
+    const availableSlots = slots.filter((slot: any) => {
       const slotStart = new Date(`${date}T${slot.time}`);
       const slotEnd = new Date(slotStart.getTime() + duration! * 60000);
 
-      return !existingAppointments?.some(apt => {
-        const aptStart = new Date(apt.scheduledAt);
-        const aptEnd = new Date(aptStart.getTime() + apt.duration * 60000);
+      return !existingAppointments?.some((apt: any) => {
+        const aptStart = new Date(apt.scheduled_at);
+        const aptDuration = apt.duration || 30;
+        const aptEnd = new Date(aptStart.getTime() + aptDuration * 60000);
 
         return slotStart < aptEnd && slotEnd > aptStart;
       });
     });
 
     // Log availability check
+    // IMPORTANT: Database uses snake_case
     await supabase.from('audit_logs').insert({
       action: 'appointment_availability_checked',
-      resourceType: 'appointment',
-      ipAddress,
-      userAgent,
+      resource_type: 'appointment',
+      ip_address: ipAddress,
+      user_agent: userAgent,
       status: 'success',
       severity: 'secondary',
       metadata: {
@@ -104,7 +108,7 @@ export async function GET(request: NextRequest) {
         duration,
         availableSlotsCount: availableSlots.length,
       },
-      durationMs: Date.now() - startTime,
+      duration_ms: Date.now() - startTime,
     });
 
     return NextResponse.json({
@@ -118,7 +122,7 @@ export async function GET(request: NextRequest) {
       duration,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

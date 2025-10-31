@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     if (error) throw error;
 
     // Generate mock work hours data
-    const staffWorkHours = staff.map(member => ({
+    const staffWorkHours = staff.map((member: any) => ({
       id: member.id,
       name: `${member.first_name} ${member.last_name}`,
       position: member.specialization || 'طبيب',

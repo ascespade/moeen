@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
       message: 'Template created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -120,6 +120,6 @@ export async function GET(request: NextRequest) {
       count: templates?.length || 0,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

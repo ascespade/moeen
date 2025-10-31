@@ -179,7 +179,7 @@ export async function POST(request: NextRequest) {
       message: 'Insurance claim created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -248,7 +248,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -318,7 +318,7 @@ export async function PUT(request: NextRequest) {
       message: 'Insurance claim updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -335,7 +335,7 @@ async function submitToInsuranceProvider(claim: any, provider: string) {
       other: null,
     };
 
-    const endpoint = providerEndpoints[provider];
+    const endpoint = providerEndpoints[provider as keyof typeof providerEndpoints];
 
     if (!endpoint) {
       return {

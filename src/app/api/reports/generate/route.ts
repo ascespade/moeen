@@ -371,12 +371,12 @@ async function __generateRevenueReport(
   const grouped = __groupDataByPeriod(paidPayments, "createdAt", groupBy || "");
 
   return {
-    totalRevenue: paidPayments.reduce((sum, p) => sum + (p.amount || 0), 0),
+    totalRevenue: paidPayments.reduce((sum: number, p: any) => sum + (p.amount || 0), 0),
     byMethod: __groupByField(paidPayments, "method"),
     byStatus: __groupByField(payments, "status"),
     dailyRevenue: grouped.map((group) => ({
       period: group.period,
-      revenue: group.data.reduce((sum, p) => sum + (p.amount || 0), 0),
+      revenue: group.data.reduce((sum: number, p: any) => sum + (p.amount || 0), 0),
       count: group.data.length,
     })),
   };

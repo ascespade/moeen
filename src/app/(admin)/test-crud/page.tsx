@@ -508,7 +508,7 @@ export default function CRUDTestPage() {
                     runCategoryTests(cat.id as TestResult['category']);
                   }
                 }}
-                variant={selectedCategory === cat.id ? 'default' : 'outline'}
+                variant={selectedCategory === cat.id ? 'primary' : 'outline'}
                 className='flex items-center gap-2'
                 disabled={isRunning}
               >

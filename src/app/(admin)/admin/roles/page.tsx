@@ -291,20 +291,20 @@ function RolesPageContent() {
       { id: 'users:create', name: 'users:create', displayName: 'إنشاء مستخدم', description: 'إنشاء مستخدم جديد', category: 'المستخدمين', isSystem: true },
       { id: 'users:edit', name: 'users:edit', displayName: 'تعديل المستخدمين', description: 'تعديل بيانات المستخدمين', category: 'المستخدمين', isSystem: true },
       { id: 'users:delete', name: 'users:delete', displayName: 'حذف المستخدمين', description: 'حذف المستخدمين', category: 'المستخدمين', isSystem: true },
-      
+
       // Roles permissions
       { id: 'roles:view', name: 'roles:view', displayName: 'عرض الأدوار', description: 'عرض قائمة الأدوار', category: 'الأدوار', isSystem: true },
       { id: 'roles:create', name: 'roles:create', displayName: 'إنشاء دور', description: 'إنشاء دور جديد', category: 'الأدوار', isSystem: true },
       { id: 'roles:edit', name: 'roles:edit', displayName: 'تعديل الأدوار', description: 'تعديل بيانات الأدوار', category: 'الأدوار', isSystem: true },
       { id: 'roles:delete', name: 'roles:delete', displayName: 'حذف الأدوار', description: 'حذف الأدوار', category: 'الأدوار', isSystem: true },
-      
+
       // Patients permissions
       { id: 'patients:view', name: 'patients:view', displayName: 'عرض المرضى', description: 'عرض قائمة المرضى', category: 'المرضى', isSystem: true },
       { id: 'patients:create', name: 'patients:create', displayName: 'إنشاء مريض', description: 'إنشاء مريض جديد', category: 'المرضى', isSystem: true },
       { id: 'patients:edit', name: 'patients:edit', displayName: 'تعديل المرضى', description: 'تعديل بيانات المرضى', category: 'المرضى', isSystem: true },
       { id: 'patients:delete', name: 'patients:delete', displayName: 'حذف المرضى', description: 'حذف المرضى', category: 'المرضى', isSystem: true },
       { id: 'patients:view_own', name: 'patients:view_own', displayName: 'عرض بياناته الشخصية', description: 'عرض البيانات الشخصية فقط', category: 'المرضى', isSystem: true },
-      
+
       // Appointments permissions
       { id: 'appointments:view', name: 'appointments:view', displayName: 'عرض المواعيد', description: 'عرض قائمة المواعيد', category: 'المواعيد', isSystem: true },
       { id: 'appointments:create', name: 'appointments:create', displayName: 'إنشاء موعد', description: 'إنشاء موعد جديد', category: 'المواعيد', isSystem: true },
@@ -312,37 +312,37 @@ function RolesPageContent() {
       { id: 'appointments:delete', name: 'appointments:delete', displayName: 'حذف المواعيد', description: 'حذف المواعيد', category: 'المواعيد', isSystem: true },
       { id: 'appointments:view_own', name: 'appointments:view_own', displayName: 'عرض مواعيده', description: 'عرض المواعيد الشخصية فقط', category: 'المواعيد', isSystem: true },
       { id: 'appointments:create_own', name: 'appointments:create_own', displayName: 'إنشاء موعد شخصي', description: 'إنشاء موعد شخصي', category: 'المواعيد', isSystem: true },
-      
+
       // Reports permissions
       { id: 'reports:view', name: 'reports:view', displayName: 'عرض التقارير', description: 'عرض التقارير', category: 'التقارير', isSystem: true },
       { id: 'reports:create', name: 'reports:create', displayName: 'إنشاء تقرير', description: 'إنشاء تقرير جديد', category: 'التقارير', isSystem: true },
       { id: 'reports:edit', name: 'reports:edit', displayName: 'تعديل التقارير', description: 'تعديل التقارير', category: 'التقارير', isSystem: true },
       { id: 'reports:delete', name: 'reports:delete', displayName: 'حذف التقارير', description: 'حذف التقارير', category: 'التقارير', isSystem: true },
-      
+
       // Settings permissions
       { id: 'settings:view', name: 'settings:view', displayName: 'عرض الإعدادات', description: 'عرض إعدادات النظام', category: 'الإعدادات', isSystem: true },
       { id: 'settings:edit', name: 'settings:edit', displayName: 'تعديل الإعدادات', description: 'تعديل إعدادات النظام', category: 'الإعدادات', isSystem: true },
-      
+
       // Security permissions
       { id: 'security:view', name: 'security:view', displayName: 'عرض الأمان', description: 'عرض إعدادات الأمان', category: 'الأمان', isSystem: true },
       { id: 'security:edit', name: 'security:edit', displayName: 'تعديل الأمان', description: 'تعديل إعدادات الأمان', category: 'الأمان', isSystem: true },
-      
+
       // Analytics permissions
       { id: 'analytics:view', name: 'analytics:view', displayName: 'عرض التحليلات', description: 'عرض التحليلات والإحصائيات', category: 'التحليلات', isSystem: true },
-      
+
       // Notifications permissions
       { id: 'notifications:view', name: 'notifications:view', displayName: 'عرض الإشعارات', description: 'عرض الإشعارات', category: 'الإشعارات', isSystem: true },
       { id: 'notifications:create', name: 'notifications:create', displayName: 'إنشاء إشعار', description: 'إنشاء إشعار جديد', category: 'الإشعارات', isSystem: true },
       { id: 'notifications:edit', name: 'notifications:edit', displayName: 'تعديل الإشعارات', description: 'تعديل الإشعارات', category: 'الإشعارات', isSystem: true },
       { id: 'notifications:delete', name: 'notifications:delete', displayName: 'حذف الإشعارات', description: 'حذف الإشعارات', category: 'الإشعارات', isSystem: true },
       { id: 'notifications:view_own', name: 'notifications:view_own', displayName: 'عرض إشعاراته', description: 'عرض الإشعارات الشخصية فقط', category: 'الإشعارات', isSystem: true },
-      
+
       // Medical records permissions
       { id: 'medical_records:view', name: 'medical_records:view', displayName: 'عرض السجلات الطبية', description: 'عرض السجلات الطبية', category: 'السجلات الطبية', isSystem: true },
       { id: 'medical_records:create', name: 'medical_records:create', displayName: 'إنشاء سجل طبي', description: 'إنشاء سجل طبي جديد', category: 'السجلات الطبية', isSystem: true },
       { id: 'medical_records:edit', name: 'medical_records:edit', displayName: 'تعديل السجلات الطبية', description: 'تعديل السجلات الطبية', category: 'السجلات الطبية', isSystem: true },
       { id: 'medical_records:view_own', name: 'medical_records:view_own', displayName: 'عرض سجله الطبي', description: 'عرض السجل الطبي الشخصي فقط', category: 'السجلات الطبية', isSystem: true },
-      
+
       // Payments permissions
       { id: 'payments:view', name: 'payments:view', displayName: 'عرض المدفوعات', description: 'عرض المدفوعات', category: 'المدفوعات', isSystem: true },
       { id: 'payments:create', name: 'payments:create', displayName: 'إنشاء دفعة', description: 'إنشاء دفعة جديدة', category: 'المدفوعات', isSystem: true },
@@ -360,16 +360,16 @@ function RolesPageContent() {
     const matchesSearch = role.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          role.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          role.name.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || 
+    const matchesStatus = statusFilter === 'all' ||
                          (statusFilter === 'active' && role.isActive) ||
                          (statusFilter === 'inactive' && !role.isActive);
-    
+
     return matchesSearch && matchesStatus;
   });
 
   const getStatusBadge = (isActive: boolean) => {
     if (isActive) {
-      return <Badge variant="default" className="bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]">نشط</Badge>;
+      return <Badge variant="primary" className="bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]">نشط</Badge>;
     } else {
       return <Badge variant="outline" className="bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]">غير نشط</Badge>;
     }
@@ -392,7 +392,7 @@ function RolesPageContent() {
       'user': <User className="h-4 w-4" />,
       'dollar-sign': <TrendingUp className="h-4 w-4" />
     };
-    
+
     return iconMap[iconName || 'user'] || <User className="h-4 w-4" />;
   };
 
@@ -433,7 +433,7 @@ function RolesPageContent() {
       acc[permission.category]?.push(permission);
       return acc;
     }, {} as Record<string, Permission[]>);
-    
+
     return grouped;
   };
 
@@ -485,7 +485,7 @@ function RolesPageContent() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">أدوار النظام</CardTitle>
@@ -500,7 +500,7 @@ function RolesPageContent() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">أدوار مخصصة</CardTitle>
@@ -515,7 +515,7 @@ function RolesPageContent() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">إجمالي المستخدمين</CardTitle>
@@ -622,7 +622,7 @@ function RolesPageContent() {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-3">
-                          <div 
+                          <div
                             className="h-8 w-8 rounded-full grid place-items-center text-white text-sm"
                             style={{ backgroundColor: role.color || '#6b7280' }}
                           >
@@ -712,7 +712,7 @@ function RolesPageContent() {
                         </DropdownMenu>
                       </TableCell>
                     </TableRow>
-                    
+
                     {/* Expanded Permissions Row */}
                     {expandedRoles.has(role.id) && (
                       <TableRow>
@@ -761,7 +761,7 @@ function RolesPageContent() {
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <Button
                       key={page}
-                      variant={currentPage === page ? "default" : "outline"}
+                      variant={currentPage === page ? "primary" : "outline"}
                       size="sm"
                       onClick={() => setCurrentPage(page)}
                       className="w-8 h-8 p-0"
@@ -794,7 +794,7 @@ function RolesPageContent() {
                 تفاصيل الدور والصلاحيات
               </DialogDescription>
             </DialogHeader>
-            
+
             {selectedRole && (
               <div className="space-y-4">
                 {/* Role Info */}

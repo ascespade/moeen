@@ -108,6 +108,6 @@ export async function POST(request: NextRequest) {
       message: 'Security event created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

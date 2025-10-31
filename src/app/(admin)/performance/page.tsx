@@ -829,7 +829,7 @@ export default function PerformancePage() {
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <Button
                       key={page}
-                      variant={currentPage === page ? "default" : "outline"}
+                      variant={currentPage === page ? "primary" : "outline"}
                       size="sm"
                       onClick={() => setCurrentPage(page)}
                       className="w-8 h-8 p-0"

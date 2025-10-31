@@ -29,13 +29,13 @@ export async function GET(request: NextRequest) {
 
     // Calculate user stats
     const totalUsers = users?.length || 0;
-    const activeUsers = users?.filter(u => u.isActive).length || 0;
+    const activeUsers = users?.filter((u: any) => u.isActive).length || 0;
     const inactiveUsers = totalUsers - activeUsers;
 
     // Count by role
     const roleCounts =
       users?.reduce(
-        (acc, user) => {
+        (acc: Record<string, number>, user: any) => {
           acc[user.role] = (acc[user.role] || 0) + 1;
           return acc;
         },
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
     const recentUsers =
-      users?.filter(u => new Date(u.createdAt) >= thirtyDaysAgo).length || 0;
+      users?.filter((u: any) => new Date(u.createdAt) >= thirtyDaysAgo).length || 0;
 
     // Get appointments stats (if table exists)
     let appointmentStats = {
@@ -74,12 +74,12 @@ export async function GET(request: NextRequest) {
 
         appointmentStats = {
           total: appointments.length,
-          today: appointments.filter(a => new Date(a.scheduledAt) >= today)
+          today: appointments.filter((a: any) => new Date(a.scheduledAt) >= today)
             .length,
-          thisWeek: appointments.filter(a => new Date(a.scheduledAt) >= weekAgo)
+          thisWeek: appointments.filter((a: any) => new Date(a.scheduledAt) >= weekAgo)
             .length,
           thisMonth: appointments.filter(
-            a => new Date(a.scheduledAt) >= monthAgo
+            (a: any) => new Date(a.scheduledAt) >= monthAgo
           ).length,
         };
       }
@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
         ]);
 
       if (config) {
-        config.forEach(item => {
+        config.forEach((item: any) => {
           switch (item.key) {
             case 'maintenance_mode':
               systemConfig.maintenanceMode = item.value === 'true';
@@ -146,6 +146,6 @@ export async function GET(request: NextRequest) {
       data: stats,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

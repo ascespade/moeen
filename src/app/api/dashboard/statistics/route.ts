@@ -73,14 +73,14 @@ export async function GET(request: NextRequest) {
       .select('amount, created_at')
       .eq('status', 'paid');
 
-    const totalRevenue = payments?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0;
+    const totalRevenue = payments?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0;
     
-    const monthlyPayments = payments?.filter(p => {
+    const monthlyPayments = payments?.filter((p: any) => {
       const paymentDate = new Date(p.created_at);
       return paymentDate >= startDate;
     }) || [];
     
-    const monthlyRevenue = monthlyPayments.reduce((sum, p) => sum + (p.amount || 0), 0);
+    const monthlyRevenue = monthlyPayments.reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
 
     // Get claims
     const { count: totalClaims } = await supabase
