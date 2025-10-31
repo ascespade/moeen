@@ -72,10 +72,14 @@ export default function DoctorDashboardPage() {
           role: "طبيب أسرة",
           avatar: undefined
         },
-        onSearch: (query) => console.log('Search:', query),
+        onSearch: (query) => {
+          // Search functionality - implement as needed
+        },
         showNotifications: true,
         notificationCount: 3,
-        onNotificationsClick: () => console.log('Show notifications')
+        onNotificationsClick: () => {
+          // Show notifications - implement as needed
+        }
       }}
       sidebar={{
         navigation: doctorNavigation,

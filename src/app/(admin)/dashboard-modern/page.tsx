@@ -229,9 +229,15 @@ export default function ModernAdminDashboard() {
       props: {
         notifications: mockNotifications,
         maxHeight: 400,
-        onMarkAsRead: (id: string) => console.log('Mark as read:', id),
-        onMarkAllAsRead: () => console.log('Mark all as read'),
-        onActionClick: (notification: any) => console.log('Action:', notification)
+        onMarkAsRead: (id: string) => {
+          // Mark notification as read - implement as needed
+        },
+        onMarkAllAsRead: () => {
+          // Mark all notifications as read - implement as needed
+        },
+        onActionClick: (notification: any) => {
+          // Handle notification action - implement as needed
+        }
       }
     }
   ], [stats, localizedNumber]);
@@ -295,15 +301,15 @@ export default function ModernAdminDashboard() {
             isEditable={isGridEditable}
             onItemChange={(items) => {
               // Handle layout changes
-              console.log('Layout changed:', items);
+              // Layout changed - implement persistence as needed
             }}
             onItemAdd={() => {
               // Handle adding new widget
-              console.log('Add new widget');
+              // Add new widget - implement as needed
             }}
             onItemRemove={(id) => {
               // Handle removing widget
-              console.log('Remove widget:', id);
+              // Remove widget - implement as needed
             }}
             className='mb-8'
           />

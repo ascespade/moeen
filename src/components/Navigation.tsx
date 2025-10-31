@@ -36,7 +36,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleQuickAction = (action: string) => {
-    console.log(`Quick action: ${action}`);
+    // Quick action handler - implement as needed
     // Handle quick actions here
   };
 

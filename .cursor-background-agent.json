@@ -1,0 +1,128 @@
+{
+  "name": "Moeen Project Background Agent",
+  "version": "1.0.0",
+  "description": "مراقبة وتحسين تلقائي للمشروع باستخدام Cursor AI",
+  "mode": "monitoring",
+  "interval": 300000,
+  "intervalUnit": "milliseconds",
+  "enabled": true,
+  "tasks": [
+    {
+      "name": "code-analysis",
+      "enabled": true,
+      "schedule": "*/5 * * * *",
+      "priority": "high",
+      "actions": [
+        "scan-typescript-errors",
+        "scan-eslint-errors",
+        "detect-duplicate-code",
+        "analyze-performance-issues"
+      ]
+    },
+    {
+      "name": "error-detection",
+      "enabled": true,
+      "schedule": "*/10 * * * *",
+      "priority": "critical",
+      "actions": [
+        "check-api-security",
+        "detect-unprotected-routes",
+        "find-type-errors",
+        "scan-security-vulnerabilities"
+      ]
+    },
+    {
+      "name": "test-coverage-check",
+      "enabled": true,
+      "schedule": "0 * * * *",
+      "priority": "high",
+      "actions": [
+        "run-test-coverage",
+        "identify-untested-files",
+        "suggest-test-cases",
+        "generate-test-templates"
+      ]
+    },
+    {
+      "name": "performance-optimization",
+      "enabled": true,
+      "schedule": "0 */6 * * *",
+      "priority": "medium",
+      "actions": [
+        "analyze-bundle-size",
+        "detect-memory-leaks",
+        "optimize-database-queries",
+        "suggest-performance-improvements"
+      ]
+    },
+    {
+      "name": "security-scan",
+      "enabled": true,
+      "schedule": "0 */12 * * *",
+      "priority": "critical",
+      "actions": [
+        "scan-api-endpoints",
+        "check-authentication-middleware",
+        "validate-input-sanitization",
+        "detect-sensitive-data-exposure"
+      ]
+    },
+    {
+      "name": "code-quality",
+      "enabled": true,
+      "schedule": "*/15 * * * *",
+      "priority": "medium",
+      "actions": [
+        "remove-console-logs",
+        "fix-linting-errors",
+        "remove-todo-comments",
+        "cleanup-temporary-files"
+      ]
+    }
+  ],
+  "targets": {
+    "criticalPaths": [
+      "src/lib/permissions/**",
+      "src/app/api/**",
+      "src/core/errors/**",
+      "src/middleware/**"
+    ],
+    "testPaths": [
+      "src/__tests__/**",
+      "tests/**"
+    ],
+    "excludePaths": [
+      "node_modules/**",
+      ".next/**",
+      "dist/**",
+      "build/**"
+    ]
+  },
+  "reports": {
+    "enabled": true,
+    "location": ".cursor-agent-reports",
+    "format": "json",
+    "includeDetails": true,
+    "dailySummary": true
+  },
+  "autoFix": {
+    "enabled": true,
+    "level": "safe",
+    "autoCommit": false,
+    "requireReview": true,
+    "fixes": {
+      "consoleLogs": true,
+      "typeErrors": true,
+      "lintingErrors": true,
+      "formatting": true,
+      "imports": true,
+      "temporaryFiles": true
+    }
+  },
+  "notifications": {
+    "enabled": true,
+    "channels": ["console", "file"],
+    "levels": ["error", "warning", "info"],
+    "webhook": null
+  }
+}

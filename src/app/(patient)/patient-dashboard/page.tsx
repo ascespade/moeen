@@ -78,10 +78,14 @@ export default function PatientDashboardPage() {
           role: "مريض",
           avatar: undefined
         },
-        onSearch: (query) => console.log('Search:', query),
+        onSearch: (query) => {
+          // Search functionality - implement as needed
+        },
         showNotifications: true,
         notificationCount: 2,
-        onNotificationsClick: () => console.log('Show notifications')
+        onNotificationsClick: () => {
+          // Show notifications - implement as needed
+        }
       }}
       sidebar={{
         navigation: patientNavigation,

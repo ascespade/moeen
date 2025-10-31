@@ -14,15 +14,7 @@ export async function POST(request: NextRequest) {
     }
 
     // TODO: Save to database or send email
-    // For now, just log it
-    console.log('Contact form submission:', {
-      name,
-      email,
-      phone,
-      subject,
-      message,
-      timestamp: new Date().toISOString(),
-    });
+    // Log removed for production - use proper logging service
 
     return NextResponse.json({
       success: true,
