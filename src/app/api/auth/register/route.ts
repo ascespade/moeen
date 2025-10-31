@@ -3,11 +3,13 @@
  * Creates new user accounts with proper validation
  */
 
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
 import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { env } from '@/config/env';
+import { ErrorHandler } from '@/core/errors';
 
 // Helper to extract IP address from request
 function getClientIP(request: NextRequest): string {
@@ -88,8 +90,8 @@ export async function POST(request: NextRequest) {
 
     // Create admin client for auth operations
     const supabaseAdmin = createServiceClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        env.NEXT_PUBLIC_SUPABASE_URL!,
+        env.SUPABASE_SERVICE_ROLE_KEY!,
       {
         auth: {
           autoRefreshToken: false,
@@ -110,7 +112,7 @@ export async function POST(request: NextRequest) {
       });
 
     if (authError) {
-      console.error('Auth creation error:', authError);
+      logger.error('Auth creation error', authError);
       return NextResponse.json(
         {
           success: false,
@@ -168,13 +170,13 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (profileError) {
-      console.error('Profile creation error:', profileError);
+      logger.error('Profile creation error', profileError);
 
       // Try to delete the auth user
       try {
         await supabaseAdmin.auth.admin.deleteUser(authData.user.id);
       } catch (deleteError) {
-        console.error(
+        logger.error(
           'Failed to delete auth user after profile creation failure:',
           deleteError
         );
@@ -218,7 +220,7 @@ export async function POST(request: NextRequest) {
         duration_ms: Date.now() - startTime,
       });
     } catch (auditError) {
-      console.error('Audit log error (non-critical):', auditError);
+      logger.warn('Audit log error (non-critical)', { error: auditError });
     }
 
     return NextResponse.json(
@@ -234,18 +236,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error('Registration error:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        errors: [
-          {
-            field: 'general',
-            message: `حدث خطأ غير متوقع: ${error instanceof Error ? error.message : 'Unknown error'}`,
-          },
-        ],
-      },
-      { status: 500 }
-    );
+    logger.error('Registration error', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

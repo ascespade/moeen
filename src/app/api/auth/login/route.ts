@@ -5,7 +5,9 @@ import { PermissionManager } from '@/lib/permissions';
 import { logger } from '@/lib/logger';
 import { ErrorHandler } from '@/core/errors';
 
-const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
+import { env } from '@/config/env';
+
+const DEFAULT_PASSWORD = env.TEST_USERS_PASSWORD || 'A123456';
 
 export async function POST(req: NextRequest) {
   try {
@@ -24,8 +26,8 @@ export async function POST(req: NextRequest) {
 
     const supabase = await createClient();
 
-    const isDev = process.env.NODE_ENV !== 'production';
-    const debugAllow = process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true';
+    const isDev = env.IS_DEVELOPMENT;
+    const debugAllow = env.ENABLE_DEBUG;
 
     // If a demo email header is provided, allow a direct DB lookup for development convenience.
     // Also auto-create demo users in dev/debug when they don't exist yet.

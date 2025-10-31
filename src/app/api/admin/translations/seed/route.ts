@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { TranslationSeeder } from '@/lib/translations/translation-seeder';
+import { env } from '@/config/env';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
-const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
+const INTERNAL_SECRET = env.ADMIN_INTERNAL_SECRET;
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,7 +12,7 @@ export async function POST(req: NextRequest) {
     const authHeader = req.headers.get('authorization');
     const internalSecret = req.headers.get('x-admin-secret');
 
-    const isDev = process.env.NODE_ENV !== 'production';
+    const isDev = env.NODE_ENV !== 'production';
     const isAuthorized =
       (isDev && internalSecret === INTERNAL_SECRET) ||
       authHeader === `Bearer ${INTERNAL_SECRET}`;
@@ -29,14 +32,8 @@ export async function POST(req: NextRequest) {
       message: 'Translations seeded successfully',
     });
   } catch (error: any) {
-    console.error('[admin/translations/seed] Error:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: error?.message || 'Failed to seed translations',
-      },
-      { status: 500 }
-    );
+    logger.error('Error seeding translations', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

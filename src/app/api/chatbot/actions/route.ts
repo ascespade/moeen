@@ -10,6 +10,7 @@ import { ErrorHandler } from '@/core/errors';
 import { ValidationHelper } from '@/core/validation';
 import { authorize, requireRole } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
+import { env } from '@/config/env';
 // import { FlowManager, IntentAnalyzer, ActionExecutor } from '@/lib/conversation-flows';
 
 const actionSchema = z.object({
@@ -356,7 +357,7 @@ export class EnhancedActionExecutor extends ActionExecutor {
       const { doctorId, date, duration = 30 } = parameters;
       
       // This would integrate with the availability API
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/appointments/availability?doctorId=${doctorId}&date=${date}&duration=${duration}`);
+      const response = await fetch(`${env.NEXT_PUBLIC_APP_URL || 'http://localhost:3002'}/api/appointments/availability?doctorId=${doctorId}&date=${date}&duration=${duration}`);
       const data = await response.json();
 
       if (!response.ok) {

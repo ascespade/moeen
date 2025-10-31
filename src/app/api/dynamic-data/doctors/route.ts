@@ -1,14 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 // API لجلب معلومات الأطباء من الجدول الموجود
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const { searchParams } = new URL(request.url);
     const specialization = searchParams.get('specialization');
     const includeUsers = searchParams.get('include_users') === 'true';
@@ -17,10 +24,11 @@ export async function GET(request: NextRequest) {
 
     if (includeUsers) {
       // استخدام الدالة الذكية التي تجلب الأطباء مع معلومات المستخدمين
-      const { data, error } = await supabase.rpc('get_doctors_with_users');
+      const { data, error } = await supabaseAdmin.rpc('get_doctors_with_users');
 
       if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        logger.error('Error in get_doctors_with_users RPC', error);
+        return ErrorHandler.getInstance().handle(error as Error);
       }
 
       // فلترة حسب التخصص إذا طُلب ذلك
@@ -36,10 +44,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ doctors: filteredData });
     } else {
       // استخدام الدالة البسيطة
-      const { data, error } = await supabase.rpc('get_doctors_info');
+      const { data, error } = await supabaseAdmin.rpc('get_doctors_info');
 
       if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        logger.error('Error in get_doctors_with_users RPC', error);
+        return ErrorHandler.getInstance().handle(error as Error);
       }
 
       // فلترة حسب التخصص إذا طُلب ذلك
@@ -55,16 +64,22 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ doctors: filteredData });
     }
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in doctors GET', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // API لإضافة طبيب جديد (للمدراء فقط)
 export async function POST(request: NextRequest) {
   try {
+    // Authorize admin, supervisor, or manager
+    const authResult = await requireAuth(['admin', 'supervisor', 'manager'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const body = await request.json();
     const {
       user_id,
@@ -91,7 +106,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('doctors')
       .insert({
         user_id,
@@ -113,21 +128,28 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error creating doctor', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in doctors POST', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // API لتحديث طبيب (للمدراء فقط)
 export async function PUT(request: NextRequest) {
   try {
+    // Authorize admin, supervisor, or manager
+    const authResult = await requireAuth(['admin', 'supervisor', 'manager'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const body = await request.json();
     const { id, ...updateData } = body;
 
@@ -146,21 +168,28 @@ export async function PUT(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error updating doctor', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in doctors PUT', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // API لحذف طبيب (للمدراء فقط)
 export async function DELETE(request: NextRequest) {
   try {
+    // Authorize admin only
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
@@ -169,7 +198,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // بدلاً من الحذف، نعطل الطبيب
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('doctors')
       .update({
         is_active: false,
@@ -180,14 +209,13 @@ export async function DELETE(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error deactivating doctor', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in doctors DELETE', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

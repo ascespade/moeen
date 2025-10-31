@@ -3,17 +3,19 @@
  * Handle Stripe webhook events for payment status updates
  */
 
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import Stripe from 'stripe';
 import { headers } from 'next/headers';
+import { env } from '@/config/env';
+import { ErrorHandler } from '@/core/errors';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe = new Stripe(env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-10-16',
 });
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+const webhookSecret = env.STRIPE_WEBHOOK_SECRET || '';
 
 export async function POST(request: NextRequest) {
   try {
@@ -32,7 +34,7 @@ export async function POST(request: NextRequest) {
     try {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
     } catch (err) {
-      console.error('Webhook signature verification failed:', err);
+      logger.error('Webhook signature verification failed', err);
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
     }
 
@@ -59,16 +61,13 @@ export async function POST(request: NextRequest) {
         );
         break;
       default:
-        console.log(`Unhandled event type: ${event.type}`);
+        logger.debug('Unhandled event type', { eventType: event.type });
     }
 
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error('Webhook error:', error);
-    return NextResponse.json(
-      { error: 'Webhook processing failed' },
-      { status: 500 }
-    );
+    logger.error('Webhook error', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -79,7 +78,7 @@ async function handlePaymentSucceeded(
   const appointmentId = paymentIntent.metadata?.appointmentId;
 
   if (!appointmentId) {
-    console.error('No appointment ID in payment intent metadata');
+    logger.warn('No appointment ID in payment intent metadata');
     return;
   }
 
@@ -96,7 +95,7 @@ async function handlePaymentSucceeded(
     .eq('transactionId', paymentIntent.id);
 
   if (paymentError) {
-    console.error('Failed to update payment status:', paymentError);
+    logger.error('Failed to update payment status', paymentError);
     return;
   }
 
@@ -107,10 +106,7 @@ async function handlePaymentSucceeded(
     .eq('id', appointmentId);
 
   if (appointmentError) {
-    console.error(
-      'Failed to update appointment payment status:',
-      appointmentError
-    );
+    logger.error('Failed to update appointment payment status', appointmentError);
     return;
   }
 
@@ -127,7 +123,7 @@ async function handlePaymentSucceeded(
     },
   });
 
-  console.log(`Payment succeeded for appointment ${appointmentId}`);
+  logger.info('Payment succeeded', { appointmentId });
 }
 
 async function handlePaymentFailed(
@@ -137,7 +133,7 @@ async function handlePaymentFailed(
   const appointmentId = paymentIntent.metadata?.appointmentId;
 
   if (!appointmentId) {
-    console.error('No appointment ID in payment intent metadata');
+    logger.warn('No appointment ID in payment intent metadata');
     return;
   }
 
@@ -154,7 +150,7 @@ async function handlePaymentFailed(
     .eq('transactionId', paymentIntent.id);
 
   if (paymentError) {
-    console.error('Failed to update payment status:', paymentError);
+    logger.error('Failed to update payment status', paymentError);
     return;
   }
 
@@ -172,7 +168,7 @@ async function handlePaymentFailed(
     },
   });
 
-  console.log(`Payment failed for appointment ${appointmentId}`);
+  logger.info('Payment failed', { appointmentId });
 }
 
 async function handlePaymentCanceled(
@@ -182,7 +178,7 @@ async function handlePaymentCanceled(
   const appointmentId = paymentIntent.metadata?.appointmentId;
 
   if (!appointmentId) {
-    console.error('No appointment ID in payment intent metadata');
+    logger.warn('No appointment ID in payment intent metadata');
     return;
   }
 
@@ -199,7 +195,7 @@ async function handlePaymentCanceled(
     .eq('transactionId', paymentIntent.id);
 
   if (paymentError) {
-    console.error('Failed to update payment status:', paymentError);
+    logger.error('Failed to update payment status', paymentError);
     return;
   }
 
@@ -216,5 +212,5 @@ async function handlePaymentCanceled(
     },
   });
 
-  console.log(`Payment canceled for appointment ${appointmentId}`);
+  logger.info('Payment canceled', { appointmentId });
 }

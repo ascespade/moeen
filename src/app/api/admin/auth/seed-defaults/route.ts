@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
+import { env } from '@/config/env';
+import { logger } from '@/lib/logger';
+import { ErrorHandler } from '@/core/errors';
 
-const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
-const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
+const INTERNAL_SECRET = env.ADMIN_INTERNAL_SECRET;
+const DEFAULT_PASSWORD = env.TEST_USERS_PASSWORD || 'A123456';
 
 const USERS = [
   { email: 'admin@test.local', name: 'Admin User', role: 'admin' },
@@ -20,10 +23,10 @@ const USERS = [
 ];
 
 export async function POST(req: any) {
-  const isDev = process.env.NODE_ENV !== 'production';
+  const isDev = env.NODE_ENV !== 'production';
   const referer = req.headers.get('referer') || '';
   const origin = req.headers.get('origin') || '';
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || '';
+  const appUrl = env.NEXT_PUBLIC_APP_URL || '';
 
   const fromLocalhost = /localhost|127\.0\.0\.1/.test(referer || origin);
 
@@ -32,9 +35,9 @@ export async function POST(req: any) {
     (req.headers.get('x-admin-secret') || '') === INTERNAL_SECRET;
   const originOk =
     appUrl && (origin.includes(appUrl) || referer.includes(appUrl));
-  const debugAllow = process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true';
+  const debugAllow = env.NEXT_PUBLIC_ENABLE_DEBUG === 'true';
 
-  console.log('[admin/seed-defaults] request context', {
+  logger.debug('Seed defaults request context', {
     referer,
     origin,
     isDev,
@@ -46,10 +49,7 @@ export async function POST(req: any) {
 
   // Allow when: header matches, or running in dev from localhost, or origin matches configured app url, or debug mode enabled
   if (!headerOk && !isDev && !fromLocalhost && !originOk && !debugAllow) {
-    console.warn(
-      '[admin/seed-defaults] unauthorized attempt to seed defaults',
-      { referer, origin }
-    );
+    logger.warn('Unauthorized attempt to seed defaults', { referer, origin });
     return NextResponse.json(
       { success: false, error: 'Unauthorized' },
       { status: 401 }
@@ -60,7 +60,7 @@ export async function POST(req: any) {
   const created: Array<{ email: string; role: string }> = [];
 
   for (const u of USERS) {
-    console.log('[admin/seed-defaults] processing user', u.email, u.role);
+    logger.debug('Processing user for seed', { email: u.email, role: u.role });
     try {
       // Create or fetch auth user
       const { data: listed } = await supabaseAdmin.auth.admin.listUsers({
@@ -77,13 +77,13 @@ export async function POST(req: any) {
             email_confirm: true,
           });
         if (cErr || !createdUser?.user) {
-          console.error('[admin/seed-defaults] createUser failed', cErr?.message);
+          logger.error('CreateUser failed', { email: u.email, error: cErr?.message });
           continue; // Skip this user and continue with next
         }
         authId = createdUser.user.id;
-        console.log('[admin/seed-defaults] created auth user', authId);
+        logger.debug('Created auth user', { email: u.email, authId });
       } else {
-        console.log('[admin/seed-defaults] existing auth user found', authId);
+        logger.debug('Existing auth user found', { email: u.email, authId });
       }
 
       // Upsert application user
@@ -107,10 +107,7 @@ export async function POST(req: any) {
       if (upErr) {
         // Check if it's a duplicate key error (user already exists by email)
         if (upErr.message?.includes('duplicate key') || upErr.message?.includes('unique constraint')) {
-          console.log(
-            '[admin/seed-defaults] User already exists, fetching existing user',
-            u.email
-          );
+          logger.debug('User already exists, fetching existing user', { email: u.email });
           // User exists, fetch it
           const { data: existingUser, error: fetchErr } = await supabase
             .from('users')
@@ -120,18 +117,15 @@ export async function POST(req: any) {
 
           if (existingUser && !fetchErr) {
             finalUser = existingUser;
-            console.log('[admin/seed-defaults] Found existing user', existingUser.id);
+            logger.debug('Found existing user', { email: u.email, userId: existingUser.id });
           } else {
-            console.warn('[admin/seed-defaults] Could not fetch existing user', fetchErr?.message);
+            logger.warn('Could not fetch existing user', { email: u.email, error: fetchErr?.message });
             continue;
           }
         }
         // If role constraint fails, try without role (role will be set via user_roles table)
         else if (upErr.message?.includes('role') || upErr.message?.includes('enum') || upErr.message?.includes('check constraint')) {
-          console.warn(
-            '[admin/seed-defaults] upsert users with role failed, retrying without role',
-            upErr?.message
-          );
+          logger.warn('Upsert users with role failed, retrying without role', { email: u.email, error: upErr?.message });
           const userDataWithoutRole = { ...userData };
           delete userDataWithoutRole.role;
           const { data: up2, error: upErr2 } = await supabase
@@ -154,10 +148,7 @@ export async function POST(req: any) {
                 continue;
               }
             } else {
-              console.error(
-                '[admin/seed-defaults] upsert users failed',
-                upErr2?.message
-              );
+              logger.error('Upsert users failed', { email: u.email, error: upErr2?.message });
               continue;
             }
           } else if (up2) {
@@ -167,16 +158,13 @@ export async function POST(req: any) {
           }
         } else {
           // Other errors - skip user
-          console.warn(
-            '[admin/seed-section] upsert users failed, skipping',
-            upErr?.message
-          );
+          logger.warn('Upsert users failed, skipping', { email: u.email, error: upErr?.message });
           continue;
         }
       }
 
       if (!finalUser) {
-        console.warn(`[admin/seed-defaults] No user record for ${u.email}, skipping`);
+        logger.warn('No user record found, skipping', { email: u.email });
         continue;
       }
 
@@ -188,12 +176,12 @@ export async function POST(req: any) {
             .update({ role: u.role })
             .eq('id', finalUser.id);
           if (updateErr) {
-            console.warn(`[admin/seed-defaults] Could not update role in users table for ${u.email}:`, updateErr.message);
+            logger.warn('Could not update role in users table', { email: u.email, error: updateErr.message });
           } else {
-            console.log(`[admin/seed-defaults] Role updated in users table for ${u.email}: ${u.role}`);
+            logger.debug('Role updated in users table', { email: u.email, role: u.role });
           }
         } catch (e: any) {
-          console.warn(`[admin/seed-defaults] Exception updating role:`, e?.message);
+          logger.warn('Exception updating role', { email: u.email, error: e?.message });
         }
       }
 
@@ -211,20 +199,20 @@ export async function POST(req: any) {
             { onConflict: 'user_id,role_id' }
           );
         if (roleErr) {
-          console.warn(`[admin/seed-defaults] Could not assign role to ${u.email}:`, roleErr.message);
+          logger.warn('Could not assign role', { email: u.email, error: roleErr.message });
         } else {
-          console.log(`[admin/seed-defaults] Role assigned to ${u.email}: ${u.role}`);
+          logger.debug('Role assigned', { email: u.email, role: u.role });
         }
       }
 
       created.push({ email: u.email, role: u.role });
     } catch (error: any) {
-      console.error(`[admin/seed-defaults] Error processing user ${u.email}:`, error?.message);
+      logger.error('Error processing user', { email: u.email, error: error?.message });
       // Continue with next user
     }
   }
 
-  console.log('[admin/seed-defaults] created users', created);
+  logger.info('Seed defaults completed', { createdCount: created.length, users: created });
   return NextResponse.json({
     success: true,
     users: created,

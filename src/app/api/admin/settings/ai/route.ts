@@ -6,6 +6,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
   try {
@@ -45,11 +47,8 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error in AI settings API:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    logger.error('Error in AI settings API', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -107,11 +106,8 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error saving AI settings:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    logger.error('Error saving AI settings', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

@@ -4,11 +4,13 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { env } from '@/config/env';
+import { ErrorHandler } from '@/core/errors';
 
 export async function GET(_request: NextRequest) {
   try {
     const baseUrl =
-      process.env.NEXT_PUBLIC_APP_URL ||
+      env.NEXT_PUBLIC_APP_URL ||
       'https://socwpqzcalgvpzjwavgh.supabase.co';
     const testResults: {
       timestamp: string;
@@ -118,13 +120,6 @@ export async function GET(_request: NextRequest) {
       },
     });
   } catch (error) {
-    return NextResponse.json(
-      {
-        timestamp: new Date().toISOString(),
-        status: 'error',
-        error: error.message,
-      },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

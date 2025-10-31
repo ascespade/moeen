@@ -1,14 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 // API لجلب معلومات المرضى من الجدول الموجود
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const { searchParams } = new URL(request.url);
     const includeUsers = searchParams.get('include_users') === 'true';
     const gender = searchParams.get('gender');
@@ -18,10 +25,11 @@ export async function GET(request: NextRequest) {
 
     if (includeUsers) {
       // استخدام الدالة الذكية التي تجلب المرضى مع معلومات المستخدمين
-      const { data, error } = await supabase.rpc('get_patients_with_users');
+      const { data, error } = await supabaseAdmin.rpc('get_patients_with_users');
 
       if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        logger.error('Error in get_patients RPC', error);
+        return ErrorHandler.getInstance().handle(error as Error);
       }
 
       // فلترة حسب الجنس إذا طُلب ذلك
@@ -58,10 +66,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ patients: filteredData });
     } else {
       // استخدام الدالة البسيطة
-      const { data, error } = await supabase.rpc('get_patients_info');
+      const { data, error } = await supabaseAdmin.rpc('get_patients_info');
 
       if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        logger.error('Error in get_patients RPC', error);
+        return ErrorHandler.getInstance().handle(error as Error);
       }
 
       // فلترة حسب الجنس إذا طُلب ذلك
@@ -108,6 +117,14 @@ export async function GET(request: NextRequest) {
 // API لإضافة مريض جديد (للمدراء والموظفين)
 export async function POST(request: NextRequest) {
   try {
+    // Authorize staff, supervisor, doctor, or admin
+    const authResult = await requireAuth(['staff', 'supervisor', 'doctor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const body = await request.json();
     const {
       user_id,
@@ -140,7 +157,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('patients')
       .insert({
         user_id,
@@ -167,21 +184,28 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error creating patient', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in patients POST', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // API لتحديث مريض (للمدراء والموظفين)
 export async function PUT(request: NextRequest) {
   try {
+    // Authorize staff, supervisor, doctor, or admin
+    const authResult = await requireAuth(['staff', 'supervisor', 'doctor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const body = await request.json();
     const { id, ...updateData } = body;
 
@@ -200,21 +224,28 @@ export async function PUT(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error updating patient', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in patients PUT', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // API لحذف مريض (للمدراء فقط)
 export async function DELETE(request: NextRequest) {
   try {
+    // Authorize admin only
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
@@ -223,7 +254,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // بدلاً من الحذف، نعطل المريض
-    const { data, error } = await supabase
+    const { data, error } = await supabaseAdmin
       .from('patients')
       .update({
         updated_at: new Date().toISOString(),
@@ -233,14 +264,13 @@ export async function DELETE(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error deactivating patient', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in patients DELETE', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

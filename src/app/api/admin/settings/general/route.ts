@@ -6,6 +6,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
   try {
@@ -25,7 +27,7 @@ export async function GET(request: NextRequest) {
       .order('key');
 
     if (error) {
-      console.error('Error fetching general settings:', error);
+      logger.error('Error fetching general settings', error);
       return NextResponse.json({ 
         error: 'Failed to fetch settings',
         details: error.message 
@@ -68,11 +70,8 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error in general settings API:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    logger.error('Error in general settings API', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -128,7 +127,7 @@ export async function POST(request: NextRequest) {
           });
 
         if (error) {
-          console.error(`Error saving setting ${key}:`, error);
+          logger.error('Error saving setting', { key, error });
           return { key, error: error.message };
         }
         return { key, success: true };
@@ -156,11 +155,8 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error saving general settings:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    logger.error('Error saving general settings', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

@@ -6,6 +6,8 @@
 import { requireAuth } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
   try {
@@ -156,11 +158,8 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error in patient stats API:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    logger.error('Error in patient stats API', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

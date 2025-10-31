@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function PUT(request: NextRequest) {
   try {
+    // Authorize admin only
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const body = await request.json();
     const supabase = getServiceSupabase();
 
@@ -39,17 +47,14 @@ export async function PUT(request: NextRequest) {
       .select();
 
     if (error) {
-      console.error('Failed to upsert settings:', error.message);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Failed to upsert settings', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true, data });
   } catch (err) {
-    console.error('Error in admin/homepage PUT:', err);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in admin/homepage PUT', err);
+    return ErrorHandler.getInstance().handle(err as Error);
   }
 }
 

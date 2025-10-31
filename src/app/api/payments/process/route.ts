@@ -253,7 +253,7 @@ async function __processMoyasarPayment(
     const moyasarResponse = await fetch('https://api.moyasar.com/v1/payments', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.MOYASAR_SECRET_KEY}`,
+        Authorization: `Bearer ${env.MOYASAR_SECRET_KEY || ''}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

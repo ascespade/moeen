@@ -45,6 +45,13 @@ const envSchema = z.object({
 
   // Webhooks - Optional
   WEBHOOK_SECRET: z.string().optional(),
+  WHATSAPP_VERIFY_TOKEN: z.string().optional(),
+  WHATSAPP_PHONE_NUMBER_ID: z.string().optional(),
+  WHATSAPP_ACCESS_TOKEN: z.string().optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().optional(),
+  MOYASAR_SECRET_KEY: z.string().optional(),
+  ADMIN_INTERNAL_SECRET: z.string().optional(),
+  TEST_USERS_PASSWORD: z.string().optional(),
 
   // AI - Optional
   OPENAI_API_KEY: z.string().optional(),
@@ -166,6 +173,13 @@ export const env = {
 
   // Webhooks
   WEBHOOK_SECRET: validatedEnv.WEBHOOK_SECRET,
+  WHATSAPP_VERIFY_TOKEN: validatedEnv.WHATSAPP_VERIFY_TOKEN,
+  WHATSAPP_PHONE_NUMBER_ID: validatedEnv.WHATSAPP_PHONE_NUMBER_ID,
+  WHATSAPP_ACCESS_TOKEN: validatedEnv.WHATSAPP_ACCESS_TOKEN,
+  STRIPE_WEBHOOK_SECRET: validatedEnv.STRIPE_WEBHOOK_SECRET,
+  MOYASAR_SECRET_KEY: validatedEnv.MOYASAR_SECRET_KEY,
+  ADMIN_INTERNAL_SECRET: validatedEnv.ADMIN_INTERNAL_SECRET,
+  TEST_USERS_PASSWORD: validatedEnv.TEST_USERS_PASSWORD,
 
   // AI
   OPENAI_API_KEY: validatedEnv.OPENAI_API_KEY,

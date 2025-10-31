@@ -2,9 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { createClient } from '@/lib/supabase/server';
 import { PermissionManager } from '@/lib/permissions';
+import { logger } from '@/lib/logger';
+import { ErrorHandler } from '@/core/errors';
+import { env } from '@/config/env';
 
-const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+const DEFAULT_PASSWORD = env.TEST_USERS_PASSWORD || 'A123456';
+const JWT_EXPIRES_IN = env.JWT_EXPIRES_IN || '7d';
 
 function parseMaxAgeSeconds(expiresIn: string | undefined): number {
   if (!expiresIn) return 60 * 60 * 24 * 7;
@@ -20,10 +23,14 @@ function parseMaxAgeSeconds(expiresIn: string | undefined): number {
   return 60 * 60 * 24 * 7;
 }
 
+import { logger } from '@/lib/logger';
+import { ErrorHandler } from '@/core/errors';
+import { env } from '@/config/env';
+
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json().catch(() => ({}) as any);
-    console.log('[api/auth/simple-login] request', { email });
+    logger.debug('Simple login request', { email });
     if (!email || !password) {
       return NextResponse.json(
         { success: false, error: 'Missing credentials' },
@@ -41,10 +48,7 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (userErr || !userRow) {
-      console.warn(
-        '[api/auth/simple-login] user not found in users table',
-        userErr?.message || null
-      );
+      logger.warn('User not found in users table', { email, error: userErr?.message || null });
       return NextResponse.json(
         { success: false, error: 'Invalid credentials' },
         { status: 401 }
@@ -70,7 +74,7 @@ export async function POST(req: NextRequest) {
         });
         if (!supaAuth.error && supaAuth.data?.user) authOk = true;
       } catch (e) {
-        console.warn('[api/auth/simple-login] supabase auth attempt failed', e);
+        logger.warn('Supabase auth attempt failed', { error: e });
       }
     }
 
@@ -83,9 +87,9 @@ export async function POST(req: NextRequest) {
 
     const permissions = PermissionManager.getRolePermissions(userRow.role);
 
-    const jwtSecret = process.env.JWT_SECRET;
+    const jwtSecret = env.JWT_SECRET;
     if (!jwtSecret) {
-      console.error('[api/auth/simple-login] JWT_SECRET missing');
+      logger.error('JWT_SECRET missing');
       return NextResponse.json(
         { success: false, error: 'Server misconfigured' },
         { status: 500 }
@@ -110,7 +114,7 @@ export async function POST(req: NextRequest) {
 
     response.cookies.set('auth-token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
       maxAge,
@@ -118,10 +122,7 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (e: any) {
-    console.error('[api/auth/simple-login] error', e);
-    return NextResponse.json(
-      { success: false, error: e?.message || 'Internal error' },
-      { status: 500 }
-    );
+    logger.error('Simple login error', e);
+    return ErrorHandler.getInstance().handle(e as Error);
   }
 }

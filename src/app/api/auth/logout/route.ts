@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { ErrorHandler } from '@/core/errors';
 
 export async function POST(_req: NextRequest) {
   try {
@@ -16,9 +17,6 @@ export async function POST(_req: NextRequest) {
 
     return response;
   } catch (error) {
-    return NextResponse.json(
-      { success: false, error: 'Logout failed' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

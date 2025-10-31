@@ -2,8 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 
+import { env } from '@/config/env';
+import { logger } from '@/lib/logger';
+import { ErrorHandler } from '@/core/errors';
+
 // This endpoint requires an internal secret header to prevent abuse
-const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
+const INTERNAL_SECRET = env.ADMIN_INTERNAL_SECRET;
 
 export async function POST(req: NextRequest) {
   try {
@@ -43,6 +47,7 @@ export async function POST(req: NextRequest) {
         email_confirm: true,
       });
       if (createErr || !created?.user) {
+        logger.error('Failed to create auth user', createErr);
         return NextResponse.json({ success: false, error: createErr?.message || 'Failed to create auth user' }, { status: 500 });
       }
       authUserId = created.user.id;
@@ -88,7 +93,8 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, user_id: upserted.id });
   } catch (e: any) {
-    return NextResponse.json({ success: false, error: e?.message || 'Internal error' }, { status: 500 });
+    logger.error('Error in create-user POST', e);
+    return ErrorHandler.getInstance().handle(e as Error);
   }
 }
 

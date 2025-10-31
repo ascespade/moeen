@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
   try {
@@ -47,7 +48,7 @@ export async function GET(request: NextRequest) {
     const { data: events, error, count } = await query;
 
     if (error) {
-      console.error('Error fetching security events:', error);
+      logger.error('Error fetching security events', error);
       // Return mock data if table doesn't exist
       return NextResponse.json({
         success: true,
@@ -62,10 +63,7 @@ export async function GET(request: NextRequest) {
       message: 'Security events fetched successfully',
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch security events' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

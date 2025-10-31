@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 const insuranceClaimSchema = z.object({
   patient_id: z.string().uuid('Invalid patient ID'),
@@ -16,6 +19,11 @@ const insuranceClaimSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
+    // Authorize staff, supervisor, doctor, or admin
+    const authResult = await requireAuth(['staff', 'supervisor', 'doctor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId') || '';
     const status = searchParams.get('status') || '';
@@ -49,16 +57,18 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Error fetching insurance claims:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch insurance claims' },
-      { status: 500 }
-    );
+    logger.error('Error fetching insurance claims', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
+    // Authorize staff, supervisor, doctor, or admin
+    const authResult = await requireAuth(['staff', 'supervisor', 'doctor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const body = await request.json();
     const validation = insuranceClaimSchema.safeParse(body);
 
@@ -77,10 +87,7 @@ export async function POST(request: NextRequest) {
       message: 'Insurance claim created successfully',
     });
   } catch (error) {
-    console.error('Error creating insurance claim:', error);
-    return NextResponse.json(
-      { error: 'Failed to create insurance claim' },
-      { status: 500 }
-    );
+    logger.error('Error creating insurance claim', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

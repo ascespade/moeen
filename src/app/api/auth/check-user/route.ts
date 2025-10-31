@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/logger';
+import { ErrorHandler } from '@/core/errors';
 
 export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json().catch(() => ({}) as any);
-    console.log('[api/auth/check-user] request', { email });
+    logger.debug('Check user request', { email });
     if (!email) {
       return NextResponse.json(
         { success: false, error: 'Missing email' },
@@ -20,7 +22,7 @@ export async function POST(req: NextRequest) {
       .single();
 
     if (error) {
-      console.error('[api/auth/check-user] db error', error.message);
+      logger.error('Database error in check-user', { error: error.message });
       // If not found, supabase returns 406 or 404 depending; handle as not found
       const notFound =
         error.code === 'PGRST116' ||
@@ -55,10 +57,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, found: true, user: data });
     }
   } catch (e: any) {
-    console.error('[api/auth/check-user] unexpected error', e);
-    return NextResponse.json(
-      { success: false, error: e?.message || 'Internal error' },
-      { status: 500 }
-    );
+    logger.error('Unexpected error in check-user', e);
+    return ErrorHandler.getInstance().handle(e as Error);
   }
 }

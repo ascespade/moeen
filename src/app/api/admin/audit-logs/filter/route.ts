@@ -6,6 +6,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
   try {
@@ -93,11 +95,8 @@ export async function GET(request: NextRequest) {
     const { data: auditLogs, error: auditError, count } = await query;
 
     if (auditError) {
-      console.error('Error fetching audit logs:', auditError);
-      return NextResponse.json({ 
-        error: 'Failed to fetch audit logs',
-        details: auditError.message 
-      }, { status: 500 });
+      logger.error('Error fetching audit logs', auditError);
+      return ErrorHandler.getInstance().handle(auditError as Error);
     }
 
     // Transform data
@@ -142,11 +141,8 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error in audit logs filter API:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    logger.error('Error in audit logs filter API', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

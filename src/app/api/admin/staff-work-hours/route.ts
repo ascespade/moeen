@@ -6,6 +6,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
   try {
@@ -59,11 +61,8 @@ export async function GET(request: NextRequest) {
     const { data: staff, error: staffError } = await staffQuery;
 
     if (staffError) {
-      console.error('Error fetching staff:', staffError);
-      return NextResponse.json({ 
-        error: 'Failed to fetch staff data',
-        details: staffError.message 
-      }, { status: 500 });
+      logger.error('Error fetching staff', staffError);
+      return ErrorHandler.getInstance().handle(staffError as Error);
     }
 
     // Get attendance records for today
@@ -175,11 +174,8 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error in staff work hours API:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    logger.error('Error in staff work hours API', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

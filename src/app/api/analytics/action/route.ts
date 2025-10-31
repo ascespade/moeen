@@ -3,6 +3,7 @@ import { getServiceSupabase } from '@/lib/supabaseClient';
 import { requireAuth } from '@/lib/auth/authorize';
 import { ErrorHandler } from '@/core/errors';
 import { logger } from '@/lib/logger';
+import { env } from '@/config/env';
 import { z } from 'zod';
 
 const analyticsSchema = z.object({
@@ -35,7 +36,7 @@ export async function POST(request: NextRequest) {
     const { action, context } = validation.data;
 
     // Only track in production
-    if (process.env.NODE_ENV === 'production') {
+    if (env.IS_PRODUCTION) {
       const supabase = getServiceSupabase();
 
       // Insert into analytics table

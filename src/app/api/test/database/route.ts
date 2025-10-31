@@ -1,9 +1,12 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
+import { ErrorHandler } from '@/core/errors';
+import { env } from '@/config/env';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
+const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseServiceKey = env.SUPABASE_SERVICE_ROLE_KEY;
 
 export async function GET(request: NextRequest) {
   const testType = request.nextUrl.searchParams.get('type') || 'connection';
@@ -24,9 +27,9 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    const supabase = await createClient();
     const supabaseAdmin = supabaseServiceKey
-      ? createClient(supabaseUrl, supabaseServiceKey)
+      ? getServiceSupabase()
       : null;
 
     const startTime = Date.now();
@@ -360,14 +363,7 @@ export async function GET(request: NextRequest) {
         );
     }
   } catch (error: any) {
-    return NextResponse.json(
-      {
-        success: false,
-        error: error.message || 'Unknown error',
-        duration: Date.now() - Date.now(),
-      },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

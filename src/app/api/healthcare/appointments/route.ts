@@ -1,14 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 // GET /api/healthcare/appointments - جلب المواعيد
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const { searchParams } = new URL(request.url);
     const doctor_id = searchParams.get('doctor_id');
     const patient_id = searchParams.get('patient_id');
@@ -17,7 +24,7 @@ export async function GET(request: NextRequest) {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
 
-    let query = supabase
+    let query = supabaseAdmin
       .from('appointments')
       .select(
         `
@@ -62,7 +69,8 @@ export async function GET(request: NextRequest) {
     const { data: appointments, error, count } = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error fetching appointments', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({
@@ -75,16 +83,22 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in healthcare appointments GET', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // POST /api/healthcare/appointments - إنشاء موعد جديد
 export async function POST(request: NextRequest) {
   try {
+    // Authorize any authenticated user (patients, staff, doctors can create appointments)
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const body = await request.json();
     const {
       patient_id,
@@ -99,7 +113,7 @@ export async function POST(request: NextRequest) {
       insurance_number,
     } = body;
 
-    const { data: appointment, error } = await supabase
+    const { data: appointment, error } = await supabaseAdmin
       .from('appointments')
       .insert({
         patient_id,
@@ -118,14 +132,13 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      logger.error('Error creating appointment', error);
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ appointment }, { status: 201 });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error in healthcare appointments POST', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

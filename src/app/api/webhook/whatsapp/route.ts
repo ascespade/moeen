@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@/lib/supabase/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
 import { logger } from '@/lib/logger';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { env } from '@/config/env';
+import { ErrorHandler } from '@/core/errors';
+import { requireAuth } from '@/lib/auth/authorize';
 
 // POST /api/webhook/whatsapp - استقبال رسائل WhatsApp
 export async function POST(request: NextRequest) {
@@ -14,9 +13,12 @@ export async function POST(request: NextRequest) {
 
     // التحقق من صحة الطلب
     const verifyToken = request.headers.get('x-verify-token');
-    if (verifyToken !== process.env.WHATSAPP_VERIFY_TOKEN) {
+    if (verifyToken !== env.WHATSAPP_VERIFY_TOKEN) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
 
     // معالجة رسائل WhatsApp
     if (body.object === 'whatsapp_business_account') {
@@ -33,10 +35,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ status: 'success' });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('WhatsApp webhook error', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
   const token = searchParams.get('hub.verify_token');
   const challenge = searchParams.get('hub.challenge');
 
-  if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
+  if (mode === 'subscribe' && token === env.WHATSAPP_VERIFY_TOKEN) {
     return new NextResponse(challenge);
   }
 
@@ -56,12 +56,13 @@ export async function GET(request: NextRequest) {
 
 async function processWhatsAppMessage(message: any, value: any) {
   try {
+    const supabaseAdmin = getServiceSupabase();
     const phoneNumber = message.from;
     const messageText = message.text?.body || '';
     const messageId = message.id;
 
     // البحث عن محادثة موجودة أو إنشاء جديدة
-    let { data: conversation } = await supabase
+    let { data: conversation } = await supabaseAdmin
       .from('chatbot_conversations')
       .select('*')
       .eq('whatsapp_number', phoneNumber)
@@ -70,7 +71,7 @@ async function processWhatsAppMessage(message: any, value: any) {
 
     if (!conversation) {
       // إنشاء محادثة جديدة
-      const { data: newConversation } = await supabase
+      const { data: newConversation } = await supabaseAdmin
         .from('chatbot_conversations')
         .insert({
           whatsapp_number: phoneNumber,
@@ -85,7 +86,7 @@ async function processWhatsAppMessage(message: any, value: any) {
     }
 
     // حفظ الرسالة
-    await supabase.from('chatbot_messages').insert({
+    await supabaseAdmin.from('chatbot_messages').insert({
       conversation_id: conversation.id,
       whatsapp_message_id: messageId,
       sender_type: 'customer',
@@ -95,7 +96,7 @@ async function processWhatsAppMessage(message: any, value: any) {
     });
 
     // تحديث آخر رسالة
-    await supabase
+    await supabaseAdmin
       .from('chatbot_conversations')
       .update({ last_message_at: new Date().toISOString() })
       .eq('id', conversation.id);
@@ -111,8 +112,9 @@ async function processMessageWithAI(
   phoneNumber: string
 ) {
   try {
+    const supabaseAdmin = getServiceSupabase();
     // البحث عن النية المناسبة
-    const { data: intents } = await supabase
+    const { data: intents } = await supabaseAdmin
       .from('chatbot_intents')
       .select('*')
       .eq('is_active', true)
@@ -166,7 +168,7 @@ async function processMessageWithAI(
     }
 
     // حفظ رد البوت
-    await supabase.from('chatbot_messages').insert({
+    await supabaseAdmin.from('chatbot_messages').insert({
       conversation_id: conversationId,
       sender_type: 'bot',
       message_text: responseText,
@@ -211,11 +213,11 @@ async function handleReminderIntent(
 async function sendWhatsAppMessage(phoneNumber: string, message: string) {
   try {
     const response = await fetch(
-      `https://graph.facebook.com/v18.0/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
+      `https://graph.facebook.com/v18.0/${env.WHATSAPP_PHONE_NUMBER_ID || ''}/messages`,
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${env.WHATSAPP_ACCESS_TOKEN || ''}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({

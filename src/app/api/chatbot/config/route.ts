@@ -1,14 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
+import { logger } from '@/lib/logger';
 
 // GET /api/chatbot/config - جلب إعدادات الشات بوت
 export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     const { data: config, error } = await supabase
       .from('chatbot_configs')
       .select('*')
@@ -42,16 +48,22 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ config });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error fetching chatbot config', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 // POST /api/chatbot/config - حفظ إعدادات الشات بوت
 export async function POST(request: NextRequest) {
   try {
+    // Authorize admin only
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
+    const supabaseAdmin = getServiceSupabase();
     const body = await request.json();
     const {
       name,
@@ -68,7 +80,7 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // البحث عن إعدادات موجودة
-    const { data: existingConfig } = await supabase
+    const { data: existingConfig } = await supabaseAdmin
       .from('chatbot_configs')
       .select('id')
       .eq('is_active', true)
@@ -77,7 +89,7 @@ export async function POST(request: NextRequest) {
     let result;
     if (existingConfig) {
       // تحديث الإعدادات الموجودة
-      const { data, error } = await supabase
+      const { data, error } = await supabaseAdmin
         .from('chatbot_configs')
         .update({
           name,
@@ -100,7 +112,7 @@ export async function POST(request: NextRequest) {
       result = { data, error };
     } else {
       // إنشاء إعدادات جديدة
-      const { data, error } = await supabase
+      const { data, error } = await supabaseAdmin
         .from('chatbot_configs')
         .insert({
           name,
@@ -130,9 +142,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ config: result.data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    logger.error('Error saving chatbot config', error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
