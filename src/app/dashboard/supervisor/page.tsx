@@ -354,7 +354,6 @@ export default function SupervisorDashboard() {
             </div>
           </div>
         </div>
-      </div>
     </ProtectedRoute>
   );
 }

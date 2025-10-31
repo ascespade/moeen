@@ -16,8 +16,8 @@ import {
 } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
 import { DashboardGrid, GridItem } from '../DashboardGrid';
-import { ChartWidget } from './ChartWidget';
-import { KPICard } from './KPICard';
+import ChartWidget from './ChartWidget';
+import KPICard from './KPICard';
 
 export interface PatientDashboardProps {
   patientId: string;

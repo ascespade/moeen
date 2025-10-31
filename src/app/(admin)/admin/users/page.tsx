@@ -82,7 +82,6 @@ interface User {
   createdByName: string;
   department?: string;
   position?: string;
-  permissions: string[];
   preferences: {
     language: string;
     theme: string;
@@ -96,7 +95,6 @@ interface User {
     sessionsCount: number;
     averageSessionDuration: number;
   };
-  tags?: string[];
   notes?: string;
 }
 
@@ -110,6 +108,7 @@ interface ApiUserResponse {
     department?: string;
     position?: string;
   };
+  avatar?: string;
   isActive: boolean;
   permissions?: string[];
   createdAt: string;
@@ -587,7 +586,7 @@ function UsersPageContent() {
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <Button
                       key={page}
-                      variant={currentPage === page ? "default" : "outline"}
+                      variant={currentPage === page ? "primary" : "outline"}
                       size="sm"
                       onClick={() => setCurrentPage(page)}
                       className="w-8 h-8 p-0"
