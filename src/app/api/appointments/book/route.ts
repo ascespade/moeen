@@ -96,9 +96,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify patient exists and is active
+    // IMPORTANT: Database uses snake_case
     const { data: patient, error: patientError } = await supabase
       .from('patients')
-      .select('id, isActivated, userId')
+      .select('id, is_activated, user_id')
       .eq('id', patientId)
       .single();
 
@@ -106,7 +107,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
     }
 
-    if (!patient.isActivated) {
+    if (!patient.is_activated) {
       return NextResponse.json(
         { error: 'Patient account not activated' },
         { status: 400 }
@@ -114,9 +115,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify doctor exists and is available
+    // IMPORTANT: Database uses snake_case
     const { data: doctor, error: doctorError } = await supabase
       .from('doctors')
-      .select('id, userId, speciality, schedule')
+      .select('id, user_id, speciality, schedule')
       .eq('id', doctorId)
       .single();
 
@@ -125,22 +127,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Create appointment with full tracking
+    // IMPORTANT: Database uses snake_case, not camelCase
     const { data: appointment, error: appointmentError } = await supabase
       .from('appointments')
       .insert({
-        patientId,
-        doctorId,
-        scheduledAt,
-        type,
-        notes,
-        duration,
-        isVirtual,
+        patient_id: patientId,
+        doctor_id: doctorId,
+        scheduled_at: scheduledAt,
+        type: type,
+        notes: notes,
+        duration: duration,
+        is_virtual: isVirtual,
         status: 'pending',
-        paymentStatus: 'unpaid',
-        insuranceClaimId,
-        createdBy: authResult.user!.id,
-        bookingSource: 'web',
-        lastActivityAt: new Date().toISOString(),
+        payment_status: 'unpaid',
+        insurance_claim_id: insuranceClaimId,
+        created_by: authResult.user!.id,
+        booking_source: 'web',
+        last_activity_at: new Date().toISOString(),
       })
       .select()
       .single();
@@ -153,13 +156,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Create audit log with full tracking
+    // IMPORTANT: Database uses snake_case
     await supabase.from('audit_logs').insert({
       action: 'appointment_created',
-      entityType: 'appointment',
-      entityId: appointment.id,
-      userId: authResult.user!.id,
-      ipAddress,
-      userAgent,
+      resource_type: 'appointment',
+      resource_id: appointment.id,
+      user_id: authResult.user!.id,
+      ip_address: ipAddress,
+      user_agent: userAgent,
       status: 'success',
       severity: 'secondary',
       metadata: {
@@ -233,15 +237,25 @@ async function checkAppointmentConflicts(
   const startTime = new Date(scheduledAt);
   const endTime = new Date(startTime.getTime() + duration * 60000);
 
-  const { data: conflicts } = await supabase
+  // IMPORTANT: Database uses snake_case
+  // Improved conflict check - fetch appointments that might overlap and filter in JS
+  const { data: allAppointments } = await supabase
     .from('appointments')
-    .select('id, scheduledAt, duration, patientId')
-    .eq('doctorId', doctorId)
+    .select('id, scheduled_at, duration, patient_id')
+    .eq('doctor_id', doctorId)
     .in('status', ['pending', 'confirmed', 'in_progress'])
-    .gte('scheduledAt', startTime.toISOString())
-    .lte('scheduledAt', endTime.toISOString());
+    .lt('scheduled_at', endTime.toISOString()); // Start before our end time
 
-  return conflicts || [];
+  // Filter for actual overlaps
+  const conflicts = (allAppointments || []).filter((appt: any) => {
+    const apptStart = new Date(appt.scheduled_at);
+    const apptDuration = appt.duration || 30;
+    const apptEnd = new Date(apptStart.getTime() + apptDuration * 60000);
+    // Check overlap: appt_start < requested_end AND appt_end > requested_start
+    return apptStart < endTime && apptEnd > startTime;
+  });
+
+  return conflicts;
 }
 
 async function sendAppointmentConfirmation(appointmentId: string) {
