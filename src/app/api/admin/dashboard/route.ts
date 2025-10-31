@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
 export async function GET(request: NextRequest) {
   try {
+    // Authorize admin only
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const supabase = await createClient();
     // Get basic statistics
     const { count: totalPatients } = await supabase
       .from('patients')
@@ -38,25 +42,113 @@ export async function GET(request: NextRequest) {
     const totalRevenue =
       paymentsData?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0;
 
+    // Get real statistics from database
+    const { count: activePatients } = await supabase
+      .from('patients')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'active');
+
+    const { count: blockedPatients } = await supabase
+      .from('patients')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'blocked');
+
+    const { count: completedAppointments } = await supabase
+      .from('appointments')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'completed');
+
+    const { count: pendingAppointments } = await supabase
+      .from('appointments')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'pending');
+
+    // Calculate monthly revenue (current month)
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+    
+    const { data: monthlyPaymentsData } = await supabase
+      .from('payments')
+      .select('amount')
+      .eq('status', 'paid')
+      .gte('created_at', startOfMonth.toISOString());
+
+    const monthlyRevenue = monthlyPaymentsData?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0;
+
+    // Get real claims statistics
+    const { count: approvedClaims } = await supabase
+      .from('insurance_claims')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'approved');
+
+    const { count: pendingClaims } = await supabase
+      .from('insurance_claims')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'pending');
+
+    const { count: rejectedClaims } = await supabase
+      .from('insurance_claims')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'rejected');
+
+    // Get real staff statistics
+    const { count: totalStaff } = await supabase
+      .from('doctors')
+      .select('*', { count: 'exact', head: true });
+
+    const { count: activeStaff } = await supabase
+      .from('doctors')
+      .select('*', { count: 'exact', head: true })
+      .eq('is_active', true);
+
+    // Get on-duty staff (staff with appointments today or currently working)
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+
+    const { data: todayAppointments } = await supabase
+      .from('appointments')
+      .select('doctor_id')
+      .gte('scheduled_at', todayStart.toISOString())
+      .lte('scheduled_at', todayEnd.toISOString())
+      .in('status', ['pending', 'confirmed', 'in_progress']);
+
+    const uniqueOnDutyStaffIds = new Set(todayAppointments?.map((a: any) => a.doctor_id) || []);
+    const onDutyStaff = uniqueOnDutyStaffIds.size;
+
+    // Get real session statistics
+    const { count: completedSessions } = await supabase
+      .from('sessions')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'completed');
+
+    const { count: upcomingSessions } = await supabase
+      .from('sessions')
+      .select('*', { count: 'exact', head: true })
+      .eq('status', 'scheduled')
+      .gte('scheduled_at', new Date().toISOString());
+
     const stats = {
       totalPatients: totalPatients || 0,
-      activePatients: Math.floor((totalPatients || 0) * 0.8), // 80% active
-      blockedPatients: Math.floor((totalPatients || 0) * 0.2), // 20% blocked
+      activePatients: activePatients || 0,
+      blockedPatients: blockedPatients || 0,
       totalAppointments: totalAppointments || 0,
-      completedAppointments: Math.floor((totalAppointments || 0) * 0.7), // 70% completed
-      pendingAppointments: Math.floor((totalAppointments || 0) * 0.3), // 30% pending
+      completedAppointments: completedAppointments || 0,
+      pendingAppointments: pendingAppointments || 0,
       totalRevenue,
-      monthlyRevenue: Math.floor(totalRevenue * 0.1), // 10% of total
+      monthlyRevenue,
       totalClaims: totalClaims || 0,
-      approvedClaims: Math.floor((totalClaims || 0) * 0.6), // 60% approved
-      pendingClaims: Math.floor((totalClaims || 0) * 0.3), // 30% pending
-      rejectedClaims: Math.floor((totalClaims || 0) * 0.1), // 10% rejected
-      totalStaff: 15, // Fixed number for now
-      activeStaff: 12, // Fixed number for now
-      onDutyStaff: 8, // Fixed number for now
+      approvedClaims: approvedClaims || 0,
+      pendingClaims: pendingClaims || 0,
+      rejectedClaims: rejectedClaims || 0,
+      totalStaff: totalStaff || 0,
+      activeStaff: activeStaff || 0,
+      onDutyStaff: onDutyStaff || 0,
       totalSessions: totalSessions || 0,
-      completedSessions: Math.floor((totalSessions || 0) * 0.8), // 80% completed
-      upcomingSessions: Math.floor((totalSessions || 0) * 0.2), // 20% upcoming
+      completedSessions: completedSessions || 0,
+      upcomingSessions: upcomingSessions || 0,
     };
 
     return NextResponse.json({
@@ -68,11 +160,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Dashboard API error:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch dashboard data' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 

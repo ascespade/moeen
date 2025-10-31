@@ -1,8 +1,15 @@
 import { createClient } from '@/lib/supabase/server';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { searchParams } = new URL(request.url);
     const therapistId = searchParams.get('therapist_id');
     const date = searchParams.get('date');
@@ -25,9 +32,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ schedules: data });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch availability' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

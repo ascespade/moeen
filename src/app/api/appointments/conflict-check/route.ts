@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { ErrorHandler } from '@/core/errors';
+import { requireAuth } from '@/lib/auth/authorize';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 
 const conflictCheckSchema = z.object({
@@ -22,6 +23,12 @@ export async function POST(request: NextRequest) {
   const { ipAddress, userAgent } = getClientInfo(request);
 
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const supabase = await createClient();
     const body = await request.json();
 
@@ -40,8 +47,8 @@ export async function POST(request: NextRequest) {
     const { doctorId, scheduledAt, duration, excludeAppointmentId } =
       validation.data!;
 
-    const startTime = new Date(scheduledAt);
-    const endTime = new Date(startTime.getTime() + duration! * 60000);
+    const appointmentStartTime = new Date(scheduledAt);
+    const endTime = new Date(appointmentStartTime.getTime() + duration! * 60000);
 
     // Check for conflicts - IMPORTANT: Database uses snake_case
     // We need to check for overlapping appointments
@@ -67,7 +74,7 @@ export async function POST(request: NextRequest) {
       const apptStart = new Date(appt.scheduled_at);
       const apptEnd = new Date(apptStart.getTime() + (appt.duration || 30) * 60000);
       // Check overlap: appt_start < requested_end AND appt_end > requested_start
-      return apptStart < endTime && apptEnd > startTime;
+      return apptStart < endTime && apptEnd > appointmentStartTime;
     });
 
     if (error) {
@@ -95,7 +102,7 @@ export async function POST(request: NextRequest) {
         hasConflicts,
         conflict_count: conflicts?.length || 0,
       },
-      duration_ms: Date.now() - startTime.getTime(),
+      duration_ms: Date.now() - startTime,
     });
 
     return NextResponse.json({
@@ -105,7 +112,7 @@ export async function POST(request: NextRequest) {
         conflicts: conflicts || [],
         conflictCount: conflicts?.length || 0,
         requestedTime: {
-          start: startTime.toISOString(),
+          start: appointmentStartTime.toISOString(),
           end: endTime.toISOString(),
           duration,
         },

@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    // Authorize any authenticated user
+    const authResult = await requireAuth()(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const supabase = await getServerSupabase();
 
     // Get current user
@@ -32,34 +39,31 @@ export async function GET() {
 
     if (error && error.code !== 'PGRST116') {
       // PGRST116 = no rows returned
-      return NextResponse.json(
-        { error: 'Failed to fetch preferences' },
-        { status: 500 }
-      );
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json(preferences || defaultPreferences);
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
+    // Authorize any authenticated user (but allow unauthenticated for localStorage fallback)
+    const authResult = await requireAuth()(request);
+    
     const supabase = await getServerSupabase();
-
-    // Get current user
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
 
     // Allow saving preferences for unauthenticated users (they use localStorage)
     // Only save to DB if authenticated
     const { key, value } = await request.json();
+
+    // Get current user from supabase
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     if (authError || !user) {
       // Unauthenticated users - return success (they use localStorage)
@@ -116,17 +120,11 @@ export async function POST(request: NextRequest) {
     );
 
     if (error) {
-      return NextResponse.json(
-        { error: 'Failed to save preference' },
-        { status: 500 }
-      );
+      return ErrorHandler.getInstance().handle(error as Error);
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
