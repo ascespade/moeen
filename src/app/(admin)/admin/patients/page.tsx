@@ -150,13 +150,13 @@ function PatientsPageContent() {
     insuranceNumber: patient.insurance_number || '',
     bloodType: patient.blood_type || '',
     // Calculate BMI if height and weight are available
-    bmi: patient.height && patient.weight ? 
+    bmi: patient.height && patient.weight ?
       (patient.weight / Math.pow((patient.height / 100), 2)) : undefined
   }));
 
   // Use mapped patients (convert snake_case to camelCase)
   const patients = mappedPatients;
-  
+
   // Calculate total pages from pagination
   const totalPages = hookPagination?.totalPages || 1;
   const currentPageForPagination = hookPagination?.currentPage || 1;
@@ -167,7 +167,7 @@ function PatientsPageContent() {
       inactive: { label: 'غير نشط', variant: 'secondary' as const, className: 'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]' },
       pending: { label: 'في الانتظار', variant: 'outline' as const, className: 'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]' }
     };
-    
+
     const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -324,7 +324,7 @@ function PatientsPageContent() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">المرضى النشطون</CardTitle>
@@ -339,7 +339,7 @@ function PatientsPageContent() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">الزيارات اليوم</CardTitle>
@@ -359,7 +359,7 @@ function PatientsPageContent() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">في الانتظار</CardTitle>

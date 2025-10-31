@@ -354,14 +354,14 @@ export default function MessagesPage() {
     const matchesType = typeFilter === 'all' || message.type === typeFilter;
     const matchesStatus = statusFilter === 'all' || message.status === statusFilter;
     const matchesCategory = categoryFilter === 'all' || message.category === categoryFilter;
-    const matchesFolder = selectedFolder === 'all' || 
+    const matchesFolder = selectedFolder === 'all' ||
                          (selectedFolder === 'inbox' && !message.isDeleted && !message.isArchived && !message.isSpam) ||
                          (selectedFolder === 'sent' && message.senderId === 'current_user') ||
                          (selectedFolder === 'drafts' && message.status === 'draft') ||
                          (selectedFolder === 'spam' && message.isSpam) ||
                          (selectedFolder === 'trash' && message.isDeleted) ||
                          (selectedFolder === 'archived' && message.isArchived);
-    
+
     return matchesSearch && matchesType && matchesStatus && matchesCategory && matchesFolder;
   });
 
@@ -374,8 +374,8 @@ export default function MessagesPage() {
       whatsapp: { label: 'واتساب', icon: <MessageSquare className="h-3 w-3" />, className: 'bg-green-100 text-green-800' },
       telegram: { label: 'تيليجرام', icon: <Send className="h-3 w-3" />, className: 'bg-blue-100 text-blue-800' }
     };
-    
-    const config = typeConfig[type as keyof typeof typeConfig] || 
+
+    const config = typeConfig[type as keyof typeof typeConfig] ||
                   { label: type, icon: null, className: '' };
     return (
       <Badge variant="outline" className={config.className}>
@@ -396,8 +396,8 @@ export default function MessagesPage() {
       failed: { label: 'فشل', variant: 'error' as const, className: 'bg-red-100 text-red-800' },
       scheduled: { label: 'مجدول', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' }
     };
-    
-    const config = statusConfig[status as keyof typeof statusConfig] || 
+
+    const config = statusConfig[status as keyof typeof statusConfig] ||
                   { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -411,8 +411,8 @@ export default function MessagesPage() {
       support: { label: 'دعم', icon: <Settings className="h-3 w-3" />, className: 'bg-cyan-100 text-cyan-800' },
       general: { label: 'عام', icon: <Mail className="h-3 w-3" />, className: 'bg-gray-100 text-gray-800' }
     };
-    
-    const config = categoryConfig[category as keyof typeof categoryConfig] || 
+
+    const config = categoryConfig[category as keyof typeof categoryConfig] ||
                   { label: category, icon: null, className: '' };
     return (
       <Badge variant="outline" className={config.className}>
@@ -431,8 +431,8 @@ export default function MessagesPage() {
       high: { label: 'عالي', variant: 'default' as const, className: 'bg-orange-100 text-orange-800' },
       urgent: { label: 'عاجل', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
-    
-    const config = priorityConfig[priority as keyof typeof priorityConfig] || 
+
+    const config = priorityConfig[priority as keyof typeof priorityConfig] ||
                   { label: priority, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -546,7 +546,7 @@ export default function MessagesPage() {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
@@ -560,7 +560,7 @@ export default function MessagesPage() {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
@@ -574,7 +574,7 @@ export default function MessagesPage() {
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
@@ -864,7 +864,7 @@ export default function MessagesPage() {
                 تفاصيل الرسالة
               </DialogDescription>
             </DialogHeader>
-            
+
             {selectedMessage && (
               <div className="space-y-4">
                 {/* Message Info */}

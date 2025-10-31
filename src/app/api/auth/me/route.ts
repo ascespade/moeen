@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
     const clientUserRole = request.headers.get('x-user-role');
 
     if (clientUserId && clientUserEmail && clientUserRole) {
-      console.log('[api/auth/me] Using client-provided user info', { clientUserEmail });
       try {
         const { createClient } = await import('@/lib/supabase/server');
         const supabase = await createClient();
@@ -51,12 +50,11 @@ export async function GET(request: NextRequest) {
           }
         }
       } catch (e) {
-        console.warn('[api/auth/me] Client user verification failed:', e);
+        // Client user verification failed - continue to normal auth flow
       }
     }
 
     const { user, error } = await authorize(request);
-    console.log('[api/auth/me] authorize result', { userId: user?.id, error });
 
     // Primary path: Supabase auth session
     if (user && !error) {
@@ -143,7 +141,6 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    console.log('[api/auth/me] returning 401 unauthorized', { error });
     return NextResponse.json(
       {
         success: false,
@@ -153,7 +150,6 @@ export async function GET(request: NextRequest) {
       { status: 401 }
     );
   } catch (error) {
-    console.error('[api/auth/me] unexpected error:', error);
     return NextResponse.json(
       {
         success: false,

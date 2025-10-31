@@ -352,7 +352,7 @@ export default function ConversationsPage() {
     const matchesStatus = statusFilter === 'all' || conversation.status === statusFilter;
     const matchesPriority = priorityFilter === 'all' || conversation.priority === priorityFilter;
     const matchesChannel = channelFilter === 'all' || conversation.channel === channelFilter;
-    
+
     return matchesSearch && matchesStatus && matchesPriority && matchesChannel;
   });
 
@@ -364,8 +364,8 @@ export default function ConversationsPage() {
       archived: { label: 'مؤرشف', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' },
       escalated: { label: 'مرفوع', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
-    
-    const config = statusConfig[status as keyof typeof statusConfig] || 
+
+    const config = statusConfig[status as keyof typeof statusConfig] ||
                   { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -377,8 +377,8 @@ export default function ConversationsPage() {
       high: { label: 'عالي', variant: 'default' as const, className: 'bg-orange-100 text-orange-800' },
       urgent: { label: 'عاجل', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
-    
-    const config = priorityConfig[priority as keyof typeof priorityConfig] || 
+
+    const config = priorityConfig[priority as keyof typeof priorityConfig] ||
                   { label: priority, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -392,8 +392,8 @@ export default function ConversationsPage() {
       whatsapp: { label: 'واتساب', icon: <MessageSquare className="h-3 w-3" />, className: 'bg-green-100 text-green-800' },
       telegram: { label: 'تيليجرام', icon: <Send className="h-3 w-3" />, className: 'bg-blue-100 text-blue-800' }
     };
-    
-    const config = channelConfig[channel as keyof typeof channelConfig] || 
+
+    const config = channelConfig[channel as keyof typeof channelConfig] ||
                   { label: channel, icon: null, className: '' };
     return (
       <Badge variant="outline" className={config.className}>
@@ -412,8 +412,8 @@ export default function ConversationsPage() {
       staff: { label: 'موظف', icon: <Users className="h-3 w-3" />, className: 'bg-green-100 text-green-800' },
       bot: { label: 'بوت', icon: <Bot className="h-3 w-3" />, className: 'bg-purple-100 text-purple-800' }
     };
-    
-    const config = typeConfig[type as keyof typeof typeConfig] || 
+
+    const config = typeConfig[type as keyof typeof typeConfig] ||
                   { label: type, icon: null, className: '' };
     return (
       <Badge variant="outline" className={config.className}>
@@ -502,7 +502,7 @@ export default function ConversationsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">المحادثات النشطة</CardTitle>
@@ -517,7 +517,7 @@ export default function ConversationsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">المحادثات المحلولة</CardTitle>
@@ -532,7 +532,7 @@ export default function ConversationsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">متوسط وقت الاستجابة</CardTitle>
@@ -832,7 +832,7 @@ export default function ConversationsPage() {
                 محادثة مع {selectedConversation?.participantName} - {selectedConversation?.channel}
               </DialogDescription>
             </DialogHeader>
-            
+
             {selectedConversation && (
               <div className="space-y-4">
                 {/* Conversation Info */}

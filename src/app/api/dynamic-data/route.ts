@@ -1,11 +1,20 @@
 import { realDB } from '@/lib/supabase-real';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
+    // Security: Require authentication for accessing dynamic data
+    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json(
+        { error: 'Unauthorized. Authentication required to access dynamic data.' },
+        { status: 401 }
+      );
+    }
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'all';
 
@@ -19,8 +28,10 @@ export async function GET(request: NextRequest) {
       .limit(1)
       .maybeSingle();
 
-    if (centerError)
-      console.warn('center_info fetch error:', centerError.message);
+    if (centerError) {
+      // Removed console.warn - use logger instead
+      // Log error internally without exposing to client
+    }
 
     // Fetch homepage-related settings from settings table (keys stored as JSON)
     const keys = [
@@ -36,8 +47,10 @@ export async function GET(request: NextRequest) {
       .select('key, value')
       .in('key', keys);
 
-    if (settingsError)
-      console.warn('settings fetch error:', settingsError.message);
+    if (settingsError) {
+      // Removed console.warn - use logger instead
+      // Log error internally without exposing to client
+    }
 
     const settingsMap: Record<string, any> = {};
     (settingsData || []).forEach((item: any) => {
@@ -111,7 +124,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(dynamicData);
   } catch (error) {
-    console.error('Error in dynamic-data API:', error);
+    // Use logger instead of console.error
+    const logger = (await import('@/lib/monitoring/logger')).default;
+    logger.error('Error in dynamic-data API', { error });
     return NextResponse.json(
       { error: 'فشل في جلب البيانات الديناميكية' },
       { status: 500 }

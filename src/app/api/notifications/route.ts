@@ -30,6 +30,28 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Security: Require authentication and proper permissions for creating notifications
+    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // Check permissions using unified permission system
+    const userPermissions = PermissionManager.getUserPermissions(
+      authResult.user.role,
+      authResult.user.meta?.permissions || []
+    );
+
+    if (!PermissionManager.canAccess(userPermissions, 'notifications', 'manage')) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const data = await realDB.createUser({
       ...body,

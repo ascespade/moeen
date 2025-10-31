@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
+import { requireAuth } from '@/lib/auth/authorize';
+import { PermissionManager } from '@/lib/permissions';
 import { z } from 'zod';
 
 const doctorSchema = z.object({
@@ -17,6 +19,27 @@ const doctorSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
+    // Security: Require authentication for accessing doctors data
+    const authResult = await requireAuth(['admin', 'supervisor', 'staff', 'doctor', 'patient'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // Check permissions using unified permission system
+    const userPermissions = PermissionManager.getUserPermissions(
+      authResult.user.role,
+      authResult.user.meta?.permissions || []
+    );
+
+    if (!PermissionManager.canAccess(userPermissions, 'doctors', 'view')) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
     const { searchParams } = new URL(request.url);
     const specialty = searchParams.get('specialty') || '';
     const searchTerm = searchParams.get('search') || '';
@@ -44,7 +67,6 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Error fetching doctors:', error);
     return NextResponse.json(
       { error: 'Failed to fetch doctors' },
       { status: 500 }
@@ -97,7 +119,6 @@ export async function POST(request: NextRequest) {
       message: 'Doctor created successfully',
     });
   } catch (error) {
-    console.error('Error creating doctor:', error);
     return NextResponse.json(
       { error: 'Failed to create doctor' },
       { status: 500 }

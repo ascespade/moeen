@@ -1,29 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ROLES } from '@/constants/roles';
+import { requireAuth } from '@/lib/auth/authorize';
+import { PermissionManager, ROLES } from '@/lib/permissions';
 
 export async function GET(request: NextRequest) {
   try {
-    // Get user role from headers (set by auth middleware)
-    const userRole = request.headers.get('x-user-role') as any;
-    const userEmail = request.headers.get('x-user-email');
+    // Use unified authentication system
+    const authResult = await requireAuth()(request);
 
-    if (!userRole) {
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { success: false, error: 'Not authenticated' },
         { status: 401 }
       );
     }
 
-    const roleData = ROLES[userRole as keyof typeof ROLES];
+    const userRole = authResult.user.role;
+
+    // Get permissions using unified PermissionManager
+    const permissions = PermissionManager.getRolePermissions(userRole);
+    const roleData = ROLES[userRole];
 
     return NextResponse.json({
       success: true,
       data: {
         role: userRole,
-        email: userEmail,
-        permissions: roleData?.permissions || [],
-        label: roleData?.label || userRole,
-        labelAr: roleData?.labelAr || userRole,
+        email: authResult.user.email,
+        permissions: permissions || [],
+        label: roleData?.name || userRole,
+        labelAr: roleData?.name || userRole,
       },
     });
   } catch (error) {

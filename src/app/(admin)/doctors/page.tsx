@@ -366,7 +366,7 @@ export default function DoctorsPage() {
                          doctor.specialization.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || doctor.status === statusFilter;
     const matchesSpecialization = specializationFilter === 'all' || doctor.specialization === specializationFilter;
-    
+
     return matchesSearch && matchesStatus && matchesSpecialization;
   });
 
@@ -376,7 +376,7 @@ export default function DoctorsPage() {
       inactive: { label: 'غير نشط', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' },
       on_leave: { label: 'في إجازة', variant: 'outline' as const, className: 'bg-yellow-100 text-yellow-800' }
     };
-    
+
     const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -526,7 +526,7 @@ export default function DoctorsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">الأطباء النشطون</CardTitle>
@@ -541,7 +541,7 @@ export default function DoctorsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">متوسط التقييم</CardTitle>
@@ -556,7 +556,7 @@ export default function DoctorsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">إجمالي المرضى</CardTitle>

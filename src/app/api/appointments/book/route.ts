@@ -191,7 +191,9 @@ export async function POST(request: NextRequest) {
       message: 'Appointment booked successfully',
     });
   } catch (error) {
-    console.error('Error in appointment booking:', error);
+    // Use logger instead of console.error
+    const logger = (await import('@/lib/monitoring/logger')).default;
+    logger.error('Error in appointment booking', { error });
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -268,5 +270,6 @@ async function checkAppointmentConflicts(
 
 async function sendAppointmentConfirmation(appointmentId: string) {
   // This will be implemented in the notification system
-  console.log(`Sending appointment confirmation for ${appointmentId}`);
+  const logger = (await import('@/lib/monitoring/logger')).default;
+  logger.info('Sending appointment confirmation', { appointmentId });
 }

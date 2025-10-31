@@ -4,10 +4,19 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = getServiceSupabase();
 
 export async function GET(request: NextRequest) {
+  // Security: Require authentication for dashboard metrics
+  const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+  if (!authResult.authorized) {
+    return NextResponse.json(
+      { error: 'Unauthorized. Authentication required to access metrics.' },
+      { status: 401 }
+    );
+  }
   const logError = (error: any, context: string) => {
     const timestamp = new Date().toISOString();
     const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${error.message || error}`;

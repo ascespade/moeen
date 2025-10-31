@@ -18,32 +18,32 @@ const ROUTE_PERMISSIONS: RoutePermission[] = [
   { path: '/admin/logs', permissions: ['security:logs'], roles: ['admin'] },
   { path: '/admin/payments', permissions: ['payments:view'], roles: ['admin', 'manager'] },
   { path: '/admin/therapists', permissions: ['doctors:view'], roles: ['admin', 'manager'] },
-  
+
   // Dashboard routes
   { path: '/dashboard', permissions: ['dashboard:view'] },
   { path: '/analytics', permissions: ['analytics:view'] },
   { path: '/reports', permissions: ['reports:view'] },
-  
+
   // Healthcare routes
   { path: '/patients', permissions: ['patients:view'] },
   { path: '/doctors', permissions: ['doctors:view'] },
   { path: '/appointments', permissions: ['appointments:view'] },
   { path: '/sessions', permissions: ['sessions:view'] },
-  
+
   // CRM routes
   { path: '/crm', permissions: ['crm:view'] },
   { path: '/crm/leads', permissions: ['crm:leads'] },
   { path: '/crm/contacts', permissions: ['crm:contacts'] },
   { path: '/crm/deals', permissions: ['crm:deals'] },
   { path: '/crm/activities', permissions: ['crm:activities'] },
-  
+
   // Chatbot routes
   { path: '/chatbot', permissions: ['chatbot:view'] },
   { path: '/chatbot/flows', permissions: ['chatbot:flows'] },
   { path: '/chatbot/templates', permissions: ['chatbot:templates'] },
   { path: '/chatbot/analytics', permissions: ['chatbot:analytics'] },
   { path: '/chatbot/integrations', permissions: ['chatbot:integrations'] },
-  
+
   // Other routes
   { path: '/conversations', permissions: ['conversations:view'] },
   { path: '/payments', permissions: ['payments:view'] },
@@ -56,16 +56,31 @@ const ROUTE_PERMISSIONS: RoutePermission[] = [
   { path: '/profile', permissions: ['profile:view'] },
   { path: '/dynamic-data', permissions: ['dynamic_data:view'] },
   { path: '/flow', permissions: ['flow:view'] },
-  { path: '/review', permissions: ['review:view'] }
+  { path: '/review', permissions: ['review:view'] },
+
+  // API routes protection patterns (used for reference)
+  { path: '/api/admin', permissions: ['users:view'], roles: ['admin', 'manager'] },
+  { path: '/api/dashboard', permissions: ['dashboard:view'] },
+  { path: '/api/analytics', permissions: ['analytics:view'], roles: ['admin', 'supervisor'] },
+  { path: '/api/patients', permissions: ['patients:view'] },
+  { path: '/api/doctors', permissions: ['doctors:view'] },
+  { path: '/api/appointments', permissions: ['appointments:view'] },
+  { path: '/api/crm', permissions: ['crm:view'], roles: ['admin', 'supervisor', 'staff'] },
+  { path: '/api/chatbot', permissions: ['chatbot:view'], roles: ['admin', 'supervisor', 'staff', 'agent'] },
+  { path: '/api/payments', permissions: ['payments:view'], roles: ['admin', 'staff'] },
+  { path: '/api/settings', permissions: ['settings:view'], roles: ['admin', 'supervisor'] },
+  { path: '/api/notifications', permissions: ['notifications:view'] },
+  { path: '/api/medical-records', permissions: ['medical_records:view'], roles: ['admin', 'doctor', 'staff'] },
+  { path: '/api/audit-logs', permissions: ['security:audit_logs'], roles: ['admin'] },
 ];
 
 export function checkRoutePermission(
-  pathname: string, 
-  userRole: RoleId, 
+  pathname: string,
+  userRole: RoleId,
   userPermissions: string[]
 ): { allowed: boolean; reason?: string } {
   // Find matching route
-  const route = ROUTE_PERMISSIONS.find(route => 
+  const route = ROUTE_PERMISSIONS.find(route =>
     pathname === route.path || pathname.startsWith(route.path + '/')
   );
 
@@ -80,7 +95,7 @@ export function checkRoutePermission(
 
   // Check permissions
   const hasRequiredPermissions = PermissionManager.hasAnyPermission(
-    userPermissions, 
+    userPermissions,
     route.permissions
   );
 

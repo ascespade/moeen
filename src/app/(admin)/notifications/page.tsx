@@ -301,7 +301,7 @@ export default function NotificationsPage() {
     const matchesType = typeFilter === 'all' || notification.type === typeFilter;
     const matchesStatus = statusFilter === 'all' || notification.status === statusFilter;
     const matchesCategory = categoryFilter === 'all' || notification.category === categoryFilter;
-    
+
     return matchesSearch && matchesType && matchesStatus && matchesCategory;
   });
 
@@ -313,8 +313,8 @@ export default function NotificationsPage() {
       error: { label: 'خطأ', variant: 'error' as const, className: 'bg-red-100 text-red-800' },
       urgent: { label: 'عاجل', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
-    
-    const config = typeConfig[type as keyof typeof typeConfig] || 
+
+    const config = typeConfig[type as keyof typeof typeConfig] ||
                   { label: type, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -328,8 +328,8 @@ export default function NotificationsPage() {
       failed: { label: 'فشل', variant: 'error' as const, className: 'bg-red-100 text-red-800' },
       cancelled: { label: 'ملغي', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' }
     };
-    
-    const config = statusConfig[status as keyof typeof statusConfig] || 
+
+    const config = statusConfig[status as keyof typeof statusConfig] ||
                   { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -343,8 +343,8 @@ export default function NotificationsPage() {
       marketing: { label: 'تسويق', icon: <Target className="h-3 w-3" />, className: 'bg-orange-100 text-orange-800' },
       general: { label: 'عام', icon: <Bell className="h-3 w-3" />, className: 'bg-gray-100 text-gray-800' }
     };
-    
-    const config = categoryConfig[category as keyof typeof categoryConfig] || 
+
+    const config = categoryConfig[category as keyof typeof categoryConfig] ||
                   { label: category, icon: null, className: '' };
     return (
       <Badge variant="outline" className={config.className}>
@@ -363,8 +363,8 @@ export default function NotificationsPage() {
       high: { label: 'عالي', variant: 'default' as const, className: 'bg-orange-100 text-orange-800' },
       urgent: { label: 'عاجل', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
-    
-    const config = priorityConfig[priority as keyof typeof priorityConfig] || 
+
+    const config = priorityConfig[priority as keyof typeof priorityConfig] ||
                   { label: priority, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -376,11 +376,11 @@ export default function NotificationsPage() {
       push: { label: 'تنبيه', icon: <Bell className="h-3 w-3" />, className: 'bg-purple-100 text-purple-800' },
       in_app: { label: 'داخلي', icon: <Activity className="h-3 w-3" />, className: 'bg-gray-100 text-gray-800' }
     };
-    
+
     return (
       <div className="flex gap-1">
         {channels.map(channel => {
-          const config = channelConfig[channel as keyof typeof channelConfig] || 
+          const config = channelConfig[channel as keyof typeof channelConfig] ||
                         { label: channel, icon: null, className: '' };
           return (
             <Badge key={channel} variant="outline" className={config.className}>
@@ -463,7 +463,7 @@ export default function NotificationsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">المرسلة</CardTitle>
@@ -478,7 +478,7 @@ export default function NotificationsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">معدل التسليم</CardTitle>
@@ -493,7 +493,7 @@ export default function NotificationsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">معدل القراءة</CardTitle>
@@ -754,7 +754,7 @@ export default function NotificationsPage() {
                 تفاصيل الإشعار
               </DialogDescription>
             </DialogHeader>
-            
+
             {selectedNotification && (
               <div className="space-y-4">
                 {/* Notification Info */}

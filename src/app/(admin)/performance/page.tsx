@@ -377,7 +377,7 @@ export default function PerformancePage() {
     const matchesCategory = categoryFilter === 'all' || metric.category === categoryFilter;
     const matchesStatus = statusFilter === 'all' || metric.status === statusFilter;
     const matchesType = typeFilter === 'all' || metric.type === typeFilter;
-    
+
     return matchesSearch && matchesCategory && matchesStatus && matchesType;
   });
 
@@ -389,8 +389,8 @@ export default function PerformancePage() {
       critical: { label: 'حرج', variant: 'error' as const, className: 'bg-red-100 text-red-800' },
       unknown: { label: 'غير معروف', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' }
     };
-    
-    const config = statusConfig[status as keyof typeof statusConfig] || 
+
+    const config = statusConfig[status as keyof typeof statusConfig] ||
                   { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -404,8 +404,8 @@ export default function PerformancePage() {
       network: { label: 'شبكة', icon: <Wifi className="h-3 w-3" />, className: 'bg-cyan-100 text-cyan-800' },
       security: { label: 'أمان', icon: <Shield className="h-3 w-3" />, className: 'bg-red-100 text-red-800' }
     };
-    
-    const config = categoryConfig[category as keyof typeof categoryConfig] || 
+
+    const config = categoryConfig[category as keyof typeof categoryConfig] ||
                   { label: category, icon: null, className: '' };
     return (
       <Badge variant="outline" className={config.className}>
@@ -426,8 +426,8 @@ export default function PerformancePage() {
       utilization: { label: 'الاستخدام', icon: <Gauge className="h-3 w-3" />, className: 'bg-orange-100 text-orange-800' },
       satisfaction: { label: 'الرضا', icon: <Smile className="h-3 w-3" />, className: 'bg-yellow-100 text-yellow-800' }
     };
-    
-    const config = typeConfig[type as keyof typeof typeConfig] || 
+
+    const config = typeConfig[type as keyof typeof typeConfig] ||
                   { label: type, icon: null, className: '' };
     return (
       <Badge variant="outline" className={config.className}>
@@ -455,8 +455,8 @@ export default function PerformancePage() {
       high: { label: 'عالي', variant: 'default' as const, className: 'bg-orange-100 text-orange-800' },
       critical: { label: 'حرج', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
     };
-    
-    const config = severityConfig[severity as keyof typeof severityConfig] || 
+
+    const config = severityConfig[severity as keyof typeof severityConfig] ||
                   { label: severity, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
@@ -529,7 +529,7 @@ export default function PerformancePage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">ممتاز</CardTitle>
@@ -544,7 +544,7 @@ export default function PerformancePage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">تحذيرات</CardTitle>
@@ -559,7 +559,7 @@ export default function PerformancePage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">تنبيهات نشطة</CardTitle>
@@ -862,7 +862,7 @@ export default function PerformancePage() {
                 تفاصيل مؤشر الأداء
               </DialogDescription>
             </DialogHeader>
-            
+
             {selectedMetric && (
               <div className="space-y-4">
                 {/* Metric Info */}

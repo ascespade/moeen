@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import logger from '@/lib/monitoring/logger';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,8 +15,8 @@ export async function POST(request: NextRequest) {
     }
 
     // TODO: Save to database or send email
-    // For now, just log it
-    console.log('Contact form submission:', {
+    // Log using logger instead of console.log
+    logger.info('Contact form submission', {
       name,
       email,
       phone,
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
       message: 'تم إرسال رسالتك بنجاح. سنرد عليك قريباً.',
     });
   } catch (error) {
-    console.error('Contact form error:', error);
+    logger.error('Contact form error', { error });
     return NextResponse.json(
       { error: 'حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.' },
       { status: 500 }
