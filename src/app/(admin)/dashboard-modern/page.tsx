@@ -221,7 +221,10 @@ export default function ModernAdminDashboard() {
     },
     {
       id: 'notifications',
-      type: 'component',
+      x: 4,
+      y: 6,
+      width: 8,
+      height: 4,
       component: NotificationPanel,
       props: {
         notifications: mockNotifications,
@@ -237,7 +240,7 @@ export default function ModernAdminDashboard() {
     <div className='flex h-screen flex-col bg-neutral-50 dark:bg-neutral-950'>
       <AdminHeader
         title='لوحة التحكم الإدارية المحدثة'
-        actions={
+        children={
           <div className='flex gap-2'>
             <Button
               variant='outline'
