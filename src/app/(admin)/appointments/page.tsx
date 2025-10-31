@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
+import { useAdminAppointments } from '@/hooks/useAdminAppointments';
+import { RouteGuard } from '@/components/admin/RouteGuard';
 import {
   Card,
   CardContent,
@@ -73,230 +75,94 @@ import {
   PhoneCall
 } from 'lucide-react';
 
-interface Appointment {
-  id: string;
-  patientId: string;
-  patientName: string;
-  patientPhone: string;
-  doctorId: string;
-  doctorName: string;
-  doctorSpecialization: string;
-  date: string;
-  time: string;
-  duration: number; // in minutes
-  type: 'in_person' | 'video' | 'phone';
-  status: 'scheduled' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'no_show';
-  reason: string;
-  notes?: string;
-  diagnosis?: string;
-  prescription?: string[];
-  followUpDate?: string;
-  createdAt: string;
-  updatedAt: string;
-  location?: string;
-  room?: string;
-}
-
-export default function AppointmentsPage() {
+function AppointmentsPageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [loading, setLoading] = useState(true);
+
+  const {
+    appointments: hookAppointments,
+    filteredAppointments,
+    loading,
+    error: hookError,
+    filters: hookFilters,
+    pagination: hookPagination,
+    updateFilters,
+    setPage,
+    refetch,
+    deleteAppointment,
+    updateAppointment,
+    createAppointment,
+    cancelAppointment,
+    confirmAppointment
+  } = useAdminAppointments();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
   const [selectedAppointments, setSelectedAppointments] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
-  // Mock data
-  useEffect(() => {
-    const mockAppointments: Appointment[] = [
-      {
-        id: '1',
-        patientId: '1',
-        patientName: 'أحمد محمد العلي',
-        patientPhone: '+966501234567',
-        doctorId: '1',
-        doctorName: 'د. أحمد محمد العلي',
-        doctorSpecialization: 'الطب العام',
-        date: '2024-01-16',
-        time: '10:00',
-        duration: 30,
-        type: 'in_person',
-        status: 'scheduled',
-        reason: 'فحص دوري',
-        notes: 'مريض يعاني من ارتفاع ضغط الدم',
-        createdAt: '2024-01-10T08:00:00Z',
-        updatedAt: '2024-01-10T08:00:00Z',
-        location: 'العيادة الرئيسية',
-        room: 'A101'
-      },
-      {
-        id: '2',
-        patientId: '2',
-        patientName: 'فاطمة أحمد السعد',
-        patientPhone: '+966502345678',
-        doctorId: '2',
-        doctorName: 'د. فاطمة أحمد السعد',
-        doctorSpecialization: 'أمراض القلب',
-        date: '2024-01-16',
-        time: '11:30',
-        duration: 45,
-        type: 'video',
-        status: 'confirmed',
-        reason: 'متابعة حالة القلب',
-        notes: 'مريضة تعاني من عدم انتظام ضربات القلب',
-        createdAt: '2024-01-12T10:30:00Z',
-        updatedAt: '2024-01-12T10:30:00Z'
-      },
-      {
-        id: '3',
-        patientId: '3',
-        patientName: 'محمد عبدالله القحطاني',
-        patientPhone: '+966503456789',
-        doctorId: '3',
-        doctorName: 'د. محمد عبدالله القحطاني',
-        doctorSpecialization: 'الجراحة العامة',
-        date: '2024-01-15',
-        time: '14:00',
-        duration: 60,
-        type: 'in_person',
-        status: 'completed',
-        reason: 'استشارة جراحية',
-        notes: 'مريض يحتاج عملية استئصال المرارة',
-        diagnosis: 'حصوات في المرارة',
-        prescription: ['مسكنات الألم', 'مضادات الالتهاب'],
-        followUpDate: '2024-01-22',
-        createdAt: '2024-01-08T14:20:00Z',
-        updatedAt: '2024-01-15T15:00:00Z',
-        location: 'العيادة الرئيسية',
-        room: 'B202'
-      },
-      {
-        id: '4',
-        patientId: '4',
-        patientName: 'نورا سعد المطيري',
-        patientPhone: '+966504567890',
-        doctorId: '4',
-        doctorName: 'د. نورا سعد المطيري',
-        doctorSpecialization: 'طب الأطفال',
-        date: '2024-01-15',
-        time: '09:00',
-        duration: 30,
-        type: 'phone',
-        status: 'cancelled',
-        reason: 'استشارة طبية للأطفال',
-        notes: 'مريضة صغيرة تعاني من ارتفاع في درجة الحرارة',
-        createdAt: '2024-01-13T16:45:00Z',
-        updatedAt: '2024-01-15T08:30:00Z'
-      },
-      {
-        id: '5',
-        patientId: '5',
-        patientName: 'خالد فيصل الشمري',
-        patientPhone: '+966505678901',
-        doctorId: '5',
-        doctorName: 'د. خالد فيصل الشمري',
-        doctorSpecialization: 'الطب النفسي',
-        date: '2024-01-17',
-        time: '16:00',
-        duration: 50,
-        type: 'video',
-        status: 'scheduled',
-        reason: 'جلسة علاج نفسي',
-        notes: 'مريض يعاني من القلق والاكتئاب',
-        createdAt: '2024-01-14T11:30:00Z',
-        updatedAt: '2024-01-14T11:30:00Z'
-      },
-      {
-        id: '6',
-        patientId: '1',
-        patientName: 'أحمد محمد العلي',
-        patientPhone: '+966501234567',
-        doctorId: '2',
-        doctorName: 'د. فاطمة أحمد السعد',
-        doctorSpecialization: 'أمراض القلب',
-        date: '2024-01-14',
-        time: '13:30',
-        duration: 40,
-        type: 'in_person',
-        status: 'no_show',
-        reason: 'فحص القلب',
-        notes: 'مريض لم يحضر الموعد',
-        createdAt: '2024-01-09T09:15:00Z',
-        updatedAt: '2024-01-14T13:45:00Z',
-        location: 'العيادة الرئيسية',
-        room: 'A102'
-      }
-    ];
+  // Update hook filters when local filters change
+  React.useEffect(() => {
+    updateFilters({
+      search: searchTerm,
+      status: statusFilter === 'all' ? 'all' : statusFilter,
+      type: typeFilter === 'all' ? 'all' : typeFilter,
+      dateFilter: dateFilter === 'all' ? 'all' : dateFilter,
+    });
+  }, [searchTerm, statusFilter, typeFilter, dateFilter, updateFilters]);
 
-    setAppointments(mockAppointments);
-    setTotalPages(Math.ceil(mockAppointments.length / 10));
-    setLoading(false);
-  }, []);
-
-  const filteredAppointments = appointments.filter(appointment => {
-    const matchesSearch = appointment.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         appointment.doctorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         appointment.reason.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || appointment.status === statusFilter;
-    const matchesType = typeFilter === 'all' || appointment.type === typeFilter;
-    
-    let matchesDate = true;
-    if (dateFilter !== 'all') {
-      const appointmentDate = new Date(appointment.date);
-      const today = new Date();
-      
-      switch (dateFilter) {
-        case 'today':
-          matchesDate = appointmentDate.toDateString() === today.toDateString();
-          break;
-        case 'tomorrow':
-          const tomorrow = new Date(today);
-          tomorrow.setDate(tomorrow.getDate() + 1);
-          matchesDate = appointmentDate.toDateString() === tomorrow.toDateString();
-          break;
-        case 'this_week':
-          const weekStart = new Date(today);
-          weekStart.setDate(today.getDate() - today.getDay());
-          const weekEnd = new Date(weekStart);
-          weekEnd.setDate(weekStart.getDate() + 6);
-          matchesDate = appointmentDate >= weekStart && appointmentDate <= weekEnd;
-          break;
-        case 'this_month':
-          matchesDate = appointmentDate.getMonth() === today.getMonth() && 
-                       appointmentDate.getFullYear() === today.getFullYear();
-          break;
-      }
-    }
-    
-    return matchesSearch && matchesStatus && matchesType && matchesDate;
+  // Map hook data (snake_case) to page data (camelCase) for compatibility
+  const mappedAppointments = hookAppointments.map(appointment => {
+    const scheduledAt = new Date(appointment.scheduled_at);
+    return {
+      id: appointment.id,
+      patientId: appointment.patient_id,
+      patientName: appointment.patients?.full_name || 'غير معروف',
+      patientPhone: appointment.patients?.phone || '',
+      doctorId: appointment.doctor_id,
+      doctorName: appointment.doctors?.speciality || 'غير معروف',
+      doctorSpecialization: appointment.doctors?.speciality || '',
+      date: scheduledAt.toISOString().split('T')[0],
+      time: scheduledAt.toTimeString().slice(0, 5),
+      duration: 30, // Default duration
+      type: appointment.type || 'in_person',
+      status: appointment.status,
+      reason: appointment.reason || 'موعد طبي',
+      notes: appointment.notes,
+      createdAt: appointment.created_at,
+      updatedAt: appointment.updated_at || appointment.created_at,
+      location: appointment.location,
+      room: appointment.room
+    };
   });
+
+  const appointments = mappedAppointments;
+  const totalPages = hookPagination?.totalPages || 1;
+  const currentPageForPagination = hookPagination?.currentPage || 1;
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      scheduled: { label: 'مجدول', variant: 'outline' as const, className: 'bg-blue-100 text-blue-800' },
-      confirmed: { label: 'مؤكد', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-      in_progress: { label: 'جاري', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
-      completed: { label: 'مكتمل', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-      cancelled: { label: 'ملغي', variant: 'error' as const, className: 'bg-red-100 text-red-800' },
-      no_show: { label: 'لم يحضر', variant: 'error' as const, className: 'bg-gray-100 text-gray-800' }
+      scheduled: { label: 'مجدول', variant: 'outline' as const, className: 'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]' },
+      confirmed: { label: 'مؤكد', variant: 'default' as const, className: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]' },
+      in_progress: { label: 'جاري', variant: 'secondary' as const, className: 'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]' },
+      completed: { label: 'مكتمل', variant: 'default' as const, className: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]' },
+      cancelled: { label: 'ملغي', variant: 'error' as const, className: 'bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] text-[var(--brand-error)] border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]' },
+      no_show: { label: 'لم يحضر', variant: 'error' as const, className: 'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]' }
     };
-    
+
     const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: 'outline' as const, className: '' };
     return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
   };
 
   const getTypeBadge = (type: string) => {
     const typeConfig = {
-      in_person: { label: 'حضوري', icon: <MapPin className="h-3 w-3" />, className: 'bg-blue-100 text-blue-800' },
-      video: { label: 'فيديو', icon: <Video className="h-3 w-3" />, className: 'bg-green-100 text-green-800' },
-      phone: { label: 'هاتفي', icon: <PhoneCall className="h-3 w-3" />, className: 'bg-purple-100 text-purple-800' }
+      in_person: { label: 'حضوري', icon: <MapPin className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]' },
+      video: { label: 'فيديو', icon: <Video className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]' },
+      phone: { label: 'هاتفي', icon: <PhoneCall className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]' }
     };
-    
+
     const config = typeConfig[type as keyof typeof typeConfig] || { label: type, icon: null, className: '' };
     return (
       <Badge variant="outline" className={config.className}>
@@ -334,17 +200,32 @@ export default function AppointmentsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-[var(--background)]">
         <div className="text-center">
-          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" />
-          <p>جاري تحميل المواعيد...</p>
+          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" style={{ color: 'var(--brand-primary)' }} />
+          <p className="text-[var(--text-secondary)]">جاري تحميل المواعيد...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (hookError) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[var(--background)]">
+        <div className="text-center max-w-md">
+          <AlertTriangle className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--brand-error)' }} />
+          <p className="mb-4" style={{ color: 'var(--brand-error)' }}>{hookError}</p>
+          <Button onClick={refetch} className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'>
+            <RefreshCw className="w-4 h-4 ml-2" />
+            إعادة المحاولة
+          </Button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[var(--background)]">
       <div className="container-app py-6">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -459,13 +340,13 @@ export default function AppointmentsPage() {
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{appointments.length}</div>
+              <div className="text-2xl font-bold">{hookPagination?.totalItems || 0}</div>
               <p className="text-xs text-muted-foreground">
-                +8 من الأسبوع الماضي
+                {filteredAppointments.length} موعد بعد الفلترة
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">اليوم</CardTitle>
@@ -484,7 +365,7 @@ export default function AppointmentsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">مكتملة</CardTitle>
@@ -499,7 +380,7 @@ export default function AppointmentsPage() {
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">ملغية</CardTitle>
@@ -593,10 +474,10 @@ export default function AppointmentsPage() {
                   <TableHead className="w-12">
                     <input
                       type="checkbox"
-                      className="rounded border-gray-300"
+                      className="rounded border-[var(--brand-border)]"
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedAppointments(filteredAppointments.map(a => a.id));
+                          setSelectedAppointments(appointments.map(a => a.id));
                         } else {
                           setSelectedAppointments([]);
                         }
@@ -613,12 +494,12 @@ export default function AppointmentsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredAppointments.map((appointment) => (
+                {appointments.map((appointment) => (
                   <TableRow key={appointment.id}>
                     <TableCell>
                       <input
                         type="checkbox"
-                        className="rounded border-gray-300"
+                        className="rounded border-[var(--brand-border)]"
                         checked={selectedAppointments.includes(appointment.id)}
                         onChange={(e) => {
                           if (e.target.checked) {
@@ -747,14 +628,14 @@ export default function AppointmentsPage() {
             {/* Pagination */}
             <div className="flex items-center justify-between mt-6">
               <div className="text-sm text-muted-foreground">
-                عرض {filteredAppointments.length} من {appointments.length} موعد
+                عرض {appointments.length > 0 ? ((currentPageForPagination - 1) * 10 + 1) : 0} - {Math.min(currentPageForPagination * 10, hookPagination?.totalItems || 0)} من {hookPagination?.totalItems || 0} موعد
               </div>
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                  disabled={currentPage === 1}
+                  onClick={() => setPage(Math.max(1, currentPageForPagination - 1))}
+                  disabled={currentPageForPagination === 1}
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
@@ -762,9 +643,9 @@ export default function AppointmentsPage() {
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <Button
                       key={page}
-                      variant={currentPage === page ? "primary" : "outline"}
+                      variant={currentPageForPagination === page ? "primary" : "outline"}
                       size="sm"
-                      onClick={() => setCurrentPage(page)}
+                      onClick={() => setPage(page)}
                       className="w-8 h-8 p-0"
                     >
                       {page}
@@ -774,8 +655,8 @@ export default function AppointmentsPage() {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                  disabled={currentPage === totalPages}
+                  onClick={() => setPage(Math.min(totalPages, currentPageForPagination + 1))}
+                  disabled={currentPageForPagination === totalPages}
                 >
                   <ChevronRight className="h-4 w-4" />
                 </Button>
@@ -785,5 +666,16 @@ export default function AppointmentsPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function AppointmentsPage() {
+  return (
+    <RouteGuard
+      requiredRoles={['admin', 'manager', 'supervisor', 'doctor', 'staff']}
+      requiredPermissions={['appointments:view']}
+    >
+      <AppointmentsPageContent />
+    </RouteGuard>
   );
 }

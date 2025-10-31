@@ -69,7 +69,15 @@
     "dashboard:update": "node scripts/live-dashboard.js",
     "report:generate": "node scripts/generate-workflow-report.js",
     "audit:quality": "bash scripts/quality-audit.sh",
-    "audit:lighthouse": "lighthouse http://localhost:3001 --output html --output-path=./reports/lighthouse-report.html --chrome-flags=\"--headless\""
+    "audit:lighthouse": "lighthouse http://localhost:3001 --output html --output-path=./reports/lighthouse-report.html --chrome-flags=\"--headless\"",
+    "cursor:agent": "node scripts/cursor-background-agent.mjs",
+    "cursor:agent:continuous": "node scripts/cursor-background-agent.mjs --continuous",
+    "cursor:parallel": "node scripts/cursor-parallel-runner.mjs --all",
+    "cursor:workflow": "node scripts/cursor-workflow-manager.mjs",
+    "cursor:fix:permissions": "node scripts/cursor-parallel-runner.mjs permissions-fix",
+    "cursor:fix:security": "node scripts/cursor-parallel-runner.mjs security-fixes",
+    "cursor:fix:typescript": "node scripts/cursor-parallel-runner.mjs typescript-cleanup",
+    "cursor:fix:all": "npm run cursor:agent && npm run cursor:parallel"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
