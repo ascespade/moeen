@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
+import { requireAuth } from '@/lib/auth/authorize';
+import { ErrorHandler } from '@/core/errors';
 
 const patientSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -20,6 +22,12 @@ const patientSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
+    // Authorize staff, supervisor, doctor, or admin
+    const authResult = await requireAuth(['staff', 'supervisor', 'doctor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const searchTerm = searchParams.get('search') || '';
     const role = searchParams.get('role') || 'patient';
@@ -42,16 +50,18 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Error fetching patients:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch patients' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
+    // Authorize staff, supervisor, or admin
+    const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const body = await request.json();
     const validation = patientSchema.safeParse(body);
 
@@ -95,10 +105,6 @@ export async function POST(request: NextRequest) {
       message: 'Patient created successfully',
     });
   } catch (error) {
-    console.error('Error creating patient:', error);
-    return NextResponse.json(
-      { error: 'Failed to create patient' },
-      { status: 500 }
-    );
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
