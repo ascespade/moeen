@@ -6,7 +6,7 @@
 import { expect, test } from '@playwright/test';
 import { getServiceSupabase } from '../../src/lib/supabaseClient';
 
-const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001';
+const BASE_URL = process.env.PLAYWRIGHT_BASE_URL || process.env.BASE_URL || 'http://localhost:3001';
 
 // Helper to create authenticated request
 async function createAuthenticatedRequest(request: any, token?: string) {
