@@ -12,16 +12,16 @@ import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import {
-    BarChart3,
-    Calendar,
-    DollarSign,
-    Download,
-    FileText,
-    RefreshCw,
-    Settings,
-    Stethoscope,
-    UserCheck,
-    Users
+  BarChart3,
+  Calendar,
+  DollarSign,
+  Download,
+  FileText,
+  RefreshCw,
+  Settings,
+  Stethoscope,
+  UserCheck,
+  Users
 } from 'lucide-react';
 
 // Mock data for demonstration - replace with real data from useAdminDashboard
@@ -244,16 +244,14 @@ export default function ModernAdminDashboard() {
               onClick={() => setIsGridEditable(!isGridEditable)}
             >
               <Settings className='w-4 h-4 mr-2' />
-              {isGridEditable ? 'إنهاء الت            </Button>
+              {isGridEditable ? 'إنهاء التخصيص' : 'تخصيص الداشبورد'}
+            </Button>
+            <Button variant='outline'>
+              <Download className='w-4 h-4 mr-2' />
+              تصدير البيانات
+            </Button>
             <Button variant='primary' onClick={refetch}>
               <RefreshCw className='w-4 h-4 mr-2' />
-              تحديث
-            </Button>
-          </div>
-        }
-      />
-      />        </Button>
-            <Button variant='primary' icon={RefreshCw} onClick={refetch}>
               تحديث
             </Button>
           </div>
