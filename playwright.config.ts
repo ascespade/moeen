@@ -1,18 +1,4 @@
-import { defineConfig } from '@playwright/test';
-
-export default defineConfig({
-  timeout: 60_000,
-  testDir: 'tests',
-  use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3001',
-    headless: true,
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
-  },
-  reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
-});
-
-import { devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 /**
  * @see https://playwright.dev/docs/test-configuration
