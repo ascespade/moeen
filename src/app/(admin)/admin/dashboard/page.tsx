@@ -567,7 +567,7 @@ function AdminDashboardContent() {
                       <div className='flex items-center gap-3'>
                         <div className='w-10 h-10 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center'>
                           <span className='text-sm font-semibold text-[var(--brand-primary)]'>
-                            {staff.name.split(' ')[0].charAt(0)}
+                            {staff.name?.split(' ')[0]?.charAt(0) || '?'}
                           </span>
                         </div>
                         <div>

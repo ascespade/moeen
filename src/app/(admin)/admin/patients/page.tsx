@@ -597,7 +597,7 @@ function PatientsPageContent() {
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                     <Button
                       key={page}
-                      variant={currentPageForPagination === page ? "default" : "outline"}
+                      variant={currentPageForPagination === page ? "primary" : "outline"}
                       size="sm"
                       onClick={() => setPage(page)}
                       className="w-8 h-8 p-0"

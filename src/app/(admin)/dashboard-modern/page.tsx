@@ -4,9 +4,9 @@ import { useMemo, useState } from 'react';
 
 import { AdminHeader } from '@/components/admin/ui';
 import { DashboardGrid, GridItem } from '@/components/dashboard/DashboardGrid';
-import { ChartWidget } from '@/components/dashboard/widgets/ChartWidget';
-import { KPICard } from '@/components/dashboard/widgets/KPICard';
-import { Notification, NotificationPanel } from '@/components/dashboard/widgets/NotificationPanel';
+import ChartWidget from '@/components/dashboard/widgets/ChartWidget';
+import KPICard from '@/components/dashboard/widgets/KPICard';
+import NotificationPanel, { Notification } from '@/components/dashboard/widgets/NotificationPanel';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';
@@ -186,7 +186,7 @@ export default function ModernAdminDashboard() {
       component: ChartWidget,
       title: 'نمو المرضى',
       props: {
-        type: 'line',
+        type: 'bar',
         data: mockChartData.patientGrowth,
         height: 300
       }
@@ -198,9 +198,9 @@ export default function ModernAdminDashboard() {
       width: 6,
       height: 4,
       component: ChartWidget,
-      title: 'الحجوزات الأسبوعية',
+      title: 'المواعيد',
       props: {
-        type: 'bar',
+        type: 'line',
         data: mockChartData.appointments,
         height: 300
       }
@@ -220,19 +220,15 @@ export default function ModernAdminDashboard() {
       }
     },
     {
-      id: 'notifications-panel',
-      x: 4,
-      y: 6,
-      width: 8,
-      height: 6,
+      id: 'notifications',
+      type: 'component',
       component: NotificationPanel,
-      title: 'الإشعارات',
       props: {
         notifications: mockNotifications,
         maxHeight: 400,
-        onMarkAsRead: (id) => console.log('Mark as read:', id),
+        onMarkAsRead: (id: string) => console.log('Mark as read:', id),
         onMarkAllAsRead: () => console.log('Mark all as read'),
-        onActionClick: (notification) => console.log('Action:', notification)
+        onActionClick: (notification: any) => console.log('Action:', notification)
       }
     }
   ], [stats, localizedNumber]);
@@ -241,23 +237,22 @@ export default function ModernAdminDashboard() {
     <div className='flex h-screen flex-col bg-neutral-50 dark:bg-neutral-950'>
       <AdminHeader
         title='لوحة التحكم الإدارية المحدثة'
-        breadcrumbs={[
-          { label: 'الرئيسية', href: '/' },
-          { label: 'لوحة التحكم', href: '/admin/admin-dashboard' },
-          { label: 'النسخة المحدثة', href: '/admin/dashboard-modern' },
-        ]}
         actions={
           <div className='flex gap-2'>
             <Button
               variant='outline'
-              icon={Settings}
               onClick={() => setIsGridEditable(!isGridEditable)}
             >
-              {isGridEditable ? 'إنهاء التخصيص' : 'تخصيص الداشبورد'}
+              <Settings className='w-4 h-4 mr-2' />
+              {isGridEditable ? 'إنهاء الت            </Button>
+            <Button variant='primary' onClick={refetch}>
+              <RefreshCw className='w-4 h-4 mr-2' />
+              تحديث
             </Button>
-            <Button variant='outline' icon={Download}>
-              تصدير البيانات
-            </Button>
+          </div>
+        }
+      />
+      />        </Button>
             <Button variant='primary' icon={RefreshCw} onClick={refetch}>
               تحديث
             </Button>

@@ -353,7 +353,7 @@ export default function SupervisorDashboard() {
               </Card>
             </div>
           </div>
-        </div>
+      </div>
     </ProtectedRoute>
   );
 }
