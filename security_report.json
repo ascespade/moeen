@@ -1,0 +1,50 @@
+{
+  "timestamp": "2025-11-01T00:00:00.000Z",
+  "status": "WARNING",
+  "vulnerabilities": {
+    "critical": 0,
+    "high": 0,
+    "moderate": 2,
+    "low": 0,
+    "info": 0,
+    "total": 2
+  },
+  "details": [
+    {
+      "name": "tar",
+      "severity": "moderate",
+      "title": "node-tar has a race condition leading to uninitialized memory exposure",
+      "url": "https://github.com/advisories/GHSA-29xp-372q-xqph",
+      "cwe": "CWE-362",
+      "path": "supabase > tar",
+      "fixAvailable": true,
+      "recommendation": "Run 'npm audit fix' to update supabase package"
+    },
+    {
+      "name": "supabase",
+      "severity": "moderate",
+      "affected_versions": "2.46.0 - 2.55.4",
+      "fixAvailable": true,
+      "via": "tar",
+      "recommendation": "Update to latest supabase version"
+    }
+  ],
+  "mock_data_check": {
+    "status": "PASSED",
+    "findings": [
+      {
+        "file": "src/app/api/test/database/route.ts",
+        "type": "testData",
+        "severity": "info",
+        "note": "Test data found in test route - acceptable"
+      }
+    ],
+    "critical_violations": 0
+  },
+  "dependencies": {
+    "total": 1035,
+    "outdated": "N/A",
+    "deprecated": 8
+  },
+  "recommendation": "ALLOW_MERGE with warnings - No critical vulnerabilities. Moderate issues can be fixed post-merge with 'npm audit fix'"
+}
