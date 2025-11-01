@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "status": "WARNING",
+    "totalFiles": 27,
+    "filesWithIssues": 20,
+    "totalIssues": 30,
+    "criticalIssues": 30,
+    "warnings": 0,
+    "autoFixed": 0,
+    "timestamp": "2025-11-01T00:00:00.000Z"
+  },
+  "criticalFindings": {
+    "mockDataViolations": {
+      "count": 30,
+      "severity": "CRITICAL",
+      "description": "Mock/fake/placeholder data found in production code - STRICT VIOLATION of project rules",
+      "files": [
+        "src/app/(admin)/dashboard-modern/page.tsx",
+        "src/app/(admin)/security/page.tsx",
+        "src/app/(admin)/doctors/page.tsx",
+        "src/app/(admin)/performance/page.tsx",
+        "src/app/(admin)/crm/flows/page.tsx",
+        "src/app/(admin)/crm/page.tsx",
+        "src/app/(admin)/crm/contacts/page.tsx",
+        "src/app/(admin)/crm/leads/page.tsx",
+        "src/app/(admin)/messages/page.tsx",
+        "src/app/(admin)/notifications/page.tsx",
+        "src/app/(admin)/crm/deals/page.tsx",
+        "src/app/(admin)/chatbot/integrations/page.tsx",
+        "src/app/(admin)/chatbot/analytics/page.tsx",
+        "src/app/(admin)/chatbot/page.tsx",
+        "src/app/(admin)/chatbot/templates/[id]/page.tsx",
+        "src/app/(admin)/chatbot/templates/page.tsx",
+        "src/app/(admin)/conversations/page.tsx",
+        "src/app/(admin)/chatbot/flows/page.tsx",
+        "src/app/(admin)/crm/activities/page.tsx",
+        "src/app/(admin)/admin/roles/page.tsx",
+        "src/app/(health)/approvals/page.tsx"
+      ],
+      "rule": "STRICT PROJECT RULES - No Fake Data (ممنوع البيانات الوهمية)",
+      "action": "REJECT - All mock data must be replaced with real Supabase queries"
+    }
+  },
+  "changedFiles": [
+    "src/app/(admin)/admin/patients/page.tsx",
+    "src/app/(admin)/conversations/page.tsx",
+    "src/app/(admin)/doctors/page.tsx",
+    "src/app/(admin)/messages/page.tsx",
+    "src/app/(admin)/notifications/page.tsx",
+    "src/app/(admin)/performance/page.tsx",
+    "src/app/api/agent/completion/route.ts",
+    "src/app/api/agent/status/route.ts",
+    "src/app/api/agent/tasks/route.ts",
+    "src/app/api/analytics/metrics/route.ts",
+    "src/app/api/appointments/book/route.ts",
+    "src/app/api/auth/check-user/route.ts",
+    "src/app/api/auth/me/route.ts",
+    "src/app/api/auth/permissions/route.ts",
+    "src/app/api/auth/simple-login/route.ts",
+    "src/app/api/chatbot/route.ts",
+    "src/app/api/contact/route.ts",
+    "src/app/api/crm/route.ts",
+    "src/app/api/dashboard/metrics/route.ts",
+    "src/app/api/dashboard/statistics/route.ts",
+    "src/app/api/doctors/route.ts",
+    "src/app/api/dynamic-data/route.ts",
+    "src/app/api/notifications/route.ts",
+    "src/app/api/patients/route.ts",
+    "src/core/api/base-handler.ts",
+    "src/lib/auth/authorize.ts",
+    "src/middleware/permissions.ts"
+  ],
+  "toolingIssues": {
+    "eslint": {
+      "status": "ERROR",
+      "message": "ESLint configuration issue - missing @eslint/js package",
+      "resolution": "Install missing ESLint dependencies or use local installation"
+    },
+    "typescript": {
+      "status": "ERROR",
+      "message": "TypeScript compiler not found in node_modules",
+      "resolution": "Run npm install to install project dependencies"
+    },
+    "next": {
+      "status": "ERROR",
+      "message": "Next.js CLI not found",
+      "resolution": "Run npm install to install Next.js"
+    }
+  },
+  "recommendations": [
+    "CRITICAL: Replace all mock data arrays with real Supabase database queries",
+    "Install project dependencies: npm install",
+    "Run lint after dependencies are installed: npm run lint",
+    "Ensure all API routes return real data from database",
+    "Follow project rule: No Fake Data - all data must come from real database queries"
+  ]
+}

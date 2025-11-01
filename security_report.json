@@ -1,0 +1,108 @@
+{
+  "summary": {
+    "status": "MODERATE_RISK",
+    "vulnerabilities": {
+      "critical": 0,
+      "high": 0,
+      "moderate": 2,
+      "low": 0,
+      "info": 0,
+      "total": 2
+    },
+    "fixAvailable": true,
+    "timestamp": "2025-11-01T00:00:00.000Z"
+  },
+  "vulnerabilities": [
+    {
+      "package": "supabase",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": ["tar"],
+      "range": "2.46.0 - 2.55.4",
+      "installedVersion": "2.54.11",
+      "fixAvailable": true,
+      "description": "Supabase package has moderate vulnerability via tar dependency",
+      "recommendation": "Run: npm audit fix"
+    },
+    {
+      "package": "tar",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": "supabase",
+      "cve": "GHSA-29xp-372q-xqph",
+      "title": "node-tar has a race condition leading to uninitialized memory exposure",
+      "url": "https://github.com/advisories/GHSA-29xp-372q-xqph",
+      "cwe": ["CWE-362"],
+      "range": "=7.5.1",
+      "fixAvailable": true,
+      "recommendation": "Will be fixed when supabase is updated"
+    }
+  ],
+  "dependencyAudit": {
+    "totalDependencies": 1110,
+    "production": 698,
+    "development": 328,
+    "optional": 140,
+    "peer": 10,
+    "outdated": "Not checked - requires npm outdated scan"
+  },
+  "codeSecurityIssues": [
+    {
+      "severity": "HIGH",
+      "category": "Data Exposure",
+      "description": "Mock data hardcoded in production code poses data structure exposure risk",
+      "affectedFiles": 20,
+      "recommendation": "Replace all mock data with secure database queries using Supabase client"
+    },
+    {
+      "severity": "INFO",
+      "category": "Authentication",
+      "description": "Multiple auth-related API routes modified",
+      "affectedFiles": [
+        "src/app/api/auth/check-user/route.ts",
+        "src/app/api/auth/me/route.ts",
+        "src/app/api/auth/permissions/route.ts",
+        "src/app/api/auth/simple-login/route.ts"
+      ],
+      "recommendation": "Ensure proper authentication validation and rate limiting"
+    },
+    {
+      "severity": "INFO",
+      "category": "Authorization",
+      "description": "Permission middleware and authorization logic modified",
+      "affectedFiles": [
+        "src/middleware/permissions.ts",
+        "src/lib/auth/authorize.ts"
+      ],
+      "recommendation": "Verify RBAC implementation and test permission boundaries"
+    }
+  ],
+  "recommendations": [
+    "IMMEDIATE: Run npm audit fix to resolve moderate vulnerabilities",
+    "HIGH PRIORITY: Remove all mock/hardcoded data from production code",
+    "Review and test authentication/authorization changes thoroughly",
+    "Implement rate limiting on API endpoints if not present",
+    "Ensure environment variables are properly configured for production",
+    "Add security headers and CSRF protection",
+    "Run security-focused tests after fixing vulnerabilities"
+  ],
+  "autoFixable": {
+    "vulnerabilities": true,
+    "command": "npm audit fix",
+    "expectedResolution": "Both moderate vulnerabilities should be resolved by updating supabase package"
+  },
+  "complianceChecks": {
+    "mockDataPolicy": {
+      "status": "VIOLATION",
+      "severity": "CRITICAL",
+      "details": "30 instances of mock data found in production code",
+      "action": "REJECT MERGE"
+    },
+    "securityVulnerabilities": {
+      "status": "WARNING",
+      "severity": "MODERATE",
+      "details": "2 moderate vulnerabilities (fixable)",
+      "action": "FIX BEFORE MERGE"
+    }
+  }
+}
