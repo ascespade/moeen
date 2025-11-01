@@ -1,0 +1,365 @@
+{
+  "framework": {
+    "name": "Daddy Dodi Framework AI",
+    "version": "2.0.0",
+    "description": "Enterprise-grade AI Agent Orchestration System"
+  },
+  "project": {
+    "name": "moeen",
+    "path": "/workspace",
+    "type": "healthcare-management",
+    "tech_stack": [
+      "Next.js 14",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Playwright",
+      "Vitest"
+    ],
+    "current_branch": "cursor/daddy-dodi-framework-ai-project-orchestration-d641",
+    "health_score": 92
+  },
+  "agents": {
+    "orchestrator": {
+      "name": "Orchestrator Agent",
+      "status": "active",
+      "role": "Project coordination and monitoring",
+      "priority": "critical",
+      "schedule": "continuous"
+    },
+    "sccia": {
+      "name": "SCCIA Agent",
+      "status": "high_priority",
+      "role": "Complete modules, remove mock data, business logic",
+      "priority": "critical",
+      "schedule": "every_5_minutes",
+      "tasks": [
+        "Replace 268 mock/placeholder data instances",
+        "Complete CRM module business logic",
+        "Complete Chatbot module integrations",
+        "Ensure all pages connect to real APIs",
+        "Fill gaps in Healthcare modules"
+      ],
+      "estimated_hours": 10,
+      "files_to_focus": [
+        "src/app/(admin)/crm/*",
+        "src/app/(admin)/chatbot/*",
+        "src/app/(admin)/doctors/page.tsx",
+        "src/app/(admin)/settings/*"
+      ]
+    },
+    "qa_testing": {
+      "name": "QA & Testing Agent",
+      "status": "standby",
+      "role": "Run tests, validate functionality, ensure quality",
+      "priority": "medium",
+      "schedule": "every_1_hour",
+      "tasks": [
+        "Run 146 existing test files",
+        "Verify Playwright E2E tests pass",
+        "Check Supabase integration tests",
+        "Validate all API endpoints",
+        "Test user flows end-to-end",
+        "Generate coverage reports"
+      ],
+      "estimated_hours": 6,
+      "test_commands": [
+        "npm run test",
+        "npm run test:unit",
+        "npm run test:e2e",
+        "npm run test:coverage",
+        "npm run test:comprehensive"
+      ]
+    },
+    "refactor_improvement": {
+      "name": "Refactor & Improvement Agent",
+      "status": "idle",
+      "role": "Code quality, best practices, optimization",
+      "priority": "low",
+      "schedule": "every_4_hours",
+      "tasks": [
+        "Remove console.logs",
+        "Optimize bundle size",
+        "Improve TypeScript types",
+        "Apply code splitting",
+        "Implement lazy loading",
+        "Enhance error handling"
+      ],
+      "estimated_hours": 8
+    },
+    "dba_integrity": {
+      "name": "DBA Integrity Agent",
+      "status": "standby",
+      "role": "Database integrity, RLS policies, no fake data",
+      "priority": "medium",
+      "schedule": "every_4_hours",
+      "tasks": [
+        "Verify RLS policies work correctly",
+        "Test database constraints",
+        "Ensure no fake data in production",
+        "Validate data integrity rules",
+        "Check migration consistency",
+        "Monitor database performance"
+      ],
+      "estimated_hours": 4,
+      "database": {
+        "tables": 25,
+        "indexes": 30,
+        "rls_policies": 20,
+        "migrations": "minimal"
+      }
+    },
+    "design_ui": {
+      "name": "Design & UI Agent",
+      "status": "idle",
+      "role": "Visual consistency, accessibility, design system",
+      "priority": "low",
+      "schedule": "every_4_hours",
+      "tasks": [
+        "Verify no duplicate components",
+        "Check color palette compliance",
+        "Ensure accessibility standards (WCAG AA)",
+        "Test responsive design",
+        "Audit theme consistency"
+      ],
+      "estimated_hours": 3,
+      "design_system": {
+        "components": 124,
+        "pages": 88,
+        "color_system": "centralized",
+        "dark_mode": true,
+        "responsive": true
+      }
+    },
+    "i18n_translation": {
+      "name": "i18n & Translation Agent",
+      "status": "standby",
+      "role": "Multi-language support, dynamic translations",
+      "priority": "medium",
+      "schedule": "daily",
+      "tasks": [
+        "CRITICAL: Locate translation files",
+        "Verify all text is translatable",
+        "Ensure translations from database",
+        "Test language switching",
+        "Add missing translations",
+        "Validate translation service"
+      ],
+      "estimated_hours": 3,
+      "files_found": [
+        "src/constants/i18n-keys.ts",
+        "src/lib/translations-manager.ts",
+        "src/lib/i18n/translationService.ts",
+        "src/lib/translations/translation-manager.ts",
+        "src/lib/translations/translation-seeder.ts"
+      ]
+    },
+    "merge_main": {
+      "name": "Merge & Main Agent",
+      "status": "monitoring",
+      "role": "Branch management, merge coordination, main stability",
+      "priority": "standby",
+      "schedule": "every_1_hour",
+      "tasks": [
+        "Monitor branch updates",
+        "Review PRs from other agents",
+        "Merge clean code to main",
+        "Ensure main branch stability",
+        "Coordinate agent deployments"
+      ],
+      "estimated_hours": 2
+    }
+  },
+  "metrics": {
+    "overall_health": 92,
+    "architecture": 95,
+    "database": 100,
+    "code_quality": 85,
+    "testing": 95,
+    "ui_ux": 98,
+    "i18n": 70,
+    "security": 90
+  },
+  "statistics": {
+    "total_pages": 88,
+    "total_components": 124,
+    "total_lib_files": 77,
+    "total_api_routes": 109,
+    "total_test_files": 146,
+    "total_docs": 40,
+    "lines_of_code": 50000,
+    "database_tables": 25,
+    "database_indexes": 30,
+    "rls_policies": 20
+  },
+  "issues": {
+    "critical": [
+      {
+        "id": "ISSUE-001",
+        "title": "Mock Data Removal",
+        "description": "268 instances of mock/placeholder data need to be replaced with real database queries",
+        "severity": "high",
+        "owner": "sccia",
+        "estimated_hours": 10,
+        "status": "open"
+      },
+      {
+        "id": "ISSUE-002",
+        "title": "i18n System Verification",
+        "description": "Translation system needs validation and location of translation files",
+        "severity": "medium",
+        "owner": "i18n_translation",
+        "estimated_hours": 3,
+        "status": "open"
+      },
+      {
+        "id": "ISSUE-003",
+        "title": "Full Test Suite Validation",
+        "description": "Need to run and verify all 146 test files pass",
+        "severity": "medium",
+        "owner": "qa_testing",
+        "estimated_hours": 6,
+        "status": "open"
+      }
+    ],
+    "medium": [
+      {
+        "id": "ISSUE-004",
+        "title": "RLS Policy Testing",
+        "description": "Verify all Row Level Security policies work correctly",
+        "severity": "medium",
+        "owner": "dba_integrity",
+        "estimated_hours": 4,
+        "status": "open"
+      },
+      {
+        "id": "ISSUE-005",
+        "title": "Accessibility Audit",
+        "description": "Ensure WCAG AA compliance across all pages",
+        "severity": "low",
+        "owner": "design_ui",
+        "estimated_hours": 3,
+        "status": "open"
+      }
+    ],
+    "low": [
+      {
+        "id": "ISSUE-006",
+        "title": "Performance Optimization",
+        "description": "Bundle size analysis and optimization",
+        "severity": "low",
+        "owner": "refactor_improvement",
+        "estimated_hours": 8,
+        "status": "open"
+      }
+    ]
+  },
+  "schedule": {
+    "every_5_minutes": [
+      "sccia"
+    ],
+    "every_1_hour": [
+      "qa_testing",
+      "merge_main"
+    ],
+    "every_4_hours": [
+      "refactor_improvement",
+      "dba_integrity",
+      "design_ui"
+    ],
+    "daily": [
+      "i18n_translation",
+      "full_test_suite",
+      "comprehensive_report"
+    ]
+  },
+  "roadmap": {
+    "week_1": {
+      "title": "Data Integration",
+      "owner": "sccia",
+      "days": [
+        "Day 1-2: Replace CRM mock data",
+        "Day 3-4: Replace Chatbot mock data",
+        "Day 5: Replace Healthcare mock data",
+        "Review: Verify all pages use real data"
+      ]
+    },
+    "week_2": {
+      "title": "Testing & Quality",
+      "owner": "qa_testing, refactor_improvement",
+      "days": [
+        "Day 1-2: Run full test suite",
+        "Day 3: Fix failing tests",
+        "Day 4: Code refactoring",
+        "Day 5: Performance optimization"
+      ]
+    },
+    "week_3": {
+      "title": "Polish & Deploy",
+      "owner": "all_agents",
+      "days": [
+        "Day 1: i18n verification",
+        "Day 2: Security audit",
+        "Day 3: Accessibility audit",
+        "Day 4: Final testing",
+        "Day 5: Merge to main & deploy"
+      ]
+    }
+  },
+  "commands": {
+    "development": {
+      "install": "npm install",
+      "dev": "npm run dev",
+      "build": "npm run build",
+      "start": "npm start"
+    },
+    "testing": {
+      "test_all": "npm run test",
+      "test_unit": "npm run test:unit",
+      "test_e2e": "npm run test:e2e",
+      "test_coverage": "npm run test:coverage",
+      "test_comprehensive": "npm run test:comprehensive"
+    },
+    "agent_operations": {
+      "cursor_agent": "npm run cursor:agent",
+      "cursor_continuous": "npm run cursor:agent:continuous",
+      "fix_permissions": "npm run cursor:fix:permissions",
+      "fix_security": "npm run cursor:fix:security",
+      "fix_typescript": "npm run cursor:fix:typescript"
+    },
+    "quality": {
+      "lint": "npm run lint",
+      "lint_fix": "npm run lint:fix",
+      "type_check": "npm run type:check",
+      "format": "npm run format"
+    }
+  },
+  "links": {
+    "architecture": "/workspace/docs/ARCHITECTURE.md",
+    "database_schema": "/workspace/docs/02-db-schema-final.md",
+    "ui_roadmap": "/workspace/docs/01-ui-screens-roadmap.md",
+    "developer_guide": "/workspace/docs/DEVELOPER_GUIDE.md",
+    "api_documentation": "/workspace/docs/API.md",
+    "orchestrator_report": "/workspace/DADDY_DODI_ORCHESTRATOR_DASHBOARD.md"
+  },
+  "monitoring": {
+    "dashboard_url": "http://localhost:3001",
+    "health_check_interval": "5_minutes",
+    "report_generation": "hourly",
+    "alert_channels": [
+      "console",
+      "file_system"
+    ]
+  },
+  "deployment": {
+    "target": "production",
+    "estimated_time": "2-3 weeks",
+    "blockers": [
+      "Mock data removal",
+      "Test suite validation",
+      "i18n verification"
+    ],
+    "readiness": "85%"
+  }
+}
