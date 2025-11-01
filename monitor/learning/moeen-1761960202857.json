@@ -1,0 +1,28 @@
+{
+  "timestamp": "2025-11-01T01:23:22.857Z",
+  "project": "moeen",
+  "health": {
+    "score": 100,
+    "status": "excellent",
+    "metrics": {
+      "build": "healthy",
+      "tests": "0/0",
+      "types": "clean",
+      "linting": "clean",
+      "security": "secure"
+    }
+  },
+  "agents": {
+    "total": 1,
+    "active": 1,
+    "status": [
+      {
+        "id": "cursor-background-agent",
+        "status": "active",
+        "lastSeen": "2025-11-01T01:23:20.594Z"
+      }
+    ]
+  },
+  "insights": [],
+  "recommendations": []
+}

@@ -1,0 +1,58 @@
+{
+  "lastUpdate": "2025-11-01T01:23:22.871Z",
+  "project": "moeen",
+  "status": "excellent",
+  "score": 100,
+  "alerts": [],
+  "agents": {
+    "total": 1,
+    "active": 1
+  },
+  "metrics": {
+    "build": "healthy",
+    "tests": {
+      "passed": 0,
+      "failed": 0,
+      "total": 0
+    },
+    "types": 0,
+    "linting": 0,
+    "security": 0
+  },
+  "learning": {
+    "timestamp": "2025-11-01T01:23:22.857Z",
+    "project": "moeen",
+    "health": {
+      "score": 100,
+      "status": "excellent",
+      "metrics": {
+        "build": "healthy",
+        "tests": "0/0",
+        "types": "clean",
+        "linting": "clean",
+        "security": "secure"
+      }
+    },
+    "agents": {
+      "total": 1,
+      "active": 1,
+      "status": [
+        {
+          "id": "cursor-background-agent",
+          "status": "active",
+          "lastSeen": "2025-11-01T01:23:20.594Z"
+        }
+      ]
+    },
+    "insights": [],
+    "recommendations": []
+  },
+  "history": [
+    {
+      "timestamp": "2025-11-01T01:23:22.871Z",
+      "score": 100,
+      "status": "excellent",
+      "alerts": 0
+    }
+  ]
+}
