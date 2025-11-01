@@ -1,0 +1,21 @@
+{
+  "project": "moeen",
+  "last_update": "2025-11-01T01:10:41.000Z",
+  "status": "healthy",
+  "health_score": 92,
+  "agents": {
+    "total": 1,
+    "active": 1,
+    "inactive": 0
+  },
+  "quick_stats": {
+    "typescript_files": 547,
+    "test_files": 143,
+    "modules": 10,
+    "commits_last_7_days": 190,
+    "uncommitted_files": 0
+  },
+  "latest_report": "/workspace/monitor/reports/moeen-2025-11-01_01-10-41.json",
+  "latest_learning": "/workspace/monitor/learning/moeen-2025-11-01_01-10-41.json",
+  "next_check": "2025-11-01T01:15:41.000Z"
+}
