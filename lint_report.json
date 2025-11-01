@@ -1,0 +1,69 @@
+{
+  "status": "completed",
+  "timestamp": "2025-11-01T00:00:00Z",
+  "summary": {
+    "totalFilesChecked": 77,
+    "filesWithIssues": 34,
+    "criticalIssues": 0,
+    "warnings": 34,
+    "canAutoFix": true
+  },
+  "eslint": {
+    "status": "error",
+    "error": "ESLint configuration issue - missing @eslint/js package",
+    "recommendation": "Install @eslint/js package or update eslint.config.js",
+    "filesAnalyzed": 77
+  },
+  "prettier": {
+    "status": "warning",
+    "filesWithIssues": 34,
+    "filesChecked": 77,
+    "formattingIssues": [
+      "src/app/api/admin/audit-logs/filter/route.ts",
+      "src/app/api/admin/auth/create-user/route.ts",
+      "src/app/api/admin/auth/seed-defaults/route.ts",
+      "src/app/api/admin/dashboard/route.ts",
+      "src/app/api/admin/patient-stats/route.ts",
+      "src/app/api/admin/recent-activities/route.ts",
+      "src/app/api/admin/settings/ai/route.ts",
+      "src/app/api/admin/settings/general/route.ts",
+      "src/app/api/admin/settings/integrations/route.ts",
+      "src/app/api/admin/settings/modules/route.ts",
+      "src/app/api/admin/settings/notifications/route.ts",
+      "src/app/api/admin/settings/security/route.ts",
+      "src/app/api/admin/staff-work-hours/route.ts",
+      "src/app/api/admin/stats/route.ts",
+      "src/app/api/admin/translations/seed/route.ts",
+      "src/app/api/agent/completion/route.ts",
+      "src/app/api/agent/status/route.ts",
+      "src/app/api/agent/tasks/route.ts",
+      "src/app/api/analytics/metrics/route.ts",
+      "src/app/api/appointments/conflict-check/route.ts",
+      "src/app/api/auth/me/route.ts",
+      "src/app/api/auth/session/route.ts",
+      "src/app/api/auth/simple-login/route.ts",
+      "src/app/api/chatbot/route.ts",
+      "src/app/api/contact/route.ts",
+      "src/app/api/crm/route.ts",
+      "src/app/api/dashboard/metrics/route.ts",
+      "src/app/api/dashboard/statistics/route.ts",
+      "src/app/api/doctors/route.ts",
+      "src/app/api/dynamic-data/route.ts",
+      "src/app/api/insurance/claims/route.ts",
+      "src/app/api/notifications/route.ts",
+      "src/app/api/patients/route.ts",
+      "src/app/api/test/database/route.ts"
+    ],
+    "autoFixCommand": "npx prettier --write \"src/app/api/**/*.ts\""
+  },
+  "recommendations": [
+    "Fix ESLint configuration by installing @eslint/js or updating eslint.config.js",
+    "Run prettier --write to auto-fix 34 formatting issues",
+    "Install vitest for running unit tests",
+    "Install TypeScript devDependencies for type checking"
+  ],
+  "autoFixable": {
+    "prettier": true,
+    "eslint": false
+  }
+}
