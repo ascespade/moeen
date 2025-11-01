@@ -1,0 +1,707 @@
+{
+  "report_metadata": {
+    "generated_at": "2025-11-01T00:00:00Z",
+    "project_name": "moeen",
+    "project_path": "/workspace",
+    "report_version": "1.0.0",
+    "agent": "DBA Integrity Agent",
+    "database_type": "PostgreSQL (Supabase)"
+  },
+  "executive_summary": {
+    "overall_health": "MODERATE",
+    "total_issues": 12,
+    "critical_issues": 3,
+    "warnings": 6,
+    "recommendations": 9,
+    "migrations_analyzed": 18,
+    "total_sql_lines": 1645
+  },
+  "schema_migrations": {
+    "status": "REVIEW_REQUIRED",
+    "total_migrations": 18,
+    "core_migrations": [
+      {
+        "file": "001_create_roles_users.sql",
+        "status": "OK",
+        "description": "User roles and authentication system",
+        "issues": []
+      },
+      {
+        "file": "002_patients_doctors_appointments.sql",
+        "status": "OK",
+        "description": "Core medical entities",
+        "issues": []
+      },
+      {
+        "file": "003_insurance_payments_claims.sql",
+        "status": "OK",
+        "description": "Financial and insurance system",
+        "issues": []
+      },
+      {
+        "file": "004_translations.sql",
+        "status": "WARNING",
+        "description": "Internationalization support",
+        "issues": [
+          {
+            "severity": "WARNING",
+            "type": "SCHEMA_CONFLICT",
+            "message": "Multiple translation table schemas detected",
+            "details": "Found 4 different SQL files defining translations table with potentially conflicting schemas",
+            "files": [
+              "migrations/004_translations.sql",
+              "src/lib/translations.sql",
+              "src/lib/update-translations-schema.sql",
+              "src/lib/seed-homepage-translations.sql"
+            ],
+            "recommendation": "Consolidate translation table schema into a single source of truth"
+          }
+        ]
+      },
+      {
+        "file": "005_reports_metrics.sql",
+        "status": "OK",
+        "description": "Reporting and analytics",
+        "issues": []
+      }
+    ],
+    "enhancement_migrations": [
+      {
+        "range": "040-052",
+        "count": 13,
+        "status": "OK",
+        "description": "Module enhancements with triggers and functions",
+        "issues": []
+      }
+    ],
+    "missing_migrations": {
+      "rollback_scripts": {
+        "severity": "WARNING",
+        "message": "No rollback scripts found for migrations",
+        "recommendation": "Create rollback/down migration scripts for each migration file"
+      }
+    }
+  },
+  "constraints_analysis": {
+    "status": "NEEDS_ATTENTION",
+    "unique_constraints": {
+      "status": "GOOD",
+      "found": [
+        {
+          "table": "users",
+          "column": "email",
+          "type": "UNIQUE",
+          "status": "OK"
+        },
+        {
+          "table": "translations",
+          "columns": ["key", "locale", "namespace"],
+          "type": "UNIQUE COMPOSITE",
+          "status": "OK"
+        },
+        {
+          "table": "patients",
+          "column": "customer_id",
+          "type": "UNIQUE",
+          "status": "OK"
+        },
+        {
+          "table": "patients",
+          "column": "public_id",
+          "type": "UNIQUE",
+          "status": "OK"
+        },
+        {
+          "table": "doctors",
+          "column": "license_number",
+          "type": "UNIQUE",
+          "status": "WARNING",
+          "note": "May allow NULLs - verify business logic"
+        }
+      ]
+    },
+    "check_constraints": {
+      "status": "GOOD",
+      "found": [
+        {
+          "table": "users",
+          "constraint": "users_role_check",
+          "definition": "role IN ('admin', 'doctor', 'patient', 'staff', 'supervisor', 'manager', 'agent', 'nurse', 'demo', 'user')",
+          "status": "OK"
+        },
+        {
+          "table": "users",
+          "constraint": "users_status_check",
+          "definition": "status IN ('active', 'inactive', 'suspended', 'pending')",
+          "status": "OK"
+        },
+        {
+          "table": "translations",
+          "constraint": "locale_check",
+          "definition": "locale IN ('ar', 'en')",
+          "status": "OK"
+        }
+      ]
+    },
+    "foreign_key_constraints": {
+      "status": "REVIEW_REQUIRED",
+      "found": [
+        {
+          "table": "patients",
+          "column": "user_id",
+          "references": "users(id)",
+          "on_delete": "CASCADE",
+          "status": "WARNING",
+          "note": "CASCADE delete may cause data loss - consider RESTRICT or SET NULL"
+        },
+        {
+          "table": "appointments",
+          "column": "patient_id",
+          "references": "patients(id)",
+          "on_delete": "CASCADE",
+          "status": "WARNING",
+          "note": "CASCADE delete may cause unintended data loss"
+        },
+        {
+          "table": "appointments",
+          "column": "doctor_id",
+          "references": "doctors(id)",
+          "on_delete": "CASCADE",
+          "status": "WARNING",
+          "note": "CASCADE delete may cause unintended data loss"
+        },
+        {
+          "table": "doctors",
+          "column": "user_id",
+          "references": "users(id)",
+          "on_delete": "CASCADE",
+          "status": "OK"
+        }
+      ],
+      "missing": [
+        {
+          "severity": "CRITICAL",
+          "table": "audit_logs",
+          "column": "user_id",
+          "note": "Foreign key to users table not defined - may cause orphaned records"
+        }
+      ]
+    },
+    "missing_constraints": {
+      "severity": "WARNING",
+      "items": [
+        {
+          "table": "appointments",
+          "constraint": "scheduled_at_future_check",
+          "description": "Consider adding CHECK constraint to prevent appointments in the past",
+          "sql": "CHECK (scheduled_at >= NOW())"
+        },
+        {
+          "table": "patients",
+          "constraint": "date_of_birth_check",
+          "description": "Add CHECK constraint to validate date of birth is in the past",
+          "sql": "CHECK (date_of_birth < NOW())"
+        }
+      ]
+    }
+  },
+  "query_performance": {
+    "status": "NEEDS_IMPROVEMENT",
+    "slow_query_patterns": [
+      {
+        "severity": "CRITICAL",
+        "pattern": "SELECT *",
+        "occurrences": 79,
+        "files_affected": 46,
+        "impact": "HIGH",
+        "description": "Using SELECT * retrieves unnecessary columns, increases network overhead and memory usage",
+        "recommendation": "Replace with explicit column names: SELECT id, name, email FROM table",
+        "estimated_performance_gain": "30-50%",
+        "examples": [
+          {
+            "file": "src/app/api/test/database/route.ts",
+            "line": "Multiple occurrences",
+            "query": "select('*')"
+          },
+          {
+            "file": "src/lib/supabase.ts",
+            "line": "Multiple occurrences",
+            "query": "select('*')"
+          }
+        ]
+      },
+      {
+        "severity": "WARNING",
+        "pattern": "Missing LIMIT clauses",
+        "description": "Queries without LIMIT may return large result sets",
+        "recommendation": "Add LIMIT clause to all list queries, implement pagination",
+        "impact": "MEDIUM"
+      },
+      {
+        "severity": "WARNING",
+        "pattern": "N+1 Query Problem",
+        "description": "Sequential queries in loops detected",
+        "file": "src/app/api/patients/journey/route.ts",
+        "lines": "290-323",
+        "recommendation": "Use JOIN or batch queries instead of sequential fetches",
+        "estimated_performance_gain": "60-80%"
+      },
+      {
+        "severity": "WARNING",
+        "pattern": "Missing index usage",
+        "description": "Queries on unindexed columns may cause full table scans",
+        "affected_queries": [
+          {
+            "table": "appointments",
+            "column": "status",
+            "usage": "Frequently filtered by status",
+            "has_index": false
+          },
+          {
+            "table": "audit_logs",
+            "column": "action",
+            "usage": "Frequently filtered by action type",
+            "has_index": false
+          },
+          {
+            "table": "notifications",
+            "column": "is_read",
+            "usage": "Frequently filtered for unread notifications",
+            "has_index": false
+          }
+        ]
+      }
+    ],
+    "missing_indexes": {
+      "severity": "CRITICAL",
+      "critical_missing": [
+        {
+          "table": "appointments",
+          "column": "status",
+          "reason": "Frequently used in WHERE clauses",
+          "sql": "CREATE INDEX idx_appointments_status ON appointments(status);",
+          "estimated_impact": "HIGH"
+        },
+        {
+          "table": "appointments",
+          "columns": ["doctor_id", "scheduled_at"],
+          "reason": "Composite index for doctor availability queries",
+          "sql": "CREATE INDEX idx_appointments_doctor_schedule ON appointments(doctor_id, scheduled_at);",
+          "estimated_impact": "HIGH"
+        },
+        {
+          "table": "audit_logs",
+          "column": "created_at",
+          "reason": "Time-based queries for audit log retrieval",
+          "sql": "CREATE INDEX idx_audit_logs_created_at ON audit_logs(created_at DESC);",
+          "estimated_impact": "MEDIUM"
+        },
+        {
+          "table": "audit_logs",
+          "column": "action",
+          "reason": "Frequently filtered by action type",
+          "sql": "CREATE INDEX idx_audit_logs_action ON audit_logs(action);",
+          "estimated_impact": "MEDIUM"
+        },
+        {
+          "table": "notifications",
+          "columns": ["user_id", "is_read"],
+          "reason": "Finding unread notifications per user",
+          "sql": "CREATE INDEX idx_notifications_user_unread ON notifications(user_id, is_read) WHERE is_read = false;",
+          "estimated_impact": "HIGH"
+        },
+        {
+          "table": "patients",
+          "column": "phone",
+          "reason": "Used for patient lookup",
+          "sql": "CREATE INDEX idx_patients_phone ON patients(phone);",
+          "estimated_impact": "MEDIUM"
+        }
+      ],
+      "recommended": [
+        {
+          "table": "insurance_claims",
+          "column": "status",
+          "sql": "CREATE INDEX idx_insurance_claims_status ON insurance_claims(status);"
+        },
+        {
+          "table": "medical_records",
+          "columns": ["patient_id", "created_at"],
+          "sql": "CREATE INDEX idx_medical_records_patient_date ON medical_records(patient_id, created_at DESC);"
+        }
+      ]
+    },
+    "existing_indexes": {
+      "status": "PARTIAL",
+      "found": [
+        "idx_users_email",
+        "idx_patients_email",
+        "idx_appointments_patient",
+        "idx_appointments_doctor",
+        "idx_users_role",
+        "idx_users_status",
+        "idx_translations_locale",
+        "idx_translations_namespace",
+        "idx_translations_key",
+        "idx_translations_locale_namespace"
+      ]
+    }
+  },
+  "translations_integrity": {
+    "status": "NEEDS_ATTENTION",
+    "issues": [
+      {
+        "severity": "WARNING",
+        "type": "SCHEMA_INCONSISTENCY",
+        "message": "Multiple translation table definitions found",
+        "details": {
+          "schema_1": {
+            "file": "migrations/004_translations.sql",
+            "structure": "languages + translations tables with foreign key"
+          },
+          "schema_2": {
+            "file": "src/lib/translations.sql",
+            "structure": "Single translations table with locale column"
+          },
+          "schema_3": {
+            "file": "src/lib/update-translations-schema.sql",
+            "structure": "Translations table with TEXT id (for CUID)"
+          }
+        },
+        "recommendation": "Consolidate to single schema definition, preferably using update-translations-schema.sql as it supports CUID"
+      },
+      {
+        "severity": "INFO",
+        "type": "RLS_ENABLED",
+        "message": "Row Level Security is properly configured on translations table",
+        "policies": [
+          "Allow read to anon",
+          "Service write"
+        ]
+      }
+    ],
+    "foreign_key_linkage": {
+      "status": "INCONSISTENT",
+      "languages_table": {
+        "status": "OPTIONAL",
+        "note": "One schema uses languages table with FK, another doesn't - both approaches are valid but should be consistent"
+      },
+      "recommendations": [
+        "Decide on a single approach: either use languages table with FK or use CHECK constraint on locale column",
+        "Current recommendation: Use CHECK constraint (simpler, less overhead) as defined in update-translations-schema.sql"
+      ]
+    },
+    "translation_coverage": {
+      "status": "PARTIAL",
+      "locales_supported": ["ar", "en"],
+      "default_locale": "ar",
+      "fallback_mechanism": "Implemented in API route",
+      "missing_translation_tracking": "Partially implemented"
+    }
+  },
+  "security_analysis": {
+    "status": "GOOD",
+    "row_level_security": {
+      "enabled_tables": [
+        "translations",
+        "patients (inferred)",
+        "appointments (inferred)"
+      ],
+      "recommendation": "Verify RLS is enabled on all sensitive tables"
+    },
+    "audit_logging": {
+      "status": "EXCELLENT",
+      "triggers_found": [
+        "log_appointment_changes",
+        "update_appointments_updated_at",
+        "medical_records_triggers",
+        "payment_triggers",
+        "crm_triggers"
+      ],
+      "coverage": "Comprehensive audit logging implemented for critical operations",
+      "note": "Audit logs capture action, user_id, ip_address, metadata"
+    },
+    "password_handling": {
+      "status": "OK",
+      "note": "Password stored as password_hash, proper hashing assumed"
+    },
+    "sensitive_data": {
+      "status": "REVIEW_REQUIRED",
+      "tables_with_pii": [
+        "users (email, phone)",
+        "patients (email, phone, address, medical_history, allergies)",
+        "doctors (email, phone)",
+        "medical_records (diagnosis, treatment_plan)"
+      ],
+      "recommendation": "Consider encryption at rest for sensitive medical data"
+    }
+  },
+  "duplicate_prevention": {
+    "status": "GOOD",
+    "mechanisms": [
+      {
+        "type": "UNIQUE_CONSTRAINT",
+        "table": "users",
+        "column": "email",
+        "status": "OK"
+      },
+      {
+        "type": "UNIQUE_CONSTRAINT",
+        "table": "patients",
+        "column": "customer_id",
+        "status": "OK"
+      },
+      {
+        "type": "UNIQUE_CONSTRAINT",
+        "table": "translations",
+        "columns": ["key", "locale", "namespace"],
+        "status": "OK"
+      },
+      {
+        "type": "APPLICATION_LEVEL",
+        "location": "src/app/api/appointments/route.ts",
+        "check": "Conflict check for overlapping appointments",
+        "status": "EXCELLENT",
+        "note": "Lines 169-190: Checks for conflicting appointments before creation"
+      }
+    ],
+    "potential_gaps": [
+      {
+        "severity": "INFO",
+        "table": "audit_logs",
+        "note": "No duplicate prevention mechanism - may accumulate duplicate log entries if not careful"
+      }
+    ]
+  },
+  "trigger_and_function_analysis": {
+    "status": "GOOD",
+    "triggers": [
+      {
+        "name": "trigger_update_appointments_updated_at",
+        "table": "appointments",
+        "function": "update_appointments_updated_at()",
+        "purpose": "Auto-update updated_at and last_activity_at",
+        "status": "OK"
+      },
+      {
+        "name": "log_appointment_changes",
+        "table": "appointments",
+        "function": "log_appointment_changes()",
+        "purpose": "Audit logging for appointment changes",
+        "status": "OK"
+      }
+    ],
+    "functions": [
+      {
+        "name": "safe_update_user_role",
+        "parameters": ["p_user_id UUID", "p_role_name TEXT"],
+        "purpose": "Safely update user role with validation",
+        "status": "OK",
+        "note": "Includes role validation and error handling"
+      }
+    ],
+    "recommendations": [
+      {
+        "type": "FUNCTION",
+        "name": "prevent_past_appointments",
+        "purpose": "Trigger to prevent creating appointments in the past",
+        "sql": "CREATE OR REPLACE FUNCTION prevent_past_appointments() RETURNS TRIGGER AS $$ BEGIN IF NEW.scheduled_at < NOW() THEN RAISE EXCEPTION 'Cannot schedule appointments in the past'; END IF; RETURN NEW; END; $$ LANGUAGE plpgsql;"
+      }
+    ]
+  },
+  "data_integrity_issues": {
+    "critical": [
+      {
+        "severity": "CRITICAL",
+        "issue": "CASCADE delete on patient_id may cause unintended data loss",
+        "tables_affected": ["appointments", "medical_records", "insurance_claims"],
+        "recommendation": "Change ON DELETE CASCADE to ON DELETE RESTRICT for appointments and medical_records to prevent accidental deletion",
+        "risk": "Deleting a patient would cascade delete all appointments and medical records"
+      }
+    ],
+    "warnings": [
+      {
+        "severity": "WARNING",
+        "issue": "Missing foreign key constraint on audit_logs.user_id",
+        "recommendation": "Add foreign key constraint: ALTER TABLE audit_logs ADD CONSTRAINT fk_audit_logs_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL;"
+      },
+      {
+        "severity": "WARNING",
+        "issue": "Multiple translation schema definitions may cause confusion",
+        "recommendation": "Remove redundant SQL files and maintain single source of truth"
+      }
+    ]
+  },
+  "performance_recommendations": {
+    "immediate_actions": [
+      {
+        "priority": "CRITICAL",
+        "action": "Replace all SELECT * with explicit column lists",
+        "estimated_effort": "4-6 hours",
+        "estimated_impact": "30-50% query performance improvement"
+      },
+      {
+        "priority": "CRITICAL",
+        "action": "Add missing indexes on appointments.status and appointments(doctor_id, scheduled_at)",
+        "estimated_effort": "30 minutes",
+        "estimated_impact": "60-80% improvement on appointment queries"
+      },
+      {
+        "priority": "HIGH",
+        "action": "Add composite index on notifications(user_id, is_read)",
+        "estimated_effort": "15 minutes",
+        "estimated_impact": "70% improvement on notification queries"
+      }
+    ],
+    "medium_term": [
+      {
+        "priority": "MEDIUM",
+        "action": "Implement query result caching for translations",
+        "estimated_effort": "2-3 hours",
+        "estimated_impact": "90% reduction in translation query load"
+      },
+      {
+        "priority": "MEDIUM",
+        "action": "Optimize N+1 queries in patient journey API",
+        "estimated_effort": "2-4 hours",
+        "estimated_impact": "60-80% improvement in API response time"
+      }
+    ],
+    "long_term": [
+      {
+        "priority": "LOW",
+        "action": "Implement database partitioning for audit_logs table",
+        "estimated_effort": "1-2 days",
+        "estimated_impact": "Improved query performance on large audit log datasets"
+      },
+      {
+        "priority": "LOW",
+        "action": "Set up read replicas for reporting queries",
+        "estimated_effort": "3-5 days",
+        "estimated_impact": "Reduced load on primary database"
+      }
+    ]
+  },
+  "proposed_schema_changes": {
+    "migrations_to_create": [
+      {
+        "priority": "HIGH",
+        "file": "053_add_missing_indexes.sql",
+        "description": "Add critical missing indexes for performance",
+        "sql": "-- Add missing indexes for performance\nCREATE INDEX CONCURRENTLY IF NOT EXISTS idx_appointments_status ON appointments(status);\nCREATE INDEX CONCURRENTLY IF NOT EXISTS idx_appointments_doctor_schedule ON appointments(doctor_id, scheduled_at);\nCREATE INDEX CONCURRENTLY IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at DESC);\nCREATE INDEX CONCURRENTLY IF NOT EXISTS idx_audit_logs_action ON audit_logs(action);\nCREATE INDEX CONCURRENTLY IF NOT EXISTS idx_notifications_user_unread ON notifications(user_id, is_read) WHERE is_read = false;\nCREATE INDEX CONCURRENTLY IF NOT EXISTS idx_patients_phone ON patients(phone);\nCREATE INDEX CONCURRENTLY IF NOT EXISTS idx_insurance_claims_status ON insurance_claims(status);"
+      },
+      {
+        "priority": "HIGH",
+        "file": "054_fix_cascade_deletes.sql",
+        "description": "Change CASCADE to RESTRICT on critical foreign keys",
+        "sql": "-- Fix CASCADE deletes to prevent data loss\nALTER TABLE appointments DROP CONSTRAINT IF EXISTS appointments_patient_id_fkey;\nALTER TABLE appointments ADD CONSTRAINT appointments_patient_id_fkey FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE RESTRICT;\n\nALTER TABLE appointments DROP CONSTRAINT IF EXISTS appointments_doctor_id_fkey;\nALTER TABLE appointments ADD CONSTRAINT appointments_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES doctors(id) ON DELETE RESTRICT;"
+      },
+      {
+        "priority": "MEDIUM",
+        "file": "055_add_audit_logs_foreign_key.sql",
+        "description": "Add missing foreign key constraint on audit_logs",
+        "sql": "-- Add foreign key constraint on audit_logs.user_id\nALTER TABLE audit_logs ADD CONSTRAINT fk_audit_logs_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL;"
+      },
+      {
+        "priority": "MEDIUM",
+        "file": "056_add_validation_constraints.sql",
+        "description": "Add data validation constraints",
+        "sql": "-- Add validation constraints\nALTER TABLE patients ADD CONSTRAINT chk_patients_dob CHECK (date_of_birth < CURRENT_DATE);\nALTER TABLE appointments ADD CONSTRAINT chk_appointments_future CHECK (scheduled_at >= NOW());"
+      },
+      {
+        "priority": "LOW",
+        "file": "057_consolidate_translations.sql",
+        "description": "Consolidate translation table schema",
+        "sql": "-- Use the schema from update-translations-schema.sql as the single source of truth\n-- This migration should drop conflicting definitions and ensure consistency"
+      }
+    ]
+  },
+  "testing_recommendations": {
+    "required_tests": [
+      {
+        "type": "INTEGRATION_TEST",
+        "description": "Test CASCADE delete behavior on appointments when patient is deleted",
+        "risk": "HIGH"
+      },
+      {
+        "type": "PERFORMANCE_TEST",
+        "description": "Benchmark query performance before and after index additions",
+        "metrics": ["query_time", "rows_examined", "index_usage"]
+      },
+      {
+        "type": "CONSTRAINT_TEST",
+        "description": "Verify all unique constraints prevent duplicate entries",
+        "tables": ["users", "patients", "translations"]
+      },
+      {
+        "type": "TRIGGER_TEST",
+        "description": "Verify audit logging triggers capture all changes",
+        "tables": ["appointments", "medical_records", "payments"]
+      }
+    ]
+  },
+  "maintenance_plan": {
+    "immediate": [
+      "Add critical missing indexes",
+      "Fix CASCADE delete constraints",
+      "Replace SELECT * queries"
+    ],
+    "weekly": [
+      "Monitor slow query log",
+      "Review audit logs for anomalies",
+      "Check index usage statistics"
+    ],
+    "monthly": [
+      "Archive old audit_logs (older than 90 days)",
+      "Vacuum and analyze all tables",
+      "Review and optimize query patterns"
+    ],
+    "quarterly": [
+      "Database performance audit",
+      "Schema review for optimization opportunities",
+      "Security review of RLS policies"
+    ]
+  },
+  "compliance_notes": {
+    "gdpr": {
+      "status": "PARTIAL",
+      "notes": [
+        "PII data identified in users, patients, doctors tables",
+        "Audit logging in place for data access",
+        "Need to implement data retention policy",
+        "Need to implement right-to-deletion mechanism"
+      ]
+    },
+    "hipaa": {
+      "status": "NEEDS_ATTENTION",
+      "notes": [
+        "Medical data stored in patients table (medical_history, allergies)",
+        "Consider encryption at rest",
+        "Audit logging implemented (good)",
+        "Need to verify access controls meet HIPAA requirements"
+      ]
+    }
+  },
+  "final_recommendations": {
+    "priority_1_critical": [
+      "Add missing indexes immediately (estimated 30 min effort, 60-80% performance gain)",
+      "Replace SELECT * queries with explicit columns (estimated 4-6 hours, 30-50% performance gain)",
+      "Fix CASCADE delete constraints to prevent data loss (estimated 1 hour)"
+    ],
+    "priority_2_high": [
+      "Consolidate translation table schemas into single definition",
+      "Add missing foreign key constraint on audit_logs.user_id",
+      "Implement query result caching for translations"
+    ],
+    "priority_3_medium": [
+      "Optimize N+1 queries in patient journey API",
+      "Add validation constraints (date_of_birth, scheduled_at)",
+      "Create rollback scripts for all migrations"
+    ],
+    "priority_4_low": [
+      "Implement database partitioning for audit_logs",
+      "Set up read replicas for reporting",
+      "Implement data retention policies"
+    ]
+  }
+}
