@@ -1,0 +1,141 @@
+{
+  "summary": {
+    "total_errors": 9,
+    "total_warnings": 8,
+    "files_checked": "all",
+    "timestamp": "2025-11-01T00:00:00Z"
+  },
+  "errors": [
+    {
+      "file": "./src/app/(admin)/dashboard-modern/page.tsx",
+      "line": 243,
+      "column": 9,
+      "rule": "react/no-children-prop",
+      "message": "Do not pass children as props. Instead, nest children between the opening and closing tags.",
+      "severity": "error"
+    },
+    {
+      "file": "./src/components/admin/settings/ModuleSettings.tsx",
+      "line": 303,
+      "column": 15,
+      "rule": "@next/next/no-assign-module-variable",
+      "message": "Do not assign to the variable `module`. See: https://nextjs.org/docs/messages/no-assign-module-variable",
+      "severity": "error"
+    },
+    {
+      "file": "./src/components/dashboard/widgets/PatientDashboard.tsx",
+      "line": 334,
+      "column": 18,
+      "rule": "react/jsx-no-undef",
+      "message": "'Thermometer' is not defined.",
+      "severity": "error"
+    },
+    {
+      "file": "./src/components/dashboard/widgets/PatientDashboard.tsx",
+      "line": 387,
+      "column": 20,
+      "rule": "react/jsx-no-undef",
+      "message": "'Thermometer' is not defined.",
+      "severity": "error"
+    },
+    {
+      "file": "./src/components/modals/TermsOfServiceModal.tsx",
+      "line": 189,
+      "column": 40,
+      "rule": "react/no-unescaped-entities",
+      "message": "`\"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.",
+      "severity": "error"
+    },
+    {
+      "file": "./src/components/modals/TermsOfServiceModal.tsx",
+      "line": 189,
+      "column": 47,
+      "rule": "react/no-unescaped-entities",
+      "message": "`\"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.",
+      "severity": "error"
+    },
+    {
+      "file": "./src/components/modals/TermsOfServiceModal.tsx",
+      "line": 189,
+      "column": 50,
+      "rule": "react/no-unescaped-entities",
+      "message": "`\"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.",
+      "severity": "error"
+    },
+    {
+      "file": "./src/components/modals/TermsOfServiceModal.tsx",
+      "line": 189,
+      "column": 61,
+      "rule": "react/no-unescaped-entities",
+      "message": "`\"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.",
+      "severity": "error"
+    },
+    {
+      "file": "./src/core/errors/index.ts",
+      "line": 290,
+      "column": 7,
+      "rule": "@typescript-eslint/no-require-imports",
+      "message": "Definition for rule '@typescript-eslint/no-require-imports' was not found.",
+      "severity": "error"
+    }
+  ],
+  "warnings": [
+    {
+      "file": "./src/app/(admin)/users/page.tsx",
+      "line": 138,
+      "column": 9,
+      "rule": "react-hooks/exhaustive-deps",
+      "message": "The 'getRoleDisplayName' function makes the dependencies of useCallback Hook (at line 218) change on every render. Move it inside the useCallback callback. Alternatively, wrap the definition of 'getRoleDisplayName' in its own useCallback() Hook."
+    },
+    {
+      "file": "./src/app/(auth)/login/page.tsx",
+      "line": 51,
+      "column": 6,
+      "rule": "react-hooks/exhaustive-deps",
+      "message": "React Hook useEffect has a missing dependency: 'resolveRedirectAfterLogin'. Either include it or remove the dependency array."
+    },
+    {
+      "file": "./src/app/(health)/approvals/page.tsx",
+      "line": 178,
+      "column": 6,
+      "rule": "react-hooks/exhaustive-deps",
+      "message": "React Hook useEffect has a missing dependency: 'loadApprovals'. Either include it or remove the dependency array."
+    },
+    {
+      "file": "./src/app/(health)/insurance-claims/page.tsx",
+      "line": 34,
+      "column": 6,
+      "rule": "react-hooks/exhaustive-deps",
+      "message": "React Hook useEffect has a missing dependency: 'loadClaims'. Either include it or remove the dependency array."
+    },
+    {
+      "file": "./src/app/layout.tsx",
+      "line": 66,
+      "column": 9,
+      "rule": "@next/next/no-page-custom-font",
+      "message": "Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font"
+    },
+    {
+      "file": "./src/components/dashboard/layouts/DashboardLayout.tsx",
+      "line": 153,
+      "column": 21,
+      "rule": "@next/next/no-img-element",
+      "message": "Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element"
+    },
+    {
+      "file": "./src/components/home/InteractiveStats.tsx",
+      "line": 99,
+      "column": 39,
+      "rule": "react-hooks/exhaustive-deps",
+      "message": "The ref value 'sectionRef.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'sectionRef.current' to a variable inside the effect, and use that variable in the cleanup function."
+    },
+    {
+      "file": "./src/components/providers/ThemeProvider.tsx",
+      "line": 98,
+      "column": 6,
+      "rule": "react-hooks/exhaustive-deps",
+      "message": "React Hook useEffect has a missing dependency: 'applyThemeColors'. Either include it or remove the dependency array."
+    }
+  ],
+  "recommendation": "Fix critical errors before merging. Auto-fixable issues have been addressed."
+}
