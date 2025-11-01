@@ -1,0 +1,84 @@
+{
+  "status": "warning",
+  "timestamp": "2025-11-01T00:00:00Z",
+  "summary": {
+    "totalTests": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "testsRun": false
+  },
+  "testRunner": {
+    "vitest": {
+      "status": "not_installed",
+      "error": "vitest command not found",
+      "recommendation": "Install vitest package: npm install -D vitest"
+    },
+    "playwright": {
+      "status": "installed",
+      "version": "1.40.1",
+      "recommendation": "Run 'npm run test:e2e' for end-to-end tests"
+    }
+  },
+  "mockDataViolations": [
+    {
+      "file": "src/app/api/admin/staff-hours/route.ts",
+      "lines": "19-31",
+      "severity": "critical",
+      "violation": "Mock data generation using Math.random()",
+      "description": "Generate mock work hours data instead of fetching from database",
+      "code": "const staffWorkHours = staff.map((member: any) => ({\n  id: member.id,\n  name: `${member.first_name} ${member.last_name}`,\n  position: member.specialization || 'طبيب',\n  totalHours: Math.floor(Math.random() * 200) + 100,\n  todayHours: Math.floor(Math.random() * 8) + 1,\n  thisWeekHours: Math.floor(Math.random() * 40) + 20,\n  thisMonthHours: Math.floor(Math.random() * 160) + 80,\n  isOnDuty: Math.random() > 0.5,\n  lastCheckIn: '08:00',\n  lastCheckOut: '17:00',\n}));",
+      "recommendation": "Replace mock data with real database queries from work_hours or time_tracking table",
+      "shouldBlockMerge": true
+    },
+    {
+      "file": "src/app/api/admin/security-events/route.ts",
+      "lines": "51-56",
+      "severity": "low",
+      "violation": "Returns empty array on error (acceptable fallback)",
+      "description": "Returns mock/empty data if table doesn't exist",
+      "code": "// Return mock data if table doesn't exist\nreturn NextResponse.json({\n  success: true,\n  data: [],\n  message: 'No security events found',\n});",
+      "recommendation": "This is acceptable as a fallback for missing tables",
+      "shouldBlockMerge": false
+    }
+  ],
+  "changedModules": [
+    "src/app/(admin)/admin/dashboard",
+    "src/app/(admin)/admin/patients",
+    "src/app/(admin)/admin/roles",
+    "src/app/(admin)/admin/users",
+    "src/app/(admin)/appointments",
+    "src/app/(admin)/chatbot",
+    "src/app/(admin)/conversations",
+    "src/app/(admin)/crm",
+    "src/app/(admin)/dashboard-modern",
+    "src/app/(admin)/doctors",
+    "src/app/(admin)/messages",
+    "src/app/(admin)/notifications",
+    "src/app/(admin)/performance",
+    "src/app/(admin)/reports",
+    "src/app/api/admin/auth",
+    "src/app/api/admin/configs",
+    "src/app/api/admin/dashboard",
+    "src/app/api/admin/patient-stats",
+    "src/app/api/admin/security-events",
+    "src/app/api/admin/staff-hours",
+    "src/app/api/admin/stats",
+    "src/app/api/appointments",
+    "src/app/api/auth",
+    "src/app/api/chatbot",
+    "src/app/api/crm",
+    "src/app/api/doctors",
+    "src/app/api/dynamic-data",
+    "src/app/api/notifications",
+    "src/app/api/patients"
+  ],
+  "recommendations": [
+    "CRITICAL: Fix mock data in src/app/api/admin/staff-hours/route.ts",
+    "Install vitest for running unit tests",
+    "Create unit tests for changed API routes",
+    "Run playwright tests to verify end-to-end functionality"
+  ],
+  "shouldBlockMerge": true,
+  "reason": "Critical mock data violation found in production code"
+}
