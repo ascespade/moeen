@@ -1,0 +1,87 @@
+{
+  "summary": {
+    "status": "PARTIAL_FAILURE",
+    "timestamp": "2025-11-01T00:00:00Z",
+    "test_framework": "vitest",
+    "total_test_files": "multiple",
+    "passed_tests": 0,
+    "failed_tests": 1,
+    "skipped_tests": 0
+  },
+  "failures": [
+    {
+      "test_suite": "src/__tests__/auth/register.test.tsx",
+      "test_name": "RegisterPage > renders registration form correctly",
+      "error": "Unable to find an element with the text: أوافق على. This could be because the text is broken up by multiple elements.",
+      "file": "src/__tests__/auth/register.test.tsx",
+      "type": "component_render"
+    }
+  ],
+  "warnings": [
+    {
+      "message": "Multiple GoTrueClient instances detected in the same browser context",
+      "files": [
+        "src/__tests__/api/appointments.test.ts",
+        "src/__tests__/api/patients.test.ts"
+      ]
+    }
+  ],
+  "mock_data_violations": [
+    {
+      "file": "src/app/(admin)/doctors/page.tsx",
+      "line": 134,
+      "issue": "mockDoctors array used directly in production code",
+      "severity": "CRITICAL",
+      "pattern": "const mockDoctors: Doctor[] = [...]",
+      "usage": "setDoctors(mockDoctors) at line 357"
+    },
+    {
+      "file": "src/app/(admin)/dashboard-modern/page.tsx",
+      "line": 28,
+      "issue": "mockNotifications used in production code",
+      "severity": "HIGH",
+      "pattern": "const mockNotifications: Notification[] = [...]",
+      "usage": "notifications: mockNotifications"
+    },
+    {
+      "file": "src/app/(admin)/dashboard-modern/page.tsx",
+      "line": 65,
+      "issue": "mockChartData used in production code",
+      "severity": "HIGH",
+      "pattern": "const mockChartData = {...}",
+      "usage": "data: mockChartData.patientGrowth/appointments/revenue"
+    },
+    {
+      "file": "src/app/(admin)/security/page.tsx",
+      "line": 135,
+      "issue": "mockEvents used in production code",
+      "severity": "HIGH",
+      "pattern": "const mockEvents: SecurityEvent[] = [...]",
+      "usage": "setSecurityEvents(mockEvents)"
+    },
+    {
+      "file": "src/app/(admin)/security/page.tsx",
+      "line": 188,
+      "issue": "mockPolicies used in production code",
+      "severity": "HIGH",
+      "pattern": "const mockPolicies: SecurityPolicy[] = [...]",
+      "usage": "setPolicies(mockPolicies)"
+    },
+    {
+      "file": "src/app/(health)/approvals/page.tsx",
+      "line": 41,
+      "issue": "mockApprovals defined but has real data loading via loadApprovals()",
+      "severity": "LOW",
+      "pattern": "const mockApprovals: Approval[] = [...]",
+      "note": "Real data loading exists via Supabase, mock might be unused"
+    }
+  ],
+  "recommendation": "DENY MERGE - Critical mock data found in production code. 5 files need to be updated to use real database queries instead of mock data.",
+  "required_actions": [
+    "Replace mockDoctors with real Supabase query in src/app/(admin)/doctors/page.tsx",
+    "Replace mockNotifications with real data in src/app/(admin)/dashboard-modern/page.tsx",
+    "Replace mockChartData with real data in src/app/(admin)/dashboard-modern/page.tsx",
+    "Replace mockEvents and mockPolicies in src/app/(admin)/security/page.tsx",
+    "Remove unused mockApprovals from src/app/(health)/approvals/page.tsx if not used"
+  ]
+}

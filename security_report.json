@@ -1,0 +1,38 @@
+{
+  "auditReportVersion": 2,
+  "timestamp": "2025-11-01T00:00:00Z",
+  "status": "PASS",
+  "vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "previous_vulnerabilities": {
+    "moderate": 2,
+    "details": [
+      {
+        "package": "tar",
+        "severity": "moderate",
+        "issue": "node-tar has a race condition leading to uninitialized memory exposure",
+        "advisory": "GHSA-29xp-372q-xqph",
+        "via": "supabase",
+        "fixed": true
+      }
+    ]
+  },
+  "dependencies": {
+    "prod": 698,
+    "dev": 328,
+    "optional": 140,
+    "peer": 10,
+    "total": 1110
+  },
+  "actions_taken": [
+    "npm audit fix --force executed successfully",
+    "All moderate vulnerabilities resolved"
+  ],
+  "recommendation": "All security vulnerabilities have been fixed. Safe to merge."
+}
