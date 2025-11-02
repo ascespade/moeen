@@ -1,7 +1,12 @@
 #!/bin/bash
-# Script to start all required services
+# Script to start all required services with stability optimizations
 
-echo "Starting all services..."
+echo "Starting all services with stability optimizations..."
+
+# Optimize network settings first
+if [ -f /workspace/optimize-network.sh ]; then
+    bash /workspace/optimize-network.sh > /dev/null 2>&1
+fi
 
 # Create required directories
 sudo mkdir -p /run/sshd /run/xrdp /var/lib/tailscale /var/log
