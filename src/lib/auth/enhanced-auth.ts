@@ -3,10 +3,15 @@
  * نظام المصادقة المحسّن
  * 
  * Simplified, clean, and efficient authentication
+ * 
+ * ✅ Client-safe (no server-only imports)
  */
 
-import { customAuthHub, CustomAuthUser, UserPermissions } from './CustomAuthHub';
+import type { CustomAuthUser, UserPermissions } from './types';
 import { getDefaultRoute, canAccessRoute, getNavigationRoutes } from './RouteManager';
+
+// Re-export types for convenience
+export type { CustomAuthUser, UserPermissions };
 
 export interface AuthState {
   user: CustomAuthUser | null;

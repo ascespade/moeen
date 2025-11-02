@@ -1,9 +1,11 @@
 /**
  * Permission Checker - Simple & Clean
  * مدقق الصلاحيات - بسيط ونظيف
+ * 
+ * ✅ Client-safe (no server-only imports)
  */
 
-import type { UserPermissions } from './CustomAuthHub';
+import type { UserPermissions } from './types';
 
 /**
  * Check if user has permission

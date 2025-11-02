@@ -3,9 +3,11 @@
  * مدقق منطق العمل
  * 
  * Validates business rules and ensures correctness
+ * 
+ * ✅ Client-safe (no server-only imports)
  */
 
-import type { CustomAuthUser } from './CustomAuthHub';
+import type { CustomAuthUser } from './types';
 
 /**
  * Validate user login rules

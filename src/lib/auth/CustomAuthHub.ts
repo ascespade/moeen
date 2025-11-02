@@ -1,6 +1,10 @@
 /**
- * 🔐 Custom Authentication Hub - Optimized & Clean
- * نظام المصادقة المخصص - محسّن ونظيف
+ * 🔐 Custom Authentication Hub - Optimized & Clean (SERVER-ONLY)
+ * نظام المصادقة المخصص - محسّن ونظيف (SERVER-ONLY)
+ * 
+ * ⚠️ This file uses server-only functions (next/headers)
+ * ⚠️ DO NOT import this in client components
+ * ✅ Use API routes instead for client-side access
  * 
  * ✅ No console logs in production
  * ✅ Optimized database queries
@@ -10,30 +14,10 @@
 
 import { createClient } from '@/lib/supabase/server';
 import jwt from 'jsonwebtoken';
+import type { CustomAuthUser, UserPermissions, AuthResult } from './types';
 
-export interface CustomAuthUser {
-  id: string;
-  email: string;
-  name: string;
-  role: string;
-  status: string;
-  avatar_url?: string;
-}
-
-export interface UserPermissions {
-  role: string;
-  permissions: Array<{
-    resource: string;
-    actions: string[];
-  }>;
-  permissionCodes: string[];
-}
-
-export interface AuthResult {
-  user: CustomAuthUser | null;
-  token: string | null;
-  error: string | null;
-}
+// Re-export types for convenience
+export type { CustomAuthUser, UserPermissions, AuthResult };
 
 // JWT Configuration
 function getJWTSecret(): string {

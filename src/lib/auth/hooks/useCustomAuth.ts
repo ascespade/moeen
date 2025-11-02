@@ -10,7 +10,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { customAuthHub, CustomAuthUser } from '../CustomAuthHub';
+import type { CustomAuthUser } from '../types';
 
 interface AuthState {
   user: CustomAuthUser | null;
@@ -35,33 +35,62 @@ export function useCustomAuth() {
           return;
         }
 
-        // Verify token
-        const user = await customAuthHub.verifyToken(token);
-        if (user) {
-          // Get user from localStorage as fallback (faster)
-          const userStr = localStorage.getItem('user');
-          let userData = user;
-          
-          if (userStr) {
-            try {
-              const parsed = JSON.parse(userStr);
-              userData = { ...user, ...parsed };
-            } catch {
-              // Use verified user
+        // Verify token via API (not direct server function)
+        try {
+          const response = await fetch('/api/auth/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.success && data.user) {
+              // Get user from localStorage as fallback (faster)
+              const userStr = localStorage.getItem('user');
+              let userData = data.user;
+              
+              if (userStr) {
+                try {
+                  const parsed = JSON.parse(userStr);
+                  userData = { ...data.user, ...parsed };
+                } catch {
+                  // Use API user
+                }
+              }
+
+              setState({
+                user: userData,
+                isAuthenticated: true,
+                loading: false,
+              });
+              return;
             }
           }
-
-          setState({
-            user: userData,
-            isAuthenticated: true,
-            loading: false,
-          });
-        } else {
-          // Invalid token - clear storage
-          localStorage.removeItem('auth_token');
-          localStorage.removeItem('user');
-          setState({ user: null, isAuthenticated: false, loading: false });
+        } catch {
+          // API call failed, continue to check localStorage
         }
+
+        // Fallback: use localStorage if API fails
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+          try {
+            const user = JSON.parse(userStr);
+            setState({
+              user,
+              isAuthenticated: true,
+              loading: false,
+            });
+            return;
+          } catch {
+            // Invalid JSON
+          }
+        }
+
+        // Invalid token - clear storage
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('user');
+        setState({ user: null, isAuthenticated: false, loading: false });
       } catch (error) {
         // Silently fail - user not authenticated
         setState({ user: null, isAuthenticated: false, loading: false });
@@ -112,12 +141,19 @@ export function useCustomAuth() {
   // Logout
   const logout = useCallback(async () => {
     try {
-      await customAuthHub.logout();
+      // Call logout API if needed
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      }).catch(() => {}); // Ignore errors
     } catch {
       // Ignore errors
     } finally {
+      // Clear all storage
       localStorage.removeItem('auth_token');
       localStorage.removeItem('user');
+      localStorage.removeItem('permissions');
+      sessionStorage.clear();
       setState({ user: null, isAuthenticated: false, loading: false });
     }
   }, []);
