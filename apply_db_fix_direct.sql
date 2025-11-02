@@ -47,15 +47,9 @@ GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO authenticated;
 GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO anon;
 GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO service_role;
 
--- Step 4: Ensure roles exist
-INSERT INTO roles (role, description) VALUES
-  ('admin', 'System administrator with full access'),
-  ('doctor', 'Medical professional with patient access'),
-  ('patient', 'Patient with personal data access'),
-  ('staff', 'Staff member with administrative access'),
-  ('supervisor', 'Supervisor with limited administrative access'),
-  ('manager', 'Manager with comprehensive administrative access')
-ON CONFLICT (role) DO NOTHING;
+-- Step 4: Skip roles table (it has different structure)
+-- Note: The roles table has a different structure (id, name, display_name, etc.)
+-- Users table uses role as a text field directly, so we don't need to modify roles table
 
 -- Step 5: Fix passwords for test users (UPDATE existing users)
 UPDATE users
