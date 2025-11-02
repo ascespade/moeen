@@ -2,13 +2,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
+import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 import { getDefaultRoute } from '@/lib/auth/unified-auth';
 export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, user, isAuthenticated, isLoading } = useUnifiedAuth();
+  const { login, user, isAuthenticated, loading: isLoading } = useCustomAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,9 +30,15 @@ export default function LoginPage() {
     setSubmitting(true);
     try {
       const result = await login(email, password);
-      if (result.success && user) {
-        const route = getDefaultRoute(user.role);
-        router.push(route);
+      if (result.success) {
+        // Get user from state or fetch
+        const currentUser = user || await fetchUser();
+        if (currentUser) {
+          const route = getDefaultRoute(currentUser.role);
+          router.push(route);
+        } else {
+          router.push('/dashboard');
+        }
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
       }
@@ -41,6 +47,25 @@ export default function LoginPage() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem('auth_token');
+      if (!token) return null;
+      const response = await fetch('/api/auth/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        return data.user;
+      }
+    } catch (error) {
+      console.error('Error fetching user:', error);
+    }
+    return null;
   };
 
   if (isLoading) {
@@ -174,9 +199,8 @@ export default function LoginPage() {
                     setSubmitting(true);
                     try {
                       const result = await login('admin@test.com', 'Admin123!');
-                      if (result.success && user) {
-                        const route = getDefaultRoute(user.role);
-                        router.push(route);
+                      if (result.success) {
+                        router.push('/dashboard');
                       } else {
                         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                       }
@@ -201,9 +225,8 @@ export default function LoginPage() {
                     setSubmitting(true);
                     try {
                       const result = await login('doctor@test.com', 'Doctor123!');
-                      if (result.success && user) {
-                        const route = getDefaultRoute(user.role);
-                        router.push(route);
+                      if (result.success) {
+                        router.push('/dashboard');
                       } else {
                         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                       }
@@ -228,9 +251,8 @@ export default function LoginPage() {
                     setSubmitting(true);
                     try {
                       const result = await login('patient@test.com', 'Patient123!');
-                      if (result.success && user) {
-                        const route = getDefaultRoute(user.role);
-                        router.push(route);
+                      if (result.success) {
+                        router.push('/dashboard');
                       } else {
                         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                       }
@@ -255,9 +277,8 @@ export default function LoginPage() {
                     setSubmitting(true);
                     try {
                       const result = await login('staff@test.com', 'Staff123!');
-                      if (result.success && user) {
-                        const route = getDefaultRoute(user.role);
-                        router.push(route);
+                      if (result.success) {
+                        router.push('/dashboard');
                       } else {
                         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                       }
