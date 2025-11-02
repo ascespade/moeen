@@ -10,6 +10,8 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { customAuthHub } from '@/lib/auth/CustomAuthHub';
+import jwt from 'jsonwebtoken';
 
 // Public routes that don't require authentication
 const PUBLIC_ROUTES = [
@@ -66,10 +68,31 @@ export async function middleware(request: NextRequest) {
   if (isPublicRoute(pathname)) {
     // If accessing login/register while authenticated, redirect to dashboard
     if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
+      // Check both Supabase Auth and Custom Auth
       const supabase = await createClient();
       const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        return NextResponse.redirect(new URL('/dashboard', request.url));
+      
+      // Also check custom auth token
+      const customAuthToken = request.cookies.get('auth_token')?.value || 
+                             request.headers.get('authorization')?.replace('Bearer ', '');
+      
+      if (session || customAuthToken) {
+        try {
+          // If custom token exists, verify it
+          if (customAuthToken) {
+            const secret = process.env.JWT_SECRET;
+            if (secret) {
+              jwt.verify(customAuthToken, secret);
+              return NextResponse.redirect(new URL('/dashboard', request.url));
+            }
+          }
+          // If Supabase session exists
+          if (session) {
+            return NextResponse.redirect(new URL('/dashboard', request.url));
+          }
+        } catch (error) {
+          // Token invalid, continue to login page
+        }
       }
     }
     return NextResponse.next();
@@ -81,13 +104,67 @@ export async function middleware(request: NextRequest) {
   }
 
   // Check authentication for protected routes
-  const supabase = await createClient();
+  // Try custom auth first (JWT token)
+  const customAuthToken = request.cookies.get('auth_token')?.value || 
+                         request.headers.get('authorization')?.replace('Bearer ', '');
   
-  // Refresh session (Supabase handles this automatically via cookies)
-  const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-
-  // No session - redirect to login
-  if (!session || sessionError) {
+  let user: { id: string; email: string; role: string; status: string } | null = null;
+  
+  if (customAuthToken) {
+    try {
+      const secret = process.env.JWT_SECRET;
+      if (secret) {
+        const decoded = jwt.verify(customAuthToken, secret) as any;
+        
+        // Get user from database to verify still active
+        const supabase = await createClient();
+        const { data: userData } = await supabase
+          .from('users')
+          .select('id, email, role, status')
+          .eq('id', decoded.userId)
+          .maybeSingle();
+        
+        if (userData && userData.status === 'active') {
+          user = {
+            id: userData.id,
+            email: userData.email,
+            role: userData.role,
+            status: userData.status,
+          };
+        }
+      }
+    } catch (error) {
+      // Token invalid, try Supabase Auth as fallback
+      console.log('[MIDDLEWARE] Custom token invalid, trying Supabase Auth');
+    }
+  }
+  
+  // Fallback to Supabase Auth if custom auth not available
+  if (!user) {
+    const supabase = await createClient();
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    
+    if (session && session.user) {
+      // Get user from database
+      const { data: userData } = await supabase
+        .from('users')
+        .select('id, email, role, status')
+        .eq('id', session.user.id)
+        .maybeSingle();
+      
+      if (userData && userData.status === 'active') {
+        user = {
+          id: userData.id,
+          email: userData.email,
+          role: userData.role,
+          status: userData.status,
+        };
+      }
+    }
+  }
+  
+  // No valid authentication - redirect to login
+  if (!user) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
@@ -95,29 +172,23 @@ export async function middleware(request: NextRequest) {
 
   // ✅ Optimized: Only check user role for admin routes or when needed
   if (requiresAdmin(pathname)) {
-    // Only query database for admin route checks
-    const { data: userData } = await supabase
-      .from('users')
-      .select('role, status')
-      .eq('id', session.user.id)
-      .maybeSingle();
-
     // User not found or inactive
-    if (!userData || (userData.status && userData.status !== 'active')) {
+    if (!user || user.status !== 'active') {
       const loginUrl = new URL('/login', request.url);
       return NextResponse.redirect(loginUrl);
     }
 
     // Check admin routes
-    if (userData.role !== 'admin' && userData.role !== 'manager') {
+    if (user.role !== 'admin' && user.role !== 'manager') {
       // Redirect to user's default dashboard
       const defaultRoutes: Record<string, string> = {
         supervisor: '/dashboard/supervisor',
+        agent: '/dashboard', // Agent role for doctor/patient/staff
         doctor: '/doctor-dashboard',
         patient: '/dashboard/patient',
         staff: '/dashboard/staff',
       };
-      const redirect = defaultRoutes[userData.role] || '/dashboard';
+      const redirect = defaultRoutes[user.role] || '/dashboard';
       return NextResponse.redirect(new URL(redirect, request.url));
     }
   }

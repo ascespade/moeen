@@ -38,7 +38,8 @@ export async function POST(req: NextRequest) {
     // Get user permissions
     const permissions = await customAuthHub.getUserPermissions(result.user.id);
 
-    return NextResponse.json({
+    // Create response
+    const response = NextResponse.json({
       success: true,
       data: {
         user: {
@@ -53,6 +54,19 @@ export async function POST(req: NextRequest) {
         permissions: permissions?.permissions || [],
       },
     });
+
+    // Set auth_token cookie for middleware
+    if (result.token) {
+      response.cookies.set('auth_token', result.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: '/',
+      });
+    }
+
+    return response;
   } catch (error) {
     console.error('Custom login error:', error);
     return NextResponse.json(
