@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 import { getDefaultRoute } from '@/lib/auth/RouteManager';
-export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
   const router = useRouter();
