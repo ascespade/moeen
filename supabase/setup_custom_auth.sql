@@ -37,7 +37,29 @@ GRANT EXECUTE ON FUNCTION verify_password(TEXT, TEXT) TO anon;
 GRANT EXECUTE ON FUNCTION verify_password(TEXT, TEXT) TO service_role;
 
 -- ===================================================
--- Step 2: Create test users
+-- Step 2: Create hash_password function (if needed)
+-- ===================================================
+CREATE OR REPLACE FUNCTION hash_password(
+  password_input TEXT
+)
+RETURNS TEXT
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+BEGIN
+  RETURN crypt(password_input, gen_salt('bf'));
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN NULL;
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO authenticated;
+GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO anon;
+GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO service_role;
+
+-- ===================================================
+-- Step 3: Create test users (UPSERT with password)
 -- ===================================================
 -- Ensure roles exist first
 INSERT INTO roles (role, description) VALUES
@@ -49,7 +71,7 @@ INSERT INTO roles (role, description) VALUES
   ('manager', 'Manager with comprehensive administrative access')
 ON CONFLICT (role) DO NOTHING;
 
--- Create test admin user
+-- Create/Update test admin user with password
 INSERT INTO users (email, password_hash, name, role, status, created_at)
 VALUES (
   'admin@test.com',
@@ -60,12 +82,17 @@ VALUES (
   NOW()
 )
 ON CONFLICT (email) DO UPDATE SET
-  password_hash = EXCLUDED.password_hash,
+  password_hash = COALESCE(EXCLUDED.password_hash, crypt('Admin123!', gen_salt('bf'))),
   role = EXCLUDED.role,
   status = EXCLUDED.status,
-  name = EXCLUDED.name;
+  name = COALESCE(EXCLUDED.name, users.name);
 
--- Create test doctor user
+-- Update existing admin user if password_hash is NULL
+UPDATE users 
+SET password_hash = crypt('Admin123!', gen_salt('bf'))
+WHERE email = 'admin@test.com' AND (password_hash IS NULL OR password_hash = '');
+
+-- Create/Update test doctor user with password
 INSERT INTO users (email, password_hash, name, role, status, created_at)
 VALUES (
   'doctor@test.com',
@@ -76,12 +103,17 @@ VALUES (
   NOW()
 )
 ON CONFLICT (email) DO UPDATE SET
-  password_hash = EXCLUDED.password_hash,
+  password_hash = COALESCE(EXCLUDED.password_hash, crypt('Doctor123!', gen_salt('bf'))),
   role = EXCLUDED.role,
   status = EXCLUDED.status,
-  name = EXCLUDED.name;
+  name = COALESCE(EXCLUDED.name, users.name);
 
--- Create test patient user
+-- Update existing doctor user if password_hash is NULL
+UPDATE users 
+SET password_hash = crypt('Doctor123!', gen_salt('bf'))
+WHERE email = 'doctor@test.com' AND (password_hash IS NULL OR password_hash = '');
+
+-- Create/Update test patient user with password
 INSERT INTO users (email, password_hash, name, role, status, created_at)
 VALUES (
   'patient@test.com',
@@ -92,12 +124,17 @@ VALUES (
   NOW()
 )
 ON CONFLICT (email) DO UPDATE SET
-  password_hash = EXCLUDED.password_hash,
+  password_hash = COALESCE(EXCLUDED.password_hash, crypt('Patient123!', gen_salt('bf'))),
   role = EXCLUDED.role,
   status = EXCLUDED.status,
-  name = EXCLUDED.name;
+  name = COALESCE(EXCLUDED.name, users.name);
 
--- Create test staff user
+-- Update existing patient user if password_hash is NULL
+UPDATE users 
+SET password_hash = crypt('Patient123!', gen_salt('bf'))
+WHERE email = 'patient@test.com' AND (password_hash IS NULL OR password_hash = '');
+
+-- Create/Update test staff user with password
 INSERT INTO users (email, password_hash, name, role, status, created_at)
 VALUES (
   'staff@test.com',
@@ -108,13 +145,18 @@ VALUES (
   NOW()
 )
 ON CONFLICT (email) DO UPDATE SET
-  password_hash = EXCLUDED.password_hash,
+  password_hash = COALESCE(EXCLUDED.password_hash, crypt('Staff123!', gen_salt('bf'))),
   role = EXCLUDED.role,
   status = EXCLUDED.status,
-  name = EXCLUDED.name;
+  name = COALESCE(EXCLUDED.name, users.name);
+
+-- Update existing staff user if password_hash is NULL
+UPDATE users 
+SET password_hash = crypt('Staff123!', gen_salt('bf'))
+WHERE email = 'staff@test.com' AND (password_hash IS NULL OR password_hash = '');
 
 -- ===================================================
--- Step 3: Verify setup
+-- Step 4: Verify setup
 -- ===================================================
 -- Check if function was created
 SELECT 
