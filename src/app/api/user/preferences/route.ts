@@ -26,7 +26,7 @@ export async function GET() {
     // Fetch user preferences
     const { data: preferences, error } = await supabase
       .from('user_preferences')
-      .select(I18N_KEYS.THEME.LABEL, language, timezone, notifications_enabled')
+      .select('theme, language, timezone, notifications_enabled')
       .eq('user_id', user.id)
       .single();
 
