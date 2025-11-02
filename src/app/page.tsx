@@ -45,10 +45,10 @@ const HomePage = memo(function HomePage() {
     if (typeof window === 'undefined') return;
     
     // Preload hero images - only if they will be used
-    // Using Image API to check if they exist before preloading
+    // Using HTMLImageElement (window.Image) to check if they exist before preloading
     const heroImages = ['/hero-1.jpg', '/hero-2.jpg', '/hero-3.jpg'];
     heroImages.forEach(img => {
-      const imgEl = new Image();
+      const imgEl = new window.Image(); // Use window.Image, not next/image Image
       imgEl.onload = () => {
         // Only preload if image loads successfully
         const link = document.createElement('link');
@@ -61,7 +61,7 @@ const HomePage = memo(function HomePage() {
     });
 
     // Preload about image - only if it will be used
-    const aboutImg = new Image();
+    const aboutImg = new window.Image(); // Use window.Image, not next/image Image
     aboutImg.onload = () => {
       const aboutLink = document.createElement('link');
       aboutLink.rel = 'preload';
