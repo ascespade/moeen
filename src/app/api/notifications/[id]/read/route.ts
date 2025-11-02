@@ -22,7 +22,7 @@ export async function POST(
     // Mark notification as read
     const { data, error } = await supabase
       .from('notifications')
-      .update({ 
+      .update({
         is_read: true,
         read_at: new Date().toISOString()
       })
