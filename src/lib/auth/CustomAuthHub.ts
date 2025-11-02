@@ -1,16 +1,18 @@
 /**
- * 🔐 Custom Authentication Hub
- * نظام المصادقة المخصص - يعتمد على جداول قاعدة البيانات
+ * 🔐 Custom Authentication Hub - Enhanced & Simplified
+ * نظام المصادقة المخصص المحسّن والمبسط
  * 
- * هذا النظام يستخدم جداول قاعدة البيانات المخصصة (users, roles, permissions)
- * بدلاً من Supabase Authentication
+ * ✅ Simplified logic
+ * ✅ Better error handling
+ * ✅ Optimized permissions fetching
+ * ✅ Clean code structure
  */
 
 import { createClient } from '@/lib/supabase/server';
 import jwt from 'jsonwebtoken';
 
 export interface CustomAuthUser {
-  id: string; // UUID in database
+  id: string;
   email: string;
   name: string;
   role: string;
@@ -24,6 +26,7 @@ export interface UserPermissions {
     resource: string;
     actions: string[];
   }>;
+  permissionCodes: string[];
 }
 
 export interface AuthResult {
@@ -32,23 +35,22 @@ export interface AuthResult {
   error: string | null;
 }
 
-// Get JWT secret dynamically at runtime from environment
+// JWT Configuration
 function getJWTSecret(): string {
   const secret = process.env.JWT_SECRET;
   if (!secret) {
-    throw new Error('JWT_SECRET environment variable is not set. Please add it to your .env file.');
+    throw new Error('JWT_SECRET environment variable is not set.');
   }
   return secret;
 }
 
-// Get JWT expires in dynamically at runtime
 function getJWTExpiresIn(): string {
   return process.env.JWT_EXPIRES_IN || '7d';
 }
 
 class CustomAuthHub {
   private static instance: CustomAuthHub;
-  private permissionsCache = new Map<string, { // Changed from number to string (UUID)
+  private permissionsCache = new Map<string, {
     permissions: UserPermissions;
     timestamp: number;
   }>();
@@ -56,9 +58,6 @@ class CustomAuthHub {
 
   private constructor() {}
 
-  /**
-   * Singleton instance
-   */
   public static getInstance(): CustomAuthHub {
     if (!CustomAuthHub.instance) {
       CustomAuthHub.instance = new CustomAuthHub();
@@ -67,14 +66,11 @@ class CustomAuthHub {
   }
 
   /**
-   * 🔐 AUTHENTICATION METHODS
+   * 🔐 LOGIN
    */
-
   async login(email: string, password: string): Promise<AuthResult> {
     try {
       const supabase = await createClient();
-
-      console.log('[AUTH-HUB] Login attempt:', email);
 
       // Get user from database
       const { data: userData, error: userError } = await supabase
@@ -83,158 +79,47 @@ class CustomAuthHub {
         .eq('email', email)
         .maybeSingle();
 
-      console.log('[AUTH-HUB] User query result:', {
-        found: !!userData,
-        error: userError?.message,
-        hasPassword: !!userData?.password_hash,
-        status: userData?.status,
-      });
-
       if (userError || !userData) {
-        console.error('[AUTH-HUB] User not found or error:', userError);
         return { user: null, token: null, error: 'Invalid credentials' };
       }
 
       // Check if user is active
       if (userData.status !== 'active') {
-        console.warn('[AUTH-HUB] User account inactive:', userData.status);
         return { user: null, token: null, error: 'User account is inactive' };
       }
 
-      // Verify password
+      // Check password
       if (!userData.password_hash) {
-        // If password_hash is null, try to create one for test users
-        // This is a fallback for users created without passwords
-        console.warn(`User ${email} has no password_hash. Attempting to set one...`);
-        
-        // For development: allow setting password for test users
-        if (process.env.NODE_ENV !== 'production' || email.includes('@test.com')) {
-          try {
-            // Hash the password and update user
-            const { data: hashResult, error: hashError } = await supabase.rpc('hash_password', {
-              password_input: password
-            });
-
-            if (!hashError && hashResult) {
-              // Update user with new password hash
-              await supabase
-                .from('users')
-                .update({ password_hash: hashResult })
-                .eq('id', userData.id);
-              
-              // Continue with login
-            } else {
-              // Fallback: use direct SQL to hash password
-              const { data: updateResult, error: updateError } = await supabase
-                .from('users')
-                .update({ 
-                  password_hash: `$2a$10$${Buffer.from(password).toString('base64').substring(0, 53)}` 
-                })
-                .eq('id', userData.id)
-                .select();
-
-              // For test users in dev, allow login even without proper hash
-              if (updateError && process.env.NODE_ENV !== 'production') {
-                console.warn('Could not set password hash, allowing dev login');
-                // Continue - we'll verify differently
-              } else {
-                return { 
-                  user: null, 
-                  token: null, 
-                  error: 'Password not set. Please set your password first or contact administrator.' 
-                };
-              }
-            }
-          } catch (error) {
-            console.error('Error setting password hash:', error);
-          }
-        } else {
-          return { 
-            user: null, 
-            token: null, 
-            error: 'Password not set. Please contact administrator.' 
-          };
-        }
+        return { user: null, token: null, error: 'Password not set. Please contact administrator.' };
       }
 
-      // Check password using pgcrypto
+      // Verify password using pgcrypto function
       let isValid = false;
-      
-      console.log('[AUTH-HUB] Verifying password...');
-      
       try {
-        // Use pgcrypto to verify password
         const { data: verifyResult, error: verifyError } = await supabase.rpc('verify_password', {
           password_input: password,
           password_hash: userData.password_hash
         });
 
-        console.log('[AUTH-HUB] Password verification result:', {
-          result: verifyResult,
-          error: verifyError?.message,
-        });
-
         if (verifyError) {
-          console.warn('[AUTH-HUB] verify_password RPC error:', verifyError);
-          
-          // If verify_password function doesn't exist, try direct SQL query
-          // Use a SELECT with WHERE clause that uses crypt() directly
-          try {
-            // For development: temporary workaround
-            if (process.env.NODE_ENV !== 'production') {
-              // Test passwords for development
-              const testPasswords = {
-                'admin@test.com': 'Admin123!',
-                'doctor@test.com': 'Doctor123!',
-                'patient@test.com': 'Patient123!',
-                'staff@test.com': 'Staff123!',
-              };
-              
-              if (testPasswords[email] === password) {
-                console.warn('Using development password verification');
-                isValid = true;
-              } else if (!userData.password_hash && email.includes('@test.com')) {
-                // Allow login for test users without password_hash in dev (temporary)
-                console.warn('⚠️  ALLOWING DEV LOGIN WITHOUT PASSWORD HASH - FIX THIS!');
-                isValid = true;
-              }
-            }
-
-            if (!isValid) {
-              return { 
-                user: null, 
-                token: null, 
-                error: 'Password verification failed. Please ensure verify_password function exists. Run QUICK_FIX_SQL.sql in Supabase SQL Editor.' 
-              };
-            }
-          } catch (e) {
-            console.error('Verification error:', e);
-            return { user: null, token: null, error: 'Password verification failed' };
+          // Fallback for development
+          if (process.env.NODE_ENV !== 'production') {
+            const testPasswords: Record<string, string> = {
+              'admin@test.com': 'Admin123!',
+              'doctor@test.com': 'Doctor123!',
+              'patient@test.com': 'Patient123!',
+              'staff@test.com': 'Staff123!',
+            };
+            isValid = testPasswords[email] === password;
+          }
+          if (!isValid) {
+            return { user: null, token: null, error: 'Invalid credentials' };
           }
         } else {
           isValid = verifyResult === true;
         }
       } catch (error) {
-        console.error('Password verification error:', error);
-        
-        // Development fallback - REMOVE IN PRODUCTION
-        if (process.env.NODE_ENV !== 'production') {
-          const testPasswords: Record<string, string> = {
-            'admin@test.com': 'Admin123!',
-            'doctor@test.com': 'Doctor123!',
-            'patient@test.com': 'Patient123!',
-            'staff@test.com': 'Staff123!',
-          };
-          
-          if (testPasswords[email] === password) {
-            console.warn('⚠️  Using development password fallback');
-            isValid = true;
-          }
-        }
-        
-        if (!isValid) {
-          return { user: null, token: null, error: 'Invalid credentials' };
-        }
+        return { user: null, token: null, error: 'Password verification failed' };
       }
 
       if (!isValid) {
@@ -247,7 +132,7 @@ class CustomAuthHub {
         .update({ last_login: new Date().toISOString() })
         .eq('id', userData.id);
 
-      // Create user object (without password_hash)
+      // Create user object
       const user: CustomAuthUser = {
         id: userData.id,
         email: userData.email,
@@ -269,7 +154,7 @@ class CustomAuthHub {
         error: null,
       };
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('[AUTH-HUB] Login error:', error);
       return {
         user: null,
         token: null,
@@ -302,7 +187,7 @@ class CustomAuthHub {
     try {
       const secret = getJWTSecret();
       const decoded = jwt.verify(token, secret) as any;
-      
+
       const supabase = await createClient();
       const { data: userData } = await supabase
         .from('users')
@@ -331,28 +216,20 @@ class CustomAuthHub {
    * Logout
    */
   async logout(): Promise<void> {
-    // Clear all caches
     this.clearAllCache();
-
-    // Clear storage
     if (typeof window !== 'undefined') {
       localStorage.clear();
       sessionStorage.clear();
-    }
-
-    // Force reload to clear all state
-    if (typeof window !== 'undefined') {
       window.location.href = '/login';
     }
   }
 
   /**
-   * 🛡️ AUTHORIZATION METHODS
+   * 🛡️ Get User Permissions - Optimized
    */
-
-  async getUserPermissions(userId: string): Promise<UserPermissions | null> { // Changed from number to string (UUID)
+  async getUserPermissions(userId: string): Promise<UserPermissions | null> {
     try {
-      // Check cache first
+      // Check cache
       const cached = this.permissionsCache.get(userId);
       if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
         return cached.permissions;
@@ -360,34 +237,40 @@ class CustomAuthHub {
 
       const supabase = await createClient();
 
-      // Get user with role
-      const { data: userData, error: userError } = await supabase
+      // Get user role
+      const { data: userData } = await supabase
         .from('users')
         .select('role')
         .eq('id', userId)
         .maybeSingle();
 
-      if (userError || !userData) {
+      if (!userData) {
         return null;
       }
 
-      // Try to get permissions from user_roles and user_permissions tables
+      // Use database function for optimized permission fetching
+      const { data: permData, error: permError } = await supabase
+        .rpc('get_user_permissions', { user_id_param: userId });
+
       let permissionCodes: string[] = [];
 
-      try {
-        // Get role permissions from user_roles -> role_permissions -> permissions
-        const { data: userRole } = await supabase
+      if (!permError && permData) {
+        permissionCodes = permData.map((p: any) => p.permission_code);
+      } else {
+        // Fallback: get from user_roles -> role_permissions -> permissions
+        const { data: userRoles } = await supabase
           .from('user_roles')
           .select('role_id')
           .eq('user_id', userId)
           .eq('is_active', true)
           .maybeSingle();
 
-        if (userRole?.role_id) {
+        if (userRoles?.role_id) {
           const { data: rolePerms } = await supabase
             .from('role_permissions')
             .select('permission_id, permissions:permission_id(code)')
-            .eq('role_id', userRole.role_id);
+            .eq('role_id', userRoles.role_id)
+            .eq('is_active', true);
 
           if (rolePerms) {
             rolePerms.forEach((rp: any) => {
@@ -398,7 +281,7 @@ class CustomAuthHub {
           }
         }
 
-        // Get user-specific permissions
+        // Get direct user permissions
         const { data: userPerms } = await supabase
           .from('user_permissions')
           .select('permission_id, permissions:permission_id(code)')
@@ -412,19 +295,15 @@ class CustomAuthHub {
             }
           });
         }
-      } catch (error) {
-        console.warn('Error fetching permissions from DB, using role-based fallback:', error);
       }
 
-      // Convert permission codes to permissions structure
-      // Format: "resource:action" -> { resource: "resource", actions: ["action"] }
+      // Convert to permissions structure
       const permissionsMap = new Map<string, string[]>();
-
       permissionCodes.forEach((code) => {
         if (code === '*') {
           permissionsMap.set('*', ['*']);
         } else {
-          const [resource, action] = code.split(':');
+          const [resource, action] = code.split('.');
           if (resource && action) {
             if (!permissionsMap.has(resource)) {
               permissionsMap.set(resource, []);
@@ -435,19 +314,15 @@ class CustomAuthHub {
       });
 
       const permissions: UserPermissions = {
-        role: userData.role || 'patient',
+        role: userData.role,
         permissions: Array.from(permissionsMap.entries()).map(([resource, actions]) => ({
           resource,
           actions,
         })),
+        permissionCodes,
       };
 
-      // If no permissions found, use role-based fallback
-      if (permissions.permissions.length === 0) {
-        permissions.permissions = this.getRolePermissions(userData.role || 'patient');
-      }
-
-      // Cache it
+      // Cache result
       this.permissionsCache.set(userId, {
         permissions,
         timestamp: Date.now(),
@@ -455,73 +330,16 @@ class CustomAuthHub {
 
       return permissions;
     } catch (error) {
-      console.error('Get user permissions error:', error);
+      console.error('[AUTH-HUB] Get permissions error:', error);
       return null;
     }
   }
 
   /**
-   * Get permissions for a role (fallback)
-   * Note: user_role enum values: 'admin', 'manager', 'agent', 'demo', 'supervisor'
+   * Check permission
    */
-  private getRolePermissions(role: string): Array<{ resource: string; actions: string[] }> {
-    const rolePermissions: Record<string, Array<{ resource: string; actions: string[] }>> = {
-      admin: [
-        { resource: '*', actions: ['*'] },
-        { resource: 'users', actions: ['create', 'read', 'update', 'delete'] },
-        { resource: 'dashboard', actions: ['access'] },
-        { resource: 'settings', actions: ['manage'] },
-      ],
-      manager: [
-        { resource: '*', actions: ['read'] },
-        { resource: 'users', actions: ['read', 'update'] },
-        { resource: 'dashboard', actions: ['access'] },
-        { resource: 'reports', actions: ['read'] },
-        { resource: 'appointments', actions: ['read', 'create', 'update'] },
-        { resource: 'patients', actions: ['read', 'write'] },
-      ],
-      supervisor: [
-        { resource: 'appointments', actions: ['read', 'create', 'update', 'delete'] },
-        { resource: 'patients', actions: ['read', 'write'] },
-        { resource: 'staff', actions: ['read', 'manage'] },
-        { resource: 'dashboard', actions: ['access'] },
-        { resource: 'medical_records', actions: ['read', 'write'] },
-      ],
-      agent: [
-        // Agent role - can be used for doctor, patient, staff based on metadata
-        { resource: 'appointments', actions: ['read', 'create', 'update'] },
-        { resource: 'patients', actions: ['read'] },
-        { resource: 'dashboard', actions: ['access'] },
-        { resource: 'profile', actions: ['read', 'update'] },
-      ],
-      demo: [
-        { resource: 'dashboard', actions: ['access'] },
-        { resource: 'profile', actions: ['read'] },
-      ],
-      // Legacy roles (for backward compatibility, map to agent)
-      doctor: [
-        { resource: 'patients', actions: ['read', 'write'] },
-        { resource: 'appointments', actions: ['read', 'create', 'update'] },
-        { resource: 'medical_records', actions: ['read', 'write'] },
-        { resource: 'dashboard', actions: ['access'] },
-      ],
-      patient: [
-        { resource: 'profile', actions: ['read', 'update'] },
-        { resource: 'appointments', actions: ['read', 'create'] },
-        { resource: 'medical_records', actions: ['read'] },
-      ],
-      staff: [
-        { resource: 'appointments', actions: ['read', 'create', 'update'] },
-        { resource: 'patients', actions: ['read'] },
-        { resource: 'dashboard', actions: ['access'] },
-      ],
-    };
-
-    return rolePermissions[role] || rolePermissions['agent'] || [];
-  }
-
   async checkPermission(
-    userId: string, // Changed from number to string (UUID)
+    userId: string,
     resource: string,
     action: string
   ): Promise<boolean> {
@@ -530,32 +348,29 @@ class CustomAuthHub {
       if (!permissions) return false;
 
       // Admin has all permissions
-      if (permissions.role === 'admin') {
+      if (permissions.permissionCodes.includes('*') || 
+          permissions.permissionCodes.includes('admin.access') ||
+          permissions.role === 'admin') {
         return true;
       }
 
       // Check specific permission
-      const hasPermission = permissions.permissions.some(
-        (p) =>
-          (p.resource === resource || p.resource === '*') &&
-          (p.actions.includes(action) || p.actions.includes('*'))
-      );
+      const perm = permissions.permissions.find(p => p.resource === resource);
+      if (!perm) return false;
 
-      return hasPermission;
+      return perm.actions.includes(action) || perm.actions.includes('*');
     } catch (error) {
-      console.error('Permission check error:', error);
       return false;
     }
   }
 
   /**
-   * Clear all cache
+   * Clear cache
    */
-  clearAllCache(): void {
+  private clearAllCache(): void {
     this.permissionsCache.clear();
   }
 }
 
 // Export singleton instance
 export const customAuthHub = CustomAuthHub.getInstance();
-export default CustomAuthHub;

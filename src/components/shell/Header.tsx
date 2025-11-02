@@ -6,6 +6,7 @@ import { I18N_KEYS } from '@/constants/i18n-keys';
 import { useLanguage, useTheme } from '@/design-system/hooks';
 import { useSystemConfig } from '@/lib/config/system-config';
 import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
+import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 import { useEffect, useState } from 'react';
 import { Bell, Search, User, Settings, LogOut, ChevronDown, Clock, Calendar, Menu, X, Bot } from 'lucide-react';
 import Link from 'next/link';
@@ -14,7 +15,14 @@ import { useRouter, usePathname } from 'next/navigation';
 export default function Header() {
   const { theme } = useTheme();
   const { language, direction } = useLanguage();
-  const { user, isAuthenticated, logout } = useUnifiedAuth();
+  // Use custom auth hook (preferred) or fallback to unified auth
+  const customAuth = useCustomAuth();
+  const unifiedAuth = useUnifiedAuth();
+  
+  // Prefer custom auth if available and authenticated
+  const user = customAuth.user || unifiedAuth.user;
+  const isAuthenticated = customAuth.isAuthenticated || unifiedAuth.isAuthenticated;
+  const logout = customAuth.logout || unifiedAuth.logout;
   const router = useRouter();
   const pathname = usePathname();
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -226,19 +234,19 @@ export default function Header() {
     router.push('/login');
   };
 
-  const userName = user?.full_name || user?.name || user?.email || 'مستخدم';
+  const userName = user?.full_name || user?.name || user?.email || '??????';
   const userRole = user?.role || 'user';
   const userEmail = user?.email || '';
 
   // Get role display name
   const roleNames: Record<string, string> = {
-    admin: 'مدير',
-    supervisor: 'مشرف',
-    doctor: 'طبيب',
-    patient: 'مريض',
-    staff: 'موظف',
-    manager: 'مدير',
-    nurse: 'ممرض',
+    admin: '????',
+    supervisor: '????',
+    doctor: '????',
+    patient: '????',
+    staff: '????',
+    manager: '????',
+    nurse: '????',
   };
 
   return (
@@ -262,7 +270,7 @@ export default function Header() {
             <Link href='/admin/dashboard' className='hidden sm:flex items-center gap-3 group'>
               <div className='relative'>
                 <div className='grid h-10 w-10 place-items-center rounded-xl text-white bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary)]/80 shadow-lg group-hover:shadow-xl transition-shadow'>
-                  <span className='text-lg font-bold'>م</span>
+                  <span className='text-lg font-bold'>?</span>
                 </div>
                 {aiFeaturesEnabled && (
                   <div className='absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900'></div>
@@ -270,9 +278,9 @@ export default function Header() {
               </div>
               <div className='hidden md:block'>
                 <div className='text-base font-bold text-gray-900 dark:text-white'>
-                  {t(I18N_KEYS.COMMON.SYSTEM_NAME) || 'مركز الهمم'}
+                  {t(I18N_KEYS.COMMON.SYSTEM_NAME) || '???? ?????'}
                 </div>
-                <div className='text-xs text-gray-500 dark:text-gray-400'>نظام الإدارة المتكامل</div>
+                <div className='text-xs text-gray-500 dark:text-gray-400'>???? ??????? ????????</div>
               </div>
             </Link>
 
@@ -285,11 +293,11 @@ export default function Header() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className='w-full h-10 pr-10 pl-4 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-all'
-                  placeholder={t(I18N_KEYS.COMMON.SEARCH_PLACEHOLDER) || 'ابحث...'}
+                  placeholder={t(I18N_KEYS.COMMON.SEARCH_PLACEHOLDER) || '????...'}
                   aria-label={t(I18N_KEYS.COMMON.SEARCH)}
                 />
                 <div className='absolute left-3 top-1/2 transform -translate-y-1/2 hidden lg:flex items-center gap-1 px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-500'>
-                  <kbd className='font-sans'>⌘</kbd>
+                  <kbd className='font-sans'>?</kbd>
                   <kbd className='font-sans'>K</kbd>
                 </div>
               </div>
@@ -344,9 +352,9 @@ export default function Header() {
                   >
                     <div className='mb-3 px-2'>
                       <div className='text-sm font-semibold text-gray-900 dark:text-white'>
-                        {t(I18N_KEYS.HEADER.AI_FEATURES) || 'ميزات الذكاء الاصطناعي'}
+                        {t(I18N_KEYS.HEADER.AI_FEATURES) || '????? ?????? ?????????'}
                       </div>
-                      <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>الميزات النشطة</div>
+                      <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>??????? ??????</div>
                     </div>
                     <div className='grid gap-2'>
                       {systemConfig.ai_features.chatbot.enabled && (
@@ -357,10 +365,10 @@ export default function Header() {
                             </div>
                             <div className='flex-1'>
                               <div className='text-sm font-medium text-gray-900 dark:text-white'>
-                                {t(I18N_KEYS.HEADER.CHATBOT) || 'المساعد الذكي'}
+                                {t(I18N_KEYS.HEADER.CHATBOT) || '??????? ?????'}
                               </div>
                               <div className='text-xs text-gray-500 dark:text-gray-400'>
-                                {t(I18N_KEYS.HEADER.CHATBOT_STATUS) || 'نشط'}
+                                {t(I18N_KEYS.HEADER.CHATBOT_STATUS) || '???'}
                               </div>
                             </div>
                           </div>
@@ -396,11 +404,11 @@ export default function Header() {
                     <div className='flex items-center justify-between'>
                       <div>
                         <div className='text-sm font-semibold text-gray-900 dark:text-white'>
-                          {t(I18N_KEYS.HEADER.NOTIFICATIONS) || 'الإشعارات'}
+                          {t(I18N_KEYS.HEADER.NOTIFICATIONS) || '?????????'}
                         </div>
                         {unreadCount > 0 && (
                           <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>
-                            {unreadCount} إشعار{unreadCount > 1 ? 'ات' : ''} جديدة
+                            {unreadCount} ?????{unreadCount > 1 ? '??' : ''} ?????
                           </div>
                         )}
                       </div>
@@ -436,7 +444,7 @@ export default function Header() {
                           }}
                           className='text-xs text-[var(--brand-primary)] hover:underline'
                         >
-                          تحديد الكل كمقروء
+                          ????? ???? ??????
                         </button>
                       )}
                     </div>
@@ -445,13 +453,13 @@ export default function Header() {
                     {notificationsLoading ? (
                       <div className='p-8 text-center'>
                         <div className='w-6 h-6 border-2 border-[var(--brand-primary)] border-t-transparent rounded-full animate-spin mx-auto mb-3'></div>
-                        <div className='text-sm text-gray-500 dark:text-gray-400'>جاري التحميل...</div>
+                        <div className='text-sm text-gray-500 dark:text-gray-400'>???? ???????...</div>
                       </div>
                     ) : notifications.length === 0 ? (
                       <div className='p-8 text-center'>
                         <Bell className='w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3' />
                         <div className='text-sm text-gray-500 dark:text-gray-400'>
-                          {t(I18N_KEYS.HEADER.NO_NOTIFICATIONS) || 'لا توجد إشعارات'}
+                          {t(I18N_KEYS.HEADER.NO_NOTIFICATIONS) || '?? ???? ???????'}
                         </div>
                       </div>
                     ) : (
@@ -514,7 +522,7 @@ export default function Header() {
                                 )}
                                 <div className='flex-1 min-w-0'>
                                   <div className='text-sm font-medium text-gray-900 dark:text-white'>
-                                    {notification.title || notification.message || 'إشعار'}
+                                    {notification.title || notification.message || '?????'}
                                   </div>
                                   {notification.message && notification.message !== notification.title && (
                                     <div className='text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2'>
@@ -539,7 +547,7 @@ export default function Header() {
                         onClick={() => setShowNotifDropdown(false)}
                         className='block w-full text-center text-sm text-[var(--brand-primary)] hover:underline py-2'
                       >
-                        عرض جميع الإشعارات
+                        ??? ???? ?????????
                       </Link>
                     </div>
                   )}
@@ -599,7 +607,7 @@ export default function Header() {
                       className='flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
                     >
                       <User className='w-4 h-4' />
-                      <span>{t(I18N_KEYS.HEADER.PROFILE) || 'الملف الشخصي'}</span>
+                      <span>{t(I18N_KEYS.HEADER.PROFILE) || '????? ??????'}</span>
                     </Link>
                     <Link
                       href='/admin/settings'
@@ -607,7 +615,7 @@ export default function Header() {
                       className='flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
                     >
                       <Settings className='w-4 h-4' />
-                      <span>{t(I18N_KEYS.HEADER.SETTINGS) || 'الإعدادات'}</span>
+                      <span>{t(I18N_KEYS.HEADER.SETTINGS) || '?????????'}</span>
                     </Link>
                   </div>
 
@@ -618,7 +626,7 @@ export default function Header() {
                       className='w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-medium'
                     >
                       <LogOut className='w-4 h-4' />
-                      <span>{t(I18N_KEYS.HEADER.LOGOUT) || 'تسجيل الخروج'}</span>
+                      <span>{t(I18N_KEYS.HEADER.LOGOUT) || '????? ??????'}</span>
                     </button>
                   </div>
                 </div>

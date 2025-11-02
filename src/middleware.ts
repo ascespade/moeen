@@ -1,59 +1,48 @@
 /**
- * Unified Middleware - OPTIMIZED VERSION
- * Middleware موحد للجلسات والصلاحيات
- *
- * ✅ Fixed: Only runs on protected routes
- * ✅ Fixed: Session refresh handled properly
- * ✅ Fixed: No blocking database queries on every request
+ * Enhanced Middleware - Clean & Optimized
+ * Middleware محسّن - نظيف ومحسّن
+ * 
+ * ✅ Simplified logic
+ * ✅ Better performance
+ * ✅ Clear route protection
+ * ✅ Role-based access control
  */
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import jwt from 'jsonwebtoken';
+import { getDefaultRoute } from './lib/auth/RouteManager';
 
-// Public routes that don't require authentication
-const PUBLIC_ROUTES = [
-  '/',
-  '/login',
-  '/register',
-  '/forgot-password',
-  '/reset-password',
-];
+// Route categories
+const PUBLIC_ROUTES = ['/', '/login', '/register', '/forgot-password', '/reset-password'];
+const PROTECTED_ROUTES = ['/dashboard', '/admin', '/profile', '/settings', '/doctor-dashboard'];
+const ADMIN_ROUTES = ['/admin'];
 
-// Protected routes that require authentication
-const PROTECTED_ROUTES = [
-  '/dashboard',
-  '/admin',
-  '/profile',
-  '/settings',
-  '/doctor-dashboard',
-];
-
-// Admin-only routes
-const ADMIN_ROUTES = [
-  '/admin',
-];
-
-// Check if route is public
+// Helpers
 function isPublicRoute(pathname: string): boolean {
   return PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith(route + '/'));
 }
 
-// Check if route requires authentication
 function isProtectedRoute(pathname: string): boolean {
   return PROTECTED_ROUTES.some(route => pathname.startsWith(route));
 }
 
-// Check if route requires admin
 function requiresAdmin(pathname: string): boolean {
   return ADMIN_ROUTES.some(route => pathname.startsWith(route));
+}
+
+interface AuthUser {
+  id: string;
+  email: string;
+  role: string;
+  status: string;
 }
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // ✅ Allow static files and API routes immediately (no auth check)
+  // Allow static files and API routes
   if (
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/api/') ||
@@ -63,90 +52,79 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // ✅ Allow public routes
+  // Handle public routes
   if (isPublicRoute(pathname)) {
-    // If accessing login/register while authenticated, redirect to dashboard
+    // Redirect authenticated users away from login/register
     if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
-      // Check custom auth token only
-      const customAuthToken = request.cookies.get('auth_token')?.value || 
-                             request.headers.get('authorization')?.replace('Bearer ', '');
-      
-      if (customAuthToken) {
+      const token = request.cookies.get('auth_token')?.value;
+      if (token) {
         try {
           const secret = process.env.JWT_SECRET;
           if (secret) {
-            const decoded = jwt.verify(customAuthToken, secret) as any;
-            // Verify user still exists and is active
+            const decoded = jwt.verify(token, secret) as any;
             const supabase = await createClient();
             const { data: userData } = await supabase
               .from('users')
-              .select('id, status')
+              .select('id, role, status')
               .eq('id', decoded.userId)
+              .eq('status', 'active')
               .maybeSingle();
-            
-            if (userData && userData.status === 'active') {
-              return NextResponse.redirect(new URL('/dashboard', request.url));
+
+            if (userData) {
+              const route = getDefaultRoute(userData.role);
+              return NextResponse.redirect(new URL(route, request.url));
             }
           }
         } catch (error) {
-          // Token invalid, continue to login page
+          // Token invalid, allow access to login
         }
       }
     }
     return NextResponse.next();
   }
 
-  // ✅ Only check auth for protected routes
+  // Handle protected routes
   if (!isProtectedRoute(pathname)) {
     return NextResponse.next();
   }
 
-  // Check authentication for protected routes using Custom Auth (JWT token)
-  const customAuthToken = request.cookies.get('auth_token')?.value || 
-                         request.headers.get('authorization')?.replace('Bearer ', '');
-  
-  let user: { id: string; email: string; role: string; status: string } | null = null;
-  
-  if (!customAuthToken) {
-    // No token - redirect to login
+  // Get authentication token
+  const token = request.cookies.get('auth_token')?.value || 
+               request.headers.get('authorization')?.replace('Bearer ', '');
+
+  if (!token) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
   }
-  
+
+  // Verify token and get user
+  let user: AuthUser | null = null;
+
   try {
     const secret = process.env.JWT_SECRET;
     if (!secret) {
       console.error('[MIDDLEWARE] JWT_SECRET not configured');
-      const loginUrl = new URL('/login', request.url);
-      loginUrl.searchParams.set('redirect', pathname);
-      return NextResponse.redirect(loginUrl);
+      return NextResponse.redirect(new URL('/login', request.url));
     }
-    
-    const decoded = jwt.verify(customAuthToken, secret) as any;
-    
-    // Get user from database to verify still active
+
+    const decoded = jwt.verify(token, secret) as any;
     const supabase = await createClient();
-    const { data: userData, error: userError } = await supabase
+
+    const { data: userData, error } = await supabase
       .from('users')
       .select('id, email, role, status')
       .eq('id', decoded.userId)
       .maybeSingle();
-    
-    if (userError || !userData) {
-      console.error('[MIDDLEWARE] User not found:', userError);
-      const loginUrl = new URL('/login', request.url);
-      loginUrl.searchParams.set('redirect', pathname);
-      return NextResponse.redirect(loginUrl);
+
+    if (error || !userData) {
+      return NextResponse.redirect(new URL('/login', request.url));
     }
-    
+
     if (userData.status !== 'active') {
-      console.warn('[MIDDLEWARE] User inactive:', userData.status);
-      const loginUrl = new URL('/login', request.url);
-      loginUrl.searchParams.set('redirect', pathname);
-      return NextResponse.redirect(loginUrl);
+      return NextResponse.redirect(new URL('/login', request.url));
     }
-    
+
     user = {
       id: userData.id,
       email: userData.email,
@@ -155,49 +133,30 @@ export async function middleware(request: NextRequest) {
     };
   } catch (error) {
     // Token invalid or expired
-    console.error('[MIDDLEWARE] Token verification failed:', error);
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('redirect', pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-  
-  // No valid authentication - redirect to login
-  if (!user) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  // ✅ Optimized: Only check user role for admin routes or when needed
+  // Check admin routes
   if (requiresAdmin(pathname)) {
-    // User not found or inactive
-    if (!user || user.status !== 'active') {
-      const loginUrl = new URL('/login', request.url);
-      return NextResponse.redirect(loginUrl);
-    }
-
-    // Check admin routes
     if (user.role !== 'admin' && user.role !== 'manager') {
       // Redirect to user's default dashboard
-      const defaultRoutes: Record<string, string> = {
-        supervisor: '/dashboard/supervisor',
-        agent: '/dashboard', // Agent role for doctor/patient/staff
-        doctor: '/doctor-dashboard',
-        patient: '/dashboard/patient',
-        staff: '/dashboard/staff',
-      };
-      const redirect = defaultRoutes[user.role] || '/dashboard';
-      return NextResponse.redirect(new URL(redirect, request.url));
+      const route = getDefaultRoute(user.role);
+      return NextResponse.redirect(new URL(route, request.url));
     }
   }
 
-  // All checks passed
-  return NextResponse.next();
+  // Add user info to headers for use in pages
+  const response = NextResponse.next();
+  response.headers.set('x-user-id', user.id);
+  response.headers.set('x-user-role', user.role);
+
+  return response;
 }
 
 export const config = {
   matcher: [
-    // ✅ Only match routes that need protection
     '/dashboard/:path*',
     '/admin/:path*',
     '/profile/:path*',

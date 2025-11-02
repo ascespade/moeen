@@ -1,36 +1,52 @@
+/**
+ * Get User Permissions API
+ * API ?????? ??? ??????? ????????
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/lib/auth/authorize';
-import { PermissionManager, ROLES } from '@/lib/permissions';
+import { customAuthHub } from '@/lib/auth/CustomAuthHub';
+import jwt from 'jsonwebtoken';
 
-export async function GET(request: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    // Use unified authentication system
-    const authResult = await requireAuth()(request);
+    // Get token from cookie or header
+    const token = req.cookies.get('auth_token')?.value || 
+                 req.headers.get('authorization')?.replace('Bearer ', '');
 
-    if (!authResult.authorized || !authResult.user) {
+    if (!token) {
       return NextResponse.json(
         { success: false, error: 'Not authenticated' },
         { status: 401 }
       );
     }
 
-    const userRole = authResult.user.role;
+    // Verify token
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      return NextResponse.json(
+        { success: false, error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
 
-    // Get permissions using unified PermissionManager
-    const permissions = PermissionManager.getRolePermissions(userRole);
-    const roleData = ROLES[userRole];
+    const decoded = jwt.verify(token, secret) as any;
+    
+    // Get permissions
+    const permissions = await customAuthHub.getUserPermissions(decoded.userId);
+
+    if (!permissions) {
+      return NextResponse.json(
+        { success: false, error: 'Could not fetch permissions' },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      data: {
-        role: userRole,
-        email: authResult.user.email,
-        permissions: permissions || [],
-        label: roleData?.name || userRole,
-        labelAr: roleData?.name || userRole,
-      },
+      permissions,
     });
   } catch (error) {
+    console.error('Get permissions error:', error);
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

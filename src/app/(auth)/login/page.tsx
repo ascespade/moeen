@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
-import { getDefaultRoute } from '@/lib/auth/unified-auth';
+import { getDefaultRoute } from '@/lib/auth/RouteManager';
 export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
@@ -28,21 +28,38 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
+    
+    const loginEmail = email || (e.currentTarget as any)?.email?.value;
+    const loginPassword = password || (e.currentTarget as any)?.password?.value;
+    
     try {
-      const result = await login(email, password);
+      const result = await login(loginEmail, loginPassword);
       if (result.success) {
         // Wait a bit for token to be saved and state updated
         await new Promise(resolve => setTimeout(resolve, 500));
         
         // Get user from state or fetch
         const currentUser = user || await fetchUser();
+        let targetRole = 'agent';
+        
         if (currentUser) {
-          const route = getDefaultRoute(currentUser.role);
-          // Use window.location for full page reload to ensure middleware picks up cookie
-          window.location.href = route;
+          targetRole = currentUser.role || 'agent';
         } else {
-          window.location.href = '/dashboard';
+          // Try to get from localStorage
+          const userStr = localStorage.getItem('user');
+          if (userStr) {
+            try {
+              const userData = JSON.parse(userStr);
+              targetRole = userData.role || 'agent';
+            } catch (e) {
+              console.error('Error parsing user:', e);
+            }
+          }
         }
+        
+        const route = getDefaultRoute(targetRole);
+        // Use window.location for full page reload to ensure middleware picks up cookie
+        window.location.href = route;
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
       }
@@ -204,12 +221,16 @@ export default function LoginPage() {
                       try {
                         const result = await login('admin@test.com', 'Admin123!');
                         if (result.success) {
-                          router.push('/dashboard');
+                          await new Promise(resolve => setTimeout(resolve, 300));
+                          const userStr = localStorage.getItem('user');
+                          const role = userStr ? JSON.parse(userStr).role : 'admin';
+                          const route = getDefaultRoute(role);
+                          window.location.href = route;
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                         }
                       } catch (err: any) {
-                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
+                        setError(err?.message || 'حدث خطأ');
                       } finally {
                         setSubmitting(false);
                       }
@@ -230,12 +251,16 @@ export default function LoginPage() {
                       try {
                         const result = await login('doctor@test.com', 'Doctor123!');
                         if (result.success) {
-                          router.push('/dashboard');
+                          await new Promise(resolve => setTimeout(resolve, 300));
+                          const userStr = localStorage.getItem('user');
+                          const role = userStr ? JSON.parse(userStr).role : 'agent';
+                          const route = getDefaultRoute(role);
+                          window.location.href = route;
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                         }
                       } catch (err: any) {
-                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
+                        setError(err?.message || 'حدث خطأ');
                       } finally {
                         setSubmitting(false);
                       }
@@ -256,12 +281,16 @@ export default function LoginPage() {
                       try {
                         const result = await login('patient@test.com', 'Patient123!');
                         if (result.success) {
-                          router.push('/dashboard');
+                          await new Promise(resolve => setTimeout(resolve, 300));
+                          const userStr = localStorage.getItem('user');
+                          const role = userStr ? JSON.parse(userStr).role : 'agent';
+                          const route = getDefaultRoute(role);
+                          window.location.href = route;
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                         }
                       } catch (err: any) {
-                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
+                        setError(err?.message || 'حدث خطأ');
                       } finally {
                         setSubmitting(false);
                       }
@@ -282,12 +311,16 @@ export default function LoginPage() {
                       try {
                         const result = await login('staff@test.com', 'Staff123!');
                         if (result.success) {
-                          router.push('/dashboard');
+                          await new Promise(resolve => setTimeout(resolve, 300));
+                          const userStr = localStorage.getItem('user');
+                          const role = userStr ? JSON.parse(userStr).role : 'agent';
+                          const route = getDefaultRoute(role);
+                          window.location.href = route;
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                         }
                       } catch (err: any) {
-                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
+                        setError(err?.message || 'حدث خطأ');
                       } finally {
                         setSubmitting(false);
                       }

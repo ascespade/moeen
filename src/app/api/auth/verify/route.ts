@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
           avatar: user.avatar_url,
           status: user.status,
         },
-        permissions: permissions?.permissions || [],
+        permissions: permissions || null,
       });
     } catch (error: any) {
       // Handle JWT errors
