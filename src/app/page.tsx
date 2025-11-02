@@ -40,26 +40,36 @@ const HomePage = memo(function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Performance: Preload critical resources
+  // Performance: Preload critical resources (only if images exist)
   React.useEffect(() => {
     if (typeof window === 'undefined') return;
     
-    // Preload hero images
+    // Preload hero images - only if they will be used
+    // Using Image API to check if they exist before preloading
     const heroImages = ['/hero-1.jpg', '/hero-2.jpg', '/hero-3.jpg'];
     heroImages.forEach(img => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = img;
-      document.head.appendChild(link);
+      const imgEl = new Image();
+      imgEl.onload = () => {
+        // Only preload if image loads successfully
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = img;
+        document.head.appendChild(link);
+      };
+      imgEl.src = img;
     });
 
-    // Preload about image
-    const aboutLink = document.createElement('link');
-    aboutLink.rel = 'preload';
-    aboutLink.as = 'image';
-    aboutLink.href = '/about-image.jpg';
-    document.head.appendChild(aboutLink);
+    // Preload about image - only if it will be used
+    const aboutImg = new Image();
+    aboutImg.onload = () => {
+      const aboutLink = document.createElement('link');
+      aboutLink.rel = 'preload';
+      aboutLink.as = 'image';
+      aboutLink.href = '/about-image.jpg';
+      document.head.appendChild(aboutLink);
+    };
+    aboutImg.src = '/about-image.jpg';
   }, []);
 
   const handleNavigation = useCallback(
