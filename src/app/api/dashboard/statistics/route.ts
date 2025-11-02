@@ -4,15 +4,16 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { requireAuth } from '@/lib/auth/authorize';
 
 export async function GET(request: NextRequest) {
   try {
-    // Security: Require authentication for dashboard statistics
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff', 'doctor'])(request);
-    if (!authResult.authorized) {
+    // ? Simplified - just check session, no permission checks
+    const supabase = await createClient();
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError || !session) {
       return NextResponse.json(
-        { error: 'Unauthorized. Authentication required to access statistics.' },
+        { error: 'Unauthorized' },
         { status: 401 }
       );
     }

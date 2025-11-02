@@ -3,11 +3,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/hooks/useAuth';
-import { getDefaultRoute } from '@/lib/auth/unified-auth';
+import { useT } from '@/components/providers/I18nProvider';
 export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { t } = useT();
   const { login: authLogin, user, loading: isLoading, isAuthenticated } = useAuth();
 
   const [email, setEmail] = useState('');
@@ -66,10 +67,10 @@ export default function LoginPage() {
             <span className='text-2xl font-bold text-white'>م</span>
           </div>
           <h1 className='mb-2 text-3xl font-bold text-gray-900 dark:text-white'>
-            مرحباً بعودتك
+            {t('login.welcome', 'مرحباً بعودتك')}
           </h1>
           <p className='text-gray-600 dark:text-gray-400'>
-            سجل دخولك للوصول إلى لوحة التحكم
+            {t('login.subtitle', 'سجل دخولك للوصول إلى لوحة التحكم')}
           </p>
         </div>
 
@@ -86,7 +87,7 @@ export default function LoginPage() {
 
             <form onSubmit={handleSubmit} className='space-y-6'>
               <div>
-                <label className='form-label'>البريد الإلكتروني</label>
+                <label className='form-label'>{t('login.email', 'البريد الإلكتروني')}</label>
                 <div className='relative'>
                   <input
                     type='email'
@@ -105,7 +106,7 @@ export default function LoginPage() {
               </div>
 
               <div>
-                <label className='form-label'>كلمة المرور</label>
+                <label className='form-label'>{t('login.password', 'كلمة المرور')}</label>
                 <div className='relative'>
                   <input
                     type='password'
@@ -133,13 +134,13 @@ export default function LoginPage() {
                     className='text-default focus:ring-default h-4 w-4 rounded border-gray-300 focus:ring-2'
                     data-testid='remember-me-checkbox'
                   />
-                  تذكرني
+                  {t('login.rememberMe', 'تذكرني')}
                 </label>
                 <Link
                   href='/forgot-password'
                   className='text-default text-sm font-medium transition-colors hover:text-[var(--default-default-hover)]'
                 >
-                  نسيت كلمة المرور؟
+                  {t('login.forgotPassword', 'نسيت كلمة المرور؟')}
                 </Link>
               </div>
 
@@ -152,12 +153,12 @@ export default function LoginPage() {
                 {submitting ? (
                   <>
                     <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent'></div>
-                    جارٍ تسجيل الدخول...
+                    {t('login.submitting', 'جارٍ تسجيل الدخول...')}
                   </>
                 ) : (
                   <>
                     <span>🔑</span>
-                    تسجيل الدخول
+                    {t('login.submit', 'تسجيل الدخول')}
                   </>
                 )}
               </button>

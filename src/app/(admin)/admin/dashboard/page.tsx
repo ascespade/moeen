@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
+import { useT } from '@/components/providers/I18nProvider';
 import { cn } from '@/lib/utils';
 import {
   Activity,
@@ -93,6 +94,7 @@ function AdminDashboardContent() {
     'today' | 'week' | 'month' | 'year'
   >('month');
 
+  const { t } = useT();
   const localizedNumber = useLocalizedNumber();
 
   const { stats, activities, staffWorkHours, loading, error, refetch } =
@@ -192,8 +194,8 @@ function AdminDashboardContent() {
   return (
     <div className='min-h-screen bg-[var(--background)]'>
       <AdminHeader
-        title='لوحة تحكم الإدارة'
-        description='مركز الهمم للرعاية الصحية المتخصصة'
+        title={t('dashboard.admin.title', 'لوحة تحكم الإدارة')}
+        description={t('dashboard.admin.description', 'مركز الهمم للرعاية الصحية المتخصصة')}
       >
         <Button
           variant='outline'
@@ -248,40 +250,40 @@ function AdminDashboardContent() {
         {/* Main Stats Grid */}
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
           <AdminStatsCard
-            title='إجمالي المرضى'
+            title={t('dashboard.stats.totalPatients', 'إجمالي المرضى')}
             value={localizedNumber(
               (stats?.totalPatients || 0).toLocaleString()
             )}
-            subtitle={`${localizedNumber((stats?.activePatients || 0).toString())} نشط • ${stats?.blockedPatients || 0} محظور`}
+            subtitle={`${localizedNumber((stats?.activePatients || 0).toString())} ${t('dashboard.stats.active', 'نشط')} • ${stats?.blockedPatients || 0} ${t('dashboard.stats.blocked', 'محظور')}`}
             icon={Users}
             iconColor='var(--brand-primary)'
             trend={{ value: 12, isPositive: true }}
           />
 
           <AdminStatsCard
-            title='إجمالي المواعيد'
+            title={t('dashboard.stats.totalAppointments', 'إجمالي المواعيد')}
             value={localizedNumber(
               (stats?.totalAppointments || 0).toLocaleString()
             )}
-            subtitle={`${localizedNumber((stats?.completedAppointments || 0).toString())} مكتمل • ${localizedNumber((stats?.pendingAppointments || 0).toString())} قيد الانتظار`}
+            subtitle={`${localizedNumber((stats?.completedAppointments || 0).toString())} ${t('dashboard.stats.completed', 'مكتمل')} • ${localizedNumber((stats?.pendingAppointments || 0).toString())} ${t('dashboard.stats.pending', 'قيد الانتظار')}`}
             icon={Calendar}
             iconColor='var(--brand-success)'
             trend={{ value: 8, isPositive: true }}
           />
 
           <AdminStatsCard
-            title='إجمالي الإيرادات'
-            value={`${localizedNumber((stats?.totalRevenue || 0).toLocaleString())} ريال`}
-            subtitle={`${localizedNumber((stats?.monthlyRevenue || 0).toLocaleString())} ريال هذا الشهر`}
+            title={t('dashboard.stats.totalRevenue', 'إجمالي الإيرادات')}
+            value={`${localizedNumber((stats?.totalRevenue || 0).toLocaleString())} ${t('common.currency', 'ريال')}`}
+            subtitle={`${localizedNumber((stats?.monthlyRevenue || 0).toLocaleString())} ${t('common.currency', 'ريال')} ${t('dashboard.stats.thisMonth', 'هذا الشهر')}`}
             icon={DollarSign}
             iconColor='var(--brand-primary)'
             trend={{ value: 15, isPositive: true }}
           />
 
           <AdminStatsCard
-            title='إجمالي الموظفين'
+            title={t('dashboard.stats.totalStaff', 'إجمالي الموظفين')}
             value={localizedNumber((stats?.totalStaff || 0).toString())}
-            subtitle={`${localizedNumber((stats?.activeStaff || 0).toString())} نشط • ${stats?.onDutyStaff || 0} في الخدمة الآن`}
+            subtitle={`${localizedNumber((stats?.activeStaff || 0).toString())} ${t('dashboard.stats.active', 'نشط')} • ${stats?.onDutyStaff || 0} ${t('dashboard.stats.onDuty', 'في الخدمة الآن')}`}
             icon={UserCheck}
             iconColor='var(--brand-warning)'
           />

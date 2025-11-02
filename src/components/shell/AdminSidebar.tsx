@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -13,14 +13,17 @@ import {
     FileText,
     LayoutDashboard,
     MessageSquare,
-  Package,
+    Package,
     Settings,
     Shield,
     TrendingUp,
     UserCheck,
     Users,
+    type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { NAVIGATION_CONFIG } from '@/lib/navigation/navigation-config';
+import { useT } from '@/components/providers/I18nProvider';
 
 interface SidebarItem {
   id: string;
@@ -37,165 +40,46 @@ interface SidebarSection {
   items: SidebarItem[];
 }
 
+// Icon mapping
+const ICON_MAP: Record<string, LucideIcon> = {
+  LayoutDashboard,
+  BarChart3,
+  Users,
+  UserCheck,
+  Shield,
+  FileText,
+  TrendingUp,
+  Bot,
+  MessageSquare,
+  Bell,
+  CreditCard,
+  Package,
+  Settings,
+};
+
 export default function AdminSidebar() {
   const pathname = usePathname();
-  // ✅ Removed auth/permission hooks to eliminate loading delays
-  // ✅ Permission checks happen at page level, not sidebar level
+  const { t } = useT();
+  const [navigationSections, setNavigationSections] = useState<NavigationSection[]>([]);
 
-  const sidebarSections: SidebarSection[] = [
-    {
-      id: 'dashboard',
-      title: 'لوحة التحكم',
-      items: [
-        {
-          id: 'main-dashboard',
-          label: 'الرئيسية',
-          icon: <LayoutDashboard className="h-4 w-4" />,
-          href: '/admin/dashboard',
-          permissions: ['dashboard:view']
-        },
-        {
-          id: 'analytics',
-          label: 'التحليلات',
-          icon: <BarChart3 className="h-4 w-4" />,
-          href: '/analytics',
-          permissions: ['analytics:view']
-        },
-      ],
-        },
-        {
-      id: 'management',
-      title: 'الإدارة',
-      items: [
-        {
-          id: 'patients',
-          label: 'المرضى',
-          icon: <Users className="h-4 w-4" />,
-          href: '/admin/patients',
-          permissions: ['patients:view']
-        },
-        {
-          id: 'users',
-          label: 'المستخدمون',
-          icon: <UserCheck className="h-4 w-4" />,
-          href: '/admin/users',
-          permissions: ['users:view']
-        },
-        {
-          id: 'roles',
-          label: 'الأدوار والصلاحيات',
-          icon: <Shield className="h-4 w-4" />,
-          href: '/admin/roles',
-          permissions: ['roles:view']
-        },
-        {
-          id: 'audit-logs',
-          label: 'سجلات التدقيق',
-          icon: <FileText className="h-4 w-4" />,
-          href: '/admin/audit-logs',
-          permissions: ['audit_logs:view']
-        },
-      ],
-    },
-    {
-      id: 'crm',
-      title: 'إدارة العلاقات',
-      items: [
-        {
-          id: 'crm-dashboard',
-          label: 'لوحة CRM',
-          icon: <TrendingUp className="h-4 w-4" />,
-          href: '/crm/dashboard',
-          permissions: ['crm:view']
-        },
-      ],
-    },
-    {
-      id: 'ai',
-      title: 'الذكاء الاصطناعي',
-      items: [
-        {
-          id: 'chatbot',
-          label: 'المساعد الذكي',
-          icon: <Bot className="h-4 w-4" />,
-          href: '/chatbot',
-          permissions: ['chatbot:view']
-        },
-      ],
-        },
-        {
-      id: 'communications',
-      title: 'التواصل',
-      items: [
-        {
-          id: 'messages',
-          label: 'الرسائل',
-          icon: <MessageSquare className="h-4 w-4" />,
-          href: '/admin/messages',
-          permissions: ['messages:view']
-        },
-        {
-          id: 'notifications',
-          label: 'الإشعارات',
-          icon: <Bell className="h-4 w-4" />,
-          href: '/admin/notifications',
-          permissions: ['notifications:view']
-        },
-      ],
-    },
-    {
-      id: 'financial',
-      title: 'المالية',
-      items: [
-        {
-          id: 'payments',
-          label: 'المدفوعات',
-          icon: <CreditCard className="h-4 w-4" />,
-              href: '/admin/payments/invoices',
-          permissions: ['payments:view']
-        },
-      ],
-    },
-    {
-      id: 'data',
-      title: 'البيانات',
-      items: [
-        {
-          id: 'dynamic-data',
-          label: 'البيانات الديناميكية',
-          icon: <Package className="h-4 w-4" />,
-          href: '/test-crud',
-          permissions: ['data:view']
-        },
-      ],
-    },
-    {
-      id: 'workflow',
-      title: 'سير العمل',
-      items: [
-        {
-          id: 'review',
-          label: 'المراجعة',
-          icon: <FileText className="h-4 w-4" />,
-          href: '/admin/review',
-          permissions: ['review:view']
-        },
-      ],
-    },
-    {
-      id: 'system',
-      title: 'النظام',
-      items: [
-        {
-          id: 'settings',
-          label: 'الإعدادات',
-          icon: <Settings className="h-4 w-4" />,
-          href: '/admin/settings',
-          permissions: ['settings:view']
-        },
-      ],
-    },
-  ];
+  // ✅ Load navigation from centralized config with translations
+  useEffect(() => {
+    const loadNavigation = async () => {
+      // Transform config with translations
+      const sections = NAVIGATION_CONFIG.map(section => ({
+        ...section,
+        title: t(section.title) || section.title,
+        items: section.items.map(item => ({
+          ...item,
+          label: t(item.label) || item.label,
+          icon: ICON_MAP[item.icon] ? <ICON_MAP[item.icon] className="h-4 w-4" /> : null,
+        })),
+      }));
+      setNavigationSections(sections);
+    };
+
+    loadNavigation();
+  }, [t]);
 
   const isActive = (href: string) => {
     if (href === '/admin/dashboard') {
@@ -204,10 +88,10 @@ export default function AdminSidebar() {
     return pathname.startsWith(href);
   };
 
-  // ✅ No permission checks - show all items
+  // ✅ Show all navigation items - no permission checks
   const filteredSections = React.useMemo(() => {
-    return sidebarSections;
-  }, []);
+    return navigationSections;
+  }, [navigationSections]);
 
     return (
     <div className="flex h-full w-64 flex-col border-r border-[var(--brand-border)] bg-[var(--panel)]">
@@ -249,7 +133,7 @@ export default function AdminSidebar() {
                     )}>
                       {item.icon}
                     </span>
-                    <span className="flex-1">{item.label}</span>
+                    <span className="flex-1">{item.label || item.id}</span>
                     {item.badge && (
                       <span className={cn(
                         'flex h-5 min-w-[20px] items-center justify-center rounded-full px-2 text-xs font-medium',

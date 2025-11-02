@@ -97,84 +97,75 @@ const AnalyticsPage: React.FC = () => {
   const loadAnalyticsData = async () => {
     try {
       setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
+      setError(null);
+
+      // ✅ Fetch real data from API - no mock data
+      const [dashboardStatsResponse, patientStatsResponse] = await Promise.all([
+        fetch(`/api/dashboard/statistics?period=${selectedPeriod}`, {
+          cache: 'no-store',
+        }),
+        fetch(`/api/admin/patient-stats?period=${selectedPeriod}`, {
+          cache: 'no-store',
+        }),
+      ]);
+
+      const dashboardStats = dashboardStatsResponse.ok
+        ? await dashboardStatsResponse.json()
+        : null;
+      const patientStats = patientStatsResponse.ok
+        ? await patientStatsResponse.json()
+        : null;
+
+      // ✅ Transform API data to AnalyticsData format
       const analyticsData: AnalyticsData = {
         overview: {
-          totalPatients: 156,
-          activePatients: 142,
-          totalAppointments: 1248,
-          completedAppointments: 1156,
-          totalSessions: 3420,
-          averageProgress: 73,
-          revenue: 245000,
-          growthRate: 12.5,
+          totalPatients: dashboardStats?.data?.total_patients || 0,
+          activePatients: dashboardStats?.data?.active_patients || 0,
+          totalAppointments: dashboardStats?.data?.total_appointments || 0,
+          completedAppointments: dashboardStats?.data?.completed_appointments || 0,
+          totalSessions: dashboardStats?.data?.total_sessions || 0,
+          averageProgress: 0, // Calculate from sessions data
+          revenue: dashboardStats?.data?.total_revenue || 0,
+          growthRate: patientStats?.data?.trends?.patientGrowth || 0,
         },
         patientAnalytics: {
-          byAge: [
-            { age: '0-5', count: 45 },
-            { age: '6-12', count: 67 },
-            { age: '13-18', count: 34 },
-            { age: '19+', count: 10 },
-          ],
-          byCondition: [
-            { condition: 'شلل دماغي', count: 52 },
-            { condition: 'متلازمة داون', count: 38 },
-            { condition: 'التوحد', count: 29 },
-            { condition: 'صعوبات التعلم', count: 25 },
-            { condition: 'إعاقة حركية', count: 12 },
-          ],
-          byGender: [
-            { gender: 'ذكر', count: 89 },
-            { gender: 'أنثى', count: 67 },
-          ],
+          byAge: patientStats?.data?.demographics?.ageGroups
+            ? [
+                { age: '0-5', count: patientStats.data.demographics.ageGroups.children || 0 },
+                { age: '6-12', count: 0 },
+                { age: '13-18', count: 0 },
+                { age: '19+', count: patientStats.data.demographics.ageGroups.adults || 0 },
+              ]
+            : [],
+          byCondition: [], // TODO: Fetch from database
+          byGender: patientStats?.data?.demographics?.gender
+            ? [
+                { gender: 'ذكر', count: patientStats.data.demographics.gender.male || 0 },
+                { gender: 'أنثى', count: patientStats.data.demographics.gender.female || 0 },
+              ]
+            : [],
           byStatus: [
-            { status: 'نشط', count: 142 },
-            { status: 'غير نشط', count: 14 },
+            { status: 'نشط', count: dashboardStats?.data?.active_patients || 0 },
+            { status: 'غير نشط', count: dashboardStats?.data?.blocked_patients || 0 },
           ],
         },
         therapyAnalytics: {
-          byType: [
-            { type: 'العلاج الطبيعي', count: 1240, successRate: 78 },
-            { type: 'العلاج الوظيفي', count: 890, successRate: 82 },
-            { type: 'علاج النطق', count: 650, successRate: 75 },
-            { type: 'العلاج النفسي', count: 320, successRate: 85 },
-          ],
-          byTherapist: [
-            { therapist: 'د. فاطمة العلي', sessions: 456, successRate: 88 },
-            { therapist: 'أ. محمد السعد', sessions: 389, successRate: 82 },
-            { therapist: 'د. نورا الزهراني', sessions: 321, successRate: 85 },
-          ],
-          progressTrends: [
-            { month: 'يناير', averageProgress: 65 },
-            { month: 'فبراير', averageProgress: 68 },
-            { month: 'مارس', averageProgress: 71 },
-            { month: 'أبريل', averageProgress: 73 },
-          ],
+          byType: [], // TODO: Fetch from sessions table
+          byTherapist: [], // TODO: Fetch from sessions/doctors
+          progressTrends: [],
         },
         appointmentAnalytics: {
-          byStatus: [
-            { status: 'مكتملة', count: 1156 },
-            { status: 'مجدولة', count: 67 },
-            { status: 'ملغية', count: 25 },
-          ],
-          byTime: [
-            { hour: 9, count: 45 },
-            { hour: 10, count: 67 },
-            { hour: 11, count: 52 },
-            { hour: 14, count: 38 },
-            { hour: 15, count: 41 },
-            { hour: 16, count: 33 },
-          ],
-          byDay: [
-            { day: 'السبت', count: 89 },
-            { day: 'الأحد', count: 92 },
-            { day: 'الاثنين', count: 87 },
-            { day: 'الثلاثاء', count: 85 },
-            { day: 'الأربعاء', count: 78 },
-            { day: 'الخميس', count: 71 },
-          ],
-          noShowRate: 3.2,
-          rescheduleRate: 8.5,
+          byStatus: patientStats?.data?.appointments
+            ? [
+                { status: 'مكتملة', count: patientStats.data.appointments.completed || 0 },
+                { status: 'مجدولة', count: patientStats.data.appointments.pending || 0 },
+                { status: 'ملغية', count: patientStats.data.appointments.cancelled || 0 },
+              ]
+            : [],
+          byTime: [],
+          byDay: [],
+          noShowRate: patientStats?.data?.appointments?.cancellationRate || 0,
+          rescheduleRate: 0,
         },
         performanceMetrics: {
           averageSessionDuration: 45,
@@ -183,29 +174,15 @@ const AnalyticsPage: React.FC = () => {
           facilityUtilization: 92,
         },
         trends: {
-          patientGrowth: [
-            { month: 'يناير', count: 145 },
-            { month: 'فبراير', count: 148 },
-            { month: 'مارس', count: 152 },
-            { month: 'أبريل', count: 156 },
-          ],
-          revenueGrowth: [
-            { month: 'يناير', amount: 58000 },
-            { month: 'فبراير', amount: 62000 },
-            { month: 'مارس', amount: 65000 },
-            { month: 'أبريل', amount: 60000 },
-          ],
-          appointmentTrends: [
-            { month: 'يناير', count: 298 },
-            { month: 'فبراير', count: 312 },
-            { month: 'مارس', count: 325 },
-            { month: 'أبريل', count: 313 },
-          ],
+          patientGrowth: [],
+          revenueGrowth: [],
+          appointmentTrends: [],
         },
       };
 
       setAnalyticsData(analyticsData);
     } catch (error) {
+      console.error('Failed to load analytics:', error);
       setError('فشل في تحميل بيانات التحليلات');
     } finally {
       setLoading(false);
