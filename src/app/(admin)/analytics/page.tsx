@@ -27,7 +27,7 @@ import {
   PieChart,
   LineChart,
 } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/lib/auth/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
 interface AnalyticsData {
@@ -77,7 +77,7 @@ interface AnalyticsData {
 }
 
 const AnalyticsPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, loading: authLoading, isAuthenticated } = useAuth();
   const router = useRouter();
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(
     null
@@ -88,12 +88,11 @@ const AnalyticsPage: React.FC = () => {
   const [selectedView, setSelectedView] = useState<string>('overview');
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-      return;
+    // ✅ Simplified - no redirect, just load data if authenticated
+    if (!authLoading && isAuthenticated) {
+      loadAnalyticsData();
     }
-    loadAnalyticsData();
-  }, [isAuthenticated, router, selectedPeriod]);
+  }, [authLoading, isAuthenticated, selectedPeriod]);
 
   const loadAnalyticsData = async () => {
     try {

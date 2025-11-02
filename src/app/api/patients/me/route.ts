@@ -1,14 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-import { authorize } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
 
 export async function GET(_request: NextRequest) {
   try {
-    const { user, error } = await authorize(_request);
+    // ✅ Simplified - just check session, no complex authorization
+    const supabase = await createClient();
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
 
-    if (error || !user) {
-      return NextResponse.json({ error }, { status: 401 });
+    if (sessionError || !session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    // Get user from session
+    const user = {
+      id: session.user.id,
+      email: session.user.email || '',
+    };
 
     // Mock patient data for testing
     const patientData = {
