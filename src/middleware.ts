@@ -10,7 +10,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { customAuthHub } from '@/lib/auth/CustomAuthHub';
 import jwt from 'jsonwebtoken';
 
 // Public routes that don't require authentication
@@ -68,27 +67,26 @@ export async function middleware(request: NextRequest) {
   if (isPublicRoute(pathname)) {
     // If accessing login/register while authenticated, redirect to dashboard
     if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
-      // Check both Supabase Auth and Custom Auth
-      const supabase = await createClient();
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      // Also check custom auth token
+      // Check custom auth token only
       const customAuthToken = request.cookies.get('auth_token')?.value || 
                              request.headers.get('authorization')?.replace('Bearer ', '');
       
-      if (session || customAuthToken) {
+      if (customAuthToken) {
         try {
-          // If custom token exists, verify it
-          if (customAuthToken) {
-            const secret = process.env.JWT_SECRET;
-            if (secret) {
-              jwt.verify(customAuthToken, secret);
+          const secret = process.env.JWT_SECRET;
+          if (secret) {
+            const decoded = jwt.verify(customAuthToken, secret) as any;
+            // Verify user still exists and is active
+            const supabase = await createClient();
+            const { data: userData } = await supabase
+              .from('users')
+              .select('id, status')
+              .eq('id', decoded.userId)
+              .maybeSingle();
+            
+            if (userData && userData.status === 'active') {
               return NextResponse.redirect(new URL('/dashboard', request.url));
             }
-          }
-          // If Supabase session exists
-          if (session) {
-            return NextResponse.redirect(new URL('/dashboard', request.url));
           }
         } catch (error) {
           // Token invalid, continue to login page
@@ -103,64 +101,64 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check authentication for protected routes
-  // Try custom auth first (JWT token)
+  // Check authentication for protected routes using Custom Auth (JWT token)
   const customAuthToken = request.cookies.get('auth_token')?.value || 
                          request.headers.get('authorization')?.replace('Bearer ', '');
   
   let user: { id: string; email: string; role: string; status: string } | null = null;
   
-  if (customAuthToken) {
-    try {
-      const secret = process.env.JWT_SECRET;
-      if (secret) {
-        const decoded = jwt.verify(customAuthToken, secret) as any;
-        
-        // Get user from database to verify still active
-        const supabase = await createClient();
-        const { data: userData } = await supabase
-          .from('users')
-          .select('id, email, role, status')
-          .eq('id', decoded.userId)
-          .maybeSingle();
-        
-        if (userData && userData.status === 'active') {
-          user = {
-            id: userData.id,
-            email: userData.email,
-            role: userData.role,
-            status: userData.status,
-          };
-        }
-      }
-    } catch (error) {
-      // Token invalid, try Supabase Auth as fallback
-      console.log('[MIDDLEWARE] Custom token invalid, trying Supabase Auth');
-    }
+  if (!customAuthToken) {
+    // No token - redirect to login
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('redirect', pathname);
+    return NextResponse.redirect(loginUrl);
   }
   
-  // Fallback to Supabase Auth if custom auth not available
-  if (!user) {
-    const supabase = await createClient();
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-    
-    if (session && session.user) {
-      // Get user from database
-      const { data: userData } = await supabase
-        .from('users')
-        .select('id, email, role, status')
-        .eq('id', session.user.id)
-        .maybeSingle();
-      
-      if (userData && userData.status === 'active') {
-        user = {
-          id: userData.id,
-          email: userData.email,
-          role: userData.role,
-          status: userData.status,
-        };
-      }
+  try {
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      console.error('[MIDDLEWARE] JWT_SECRET not configured');
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
     }
+    
+    const decoded = jwt.verify(customAuthToken, secret) as any;
+    
+    // Get user from database to verify still active
+    const supabase = await createClient();
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('id, email, role, status')
+      .eq('id', decoded.userId)
+      .maybeSingle();
+    
+    if (userError || !userData) {
+      console.error('[MIDDLEWARE] User not found:', userError);
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+    
+    if (userData.status !== 'active') {
+      console.warn('[MIDDLEWARE] User inactive:', userData.status);
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+    
+    user = {
+      id: userData.id,
+      email: userData.email,
+      role: userData.role,
+      status: userData.status,
+    };
+  } catch (error) {
+    // Token invalid or expired
+    console.error('[MIDDLEWARE] Token verification failed:', error);
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('redirect', pathname);
+    return NextResponse.redirect(loginUrl);
   }
   
   // No valid authentication - redirect to login
