@@ -136,8 +136,15 @@ export function getDefaultRoute(role: string): string {
  */
 export async function fetchCurrentUser(): Promise<AuthUser | null> {
   try {
+    // ✅ First check if we have a Supabase session before making API call
+    const hasSession = await checkSupabaseSession();
+    if (!hasSession) {
+      // No session, no need to call API
+      return null;
+    }
+
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    const timeoutId = setTimeout(() => controller.abort(), 2000); // Reduced timeout
 
     const response = await fetch('/api/auth/me', {
       method: 'GET',
@@ -154,10 +161,7 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
     }
 
     if (!response.ok) {
-      // Only log non-401 errors
-      if (response.status !== 401) {
-        console.warn('[UnifiedAuth] Error fetching user:', response.status, response.statusText);
-      }
+      // Don't log 401 errors (they're expected)
       return null;
     }
 
@@ -184,14 +188,7 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
 
     return user;
   } catch (error: any) {
-    // Ignore abort errors (timeout) and network errors silently
-    if (error?.name === 'AbortError') {
-      return null;
-    }
-    // Only log unexpected errors
-    if (error?.message && !error.message.includes('401')) {
-      console.warn('[UnifiedAuth] Error fetching user:', error.message);
-    }
+    // Ignore all errors silently - user is simply not logged in
     return null;
   }
 }
@@ -213,33 +210,26 @@ export async function checkSupabaseSession(): Promise<boolean> {
  * Initialize auth - get user from storage or API
  */
 export async function initializeAuth(): Promise<AuthUser | null> {
-  // 1. Try stored user first (fast path)
-  const storedUser = getStoredUser();
-  if (storedUser) {
-    // Verify session exists (but don't wait too long)
-    try {
-      const hasSession = await Promise.race([
-        checkSupabaseSession(),
-        new Promise<boolean>(resolve => setTimeout(() => resolve(false), 1000))
-      ]);
-
-      if (hasSession) {
-        return storedUser;
-      } else {
-        // Session expired, clear storage
-        clearAuth();
-      }
-    } catch {
-      // If session check fails, still try to use stored user if available
-      // The API will verify it
+  // 1. Check Supabase session first (fast check)
+  const hasSession = await checkSupabaseSession();
+  
+  // 2. Try stored user if session exists
+  if (hasSession) {
+    const storedUser = getStoredUser();
+    if (storedUser) {
+      // Session exists and we have stored user - use it
+      return storedUser;
     }
-  }
-
-  // 2. Try to fetch from API (this will return null if 401, which is fine)
-  const apiUser = await fetchCurrentUser();
-  if (apiUser) {
-    saveUser(apiUser);
-    return apiUser;
+    
+    // Session exists but no stored user - fetch from API
+    const apiUser = await fetchCurrentUser();
+    if (apiUser) {
+      saveUser(apiUser);
+      return apiUser;
+    }
+  } else {
+    // No session - clear any stored data
+    clearAuth();
   }
 
   // 3. No user found - this is normal when not logged in
