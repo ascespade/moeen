@@ -73,36 +73,67 @@ bash /workspace/monitor-services.sh
 2. Copy public key to server
 3. Test passwordless connection
 
+### 6. Service Startup Script ✓
+- **Status:** COMPLETED
+- **Details:**
+  - Startup script created: `/workspace/start-services.sh`
+  - Automatically starts all required services
+  - Includes status checking
+
+**Usage:**
+```bash
+bash /workspace/start-services.sh
+```
+
 ## ⚠️ Partially Completed / Requires Attention
 
 ### 1. Tailscale Installation ⚠️
-- **Status:** INSTALLED BUT NOT FUNCTIONAL
-- **Issue:** Requires `/dev/net/tun` device (TUN/TAP) which is not available in this container environment
+- **Status:** INSTALLED BUT NOT FULLY FUNCTIONAL
+- **Issue:** Requires kernel TUN module which is not available in this container environment
 - **Details:**
   - Tailscale package installed successfully
-  - Tailscale daemon cannot start due to missing TUN device
+  - TUN device created manually (`/dev/net/tun`)
+  - Tailscale daemon cannot start due to missing kernel module
   - This is a common limitation in containerized environments
 
 **Solution Options:**
 1. **Run in privileged container mode** (if available)
-2. **Use Tailscale in userspace mode** (if supported)
-3. **Deploy on a VM or bare metal** instead of a container
-4. **Use alternative VPN solution** that doesn't require TUN device
+2. **Deploy on a VM or bare metal** instead of a container
+3. **Use alternative VPN solution** that doesn't require TUN device
+4. **Manual start script** available in `/workspace/start-services.sh`
 
-**Note:** The Auth Key provided is still valid and can be used once Tailscale is properly configured.
+**Note:** The Auth Key provided is still valid and can be used once Tailscale is properly configured with kernel support.
+
+**Manual Activation (if kernel module becomes available):**
+```bash
+sudo tailscaled --state=/var/lib/tailscale/tailscaled.state &
+sudo tailscale up --authkey=tskey-auth-kK7y8hLpeA21CNTRL-PojuEB6qwXUU2WHQtUazWUtD1VQXEW63 --accept-routes
+```
 
 ### 2. Cursor IDE Installation ⚠️
-- **Status:** NOT INSTALLED
-- **Issue:** Direct download links are not accessible (500/404 errors)
+- **Status:** NOT INSTALLED - REQUIRES MANUAL DOWNLOAD
+- **Issue:** Direct download links are not accessible (500/404 errors from official sources)
 - **Details:**
   - Attempted multiple download methods
   - Official download URLs returned errors
+  - Installation script created: `/workspace/install-cursor.sh`
 
 **Manual Installation Steps:**
-1. Visit https://cursor.sh on your local machine
-2. Download the Linux `.deb` package
-3. Transfer to server via SCP or other method
-4. Install with: `sudo dpkg -i cursor.deb`
+1. Visit https://cursor.sh on your local Windows machine
+2. Download the Linux `.deb` package (64-bit)
+3. Transfer to server via SCP:
+   ```powershell
+   scp cursor.deb ubuntu@SERVER_IP:/tmp/cursor.deb
+   ```
+4. Install using the provided script:
+   ```bash
+   bash /workspace/install-cursor.sh
+   ```
+   Or manually:
+   ```bash
+   sudo dpkg -i /tmp/cursor.deb
+   sudo apt-get install -f -y
+   ```
 
 **Alternative:** Install from source or use alternative IDE (VS Code, etc.)
 
@@ -114,16 +145,18 @@ bash /workspace/monitor-services.sh
 |---------|--------|------|-------|
 | SSH | ✅ Running | 22 | Key-based auth only |
 | XRDP | ✅ Running | 3389 | XFCE desktop |
-| Tailscale | ❌ Not Running | - | Requires TUN device |
+| Tailscale | ⚠️ Installed | - | Needs kernel module |
 | Cursor IDE | ❌ Not Installed | - | Needs manual install |
 
-### Created Files
+### Created Files & Scripts
 
 1. `/workspace/prevent-sleep.sh` - Prevents system sleep
 2. `/workspace/monitor-services.sh` - Monitors and restarts services
-3. `/workspace/setup-ssh-keys.sh` - SSH key setup helper
-4. `/workspace/README-SSH-KEYS.md` - SSH key documentation
-5. `/workspace/SETUP_COMPLETE.md` - This file
+3. `/workspace/start-services.sh` - Starts all services
+4. `/workspace/setup-ssh-keys.sh` - SSH key setup helper
+5. `/workspace/install-cursor.sh` - Cursor IDE installation helper
+6. `/workspace/README-SSH-KEYS.md` - SSH key documentation
+7. `/workspace/SETUP_COMPLETE.md` - This file
 
 ### Log Files
 
@@ -131,40 +164,28 @@ bash /workspace/monitor-services.sh
 - `/var/log/service-monitor.log` - Service monitoring logs
 - `/var/log/xrdp.log` - XRDP service logs
 
-## 🔧 Next Steps
+## 🔧 Quick Start Commands
 
-### Immediate Actions
+### Start All Services
+```bash
+bash /workspace/start-services.sh
+```
 
-1. **Set up SSH keys** (required for remote access):
-   ```bash
-   # On Windows, generate key and add to server
-   # See: /workspace/README-SSH-KEYS.md
-   ```
+### Monitor Services
+```bash
+bash /workspace/monitor-services.sh
+```
 
-2. **Test Remote Desktop connection**:
-   - Use Windows Remote Desktop Client
-   - Connect to server IP on port 3389
-   - Login with your username/password
+### Prevent Sleep
+```bash
+bash /workspace/prevent-sleep.sh
+```
 
-3. **Install Cursor IDE**:
-   - Download manually and install
-   - Or use alternative IDE
-
-### Optional Actions
-
-1. **Set up Tailscale** (if privileged access available):
-   - Requires TUN device support
-   - May need container restart with privileged mode
-
-2. **Set up automated monitoring**:
-   - Currently scripts must be run manually or via alternative scheduler
-   - Consider using `systemd` timers (if available) or alternative cron daemon
-
-## 📝 Notes
-
-- **Systemd Not Available:** This environment doesn't use systemd, so services must be started manually or via alternative methods
-- **Crontab Not Available:** Cannot use traditional cron jobs; consider alternative scheduling methods
-- **Container Environment:** Some features (like Tailscale) may require privileged container mode
+### Check Service Status
+```bash
+ss -tlnp | grep -E "(:22|:3389)"
+ps aux | grep -E "(sshd|xrdp)"
+```
 
 ## 🔗 Connection Information
 
@@ -172,16 +193,31 @@ bash /workspace/monitor-services.sh
 - **RDP:** `rdp://SERVER_IP:3389` (use Remote Desktop Client on Windows)
 - **Username:** `ubuntu` (default)
 
+## 📝 Notes
+
+- **Systemd Not Available:** This environment doesn't use systemd, so services must be started manually or via scripts
+- **Crontab Not Available:** Cannot use traditional cron jobs; scripts must be run manually or via alternative scheduler
+- **Container Environment:** Some features (like Tailscale) may require privileged container mode or kernel modules
+
+## 🔄 Restart Services After Reboot
+
+Since systemd is not available, services need to be started manually after reboot:
+
+```bash
+bash /workspace/start-services.sh
+```
+
+To automate this, you can:
+1. Add the script to your shell profile (`~/.bashrc`)
+2. Create a startup script in `/etc/rc.local` (if available)
+3. Use an alternative init system or supervisor
+
 ## 📞 Troubleshooting
 
-If services are not running:
+### Services Not Running
 ```bash
-# Start SSH
-sudo /usr/sbin/sshd -D &
-
-# Start XRDP
-sudo /usr/sbin/xrdp-sesman &
-sudo /usr/sbin/xrdp &
+# Start all services
+bash /workspace/start-services.sh
 
 # Monitor services
 bash /workspace/monitor-services.sh
@@ -190,3 +226,44 @@ bash /workspace/monitor-services.sh
 tail -f /var/log/service-monitor.log
 tail -f /var/log/xrdp.log
 ```
+
+### SSH Connection Issues
+```bash
+# Check SSH status
+ps aux | grep sshd
+ss -tlnp | grep :22
+
+# Check SSH config
+sudo cat /etc/ssh/sshd_config | grep -E "(PasswordAuthentication|PubkeyAuthentication)"
+
+# Restart SSH
+sudo pkill sshd
+sudo /usr/sbin/sshd -D &
+```
+
+### RDP Connection Issues
+```bash
+# Check XRDP status
+ps aux | grep xrdp
+ss -tlnp | grep :3389
+
+# Restart XRDP
+sudo pkill xrdp xrdp-sesman
+sudo /usr/sbin/xrdp-sesman &
+sudo /usr/sbin/xrdp &
+```
+
+## ✅ Next Steps Checklist
+
+- [ ] Add SSH public key to `~/.ssh/authorized_keys`
+- [ ] Test SSH connection without password
+- [ ] Test RDP connection from Windows
+- [ ] Download and install Cursor IDE (optional)
+- [ ] Set up Tailscale if kernel support becomes available (optional)
+- [ ] Configure automatic service startup (if needed)
+
+---
+
+**Setup completed on:** $(date)
+**System:** Ubuntu 24.04 LTS
+**Services:** SSH ✓, XRDP ✓, Tailscale ⚠️, Cursor IDE ❌

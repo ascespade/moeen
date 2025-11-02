@@ -14,6 +14,7 @@ log() {
 check_ssh() {
     if ! pgrep -x "sshd" > /dev/null; then
         log "SSH daemon not running, starting..."
+        sudo mkdir -p /run/sshd
         sudo /usr/sbin/sshd -D 2>&1 &
         sleep 2
         if pgrep -x "sshd" > /dev/null; then
