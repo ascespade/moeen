@@ -64,16 +64,19 @@ export default function AdminSidebar() {
 
   // ✅ Load navigation from centralized config with translations
   useEffect(() => {
-    const loadNavigation = async () => {
+    const loadNavigation = () => {
       // Transform config with translations
       const sections = NAVIGATION_CONFIG.map(section => ({
         ...section,
         title: t(section.title) || section.title,
-        items: section.items.map(item => ({
-          ...item,
-          label: t(item.label) || item.label,
-          icon: ICON_MAP[item.icon] ? <ICON_MAP[item.icon] className="h-4 w-4" /> : null,
-        })),
+        items: section.items.map(item => {
+          const IconComponent = item.icon ? ICON_MAP[item.icon] : null;
+          return {
+            ...item,
+            label: t(item.label) || item.label,
+            icon: IconComponent ? React.createElement(IconComponent, { className: "h-4 w-4" }) : null,
+          };
+        }),
       }));
       setNavigationSections(sections);
     };
