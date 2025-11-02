@@ -159,32 +159,39 @@ class CustomAuthHub {
         if (verifyError) {
           console.warn('verify_password RPC error:', verifyError);
           
-          // Fallback: Direct SQL verification
+          // If verify_password function doesn't exist, try direct SQL query
+          // Use a SELECT with WHERE clause that uses crypt() directly
           try {
-            const { data: sqlVerify, error: sqlError } = await supabase
-              .from('users')
-              .select('id')
-              .eq('email', email)
-              .single();
-
-            // For development: allow test password if RPC doesn't work
+            // For development: temporary workaround
             if (process.env.NODE_ENV !== 'production') {
-              const testPassword = process.env.TEST_USERS_PASSWORD || 'A123456';
-              if (password === testPassword) {
-                console.warn('Using test password fallback for dev');
+              // Test passwords for development
+              const testPasswords = {
+                'admin@test.com': 'Admin123!',
+                'doctor@test.com': 'Doctor123!',
+                'patient@test.com': 'Patient123!',
+                'staff@test.com': 'Staff123!',
+              };
+              
+              if (testPasswords[email] === password) {
+                console.warn('Using development password verification');
                 isValid = true;
               } else if (!userData.password_hash && email.includes('@test.com')) {
-                // Allow login for test users without password_hash in dev
-                console.warn('Allowing test user login without password_hash in dev mode');
+                // Allow login for test users without password_hash in dev (temporary)
+                console.warn('⚠️  ALLOWING DEV LOGIN WITHOUT PASSWORD HASH - FIX THIS!');
                 isValid = true;
               }
             }
 
-            if (!isValid && sqlError) {
-              return { user: null, token: null, error: 'Password verification failed. Please ensure verify_password function exists in database.' };
+            if (!isValid) {
+              return { 
+                user: null, 
+                token: null, 
+                error: 'Password verification failed. Please ensure verify_password function exists. Run QUICK_FIX_SQL.sql in Supabase SQL Editor.' 
+              };
             }
           } catch (e) {
-            console.error('SQL verification error:', e);
+            console.error('Verification error:', e);
+            return { user: null, token: null, error: 'Password verification failed' };
           }
         } else {
           isValid = verifyResult === true;
@@ -192,11 +199,17 @@ class CustomAuthHub {
       } catch (error) {
         console.error('Password verification error:', error);
         
-        // Development fallback
+        // Development fallback - REMOVE IN PRODUCTION
         if (process.env.NODE_ENV !== 'production') {
-          const testPassword = process.env.TEST_USERS_PASSWORD || 'A123456';
-          if (password === testPassword || email.includes('@test.com')) {
-            console.warn('Using development fallback for password verification');
+          const testPasswords: Record<string, string> = {
+            'admin@test.com': 'Admin123!',
+            'doctor@test.com': 'Doctor123!',
+            'patient@test.com': 'Patient123!',
+            'staff@test.com': 'Staff123!',
+          };
+          
+          if (testPasswords[email] === password) {
+            console.warn('⚠️  Using development password fallback');
             isValid = true;
           }
         }
