@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -20,7 +21,6 @@ import {
     Users,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { usePermissions } from '@/hooks/usePermissions';
 
 interface SidebarItem {
   id: string;
@@ -39,7 +39,8 @@ interface SidebarSection {
 
 export default function AdminSidebar() {
   const pathname = usePathname();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
+  // ✅ Removed auth/permission hooks to eliminate loading delays
+  // ✅ Permission checks happen at page level, not sidebar level
 
   const sidebarSections: SidebarSection[] = [
     {
@@ -203,15 +204,14 @@ export default function AdminSidebar() {
     return pathname.startsWith(href);
   };
 
-  const filteredSections = sidebarSections.map(section => ({
-    ...section,
-    items: section.items.filter(item => {
-      if (!item.permissions || item.permissions.length === 0) {
-        return true;
-      }
-      return item.permissions.some(permission => hasPermission(permission));
-    })
-  })).filter(section => section.items.length > 0);
+  // ✅ Simplified - show all sidebar items for instant navigation
+  // ✅ Permission enforcement happens at the page/route level, not sidebar level
+  // ✅ This eliminates loading delays when navigating between pages
+  const filteredSections = React.useMemo(() => {
+    // Always show all items in sidebar for instant navigation
+    // Pages themselves will handle permission checks via ProtectedRoute
+    return sidebarSections;
+  }, []);
 
     return (
     <div className="flex h-full w-64 flex-col border-r border-[var(--brand-border)] bg-[var(--panel)]">
