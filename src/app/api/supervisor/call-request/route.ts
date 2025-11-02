@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import logger from '@/lib/monitoring/logger';
+import { requireAuth } from '@/lib/auth/authorize';
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
 
 export async function POST(request: NextRequest) {
   try {
@@ -134,7 +145,17 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET: للمشرف لرؤية الطلبات
+// GET: للمشرف لرؤية الطلب
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+ات
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();

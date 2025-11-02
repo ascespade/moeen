@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/authorize';
 import { PermissionManager } from '@/lib/permissions';
 import logger from '@/lib/monitoring/logger';
+import { AuditLogger, AuditAction } from '@/lib/audit-logger';
 
 const patientSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -56,6 +57,14 @@ export async function GET(request: NextRequest) {
 
     // Apply pagination
     const paginatedPatients = patients.slice(offset, offset + limit);
+
+    // Audit log: PHI access (HIPAA compliance)
+    await AuditLogger.logPHIAccess(
+      AuditAction.PATIENT_SEARCHED,
+      'patients',
+      'multiple',
+      { searchTerm, role, resultCount: patients.length }
+    );
 
     return NextResponse.json({
       success: true,
@@ -137,6 +146,14 @@ export async function POST(request: NextRequest) {
       admission_date: new Date().toISOString(),
       status: 'active',
     });
+
+    // Audit log: Patient creation (HIPAA compliance)
+    await AuditLogger.logPHIAccess(
+      AuditAction.PATIENT_CREATED,
+      'patients',
+      patient.id,
+      { createdBy: authResult.user.id }
+    );
 
     return NextResponse.json({
       success: true,

@@ -1,12 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// GET /api/chatbot/intents - جلب جميع النيات
+// GET /api/chatbot/intents - جلب جميع الني
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+ات
 export async function GET(request: NextRequest) {
   try {
     const { data: intents, error } = await supabase
@@ -14,7 +25,17 @@ export async function GET(request: NextRequest) {
       .select('*')
       .order('priority', { ascending: true });
 
-    if (error) {
+    i
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+f (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 

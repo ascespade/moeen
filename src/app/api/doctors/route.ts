@@ -3,6 +3,7 @@ import { realDB } from '@/lib/supabase-real';
 import { requireAuth } from '@/lib/auth/authorize';
 import { PermissionManager } from '@/lib/permissions';
 import { z } from 'zod';
+import { AuditLogger, AuditAction } from '@/lib/audit-logger';
 
 const doctorSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -76,6 +77,28 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Security: Require authentication and proper permissions
+    const authResult = await requireAuth(['admin', 'supervisor'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // Check permissions
+    const userPermissions = PermissionManager.getUserPermissions(
+      authResult.user.role,
+      authResult.user.meta?.permissions || []
+    );
+
+    if (!PermissionManager.canAccess(userPermissions, 'doctors', 'create')) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const validation = doctorSchema.safeParse(body);
 
@@ -111,6 +134,15 @@ export async function POST(request: NextRequest) {
       consultation_fee: validation.data.consultation_fee,
       is_available: validation.data.is_available ?? true,
       working_hours: validation.data.working_hours,
+    });
+
+    // Audit log: Doctor creation
+    await AuditLogger.log({
+      action: AuditAction.CREATE,
+      table_name: 'doctors',
+      record_id: doctor.id,
+      new_values: { doctor_id: doctor.id, license_number: validation.data.license_number },
+      metadata: { createdBy: authResult.user.id },
     });
 
     return NextResponse.json({

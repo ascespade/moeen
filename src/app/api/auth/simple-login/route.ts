@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { createClient } from '@/lib/supabase/server';
 import { PermissionManager } from '@/lib/permissions';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
@@ -17,7 +18,17 @@ function parseMaxAgeSeconds(expiresIn: string | undefined): number {
   if (unit === 'm') return n * 60;
   if (unit === 'h') return n * 60 * 60;
   if (unit === 'd') return n * 60 * 60 * 24;
-  return 60 * 60 * 24 * 7;
+  return 60 * 60 * 24 * 
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(req: NextRequest);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+7;
 }
 
 export async function POST(req: NextRequest) {

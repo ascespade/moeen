@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
 const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
@@ -16,7 +17,17 @@ const USERS = [
     role: 'supervisor',
   },
   { email: 'manager@test.local', name: 'Manager User', role: 'manager' },
-  { email: 'agent@test.local', name: 'Agent User', role: 'agent' },
+  { email: 'agent@test.local', name: 'Agent User', role: '
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin","supervisor"])(req: any);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+agent' },
 ];
 
 export async function POST(req: any) {

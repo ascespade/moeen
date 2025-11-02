@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const sessionSchema = z.object({
   patient_id: z.string().uuid('Invalid patient ID'),
@@ -13,7 +14,17 @@ const sessionSchema = z.object({
   notes: z.string().optional(),
   exercises: z.any().optional(),
   insurance_claim_number: z.string().optional(),
-});
+})
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+;
 
 export async function GET(request: NextRequest) {
   try {
@@ -40,7 +51,17 @@ export async function GET(request: NextRequest) {
       success: true,
       data: paginatedSessions,
       pagination: {
-        total: sessions.length,
+    
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+    total: sessions.length,
         limit,
         offset,
         hasMore: offset + limit < sessions.length,

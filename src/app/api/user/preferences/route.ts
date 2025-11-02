@@ -1,5 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+/lib/auth/authorize';
 
 export async function GET() {
   try {
@@ -32,7 +43,17 @@ export async function GET() {
 
     if (error && error.code !== 'PGRST116') {
       // PGRST116 = no rows returned
+      return Nex
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+tResponse.json(
         { error: 'Failed to fetch preferences' },
         { status: 500 }
       );

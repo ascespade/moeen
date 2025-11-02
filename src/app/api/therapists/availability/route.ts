@@ -1,5 +1,16 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/author
+  try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["admin"])(request: Request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+ize';
 
 export async function GET(request: Request) {
   try {
