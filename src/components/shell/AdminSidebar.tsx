@@ -204,12 +204,8 @@ export default function AdminSidebar() {
     return pathname.startsWith(href);
   };
 
-  // ✅ Simplified - show all sidebar items for instant navigation
-  // ✅ Permission enforcement happens at the page/route level, not sidebar level
-  // ✅ This eliminates loading delays when navigating between pages
+  // ✅ No permission checks - show all items
   const filteredSections = React.useMemo(() => {
-    // Always show all items in sidebar for instant navigation
-    // Pages themselves will handle permission checks via ProtectedRoute
     return sidebarSections;
   }, []);
 

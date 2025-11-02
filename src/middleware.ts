@@ -1,19 +1,14 @@
 /**
- * ✅ OPTIMIZED Middleware
- * Middleware محسّن للجلسات والصلاحيات
- *
- * Fixed critical issues:
- * - Only protects specific routes (no database query on every request)
- * - Proper session refresh
- * - No blocking of static assets
- * - Fast route protection
+ * ✅ SIMPLIFIED Middleware
+ * Middleware مبسّط - فقط فحص session بسيط
+ * بدون فحص صلاحيات أو roles
  */
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
-// Public routes that don't require authentication
+// Public routes
 const PUBLIC_ROUTES = [
   '/',
   '/login',
@@ -22,58 +17,29 @@ const PUBLIC_ROUTES = [
   '/reset-password',
 ];
 
-// Protected routes that require authentication
-const PROTECTED_ROUTES = [
-  '/dashboard',
-  '/admin',
-  '/profile',
-  '/settings',
-  '/doctor-dashboard',
-];
-
-// Admin-only routes
-const ADMIN_ROUTES = [
-  '/admin',
-];
-
 // Check if route is public
 function isPublicRoute(pathname: string): boolean {
   return PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith(route + '/'));
 }
 
-// Check if route requires authentication
-function isProtectedRoute(pathname: string): boolean {
-  return PROTECTED_ROUTES.some(route => pathname.startsWith(route));
-}
-
-// Check if route requires admin
-function requiresAdmin(pathname: string): boolean {
-  return ADMIN_ROUTES.some(route => pathname.startsWith(route));
-}
-
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // ✅ Allow public routes immediately (no database queries)
+  // ✅ Allow public routes
   if (isPublicRoute(pathname)) {
     return NextResponse.next();
   }
 
-  // ✅ Allow API routes (they handle their own auth)
+  // ✅ Allow API routes
   if (pathname.startsWith('/api/')) {
     return NextResponse.next();
   }
 
-  // ✅ Only check auth for protected routes
-  if (!isProtectedRoute(pathname)) {
-    return NextResponse.next();
-  }
-
-  // ✅ Get and refresh session (only for protected routes)
+  // ✅ Simple session check for protected routes
   const supabase = await createClient();
   const { data: { session } } = await supabase.auth.getSession();
 
-  // ✅ No session - redirect to login (only for protected routes)
+  // ✅ No session - redirect to login
   if (!session) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
@@ -82,16 +48,15 @@ export async function middleware(request: NextRequest) {
 
   // ✅ Redirect authenticated users away from login page
   if (pathname.startsWith('/login') && session) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
   }
 
-  // ✅ All checks passed - session exists
+  // ✅ All good - allow access
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    // ✅ ONLY match routes that need protection - not static files!
     '/dashboard/:path*',
     '/admin/:path*',
     '/profile/:path*',

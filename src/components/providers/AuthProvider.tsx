@@ -25,8 +25,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Redirect to login if not authenticated
       router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
     } else if (user && isPublicRoute) {
-      // Redirect to dashboard if already authenticated
-      router.push('/dashboard');
+      // ? Always redirect to admin dashboard
+      router.push('/admin/dashboard');
     }
   }, [user, loading, pathname, router]);
 

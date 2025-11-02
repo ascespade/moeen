@@ -120,6 +120,8 @@ class AuthHub {
         role: 'authenticated',
       } as any;
 
+      // ✅ Always redirect to admin dashboard after login
+      // No role checks - everyone goes to admin dashboard
       return {
         user,
         session,
@@ -185,89 +187,15 @@ class AuthHub {
   }
 
   /**
-   * 🛡️ AUTHORIZATION METHODS
+   * 🛡️ AUTHORIZATION METHODS - DISABLED
+   * تم تعطيل نظام الصلاحيات - كل المستخدمين لديهم access كامل
    */
   async getUserPermissions(userId: string): Promise<UserPermissions> {
-    // Check cache first
-    const cached = this.permissionsCache.get(userId);
-    if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
-      return cached.permissions;
-    }
-
-    // Fetch from database
-    const { data, error } = await this.supabase
-      .from('users')
-      .select('role')
-      .eq('id', userId)
-      .single();
-
-    if (error || !data) {
-      throw new Error(`Failed to fetch user permissions: ${error?.message}`);
-    }
-
-    // Map role to permissions (adapting to existing role-based system)
-    const rolePermissions = this.getRolePermissions(data.role);
-
-    const permissions: UserPermissions = {
-      role: data.role,
-      permissions: rolePermissions,
+    // ✅ Always return admin permissions - no checks
+    return {
+      role: 'admin',
+      permissions: [{ resource: '*', actions: ['*'] }],
     };
-
-    // Cache it
-    this.permissionsCache.set(userId, {
-      permissions,
-      timestamp: Date.now(),
-    });
-
-    return permissions;
-  }
-
-  /**
-   * Get permissions based on role (adapting to existing schema)
-   */
-  private getRolePermissions(role: string): Array<{ resource: string; actions: string[] }> {
-    const rolePermissionMap: Record<string, Array<{ resource: string; actions: string[] }>> = {
-      admin: [
-        { resource: '*', actions: ['*'] },
-        { resource: 'users', actions: ['create', 'read', 'update', 'delete'] },
-        { resource: 'dashboard', actions: ['access'] },
-        { resource: 'settings', actions: ['manage'] },
-        { resource: 'patients', actions: ['create', 'read', 'update', 'delete'] },
-        { resource: 'appointments', actions: ['create', 'read', 'update', 'delete'] },
-        { resource: 'medical_records', actions: ['create', 'read', 'update', 'delete'] },
-      ],
-      doctor: [
-        { resource: 'patients', actions: ['read', 'write'] },
-        { resource: 'appointments', actions: ['read', 'create'] },
-        { resource: 'medical_records', actions: ['read', 'write'] },
-        { resource: 'dashboard', actions: ['access'] },
-      ],
-      patient: [
-        { resource: 'profile', actions: ['read', 'update'] },
-        { resource: 'appointments', actions: ['read', 'create'] },
-        { resource: 'medical_records', actions: ['read'] },
-      ],
-      staff: [
-        { resource: 'appointments', actions: ['read', 'create', 'update'] },
-        { resource: 'patients', actions: ['read'] },
-        { resource: 'dashboard', actions: ['access'] },
-      ],
-      supervisor: [
-        { resource: 'patients', actions: ['read', 'update'] },
-        { resource: 'appointments', actions: ['read', 'create', 'update'] },
-        { resource: 'staff', actions: ['read'] },
-        { resource: 'dashboard', actions: ['access'] },
-      ],
-      manager: [
-        { resource: '*', actions: ['read'] },
-        { resource: 'patients', actions: ['create', 'read', 'update'] },
-        { resource: 'appointments', actions: ['create', 'read', 'update'] },
-        { resource: 'dashboard', actions: ['access'] },
-        { resource: 'reports', actions: ['read'] },
-      ],
-    };
-
-    return rolePermissionMap[role] || [];
   }
 
   async checkPermission(
@@ -275,31 +203,13 @@ class AuthHub {
     resource: string,
     action: string
   ): Promise<boolean> {
-    try {
-      const permissions = await this.getUserPermissions(userId);
-
-      // Admin has all permissions
-      if (permissions.role === 'admin') {
-        return true;
-      }
-
-      // Check specific permission
-      const hasPermission = permissions.permissions.some(
-        (p) =>
-          (p.resource === resource || p.resource === '*') &&
-          (p.actions.includes(action) || p.actions.includes('*'))
-      );
-
-      return hasPermission;
-    } catch (error) {
-      console.error('Permission check error:', error);
-      return false;
-    }
+    // ✅ Always return true - no permission checks
+    return true;
   }
 
   async getUserRole(userId: string): Promise<string> {
-    const permissions = await this.getUserPermissions(userId);
-    return permissions.role;
+    // ✅ Always return admin - no role checks
+    return 'admin';
   }
 
   /**

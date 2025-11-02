@@ -16,11 +16,10 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // Redirect if already logged in
+  // ✅ Redirect if already logged in - always go to admin dashboard
   useEffect(() => {
     if (!isLoading && isAuthenticated && user) {
-      const route = getDefaultRoute(user.role);
-      router.replace(route);
+      router.replace('/admin/dashboard');
     }
   }, [isAuthenticated, isLoading, user, router]);
 
@@ -29,38 +28,19 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
     try {
+      // ✅ Simple login - just check email and password
       const result = await authLogin(email, password);
       if (result.error) {
         const errorMsg = result.error.message || 'بيانات الاعتماد غير صحيحة.';
         setError(errorMsg);
-        console.error('[Login] Error:', errorMsg);
       } else if (result.user) {
-        // Get user role from API response or fetch from /api/auth/me
-        try {
-          const response = await fetch('/api/auth/me');
-          if (response.ok) {
-            const data = await response.json();
-            const userRole = data.data?.user?.role || data.user?.role || result.user.user_metadata?.role || 'patient';
-            const route = getDefaultRoute(userRole);
-            router.push(route);
-            router.refresh();
-          } else {
-            // Use role from user metadata if available
-            const userRole = result.user.user_metadata?.role || 'patient';
-            const route = getDefaultRoute(userRole);
-            router.push(route);
-            router.refresh();
-          }
-        } catch {
-          // Fallback to dashboard
-          router.push('/dashboard');
-          router.refresh();
-        }
+        // ✅ Always redirect to admin dashboard - no role checks
+        router.push('/admin/dashboard');
+        router.refresh();
       } else {
         setError('فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.');
       }
     } catch (err: any) {
-      console.error('[Login] Exception:', err);
       setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
     } finally {
       setSubmitting(false);
@@ -195,7 +175,7 @@ export default function LoginPage() {
                     onClick={async () => {
                       setEmail('admin@test.com');
                       setPassword('Admin123!');
-                      // Auto-login using AuthHub
+                      // ✅ Simple auto-login - always goes to admin dashboard
                       try {
                         const result = await authLogin('admin@test.com', 'Admin123!');
                         if (result.error) {
@@ -223,7 +203,7 @@ export default function LoginPage() {
                         if (result.error) {
                           setError(result.error.message || 'فشل تسجيل الدخول');
                         } else if (result.user) {
-                          router.push('/doctor-dashboard');
+                          router.push('/admin/dashboard');
                           router.refresh();
                         }
                       } catch (err: any) {
@@ -245,7 +225,7 @@ export default function LoginPage() {
                         if (result.error) {
                           setError(result.error.message || 'فشل تسجيل الدخول');
                         } else if (result.user) {
-                          router.push('/dashboard/patient');
+                          router.push('/admin/dashboard');
                           router.refresh();
                         }
                       } catch (err: any) {
@@ -267,7 +247,7 @@ export default function LoginPage() {
                         if (result.error) {
                           setError(result.error.message || 'فشل تسجيل الدخول');
                         } else if (result.user) {
-                          router.push('/dashboard/staff');
+                          router.push('/admin/dashboard');
                           router.refresh();
                         }
                       } catch (err: any) {
