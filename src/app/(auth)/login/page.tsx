@@ -31,28 +31,36 @@ export default function LoginPage() {
     try {
       const result = await authLogin(email, password);
       if (result.error) {
-        setError(result.error.message || 'بيانات الاعتماد غير صحيحة.');
+        const errorMsg = result.error.message || 'بيانات الاعتماد غير صحيحة.';
+        setError(errorMsg);
+        console.error('[Login] Error:', errorMsg);
       } else if (result.user) {
-        // Get user role from database to determine route
+        // Get user role from API response or fetch from /api/auth/me
         try {
           const response = await fetch('/api/auth/me');
           if (response.ok) {
             const data = await response.json();
-            const userRole = data.data?.user?.role || data.user?.role || 'patient';
+            const userRole = data.data?.user?.role || data.user?.role || result.user.user_metadata?.role || 'patient';
             const route = getDefaultRoute(userRole);
             router.push(route);
             router.refresh();
           } else {
-            // Fallback to dashboard if can't get role
-            router.push('/dashboard');
+            // Use role from user metadata if available
+            const userRole = result.user.user_metadata?.role || 'patient';
+            const route = getDefaultRoute(userRole);
+            router.push(route);
             router.refresh();
           }
         } catch {
+          // Fallback to dashboard
           router.push('/dashboard');
           router.refresh();
         }
+      } else {
+        setError('فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.');
       }
     } catch (err: any) {
+      console.error('[Login] Exception:', err);
       setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
     } finally {
       setSubmitting(false);

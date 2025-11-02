@@ -55,28 +55,83 @@ class AuthHub {
    */
   async login(email: string, password: string): Promise<AuthResult> {
     try {
-      const { data, error } = await this.supabase.auth.signInWithPassword({
-        email,
-        password,
+      // ✅ Use API route instead of direct Supabase auth
+      // This allows fallback logic and auto-user creation
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
       });
 
-      if (error) {
-        return { user: null, session: null, error };
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        // Try to get error message from response
+        const errorMessage = data.error || data.message || 'Login failed';
+        return {
+          user: null,
+          session: null,
+          error: { message: errorMessage } as AuthError,
+        };
+      }
+
+      if (!data.success) {
+        return {
+          user: null,
+          session: null,
+          error: { message: data.error || 'Login failed' } as AuthError,
+        };
       }
 
       // Clear old cache
       this.permissionsCache.clear();
 
+      // Get session from Supabase after successful API login
+      const session = await this.getSession();
+
+      // Convert API user response to Supabase User format
+      const apiUser = data.data?.user;
+      if (!apiUser) {
+        return {
+          user: null,
+          session: null,
+          error: { message: 'User data not found' } as AuthError,
+        };
+      }
+
+      // Create a mock User object compatible with Supabase User
+      const user = {
+        id: apiUser.id,
+        email: apiUser.email,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        app_metadata: {},
+        user_metadata: {
+          name: apiUser.name,
+          role: apiUser.role,
+        },
+        aud: 'authenticated',
+        confirmation_sent_at: null,
+        confirmed_at: new Date().toISOString(),
+        email_confirmed_at: new Date().toISOString(),
+        recovery_sent_at: null,
+        last_sign_in_at: new Date().toISOString(),
+        role: 'authenticated',
+      } as any;
+
       return {
-        user: data.user,
-        session: data.session,
+        user,
+        session,
         error: null,
       };
     } catch (error) {
       return {
         user: null,
         session: null,
-        error: error as AuthError,
+        error: {
+          message: error instanceof Error ? error.message : 'Login failed',
+        } as AuthError,
       };
     }
   }
