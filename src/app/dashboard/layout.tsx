@@ -20,26 +20,39 @@ export default function DashboardLayout({
   useEffect(() => {
     const loadUser = async () => {
       try {
+        // First, use localStorage immediately for fast render
         const userStr = localStorage.getItem('user');
         if (userStr) {
-          setUser(JSON.parse(userStr));
-        }
-        // Also check Supabase session
-        const { data } = await supabase.auth.getSession();
-        if (data?.session) {
-          const { data: userData } = await supabase
-            .from('users')
-            .select('id, email, role, name')
-            .eq('id', data.session.user.id)
-            .maybeSingle();
-          if (userData) {
-            setUser({
-              id: userData.id,
-              email: userData.email,
-              role: userData.role,
-              name: userData.name,
-            });
+          try {
+            const userData = JSON.parse(userStr);
+            setUser(userData);
+            setLoading(false); // Set loading to false immediately if we have stored user
+          } catch (e) {
+            // Invalid JSON, continue to Supabase check
           }
+        }
+
+        // Then try Supabase session in background (don't block on this)
+        try {
+          const { data } = await supabase.auth.getSession();
+          if (data?.session) {
+            // Only update if we got new data, but don't wait for it
+            const { data: userData } = await supabase
+              .from('users')
+              .select('id, email, role, name')
+              .eq('id', data.session.user.id)
+              .maybeSingle();
+            if (userData) {
+              setUser({
+                id: userData.id,
+                email: userData.email,
+                role: userData.role,
+                name: userData.name,
+              });
+            }
+          }
+        } catch (error) {
+          // Ignore Supabase errors - we already have localStorage user
         }
       } catch (error) {
         console.error('Error loading user:', error);

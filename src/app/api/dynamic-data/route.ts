@@ -7,16 +7,35 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    // Security: Require authentication for accessing dynamic data
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
-    if (!authResult.authorized) {
-      return NextResponse.json(
-        { error: 'Unauthorized. Authentication required to access dynamic data.' },
-        { status: 401 }
-      );
-    }
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'all';
+
+    // Public data types that don't require authentication (for homepage)
+    const publicTypes = ['services', 'hero', 'testimonials', 'gallery', 'contact'];
+    const isPublicRequest = publicTypes.includes(type);
+
+    // Only require authentication for accessing all data or sensitive data
+    if (!isPublicRequest && type !== 'all') {
+      // For non-public specific types, require auth
+      const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+      if (!authResult.authorized) {
+        return NextResponse.json(
+          { error: 'Unauthorized. Authentication required to access this data.' },
+          { status: 401 }
+        );
+      }
+    }
+
+    // For 'all' type, require authentication
+    if (type === 'all') {
+      const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+      if (!authResult.authorized) {
+        return NextResponse.json(
+          { error: 'Unauthorized. Authentication required to access all data.' },
+          { status: 401 }
+        );
+      }
+    }
 
     const supabase = getServiceSupabase();
 

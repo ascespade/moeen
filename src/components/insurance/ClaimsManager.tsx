@@ -7,7 +7,8 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
-import { Select } from '@/components/ui/Select';
+import { Select } from '@/components/ui/Select';import { I18N_KEYS } from '@/constants/i18n-keys';
+
 import {
   FileText,
   Upload,
@@ -196,11 +197,11 @@ export default function ClaimsManager({
     <Card className='p-6'>
       <div className='flex items-center justify-between mb-6'>
         <h2 className='text-xl font-semibold text-gray-900 dark:text-white'>
-          {t('insurance.claims.title')}
+          {t(I18N_KEYS.INSURANCE.CLAIMS_TITLE)}
         </h2>
         <Button onClick={() => setShowCreateForm(true)}>
           <Plus className='h-4 w-4 mr-2' />
-          {t('insurance.claims.create_new')}
+          {t(I18N_KEYS.INSURANCE.CREATE_NEW)}
         </Button>
       </div>
 
@@ -210,7 +211,7 @@ export default function ClaimsManager({
           <div className='relative'>
             <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
             <Input
-              placeholder={t('insurance.claims.search_placeholder')}
+              placeholder={t(I18N_KEYS.INSURANCE.SEARCH_PLACEHOLDER)}
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
               className='pl-10'
@@ -218,14 +219,14 @@ export default function ClaimsManager({
           </div>
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <option value='all'>{t('insurance.claims.all_statuses')}</option>
-          <option value='draft'>{t('insurance.claims.draft')}</option>
-          <option value='submitted'>{t('insurance.claims.submitted')}</option>
+          <option value='all'>{t(I18N_KEYS.INSURANCE.ALL_STATUSES)}</option>
+          <option value='draft'>{t(I18N_KEYS.INSURANCE.DRAFT)}</option>
+          <option value='submitted'>{t(I18N_KEYS.INSURANCE.SUBMITTED)}</option>
           <option value='under_review'>
-            {t('insurance.claims.under_review')}
+            {t(I18N_KEYS.INSURANCE.UNDER_REVIEW)}
           </option>
-          <option value='approved'>{t('insurance.claims.approved')}</option>
-          <option value='rejected'>{t('insurance.claims.rejected')}</option>
+          <option value='approved'>{t(I18N_KEYS.INSURANCE.APPROVED)}</option>
+          <option value='rejected'>{t(I18N_KEYS.INSURANCE.REJECTED)}</option>
         </Select>
       </div>
 
@@ -233,13 +234,13 @@ export default function ClaimsManager({
       {showCreateForm && (
         <Card className='p-4 mb-6 bg-surface dark:bg-blue-900/20'>
           <h3 className='text-lg font-semibold text-gray-900 dark:text-white mb-4'>
-            {t('insurance.claims.create_new')}
+            {t(I18N_KEYS.INSURANCE.CREATE_NEW)}
           </h3>
           <form onSubmit={handleCreateClaim} className='space-y-4'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div>
                 <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
-                  {t('insurance.claims.provider')}
+                  {t(I18N_KEYS.INSURANCE.PROVIDER)}
                 </label>
                 <Select
                   value={newClaim.provider}
@@ -249,7 +250,7 @@ export default function ClaimsManager({
                   required
                 >
                   <option value=''>
-                    {t('insurance.claims.select_provider')}
+                    {t(I18N_KEYS.INSURANCE.SELECT_PROVIDER)}
                   </option>
                   <option value='SEHA'>SEHA</option>
                   <option value='SHOON'>SHOON</option>
@@ -258,7 +259,7 @@ export default function ClaimsManager({
               </div>
               <div>
                 <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
-                  {t('insurance.claims.amount')}
+                  {t(I18N_KEYS.INSURANCE.AMOUNT)}
                 </label>
                 <Input
                   type='number'
@@ -274,7 +275,7 @@ export default function ClaimsManager({
             </div>
             <div>
               <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
-                {t('insurance.claims.description')}
+                {t(I18N_KEYS.INSURANCE.DESCRIPTION)}
               </label>
               <Input
                 value={newClaim.description}
@@ -284,14 +285,14 @@ export default function ClaimsManager({
                     description: e.target.value,
                   }))
                 }
-                placeholder={t('insurance.claims.description_placeholder')}
+                placeholder={t(I18N_KEYS.INSURANCE.DESCRIPTION_PLACEHOLDER)}
                 required
               />
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div>
                 <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
-                  {t('insurance.claims.diagnosis')}
+                  {t(I18N_KEYS.INSURANCE.DIAGNOSIS)}
                 </label>
                 <Input
                   value={newClaim.diagnosis}
@@ -301,12 +302,12 @@ export default function ClaimsManager({
                       diagnosis: e.target.value,
                     }))
                   }
-                  placeholder={t('insurance.claims.diagnosis_placeholder')}
+                  placeholder={t(I18N_KEYS.INSURANCE.DIAGNOSIS_PLACEHOLDER)}
                 />
               </div>
               <div>
                 <label className='block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1'>
-                  {t('insurance.claims.treatment')}
+                  {t(I18N_KEYS.INSURANCE.TREATMENT)}
                 </label>
                 <Input
                   value={newClaim.treatment}
@@ -316,7 +317,7 @@ export default function ClaimsManager({
                       treatment: e.target.value,
                     }))
                   }
-                  placeholder={t('insurance.claims.treatment_placeholder')}
+                  placeholder={t(I18N_KEYS.INSURANCE.TREATMENT_PLACEHOLDER)}
                 />
               </div>
             </div>
@@ -326,12 +327,12 @@ export default function ClaimsManager({
                 variant='outline'
                 onClick={() => setShowCreateForm(false)}
               >
-                {t('common.cancel')}
+                {t(I18N_KEYS.COMMON.CANCEL)}
               </Button>
               <Button type='submit' disabled={isCreating}>
                 {isCreating
-                  ? t('common.creating')
-                  : t('insurance.claims.create')}
+                  ? t(I18N_KEYS.COMMON.CREATING)
+                  : t(I18N_KEYS.INSURANCE.CREATE)}
               </Button>
             </div>
           </form>
@@ -361,7 +362,7 @@ export default function ClaimsManager({
                   </p>
                   {claim.referenceNumber && (
                     <p className='text-xs text-gray-500 dark:text-gray-500'>
-                      {t('insurance.claims.reference')}: {claim.referenceNumber}
+                      {t(I18N_KEYS.INSURANCE.REFERENCE)}: {claim.referenceNumber}
                     </p>
                   )}
                 </div>
@@ -372,7 +373,7 @@ export default function ClaimsManager({
                 </Badge>
                 {claim.status === 'draft' && (
                   <Button size='sm' onClick={() => handleSubmitClaim(claim.id)}>
-                    {t('insurance.claims.submit')}
+                    {t(I18N_KEYS.INSURANCE.SUBMIT)}
                   </Button>
                 )}
                 <Button
@@ -391,7 +392,7 @@ export default function ClaimsManager({
           <div className='text-center py-8'>
             <FileText className='h-12 w-12 text-gray-400 mx-auto mb-4' />
             <p className='text-gray-600 dark:text-gray-400'>
-              {t('insurance.claims.no_claims')}
+              {t(I18N_KEYS.INSURANCE.NO_CLAIMS)}
             </p>
           </div>
         )}

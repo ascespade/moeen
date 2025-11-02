@@ -1,6 +1,7 @@
 'use client';
 import { useSystemConfig } from '@/lib/config/system-config';
 import { useT } from '@/components/providers/I18nProvider';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 import { useState } from 'react';
 
 export default function SystemConfigPanel() {
@@ -9,20 +10,20 @@ export default function SystemConfigPanel() {
   const [activeTab, setActiveTab] = useState<'modules' | 'ai' | 'security' | 'automation'>('modules');
 
   const tabs = [
-    { id: 'modules', label: t('admin.modules'), icon: '📋' },
-    { id: 'ai', label: t('admin.aiFeatures'), icon: '🤖' },
-    { id: 'security', label: t('admin.security'), icon: '🔒' },
-    { id: 'automation', label: t('admin.automation'), icon: '⚙️' }
+    { id: 'modules', label: t(I18N_KEYS.ADMIN.MODULES), icon: '📋' },
+    { id: 'ai', label: t(I18N_KEYS.ADMIN.AI_FEATURES), icon: '🤖' },
+    { id: 'security', label: t(I18N_KEYS.ADMIN.SECURITY), icon: '🔒' },
+    { id: 'automation', label: t(I18N_KEYS.ADMIN.AUTOMATION), icon: '⚙️' }
   ];
 
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-          {t('admin.systemConfiguration')}
+          {t(I18N_KEYS.ADMIN.SYSTEM_CONFIGURATION)}
         </h1>
         <p className="text-gray-600 dark:text-gray-400">
-          {t('admin.systemConfigurationDescription')}
+          {t(I18N_KEYS.ADMIN.SYSTEM_CONFIGURATION_DESCRIPTION)}
         </p>
       </div>
 
@@ -50,7 +51,7 @@ export default function SystemConfigPanel() {
       {activeTab === 'modules' && (
         <div className="space-y-6">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            {t('admin.healthcareModules')}
+            {t(I18N_KEYS.ADMIN.HEALTHCARE_MODULES)}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(config.modules).map(([moduleName, moduleConfig]) => (
@@ -93,7 +94,7 @@ export default function SystemConfigPanel() {
       {activeTab === 'ai' && (
         <div className="space-y-6">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            {t('admin.aiFeatures')}
+            {t(I18N_KEYS.ADMIN.AI_FEATURES)}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {Object.entries(config.ai_features).map(([featureName, featureConfig]) => (
@@ -125,7 +126,7 @@ export default function SystemConfigPanel() {
                     <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                   </label>
                 </div>
-                
+
                 {featureConfig.purpose && (
                   <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
                     {featureConfig.purpose}
@@ -135,7 +136,7 @@ export default function SystemConfigPanel() {
                 {featureConfig.capabilities && (
                   <div className="space-y-2">
                     <h4 className="text-sm font-medium text-gray-900 dark:text-white">
-                      {t('admin.capabilities')}:
+                      {t(I18N_KEYS.ADMIN.CAPABILITIES)}:
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {featureConfig.capabilities.map((capability, index) => (
@@ -153,7 +154,7 @@ export default function SystemConfigPanel() {
                 {'integrations' in featureConfig && featureConfig.integrations && (
                   <div className="space-y-2 mt-4">
                     <h4 className="text-sm font-medium text-gray-900 dark:text-white">
-                      {t('admin.integrations')}:
+                      {t(I18N_KEYS.ADMIN.INTEGRATIONS)}:
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {featureConfig.integrations.map((integration, index) => (
@@ -177,7 +178,7 @@ export default function SystemConfigPanel() {
       {activeTab === 'security' && (
         <div className="space-y-6">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            {t('admin.securitySettings')}
+            {t(I18N_KEYS.ADMIN.SECURITY_SETTINGS)}
           </h2>
           <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <div className="space-y-4">
@@ -193,11 +194,11 @@ export default function SystemConfigPanel() {
                   </div>
                   <div className="flex items-center">
                     <span className={`px-2 py-1 text-xs rounded-full ${
-                      enabled 
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
+                      enabled
+                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                         : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
                     }`}>
-                      {enabled ? t('common.enabled') : t('common.disabled')}
+                      {enabled ? t(I18N_KEYS.COMMON.ENABLED) : t(I18N_KEYS.COMMON.DISABLED)}
                     </span>
                   </div>
                 </div>
@@ -211,11 +212,11 @@ export default function SystemConfigPanel() {
       {activeTab === 'automation' && (
         <div className="space-y-6">
           <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            {t('admin.automationSettings')}
+            {t(I18N_KEYS.ADMIN.AUTOMATION_SETTINGS)}
           </h2>
           <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
             <h3 className="font-medium text-gray-900 dark:text-white mb-4">
-              {t('admin.scheduledJobs')}
+              {t(I18N_KEYS.ADMIN.SCHEDULED_JOBS)}
             </h3>
             <div className="space-y-3">
               {config.automation.cron_jobs.map((job, index) => (
@@ -225,7 +226,7 @@ export default function SystemConfigPanel() {
                     <span className="text-gray-900 dark:text-white">{job}</span>
                   </div>
                   <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {t('admin.active')}
+                    {t(I18N_KEYS.ADMIN.ACTIVE)}
                   </span>
                 </div>
               ))}

@@ -12,13 +12,14 @@ import {
 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { useTheme } from '@/components/providers/ThemeProvider';
+import { useTheme } from '@/components/providers/ThemeProvider';import { I18N_KEYS } from '@/constants/i18n-keys';
+
 
 interface SupervisorData {
   id: string;
@@ -63,20 +64,96 @@ export default function SupervisorDashboard() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+    let timeoutId: NodeJS.Timeout;
+
     const fetchSupervisorData = async () => {
       try {
-        const response = await fetch('/api/supervisor/me');
-        if (response.ok) {
+        // Add timeout to prevent infinite loading
+        const controller = new AbortController();
+        timeoutId = setTimeout(() => {
+          controller.abort();
+          if (isMounted) {
+            setIsLoading(false);
+            // Set default data if API fails
+            setSupervisorData({
+              id: '',
+              fullName: '',
+              role: 'supervisor',
+              staffActivity: [],
+              systemMetrics: {
+                totalPatients: 0,
+                totalAppointments: 0,
+                revenue: 0,
+                claimsProcessed: 0,
+              },
+              alerts: [],
+              reports: [],
+            });
+          }
+        }, 3000); // 3 second timeout
+
+        const response = await fetch('/api/supervisor/me', {
+          signal: controller.signal,
+          credentials: 'include',
+        });
+
+        clearTimeout(timeoutId);
+
+        if (response.ok && isMounted) {
           const data = await response.json();
           setSupervisorData(data);
+        } else if (isMounted) {
+          // If API fails, use default data
+          setSupervisorData({
+            id: '',
+            fullName: '',
+            role: 'supervisor',
+            staffActivity: [],
+            systemMetrics: {
+              totalPatients: 0,
+              totalAppointments: 0,
+              revenue: 0,
+              claimsProcessed: 0,
+            },
+            alerts: [],
+            reports: [],
+          });
         }
       } catch (error) {
+        clearTimeout(timeoutId);
+        // On error, use default data and stop loading
+        if (isMounted) {
+          setSupervisorData({
+            id: '',
+            fullName: '',
+            role: 'supervisor',
+            staffActivity: [],
+            systemMetrics: {
+              totalPatients: 0,
+              totalAppointments: 0,
+              revenue: 0,
+              claimsProcessed: 0,
+            },
+            alerts: [],
+            reports: [],
+          });
+        }
       } finally {
-        setIsLoading(false);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     };
 
     fetchSupervisorData();
+
+    return () => {
+      isMounted = false;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, []);
 
   const handleGenerateReport = async (reportType: string) => {
@@ -103,7 +180,7 @@ export default function SupervisorDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['supervisor', 'admin']}>
+    <UnifiedProtectedRoute allowedRoles={['supervisor', 'admin']}>
       <div className='space-y-6'>
           {/* Header */}
           <div className='mb-8'>
@@ -232,10 +309,10 @@ export default function SupervisorDashboard() {
                             }
                           >
                             {staff.efficiency >= 80
-                              ? t('common.excellent')
+                              ? t(I18N_KEYS.COMMON.SUCCESS)
                               : staff.efficiency >= 60
-                                ? t('common.good')
-                                : t('common.needs_improvement')}
+                                ? t(I18N_KEYS.COMMON.SUCCESS)
+                                : t(I18N_KEYS.COMMON.ERROR)}
                           </Badge>
                         </div>
                       </div>
@@ -354,6 +431,6 @@ export default function SupervisorDashboard() {
             </div>
           </div>
       </div>
-    </ProtectedRoute>
+    </UnifiedProtectedRoute>
   );
 }

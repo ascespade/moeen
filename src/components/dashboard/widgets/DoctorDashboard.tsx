@@ -14,6 +14,7 @@ import {
     Timer,
     Users
 } from 'lucide-react';
+import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
 import { DashboardGrid, GridItem } from '../DashboardGrid';
 import ChartWidget from './ChartWidget';
@@ -265,30 +266,42 @@ const DoctorDashboard: React.FC<DoctorDashboardProps> = ({
         <Button
           variant="outline"
           className="flex flex-col items-center justify-center h-20 hover-lift"
+          asChild
         >
-          <Stethoscope className="w-6 h-6 mb-2 text-primary-600" />
-          <span className="text-sm">بدء استشارة</span>
+          <Link href="/doctor/consultations/new">
+            <Stethoscope className="w-6 h-6 mb-2 text-primary-600" />
+            <span className="text-sm">بدء استشارة</span>
+          </Link>
         </Button>
         <Button
           variant="outline"
           className="flex flex-col items-center justify-center h-20 hover-lift"
+          asChild
         >
-          <Pill className="w-6 h-6 mb-2 text-primary-600" />
-          <span className="text-sm">وصفة طبية</span>
+          <Link href="/doctor/prescriptions/new">
+            <Pill className="w-6 h-6 mb-2 text-primary-600" />
+            <span className="text-sm">وصفة طبية</span>
+          </Link>
         </Button>
         <Button
           variant="outline"
           className="flex flex-col items-center justify-center h-20 hover-lift"
+          asChild
         >
-          <FileText className="w-6 h-6 mb-2 text-primary-600" />
-          <span className="text-sm">سجل المريض</span>
+          <Link href="/doctor/patients">
+            <FileText className="w-6 h-6 mb-2 text-primary-600" />
+            <span className="text-sm">سجل المريض</span>
+          </Link>
         </Button>
         <Button
           variant="outline"
           className="flex flex-col items-center justify-center h-20 hover-lift"
+          asChild
         >
-          <AlertTriangle className="w-6 h-6 mb-2 text-primary-600" />
-          <span className="text-sm">حالة طوارئ</span>
+          <Link href="/doctor/emergencies">
+            <AlertTriangle className="w-6 h-6 mb-2 text-primary-600" />
+            <span className="text-sm">حالة طوارئ</span>
+          </Link>
         </Button>
       </div>
 

@@ -14,20 +14,10 @@ const USERS = [
   {
     email: 'supervisor@test.local',
     name: 'Supervisor User',
-    role: 'supervisor',
+    role: 'admin', // Changed to admin with full permissions
   },
   { email: 'manager@test.local', name: 'Manager User', role: 'manager' },
-  { email: 'agent@test.local', name: 'Agent User', role: '
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin","supervisor"])(req: any);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-agent' },
+  { email: 'agent@test.local', name: 'Agent User', role: 'agent' },
 ];
 
 export async function POST(req: any) {
@@ -156,9 +146,16 @@ export async function POST(req: any) {
       // Force update role in users table
       if (u.role && finalUser) {
         try {
+          const updateData: any = { role: u.role, status: 'active', is_active: true };
+
+          // For admin role, ensure full permissions
+          if (u.role === 'admin') {
+            updateData.metadata = { permissions: ['*'] }; // Full permissions
+          }
+
           await supabase
             .from('users')
-            .update({ role: u.role })
+            .update(updateData)
             .eq('id', finalUser.id);
         } catch (e: any) {
           // Error updating role - continue

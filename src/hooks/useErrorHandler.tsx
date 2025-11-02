@@ -2,7 +2,8 @@
 import logger from '@/lib/monitoring/logger';
 
 import { useCallback } from 'react';
-import { useT } from '@/hooks/useT';
+import { useT } from '@/hooks/useT';import { I18N_KEYS } from '@/constants/i18n-keys';
+
 // import { toast } from '@/components/ui/Toast';
 // import { logger } from '@/lib/logger';
 
@@ -20,7 +21,7 @@ export function useErrorHandler() {
       const {
         showToast = true,
         logError = true,
-        fallbackMessage = t('error.generic'),
+        fallbackMessage = t(I18N_KEYS.ERRORS.SERVER_ERROR),
       } = options;
 
       let errorMessage = fallbackMessage;

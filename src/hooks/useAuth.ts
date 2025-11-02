@@ -54,17 +54,20 @@ export const useAuth = (): AuthState & AuthActions => {
           return;
         }
 
-        // Fetch canonical user + permissions from API
+        // Fetch canonical user + permissions from API with timeout
         try {
           const controller = new AbortController();
-          const t = setTimeout(() => controller.abort(), 5000);
+          const timeoutId = setTimeout(() => controller.abort(), 2000); // Reduced to 2 seconds for faster fallback
+
           const res = await fetch('/api/auth/me', {
             method: 'GET',
             credentials: 'include',
             cache: 'no-store',
             signal: controller.signal,
           });
-          clearTimeout(t);
+
+          clearTimeout(timeoutId);
+
           if (res.ok) {
             const payload = await res.json().catch(() => ({}) as any);
             const foundUser = payload?.data?.user || payload?.user || null;
@@ -74,16 +77,45 @@ export const useAuth = (): AuthState & AuthActions => {
               setUserState(foundUser);
               setPermissions(foundPermissions || []);
               setUser(foundUser);
+              localStorage.setItem('user', JSON.stringify(foundUser)); // Ensure stored
               localStorage.setItem(
                 'permissions',
                 JSON.stringify(foundPermissions || [])
               );
             } else {
-              clearAuth();
+              // If API fails but we have stored user, use it
+              const storedUser = getUser();
+              if (storedUser) {
+                const storedPerms = localStorage.getItem('permissions');
+                const perms = storedPerms ? JSON.parse(storedPerms) : [];
+                setPermissions(perms);
+                setUserState(storedUser);
+                setUser(storedUser);
+              } else {
+                clearAuth();
+              }
+            }
+          } else {
+            // API failed - use stored user if available
+            const storedUser = getUser();
+            if (storedUser) {
+              const storedPerms = localStorage.getItem('permissions');
+              const perms = storedPerms ? JSON.parse(storedPerms) : [];
+              setPermissions(perms);
+              setUserState(storedUser);
+              setUser(storedUser);
             }
           }
         } catch (_e) {
-          // Silently ignore transient network errors in non-authenticated states
+          // Network error or timeout - use stored user if available
+          const storedUser = getUser();
+          if (storedUser) {
+            const storedPerms = localStorage.getItem('permissions');
+            const perms = storedPerms ? JSON.parse(storedPerms) : [];
+            setPermissions(perms);
+            setUserState(storedUser);
+            setUser(storedUser);
+          }
         }
       } catch (_error) {
         clearAuth();

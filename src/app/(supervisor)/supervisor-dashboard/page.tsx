@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react';
 import { useT } from '@/hooks/useT';
 import { useTheme } from '@/core/theme';
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { LoadingSpinner } from '@/components/ui';
+import { LoadingSpinner } from '@/components/ui';import { I18N_KEYS } from '@/constants/i18n-keys';
+
 import {
   Users,
   TrendingUp,
@@ -101,7 +102,7 @@ export default function SupervisorDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['supervisor', 'admin']}>
+    <UnifiedProtectedRoute allowedRoles={['supervisor', 'admin']}>
       <div className='min-h-screen bg-surface dark:bg-gray-900'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
           {/* Header */}
@@ -231,10 +232,10 @@ export default function SupervisorDashboard() {
                             }
                           >
                             {staff.efficiency >= 80
-                              ? t('common.excellent')
+                              ? t(I18N_KEYS.COMMON.SUCCESS)
                               : staff.efficiency >= 60
-                                ? t('common.good')
-                                : t('common.needs_improvement')}
+                                ? t(I18N_KEYS.COMMON.SUCCESS)
+                                : t(I18N_KEYS.COMMON.ERROR)}
                           </Badge>
                         </div>
                       </div>
@@ -354,6 +355,6 @@ export default function SupervisorDashboard() {
           </div>
         </div>
       </div>
-    </ProtectedRoute>
+    </UnifiedProtectedRoute>
   );
 }

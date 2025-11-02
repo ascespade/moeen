@@ -117,9 +117,9 @@ export default function AdminSidebar() {
           id: 'chatbot',
           label: 'المساعد الذكي',
           icon: <Bot className="h-4 w-4" />,
-          href: '/admin/chatbot',
+          href: '/chatbot',
           permissions: ['chatbot:view']
-            },
+        },
       ],
         },
         {
@@ -185,13 +185,6 @@ export default function AdminSidebar() {
       id: 'system',
       title: 'النظام',
       items: [
-        {
-          id: 'users-management',
-          label: 'إدارة المستخدمين',
-          icon: <Users className="h-4 w-4" />,
-          href: '/admin/users',
-          permissions: ['users:manage']
-        },
         {
           id: 'settings',
           label: 'الإعدادات',
@@ -278,7 +271,7 @@ export default function AdminSidebar() {
           </div>
         ))}
       </nav>
-        
+
       <div className="border-t border-[var(--brand-border)] p-4">
         <div className="rounded-lg bg-[var(--brand-surface)] p-3">
           <div className="flex items-center gap-3">

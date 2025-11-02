@@ -1,4 +1,4 @@
-import { createClient } from './supabase/client';
+import { getBrowserSupabase } from './supabaseClient';
 import { I18N_KEYS } from '@/constants/i18n-keys';
 
 export interface DynamicContent {
@@ -65,7 +65,7 @@ export interface FAQ {
  * Eliminates hardcoded values and ensures all content is database-driven
  */
 class DynamicContentManager {
-  private supabase = createClient();
+  private supabase = getBrowserSupabase(); // Use singleton browser client
   private cache = new Map<string, any>();
   private cacheExpiry = 5 * 60 * 1000; // 5 minutes
 

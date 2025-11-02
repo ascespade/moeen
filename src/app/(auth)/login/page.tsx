@@ -1,29 +1,14 @@
 'use client';
-import { useState, useEffect, useMemo, FormEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getBrowserSupabase } from '@/lib/supabaseClient';
+import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
+import { getDefaultRoute } from '@/lib/auth/unified-auth';
 export const dynamic = 'force-dynamic';
-
-const ROLE_REDIRECTS: Record<string, string> = {
-  admin: '/admin/dashboard',
-  doctor: '/dashboard/doctor',
-  staff: '/dashboard/staff',
-  patient: '/dashboard/patient',
-  supervisor: '/dashboard/supervisor',
-  customer: '/dashboard',
-};
-
-function getRedirectForRole(role?: string | null) {
-  if (!role) return '/dashboard';
-  // Normalize role name (handle both 'admin' and 'Administrator' etc.)
-  const normalizedRole = role.toLowerCase().trim();
-  return ROLE_REDIRECTS[normalizedRole] || ROLE_REDIRECTS[role] || '/dashboard';
-}
 
 export default function LoginPage() {
   const router = useRouter();
-  const supabase = useMemo(() => getBrowserSupabase(), []);
+  const { login, user, isAuthenticated, isLoading } = useUnifiedAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,216 +16,43 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // If session already exists, resolve role and redirect
+  // Redirect if already logged in
   useEffect(() => {
-    let mounted = true;
-    (async () => {
-      const { data } = await supabase.auth.getSession();
-      const session = data?.session;
-      if (mounted && session?.user?.id) {
-        const redirect = await resolveRedirectAfterLogin(
-          session.user.id,
-          session.user.email || undefined
-        );
-        router.replace(redirect);
-      }
-    })();
-    return () => {
-      mounted = false;
-    };
-  }, [router, supabase]);
-
-  async function fetchPermissions(
-    userId: string,
-    roleId?: string | null
-  ): Promise<string[]> {
-    const perms = new Set<string>();
-
-    // Role permissions
-    let roleIdToUse: string | undefined | null = roleId ?? null;
-    if (!roleIdToUse) {
-      const { data: ur } = await supabase
-        .from('user_roles')
-        .select('role_id')
-        .eq('user_id', userId)
-        .maybeSingle();
-      roleIdToUse = ur?.role_id as string | undefined;
+    if (!isLoading && isAuthenticated && user) {
+      const route = getDefaultRoute(user.role);
+      router.replace(route);
     }
-    if (roleIdToUse) {
-      const { data: rolePermRows } = await supabase
-        .from('role_permissions')
-        .select('permission_id')
-        .eq('role_id', roleIdToUse);
-      const rolePermIds = (rolePermRows || [])
-        .map((rp: { permission_id: string }) => rp.permission_id)
-        .filter(Boolean);
-      if (rolePermIds.length) {
-        const { data: permRows } = await supabase
-          .from('permissions')
-          .select('code')
-          .in('id', rolePermIds as string[]);
-        (permRows || []).forEach((p: { code?: string }) => p?.code && perms.add(p.code));
-      }
-    }
+  }, [isAuthenticated, isLoading, user, router]);
 
-    // User direct permissions
-    const { data: userPermRows } = await supabase
-      .from('user_permissions')
-      .select('permission_id')
-      .eq('user_id', userId);
-    const userPermIds = (userPermRows || [])
-      .map((up: { permission_id: string }) => up.permission_id)
-      .filter(Boolean);
-    if (userPermIds.length) {
-      const { data: permRows } = await supabase
-        .from('permissions')
-        .select('code')
-        .in('id', userPermIds as string[]);
-      (permRows || []).forEach((p: { code?: string }) => p?.code && perms.add(p.code));
-    }
-
-    return Array.from(perms);
-  }
-
-  async function resolveRedirectAfterLogin(
-    userId: string,
-    userEmail?: string
-  ): Promise<string> {
-    // Check user status and resolve role
-    const { data: userRow, error: userErr } = await supabase
-      .from('users')
-      .select('status, role')
-      .eq('id', userId)
-      .maybeSingle();
-
-    if (userErr) {
-      return '/dashboard';
-    }
-
-    const inactiveByStatus = userRow?.status && userRow.status !== 'active';
-    if (inactiveByStatus) {
-      await supabase.auth.signOut();
-      setError('⚠️ حسابك قيد المراجعة. يرجى التواصل مع المشرف.');
-      return '/login';
-    }
-
-    // Determine role (via user_roles -> roles, fallback users.role)
-    let roleId: string | null = null;
-    let roleName: string | null = null;
-
-    // First, try to get role from user_roles table (new system)
-    const { data: ur } = await supabase
-      .from('user_roles')
-      .select('role_id, is_active')
-      .eq('user_id', userId)
-      .eq('is_active', true)
-      .maybeSingle();
-
-    if (ur?.role_id) {
-      roleId = ur.role_id as string;
-      const { data: role } = await supabase
-        .from('roles')
-        .select('name')
-        .eq('id', roleId)
-        .maybeSingle();
-      roleName = role?.name ?? null;
-    }
-
-    // Fallback to users.role column if no role found in user_roles
-    if (!roleName && userRow?.role) {
-      roleName = userRow.role as string;
-    }
-
-    // Normalize role name (handle variations)
-    if (roleName) {
-      roleName = roleName.toLowerCase().trim();
-    }
-
-    // If still no role, try to auto-assign patient role (only as last resort)
-    if (!roleName) {
-      const { data: patientRole } = await supabase
-        .from('roles')
-        .select('id, name')
-        .eq('name', 'patient')
-        .maybeSingle();
-      if (patientRole?.id) {
-        try {
-          await supabase
-            .from('user_roles')
-            .upsert(
-              { user_id: userId, role_id: patientRole.id, is_active: true },
-              { onConflict: 'user_id,role_id' }
-            );
-          roleName = 'patient';
-        } catch (e) {
-          console.error('Failed to auto-assign patient role:', e);
-        }
-      }
-    }
-
-    // If still no role found, reject login
-    if (!roleName) {
-      await supabase.auth.signOut();
-      setError('⚠️ لا توجد صلاحية مرتبطة بحسابك. يرجى التواصل مع المشرف.');
-      return '/login';
-    }
-
-    // Fetch permissions and persist locally for client-side checks
-    try {
-      const permissions = await fetchPermissions(userId, roleId);
-      localStorage.setItem('permissions', JSON.stringify(permissions));
-      const clientUser = {
-        id: userId,
-        email: userEmail || '',
-        role: roleName,
-      } as any;
-      localStorage.setItem('user', JSON.stringify(clientUser));
-    } catch (e) {
-      // Ignore permission fetch errors but continue redirect
-    }
-
-    return getRedirectForRole(roleName);
-  }
-
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
     try {
-      const { data, error: signInError } =
-        await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-      if (signInError || !data?.user) {
-        setError('بيانات الاعتماد غير صحيحة.');
-        setSubmitting(false);
-        return;
+      const result = await login(email, password);
+      if (result.success && user) {
+        const route = getDefaultRoute(user.role);
+        router.push(route);
+      } else {
+        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
       }
-
-      // Wait a bit for session to be saved to cookies
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-      const redirectTo = await resolveRedirectAfterLogin(
-        data.user.id,
-        data.user.email || undefined
-      );
-      if (redirectTo === '/login') {
-        setSubmitting(false);
-        return;
-      }
-
-      // Ensure session is persisted before redirect
-      await supabase.auth.getSession();
-
-      router.replace(redirectTo);
     } catch (err: any) {
       setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
     } finally {
       setSubmitting(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p>جاري التحميل...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-[var(--default-surface)] via-white to-[var(--bg-gray-50)] p-4'>

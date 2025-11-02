@@ -7,12 +7,12 @@ test.describe('theme Module - Playwright Tests', () => {
     await page.waitForLoadState('networkidle');
   });
 
-  test('theme - Page loads successfully', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Page loads successfully', async ({ page }) => {
     await expect(page).toHaveTitle(/.*/);
     await expect(page.locator('body')).toBeVisible();
   });
 
-  test('theme - Navigation works', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Navigation works', async ({ page }) => {
     // Test navigation to theme related pages
     const navLinks = page.locator('nav a, [role="navigation"] a');
     const count = await navLinks.count();
@@ -28,7 +28,7 @@ test.describe('theme Module - Playwright Tests', () => {
     }
   });
 
-  test('theme - Responsive design', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Responsive design', async ({ page }) => {
     // Test mobile viewport
     await page.setViewportSize({ width: 375, height: 667 });
     await expect(page.locator('body')).toBeVisible();
@@ -42,7 +42,7 @@ test.describe('theme Module - Playwright Tests', () => {
     await expect(page.locator('body')).toBeVisible();
   });
 
-  test('theme - Accessibility', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Accessibility', async ({ page }) => {
     // Check for basic accessibility
     const headings = page.locator('h1, h2, h3, h4, h5, h6');
     const headingCount = await headings.count();
@@ -64,7 +64,7 @@ test.describe('theme Module - Playwright Tests', () => {
     }
   });
 
-  test('theme - Performance', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Performance', async ({ page }) => {
     const startTime = Date.now();
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -74,13 +74,13 @@ test.describe('theme Module - Playwright Tests', () => {
     expect(loadTime).toBeLessThan(5000);
   });
 
-  test('theme - Error handling', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Error handling', async ({ page }) => {
     // Test 404 page
     const response = await page.goto('/non-existent-page');
     expect(response?.status()).toBe(404);
   });
 
-  test('theme - Form interactions', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Form interactions', async ({ page }) => {
     const forms = page.locator('form');
     const formCount = await forms.count();
 
@@ -100,7 +100,7 @@ test.describe('theme Module - Playwright Tests', () => {
     }
   });
 
-  test('theme - API calls', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - API calls', async ({ page }) => {
     // Monitor network requests
     const requests = [];
     page.on('request', request => {
@@ -119,7 +119,7 @@ test.describe('theme Module - Playwright Tests', () => {
     }
   });
 
-  test('theme - State management', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - State management', async ({ page }) => {
     // Test if the page maintains state
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -133,7 +133,7 @@ test.describe('theme Module - Playwright Tests', () => {
     }
   });
 
-  test('theme - Internationalization', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Internationalization', async ({ page }) => {
     // Test language switching if available
     const langSelectors = page.locator(
       '[data-lang], [data-testid*="lang"], select[name*="lang"]'

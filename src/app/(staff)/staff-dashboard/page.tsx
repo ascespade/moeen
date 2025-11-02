@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useT } from '@/hooks/useT';
 import { useTheme } from '@/core/theme';
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -113,7 +113,7 @@ export default function StaffDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['staff', 'supervisor', 'admin']}>
+    <UnifiedProtectedRoute allowedRoles={['staff', 'supervisor', 'admin']}>
       <div className='min-h-screen bg-surface dark:bg-gray-900'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
           {/* Header */}
@@ -350,6 +350,6 @@ export default function StaffDashboard() {
           </div>
         </div>
       </div>
-    </ProtectedRoute>
+    </UnifiedProtectedRoute>
   );
 }

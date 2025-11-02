@@ -17,7 +17,7 @@ test.describe('theme Module - Integration Tests', () => {
     await page.waitForLoadState('networkidle');
   });
 
-  test('theme - Full workflow integration', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Full workflow integration', async ({ page }) => {
     // Test complete user workflow
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -34,7 +34,7 @@ test.describe('theme Module - Integration Tests', () => {
     expect(error).toBeNull();
   });
 
-  test('theme - API and UI integration', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - API and UI integration', async ({ page }) => {
     // Monitor API calls
     const apiCalls = [];
     page.on('request', request => {
@@ -66,7 +66,7 @@ test.describe('theme Module - Integration Tests', () => {
     }
   });
 
-  test('theme - State persistence', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - State persistence', async ({ page }) => {
     // Test state persistence across page reloads
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -89,7 +89,7 @@ test.describe('theme Module - Integration Tests', () => {
     await expect(page.locator('body')).toBeVisible();
   });
 
-  test('theme - Error recovery', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Error recovery', async ({ page }) => {
     // Test error recovery mechanisms
     await page.goto('/');
     await page.waitForLoadState('networkidle');
@@ -111,7 +111,7 @@ test.describe('theme Module - Integration Tests', () => {
     await expect(page.locator('body')).toBeVisible();
   });
 
-  test('theme - Performance under load', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Performance under load', async ({ page }) => {
     // Test performance under simulated load
     const startTime = Date.now();
 

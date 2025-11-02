@@ -1,5 +1,6 @@
 'use client';
 import { ROUTES } from '@/constants/routes';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 import { useI18n } from '@/hooks/useI18n';
 import { usePreferences } from '@/hooks/usePreferences';
 import { UI_CONSTANTS } from '@/lib/constants/ui';
@@ -34,7 +35,7 @@ const ThemeLanguageSwitches = memo(function ThemeLanguageSwitches() {
         ) : (
           <Moon className='h-4 w-4' />
         )}
-        <span className='hidden sm:inline'>{t('theme', 'الثيم')}</span>
+        <span className='hidden sm:inline'>{t(I18N_KEYS.THEME.LABEL, 'الثيم')}</span>
       </button>
 
       {/* Language Toggle Button */}
@@ -80,26 +81,26 @@ const GlobalHeader = memo(function GlobalHeader() {
           </div>
           <div className='hidden items-center gap-6 md:flex'>
             <Link href='#services' className='nav-link'>
-              {t('nav.services', 'الخدمات')}
+              {t(I18N_KEYS.NAV.SERVICES, 'الخدمات')}
             </Link>
             <Link href='#about' className='nav-link'>
-              {t('nav.about', 'عن المركز')}
+              {t(I18N_KEYS.NAV.ABOUT, 'عن المركز')}
             </Link>
             <Link href='#gallery' className='nav-link'>
-              {t('nav.gallery', 'المعرض')}
+              {t(I18N_KEYS.NAV.GALLERY, 'المعرض')}
             </Link>
             <Link href='#contact' className='nav-link'>
-              {t('nav.contact', 'اتصل بنا')}
+              {t(I18N_KEYS.NAV.CONTACT, 'اتصل بنا')}
             </Link>
           </div>
           <div className='flex items-center gap-3'>
             {/* Theme and Language Switches */}
             <ThemeLanguageSwitches />
             <Link href={ROUTES.LOGIN} className='btn btn-outline'>
-              {t('auth.login', 'تسجيل الدخول')}
+              {t(I18N_KEYS.AUTH.LOGIN, 'تسجيل الدخول')}
             </Link>
             <Link href={ROUTES.REGISTER} className='btn btn-default'>
-              {t('auth.register', 'إنشاء حساب')}
+              {t(I18N_KEYS.AUTH.REGISTER, 'إنشاء حساب')}
             </Link>
           </div>
         </div>

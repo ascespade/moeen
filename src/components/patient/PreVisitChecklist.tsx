@@ -5,7 +5,8 @@ import { useT } from '@/hooks/useT';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Checkbox } from '@/components/ui/Checkbox';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/Badge';import { I18N_KEYS } from '@/constants/i18n-keys';
+
 import {
   CheckCircle,
   AlertCircle,
@@ -177,16 +178,16 @@ export default function PreVisitChecklist({
     <Card className='p-6'>
       <div className='mb-6'>
         <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>
-          {t('patient.checklist.title')}
+          {t(I18N_KEYS.PATIENTS.CHECKLIST.TITLE)}
         </h2>
         <p className='text-gray-600 dark:text-gray-400'>
-          {t('patient.checklist.description')}
+          {t(I18N_KEYS.PATIENTS.CHECKLIST.DESCRIPTION)}
         </p>
 
         {/* Progress */}
         <div className='mt-4'>
           <div className='flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2'>
-            <span>{t('patient.checklist.progress')}</span>
+            <span>{t(I18N_KEYS.PATIENTS.CHECKLIST.PROGRESS)}</span>
             <span>
               {completedItems}/{totalItems}
             </span>
@@ -240,7 +241,7 @@ export default function PreVisitChecklist({
                       <div className='flex items-center space-x-2'>
                         {item.required && (
                           <Badge variant='secondary' className='text-xs'>
-                            {t('common.required')}
+                            {t(I18N_KEYS.COMMON.REQUIRED)}
                           </Badge>
                         )}
                         {item.completed && (
@@ -265,12 +266,12 @@ export default function PreVisitChecklist({
         <div className='flex items-center justify-between'>
           <div>
             <p className='text-sm text-gray-600 dark:text-gray-400'>
-              {t('patient.checklist.required_completed')}:{' '}
+              {t(I18N_KEYS.PATIENTS.CHECKLIST.REQUIRED_COMPLETED)}:{' '}
               {completedRequiredItems}/{requiredItems.length}
             </p>
             {!allRequiredCompleted && (
               <p className='text-sm text-default-default dark:text-orange-400 mt-1'>
-                {t('patient.checklist.required_warning')}
+                {t(I18N_KEYS.PATIENTS.CHECKLIST.REQUIRED_WARNING)}
               </p>
             )}
           </div>
@@ -280,7 +281,7 @@ export default function PreVisitChecklist({
             disabled={!allRequiredCompleted || isSaving}
             className='px-8'
           >
-            {isSaving ? t('common.submitting') : t('patient.checklist.submit')}
+            {isSaving ? t(I18N_KEYS.COMMON.SUBMITTING) : t(I18N_KEYS.PATIENTS.CHECKLIST.SUBMIT)}
           </Button>
         </div>
       </div>
