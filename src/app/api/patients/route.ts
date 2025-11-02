@@ -53,10 +53,15 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    const patients = await realDB.searchUsers(searchTerm, role);
-
-    // Apply pagination
-    const paginatedPatients = patients.slice(offset, offset + limit);
+    // Use optimized patient queries with proper DB pagination
+    const { searchPatients } = await import('@/lib/database/modules/patients.queries');
+    const supabase = await createClient();
+    
+    const { patients: paginatedPatients, total } = await searchPatients(supabase, {
+      searchTerm,
+      limit,
+      offset,
+    });
 
     // Audit log: PHI access (HIPAA compliance)
     await AuditLogger.logPHIAccess(
@@ -70,10 +75,10 @@ export async function GET(request: NextRequest) {
       success: true,
       data: paginatedPatients,
       pagination: {
-        total: patients.length,
+        total,
         limit,
         offset,
-        hasMore: offset + limit < patients.length,
+        hasMore: offset + limit < total,
       },
     });
   } catch (error) {

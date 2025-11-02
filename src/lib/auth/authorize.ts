@@ -64,127 +64,27 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
       return { user: null, error: 'Unauthorized' };
     }
 
-    // Get user data with role
-    const { data: userData, error: userError } = await supabase
-      .from('users')
-      .select('id, email, role, status')
-      .eq('id', session.user.id)
-      .maybeSingle();
+    // Get user data with role using optimized query
+    const { getUserById, getUserPermissions, updateUserLastLogin } = await import('@/lib/database/modules/auth.queries');
+    
+    const userData = await getUserById(supabase, session.user.id);
 
-    if (userError || !userData) {
+    if (!userData) {
       return { user: null, error: 'User not found' };
     }
     if (userData.status && userData.status !== 'active') {
       return { user: null, error: 'Inactive user' };
     }
 
-    // Aggregate permissions from role_permissions and user_permissions
-    // Use simpler query with timeout protection
-    let rolePerms = null;
-    let userPerms = null;
+    // Get user permissions (optimized - uses PermissionManager cache + DB queries)
+    const userPerms = await getUserPermissions(supabase, userData.id, userData.role);
 
-    try {
-      // Try simpler query first (without nested joins that might hang)
-      const rolePermsResult = await Promise.race([
-        supabase
-          .from('user_roles')
-          .select('role_id')
-          .eq('user_id', userData.id)
-          .eq('is_active', true)
-          .maybeSingle(),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000))
-      ]) as any;
+    // Update last login timestamp (async - don't wait)
+    updateUserLastLogin(supabase, userData.id).catch(() => {
+      // Silently fail - not critical
+    });
 
-      rolePerms = rolePermsResult?.data;
-
-      // If we got a role_id, try to get permissions
-      if (rolePerms?.role_id) {
-        try {
-          const permResult = await Promise.race([
-            supabase
-              .from('role_permissions')
-              .select('permission_id, permissions:permission_id(code)')
-              .eq('role_id', rolePerms.role_id),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000))
-          ]) as any;
-
-          rolePerms = { role_permissions: permResult?.data || [] };
-        } catch (e) {
-          rolePerms = null;
-        }
-      }
-    } catch (e) {
-      rolePerms = null;
-    }
-
-    try {
-      const userPermsResult = await Promise.race([
-        supabase
-          .from('user_permissions')
-          .select('permission_id, permissions:permission_id(code)')
-          .eq('user_id', userData.id)
-          .eq('is_active', true),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000))
-      ]) as any;
-
-      userPerms = userPermsResult?.data || [];
-    } catch (e) {
-      userPerms = [];
-    }
-
-    let codes = new Set<string>();
-
-    try {
-      // Handle rolePerms - could be single object or array
-      if (rolePerms) {
-        const rolePermsArray = Array.isArray(rolePerms) ? rolePerms : [rolePerms];
-        rolePermsArray.forEach((rp: any) => {
-          if (rp?.role_permissions) {
-            const permArray = Array.isArray(rp.role_permissions) ? rp.role_permissions : [rp.role_permissions];
-            permArray.forEach((x: any) => {
-              if (x?.permissions?.code) codes.add(x.permissions.code);
-            });
-          }
-        });
-      }
-
-      // Handle userPerms
-      const userPermsArray = Array.isArray(userPerms) ? userPerms : (userPerms ? [userPerms] : []);
-      userPermsArray.forEach((up: any) => {
-        if (up?.permissions?.code) codes.add(up.permissions.code);
-      });
-    } catch (error) {
-      // Error processing permissions - continue with fallback
-    }
-
-    // Fallback: If no permissions found, use PermissionManager
-    if (codes.size === 0 && userData.role) {
-      try {
-        const { PermissionManager } = await import('@/lib/permissions');
-        const rolePermsList = PermissionManager.getRolePermissions(userData.role);
-        if (Array.isArray(rolePermsList)) {
-          rolePermsList.forEach((p: string) => codes.add(p));
-        } else {
-          // Ultimate fallback: basic permissions
-          if (userData.role === 'admin') {
-            codes.add('dashboard:view');
-            codes.add('*');
-          } else {
-            codes.add('dashboard:view');
-          }
-        }
-      } catch (e) {
-        // Ultimate fallback: basic permissions based on role
-        if (userData.role === 'admin' || userData.role === 'manager') {
-          codes.add('dashboard:view');
-          codes.add('*');
-        } else {
-          codes.add('dashboard:view');
-        }
-      }
-    }
-
-    const meta = { permissions: Array.from(codes) };
+    const meta = { permissions: userPerms.permissions };
 
     return {
       user: {

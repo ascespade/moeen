@@ -47,24 +47,32 @@ export async function GET(request: NextRequest) {
     const limit = parseInt(searchParams.get('limit') || '50');
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    let doctors;
+    // Use optimized doctor queries with proper DB pagination
+    const { searchDoctors, getDoctorsBySpecialty } = await import('@/lib/database/modules/doctors.queries');
+    const supabase = await createClient();
+    
+    let result;
     if (specialty) {
-      doctors = await realDB.getDoctorsBySpecialty(specialty);
+      const doctors = await getDoctorsBySpecialty(supabase, specialty);
+      // Apply client-side pagination for specialty (since it's a filtered result)
+      const paginatedDoctors = doctors.slice(offset, offset + limit);
+      result = { doctors: paginatedDoctors, total: doctors.length };
     } else {
-      doctors = await realDB.searchUsers(searchTerm, 'doctor');
+      result = await searchDoctors(supabase, {
+        searchTerm,
+        limit,
+        offset,
+      });
     }
-
-    // Apply pagination
-    const paginatedDoctors = doctors.slice(offset, offset + limit);
 
     return NextResponse.json({
       success: true,
-      data: paginatedDoctors,
+      data: result.doctors,
       pagination: {
-        total: doctors.length,
+        total: result.total,
         limit,
         offset,
-        hasMore: offset + limit < doctors.length,
+        hasMore: offset + limit < result.total,
       },
     });
   } catch (error) {
