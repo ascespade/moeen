@@ -32,8 +32,19 @@ export interface AuthResult {
   error: string | null;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+// Get JWT secret dynamically at runtime from environment
+function getJWTSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is not set. Please add it to your .env file.');
+  }
+  return secret;
+}
+
+// Get JWT expires in dynamically at runtime
+function getJWTExpiresIn(): string {
+  return process.env.JWT_EXPIRES_IN || '7d';
+}
 
 class CustomAuthHub {
   private static instance: CustomAuthHub;
@@ -184,14 +195,16 @@ class CustomAuthHub {
    * Generate JWT token
    */
   private generateToken(user: CustomAuthUser): string {
+    const secret = getJWTSecret();
+    const expiresIn = getJWTExpiresIn();
     return jwt.sign(
       {
         userId: user.id,
         email: user.email,
         role: user.role,
       },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN }
+      secret,
+      { expiresIn }
     );
   }
 
@@ -200,7 +213,8 @@ class CustomAuthHub {
    */
   async verifyToken(token: string): Promise<CustomAuthUser | null> {
     try {
-      const decoded = jwt.verify(token, JWT_SECRET) as any;
+      const secret = getJWTSecret();
+      const decoded = jwt.verify(token, secret) as any;
       
       const supabase = await createClient();
       const { data: userData } = await supabase

@@ -16,31 +16,42 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Verify token
-    const user = await customAuthHub.verifyToken(token);
+    try {
+      // Verify token
+      const user = await customAuthHub.verifyToken(token);
 
-    if (!user) {
-      return NextResponse.json(
-        { success: false, error: 'Invalid token' },
-        { status: 401 }
-      );
+      if (!user) {
+        return NextResponse.json(
+          { success: false, error: 'Invalid or expired token' },
+          { status: 401 }
+        );
+      }
+
+      // Get user permissions
+      const permissions = await customAuthHub.getUserPermissions(user.id);
+
+      return NextResponse.json({
+        success: true,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+          avatar: user.avatar_url,
+          status: user.status,
+        },
+        permissions: permissions?.permissions || [],
+      });
+    } catch (error: any) {
+      // Handle JWT errors
+      if (error.message?.includes('JWT_SECRET')) {
+        return NextResponse.json(
+          { success: false, error: 'JWT configuration error. Please check JWT_SECRET in .env file.' },
+          { status: 500 }
+        );
+      }
+      throw error;
     }
-
-    // Get user permissions
-    const permissions = await customAuthHub.getUserPermissions(user.id);
-
-    return NextResponse.json({
-      success: true,
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-        avatar: user.avatar_url,
-        status: user.status,
-      },
-      permissions: permissions?.permissions || [],
-    });
   } catch (error) {
     console.error('Verify token error:', error);
     return NextResponse.json(
