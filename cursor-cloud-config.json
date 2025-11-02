@@ -1,0 +1,124 @@
+{
+  "project": {
+    "id": "hemam-center",
+    "name": "Hemam Center Healthcare Management System",
+    "organization": "مركز الهمم للإعاقات الذهنية والتوحد"
+  },
+  "entities": {
+    "background_agents": {
+      "enabled": true,
+      "config_file": "./cursor_background_agent.json",
+      "api_key_env": "CURSOR_API_KEY",
+      "base_url": "https://api.cursor.sh/v1/background-agent",
+      "features": {
+        "auto_healing": true,
+        "parallel_execution": true,
+        "auto_commit": true,
+        "monitoring": true
+      }
+    },
+    "rules": {
+      "enabled": true,
+      "file": ".cursorrules",
+      "shared_with_composer": true,
+      "shared_with_agents": true,
+      "auto_sync": true
+    },
+    "composer": {
+      "enabled": true,
+      "api_key_env": "CURSOR_API_KEY",
+      "base_url": "https://api.cursor.sh/v1/composer",
+      "use_rules": true,
+      "features": {
+        "visual_editing": true,
+        "component_generation": true,
+        "code_export": true,
+        "preview": true
+      }
+    },
+    "composer_rules": {
+      "enabled": true,
+      "file": ".cursor/composer-rules.json",
+      "sync_with_rules": true,
+      "auto_apply": true
+    }
+  },
+  "communication": {
+    "shared_context": {
+      "enabled": true,
+      "sync_interval": 5000,
+      "storage": "memory"
+    },
+    "events": {
+      "enabled": true,
+      "channels": [
+        "component_created",
+        "component_updated",
+        "rules_changed",
+        "agent_fixed",
+        "build_status"
+      ]
+    },
+    "api_sync": {
+      "enabled": true,
+      "frequency": "real-time",
+      "retry_on_failure": true
+    },
+    "webhooks": {
+      "enabled": false,
+      "url": null,
+      "events": []
+    }
+  },
+  "integration": {
+    "background_agent_to_composer": {
+      "enabled": true,
+      "on_event": "component_suggestion_needed",
+      "action": "suggest_component"
+    },
+    "composer_to_rules": {
+      "enabled": true,
+      "on_event": "component_created",
+      "action": "validate_against_rules"
+    },
+    "rules_to_composer_rules": {
+      "enabled": true,
+      "sync_mode": "bidirectional",
+      "conflict_resolution": "rules_priority"
+    },
+    "composer_rules_to_background_agent": {
+      "enabled": true,
+      "on_event": "rules_updated",
+      "action": "reload_config"
+    }
+  },
+  "monitoring": {
+    "log_level": "info",
+    "log_file": ".cursor_cloud_logs/entities.log",
+    "metrics": {
+      "track_api_calls": true,
+      "track_events": true,
+      "track_errors": true
+    },
+    "alerts": {
+      "on_error": true,
+      "on_communication_failure": true,
+      "channels": ["console", "log_file"]
+    }
+  },
+  "security": {
+    "api_key_storage": "env",
+    "encrypt_secrets": true,
+    "validate_requests": true,
+    "rate_limiting": {
+      "enabled": true,
+      "max_requests_per_minute": 60
+    }
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "created_at": "2025-01-27",
+    "last_updated": "2025-01-27",
+    "maintainer": "Cursor AI Agent"
+  }
+}
