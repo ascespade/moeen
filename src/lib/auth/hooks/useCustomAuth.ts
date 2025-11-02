@@ -65,12 +65,14 @@ export function useCustomAuth(): UseCustomAuthReturn {
       const data = await response.json();
 
       if (data.success && data.data) {
-        // Save token
+        // Save token to localStorage
         if (data.data.token) {
           localStorage.setItem('auth_token', data.data.token);
+          // Also save user data to localStorage for compatibility
+          localStorage.setItem('user', JSON.stringify(data.data.user));
         }
 
-        // Save user
+        // Save user to state
         setUser({
           id: data.data.user.id,
           email: data.data.user.email,

@@ -9,12 +9,12 @@ export default function DashboardRedirect() {
   useEffect(() => {
     // Get user role from localStorage or session
     const userStr = localStorage.getItem('user');
-    let role = 'patient'; // default
+    let role = 'agent'; // default for agent role (doctor/patient/staff)
 
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        role = user.role || 'patient';
+        role = user.role || 'agent';
       } catch (e) {
         console.error('Error parsing user:', e);
       }
@@ -29,11 +29,15 @@ export default function DashboardRedirect() {
       supervisor: '/dashboard/supervisor',
       manager: '/admin/dashboard',
       nurse: '/dashboard/staff',
-      agent: '/crm/dashboard',
+      agent: '/dashboard', // Agent role stays on main dashboard
     };
 
-    const targetRoute = roleRoutes[role] || '/dashboard/patient';
-    router.replace(targetRoute);
+    const targetRoute = roleRoutes[role] || '/dashboard';
+    
+    // Only redirect if not already on target route
+    if (window.location.pathname !== targetRoute) {
+      router.replace(targetRoute);
+    }
   }, [router]);
 
   return (

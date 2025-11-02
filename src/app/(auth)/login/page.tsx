@@ -31,13 +31,17 @@ export default function LoginPage() {
     try {
       const result = await login(email, password);
       if (result.success) {
+        // Wait a bit for token to be saved and state updated
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
         // Get user from state or fetch
         const currentUser = user || await fetchUser();
         if (currentUser) {
           const route = getDefaultRoute(currentUser.role);
-          router.push(route);
+          // Use window.location for full page reload to ensure middleware picks up cookie
+          window.location.href = route;
         } else {
-          router.push('/dashboard');
+          window.location.href = '/dashboard';
         }
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
