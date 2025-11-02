@@ -21,7 +21,15 @@ const ADMIN_ROUTES = ['/admin'];
 
 // Helpers
 function isPublicRoute(pathname: string): boolean {
-  return PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith(route + '/'));
+  // Exact match for root
+  if (pathname === '/') {
+    return true;
+  }
+  // Check other public routes
+  return PUBLIC_ROUTES.some(route => {
+    if (route === '/') return false; // Already handled above
+    return pathname === route || pathname.startsWith(route + '/');
+  });
 }
 
 function isProtectedRoute(pathname: string): boolean {
