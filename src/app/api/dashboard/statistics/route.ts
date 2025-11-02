@@ -21,8 +21,6 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const period = searchParams.get('period') || 'month';
 
-    const supabase = await createClient();
-
     // Calculate date ranges based on period
     const now = new Date();
     let startDate: Date;
