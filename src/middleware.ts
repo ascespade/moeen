@@ -62,7 +62,7 @@ export async function middleware(request: NextRequest) {
 
   // Handle public routes
   if (isPublicRoute(pathname)) {
-    // Redirect authenticated users away from login/register
+    // Redirect authenticated users away from login/register (only for these routes)
     if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
       const token = request.cookies.get('auth_token')?.value;
       if (token) {
@@ -72,17 +72,25 @@ export async function middleware(request: NextRequest) {
             const decoded = jwt.verify(token, secret) as any;
             
             // Quick check: verify user exists and is active (single optimized query)
-            const supabase = await createClient();
-            const { data: userData } = await supabase
-              .from('users')
-              .select('role, status')
-              .eq('id', decoded.userId)
-              .eq('status', 'active')
-              .maybeSingle();
+            try {
+              const supabase = await createClient();
+              const { data: userData } = await supabase
+                .from('users')
+                .select('role, status')
+                .eq('id', decoded.userId)
+                .eq('status', 'active')
+                .maybeSingle();
 
-            if (userData) {
-              const route = getDefaultRoute(userData.role);
-              return NextResponse.redirect(new URL(route, request.url));
+              if (userData) {
+                const route = getDefaultRoute(userData.role);
+                return NextResponse.redirect(new URL(route, request.url));
+              }
+            } catch (dbError) {
+              // Database error - allow access to login page
+              // Don't log in production to avoid information leakage
+              if (process.env.NODE_ENV === 'development') {
+                console.error('[MIDDLEWARE] DB error:', dbError);
+              }
             }
           }
         } catch {
@@ -90,6 +98,7 @@ export async function middleware(request: NextRequest) {
         }
       }
     }
+    // Allow access to all public routes (including homepage)
     return NextResponse.next();
   }
 
