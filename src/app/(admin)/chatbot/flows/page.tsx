@@ -19,7 +19,7 @@ interface Flow {
 const mockFlows: Flow[] = [
   {
     id: '1',
-    name: 'استقبال المرضى',
+    name: '1',
     description: 'تدفق ترحيب واستقبال المرضى الجدد',
     status: 'published',
     createdAt: '2024-01-10',
@@ -30,7 +30,7 @@ const mockFlows: Flow[] = [
   },
   {
     id: '2',
-    name: 'حجز المواعيد',
+    name: '2',
     description: 'مساعدة المرضى في حجز المواعيد',
     status: 'published',
     createdAt: '2024-01-08',
@@ -41,9 +41,9 @@ const mockFlows: Flow[] = [
   },
   {
     id: '3',
-    name: 'استفسارات عامة',
+    name: '3',
     description: 'الرد على الاستفسارات العامة حول الخدمات',
-    status: 'draft',
+    status: 'published',
     createdAt: '2024-01-12',
     updatedAt: '2024-01-13',
     tags: ['استفسارات', 'خدمات'],
@@ -51,9 +51,9 @@ const mockFlows: Flow[] = [
   },
   {
     id: '4',
-    name: 'تأكيد المواعيد',
+    name: '4',
     description: 'تأكيد المواعيد قبل 24 ساعة',
-    status: 'archived',
+    status: 'published',
     createdAt: '2024-01-05',
     updatedAt: '2024-01-10',
     tags: ['تأكيد', 'مواعيد'],
