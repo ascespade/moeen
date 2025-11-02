@@ -29,65 +29,39 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
     
-    const loginEmail = email || (e.currentTarget as any)?.email?.value;
-    const loginPassword = password || (e.currentTarget as any)?.password?.value;
-    
     try {
-      const result = await login(loginEmail, loginPassword);
+      const result = await login(email, password);
       if (result.success) {
-        // Wait a bit for token to be saved and state updated
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Get user from state or fetch
-        const currentUser = user || await fetchUser();
+        // Get user role from localStorage (already saved by useCustomAuth)
+        const userStr = localStorage.getItem('user');
         let targetRole = 'agent';
         
-        if (currentUser) {
-          targetRole = currentUser.role || 'agent';
-        } else {
-          // Try to get from localStorage
-          const userStr = localStorage.getItem('user');
-          if (userStr) {
-            try {
-              const userData = JSON.parse(userStr);
-              targetRole = userData.role || 'agent';
-            } catch (e) {
-              console.error('Error parsing user:', e);
-            }
+        if (userStr) {
+          try {
+            const userData = JSON.parse(userStr);
+            targetRole = userData.role || 'agent';
+          } catch {
+            // Use default
           }
         }
+        
+        // Small delay to ensure cookie is set (minimal delay)
+        await new Promise(resolve => setTimeout(resolve, 100));
         
         const route = getDefaultRoute(targetRole);
         // Use window.location for full page reload to ensure middleware picks up cookie
         window.location.href = route;
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+        setSubmitting(false);
       }
     } catch (err: any) {
       setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
-    } finally {
       setSubmitting(false);
     }
   };
 
-  const fetchUser = async () => {
-    try {
-      const token = localStorage.getItem('auth_token');
-      if (!token) return null;
-      const response = await fetch('/api/auth/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        return data.user;
-      }
-    } catch (error) {
-      console.error('Error fetching user:', error);
-    }
-    return null;
-  };
+  // Removed fetchUser - no longer needed (useCustomAuth handles this)
 
   if (isLoading) {
     return (
@@ -221,17 +195,16 @@ export default function LoginPage() {
                       try {
                         const result = await login('admin@test.com', 'Admin123!');
                         if (result.success) {
-                          await new Promise(resolve => setTimeout(resolve, 300));
                           const userStr = localStorage.getItem('user');
                           const role = userStr ? JSON.parse(userStr).role : 'admin';
                           const route = getDefaultRoute(role);
-                          window.location.href = route;
+                          setTimeout(() => window.location.href = route, 100);
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                          setSubmitting(false);
                         }
                       } catch (err: any) {
                         setError(err?.message || 'حدث خطأ');
-                      } finally {
                         setSubmitting(false);
                       }
                     }}
@@ -251,17 +224,16 @@ export default function LoginPage() {
                       try {
                         const result = await login('doctor@test.com', 'Doctor123!');
                         if (result.success) {
-                          await new Promise(resolve => setTimeout(resolve, 300));
                           const userStr = localStorage.getItem('user');
                           const role = userStr ? JSON.parse(userStr).role : 'agent';
                           const route = getDefaultRoute(role);
-                          window.location.href = route;
+                          setTimeout(() => window.location.href = route, 100);
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                          setSubmitting(false);
                         }
                       } catch (err: any) {
                         setError(err?.message || 'حدث خطأ');
-                      } finally {
                         setSubmitting(false);
                       }
                     }}
@@ -281,17 +253,16 @@ export default function LoginPage() {
                       try {
                         const result = await login('patient@test.com', 'Patient123!');
                         if (result.success) {
-                          await new Promise(resolve => setTimeout(resolve, 300));
                           const userStr = localStorage.getItem('user');
                           const role = userStr ? JSON.parse(userStr).role : 'agent';
                           const route = getDefaultRoute(role);
-                          window.location.href = route;
+                          setTimeout(() => window.location.href = route, 100);
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                          setSubmitting(false);
                         }
                       } catch (err: any) {
                         setError(err?.message || 'حدث خطأ');
-                      } finally {
                         setSubmitting(false);
                       }
                     }}
@@ -311,17 +282,16 @@ export default function LoginPage() {
                       try {
                         const result = await login('staff@test.com', 'Staff123!');
                         if (result.success) {
-                          await new Promise(resolve => setTimeout(resolve, 300));
                           const userStr = localStorage.getItem('user');
                           const role = userStr ? JSON.parse(userStr).role : 'agent';
                           const route = getDefaultRoute(role);
-                          window.location.href = route;
+                          setTimeout(() => window.location.href = route, 100);
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                          setSubmitting(false);
                         }
                       } catch (err: any) {
                         setError(err?.message || 'حدث خطأ');
-                      } finally {
                         setSubmitting(false);
                       }
                     }}

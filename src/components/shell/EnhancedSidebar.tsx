@@ -24,7 +24,7 @@ export default function EnhancedSidebar() {
       // Fetch permissions and get menu items
       const fetchPermissions = async () => {
         try {
-          // Try to get permissions from verify endpoint first
+          // Try to get permissions from verify endpoint
           const token = localStorage.getItem('auth_token');
           if (token) {
             try {
@@ -40,12 +40,12 @@ export default function EnhancedSidebar() {
                 setMenuItems(navItems);
                 return;
               }
-            } catch (e) {
+            } catch {
               // Fall through to basic menu
             }
           }
 
-          // Fallback: create basic menu based on role
+          // Fallback: create basic menu based on role (fast, no API call)
           const basicRoutes: RouteConfig[] = [
             {
               path: '/dashboard',
@@ -69,9 +69,8 @@ export default function EnhancedSidebar() {
           });
 
           setMenuItems(basicRoutes);
-        } catch (error) {
-          console.error('Error fetching permissions:', error);
-          // Set basic menu on error
+        } catch {
+          // Set basic menu on error (silent fail)
           setMenuItems([
             { path: '/dashboard', label: 'لوحة التحكم', icon: 'dashboard' },
             { path: '/profile', label: 'الملف الشخصي', icon: 'profile' },

@@ -1,59 +1,77 @@
+/**
+ * Custom Auth Hook - Clean & Optimized
+ * Hook ???????? ?????? - ???? ??????
+ * 
+ * ? Simple state management
+ * ? Proper cleanup
+ * ? No unnecessary re-renders
+ */
+
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { CustomAuthUser } from '../CustomAuthHub';
+import { customAuthHub, CustomAuthUser } from '../CustomAuthHub';
 
-interface UseCustomAuthReturn {
+interface AuthState {
   user: CustomAuthUser | null;
-  loading: boolean;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  logout: () => Promise<void>;
+  loading: boolean;
 }
 
-export function useCustomAuth(): UseCustomAuthReturn {
-  const [user, setUser] = useState<CustomAuthUser | null>(null);
-  const [loading, setLoading] = useState(true);
+export function useCustomAuth() {
+  const [state, setState] = useState<AuthState>({
+    user: null,
+    isAuthenticated: false,
+    loading: true,
+  });
 
-  // Initialize auth on mount
+  // Initialize auth state
   useEffect(() => {
     const initAuth = async () => {
       try {
-        // Check for token in localStorage
         const token = localStorage.getItem('auth_token');
         if (!token) {
-          setLoading(false);
+          setState({ user: null, isAuthenticated: false, loading: false });
           return;
         }
 
-        // Verify token with API
-        const response = await fetch('/api/auth/verify', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token }),
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success && data.user) {
-            setUser(data.user);
-          } else {
-            localStorage.removeItem('auth_token');
+        // Verify token
+        const user = await customAuthHub.verifyToken(token);
+        if (user) {
+          // Get user from localStorage as fallback (faster)
+          const userStr = localStorage.getItem('user');
+          let userData = user;
+          
+          if (userStr) {
+            try {
+              const parsed = JSON.parse(userStr);
+              userData = { ...user, ...parsed };
+            } catch {
+              // Use verified user
+            }
           }
+
+          setState({
+            user: userData,
+            isAuthenticated: true,
+            loading: false,
+          });
         } else {
+          // Invalid token - clear storage
           localStorage.removeItem('auth_token');
+          localStorage.removeItem('user');
+          setState({ user: null, isAuthenticated: false, loading: false });
         }
       } catch (error) {
-        console.error('Auth init error:', error);
-        localStorage.removeItem('auth_token');
-      } finally {
-        setLoading(false);
+        // Silently fail - user not authenticated
+        setState({ user: null, isAuthenticated: false, loading: false });
       }
     };
 
     initAuth();
   }, []);
 
+  // Login
   const login = useCallback(async (email: string, password: string) => {
     try {
       const response = await fetch('/api/auth/custom-login', {
@@ -65,24 +83,21 @@ export function useCustomAuth(): UseCustomAuthReturn {
       const data = await response.json();
 
       if (data.success && data.data) {
-        // Save token to localStorage
+        // Save token and user
         if (data.data.token) {
           localStorage.setItem('auth_token', data.data.token);
-          // Also save user data to localStorage for compatibility
+        }
+        if (data.data.user) {
           localStorage.setItem('user', JSON.stringify(data.data.user));
         }
 
-        // Save user to state
-        setUser({
-          id: data.data.user.id,
-          email: data.data.user.email,
-          name: data.data.user.name,
-          role: data.data.user.role,
-          status: data.data.user.status,
-          avatar_url: data.data.user.avatar,
+        setState({
+          user: data.data.user,
+          isAuthenticated: true,
+          loading: false,
         });
 
-        return { success: true };
+        return { success: true, user: data.data.user };
       } else {
         return { success: false, error: data.error || 'Login failed' };
       }
@@ -94,21 +109,21 @@ export function useCustomAuth(): UseCustomAuthReturn {
     }
   }, []);
 
+  // Logout
   const logout = useCallback(async () => {
-    // Clear token
-    localStorage.removeItem('auth_token');
-    setUser(null);
-
-    // Redirect to login
-    if (typeof window !== 'undefined') {
-      window.location.href = '/login';
+    try {
+      await customAuthHub.logout();
+    } catch {
+      // Ignore errors
+    } finally {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user');
+      setState({ user: null, isAuthenticated: false, loading: false });
     }
   }, []);
 
   return {
-    user,
-    loading,
-    isAuthenticated: !!user,
+    ...state,
     login,
     logout,
   };

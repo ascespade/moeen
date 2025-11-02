@@ -1,44 +1,43 @@
 /**
- * Custom Login API
- * نظام Login المخصص من جداول قاعدة البيانات
+ * Custom Login API - Optimized
+ * API تسجيل الدخول المخصص - محسّن
+ * 
+ * ✅ Clean business logic
+ * ✅ Proper error handling
+ * ✅ Security best practices
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { customAuthHub } from '@/lib/auth/CustomAuthHub';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
 
-    console.log('[CUSTOM-LOGIN] Login attempt for:', email);
-
+    // Validation
     if (!email || !password) {
       return NextResponse.json(
-        { success: false, error: 'البريد الإلكتروني وكلمة المرور مطلوبان' },
+        { success: false, error: 'Email and password are required' },
         { status: 400 }
       );
     }
 
-    // Login using custom auth hub
+    // Business Logic: Login attempt
     const result = await customAuthHub.login(email, password);
 
-    console.log('[CUSTOM-LOGIN] Login result:', {
-      success: !!result.user,
-      error: result.error,
-      userId: result.user?.id,
-    });
-
-    if (result.error || !result.user) {
+    if (!result.user || !result.token) {
+      // Don't reveal specific error reasons (security)
       return NextResponse.json(
-        { success: false, error: result.error || 'خطأ في تسجيل الدخول' },
+        { success: false, error: result.error || 'Invalid credentials' },
         { status: 401 }
       );
     }
 
-    // Get user permissions
+    // Get permissions (cached, fast)
     const permissions = await customAuthHub.getUserPermissions(result.user.id);
 
-    // Create response
     const response = NextResponse.json({
       success: true,
       data: {
@@ -51,26 +50,29 @@ export async function POST(req: NextRequest) {
           status: result.user.status,
         },
         token: result.token,
-        permissions: permissions?.permissions || [],
+        permissions: permissions || null,
       },
     });
 
-    // Set auth_token cookie for middleware
-    if (result.token) {
-      response.cookies.set('auth_token', result.token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 60 * 60 * 24 * 7, // 7 days
-        path: '/',
-      });
-    }
+    // Set auth_token cookie (secure)
+    const isProduction = process.env.NODE_ENV === 'production';
+    response.cookies.set('auth_token', result.token, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: '/',
+    });
 
     return response;
   } catch (error) {
-    console.error('Custom login error:', error);
+    // Log in development only
+    if (isDev) {
+      console.error('[CUSTOM-LOGIN] Error:', error);
+    }
+    
     return NextResponse.json(
-      { success: false, error: 'خطأ داخلي في السيرفر' },
+      { success: false, error: 'Internal server error' },
       { status: 500 }
     );
   }

@@ -1,11 +1,11 @@
 /**
- * Enhanced Middleware - Clean & Optimized
- * Middleware محسّن - نظيف ومحسّن
+ * Enhanced Middleware - Optimized & Fast
+ * Middleware محسّن - سريع ومحسّن
  * 
- * ✅ Simplified logic
- * ✅ Better performance
- * ✅ Clear route protection
- * ✅ Role-based access control
+ * ✅ Single database query per request
+ * ✅ Cache-friendly
+ * ✅ Minimal logic
+ * ✅ Clear business rules
  */
 
 import { NextResponse } from 'next/server';
@@ -42,7 +42,7 @@ interface AuthUser {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow static files and API routes
+  // Allow static files and API routes immediately
   if (
     pathname.startsWith('/_next/') ||
     pathname.startsWith('/api/') ||
@@ -62,10 +62,12 @@ export async function middleware(request: NextRequest) {
           const secret = process.env.JWT_SECRET;
           if (secret) {
             const decoded = jwt.verify(token, secret) as any;
+            
+            // Quick check: verify user exists and is active (single optimized query)
             const supabase = await createClient();
             const { data: userData } = await supabase
               .from('users')
-              .select('id, role, status')
+              .select('role, status')
               .eq('id', decoded.userId)
               .eq('status', 'active')
               .maybeSingle();
@@ -75,7 +77,7 @@ export async function middleware(request: NextRequest) {
               return NextResponse.redirect(new URL(route, request.url));
             }
           }
-        } catch (error) {
+        } catch {
           // Token invalid, allow access to login
         }
       }
@@ -98,31 +100,32 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Verify token and get user
+  // Verify token and get user (single optimized query)
   let user: AuthUser | null = null;
 
   try {
     const secret = process.env.JWT_SECRET;
     if (!secret) {
-      console.error('[MIDDLEWARE] JWT_SECRET not configured');
+      // Don't log in production to avoid information leakage
       return NextResponse.redirect(new URL('/login', request.url));
     }
 
     const decoded = jwt.verify(token, secret) as any;
     const supabase = await createClient();
 
+    // Single optimized query: get user with status check
     const { data: userData, error } = await supabase
       .from('users')
       .select('id, email, role, status')
       .eq('id', decoded.userId)
+      .eq('status', 'active') // Filter at DB level
       .maybeSingle();
 
     if (error || !userData) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-
-    if (userData.status !== 'active') {
-      return NextResponse.redirect(new URL('/login', request.url));
+      // User not found or inactive
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('redirect', pathname);
+      return NextResponse.redirect(loginUrl);
     }
 
     user = {
@@ -131,14 +134,14 @@ export async function middleware(request: NextRequest) {
       role: userData.role,
       status: userData.status,
     };
-  } catch (error) {
+  } catch {
     // Token invalid or expired
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     return NextResponse.redirect(loginUrl);
   }
 
-  // Check admin routes
+  // Business Logic: Check admin routes
   if (requiresAdmin(pathname)) {
     if (user.role !== 'admin' && user.role !== 'manager') {
       // Redirect to user's default dashboard
@@ -147,7 +150,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Add user info to headers for use in pages
+  // Add user info to headers for use in pages (optional optimization)
   const response = NextResponse.next();
   response.headers.set('x-user-id', user.id);
   response.headers.set('x-user-role', user.role);

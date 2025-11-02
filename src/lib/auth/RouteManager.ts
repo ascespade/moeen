@@ -1,8 +1,10 @@
 /**
- * Route Manager - Enhanced
- * مدير المسارات المحسّن
+ * Route Manager - Optimized & Simple
+ * مدير المسارات - محسّن وبسيط
  * 
- * Manages routing based on user roles and permissions
+ * ✅ Simple business logic
+ * ✅ Fast route resolution
+ * ✅ Clear role mapping
  */
 
 export interface RouteConfig {
@@ -16,10 +18,11 @@ export interface RouteConfig {
 }
 
 /**
- * Get default route for user role
+ * Get default route for user role - Simple & Fast
  */
 export function getDefaultRoute(role: string): string {
-  const roleRoutes: Record<string, string> = {
+  // Direct mapping - fastest
+  const routeMap: Record<string, string> = {
     admin: '/admin/dashboard',
     manager: '/admin/dashboard',
     supervisor: '/dashboard/supervisor',
@@ -27,31 +30,33 @@ export function getDefaultRoute(role: string): string {
     doctor: '/dashboard/doctor',
     patient: '/dashboard/patient',
     staff: '/dashboard/staff',
+    nurse: '/dashboard/staff',
+    therapist: '/dashboard',
   };
 
-  return roleRoutes[role] || '/dashboard';
+  return routeMap[role] || '/dashboard';
 }
 
 /**
- * Check if user can access route
+ * Check if user can access route - Simple Logic
  */
 export function canAccessRoute(
   userRole: string,
   userPermissions: string[],
   routePath: string
 ): boolean {
-  // Public routes
-  const publicRoutes = ['/', '/login', '/register', '/forgot-password'];
+  // Public routes - always accessible
+  const publicRoutes = ['/', '/login', '/register', '/forgot-password', '/reset-password'];
   if (publicRoutes.includes(routePath)) {
     return true;
   }
 
-  // Admin routes
+  // Admin routes - only admin/manager
   if (routePath.startsWith('/admin')) {
     return userRole === 'admin' || userRole === 'manager';
   }
 
-  // Dashboard routes
+  // Dashboard routes - all authenticated users
   if (routePath.startsWith('/dashboard')) {
     return ['admin', 'manager', 'supervisor', 'agent', 'doctor', 'patient', 'staff'].includes(userRole);
   }
@@ -63,11 +68,12 @@ export function canAccessRoute(
 
   // Settings - check permission
   if (routePath.startsWith('/settings')) {
-    return userPermissions.includes('settings.view') || 
-           userPermissions.includes('settings.manage') ||
+    return hasPermission(userPermissions, 'settings.view') || 
+           hasPermission(userPermissions, 'settings.manage') ||
            userRole === 'admin';
   }
 
+  // Default: deny access
   return false;
 }
 
@@ -176,6 +182,7 @@ export function getNavigationRoutes(
     });
   }
 
+  // Filter routes based on role and permissions
   return baseRoutes.filter(route => {
     // Check role access
     if (route.roles && !route.roles.includes(userRole)) {
@@ -192,7 +199,7 @@ export function getNavigationRoutes(
 }
 
 /**
- * Check if user has permission
+ * Check if user has permission - Simple & Fast
  */
 function hasPermission(userPermissions: string[], permission: string): boolean {
   // Admin has all permissions
@@ -207,7 +214,7 @@ function hasPermission(userPermissions: string[], permission: string): boolean {
 
   // Wildcard resource permission (e.g., "users.*" for "users.read")
   const [resource] = permission.split('.');
-  if (userPermissions.includes(`${resource}.*`)) {
+  if (resource && userPermissions.includes(`${resource}.*`)) {
     return true;
   }
 
