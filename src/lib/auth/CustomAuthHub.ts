@@ -10,7 +10,7 @@ import { createClient } from '@/lib/supabase/server';
 import jwt from 'jsonwebtoken';
 
 export interface CustomAuthUser {
-  id: number;
+  id: string; // UUID in database
   email: string;
   name: string;
   role: string;
@@ -48,7 +48,7 @@ function getJWTExpiresIn(): string {
 
 class CustomAuthHub {
   private static instance: CustomAuthHub;
-  private permissionsCache = new Map<number, {
+  private permissionsCache = new Map<string, { // Changed from number to string (UUID)
     permissions: UserPermissions;
     timestamp: number;
   }>();
@@ -74,6 +74,8 @@ class CustomAuthHub {
     try {
       const supabase = await createClient();
 
+      console.log('[AUTH-HUB] Login attempt:', email);
+
       // Get user from database
       const { data: userData, error: userError } = await supabase
         .from('users')
@@ -81,12 +83,21 @@ class CustomAuthHub {
         .eq('email', email)
         .maybeSingle();
 
+      console.log('[AUTH-HUB] User query result:', {
+        found: !!userData,
+        error: userError?.message,
+        hasPassword: !!userData?.password_hash,
+        status: userData?.status,
+      });
+
       if (userError || !userData) {
+        console.error('[AUTH-HUB] User not found or error:', userError);
         return { user: null, token: null, error: 'Invalid credentials' };
       }
 
       // Check if user is active
       if (userData.status !== 'active') {
+        console.warn('[AUTH-HUB] User account inactive:', userData.status);
         return { user: null, token: null, error: 'User account is inactive' };
       }
 
@@ -149,6 +160,8 @@ class CustomAuthHub {
       // Check password using pgcrypto
       let isValid = false;
       
+      console.log('[AUTH-HUB] Verifying password...');
+      
       try {
         // Use pgcrypto to verify password
         const { data: verifyResult, error: verifyError } = await supabase.rpc('verify_password', {
@@ -156,8 +169,13 @@ class CustomAuthHub {
           password_hash: userData.password_hash
         });
 
+        console.log('[AUTH-HUB] Password verification result:', {
+          result: verifyResult,
+          error: verifyError?.message,
+        });
+
         if (verifyError) {
-          console.warn('verify_password RPC error:', verifyError);
+          console.warn('[AUTH-HUB] verify_password RPC error:', verifyError);
           
           // If verify_password function doesn't exist, try direct SQL query
           // Use a SELECT with WHERE clause that uses crypt() directly
@@ -332,7 +350,7 @@ class CustomAuthHub {
    * 🛡️ AUTHORIZATION METHODS
    */
 
-  async getUserPermissions(userId: number): Promise<UserPermissions | null> {
+  async getUserPermissions(userId: string): Promise<UserPermissions | null> { // Changed from number to string (UUID)
     try {
       // Check cache first
       const cached = this.permissionsCache.get(userId);
@@ -503,7 +521,7 @@ class CustomAuthHub {
   }
 
   async checkPermission(
-    userId: number,
+    userId: string, // Changed from number to string (UUID)
     resource: string,
     action: string
   ): Promise<boolean> {

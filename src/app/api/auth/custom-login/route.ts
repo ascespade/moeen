@@ -10,6 +10,8 @@ export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
 
+    console.log('[CUSTOM-LOGIN] Login attempt for:', email);
+
     if (!email || !password) {
       return NextResponse.json(
         { success: false, error: 'البريد الإلكتروني وكلمة المرور مطلوبان' },
@@ -19,6 +21,12 @@ export async function POST(req: NextRequest) {
 
     // Login using custom auth hub
     const result = await customAuthHub.login(email, password);
+
+    console.log('[CUSTOM-LOGIN] Login result:', {
+      success: !!result.user,
+      error: result.error,
+      userId: result.user?.id,
+    });
 
     if (result.error || !result.user) {
       return NextResponse.json(
