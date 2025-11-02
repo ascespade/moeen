@@ -2,13 +2,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
+import { useAuth } from '@/lib/auth/hooks/useAuth';
 import { getDefaultRoute } from '@/lib/auth/unified-auth';
 export const dynamic = 'force-dynamic';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, user, isAuthenticated, isLoading } = useUnifiedAuth();
+  const { login: authLogin, user, loading: isLoading, isAuthenticated } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,12 +29,28 @@ export default function LoginPage() {
     setError(null);
     setSubmitting(true);
     try {
-      const result = await login(email, password);
-      if (result.success && user) {
-        const route = getDefaultRoute(user.role);
-        router.push(route);
-      } else {
-        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+      const result = await authLogin(email, password);
+      if (result.error) {
+        setError(result.error.message || 'بيانات الاعتماد غير صحيحة.');
+      } else if (result.user) {
+        // Get user role from database to determine route
+        try {
+          const response = await fetch('/api/auth/me');
+          if (response.ok) {
+            const data = await response.json();
+            const userRole = data.data?.user?.role || data.user?.role || 'patient';
+            const route = getDefaultRoute(userRole);
+            router.push(route);
+            router.refresh();
+          } else {
+            // Fallback to dashboard if can't get role
+            router.push('/dashboard');
+            router.refresh();
+          }
+        } catch {
+          router.push('/dashboard');
+          router.refresh();
+        }
       }
     } catch (err: any) {
       setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
@@ -171,11 +187,17 @@ export default function LoginPage() {
                     onClick={async () => {
                       setEmail('admin@test.com');
                       setPassword('Admin123!');
-                      // Auto-login
-                      const result = await login('admin@test.com', 'Admin123!');
-                      if (result.success) {
-                        router.push('/admin/dashboard');
-                        router.refresh();
+                      // Auto-login using AuthHub
+                      try {
+                        const result = await authLogin('admin@test.com', 'Admin123!');
+                        if (result.error) {
+                          setError(result.error.message || 'فشل تسجيل الدخول');
+                        } else if (result.user) {
+                          router.push('/admin/dashboard');
+                          router.refresh();
+                        }
+                      } catch (err: any) {
+                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
                       }
                     }}
                     className='btn btn-sm bg-red-500 hover:bg-red-600 text-white text-xs'
@@ -188,11 +210,16 @@ export default function LoginPage() {
                     onClick={async () => {
                       setEmail('doctor@test.com');
                       setPassword('Doctor123!');
-                      // Auto-login
-                      const result = await login('doctor@test.com', 'Doctor123!');
-                      if (result.success) {
-                        router.push('/doctor-dashboard');
-                        router.refresh();
+                      try {
+                        const result = await authLogin('doctor@test.com', 'Doctor123!');
+                        if (result.error) {
+                          setError(result.error.message || 'فشل تسجيل الدخول');
+                        } else if (result.user) {
+                          router.push('/doctor-dashboard');
+                          router.refresh();
+                        }
+                      } catch (err: any) {
+                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
                       }
                     }}
                     className='btn btn-sm bg-blue-500 hover:bg-blue-600 text-white text-xs'
@@ -205,11 +232,16 @@ export default function LoginPage() {
                     onClick={async () => {
                       setEmail('patient@test.com');
                       setPassword('Patient123!');
-                      // Auto-login
-                      const result = await login('patient@test.com', 'Patient123!');
-                      if (result.success) {
-                        router.push('/dashboard/patient');
-                        router.refresh();
+                      try {
+                        const result = await authLogin('patient@test.com', 'Patient123!');
+                        if (result.error) {
+                          setError(result.error.message || 'فشل تسجيل الدخول');
+                        } else if (result.user) {
+                          router.push('/dashboard/patient');
+                          router.refresh();
+                        }
+                      } catch (err: any) {
+                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
                       }
                     }}
                     className='btn btn-sm bg-green-500 hover:bg-green-600 text-white text-xs'
@@ -222,11 +254,16 @@ export default function LoginPage() {
                     onClick={async () => {
                       setEmail('staff@test.com');
                       setPassword('Staff123!');
-                      // Auto-login
-                      const result = await login('staff@test.com', 'Staff123!');
-                      if (result.success) {
-                        router.push('/dashboard/staff');
-                        router.refresh();
+                      try {
+                        const result = await authLogin('staff@test.com', 'Staff123!');
+                        if (result.error) {
+                          setError(result.error.message || 'فشل تسجيل الدخول');
+                        } else if (result.user) {
+                          router.push('/dashboard/staff');
+                          router.refresh();
+                        }
+                      } catch (err: any) {
+                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
                       }
                     }}
                     className='btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white text-xs'
