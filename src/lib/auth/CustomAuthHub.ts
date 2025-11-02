@@ -444,6 +444,7 @@ class CustomAuthHub {
 
   /**
    * Get permissions for a role (fallback)
+   * Note: user_role enum values: 'admin', 'manager', 'agent', 'demo', 'supervisor'
    */
   private getRolePermissions(role: string): Array<{ resource: string; actions: string[] }> {
     const rolePermissions: Record<string, Array<{ resource: string; actions: string[] }>> = {
@@ -453,6 +454,33 @@ class CustomAuthHub {
         { resource: 'dashboard', actions: ['access'] },
         { resource: 'settings', actions: ['manage'] },
       ],
+      manager: [
+        { resource: '*', actions: ['read'] },
+        { resource: 'users', actions: ['read', 'update'] },
+        { resource: 'dashboard', actions: ['access'] },
+        { resource: 'reports', actions: ['read'] },
+        { resource: 'appointments', actions: ['read', 'create', 'update'] },
+        { resource: 'patients', actions: ['read', 'write'] },
+      ],
+      supervisor: [
+        { resource: 'appointments', actions: ['read', 'create', 'update', 'delete'] },
+        { resource: 'patients', actions: ['read', 'write'] },
+        { resource: 'staff', actions: ['read', 'manage'] },
+        { resource: 'dashboard', actions: ['access'] },
+        { resource: 'medical_records', actions: ['read', 'write'] },
+      ],
+      agent: [
+        // Agent role - can be used for doctor, patient, staff based on metadata
+        { resource: 'appointments', actions: ['read', 'create', 'update'] },
+        { resource: 'patients', actions: ['read'] },
+        { resource: 'dashboard', actions: ['access'] },
+        { resource: 'profile', actions: ['read', 'update'] },
+      ],
+      demo: [
+        { resource: 'dashboard', actions: ['access'] },
+        { resource: 'profile', actions: ['read'] },
+      ],
+      // Legacy roles (for backward compatibility, map to agent)
       doctor: [
         { resource: 'patients', actions: ['read', 'write'] },
         { resource: 'appointments', actions: ['read', 'create', 'update'] },
@@ -469,21 +497,9 @@ class CustomAuthHub {
         { resource: 'patients', actions: ['read'] },
         { resource: 'dashboard', actions: ['access'] },
       ],
-      supervisor: [
-        { resource: 'appointments', actions: ['read', 'create', 'update', 'delete'] },
-        { resource: 'patients', actions: ['read', 'write'] },
-        { resource: 'staff', actions: ['read', 'manage'] },
-        { resource: 'dashboard', actions: ['access'] },
-      ],
-      manager: [
-        { resource: '*', actions: ['read'] },
-        { resource: 'users', actions: ['read', 'update'] },
-        { resource: 'dashboard', actions: ['access'] },
-        { resource: 'reports', actions: ['read'] },
-      ],
     };
 
-    return rolePermissions[role] || [];
+    return rolePermissions[role] || rolePermissions['agent'] || [];
   }
 
   async checkPermission(

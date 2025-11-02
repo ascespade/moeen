@@ -189,112 +189,112 @@ export default function LoginPage() {
               <p className='mb-4 text-center text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400'>
                 🔧 تسجيل دخول سريع (للتجربة)
               </p>
-              <div className='grid grid-cols-2 gap-2'>
-                <button
-                  type='button'
-                  onClick={async () => {
-                    setEmail('admin@test.com');
-                    setPassword('Admin123!');
-                    setError(null);
-                    setSubmitting(true);
-                    try {
-                      const result = await login('admin@test.com', 'Admin123!');
-                      if (result.success) {
-                        router.push('/dashboard');
-                      } else {
-                        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                <div className='grid grid-cols-2 gap-2'>
+                  <button
+                    type='button'
+                    onClick={async () => {
+                      setEmail('admin@test.com');
+                      setPassword('Admin123!');
+                      setError(null);
+                      setSubmitting(true);
+                      try {
+                        const result = await login('admin@test.com', 'Admin123!');
+                        if (result.success) {
+                          router.push('/dashboard');
+                        } else {
+                          setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                        }
+                      } catch (err: any) {
+                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
+                      } finally {
+                        setSubmitting(false);
                       }
-                    } catch (err: any) {
-                      setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
-                    } finally {
-                      setSubmitting(false);
-                    }
-                  }}
-                  disabled={submitting}
-                  className='btn btn-sm bg-red-500 hover:bg-red-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
-                  title='Admin Dashboard'
-                >
-                  👑 Admin
-                </button>
-                <button
-                  type='button'
-                  onClick={async () => {
-                    setEmail('doctor@test.com');
-                    setPassword('Doctor123!');
-                    setError(null);
-                    setSubmitting(true);
-                    try {
-                      const result = await login('doctor@test.com', 'Doctor123!');
-                      if (result.success) {
-                        router.push('/dashboard');
-                      } else {
-                        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                    }}
+                    disabled={submitting}
+                    className='btn btn-sm bg-red-500 hover:bg-red-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                    title='Admin Dashboard'
+                  >
+                    👑 Admin
+                  </button>
+                  <button
+                    type='button'
+                    onClick={async () => {
+                      setEmail('doctor@test.com');
+                      setPassword('Doctor123!');
+                      setError(null);
+                      setSubmitting(true);
+                      try {
+                        const result = await login('doctor@test.com', 'Doctor123!');
+                        if (result.success) {
+                          router.push('/dashboard');
+                        } else {
+                          setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                        }
+                      } catch (err: any) {
+                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
+                      } finally {
+                        setSubmitting(false);
                       }
-                    } catch (err: any) {
-                      setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
-                    } finally {
-                      setSubmitting(false);
-                    }
-                  }}
-                  disabled={submitting}
-                  className='btn btn-sm bg-blue-500 hover:bg-blue-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
-                  title='Doctor Dashboard'
-                >
-                  🩺 Doctor
-                </button>
-                <button
-                  type='button'
-                  onClick={async () => {
-                    setEmail('patient@test.com');
-                    setPassword('Patient123!');
-                    setError(null);
-                    setSubmitting(true);
-                    try {
-                      const result = await login('patient@test.com', 'Patient123!');
-                      if (result.success) {
-                        router.push('/dashboard');
-                      } else {
-                        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                    }}
+                    disabled={submitting}
+                    className='btn btn-sm bg-blue-500 hover:bg-blue-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                    title='Doctor (Agent Role)'
+                  >
+                    🩺 Doctor
+                  </button>
+                  <button
+                    type='button'
+                    onClick={async () => {
+                      setEmail('patient@test.com');
+                      setPassword('Patient123!');
+                      setError(null);
+                      setSubmitting(true);
+                      try {
+                        const result = await login('patient@test.com', 'Patient123!');
+                        if (result.success) {
+                          router.push('/dashboard');
+                        } else {
+                          setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                        }
+                      } catch (err: any) {
+                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
+                      } finally {
+                        setSubmitting(false);
                       }
-                    } catch (err: any) {
-                      setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
-                    } finally {
-                      setSubmitting(false);
-                    }
-                  }}
-                  disabled={submitting}
-                  className='btn btn-sm bg-green-500 hover:bg-green-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
-                  title='Patient Dashboard'
-                >
-                  👤 Patient
-                </button>
-                <button
-                  type='button'
-                  onClick={async () => {
-                    setEmail('staff@test.com');
-                    setPassword('Staff123!');
-                    setError(null);
-                    setSubmitting(true);
-                    try {
-                      const result = await login('staff@test.com', 'Staff123!');
-                      if (result.success) {
-                        router.push('/dashboard');
-                      } else {
-                        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                    }}
+                    disabled={submitting}
+                    className='btn btn-sm bg-green-500 hover:bg-green-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                    title='Patient (Agent Role)'
+                  >
+                    👤 Patient
+                  </button>
+                  <button
+                    type='button'
+                    onClick={async () => {
+                      setEmail('staff@test.com');
+                      setPassword('Staff123!');
+                      setError(null);
+                      setSubmitting(true);
+                      try {
+                        const result = await login('staff@test.com', 'Staff123!');
+                        if (result.success) {
+                          router.push('/dashboard');
+                        } else {
+                          setError(result.error || 'بيانات الاعتماد غير صحيحة.');
+                        }
+                      } catch (err: any) {
+                        setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
+                      } finally {
+                        setSubmitting(false);
                       }
-                    } catch (err: any) {
-                      setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
-                    } finally {
-                      setSubmitting(false);
-                    }
-                  }}
-                  disabled={submitting}
-                  className='btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
-                  title='Staff Dashboard'
-                >
-                  🏥 Staff
-                </button>
-              </div>
+                    }}
+                    disabled={submitting}
+                    className='btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                    title='Staff (Agent Role)'
+                  >
+                    🏥 Staff
+                  </button>
+                </div>
               <div className='mt-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg'>
                 <p className='mb-2 text-xs font-medium text-gray-700 dark:text-gray-300'>Test Credentials:</p>
                 <div className='space-y-1 text-xs text-gray-600 dark:text-gray-400'>
