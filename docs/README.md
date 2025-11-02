@@ -33,6 +33,7 @@ Moeen is a comprehensive medical center management system built with Next.js 14,
 - [WORKFLOWS.md](./WORKFLOWS.md) - System workflows overview
 - [ci-self-healing-usage.md](./ci-self-healing-usage.md) - CI/CD self-healing system
 - [workflows/](./workflows/) - Detailed workflow documentation
+- [CURSOR_CLOUD_ENTITIES_GUIDE.md](./CURSOR_CLOUD_ENTITIES_GUIDE.md) - 🎯 دليل التحكم والتواصل في Cursor Cloud Entities
 
 ### 📊 Reports & Audits
 

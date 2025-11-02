@@ -72,6 +72,7 @@
     "audit:lighthouse": "lighthouse http://localhost:3001 --output html --output-path=./reports/lighthouse-report.html --chrome-flags=\"--headless\"",
     "cursor:agent": "node scripts/cursor-background-agent.mjs",
     "cursor:agent:continuous": "node scripts/cursor-background-agent.mjs --continuous",
+    "cursor-cloud": "ts-node scripts/cursor-cloud-controller.ts",
     "cursor:parallel": "node scripts/cursor-parallel-runner.mjs --all",
     "cursor:workflow": "node scripts/cursor-workflow-manager.mjs",
     "cursor:fix:permissions": "node scripts/cursor-parallel-runner.mjs permissions-fix",
