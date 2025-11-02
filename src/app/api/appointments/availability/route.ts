@@ -18,7 +18,7 @@ const availabilitySchema = z.object({
 })
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin","doctor","staff","supervisor","patient"])(request: NextRequest);
+    const authResult = await requireAuth(["admin","doctor","staff","supervisor","patient"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

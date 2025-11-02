@@ -19,7 +19,7 @@ const conflictCheckSchema = z.object({
 });
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin","doctor","staff","supervisor","patient"])(request: NextRequest);
+    const authResult = await requireAuth(["admin","doctor","staff","supervisor","patient"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { data: allAppointments, error } = await query;
-    
+
     // Filter for actual overlaps in JavaScript
     const conflicts = (allAppointments || []).filter((appt: any) => {
       const apptStart = new Date(appt.scheduled_at);

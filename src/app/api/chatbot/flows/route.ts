@@ -10,7 +10,7 @@ const supabase = createClient(
 // GET /api/chatbot/flows - جلب جميع التدفق
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -25,10 +25,10 @@ export async function GET(request: NextRequest) {
       .select('*')
       .order('created_at', { ascending: false });
 
- 
+
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

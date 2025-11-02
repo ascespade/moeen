@@ -10,7 +10,7 @@ const supabase = createClient(
 // GET /api/chatbot/conversations - جلب المحادث
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -50,10 +50,10 @@ export async function GET(request: NextRequest) {
     const { data: conversations, error } = await query;
 
     if (error) {
-   
+
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

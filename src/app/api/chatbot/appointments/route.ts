@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -208,7 +208,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -288,7 +288,7 @@ async function sendWhatsAppConfirmation(phone: string, appointment: any) {
   // في التطبيق الحقيقي، ستحتاج إلى تكامل مع WhatsApp Business API
 
   const message = `تم حجز موعدك بنجاح!
-  
+
 التفاصيل:
 👨‍⚕️ الطبيب: ${appointment.doctors.first_name} ${appointment.doctors.last_name}
 🏥 التخصص: ${appointment.doctors.specialty}

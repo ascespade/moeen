@@ -10,7 +10,7 @@ const supabase = createClient(
 // GET /api/chatbot/config - جلب إعدادات الشات ب
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
           'مرحباً بك في مركز الهمم! 👋\n\nيمكنني مساعدتك في:\n📅 حجز المواعيد\n❌ إلغاء المواعيد\n🔔 تذكير بالمواعيد\nℹ️ معلومات عن الخدمات\n\nكيف يمكنني مسا
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

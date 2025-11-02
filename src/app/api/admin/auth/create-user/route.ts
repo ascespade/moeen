@@ -4,17 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 
 // This endpoint requires an internal secret header to prevent abuse
-const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRE
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin","supervisor"])(req: NextRequest);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-T;
+const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
 
 export async function POST(req: NextRequest) {
   try {
