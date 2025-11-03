@@ -1,0 +1,65 @@
+{
+  "timestamp": "2025-11-03T20:17:55.240Z",
+  "target": 95,
+  "achieved": 92,
+  "status": "PARTIAL",
+  "results": {
+    "playwright": {
+      "passed": 8,
+      "failed": 2,
+      "total": 10,
+      "tests": []
+    },
+    "supabase": {
+      "passed": 10,
+      "failed": 0,
+      "total": 10,
+      "tests": []
+    },
+    "integration": {
+      "passed": 5,
+      "failed": 0,
+      "total": 5,
+      "tests": []
+    },
+    "overall": {
+      "passed": 23,
+      "failed": 2,
+      "total": 25,
+      "successRate": 92
+    }
+  },
+  "issues": [
+    {
+      "type": "playwright",
+      "message": "Playwright tests need app server running",
+      "severity": "medium"
+    }
+  ],
+  "fixes": [
+    "Added return type to src/app/api/translations/[lang]/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/translations/[lang]/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/test/endpoints/route.ts",
+    "Added return type to src/app/api/test/database/route.ts",
+    "Added return type to src/app/api/translations/[lang]/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/test/endpoints/route.ts",
+    "Added return type to src/app/api/translations/[lang]/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/test/endpoints/route.ts",
+    "Added return type to src/app/api/translations/[lang]/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/translations/[lang]/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/translations/[lang]/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/test/endpoints/route.ts",
+    "Added return type to src/app/api/translations/[lang]/route.ts",
+    "Added return type to src/app/api/test/health/route.ts",
+    "Added return type to src/app/api/test/endpoints/route.ts"
+  ]
+}
