@@ -14,7 +14,9 @@ const sessionSchema = z.object({
   notes: z.string().optional(),
   exercises: z.any().optional(),
   insurance_claim_number: z.string().optional(),
-})
+});
+
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -24,10 +26,7 @@ const sessionSchema = z.object({
         { status: 401 }
       );
     }
-;
 
-export async function GET(request: NextRequest) {
-  try {
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId') || '';
     const doctorId = searchParams.get('doctorId') || '';
@@ -51,17 +50,7 @@ export async function GET(request: NextRequest) {
       success: true,
       data: paginatedSessions,
       pagination: {
-    
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-    total: sessions.length,
+        total: sessions.length,
         limit,
         offset,
         hasMore: offset + limit < sessions.length,
