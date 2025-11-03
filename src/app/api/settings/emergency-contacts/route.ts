@@ -7,7 +7,8 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// API لجلب جهات الاتصال الطار
+// API لجلب جهات الاتصال الطارئة
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -17,9 +18,7 @@ const supabase = createClient(
         { status: 401 }
       );
     }
-ئة
-export async function GET(request: NextRequest) {
-  try {
+
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type');
     const priority = searchParams.get('priority');

@@ -6,20 +6,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
 import { requireAuth } from '@/lib/auth/authorize';
 
-const supabase = getServiceSupabase()
+const supabase = getServiceSupabase();
+
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
         { status: 401 }
       );
     }
-;
 
-export async function GET(request: NextRequest) {
-  try {
     const { searchParams } = new URL(request.url);
     const service = searchParams.get('service');
     const level = searchParams.get('level');

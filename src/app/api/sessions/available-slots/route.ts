@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import logger from '@/lib/monitoring/logger';
-import { requireAuth } from '@/lib/auth/authorize'
+import { requireAuth } from '@/lib/auth/authorize';
+
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -11,10 +13,7 @@ import { requireAuth } from '@/lib/auth/authorize'
         { status: 401 }
       );
     }
-;
 
-export async function GET(request: NextRequest) {
-  try {
     const searchParams = request.nextUrl.searchParams;
     const sessionTypeId = searchParams.get('sessionTypeId');
     const date = searchParams.get('date');

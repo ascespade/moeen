@@ -3,6 +3,8 @@ import { getServiceSupabase } from '@/lib/supabaseClient';
 import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = getServiceSupabase();
+
+export async function POST(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -13,9 +15,6 @@ const supabase = getServiceSupabase();
       );
     }
 
-
-export async function POST(request: NextRequest) {
-  try {
     const { language, key, requestedAt } = await request.json();
 
     if (!language || !key) {

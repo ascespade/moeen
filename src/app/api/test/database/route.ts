@@ -5,6 +5,8 @@ import { requireAuth } from '@/lib/auth/authorize';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
+
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -15,11 +17,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.
       );
     }
 
-
-export async function GET(request: NextRequest) {
-  const testType = request.nextUrl.searchParams.get('type') || 'connection';
-
-  try {
+    const testType = request.nextUrl.searchParams.get('type') || 'connection';
     if (!supabaseUrl || !supabaseAnonKey) {
       return NextResponse.json(
         {

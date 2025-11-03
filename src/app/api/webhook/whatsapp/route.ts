@@ -8,17 +8,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// POST /api/webhook/whatsapp - استقبال رسائل WhatsAp
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-p
+// POST /api/webhook/whatsapp - استقبال رسائل WhatsApp
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

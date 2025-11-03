@@ -6,6 +6,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { clearRateLimitCache } from '@/middleware/rate-limiter';
 import { requireAuth } from '@/lib/auth/authorize';
+
+export async function POST(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -16,17 +18,14 @@ import { requireAuth } from '@/lib/auth/authorize';
       );
     }
 
+    // Only allow in development/testing environment
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json(
+        { error: 'Not available in production' },
+        { status: 403 }
+      );
+    }
 
-export async function POST(request: NextRequest) {
-  // Only allow in development/testing environment
-  if (process.env.NODE_ENV === 'production') {
-    return NextResponse.json(
-      { error: 'Not available in production' },
-      { status: 403 }
-    );
-  }
-
-  try {
     clearRateLimitCache();
     return NextResponse.json({
       success: true,
