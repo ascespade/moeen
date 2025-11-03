@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useAdminAppointments } from '@/hooks/useAdminAppointments';
-import { RouteGuard } from '@/components/admin/RouteGuard';
 import {
   Card,
   CardContent,
@@ -670,12 +669,5 @@ function AppointmentsPageContent() {
 }
 
 export default function AppointmentsPage() {
-  return (
-    <RouteGuard
-      requiredRoles={['admin', 'manager', 'supervisor', 'doctor', 'staff']}
-      requiredPermissions={['appointments:view']}
-    >
-      <AppointmentsPageContent />
-    </RouteGuard>
-  );
+  return <AppointmentsPageContent />;
 }

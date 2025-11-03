@@ -3,7 +3,39 @@ import { authorize } from '@/lib/auth/authorize';
 
 export async function GET(request: NextRequest) {
   try {
-    // Try to get user from headers (sent from client localStorage)
+    // First: Try JWT from cookie (fastest path)
+    const token = request.cookies.get('auth_token')?.value ||
+                 request.cookies.get('auth-token')?.value;
+
+    if (token) {
+      try {
+        const jwtSecret = process.env.JWT_SECRET;
+        if (jwtSecret) {
+          const jwt = await import('jsonwebtoken');
+          const decoded = jwt.verify(token, jwtSecret) as any;
+
+          if (decoded.userId && decoded.email && decoded.role) {
+            // Get permissions from PermissionManager (fast, no DB query)
+            const { PermissionManager } = await import('@/lib/permissions');
+            const permissions = PermissionManager.getRolePermissions(decoded.role);
+
+            return NextResponse.json({
+              success: true,
+              user: {
+                id: decoded.userId,
+                email: decoded.email,
+                role: decoded.role,
+                permissions: Array.isArray(permissions) ? permissions : [],
+              },
+            });
+          }
+        }
+      } catch (e) {
+        // Invalid JWT, continue to other methods
+      }
+    }
+
+    // Second: Try to get user from headers (sent from client localStorage)
     const clientUserId = request.headers.get('x-user-id');
     const clientUserEmail = request.headers.get('x-user-email');
     const clientUserRole = request.headers.get('x-user-role');

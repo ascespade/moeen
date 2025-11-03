@@ -1,7 +1,7 @@
 /**
  * Custom Auth Hook - Clean & Optimized
  * Hook ???????? ?????? - ???? ??????
- * 
+ *
  * ? Simple state management
  * ? Proper cleanup
  * ? No unnecessary re-renders
@@ -9,7 +9,7 @@
 
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { CustomAuthUser } from '../types';
 
 interface AuthState {
@@ -49,7 +49,7 @@ export function useCustomAuth() {
               // Get user from localStorage as fallback (faster)
               const userStr = localStorage.getItem('user');
               let userData = data.user;
-              
+
               if (userStr) {
                 try {
                   const parsed = JSON.parse(userStr);
@@ -106,8 +106,16 @@ export function useCustomAuth() {
       const response = await fetch('/api/auth/custom-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // Important: include cookies
         body: JSON.stringify({ email, password }),
       });
+
+      if (!response.ok) {
+        return {
+          success: false,
+          error: `HTTP ${response.status}: ${response.statusText}`
+        };
+      }
 
       const data = await response.json();
 
@@ -131,6 +139,7 @@ export function useCustomAuth() {
         return { success: false, error: data.error || 'Login failed' };
       }
     } catch (error) {
+      console.error('[useCustomAuth] Login error:', error);
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Login failed',

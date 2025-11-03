@@ -18,17 +18,7 @@ function parseMaxAgeSeconds(expiresIn: string | undefined): number {
   if (unit === 'm') return n * 60;
   if (unit === 'h') return n * 60 * 60;
   if (unit === 'd') return n * 60 * 60 * 24;
-  return 60 * 60 * 24 * 
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(req: NextRequest);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-7;
+  return 60 * 60 * 24 * 7;
 }
 
 export async function POST(req: NextRequest) {

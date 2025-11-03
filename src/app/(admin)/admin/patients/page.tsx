@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { RouteGuard } from '@/components/admin/RouteGuard';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useAdminPatients } from '@/hooks/useAdminPatients';
@@ -624,12 +623,5 @@ function PatientsPageContent() {
 }
 
 export default function PatientsPage() {
-  return (
-    <RouteGuard
-      requiredRoles={['admin', 'manager', 'supervisor', 'doctor', 'staff']}
-      requiredPermissions={['patients:view']}
-    >
-      <PatientsPageContent />
-    </RouteGuard>
-  );
+  return <PatientsPageContent />;
 }

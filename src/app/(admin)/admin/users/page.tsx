@@ -1,6 +1,5 @@
 'use client';
 
-import { RouteGuard } from '@/components/admin/RouteGuard';
 import { AdminFilterBar, AdminHeader, AdminStatsCard } from '@/components/admin/ui';
 import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
@@ -696,12 +695,5 @@ function UsersPageContent() {
 }
 
 export default function UsersPage() {
-  return (
-    <RouteGuard
-      requiredRoles={['admin', 'manager']}
-      requiredPermissions={['users:view']}
-    >
-      <UsersPageContent />
-    </RouteGuard>
-  );
+  return <UsersPageContent />;
 }

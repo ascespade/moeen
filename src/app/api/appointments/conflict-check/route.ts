@@ -3,13 +3,12 @@
  * Check for appointment conflicts and availability
  */
 
+import { ErrorHandler } from '@/core/errors';
+import { ValidationHelper } from '@/core/validation';
+import { createClient } from '@/lib/supabase/server';
+import { getClientInfo } from '@/lib/utils/request-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createClient } from '@/lib/supabase/server';
-import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
-import { getClientInfo } from '@/lib/utils/request-helpers';
-import { requireAuth } from '@/lib/auth/authorize';
 
 const conflictCheckSchema = z.object({
   doctorId: z.string().uuid('Invalid doctor ID'),
@@ -17,16 +16,6 @@ const conflictCheckSchema = z.object({
   duration: z.number().min(15).max(240).default(30),
   excludeAppointmentId: z.string().uuid().optional(),
 });
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin","doctor","staff","supervisor","patient"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();

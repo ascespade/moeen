@@ -1,6 +1,5 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
-import { RouteGuard } from '@/components/admin/RouteGuard';
 
 import Image from 'next/image';
 
@@ -26,7 +25,7 @@ function AuditLogsPageContent() {
     failed: 0,
     warning: 0
   });
-  
+
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [actionFilter, setActionFilter] = useState<string>('all');
@@ -72,7 +71,7 @@ function AuditLogsPageContent() {
     try {
       setLoading(true);
       setError(null);
-      
+
       const params = new URLSearchParams({
         ...(searchTerm && { search: searchTerm }),
         ...(statusFilter !== 'all' && { status: statusFilter }),
@@ -147,13 +146,13 @@ function AuditLogsPageContent() {
             </div>
           </div>
         )}
-        
+
         {error && (
           <div className='mb-8 rounded-lg bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] border border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)] p-4 text-[var(--brand-error)]'>
             <p>خطأ في تحميل البيانات: {error}</p>
           </div>
         )}
-        
+
         {!loading && !error && (
           <>
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
@@ -232,7 +231,7 @@ function AuditLogsPageContent() {
               </select>
             </div>
             <div className='flex items-end'>
-              <button 
+              <button
                 onClick={fetchAuditLogs}
                 className='w-full rounded-lg bg-[var(--brand-primary)] py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
               >
@@ -351,12 +350,5 @@ function AuditLogsPageContent() {
 }
 
 export default function AuditLogsPage() {
-  return (
-    <RouteGuard
-      requiredRoles={['admin', 'supervisor']}
-      requiredPermissions={['audit_logs:view']}
-    >
-      <AuditLogsPageContent />
-    </RouteGuard>
-  );
+  return <AuditLogsPageContent />;
 }

@@ -1,6 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/authorize';
 import { realDB } from '@/lib/supabase-real';
-import { requireAuth } from '@/lib/auth/authorize'
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -10,10 +12,7 @@ import { requireAuth } from '@/lib/auth/authorize'
         { status: 401 }
       );
     }
-;
 
-export async function GET(request: NextRequest) {
-  try {
     const { searchParams } = new URL(request.url);
     const searchTerm = searchParams.get('search') || '';
     const limit = parseInt(searchParams.get('limit') || '50');
@@ -23,17 +22,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data:
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
- data.slice(offset, offset + limit),
+      data: data.slice(offset, offset + limit),
       pagination: {
         total: data.length,
         limit,

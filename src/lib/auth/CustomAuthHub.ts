@@ -187,6 +187,8 @@ class CustomAuthHub {
         userId: user.id,
         email: user.email,
         role: user.role,
+        status: user.status || 'active', // Include status for middleware
+        verifyStatus: false, // Don't require DB verification in middleware
       },
       secret,
       { expiresIn }

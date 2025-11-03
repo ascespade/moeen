@@ -1,22 +1,15 @@
 /**
- * Custom Login API - Optimized
- * API تسجيل الدخول المخصص - محسّن
- * 
- * ✅ Clean business logic
- * ✅ Proper error handling
- * ✅ Security best practices
+ * Simple Login API - Clean & Simple
  */
 
-import { NextRequest, NextResponse } from 'next/server';
 import { customAuthHub } from '@/lib/auth/CustomAuthHub';
-
-const isDev = process.env.NODE_ENV === 'development';
+import jwt from 'jsonwebtoken';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
 
-    // Validation
     if (!email || !password) {
       return NextResponse.json(
         { success: false, error: 'Email and password are required' },
@@ -24,20 +17,43 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Business Logic: Login attempt
+    // Login
     const result = await customAuthHub.login(email, password);
 
     if (!result.user || !result.token) {
-      // Don't reveal specific error reasons (security)
       return NextResponse.json(
         { success: false, error: result.error || 'Invalid credentials' },
         { status: 401 }
       );
     }
 
-    // Get permissions (cached, fast)
+    // Get permissions
     const permissions = await customAuthHub.getUserPermissions(result.user.id);
 
+    // Generate JWT token (always ensure it's a proper JWT)
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      return NextResponse.json(
+        { success: false, error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
+    // Always generate fresh JWT with all required fields
+    const jwtToken = jwt.sign(
+      {
+        userId: result.user.id,
+        email: result.user.email,
+        role: result.user.role,
+        status: result.user.status || 'active',
+      },
+      jwtSecret,
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+      }
+    );
+
+    // Create response
     const response = NextResponse.json({
       success: true,
       data: {
@@ -49,14 +65,14 @@ export async function POST(req: NextRequest) {
           avatar: result.user.avatar_url,
           status: result.user.status,
         },
-        token: result.token,
+        token: jwtToken,
         permissions: permissions || null,
       },
     });
 
-    // Set auth_token cookie (secure)
+    // Set cookie (important: same domain, path, and settings)
     const isProduction = process.env.NODE_ENV === 'production';
-    response.cookies.set('auth_token', result.token, {
+    response.cookies.set('auth_token', jwtToken, {
       httpOnly: true,
       secure: isProduction,
       sameSite: 'lax',
@@ -66,11 +82,7 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (error) {
-    // Log in development only
-    if (isDev) {
-      console.error('[CUSTOM-LOGIN] Error:', error);
-    }
-    
+    console.error('[LOGIN] Error:', error);
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

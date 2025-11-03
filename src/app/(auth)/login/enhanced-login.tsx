@@ -5,11 +5,11 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 import { getDefaultRoute } from '@/lib/auth/RouteManager';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function EnhancedLoginPage() {
   const router = useRouter();
@@ -35,15 +35,15 @@ export default function EnhancedLoginPage() {
 
     try {
       const result = await login(email, password);
-      
+
       if (result.success) {
-        // Wait for state update
-        await new Promise(resolve => setTimeout(resolve, 300));
-        
+        // Wait to ensure cookie is set and ready for middleware
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         // Get user from localStorage
         const userStr = localStorage.getItem('user');
         let currentRole = 'agent';
-        
+
         if (userStr) {
           try {
             const userData = JSON.parse(userStr);
@@ -73,13 +73,14 @@ export default function EnhancedLoginPage() {
 
     try {
       const result = await login(userEmail, userPassword);
-      
+
       if (result.success) {
-        await new Promise(resolve => setTimeout(resolve, 300));
-        
+        // Wait to ensure cookie is set and ready for middleware
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         const userStr = localStorage.getItem('user');
         let currentRole = 'agent';
-        
+
         if (userStr) {
           try {
             const userData = JSON.parse(userStr);

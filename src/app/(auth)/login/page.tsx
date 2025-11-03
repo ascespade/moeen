@@ -1,9 +1,9 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 import { getDefaultRoute } from '@/lib/auth/RouteManager';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -27,28 +27,17 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
-    
+
     try {
       const result = await login(email, password);
-      if (result.success) {
-        // Get user role from localStorage (already saved by useCustomAuth)
-        const userStr = localStorage.getItem('user');
-        let targetRole = 'agent';
-        
-        if (userStr) {
-          try {
-            const userData = JSON.parse(userStr);
-            targetRole = userData.role || 'agent';
-          } catch {
-            // Use default
-          }
-        }
-        
-        // Small delay to ensure cookie is set (minimal delay)
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        const route = getDefaultRoute(targetRole);
-        // Use window.location for full page reload to ensure middleware picks up cookie
+      if (result.success && result.user) {
+        // Get route based on user role
+        const route = getDefaultRoute(result.user.role || 'agent');
+
+        // Reset state
+        setSubmitting(false);
+
+        // Redirect - cookie is already set by server
         window.location.href = route;
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
@@ -193,11 +182,10 @@ export default function LoginPage() {
                       setSubmitting(true);
                       try {
                         const result = await login('admin@test.com', 'Admin123!');
-                        if (result.success) {
-                          const userStr = localStorage.getItem('user');
-                          const role = userStr ? JSON.parse(userStr).role : 'admin';
-                          const route = getDefaultRoute(role);
-                          setTimeout(() => window.location.href = route, 100);
+                        if (result.success && result.user) {
+                          const route = getDefaultRoute(result.user.role || 'admin');
+                          setSubmitting(false);
+                          window.location.href = route;
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                           setSubmitting(false);
@@ -226,7 +214,7 @@ export default function LoginPage() {
                           const userStr = localStorage.getItem('user');
                           const role = userStr ? JSON.parse(userStr).role : 'agent';
                           const route = getDefaultRoute(role);
-                          setTimeout(() => window.location.href = route, 100);
+                          router.replace(route);
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                           setSubmitting(false);
@@ -255,7 +243,7 @@ export default function LoginPage() {
                           const userStr = localStorage.getItem('user');
                           const role = userStr ? JSON.parse(userStr).role : 'agent';
                           const route = getDefaultRoute(role);
-                          setTimeout(() => window.location.href = route, 100);
+                          router.replace(route);
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                           setSubmitting(false);
@@ -284,7 +272,7 @@ export default function LoginPage() {
                           const userStr = localStorage.getItem('user');
                           const role = userStr ? JSON.parse(userStr).role : 'agent';
                           const route = getDefaultRoute(role);
-                          setTimeout(() => window.location.href = route, 100);
+                          router.replace(route);
                         } else {
                           setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                           setSubmitting(false);

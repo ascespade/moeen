@@ -1,23 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { requireAuth } from '@/lib/auth/authorize';
+import { NextRequest, NextResponse } from 'next/server';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// GET /api/chatbot/config - جلب إعدادات الشات ب
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-وت
+// GET /api/chatbot/config - جلب إعدادات الشات بوت
 export async function GET(request: NextRequest) {
   try {
     const { data: config, error } = await supabase
@@ -45,17 +34,7 @@ export async function GET(request: NextRequest) {
         },
         auto_reply_enabled: true,
         auto_reply_message:
-          'مرحباً بك في مركز الهمم! 👋\n\nيمكنني مساعدتك في:\n📅 حجز المواعيد\n❌ إلغاء المواعيد\n🔔 تذكير بالمواعيد\nℹ️ معلومات عن الخدمات\n\nكيف يمكنني مسا
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-عدتك اليوم؟',
+          'مرحباً بك في مركز الهمم! 👋\n\nيمكنني مساعدتك في:\n📅 حجز المواعيد\n❌ إلغاء المواعيد\n🔔 تذكير بالمواعيد\nℹ️ معلومات عن الخدمات\n\nكيف يمكنني مساعدتك اليوم؟',
       };
 
       return NextResponse.json({ config: defaultConfig });

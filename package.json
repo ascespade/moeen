@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "node scripts/find-port.js 3000",
+    "dev:port": "next dev -p",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

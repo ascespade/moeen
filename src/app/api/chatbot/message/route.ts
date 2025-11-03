@@ -1,6 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
 import logger from '@/lib/monitoring/logger';
-import { requireAuth } from '@/lib/auth/authorize';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Simple chatbot responses - يمكن توسيعه لاحقاً
 const responses: Record<string, string> = {
@@ -60,16 +59,6 @@ const responses: Record<string, string> = {
   طوارئ:
     '🚨 أرقام الطوارئ:\n\n997 - الطوارئ العامة\n911 - الإسعاف\n+966555381558 - مركز الهمم (واتساب)',
 };
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-
 
 export async function POST(request: NextRequest) {
   try {

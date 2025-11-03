@@ -1,15 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/lib/auth/authorize'
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-;
 
 export async function GET(request: NextRequest) {
   try {
