@@ -22,6 +22,7 @@
     "prevent:setup": "node scripts/prevent-future-issues.mjs",
     "quality:check": "node scripts/quality-checks.mjs",
     "audit:master": "node scripts/master-audit-and-fix.mjs",
+    "audit:five-rounds": "node scripts/five-rounds-audit.mjs",
     "test:unit": "vitest run --reporter=verbose",
     "test:integration": "vitest run --config vitest.integration.config.js",
     "test:e2e": "playwright test --config=playwright-auto.config.ts",

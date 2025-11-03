@@ -18,7 +18,7 @@ const doctorSchema = z.object({
   working_hours: z.any().optional(),
 });
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication for accessing doctors data
     const authResult = await requireAuth(['admin', 'supervisor', 'staff', 'doctor', 'patient'])(request);

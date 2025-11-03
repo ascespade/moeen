@@ -16,7 +16,7 @@ const sessionSchema = z.object({
   insurance_claim_number: z.string().optional(),
 });
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);

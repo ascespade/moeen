@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import logger from '@/lib/monitoring/logger';
 import { requireAuth } from '@/lib/auth/authorize';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);

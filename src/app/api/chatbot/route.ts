@@ -3,7 +3,7 @@ import { realDB } from '@/lib/supabase-real';
 import { requireAuth } from '@/lib/auth/authorize';
 import { PermissionManager } from '@/lib/permissions';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication and proper permissions
     const authResult = await requireAuth(['admin', 'supervisor', 'staff', 'agent'])(request);

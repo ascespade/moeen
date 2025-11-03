@@ -1,0 +1,745 @@
+{
+  "timestamp": "2025-11-03T20:13:41.252Z",
+  "summary": {
+    "totalIssues": 86,
+    "totalFixes": 11,
+    "totalImprovements": 45
+  },
+  "rounds": {
+    "round1_code": {
+      "issues": 3,
+      "fixes": 11,
+      "improvements": 10
+    },
+    "round2_design": {
+      "issues": 7,
+      "fixes": 0,
+      "improvements": 1
+    },
+    "round3_technical": {
+      "issues": 64,
+      "fixes": 0,
+      "improvements": 0
+    },
+    "round4_database": {
+      "issues": 11,
+      "fixes": 0,
+      "improvements": 34
+    },
+    "round5_business": {
+      "issues": 1,
+      "fixes": 0,
+      "improvements": 0
+    }
+  },
+  "details": {
+    "round1_code": {
+      "issues": [
+        {
+          "file": "src/app/api/supervisor/me/route.ts",
+          "issue": "Missing return type annotation",
+          "severity": "medium",
+          "suggestion": "Add explicit return type"
+        },
+        {
+          "file": "src/components/dynamic-doctors-list.tsx",
+          "issue": "Component violates single responsibility",
+          "severity": "medium",
+          "suggestion": "Extract data fetching to custom hook"
+        },
+        {
+          "file": "src/components/dynamic-data-dashboard.tsx",
+          "issue": "Component violates single responsibility",
+          "severity": "medium",
+          "suggestion": "Extract data fetching to custom hook"
+        }
+      ],
+      "fixes": [
+        "Added return type to src/app/api/supervisor/me/route.ts",
+        "Improved type safety in src/utils/performance-utils.ts",
+        "Improved type safety in src/utils/api.ts",
+        "Improved type safety in src/types/api.ts",
+        "Improved type safety in src/scripts/apply_db_fix.ts",
+        "Improved type safety in src/lib/whatsapp-business-api.ts",
+        "Improved type safety in src/lib/supabase.ts",
+        "Improved type safety in src/lib/supabase-real.ts",
+        "Improved type safety in src/lib/slack-integration.ts",
+        "Improved type safety in src/lib/saudi-ministry-health-integration.ts",
+        "Improved type safety in src/lib/saudi-health-integration.ts"
+      ],
+      "improvements": [
+        "Type safety improved in src/utils/performance-utils.ts",
+        "Type safety improved in src/utils/api.ts",
+        "Type safety improved in src/types/api.ts",
+        "Type safety improved in src/scripts/apply_db_fix.ts",
+        "Type safety improved in src/lib/whatsapp-business-api.ts",
+        "Type safety improved in src/lib/supabase.ts",
+        "Type safety improved in src/lib/supabase-real.ts",
+        "Type safety improved in src/lib/slack-integration.ts",
+        "Type safety improved in src/lib/saudi-ministry-health-integration.ts",
+        "Type safety improved in src/lib/saudi-health-integration.ts"
+      ]
+    },
+    "round2_design": {
+      "issues": [
+        {
+          "file": "src/components/ui/RTLToggle.tsx",
+          "issue": "Button missing accessibility attributes",
+          "severity": "medium",
+          "suggestion": "Add aria-label or aria-labelledby"
+        },
+        {
+          "file": "src/theme/index.ts",
+          "issue": "Hardcoded color values detected",
+          "severity": "low",
+          "suggestion": "Use design system color tokens"
+        },
+        {
+          "file": "src/styles/centralized.css",
+          "issue": "Hardcoded color values detected",
+          "severity": "low",
+          "suggestion": "Use design system color tokens"
+        },
+        {
+          "file": "src/components/ui/Tabs.tsx",
+          "issue": "Component may not be responsive",
+          "severity": "low",
+          "suggestion": "Add responsive breakpoints (md:, lg:, etc.)"
+        },
+        {
+          "file": "src/components/ui/Table.tsx",
+          "issue": "Component may not be responsive",
+          "severity": "low",
+          "suggestion": "Add responsive breakpoints (md:, lg:, etc.)"
+        },
+        {
+          "file": "src/components/ui/Select.tsx",
+          "issue": "Component may not be responsive",
+          "severity": "low",
+          "suggestion": "Add responsive breakpoints (md:, lg:, etc.)"
+        },
+        {
+          "file": "src/components/ui/DropdownMenu.tsx",
+          "issue": "Component may not be responsive",
+          "severity": "low",
+          "suggestion": "Add responsive breakpoints (md:, lg:, etc.)"
+        }
+      ],
+      "fixes": [],
+      "improvements": [
+        "Created accessibility utilities"
+      ]
+    },
+    "round3_technical": {
+      "issues": [
+        {
+          "file": "src/app/api/upload/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/upload/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/training/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/training/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/settings/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/settings/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/progress/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/progress/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/sessions/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/sessions/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/patients/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/patients/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/notifications/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/notifications/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/medical-records/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/medical-records/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/insurance-claims/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/insurance-claims/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/insurance/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/insurance/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/i18n/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/health/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/family/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/family/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/errors/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/errors/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/dynamic-data/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/dynamic-data/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/doctors/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/doctors/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/crm/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/crm/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/chatbot/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/chatbot/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/auth/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/audit-logs/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/audit-logs/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/appointments/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/appointments/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/admin/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/admin/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/webhook/whatsapp/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/webhook/whatsapp/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/users/me/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/user/preferences/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/user/preferences/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/translations/missing/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/translations/missing/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/translations/[lang]/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/therapists/availability/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/test/health/route.ts",
+          "issue": "Potential N+1 query problem",
+          "severity": "medium",
+          "suggestion": "Use Promise.all for parallel queries"
+        },
+        {
+          "file": "src/app/api/test/health/route.ts",
+          "issue": "Missing caching strategy",
+          "severity": "low",
+          "suggestion": "Add cache headers or revalidation"
+        },
+        {
+          "file": "src/app/api/upload/route.ts",
+          "issue": "Potential SQL injection risk",
+          "severity": "critical",
+          "suggestion": "Use parameterized queries"
+        },
+        {
+          "file": "src/app/api/progress/route.ts",
+          "issue": "API route may be missing authentication",
+          "severity": "critical",
+          "suggestion": "Add authentication middleware"
+        },
+        {
+          "file": "src/app/api/health/route.ts",
+          "issue": "API route may be missing authentication",
+          "severity": "critical",
+          "suggestion": "Add authentication middleware"
+        },
+        {
+          "file": "src/app/api/family/route.ts",
+          "issue": "API route may be missing authentication",
+          "severity": "critical",
+          "suggestion": "Add authentication middleware"
+        },
+        {
+          "file": "src/app/api/dynamic-data/route.ts",
+          "issue": "Potential SQL injection risk",
+          "severity": "critical",
+          "suggestion": "Use parameterized queries"
+        },
+        {
+          "file": "src/app/api/auth/route.ts",
+          "issue": "API route may be missing authentication",
+          "severity": "critical",
+          "suggestion": "Add authentication middleware"
+        },
+        {
+          "file": "src/app/api/appointments/route.ts",
+          "issue": "Potential SQL injection risk",
+          "severity": "critical",
+          "suggestion": "Use parameterized queries"
+        },
+        {
+          "file": "src/app/api/users/me/route.ts",
+          "issue": "API route may be missing authentication",
+          "severity": "critical",
+          "suggestion": "Add authentication middleware"
+        },
+        {
+          "file": "src/app/api/user/preferences/route.ts",
+          "issue": "API route may be missing authentication",
+          "severity": "critical",
+          "suggestion": "Add authentication middleware"
+        },
+        {
+          "file": "src/app/api/translations/[lang]/route.ts",
+          "issue": "API route may be missing authentication",
+          "severity": "critical",
+          "suggestion": "Add authentication middleware"
+        },
+        {
+          "file": "src/app/api/translations/[lang]/route.ts",
+          "issue": "Potential SQL injection risk",
+          "severity": "critical",
+          "suggestion": "Use parameterized queries"
+        },
+        {
+          "file": "src/app/api/test/health/route.ts",
+          "issue": "API route may be missing authentication",
+          "severity": "critical",
+          "suggestion": "Add authentication middleware"
+        }
+      ],
+      "fixes": [],
+      "improvements": []
+    },
+    "round4_database": {
+      "issues": [
+        {
+          "table": "approvals",
+          "issue": "Missing index on foreign key approved_by",
+          "severity": "high",
+          "suggestion": "CREATE INDEX idx_approvals_approved_by ON approvals(approved_by)"
+        },
+        {
+          "table": "approvals",
+          "issue": "Missing index on foreign key created_by",
+          "severity": "high",
+          "suggestion": "CREATE INDEX idx_approvals_created_by ON approvals(created_by)"
+        },
+        {
+          "table": "approvals",
+          "issue": "Missing index on foreign key updated_by",
+          "severity": "high",
+          "suggestion": "CREATE INDEX idx_approvals_updated_by ON approvals(updated_by)"
+        },
+        {
+          "file": "src/app/api/upload/route.ts",
+          "issue": "Using implicit joins (Supabase syntax)",
+          "severity": "low",
+          "suggestion": "Consider explicit joins for complex queries"
+        },
+        {
+          "file": "src/app/api/progress/route.ts",
+          "issue": "Using SELECT * in query",
+          "severity": "medium",
+          "suggestion": "Select only required columns for better performance"
+        },
+        {
+          "file": "src/app/api/medical-records/route.ts",
+          "issue": "Using implicit joins (Supabase syntax)",
+          "severity": "low",
+          "suggestion": "Consider explicit joins for complex queries"
+        },
+        {
+          "file": "src/app/api/family/route.ts",
+          "issue": "Using SELECT * in query",
+          "severity": "medium",
+          "suggestion": "Select only required columns for better performance"
+        },
+        {
+          "file": "src/app/api/errors/route.ts",
+          "issue": "Using SELECT * in query",
+          "severity": "medium",
+          "suggestion": "Select only required columns for better performance"
+        },
+        {
+          "file": "src/app/api/dynamic-data/route.ts",
+          "issue": "Using SELECT * in query",
+          "severity": "medium",
+          "suggestion": "Select only required columns for better performance"
+        },
+        {
+          "table": "center_info",
+          "issue": "Column phone should be NOT NULL",
+          "severity": "medium",
+          "suggestion": "ALTER TABLE center_info ALTER COLUMN phone SET NOT NULL"
+        },
+        {
+          "table": "center_info",
+          "issue": "Column email should be NOT NULL",
+          "severity": "medium",
+          "suggestion": "ALTER TABLE center_info ALTER COLUMN email SET NOT NULL"
+        }
+      ],
+      "fixes": [],
+      "improvements": [
+        {
+          "table": "ai_models",
+          "suggestion": "Add index on ai_models.created_at for better query performance"
+        },
+        {
+          "table": "ai_models",
+          "suggestion": "Add index on ai_models.updated_at for better query performance"
+        },
+        {
+          "table": "ai_training_data",
+          "suggestion": "Add index on ai_training_data.created_at for better query performance"
+        },
+        {
+          "table": "analytics",
+          "suggestion": "Add index on analytics.updated_at for better query performance"
+        },
+        {
+          "table": "appointments",
+          "suggestion": "Add index on appointments.created_at for better query performance"
+        },
+        {
+          "table": "approvals",
+          "suggestion": "Add index on approvals.updated_at for better query performance"
+        },
+        {
+          "table": "call_requests",
+          "suggestion": "Add index on call_requests.created_at for better query performance"
+        },
+        {
+          "table": "call_requests",
+          "suggestion": "Add index on call_requests.updated_at for better query performance"
+        },
+        {
+          "table": "center_info",
+          "suggestion": "Add index on center_info.created_at for better query performance"
+        },
+        {
+          "table": "center_info",
+          "suggestion": "Add index on center_info.updated_at for better query performance"
+        },
+        {
+          "table": "center_info",
+          "suggestion": "Add index on center_info.email for better query performance"
+        },
+        {
+          "table": "channels",
+          "suggestion": "Add index on channels.created_at for better query performance"
+        },
+        {
+          "table": "channels",
+          "suggestion": "Add index on channels.updated_at for better query performance"
+        },
+        {
+          "table": "chatbot_appointments",
+          "suggestion": "Add index on chatbot_appointments.created_at for better query performance"
+        },
+        {
+          "table": "chatbot_appointments",
+          "suggestion": "Add index on chatbot_appointments.updated_at for better query performance"
+        },
+        {
+          "table": "chatbot_appointments",
+          "suggestion": "Add index on chatbot_appointments.status for better query performance"
+        },
+        {
+          "table": "chatbot_configs",
+          "suggestion": "Add index on chatbot_configs.created_at for better query performance"
+        },
+        {
+          "table": "chatbot_configs",
+          "suggestion": "Add index on chatbot_configs.updated_at for better query performance"
+        },
+        {
+          "table": "chatbot_conversations",
+          "suggestion": "Add index on chatbot_conversations.updated_at for better query performance"
+        },
+        {
+          "table": "chatbot_edges",
+          "suggestion": "Add index on chatbot_edges.created_at for better query performance"
+        },
+        {
+          "table": "chatbot_flows",
+          "suggestion": "Add index on chatbot_flows.created_at for better query performance"
+        },
+        {
+          "table": "chatbot_flows",
+          "suggestion": "Add index on chatbot_flows.updated_at for better query performance"
+        },
+        {
+          "table": "chatbot_flows",
+          "suggestion": "Add index on chatbot_flows.status for better query performance"
+        },
+        {
+          "table": "chatbot_integrations",
+          "suggestion": "Add index on chatbot_integrations.created_at for better query performance"
+        },
+        {
+          "table": "chatbot_integrations",
+          "suggestion": "Add index on chatbot_integrations.updated_at for better query performance"
+        },
+        {
+          "table": "chatbot_integrations",
+          "suggestion": "Add index on chatbot_integrations.status for better query performance"
+        },
+        {
+          "table": "chatbot_intents",
+          "suggestion": "Add index on chatbot_intents.created_at for better query performance"
+        },
+        {
+          "table": "chatbot_intents",
+          "suggestion": "Add index on chatbot_intents.updated_at for better query performance"
+        },
+        {
+          "table": "chatbot_messages",
+          "suggestion": "Add index on chatbot_messages.updated_at for better query performance"
+        },
+        {
+          "table": "chatbot_nodes",
+          "suggestion": "Add index on chatbot_nodes.created_at for better query performance"
+        },
+        {
+          "table": "chatbot_nodes",
+          "suggestion": "Add index on chatbot_nodes.updated_at for better query performance"
+        },
+        {
+          "table": "chatbot_reminders",
+          "suggestion": "Add index on chatbot_reminders.created_at for better query performance"
+        },
+        {
+          "table": "chatbot_templates",
+          "suggestion": "Add index on chatbot_templates.created_at for better query performance"
+        },
+        {
+          "table": "chatbot_templates",
+          "suggestion": "Add index on chatbot_templates.updated_at for better query performance"
+        }
+      ]
+    },
+    "round5_business": {
+      "issues": [
+        {
+          "file": "src/__tests__/api/appointments.test.ts",
+          "issue": "Missing appointment conflict detection",
+          "severity": "critical",
+          "suggestion": "Check for scheduling conflicts before creating appointment"
+        }
+      ],
+      "fixes": [],
+      "improvements": []
+    }
+  }
+}

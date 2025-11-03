@@ -20,7 +20,7 @@ const auditQuerySchema = z.object({
   limit: z.number().min(1).max(100).default(20),
 });
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize supervisor or admin
     const authResult = await requireAuth(['supervisor', 'admin'])(request);

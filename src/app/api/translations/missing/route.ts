@@ -4,7 +4,7 @@ import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = getServiceSupabase();
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);

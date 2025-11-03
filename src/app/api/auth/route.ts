@@ -15,7 +15,7 @@ const registerSchema = z.object({
   role: z.enum(['patient', 'doctor', 'admin', 'staff']),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const { action } = body;

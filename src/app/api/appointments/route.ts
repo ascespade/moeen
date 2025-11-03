@@ -4,7 +4,7 @@ import { authorize } from '@/lib/auth/authorize';
 import { validateData, appointmentSchema } from '@/lib/validation/schemas';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
 
   try {

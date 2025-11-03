@@ -9,7 +9,7 @@ const supabase = createClient(
 );
 
 // POST /api/webhook/whatsapp - استقبال رسائل WhatsApp
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
 

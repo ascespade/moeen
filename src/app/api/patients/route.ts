@@ -22,7 +22,7 @@ const patientSchema = z.object({
   insurance_number: z.string().optional(),
 });
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication and proper permissions
     const authResult = await requireAuth(['admin', 'doctor', 'staff', 'supervisor'])(request);
