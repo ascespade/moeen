@@ -7,7 +7,8 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// GET /api/crm/leads - جلب العملاء المحتمل
+// GET /api/crm/leads - جلب العملاء المحتملين
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -17,9 +18,7 @@ const supabase = createClient(
         { status: 401 }
       );
     }
-ين
-export async function GET(request: NextRequest) {
-  try {
+
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
     const owner_id = searchParams.get('owner_id');
@@ -60,17 +59,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       leads,
-
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-  pagination: {
+      pagination: {
         page,
         limit,
         total: count || 0,

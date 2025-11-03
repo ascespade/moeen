@@ -95,12 +95,12 @@ export function ThemeProvider({
     });
 
     return unsubscribe;
-  }, []);
+  }, [applyThemeColors]);
 
   useEffect(() => {
     // Initial theme color application and re-apply when mode or settings change
     applyThemeColors();
-  }, [advancedSettings, resolvedMode]);
+  }, [advancedSettings, resolvedMode, applyThemeColors]);
 
   const updateSettings = (updates: Partial<ThemeSettings>) => {
     const newSettings = ThemeManager.updateSettings(updates);

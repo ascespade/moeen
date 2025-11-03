@@ -7,7 +7,8 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// API لجلب معلومات المرضى من الجدول الموج
+// API لجلب معلومات المرضى من الجدول الموجود
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -17,9 +18,7 @@ const supabase = createClient(
         { status: 401 }
       );
     }
-ود
-export async function GET(request: NextRequest) {
-  try {
+
     const { searchParams } = new URL(request.url);
     const includeUsers = searchParams.get('include_users') === 'true';
     const gender = searchParams.get('gender');
@@ -100,17 +99,7 @@ export async function GET(request: NextRequest) {
               return age >= 18 && age <= 65;
             case '65+':
               return age > 65;
-
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-     default:
+            default:
               return true;
           }
         });

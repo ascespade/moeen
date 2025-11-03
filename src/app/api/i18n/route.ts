@@ -71,17 +71,7 @@ function getFallbackMessages(locale: string, ns: string) {
     ns,
     messages: fallbackMessages[locale]?.[ns] || {},
     source: 'fallback',
-  
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: Request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-});
+  });
 }
 
 export async function GET(request: Request) {

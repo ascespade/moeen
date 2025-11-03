@@ -25,7 +25,7 @@ export function usePermissions() {
       console.error('Failed to load permissions:', error);
       setLoading(false);
     });
-  }, [user?.id, authLoading]);
+  }, [user, authLoading]);
 
   const checkPermission = useCallback(async (resource: string, action: string): Promise<boolean> => {
     if (!user) return false;

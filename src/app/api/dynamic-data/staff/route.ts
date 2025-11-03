@@ -7,7 +7,8 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// API لجلب معلومات الموظفين من جدول users الموج
+// API لجلب معلومات الموظفين من جدول users الموجود
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -17,9 +18,7 @@ const supabase = createClient(
         { status: 401 }
       );
     }
-ود
-export async function GET(request: NextRequest) {
-  try {
+
     const { searchParams } = new URL(request.url);
     const role = searchParams.get('role'); // admin, manager, agent, supervisor
     const status = searchParams.get('status') || 'active';
@@ -42,17 +41,7 @@ export async function GET(request: NextRequest) {
     // فلترة حسب الحالة إذا طُلب ذلك
     if (status) {
       filteredData = filteredData?.filter(
-
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-      (staff: any) => staff.status?.toLowerCase() === status.toLowerCase()
+        (staff: any) => staff.status?.toLowerCase() === status.toLowerCase()
       );
     }
 

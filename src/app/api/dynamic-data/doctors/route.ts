@@ -7,7 +7,8 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// API لجلب معلومات الأطباء من الجدول الموج
+// API لجلب معلومات الأطباء من الجدول الموجود
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -17,9 +18,7 @@ const supabase = createClient(
         { status: 401 }
       );
     }
-ود
-export async function GET(request: NextRequest) {
-  try {
+
     const { searchParams } = new URL(request.url);
     const specialization = searchParams.get('specialization');
     const includeUsers = searchParams.get('include_users') === 'true';
@@ -58,17 +57,7 @@ export async function GET(request: NextRequest) {
       if (specialization) {
         filteredData = data?.filter((doctor: any) =>
           doctor.specialization
-            ?.toLow
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-erCase()
+            ?.toLowerCase()
             .includes(specialization.toLowerCase())
         );
       }

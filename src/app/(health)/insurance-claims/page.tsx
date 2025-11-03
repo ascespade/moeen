@@ -1,7 +1,7 @@
 'use client';
 import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface InsuranceClaim {
   id: string;
@@ -29,11 +29,7 @@ export default function InsuranceClaimsPage() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadClaims();
-  }, [selectedStatus]);
-
-  const loadClaims = async () => {
+  const loadClaims = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -80,7 +76,11 @@ export default function InsuranceClaimsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedStatus]);
+
+  useEffect(() => {
+    loadClaims();
+  }, [selectedStatus, loadClaims]);
 
   const getStatusColor = (status: InsuranceClaim['status']) => {
     switch (status) {

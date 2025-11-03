@@ -240,8 +240,8 @@ export default function ModernAdminDashboard() {
     <div className='flex h-screen flex-col bg-neutral-50 dark:bg-neutral-950'>
       <AdminHeader
         title='لوحة التحكم الإدارية المحدثة'
-        children={
-          <div className='flex gap-2'>
+      >
+        <div className='flex gap-2'>
             <Button
               variant='outline'
               onClick={() => setIsGridEditable(!isGridEditable)}
@@ -258,8 +258,7 @@ export default function ModernAdminDashboard() {
               تحديث
             </Button>
           </div>
-        }
-      />
+      </AdminHeader>
 
       <main className='flex-1 overflow-auto'>
         {/* Period Selector */}

@@ -11,7 +11,8 @@ import {
     Heart,
     Pill,
     Stethoscope,
-        Weight
+    Thermometer,
+    Weight
 } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
 import { DashboardGrid, GridItem } from '../DashboardGrid';

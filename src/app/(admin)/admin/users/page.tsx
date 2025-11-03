@@ -134,7 +134,8 @@ function UsersPageContent() {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const getRoleDisplayName = (role: string): string => {
+  // Load users data from API
+  const getRoleDisplayName = useCallback((role: string): string => {
     const roleMap: Record<string, string> = {
       admin: 'مدير النظام',
       manager: 'مدير',
@@ -147,9 +148,8 @@ function UsersPageContent() {
       demo: 'تجريبي'
     };
     return roleMap[role] || role;
-  };
+  }, []);
 
-  // Load users data from API
   const loadUsersData = useCallback(async () => {
     try {
       setLoading(true);

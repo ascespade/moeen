@@ -300,7 +300,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
             {getCategoryModules(categoryKey).map((moduleConfig) => {
-              const module = modules[moduleConfig.key];
+              const moduleConfigInstance = modules[moduleConfig.key];
               const Icon = moduleConfig.icon;
               
               return (
@@ -308,7 +308,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
                   key={moduleConfig.key}
                   className={cn(
                     'p-6 rounded-xl border transition-all duration-200',
-                    module.enabled
+                    moduleConfigInstance.enabled
                       ? 'border-green-200 bg-green-50/50 shadow-sm'
                       : 'border-[var(--brand-border)] bg-[var(--panel)]'
                   )}
@@ -331,7 +331,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
                     </div>
                     
                     <Switch
-                      checked={module.enabled}
+                      checked={moduleConfigInstance.enabled}
                       onCheckedChange={() => toggleModule(moduleConfig.key)}
                     />
                   </div>
@@ -340,17 +340,17 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
                   <div className='space-y-2'>
                     <Label className='text-sm font-medium text-[var(--text-secondary)]'>الميزات المتاحة:</Label>
                     <div className='space-y-1'>
-                      {module.features.map((feature, index) => (
+                      {moduleConfigInstance.features.map((feature, index) => (
                         <div 
                           key={index} 
                           className={cn(
                             'flex items-center gap-2 text-sm p-2 rounded-lg transition-colors',
-                            module.enabled 
+                            moduleConfigInstance.enabled 
                               ? 'text-green-700 bg-green-50' 
                               : 'text-gray-500 bg-gray-50'
                           )}
                         >
-                          {module.enabled ? (
+                          {moduleConfigInstance.enabled ? (
                             <CheckCircle className='w-3 h-3 text-green-500' />
                           ) : (
                             <AlertTriangle className='w-3 h-3 text-gray-400' />
@@ -364,10 +364,10 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
                   {/* Module Status */}
                   <div className='mt-4 pt-4 border-t border-[var(--brand-border)]/50'>
                     <Badge 
-                      variant={module.enabled ? 'default' : 'outline'}
-                      className={module.enabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}
+                      variant={moduleConfigInstance.enabled ? 'default' : 'outline'}
+                      className={moduleConfigInstance.enabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}
                     >
-                      {module.enabled ? 'نشط' : 'متوقف'}
+                      {moduleConfigInstance.enabled ? 'نشط' : 'متوقف'}
                     </Badge>
                   </div>
                 </div>

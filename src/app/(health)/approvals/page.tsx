@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { createClient } from '@/lib/supabase/client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -173,11 +173,7 @@ export default function ApprovalsPage() {
   const [typeFilter, setTypeFilter] = useState<'all' | Approval['requestType']>('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
 
-  useEffect(() => {
-    loadApprovals();
-  }, [filter]);
-
-  const loadApprovals = async () => {
+  const loadApprovals = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -231,7 +227,11 @@ export default function ApprovalsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter]);
+
+  useEffect(() => {
+    loadApprovals();
+  }, [filter, loadApprovals]);
 
   const filteredApprovals = approvals.filter(approval => {
     const matchesSearch =
