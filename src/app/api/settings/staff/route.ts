@@ -11,7 +11,7 @@ const supabase = createClient(
 export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -63,16 +63,6 @@ export async function GET(request: NextRequest) {
 
     const { data, error } = await query;
 
-
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
@@ -89,6 +79,15 @@ export async function GET(request: NextRequest) {
 // API لإضافة موظف جديد (للمدراء فقط)
 export async function POST(request: NextRequest) {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const {
       user_id,
@@ -164,6 +163,15 @@ export async function POST(request: NextRequest) {
 // API لتحديث موظف (للمدراء فقط)
 export async function PUT(request: NextRequest) {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { id, ...updateData } = body;
 
@@ -197,6 +205,15 @@ export async function PUT(request: NextRequest) {
 // API لحذف موظف (للمدراء فقط)
 export async function DELETE(request: NextRequest) {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 

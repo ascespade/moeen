@@ -11,7 +11,7 @@ const supabase = createClient(
 export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -41,17 +41,7 @@ export async function GET(request: NextRequest) {
     const { data, error } = await query;
 
     if (error) {
-      r
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-eturn NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ emergencyContacts: data });
@@ -66,6 +56,15 @@ eturn NextResponse.json({ error: error.message }, { status: 500 });
 // API لإضافة جهة اتصال طارئة جديدة (للمدراء فقط)
 export async function POST(request: NextRequest) {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const {
       name,
@@ -116,6 +115,15 @@ export async function POST(request: NextRequest) {
 // API لتحديث جهة اتصال طارئة (للمدراء فقط)
 export async function PUT(request: NextRequest) {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { id, ...updateData } = body;
 
@@ -149,6 +157,15 @@ export async function PUT(request: NextRequest) {
 // API لحذف جهة اتصال طارئة (للمدراء فقط)
 export async function DELETE(request: NextRequest) {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 

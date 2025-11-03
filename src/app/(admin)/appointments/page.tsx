@@ -354,6 +354,7 @@ function AppointmentsPageContent() {
             <CardContent>
               <div className="text-2xl font-bold">
                 {appointments.filter(a => {
+                  if (!a.date) return false;
                   const appointmentDate = new Date(a.date);
                   const today = new Date();
                   return appointmentDate.toDateString() === today.toDateString();
@@ -531,7 +532,7 @@ function AppointmentsPageContent() {
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        <div className="font-medium">{formatDate(appointment.date)}</div>
+                        <div className="font-medium">{appointment.date ? formatDate(appointment.date) : 'غير محدد'}</div>
                         <div className="text-muted-foreground flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           {formatTime(appointment.time)} ({appointment.duration} دقيقة)

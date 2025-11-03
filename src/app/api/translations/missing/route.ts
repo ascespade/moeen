@@ -7,7 +7,7 @@ const supabase = getServiceSupabase();
 export async function POST(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -58,20 +58,19 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
 
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
         { status: 401 }
       );
     }
-}
 
-export async function GET(request: NextRequest) {
-  try {
     const { searchParams } = new URL(request.url);
     const language = searchParams.get('language');
 

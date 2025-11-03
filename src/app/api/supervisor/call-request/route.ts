@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import logger from '@/lib/monitoring/logger';
 import { requireAuth } from '@/lib/auth/authorize';
+
+export async function POST(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -12,9 +14,6 @@ import { requireAuth } from '@/lib/auth/authorize';
       );
     }
 
-
-export async function POST(request: NextRequest) {
-  try {
     const { reason, priority = 'high' } = await request.json();
 
     const supabase = await createClient();
@@ -146,18 +145,17 @@ export async function POST(request: NextRequest) {
 }
 
 // GET: للمشرف لرؤية الطلب
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
         { status: 401 }
       );
     }
-ات
-export async function GET(request: NextRequest) {
-  try {
+
     const supabase = await createClient();
 
     // Check if user is supervisor/admin

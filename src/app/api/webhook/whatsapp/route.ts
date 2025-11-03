@@ -54,22 +54,15 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-ok
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const mode = searchParams.get('hub.mode');
-  const token = searchParams.get('hub.verify_token');
-  const challenge = searchParams.get('hub.challenge');
-
-  if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
-    return new NextResponse(challenge);
+      { error: 'Forbidden' },
+      { status: 403 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
-
-  return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 }
 
 async function processWhatsAppMessage(message: any, value: any) {
