@@ -30,13 +30,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Calculate user stats
     const totalUsers = users?.length || 0;
-    const activeUsers = users?.filter((u: any) => u.isActive).length || 0;
+    const activeUsers = users?.filter((u: unknown) => u.isActive).length || 0;
     const inactiveUsers = totalUsers - activeUsers;
 
     // Count by role
     const roleCounts =
       users?.reduce(
-        (acc: Record<string, number>, user: any) => {
+        (acc: Record<string, number>, user: unknown) => {
           acc[user.role] = (acc[user.role] || 0) + 1;
           return acc;
         },
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
     const recentUsers =
-      users?.filter((u: any) => new Date(u.createdAt) >= thirtyDaysAgo).length || 0;
+      users?.filter((u: unknown) => new Date(u.createdAt) >= thirtyDaysAgo).length || 0;
 
     // Get appointments stats (if table exists)
     let appointmentStats = {
@@ -75,12 +75,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
         appointmentStats = {
           total: appointments.length,
-          today: appointments.filter((a: any) => new Date(a.scheduledAt) >= today)
+          today: appointments.filter((a: unknown) => new Date(a.scheduledAt) >= today)
             .length,
-          thisWeek: appointments.filter((a: any) => new Date(a.scheduledAt) >= weekAgo)
+          thisWeek: appointments.filter((a: unknown) => new Date(a.scheduledAt) >= weekAgo)
             .length,
           thisMonth: appointments.filter(
-            (a: any) => new Date(a.scheduledAt) >= monthAgo
+            (a: unknown) => new Date(a.scheduledAt) >= monthAgo
           ).length,
         };
       }
@@ -109,7 +109,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         ]);
 
       if (config) {
-        config.forEach((item: any) => {
+        config.forEach((item: unknown) => {
           switch (item.key) {
             case 'maintenance_mode':
               systemConfig.maintenanceMode = item.value === 'true';

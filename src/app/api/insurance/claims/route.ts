@@ -322,7 +322,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function submitToInsuranceProvider(claim: any, provider: string) {
+async function submitToInsuranceProvider(claim: unknown, provider: string) {
   try {
     // This would integrate with actual insurance provider APIs
     // For now, we'll simulate the submission

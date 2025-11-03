@@ -38,7 +38,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       let filteredData = data;
       if (gender) {
         filteredData = data?.filter(
-          (patient: any) =>
+          (patient: unknown) =>
             patient.gender?.toLowerCase() === gender.toLowerCase()
         );
       }
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // فلترة حسب العمر إذا طُلب ذلك
       if (ageRange && filteredData) {
         const now = new Date();
-        filteredData = filteredData.filter((patient: any) => {
+        filteredData = filteredData.filter((patient: unknown) => {
           if (!patient.date_of_birth) return false;
 
           const birthDate = new Date(patient.date_of_birth);
@@ -78,7 +78,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       let filteredData = data;
       if (gender) {
         filteredData = data?.filter(
-          (patient: any) =>
+          (patient: unknown) =>
             patient.gender?.toLowerCase() === gender.toLowerCase()
         );
       }
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // فلترة حسب العمر إذا طُلب ذلك
       if (ageRange && filteredData) {
         const now = new Date();
-        filteredData = filteredData.filter((patient: any) => {
+        filteredData = filteredData.filter((patient: unknown) => {
           if (!patient.date_of_birth) return false;
 
           const birthDate = new Date(patient.date_of_birth);

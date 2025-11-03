@@ -206,15 +206,15 @@ async function __generateDashboardMetrics(
   // Calculate metrics
   const totalPatients = patients.length;
   const activatedPatients = patients.filter(
-    (p: any) => p.isActivated,
+    (p: unknown) => p.isActivated,
   ).length;
   const totalAppointments = appointments.length;
   const completedAppointments = appointments.filter(
-    (a: any) => a.status === "completed",
+    (a: unknown) => a.status === "completed",
   ).length;
   const totalRevenue = payments
-    .filter((p: any) => p.status === "paid")
-    .reduce((sum: any, p: any) => sum + (p.amount || 0), 0);
+    .filter((p: unknown) => p.status === "paid")
+    .reduce((sum: unknown, p: unknown) => sum + (p.amount || 0), 0);
 
   // Daily breakdown
   const dailyStats = __generateDailyBreakdown(
@@ -278,14 +278,14 @@ async function __generatePatientStatistics(
   // Calculate statistics
   const stats = {
     total: patients.length,
-    activated: patients.filter((p: any) => p.isActivated).length,
-    pending: patients.filter((p: any) => !p.isActivated).length,
+    activated: patients.filter((p: unknown) => p.isActivated).length,
+    pending: patients.filter((p: unknown) => !p.isActivated).length,
     byInsurance: __groupByField(patients, "insuranceProvider"),
     byAgeGroup: __calculateAgeGroups(patients),
     activationTrend: grouped.map((group) => ({
       period: group.period,
       total: group.data.length,
-      activated: group.data.filter((p: any) => p.isActivated).length,
+      activated: group.data.filter((p: unknown) => p.isActivated).length,
     })),
   };
 
@@ -330,13 +330,13 @@ async function __generateAppointmentAnalytics(
     byType: __groupByField(appointments, "type"),
     averageDuration:
       appointments.reduce(
-        (sum: any, apt: any) => sum + (apt.duration || 30),
+        (sum: unknown, apt: unknown) => sum + (apt.duration || 30),
         0,
       ) / appointments.length,
     trends: grouped.map((group) => ({
       period: group.period,
       total: group.data.length,
-      completed: group.data.filter((a: any) => a.status === "completed")
+      completed: group.data.filter((a: unknown) => a.status === "completed")
         .length,
     })),
   };
@@ -371,12 +371,12 @@ async function __generateRevenueReport(
   const grouped = __groupDataByPeriod(paidPayments, "createdAt", groupBy || "");
 
   return {
-    totalRevenue: paidPayments.reduce((sum: number, p: any) => sum + (p.amount || 0), 0),
+    totalRevenue: paidPayments.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0),
     byMethod: __groupByField(paidPayments, "method"),
     byStatus: __groupByField(payments, "status"),
     dailyRevenue: grouped.map((group) => ({
       period: group.period,
-      revenue: group.data.reduce((sum: number, p: any) => sum + (p.amount || 0), 0),
+      revenue: group.data.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0),
       count: group.data.length,
     })),
   };
@@ -452,10 +452,10 @@ function __generateDailyBreakdown(
 
   while (current <= end) {
     const dateStr = current.toISOString().split("T")[0] || "";
-    const dayAppointments = appointments.filter((a: any) =>
+    const dayAppointments = appointments.filter((a: unknown) =>
       a.scheduledAt?.startsWith(dateStr),
     );
-    const dayPayments = payments.filter((p: any) =>
+    const dayPayments = payments.filter((p: unknown) =>
       p.createdAt?.startsWith(dateStr),
     );
 
@@ -463,8 +463,8 @@ function __generateDailyBreakdown(
       date: dateStr,
       appointments: dayAppointments.length,
       revenue: (dayPayments as any)
-        .filter((p: any) => p.status === "paid")
-        .reduce((sum: any, p: any) => sum + (p.amount || 0), 0),
+        .filter((p: unknown) => p.status === "paid")
+        .reduce((sum: unknown, p: unknown) => sum + (p.amount || 0), 0),
     });
 
     current.setDate(current.getDate() + 1);

@@ -41,7 +41,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data, error } = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     return NextResponse.json({ emergencyContacts: data });
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     return NextResponse.json({ success: true, data });
@@ -128,7 +128,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
     const { id, ...updateData } = body;
 
     if (!id) {
-      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+      return NextResponse.json({ error: 'ID is required' }, { status: 400, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     const { data, error } = await supabase
@@ -142,7 +142,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     return NextResponse.json({ success: true, data });
@@ -170,7 +170,7 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
     const id = searchParams.get('id');
 
     if (!id) {
-      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+      return NextResponse.json({ error: 'ID is required' }, { status: 400, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     const { error } = await supabase
@@ -179,7 +179,7 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       .eq('id', id);
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     return NextResponse.json({ success: true });

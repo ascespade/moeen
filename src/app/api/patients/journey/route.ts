@@ -61,7 +61,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function activatePatient(request: NextRequest, body: any) {
+async function activatePatient(request: NextRequest, body: unknown) {
   try {
     // Authorize staff, supervisor, or admin
     const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(
@@ -153,7 +153,7 @@ async function activatePatient(request: NextRequest, body: any) {
   }
 }
 
-async function updateChecklist(request: NextRequest, body: any) {
+async function updateChecklist(request: NextRequest, body: unknown) {
   try {
     // Authorize patient, staff, or admin
     const authResult = await requireAuth(['patient', 'staff', 'admin'])(
@@ -200,7 +200,7 @@ async function updateChecklist(request: NextRequest, body: any) {
         patientId,
         appointmentId,
         checklistItems,
-        completedAt: checklistItems.every((item: any) => item.completed)
+        completedAt: checklistItems.every((item: unknown) => item.completed)
           ? new Date().toISOString()
           : null,
         updatedBy: authResult.user!.id,
@@ -224,7 +224,7 @@ async function updateChecklist(request: NextRequest, body: any) {
       metadata: {
         patientId,
         appointmentId,
-        completedItems: checklistItems.filter((item: any) => item.completed)
+        completedItems: checklistItems.filter((item: unknown) => item.completed)
           .length,
         totalItems: checklistItems.length,
       },
@@ -240,7 +240,7 @@ async function updateChecklist(request: NextRequest, body: any) {
   }
 }
 
-async function requestFileAccess(request: NextRequest, body: any) {
+async function requestFileAccess(request: NextRequest, body: unknown) {
   try {
     // Authorize patient, staff, or admin
     const authResult = await requireAuth(['patient', 'staff', 'admin'])(
@@ -355,7 +355,7 @@ async function requestFileAccess(request: NextRequest, body: any) {
   }
 }
 
-async function createPatientFile(patientId: string, supabase: any) {
+async function createPatientFile(patientId: string, supabase: unknown) {
   // Create initial patient file structure
   const { error } = await supabase.from('patient_files').insert({
     patientId,
@@ -370,7 +370,7 @@ async function createPatientFile(patientId: string, supabase: any) {
   }
 }
 
-async function sendActivationNotification(patient: any, supabase: any) {
+async function sendActivationNotification(patient: unknown, supabase: unknown) {
   // Send activation notification to patient
   await supabase.from('notifications').insert({
     type: 'patient_activated',

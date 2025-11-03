@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
       success: true,
       message: 'Translations seeded successfully',
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[admin/translations/seed] Error:', error);
     return NextResponse.json(
       {

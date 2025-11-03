@@ -85,7 +85,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const results: Array<{
       channel: string;
       success: boolean;
-      data?: any;
+      data?: unknown;
       error?: string;
     }> = [];
 

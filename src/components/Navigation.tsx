@@ -45,7 +45,7 @@ export default function Navigation() {
       {/* Mobile menu button */}
       <div className='lg:hidden fixed top-4 left-4 z-50'>
         <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={() = aria-label="Button"> setIsMobileMenuOpen(!isMobileMenuOpen)}
           className='p-2 bg-white/10 backdrop-blur-md rounded-xl text-white hover:bg-white/20 transition-colors'
         >
           {isMobileMenuOpen ? (
@@ -117,7 +117,7 @@ export default function Navigation() {
                 return (
                   <button
                     key={action.name}
-                    onClick={() => handleQuickAction(action.action)}
+                    onClick={() = aria-label="Button"> handleQuickAction(action.action)}
                     className='w-full flex items-center space-x-3 px-4 py-2 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors'
                   >
                     <Sun className='w-4 h-4' />

@@ -30,7 +30,7 @@ export default function KeywordEditor({
           onChange={e => setValue(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && add()}
         />
-        <button className='h-10 rounded-md border px-3' onClick={add}>
+        <button className='h-10 rounded-md border px-3' onClick={add} aria-label="Button">
           إضافة
         </button>
       </div>
@@ -41,7 +41,7 @@ export default function KeywordEditor({
             className='inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-800 px-3 h-8 text-sm'
           >
             {k}
-            <button className='text-amber-900' onClick={() => remove(k)}>
+            <button className='text-amber-900' onClick={() = aria-label="Button"> remove(k)}>
               ×
             </button>
           </span>

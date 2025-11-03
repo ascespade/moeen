@@ -78,7 +78,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         role: updatedUser.role,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error updating user to admin:', error);
     return NextResponse.json(
       { success: false, error: error.message || 'Internal server error' },

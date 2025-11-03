@@ -32,7 +32,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (centerError) {
-      return NextResponse.json({ error: centerError.message }, { status: 500 });
+      return NextResponse.json({ error: centerError.message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     const response: any = { center: centerInfo };
@@ -143,7 +143,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     return NextResponse.json({ success: true, data });

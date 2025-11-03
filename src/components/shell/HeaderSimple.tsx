@@ -53,7 +53,7 @@ export default function HeaderSimple() {
             <div className='relative'>
               <button
                 className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
-                onClick={e => {
+                onClick={e = aria-label="Button"> {
                   e.stopPropagation();
                   setShowThemeDropdown(!showThemeDropdown);
                 }}
@@ -72,7 +72,7 @@ export default function HeaderSimple() {
                 >
                   <button
                     className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
-                    onClick={() => {
+                    onClick={() = aria-label="Button"> {
                       setTheme('light');
                       setShowThemeDropdown(false);
                     }}
@@ -81,7 +81,7 @@ export default function HeaderSimple() {
                   </button>
                   <button
                     className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
-                    onClick={() => {
+                    onClick={() = aria-label="Button"> {
                       setTheme('dark');
                       setShowThemeDropdown(false);
                     }}
@@ -95,7 +95,7 @@ export default function HeaderSimple() {
             {/* Direction Toggle */}
             <button
               className='h-9 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
-              onClick={() => setDir(dir === 'rtl' ? 'ltr' : 'rtl')}
+              onClick={() = aria-label="Button"> setDir(dir === 'rtl' ? 'ltr' : 'rtl')}
             >
               {dir === 'rtl' ? 'RTL' : 'LTR'}
             </button>
@@ -104,7 +104,7 @@ export default function HeaderSimple() {
             <div className='relative'>
               <button
                 className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
-                onClick={e => {
+                onClick={e = aria-label="Button"> {
                   e.stopPropagation();
                   setShowLangDropdown(!showLangDropdown);
                 }}
@@ -119,13 +119,13 @@ export default function HeaderSimple() {
                 >
                   <button
                     className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
-                    onClick={() => setShowLangDropdown(false)}
+                    onClick={() = aria-label="Button"> setShowLangDropdown(false)}
                   >
                     العربية
                   </button>
                   <button
                     className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
-                    onClick={() => setShowLangDropdown(false)}
+                    onClick={() = aria-label="Button"> setShowLangDropdown(false)}
                   >
                     English
                   </button>

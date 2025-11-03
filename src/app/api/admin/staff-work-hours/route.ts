@@ -105,14 +105,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .lte('date', today);
 
     // Transform data
-    const staffWorkHours = (staff || []).map((member: any) => {
-      const todayRecord = todayAttendance?.find((a: any) => a.user_id === member.id);
+    const staffWorkHours = (staff || []).map((member: unknown) => {
+      const todayRecord = todayAttendance?.find((a: unknown) => a.user_id === member.id);
       const weeklyHours = weeklyAttendance
-        ?.filter((a: any) => a.user_id === member.id)
-        ?.reduce((sum: number, record: any) => sum + (record.total_hours || 0), 0) || 0;
+        ?.filter((a: unknown) => a.user_id === member.id)
+        ?.reduce((sum: number, record: unknown) => sum + (record.total_hours || 0), 0) || 0;
       const monthlyHours = monthlyAttendance
-        ?.filter((a: any) => a.user_id === member.id)
-        ?.reduce((sum: number, record: any) => sum + (record.total_hours || 0), 0) || 0;
+        ?.filter((a: unknown) => a.user_id === member.id)
+        ?.reduce((sum: number, record: unknown) => sum + (record.total_hours || 0), 0) || 0;
 
       const isOnDuty = todayRecord && todayRecord.check_in_time && !todayRecord.check_out_time;
 
@@ -147,20 +147,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Filter by on-duty status if requested
     const filteredStaff = status === 'on_duty' 
-      ? staffWorkHours.filter((s: any) => s.isOnDuty)
+      ? staffWorkHours.filter((s: unknown) => s.isOnDuty)
       : status === 'off_duty' 
-      ? staffWorkHours.filter((s: any) => !s.isOnDuty)
+      ? staffWorkHours.filter((s: unknown) => !s.isOnDuty)
       : staffWorkHours;
 
     // Calculate summary statistics
     const summary = {
       totalStaff: staffWorkHours.length,
-      onDutyStaff: staffWorkHours.filter((s: any) => s.isOnDuty).length,
-      offDutyStaff: staffWorkHours.filter((s: any) => !s.isOnDuty).length,
-      avgHoursToday: staffWorkHours.length > 0 ? staffWorkHours.reduce((sum: number, s: any) => sum + s.todayHours, 0) / staffWorkHours.length : 0,
-      avgHoursWeek: staffWorkHours.length > 0 ? staffWorkHours.reduce((sum: number, s: any) => sum + s.thisWeekHours, 0) / staffWorkHours.length : 0,
-      avgHoursMonth: staffWorkHours.length > 0 ? staffWorkHours.reduce((sum: number, s: any) => sum + s.thisMonthHours, 0) / staffWorkHours.length : 0,
-      departments: [...new Set(staffWorkHours.map((s: any) => s.department))]
+      onDutyStaff: staffWorkHours.filter((s: unknown) => s.isOnDuty).length,
+      offDutyStaff: staffWorkHours.filter((s: unknown) => !s.isOnDuty).length,
+      avgHoursToday: staffWorkHours.length > 0 ? staffWorkHours.reduce((sum: number, s: unknown) => sum + s.todayHours, 0) / staffWorkHours.length : 0,
+      avgHoursWeek: staffWorkHours.length > 0 ? staffWorkHours.reduce((sum: number, s: unknown) => sum + s.thisWeekHours, 0) / staffWorkHours.length : 0,
+      avgHoursMonth: staffWorkHours.length > 0 ? staffWorkHours.reduce((sum: number, s: unknown) => sum + s.thisMonthHours, 0) / staffWorkHours.length : 0,
+      departments: [...new Set(staffWorkHours.map((s: unknown) => s.department))]
     };
 
     return NextResponse.json({

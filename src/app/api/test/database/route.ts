@@ -80,7 +80,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               accessible: !error,
               error: error?.message || null,
             };
-          } catch (err: any) {
+          } catch (err: unknown) {
             tableResults[table] = {
               accessible: false,
               error: err.message,
@@ -279,7 +279,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               error: appointmentsError.message,
             };
           }
-        } catch (err: any) {
+        } catch (err: unknown) {
           relationResults['appointments -> patients'] = {
             working: false,
             error: err.message,
@@ -298,7 +298,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             error: fkError?.message || null,
             note: !fkError ? 'patient_id column accessible' : 'Column check failed',
           };
-        } catch (err: any) {
+        } catch (err: unknown) {
           relationResults['foreign key column exists'] = {
             working: false,
             error: err.message,
@@ -335,7 +335,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               duration: idxDuration,
               error: error?.message || null,
             };
-          } catch (err: any) {
+          } catch (err: unknown) {
             indexResults[`${idx.table}.${idx.column}`] = {
               performance: 'error',
               error: err.message,
@@ -368,7 +368,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           { status: 400 }
         );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,

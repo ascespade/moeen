@@ -3,6 +3,15 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const supabase = await createClient();
 
     // Get overall stats
@@ -24,7 +33,7 @@ export async function GET() {
       .eq('status', 'completed');
 
     const totalRevenue =
-      revenue?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0;
+      revenue?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) || 0;
 
     return NextResponse.json({
       stats: {

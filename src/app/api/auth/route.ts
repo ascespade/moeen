@@ -17,6 +17,15 @@ const registerSchema = z.object({
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { action } = body;
 
@@ -38,7 +47,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function handleLogin(request: NextRequest, body: any) {
+async function handleLogin(request: NextRequest, body: unknown) {
   const validation = loginSchema.safeParse(body);
   if (!validation.success) {
     return NextResponse.json(
@@ -72,7 +81,7 @@ async function handleLogin(request: NextRequest, body: any) {
   }
 }
 
-async function handleRegister(request: NextRequest, body: any) {
+async function handleRegister(request: NextRequest, body: unknown) {
   const validation = registerSchema.safeParse(body);
   if (!validation.success) {
     return NextResponse.json(

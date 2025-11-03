@@ -84,7 +84,7 @@ export default function SettingsTabs() {
           <button
             key={t.id}
             className={`h-9 px-3 rounded-md border whitespace-nowrap ${active === t.id ? 'bg-gray-900 text-white' : 'hover:bg-surface dark:hover:bg-white/10'}`}
-            onClick={() => setActive(t.id)}
+            onClick={() = aria-label="Button"> setActive(t.id)}
           >
             {t.label}
           </button>
@@ -145,7 +145,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => save({ general: settings?.general || {} })}
+              onClick={() = aria-label="Button"> save({ general: settings?.general || {} })}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>
@@ -191,7 +191,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => save({ provider: settings?.provider || '' })}
+              onClick={() = aria-label="Button"> save({ provider: settings?.provider || '' })}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>
@@ -244,7 +244,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() =>
+              onClick={() = aria-label="Button">
                 save({ voice: settings?.voice || { stt: null, tts: null } })
               }
             >
@@ -360,7 +360,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => save({ providers: settings?.providers || {} })}
+              onClick={() = aria-label="Button"> save({ providers: settings?.providers || {} })}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>
@@ -407,7 +407,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => save({ channels: settings?.channels || {} })}
+              onClick={() = aria-label="Button"> save({ channels: settings?.channels || {} })}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>
@@ -457,7 +457,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => save({ security: settings?.security || {} })}
+              onClick={() = aria-label="Button"> save({ security: settings?.security || {} })}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>
@@ -488,7 +488,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() =>
+              onClick={() = aria-label="Button">
                 save({ notifications: settings?.notifications || {} })
               }
             >
@@ -522,7 +522,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() =>
+              onClick={() = aria-label="Button">
                 save({ emergency: settings?.emergency || { keywords: [] } })
               }
             >
@@ -586,7 +586,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => save({ account: settings?.account || {} })}
+              onClick={() = aria-label="Button"> save({ account: settings?.account || {} })}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>
@@ -624,7 +624,7 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => save({ billing: settings?.billing || {} })}
+              onClick={() = aria-label="Button"> save({ billing: settings?.billing || {} })}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>

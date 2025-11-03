@@ -33,7 +33,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Transform configs to object format
-    const settings = (configs || []).reduce((acc: Record<string, any>, config: any) => {
+    const settings = (configs || []).reduce((acc: Record<string, any>, config: unknown) => {
       try {
         acc[config.key] = typeof config.value === 'string' 
           ? JSON.parse(config.value) 

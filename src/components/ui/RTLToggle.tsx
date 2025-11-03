@@ -24,7 +24,7 @@ export default function RTLToggle({
         className
       )}
       title={`Switch to ${settings.rtl ? 'LTR' : 'RTL'} mode`}
-    >
+     aria-label="Button">
       <svg
         className='w-5 h-5'
         fill='none'

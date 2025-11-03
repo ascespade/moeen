@@ -198,8 +198,8 @@ export async function GET(_request: NextRequest) {
       try {
         // Try to get createdBy user info for notifications that have createdBy field
         const createdByIds = notifications
-          .map((n: any) => n.createdBy || n.created_by)
-          .filter((id: any) => id && typeof id === 'string');
+          .map((n: unknown) => n.createdBy || n.created_by)
+          .filter((id: unknown) => id && typeof id === 'string');
 
         if (createdByIds.length > 0) {
           const { data: users } = await supabase
@@ -208,8 +208,8 @@ export async function GET(_request: NextRequest) {
             .in('id', createdByIds);
 
           if (users) {
-            const userMap = new Map(users.map((u: any) => [u.id, u]));
-            enrichedNotifications = notifications.map((n: any) => ({
+            const userMap = new Map(users.map((u: unknown) => [u.id, u]));
+            enrichedNotifications = notifications.map((n: unknown) => ({
               ...n,
               createdByUser: n.createdBy || n.created_by ? userMap.get(n.createdBy || n.created_by) : null,
             }));

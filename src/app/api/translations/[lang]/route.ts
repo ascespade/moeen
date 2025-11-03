@@ -10,6 +10,15 @@ export async function GET(
   const { lang } = params;
 
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     // Set cache control headers
     const headers = new Headers();
     headers.set(

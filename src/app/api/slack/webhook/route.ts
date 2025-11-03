@@ -31,7 +31,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function handleSlackEvent(event: any) {
+async function handleSlackEvent(event: unknown) {
   try {
     await slack.handleSlackEvent(event);
   } catch (error) {
@@ -40,5 +40,5 @@ async function handleSlackEvent(event: any) {
 }
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
+  return NextResponse.json({ error: 'Method not allowed' }, { status: 405, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
 }

@@ -101,7 +101,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Transform data
-    const transformedLogs = (auditLogs || []).map((log: any) => ({
+    const transformedLogs = (auditLogs || []).map((log: unknown) => ({
       id: log.id,
       user: log.users?.full_name || log.users?.email || 'مستخدم غير معروف',
       userRole: log.users?.role || '',
@@ -219,7 +219,7 @@ function getResourceDisplayName(resource: string): string {
   return resourceNames[resource] || resource;
 }
 
-function extractDetails(details: any): string {
+function extractDetails(details: unknown): string {
   try {
     if (typeof details === 'string') {
       const parsed = JSON.parse(details);
@@ -254,7 +254,7 @@ function formatTimestamp(timestamp: string): string {
   });
 }
 
-async function getAuditStats(supabase: any, filters: any) {
+async function getAuditStats(supabase: unknown, filters: unknown) {
   // Get total counts by status
   const { data: statusCounts } = await supabase
     .from('audit_logs')
@@ -263,9 +263,9 @@ async function getAuditStats(supabase: any, filters: any) {
 
   const stats = {
     total: statusCounts?.length || 0,
-    success: statusCounts?.filter((log: any) => log.status === 'success').length || 0,
-    failed: statusCounts?.filter((log: any) => log.status === 'failed').length || 0,
-    warning: statusCounts?.filter((log: any) => log.status === 'warning').length || 0
+    success: statusCounts?.filter((log: unknown) => log.status === 'success').length || 0,
+    failed: statusCounts?.filter((log: unknown) => log.status === 'failed').length || 0,
+    warning: statusCounts?.filter((log: unknown) => log.status === 'warning').length || 0
   };
 
   return stats;

@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ success: true, user_id: upserted.id });
-  } catch (e: any) {
+  } catch (e: unknown) {
     return NextResponse.json({ success: false, error: e?.message || 'Internal error' }, { status: 500 });
   }
 }

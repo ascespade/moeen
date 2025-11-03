@@ -86,13 +86,13 @@ export default function Header() {
 
         if (data.success && Array.isArray(data.data)) {
           // Filter notifications for this user and get real data
-          const userNotifications = data.data.filter((n: any) => {
+          const userNotifications = data.data.filter((n: unknown) => {
             // Match by recipientId or user_id
             return (n.recipientId === user.id || n.user_id === user.id || n.recipient_id === user.id || n.userId === user.id);
           });
 
           // Sort: unread first, then by date
-          const sorted = userNotifications.sort((a: any, b: any) => {
+          const sorted = userNotifications.sort((a: unknown, b: unknown) => {
             const aUnread = !a.is_read && !a.read;
             const bUnread = !b.is_read && !b.read;
             if (aUnread !== bUnread) return aUnread ? -1 : 1;
@@ -142,7 +142,7 @@ export default function Header() {
     };
   }, [isAuthenticated, user?.id]);
 
-  const unreadCount = notifications.filter((n: any) => !n.is_read && !n.read).length;
+  const unreadCount = notifications.filter((n: unknown) => !n.is_read && !n.read).length;
 
   // Set initial time and mounted flag on client-side only
   useEffect(() => {
@@ -419,8 +419,8 @@ export default function Header() {
                               // Mark all as read
                               await Promise.all(
                                 notifications
-                                  .filter((n: any) => !n.is_read)
-                                  .map((n: any) =>
+                                  .filter((n: unknown) => !n.is_read)
+                                  .map((n: unknown) =>
                                     fetch(`/api/notifications/${n.id}/read`, {
                                       method: 'POST',
                                       credentials: 'include',
@@ -464,7 +464,7 @@ export default function Header() {
                       </div>
                     ) : (
                       <div className='p-2'>
-                        {notifications.slice(0, 5).map((notification: any) => {
+                        {notifications.slice(0, 5).map((notification: unknown) => {
                           const isUnread = !notification.is_read && !notification.read;
                           const createdDate = notification.created_at || notification.createdAt;
                           const timeAgo = createdDate
@@ -500,7 +500,7 @@ export default function Header() {
                                     // Update local state if successful
                                     if (markResponse.ok) {
                                       setNotifications(
-                                        notifications.map((n: any) =>
+                                        notifications.map((n: unknown) =>
                                           n.id === notification.id ? { ...n, is_read: true, status: 'read' } : n
                                         )
                                       );

@@ -11,7 +11,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     const { ipAddress, userAgent } = getClientInfo(request);
@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     const { ipAddress, userAgent } = getClientInfo(request);
@@ -146,12 +146,12 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (patientError || !patient) {
-      return NextResponse.json({ error: 'Patient not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Patient not found' }, { status: 404, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     // Check permissions
     if (user.role === 'patient' && patient.user_id !== user.id) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     // Check if doctor exists
@@ -162,7 +162,7 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (doctorError || !doctor) {
-      return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Doctor not found' }, { status: 404, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     // Check for appointment conflicts

@@ -45,7 +45,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .eq('status', 'paid');
 
     const totalRevenue =
-      paymentsData?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0;
+      paymentsData?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) || 0;
 
     const stats = {
       totalPatients: totalPatients || 0,

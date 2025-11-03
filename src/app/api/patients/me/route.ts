@@ -7,7 +7,7 @@ export async function GET(_request: NextRequest) {
     const { user, error } = await authorize(_request);
 
     if (error || !user) {
-      return NextResponse.json({ error }, { status: 401 });
+      return NextResponse.json({ error }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     // Mock patient data for testing

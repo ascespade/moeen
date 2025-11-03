@@ -28,7 +28,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       }, { status: 500 });
     }
 
-    const integrations = (configs || []).reduce((acc: Record<string, any>, config: any) => {
+    const integrations = (configs || []).reduce((acc: Record<string, any>, config: unknown) => {
       try {
         // Mask sensitive data when reading
         const value = typeof config.value === 'string' 

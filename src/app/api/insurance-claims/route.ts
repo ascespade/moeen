@@ -42,7 +42,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Filter by status if provided
     if (status) {
-      claims = claims.filter((claim: any) => claim.status === status);
+      claims = claims.filter((claim: unknown) => claim.status === status);
     }
 
     // Apply pagination

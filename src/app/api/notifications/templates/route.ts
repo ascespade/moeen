@@ -33,7 +33,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     const supabase = await createClient();

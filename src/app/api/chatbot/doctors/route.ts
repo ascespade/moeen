@@ -33,7 +33,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Get available time slots for each doctor
     const doctorsWithSlots = await Promise.all(
-      doctors.map(async (doctor: any) => {
+      doctors.map(async (doctor: unknown) => {
         const availableSlots = await getAvailableTimeSlots(
           doctor.id,
           date || undefined
@@ -69,7 +69,7 @@ async function getAvailableTimeSlots(doctorId: string, date?: string) {
     .eq('status', 'scheduled');
 
   const bookedTimes =
-    existingAppointments?.map((apt: any) => apt.appointment_time) || [];
+    existingAppointments?.map((apt: unknown) => apt.appointment_time) || [];
 
   // Generate available time slots (9 AM to 5 PM, every hour)
   const availableSlots: string[] = [];

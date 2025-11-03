@@ -342,7 +342,7 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function createPatientProfile(userId: string, profile: any) {
+async function createPatientProfile(userId: string, profile: unknown) {
   const supabase = await createClient();
 
   const { error } = await supabase.from('patients').insert({
@@ -358,7 +358,7 @@ async function createPatientProfile(userId: string, profile: any) {
   return error;
 }
 
-async function createDoctorProfile(userId: string, profile: any) {
+async function createDoctorProfile(userId: string, profile: unknown) {
   const supabase = await createClient();
 
   const { error } = await supabase.from('doctors').insert({

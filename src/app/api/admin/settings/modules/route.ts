@@ -28,7 +28,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       }, { status: 500 });
     }
 
-    const modules = (configs || []).reduce((acc: Record<string, any>, config: any) => {
+    const modules = (configs || []).reduce((acc: Record<string, any>, config: unknown) => {
       try {
         acc[config.key] = typeof config.value === 'string' 
           ? JSON.parse(config.value) 

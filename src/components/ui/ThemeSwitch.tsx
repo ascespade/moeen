@@ -87,7 +87,7 @@ export function ThemeSwitch({
           className={`${iconSizes[size]} ${isLight ? 'text-[var(--brand-primary)]' : 'text-[var(--text-tertiary)]'}`}
         />
         <button
-          onClick={() => {
+          onClick={() = aria-label="Button"> {
             if (theme === 'light') setTheme('dark');
             else if (theme === 'dark') setTheme('system');
             else setTheme('light');
@@ -139,7 +139,7 @@ export function ThemeSwitch({
                 return (
                   <button
                     key={themeOption.value}
-                    onClick={() => {
+                    onClick={() = aria-label="Button"> {
                       setTheme(themeOption.value);
                       setIsOpen(false);
                     }}

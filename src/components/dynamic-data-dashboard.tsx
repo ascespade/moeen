@@ -40,7 +40,7 @@ interface Doctor {
   total_reviews: number;
   qualifications: string[];
   bio: string;
-  working_hours: any;
+  working_hours: unknown;
   languages: string[];
   experience_years: number;
   user_info?: {
@@ -106,7 +106,7 @@ interface EmergencyContact {
   type: string;
   priority: number;
   is_available_24_7: boolean;
-  working_hours: any;
+  working_hours: unknown;
   notes: string;
   is_active: boolean;
 }
@@ -123,8 +123,8 @@ interface CenterInfo {
   city: string;
   services: string[];
   specialties: string[];
-  working_hours: any;
-  social_media: any;
+  working_hours: unknown;
+  social_media: unknown;
 }
 
 export default function DynamicDataDashboard({ className }: DynamicDataProps) {

@@ -39,7 +39,7 @@ export default function CTAButton({
     <button
       className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
       onClick={onClick}
-    >
+     aria-label="Button">
       {children}
     </button>
   );

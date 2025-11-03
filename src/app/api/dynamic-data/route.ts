@@ -72,7 +72,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const settingsMap: Record<string, any> = {};
-    (settingsData || []).forEach((item: any) => {
+    (settingsData || []).forEach((item: unknown) => {
       try {
         settingsMap[item.key] =
           typeof item.value === 'string' ? JSON.parse(item.value) : item.value;

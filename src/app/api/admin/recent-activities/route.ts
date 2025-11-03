@@ -59,7 +59,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Transform audit logs to activity format
-    const activities = (auditLogs || []).map((log: any) => ({
+    const activities = (auditLogs || []).map((log: unknown) => ({
       id: log.id,
       type: mapResourceTypeToActivityType(log.resource_type),
       title: generateActivityTitle(log.action, log.resource_type),
@@ -85,7 +85,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .limit(5);
 
     // Transform appointments to activities
-    const appointmentActivities = (recentAppointments || []).map((apt: any) => ({
+    const appointmentActivities = (recentAppointments || []).map((apt: unknown) => ({
       id: `apt-${apt.id}`,
       type: 'appointment',
       title: apt.status === 'scheduled' ? 'موعد جديد' : 'تحديث موعد',
@@ -158,7 +158,7 @@ function generateActivityTitle(action: string, resourceType: string): string {
   return titleMap[action]?.[resourceType] || `${action} ${resourceType}`;
 }
 
-function generateActivityDescription(log: any): string {
+function generateActivityDescription(log: unknown): string {
   try {
     const details = typeof log.details === 'string' ? JSON.parse(log.details) : log.details;
     return details?.description || details?.message || `تم ${log.action} ${log.resource_type}`;

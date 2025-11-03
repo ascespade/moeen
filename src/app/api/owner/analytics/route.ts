@@ -3,6 +3,15 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const supabase = await createClient();
 
     // Get system metrics

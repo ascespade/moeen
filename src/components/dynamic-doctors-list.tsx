@@ -44,7 +44,7 @@ interface Doctor {
   total_reviews: number;
   qualifications: string[];
   bio: string;
-  working_hours: any;
+  working_hours: unknown;
   languages: string[];
   experience_years: number;
   user_info?: {
@@ -144,7 +144,7 @@ export default function DynamicDoctorsList({
     new Set(doctors.flatMap(doctor => doctor.languages || []))
   );
 
-  const formatWorkingHours = (workingHours: any) => {
+  const formatWorkingHours = (workingHours: unknown) => {
     if (!workingHours || typeof workingHours !== 'object') return 'غير محدد';
 
     const entries = Object.entries(workingHours);

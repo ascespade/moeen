@@ -41,7 +41,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data, error } = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     // تحويل البيانات إلى شكل مناسب
@@ -111,7 +111,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       .select();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     return NextResponse.json({ success: true, data: data[0] });
@@ -130,7 +130,7 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
     const key = searchParams.get('key');
 
     if (!key) {
-      return NextResponse.json({ error: 'Key is required' }, { status: 400 });
+      return NextResponse.json({ error: 'Key is required' }, { status: 400, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     const { error } = await supabase
@@ -139,7 +139,7 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       .eq('key', key);
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     return NextResponse.json({ success: true });

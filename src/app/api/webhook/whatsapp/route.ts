@@ -16,7 +16,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // التحقق من صحة الطلب
     const verifyToken = request.headers.get('x-verify-token');
     if (verifyToken !== process.env.WHATSAPP_VERIFY_TOKEN) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     // معالجة رسائل WhatsApp
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function processWhatsAppMessage(message: any, value: any) {
+async function processWhatsAppMessage(message: unknown, value: unknown) {
   try {
     const phoneNumber = message.from;
     const messageText = message.text?.body || '';

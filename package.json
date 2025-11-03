@@ -25,6 +25,7 @@
     "audit:five-rounds": "node scripts/five-rounds-audit.mjs",
     "audit:final": "node scripts/final-comprehensive-audit.mjs",
     "test:round6": "node scripts/round6-comprehensive-testing.mjs",
+    "fix:all-rounds": "node scripts/comprehensive-fix-all-rounds.mjs",
     "test:unit": "vitest run --reporter=verbose",
     "test:integration": "vitest run --config vitest.integration.config.js",
     "test:e2e": "playwright test --config=playwright-auto.config.ts",

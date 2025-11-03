@@ -108,12 +108,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function generateCSV(data: any, customFields?: string[]) {
+async function generateCSV(data: unknown, customFields?: string[]) {
   // Simple CSV generation
   const headers = customFields || Object.keys(data);
   const csvContent = [
     headers.join(','),
-    ...Object.values(data).map((row: any) =>
+    ...Object.values(data).map((row: unknown) =>
       headers.map(header => `"${row[header] || ''}"`).join(',')
     ),
   ].join('\n');
@@ -121,14 +121,14 @@ async function generateCSV(data: any, customFields?: string[]) {
   return csvContent;
 }
 
-async function generatePDF(data: any, includeCharts: boolean) {
+async function generatePDF(data: unknown, includeCharts: boolean) {
   // PDF generation would use a library like puppeteer or jsPDF
   // For now, return a simple text representation
   const pdfContent = `Report Data:\n${JSON.stringify(data, null, 2)}`;
   return Buffer.from(pdfContent);
 }
 
-async function generateExcel(data: any, customFields?: string[]) {
+async function generateExcel(data: unknown, customFields?: string[]) {
   // Excel generation would use a library like xlsx
   // For now, return CSV format
   return await generateCSV(data, customFields);

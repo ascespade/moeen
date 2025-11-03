@@ -1,3 +1,4 @@
+import { validateAppointment, checkAppointmentConflicts } from '@/utils/business-logic';
 import { NextRequest } from 'next/server';
 import { GET, POST, PUT } from '@/app/api/appointments/route';
 import { realDB } from '@/lib/supabase-real';

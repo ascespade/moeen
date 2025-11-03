@@ -45,7 +45,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch crm' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch crm' }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
   }
 }
 

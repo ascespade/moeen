@@ -20,7 +20,7 @@ const USERS = [
   { email: 'agent@test.local', name: 'Agent User', role: 'agent' },
 ];
 
-export async function POST(req: any) {
+export async function POST(req: unknown) {
   const isDev = process.env.NODE_ENV !== 'production';
   const referer = req.headers.get('referer') || '';
   const origin = req.headers.get('origin') || '';
@@ -157,7 +157,7 @@ export async function POST(req: any) {
             .from('users')
             .update(updateData)
             .eq('id', finalUser.id);
-        } catch (e: any) {
+        } catch (e: unknown) {
           // Error updating role - continue
         }
       }
@@ -178,7 +178,7 @@ export async function POST(req: any) {
       }
 
       created.push({ email: u.email, role: u.role });
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Continue with next user
     }
   }

@@ -171,7 +171,7 @@ async function getCurrentUser(authHeader: string) {
   }
 }
 
-async function logAdminAction(userId: string, action: string, details: any) {
+async function logAdminAction(userId: string, action: string, details: unknown) {
   try {
     await supabase.from('audit_logs').insert({
       user_id: userId,

@@ -25,7 +25,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // Authorize supervisor or admin
     const authResult = await requireAuth(['supervisor', 'admin'])(request);
     if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     const supabase = await createClient();

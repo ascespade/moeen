@@ -49,7 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
               نعتذر، حدث خطأ غير متوقع. يرجى إعادة تحميل الصفحة أو المحاولة لاحقاً.
             </p>
             <button
-              onClick={() => window.location.reload()}
+              onClick={() = aria-label="Button"> window.location.reload()}
               className='w-full rounded-md bg-[var(--brand-default)] px-4 py-2 text-white hover:bg-[var(--brand-default)]/90'
             >
               إعادة تحميل الصفحة
