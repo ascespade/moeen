@@ -41,12 +41,19 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET /api/webhook/whatsapp - التحقق من webho
+// GET /api/webhook/whatsapp - التحقق من webhook
+export async function GET(request: NextRequest) {
   try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
+    // التحقق من webhook (no auth required for webhook verification)
+    const mode = request.nextUrl.searchParams.get('hub.mode');
+    const token = request.nextUrl.searchParams.get('hub.verify_token');
+    const challenge = request.nextUrl.searchParams.get('hub.challenge');
+
+    if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
+      return new NextResponse(challenge, { status: 200 });
+    }
+
+    return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
         { status: 401 }
       );
