@@ -234,7 +234,7 @@ async function applyDatabaseFix() {
       console.error('   ❌ Verification error:', verifyError.message);
     } else {
       console.log(`   ✅ Found ${users?.length || 0} test users`);
-      users?.forEach((user: any) => {
+      users?.forEach((user: unknown) => {
         const hasPassword = user.password_hash && user.password_hash !== '';
         console.log(`   ${hasPassword ? '✅' : '❌'} ${user.email} (${user.role}) - ${hasPassword ? 'Has password' : 'No password'}`);
       });
@@ -248,7 +248,7 @@ async function applyDatabaseFix() {
       console.log(`      - ${u.email} / ${u.password}`);
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Error applying database fix:', error.message);
     console.error('\n💡 Alternative: Run SQL script manually in Supabase SQL Editor:');
     console.error('   File: supabase/fix_existing_users_passwords.sql');

@@ -422,7 +422,7 @@ export class WhatsAppBusinessAPI {
       messageId: string;
       timestamp: string;
       type: string;
-      content: any;
+      content: unknown;
     }>;
     statuses: Array<{
       messageId: string;
@@ -477,7 +477,7 @@ export class WhatsAppBusinessAPI {
   // Get Business Profile
   async getBusinessProfile(): Promise<{
     success: boolean;
-    profile?: any;
+    profile?: unknown;
     error?: string;
   }> {
     try {

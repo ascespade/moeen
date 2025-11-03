@@ -87,7 +87,7 @@ export const STORAGE_KEYS = {
 
 // Storage helpers
 export const getUser = () => storage.get(STORAGE_KEYS.USER);
-export const setUser = (user: any) => storage.set(STORAGE_KEYS.USER, user);
+export const setUser = (user: unknown) => storage.set(STORAGE_KEYS.USER, user);
 export const removeUser = () => storage.remove(STORAGE_KEYS.USER);
 
 export const getToken = () => storage.get(STORAGE_KEYS.TOKEN);
@@ -110,7 +110,7 @@ export const setLanguage = (language: string) =>
   storage.set(STORAGE_KEYS.LANGUAGE, language);
 
 export const getSettings = () => storage.get(STORAGE_KEYS.SETTINGS);
-export const setSettings = (settings: any) =>
+export const setSettings = (settings: unknown) =>
   storage.set(STORAGE_KEYS.SETTINGS, settings);
 
 export const clearAuth = () => {

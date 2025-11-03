@@ -1,0 +1,4830 @@
+{
+  "timestamp": "2025-11-03T17:55:11.200Z",
+  "summary": {
+    "totalIssues": 795,
+    "bySeverity": {
+      "critical": 19,
+      "high": 49,
+      "medium": 378,
+      "low": 349
+    }
+  },
+  "issues": {
+    "code": [
+      {
+        "file": "src/components/ui/Button.tsx",
+        "issue": "Button missing accessibility attributes",
+        "severity": "low",
+        "suggestion": "Add aria-label or aria-labelledby"
+      },
+      {
+        "file": "src/components/home/ContactFormWithMap.tsx",
+        "issue": "Button missing accessibility attributes",
+        "severity": "low",
+        "suggestion": "Add aria-label or aria-labelledby"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Component props not typed",
+        "severity": "medium",
+        "suggestion": "Add TypeScript types for props"
+      },
+      {
+        "file": "src/app/api/settings/system/route.ts",
+        "issue": "Using request.json() in GET handler",
+        "severity": "low",
+        "suggestion": "GET requests should not read body"
+      },
+      {
+        "file": "src/app/api/settings/center/route.ts",
+        "issue": "Using request.json() in GET handler",
+        "severity": "low",
+        "suggestion": "GET requests should not read body"
+      },
+      {
+        "file": "src/app/api/appointments/[id]/route.ts",
+        "issue": "Using request.json() in GET handler",
+        "severity": "low",
+        "suggestion": "GET requests should not read body"
+      },
+      {
+        "file": "src/app/api/patients/[id]/activation/step/route.ts",
+        "issue": "Using request.json() in GET handler",
+        "severity": "low",
+        "suggestion": "GET requests should not read body"
+      },
+      {
+        "file": "src/components/patients/PatientRecords.tsx",
+        "line": 187,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(health)/approvals/page.tsx",
+        "line": 41,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/security/page.tsx",
+        "line": 135,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/security/page.tsx",
+        "line": 188,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/security/page.tsx",
+        "line": 221,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/security/page.tsx",
+        "line": 248,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/reports/page.tsx",
+        "line": 148,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/performance/page.tsx",
+        "line": 201,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/performance/page.tsx",
+        "line": 343,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/notifications/page.tsx",
+        "line": 154,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/messages/page.tsx",
+        "line": 196,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/doctors/page.tsx",
+        "line": 134,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/dashboard-modern/page.tsx",
+        "line": 28,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/crm/page.tsx",
+        "line": 175,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/crm/page.tsx",
+        "line": 251,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/crm/page.tsx",
+        "line": 290,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/conversations/page.tsx",
+        "line": 187,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/page.tsx",
+        "line": 166,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/page.tsx",
+        "line": 241,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/crm/leads/page.tsx",
+        "line": 33,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/crm/flows/page.tsx",
+        "line": 76,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/crm/deals/page.tsx",
+        "line": 30,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/crm/activities/page.tsx",
+        "line": 21,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/crm/contacts/page.tsx",
+        "line": 96,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/crm/contacts/page.tsx",
+        "line": 144,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/templates/page.tsx",
+        "line": 21,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/integrations/page.tsx",
+        "line": 19,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/flows/page.tsx",
+        "line": 19,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/admin/roles/page.tsx",
+        "line": 116,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/app/(admin)/admin/roles/page.tsx",
+        "line": 287,
+        "issue": "Potential mock/hardcoded data",
+        "severity": "high",
+        "suggestion": "Replace with real database query"
+      },
+      {
+        "file": "src/middleware.backup.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/middleware.disabled.ts"
+      },
+      {
+        "file": "src/lib/theme-settings.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/lib/user-preferences.ts"
+      },
+      {
+        "file": "src/hooks/useErrorHandler.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/lib/supabaseClient.ts"
+      },
+      {
+        "file": "src/hooks/useAdminAppointments.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/hooks/useAdminUsers.ts"
+      },
+      {
+        "file": "src/app/layout.minimal.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/lib/validation/security.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/lib/validation.ts"
+      },
+      {
+        "file": "src/lib/auth/enhanced-auth.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/lib/encryption.ts"
+      },
+      {
+        "file": "src/lib/agent/agent-settings.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/lib/theme-settings.ts"
+      },
+      {
+        "file": "src/lib/agent/agent-settings.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/lib/user-preferences.ts"
+      },
+      {
+        "file": "src/design-system/hooks/index.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/lib/supabaseClient.ts"
+      },
+      {
+        "file": "src/components/shell/Header.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/components/ui/ScrollArea.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/Textarea.tsx"
+      },
+      {
+        "file": "src/components/ui/Label.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/Textarea.tsx"
+      },
+      {
+        "file": "src/components/shared/Tabs.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/Modal.tsx"
+      },
+      {
+        "file": "src/components/shared/ScreenReaderOnly.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/Skeleton.tsx"
+      },
+      {
+        "file": "src/components/shared/LoadingSpinner.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/LoadingSpinner.tsx"
+      },
+      {
+        "file": "src/components/settings/KeywordEditor.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/error.tsx"
+      },
+      {
+        "file": "src/components/providers/UIProvider.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/components/providers/ThemeProvider.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/Tooltip.tsx"
+      },
+      {
+        "file": "src/components/providers/ModernInteractionsProvider.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/components/providers/I18nProvider.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/dynamic-data-dashboard.tsx"
+      },
+      {
+        "file": "src/components/providers/I18nProvider.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/providers/ThemeProvider.tsx"
+      },
+      {
+        "file": "src/components/providers/I18nProvider.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/providers/ThemeProvider.tsx"
+      },
+      {
+        "file": "src/components/providers/AuthProvider.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/Skeleton.tsx"
+      },
+      {
+        "file": "src/components/patient/ActivationFlow.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/error.tsx"
+      },
+      {
+        "file": "src/components/modals/TermsOfServiceModal.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/error.tsx"
+      },
+      {
+        "file": "src/components/modals/PrivacyPolicyModal.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/error.tsx"
+      },
+      {
+        "file": "src/components/layout/GlobalHeader.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/components/insurance/ClaimsManager.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/error.tsx"
+      },
+      {
+        "file": "src/components/home/ModernHero.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/error.tsx"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/Tooltip.tsx"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/Skeleton.tsx"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/Skeleton.tsx"
+      },
+      {
+        "file": "src/components/common/LoadingSpinner.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/LoadingSpinner.tsx"
+      },
+      {
+        "file": "src/components/common/LoadingSpinner.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/ui/LoadingSpinner.tsx"
+      },
+      {
+        "file": "src/components/common/ErrorBoundary.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/dashboard/KpiCard.tsx"
+      },
+      {
+        "file": "src/app/dashboard/layout.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/admin/layout.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/(legal)/layout.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/(health)/layout.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/(info)/layout.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/(auth)/layout.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/(admin)/layout.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/components/admin/settings/SecuritySettings.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/dynamic-data-dashboard.tsx"
+      },
+      {
+        "file": "src/components/admin/settings/NotificationSettings.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/dynamic-data-dashboard.tsx"
+      },
+      {
+        "file": "src/components/admin/settings/ModuleSettings.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/dynamic-data-dashboard.tsx"
+      },
+      {
+        "file": "src/components/admin/settings/IntegrationSettings.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/dynamic-data-dashboard.tsx"
+      },
+      {
+        "file": "src/components/admin/settings/GeneralSettings.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/dynamic-data-dashboard.tsx"
+      },
+      {
+        "file": "src/components/admin/settings/AISettings.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/dynamic-data-dashboard.tsx"
+      },
+      {
+        "file": "src/app/dashboard/supervisor/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/dashboard/patient/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/dashboard/staff/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/dashboard/doctor/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/api/settings/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/sessions/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/medical-records/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/upload/route.ts"
+      },
+      {
+        "file": "src/app/api/medical-records/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/upload/route.ts"
+      },
+      {
+        "file": "src/app/api/insurance-claims/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/insurance-claims/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/sessions/route.ts"
+      },
+      {
+        "file": "src/app/api/insurance/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/insurance/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/i18n/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/middleware/auth.ts"
+      },
+      {
+        "file": "src/app/api/family/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/progress/route.ts"
+      },
+      {
+        "file": "src/app/api/errors/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/errors/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/crm/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/contact/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/patients/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/patients/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/(supervisor)/supervisor-dashboard/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(staff)/staff-dashboard/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(marketing)/features/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/(marketing)/pricing/page.tsx"
+      },
+      {
+        "file": "src/app/(health)/family/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/(health)/progress/page.tsx"
+      },
+      {
+        "file": "src/app/(auth)/login/enhanced-login.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/(auth)/login/page.tsx"
+      },
+      {
+        "file": "src/app/(admin)/reports/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/performance/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/payments/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/(health)/progress/page.tsx"
+      },
+      {
+        "file": "src/app/(admin)/notifications/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/messages/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/doctors/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/crm/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/conversations/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/appointments/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/appointments/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/design-system/page.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/layout.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/api/translations/missing/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/translations/missing/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/therapists/availability/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/test/endpoints/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/test/database/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/test/clear-rate-limit/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/supervisor/call-request/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/supervisor/call-request/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/slack/notify/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/system/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/system/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/staff/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/staff/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/staff/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/staff/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/emergency-contacts/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/emergency-contacts/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/emergency-contacts/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/emergency-contacts/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/settings/center/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/sessions/available-slots/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/reports/dashboard-metrics/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/upload/route.ts"
+      },
+      {
+        "file": "src/app/api/progress/assessments/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/family/route.ts"
+      },
+      {
+        "file": "src/app/api/progress/assessments/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/progress/route.ts"
+      },
+      {
+        "file": "src/app/api/notifications/send/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/upload/route.ts"
+      },
+      {
+        "file": "src/app/api/notifications/schedule/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/payments/process/route.ts"
+      },
+      {
+        "file": "src/app/api/medical-records/upload/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/api/insurance/claims/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/reports/export/route.ts"
+      },
+      {
+        "file": "src/app/api/insurance/claims/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/reports/export/route.ts"
+      },
+      {
+        "file": "src/app/api/healthcare/patients/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/healthcare/appointments/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/family/support/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/family/route.ts"
+      },
+      {
+        "file": "src/app/api/family/support/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/progress/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/staff/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/staff/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/patients/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/patients/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/dynamic-data/staff/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/patients/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/doctors/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/doctors/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/healthcare/patients/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/doctors/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/dynamic-data/staff/route.ts"
+      },
+      {
+        "file": "src/app/api/dynamic-data/doctors/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/doctors/me/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/patients/me/route.ts"
+      },
+      {
+        "file": "src/app/api/doctors/availability/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/upload/route.ts"
+      },
+      {
+        "file": "src/app/api/dashboard/statistics/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/patients/route.ts"
+      },
+      {
+        "file": "src/app/api/dashboard/logs/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/crm/stats/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/crm/leads/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/crm/contacts/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/messages/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/message/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/flows/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/chatbot/intents/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/doctors/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/conversations/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/conversations/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/user/preferences/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/config/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/chatbot/intents/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/appointments/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/actions/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/payments/process/route.ts"
+      },
+      {
+        "file": "src/app/api/chatbot/actions/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/payments/process/route.ts"
+      },
+      {
+        "file": "src/app/api/auth/verify/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/auth/simple-login/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/patients/me/route.ts"
+      },
+      {
+        "file": "src/app/api/auth/login/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/patients/me/route.ts"
+      },
+      {
+        "file": "src/app/api/auth/forgot-password/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/auth/register/route.ts"
+      },
+      {
+        "file": "src/app/api/auth/custom-login/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/patients/me/route.ts"
+      },
+      {
+        "file": "src/app/api/auth/check-user/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/appointments/book/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/appointments/conflict-check/route.ts"
+      },
+      {
+        "file": "src/app/api/appointments/availability/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/appointments/conflict-check/route.ts"
+      },
+      {
+        "file": "src/app/api/appointments/availability/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/sessions/available-slots/route.ts"
+      },
+      {
+        "file": "src/app/api/appointments/[id]/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/appointments/[id]/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/analytics/metrics/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/patients/route.ts"
+      },
+      {
+        "file": "src/app/api/analytics/action/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/patients/me/route.ts"
+      },
+      {
+        "file": "src/app/api/agent/logs/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/agent/completion/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/training/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/users/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/users/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/audit-logs/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/users/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/users/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/system-config/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/system-config/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/stats/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/audit-logs/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/security-events/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/audit-logs/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/security-events/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/recent-activities/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/admin/staff-work-hours/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/configs/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/audit-logs/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/configs/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/configs/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/configs/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/notifications/templates/route.ts"
+      },
+      {
+        "file": "src/app/(health)/patients/[id]/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/users/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/users/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/design-system/page.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/settings/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/design-system/page.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/roles/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/roles/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/design-system/page.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/patients/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/shell/Sidebar.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/patients/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/design-system/page.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/dashboard/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/design-system/page.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/audit-logs/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/design-system/page.tsx"
+      },
+      {
+        "file": "src/app/api/webhooks/payments/stripe/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/admin/homepage/route.ts"
+      },
+      {
+        "file": "src/app/api/patients/[id]/activate/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/patients/[id]/activate/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/notifications/[id]/read/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/notifications/[id]/read/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/users/update-supervisor-to-admin/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/crm/leads/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/users/[id]/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/users/[id]/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/settings/modules/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/admin/settings/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/settings/modules/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/admin/settings/security/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/settings/integrations/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/admin/settings/security/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/settings/integrations/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/admin/settings/security/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/settings/general/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/insurance/claims/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/settings/general/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/insurance/claims/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/settings/ai/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/admin/settings/notifications/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/settings/ai/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/admin/settings/security/route.ts"
+      },
+      {
+        "file": "src/app/api/admin/audit-logs/filter/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/insurance/claims/route.ts"
+      },
+      {
+        "file": "src/app/(admin)/crm/contacts/[id]/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/components/dynamic-data-dashboard.tsx"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/templates/[id]/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/flows/[flowId]/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/layout.tsx"
+      },
+      {
+        "file": "src/app/(admin)/admin/payments/invoices/page.tsx",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/(health)/progress/page.tsx"
+      },
+      {
+        "file": "src/app/api/patients/[id]/activation/step/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/patients/[id]/activation/step/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/insurance/claims/[id]/submit/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/app/api/insurance/claims/[id]/submit/route.ts",
+        "issue": "Duplicate code block detected",
+        "severity": "medium",
+        "suggestion": "Extract to shared utility. Similar code found in src/app/api/translations/[lang]/route.ts"
+      },
+      {
+        "file": "src/theme/index.ts",
+        "issue": "Function too long (138 lines)",
+        "severity": "medium",
+        "suggestion": "Break down into smaller functions"
+      },
+      {
+        "file": "src/components/dynamic-stats.tsx",
+        "issue": "High nesting depth (6 levels)",
+        "severity": "medium",
+        "suggestion": "Simplify logic, use early returns"
+      },
+      {
+        "file": "src/components/dynamic-contact-info.tsx",
+        "issue": "High nesting depth (6 levels)",
+        "severity": "medium",
+        "suggestion": "Simplify logic, use early returns"
+      },
+      {
+        "file": "src/lib/auth/authorize.ts",
+        "issue": "High nesting depth (9 levels)",
+        "severity": "medium",
+        "suggestion": "Simplify logic, use early returns"
+      },
+      {
+        "file": "src/components/preline/PrelineInit.tsx",
+        "issue": "High nesting depth (6 levels)",
+        "severity": "medium",
+        "suggestion": "Simplify logic, use early returns"
+      },
+      {
+        "file": "src/components/home/ServicesWithImages.tsx",
+        "issue": "High nesting depth (6 levels)",
+        "severity": "medium",
+        "suggestion": "Simplify logic, use early returns"
+      },
+      {
+        "file": "src/components/home/InteractiveStats.tsx",
+        "issue": "High nesting depth (9 levels)",
+        "severity": "medium",
+        "suggestion": "Simplify logic, use early returns"
+      },
+      {
+        "file": "src/app/(health)/sessions/page.tsx",
+        "issue": "High nesting depth (6 levels)",
+        "severity": "medium",
+        "suggestion": "Simplify logic, use early returns"
+      },
+      {
+        "file": "src/app/api/auth/me/route.ts",
+        "issue": "High nesting depth (7 levels)",
+        "severity": "medium",
+        "suggestion": "Simplify logic, use early returns"
+      },
+      {
+        "file": "src/utils/validation.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/utils/storage.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/utils/api.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/utils/api-client.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/types/index.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/types/database.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/types/api.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/scripts/apply_db_fix.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/scripts/apply_db_fix.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/scripts/apply_db_fix.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/scripts/apply_db_fix.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/scripts/apply_db_fix.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/middleware/permissions.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/hooks/useThrottle.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/hooks/usePreferences.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/hooks/usePermissions.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/hooks/usePerformance.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/hooks/useKeyboardNavigation.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/hooks/useErrorHandler.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/hooks/useDebounce.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/hooks/useAsync.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/hooks/useAsync.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/whatsapp-business-api.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/supabaseClient.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/supabaseClient.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/supabaseClient.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/supabase.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/supabase-real.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/slack-integration.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/saudi-ministry-health-integration.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/saudi-health-integration.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/responsive-design.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/responsive-design.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/responsive-design.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/private-center-integration.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/performance-optimizations.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/performance-monitor.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/modern-interactions.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/modern-interactions.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/dynamic-content-manager.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/database.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/database-utils.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/conversation-flows.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/cache-system.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/audit-logger.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/accessibility.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/accessibility.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/context/TranslationProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/context/TranslationProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/context/ThemeContext.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/context/ThemeContext.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/context/ThemeContext.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/context/ThemeContext.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dynamic-stats.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dynamic-services.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dynamic-doctors-list.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/dynamic-doctors-list.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dynamic-data-dashboard.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/dynamic-data-dashboard.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dynamic-contact-info.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/dynamic-contact-info.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/Navigation.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/scroll-restoration.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/not-found.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/layout.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/layout.minimal.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/error.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/__tests__/setup.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/translations/translation-manager.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/testing/test-utils.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/testing/test-utils.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/supabase/server.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/payments/moyasar.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/optimization/performance.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/monitoring/logger.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/integrations/test-helpers.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/errors/api-errors.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/database/queries.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/database/queries.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/database/queries.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/database/queries.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/database/queries.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/database/queries.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/database/connection-pool.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/config/system-config.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/config/system-config.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/cache/redis.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/auth/unified-auth.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/auth/performance.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/auth/authorize.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/auth/CustomAuthHub.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/lib/auth/CustomAuthHub.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/auth/CustomAuthHub.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/api/whatsapp.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/design-system/hooks/index.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/design-system/hooks/index.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/design-system/hooks/index.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/design-system/hooks/index.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/core/validation/index.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/core/utils/index.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/core/types/index.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/core/theme/index.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/core/hooks/index.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/core/api/client.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/core/api/base-handler.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/ui/Tooltip.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/Toast.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/ThemeToggle.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/ThemeSwitch.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/Textarea.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/StatCard.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/Skeleton.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/ScrollArea.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/RTLToggle.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/Modal.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/LocalizedNumber.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/LoadingSpinner.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/LoadingSpinner.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/Label.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/FeatureCard.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/DesignSystemDemo.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/DataTable.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/ui/CTAButton.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shell/Sidebar.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shell/HeaderSimple.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shell/Header.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/shell/Header.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shell/EnhancedSidebar.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shell/AdminSidebar.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/Tabs.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/ScreenReaderOnly.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/OptimizedImage.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/Modal.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/LoadingSpinner.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/LiveRegion.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/Form.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/Form.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/Form.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/Form.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/EmptyState.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shared/DataTable.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/settings/SettingsTabs.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/settings/KeywordEditor.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/settings/KeywordEditor.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/UIProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/ThemeProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/ThemeProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/ModernInteractionsProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/I18nProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/I18nProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/I18nProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/DesignSystemProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/DesignSystemProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/providers/AuthProvider.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/preline/PrelineInit.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/patients/PatientRecords.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/patient/PreVisitChecklist.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/patient/ActivationFlow.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/modals/TermsOfServiceModal.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/modals/PrivacyPolicyModal.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/lazy/LazyComponents.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/layout/SmartHeader.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/layout/SmartHeader.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/layout/SmartHeader.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/layout/Header.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/layout/GlobalHeader.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/layout/GlobalHeader.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/layout/Footer.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/insurance/ClaimsManager.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/VisionMission.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/VideoStorySection.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/SuccessStories.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/ServicesWithImages.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/home/ServicesWithImages.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/ModernHero.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/InteractiveStats.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/InteractiveGallery.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/ContactFormWithMap.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/ContactForm.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/BusinessSection.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/home/BusinessSection.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/KpiCard.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/DynamicCharts.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/Charts.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/Charts.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/Charts.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/ThemeSwitcher.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/StatusBanner.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/Skeleton.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/Skeleton.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/PlaceholderSquare.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/PerformanceOptimizedImage.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/LoadingSpinner.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/LoadingSpinner.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/LiveDot.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/LanguageSwitcher.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/ErrorBoundary.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/common/ErrorBoundary.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/ErrorBoundary.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/EmptyState.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/common/DirectionToggle.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/chatbot/MoeenChatbot.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/chatbot/MoainChatbot.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/charts/PieChart.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/charts/LineChart.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/charts/BarChart.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/charts/AreaChart.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/booking/SessionTypeSelector.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/booking/AvailableSlotsPicker.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/booking/AvailableSlotsPicker.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/auth/UnifiedProtectedRoute.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/auth/ProtectedRoute.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/appointments/AppointmentManager.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/admin/SystemConfigPanel.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/RouteGuard.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/admin/RouteGuard.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/accessibility/AccessibilitySettings.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/unauthorized/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/uikit/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/simple/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/design-system/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/dashboard/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/dashboard/layout.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/color-palette/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/admin/layout.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(legal)/layout.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(info)/layout.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/layout.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(auth)/layout.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/layout.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/auth/hooks/usePermissions.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/auth/hooks/useCustomAuth.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/lib/auth/hooks/useAuth.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shell/__tests__/Header.test.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/shell/__tests__/Header.test.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/dashboard/widgets/ChartWidget.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/admin/settings/SecuritySettings.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/admin/settings/SecuritySettings.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/settings/NotificationSettings.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/admin/settings/NotificationSettings.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/settings/ModuleSettings.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/settings/IntegrationSettings.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/admin/settings/IntegrationSettings.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/settings/GeneralSettings.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/settings/AISettings.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/components/admin/settings/AISettings.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/ui/AdminTable.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/ui/AdminStatsCard.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/ui/AdminHeader.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/ui/AdminFilterBar.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/components/admin/ui/AdminCard.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/uikit/guidelines/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/dashboard/supervisor/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/dashboard/patient/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/dashboard/staff/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/dashboard/doctor/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/progress/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/insurance-claims/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/health/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/family/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/dynamic-data/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/auth/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(supervisor)/supervisor-dashboard/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(staff)/staff-dashboard/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(patient)/patient-dashboard/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(marketing)/features/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(marketing)/faq/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(marketing)/pricing/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(info)/about/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/training/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/therapy/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/sessions/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/sessions/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/progress/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/patients/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/patients/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/medical-file/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/medical-file/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/insurance-claims/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/insurance-claims/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/insurance/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/insurance/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/family-support/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/approvals/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/approvals/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/family/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(doctor)/doctor-dashboard/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(auth)/verify-email/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(auth)/reset-password/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(auth)/register/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(auth)/forgot-password/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(auth)/login/simplified.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(auth)/login/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(auth)/login/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(auth)/login/enhanced-login.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(auth)/login/enhanced-login.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/test-crud/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/test-crud/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/settings/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/review/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/reports/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/reports/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/profile/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/performance/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/payments/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/notifications/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/messages/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/integrations/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/flow/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/dynamic-data/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/dashboard-modern/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/dashboard-modern/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/doctors/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/crm/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/crm/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/conversations/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/conversations/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/appointments/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/appointments/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/agent-dashboard/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin-dashboard/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/admin-dashboard/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/layout.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/webhook/whatsapp/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/user/preferences/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/test/database/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/supervisor/me/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/slack/webhook/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/slack/notify/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/settings/center/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/sessions/available-slots/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/reports/generate/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/reports/export/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/reports/dashboard-metrics/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/progress/assessments/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/patients/journey/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/owner/stats/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/owner/stats/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/owner/analytics/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/notifications/schedule/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/notifications/send/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/insurance/claims/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/family/support/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/dynamic-data/staff/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/dynamic-data/patients/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/dynamic-data/doctors/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/doctors/availability/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/dashboard/statistics/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/dashboard/logs/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/dashboard/health/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/dashboard/health/route.ts",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/chatbot/doctors/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/chatbot/appointments/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/auth/simple-login/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/auth/login/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/auth/check-user/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/appointments/conflict-check/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/appointments/book/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/appointments/availability/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/users/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/stats/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/staff-work-hours/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/staff-hours/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/recent-activities/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/patient-stats/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/homepage/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/dashboard/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/patients/[id]/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/patients/[id]/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/settings/api-keys/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/crm/leads/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/crm/deals/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/crm/activities/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/templates/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/integrations/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/flows/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/analytics/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/users/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/users/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/settings/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/settings/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/roles/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/roles/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/patients/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/patients/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/logs/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/homepage/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/admin/homepage/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/dashboard/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/dashboard/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/channels/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/audit-logs/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/audit-logs/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/api/payments/webhook/stripe/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/users/update-supervisor-to-admin/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/users/[id]/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/translations/seed/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/settings/security/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/settings/notifications/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/settings/modules/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/settings/integrations/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/settings/general/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/settings/ai/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/auth/seed-defaults/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/auth/create-user/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/api/admin/audit-logs/filter/route.ts",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/health/sessions/book/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/health/sessions/book/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/sessions/[id]/notes/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/sessions/[id]/notes/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/crm/deals/kanban/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/crm/contacts/[id]/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/templates/[id]/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/flows/[flowId]/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/therapists/schedules/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/admin/therapists/schedules/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(admin)/admin/payments/invoices/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(admin)/admin/payments/invoices/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      },
+      {
+        "file": "src/app/(health)/health/patients/[id]/iep/page.tsx",
+        "issue": "Usage of \"any\" type",
+        "severity": "medium",
+        "suggestion": "Replace with proper TypeScript types"
+      },
+      {
+        "file": "src/app/(health)/health/patients/[id]/iep/page.tsx",
+        "issue": "Function missing return type",
+        "severity": "low",
+        "suggestion": "Add explicit return type"
+      }
+    ],
+    "database": [],
+    "tests": [
+      {
+        "issue": "Low test coverage (3.2%)",
+        "severity": "medium",
+        "suggestion": "Add more test files"
+      }
+    ],
+    "structure": [
+      {
+        "file": "src/theme/index.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/whatsapp-business-api.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/supabase-real.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/slack-integration.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/saudi-ministry-health-integration.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/saudi-health-integration.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/private-center-integration.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/file-upload.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/conversation-flows.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/components/dynamic-data-dashboard.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/translations/translation-seeder.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/permissions/index.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/lib/integrations/test-helpers.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/core/store/index.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/core/hooks/index.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/components/shell/Header.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/components/settings/SettingsTabs.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/components/patients/PatientRecords.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/components/chatbot/MoainChatbot.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/components/appointments/AppointmentManager.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/components/dashboard/charts/AdvancedCharts.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/components/admin/settings/AISettings.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(health)/training/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(health)/therapy/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(health)/progress-tracking/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(health)/medical-file/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(health)/insurance-claims/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(health)/insurance/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(health)/family-support/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(health)/approvals/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/test-crud/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/security/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/reports/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/performance/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/notifications/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/messages/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/doctors/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/crm/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/conversations/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/appointments/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/analytics/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/admin-dashboard/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/admin/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/api/reports/generate/route.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/api/chatbot/actions/route.ts",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(health)/patients/[id]/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/settings/api-keys/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/crm/leads/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/crm/deals/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/crm/dashboard/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/crm/contacts/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/templates/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/admin/users/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/admin/roles/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/admin/patients/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/admin/dashboard/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      },
+      {
+        "file": "src/app/(admin)/chatbot/flows/[flowId]/page.tsx",
+        "issue": "File too large (>500 lines)",
+        "severity": "low",
+        "suggestion": "Consider splitting into smaller modules"
+      }
+    ],
+    "performance": [],
+    "security": [
+      {
+        "file": "src/app/api/upload/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/dynamic-data/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/auth/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/appointments/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/translations/[lang]/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/test/database/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/supervisor/me/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/reports/generate/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/payments/process/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/notifications/send/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/notifications/schedule/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/medical-records/upload/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/insurance/claims/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/healthcare/patients/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/dashboard/metrics/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/crm/leads/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/crm/contacts/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/chatbot/message/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/chatbot/doctors/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/chatbot/appointments/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/chatbot/actions/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/auth/verify/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/auth/reset-password/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/auth/register/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/auth/logout/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/auth/login/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/auth/forgot-password/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/auth/custom-login/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/auth/check-user/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/appointments/conflict-check/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/appointments/book/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/analytics/action/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/admin/users/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/admin/recent-activities/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      },
+      {
+        "file": "src/app/api/webhooks/payments/stripe/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/webhooks/payments/moyasar/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/admin/users/update-supervisor-to-admin/route.ts",
+        "issue": "API route may be missing authentication",
+        "severity": "high",
+        "suggestion": "Add requireAuth middleware"
+      },
+      {
+        "file": "src/app/api/admin/audit-logs/filter/route.ts",
+        "issue": "Potential SQL injection risk",
+        "severity": "critical",
+        "suggestion": "Use parameterized queries ($1, $2, etc.)"
+      }
+    ]
+  },
+  "improvements": [
+    {
+      "type": "data",
+      "file": "src/components/dashboard/widgets/ChartWidget.tsx",
+      "suggestion": "Consider initializing with actual data or loading state"
+    }
+  ]
+}

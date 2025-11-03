@@ -80,7 +80,7 @@ export class RealSupabaseManager {
     return data;
   }
 
-  async updateUser(userId: string, updates: any) {
+  async updateUser(userId: string, updates: unknown) {
     const { data, error } = await admin
       .from('users')
       .update({ ...updates, updated_at: new Date().toISOString() })
@@ -120,7 +120,7 @@ export class RealSupabaseManager {
     experience_years?: number;
     consultation_fee?: number;
     is_available?: boolean;
-    working_hours?: any;
+    working_hours?: unknown;
   }) {
     const { data, error } = await admin
       .from('doctors')
@@ -300,7 +300,7 @@ export class RealSupabaseManager {
     return data;
   }
 
-  async updateAppointment(appointmentId: string, updates: any) {
+  async updateAppointment(appointmentId: string, updates: unknown) {
     const { data, error } = await admin
       .from('appointments')
       .update({ ...updates, updated_at: new Date().toISOString() })
@@ -323,7 +323,7 @@ export class RealSupabaseManager {
     duration_minutes?: number;
     type: 'assessment' | 'treatment' | 'follow_up' | 'consultation';
     notes?: string;
-    exercises?: any;
+    exercises?: unknown;
     insurance_claim_number?: string;
   }) {
     const { data, error } = await admin
@@ -371,7 +371,7 @@ export class RealSupabaseManager {
     return data;
   }
 
-  async updateSession(sessionId: string, updates: any) {
+  async updateSession(sessionId: string, updates: unknown) {
     const { data, error } = await admin
       .from('sessions')
       .update({ ...updates, updated_at: new Date().toISOString() })
@@ -398,7 +398,7 @@ export class RealSupabaseManager {
     response?: string;
     sentiment?: string;
     crisis_level?: 'normal' | 'urgent' | 'crisis';
-    metadata?: any;
+    metadata?: unknown;
   }) {
     const { data, error } = await admin
       .from('conversations')
@@ -460,7 +460,7 @@ export class RealSupabaseManager {
     return data;
   }
 
-  async updateInsuranceClaim(claimId: string, updates: any) {
+  async updateInsuranceClaim(claimId: string, updates: unknown) {
     const { data, error } = await admin
       .from('insurance_claims')
       .update(updates)
@@ -480,7 +480,7 @@ export class RealSupabaseManager {
     priority?: 'low' | 'medium' | 'high' | 'critical';
     title: string;
     message: string;
-    data?: any;
+    data?: unknown;
   }) {
     const { data, error } = await admin
       .from('notifications')
@@ -531,8 +531,8 @@ export class RealSupabaseManager {
     if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
 
     const total = (data as any[]).length;
-    const active = (data as any[]).filter((p: any) => p.created_at).length;
-    const newLast30Days = (data as any[]).filter((p: any) => {
+    const active = (data as any[]).filter((p: unknown) => p.created_at).length;
+    const newLast30Days = (data as any[]).filter((p: unknown) => {
       const createdAt = new Date(p.created_at as string);
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -552,12 +552,12 @@ export class RealSupabaseManager {
 
     const total = (data as any[]).length;
     const completed = (data as any[]).filter(
-      (a: any) => a.status === 'completed'
+      (a: unknown) => a.status === 'completed'
     ).length;
     const cancelled = (data as any[]).filter(
-      (a: any) => a.status === 'cancelled'
+      (a: unknown) => a.status === 'cancelled'
     ).length;
-    const upcoming = (data as any[]).filter((a: any) => {
+    const upcoming = (data as any[]).filter((a: unknown) => {
       const appointmentDate = new Date(a.appointment_date as string);
       return appointmentDate >= new Date() && a.status === 'scheduled';
     }).length;
@@ -575,9 +575,9 @@ export class RealSupabaseManager {
 
     const total = (data as any[]).length;
     const crisis = (data as any[]).filter(
-      (c: any) => c.crisis_level === 'crisis'
+      (c: unknown) => c.crisis_level === 'crisis'
     ).length;
-    const recent = (data as any[]).filter((c: any) => {
+    const recent = (data as any[]).filter((c: unknown) => {
       const createdAt = new Date(c.created_at as string);
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -860,7 +860,7 @@ export class RealSupabaseManager {
     return { success: true };
   }
 
-  async updateTranslation(key: string, updates: any) {
+  async updateTranslation(key: string, updates: unknown) {
     const { data, error } = await admin
       .from('translations')
       .update(updates)
@@ -880,8 +880,8 @@ export class RealSupabaseManager {
     action: string;
     table_name?: string;
     record_id?: string;
-    old_values?: any;
-    new_values?: any;
+    old_values?: unknown;
+    new_values?: unknown;
     ip_address?: string;
     user_agent?: string;
   }) {
