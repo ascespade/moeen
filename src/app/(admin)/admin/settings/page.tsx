@@ -1,6 +1,5 @@
 'use client';
 
-import { RouteGuard } from '@/components/admin/RouteGuard';
 import { AdminCard, AdminHeader } from '@/components/admin/ui';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
@@ -85,7 +84,7 @@ function AdminSettingsPageContent() {
   // TODO: Add user role check
   const userRole = 'admin'; // Will be replaced with actual user role
 
-  const visibleTabs = settingsTabs.filter(tab => 
+  const visibleTabs = settingsTabs.filter(tab =>
     !tab.adminOnly || userRole === 'admin'
   );
 
@@ -170,23 +169,23 @@ function AdminSettingsPageContent() {
             آخر حفظ: {lastSaved.toLocaleTimeString('ar-SA')}
           </div>
         )}
-        
-        <Button 
-          variant='outline' 
+
+        <Button
+          variant='outline'
           className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
           disabled={isSaving}
         >
           <RefreshCw className='w-4 h-4 ml-2' />
           إعادة تعيين
         </Button>
-        
-        <Button 
+
+        <Button
           onClick={handleSave}
           disabled={!hasChanges || isSaving}
           className={cn(
             'transition-all duration-300',
-            hasChanges 
-              ? 'bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white animate-pulse' 
+            hasChanges
+              ? 'bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white animate-pulse'
               : 'bg-[color-mix(in_srgb,var(--text-muted)_20%,transparent)] text-[var(--text-muted)] cursor-not-allowed'
           )}
         >
@@ -215,7 +214,7 @@ function AdminSettingsPageContent() {
                   </div>
                 </div>
               </div>
-              
+
               <nav className='p-2'>
                 {visibleTabs.map((tab) => (
                   <button
@@ -232,8 +231,8 @@ function AdminSettingsPageContent() {
                     <div className='flex items-center gap-3'>
                       <div className={cn(
                         'transition-colors duration-200',
-                        activeTab === tab.id 
-                          ? 'text-[var(--brand-primary)]' 
+                        activeTab === tab.id
+                          ? 'text-[var(--brand-primary)]'
                           : 'text-[var(--text-secondary)] group-hover:text-[var(--brand-primary)]'
                       )}>
                         {tab.icon}
@@ -241,8 +240,8 @@ function AdminSettingsPageContent() {
                       <div className='text-right'>
                         <div className={cn(
                           'font-medium transition-colors duration-200',
-                          activeTab === tab.id 
-                            ? 'text-[var(--brand-primary)]' 
+                          activeTab === tab.id
+                            ? 'text-[var(--brand-primary)]'
                             : 'text-[var(--text-primary)] group-hover:text-[var(--brand-primary)]'
                         )}>
                           {tab.label}
@@ -290,15 +289,15 @@ function AdminSettingsPageContent() {
                       لديك تغييرات غير محفوظة
                     </span>
                     <div className='flex gap-2'>
-                      <Button 
-                        variant='outline' 
+                      <Button
+                        variant='outline'
                         size='sm'
                         onClick={() => setHasChanges(false)}
                         className='border-[var(--brand-border)]'
                       >
                         تراجع
                       </Button>
-                      <Button 
+                      <Button
                         onClick={handleSave}
                         size='sm'
                         disabled={isSaving}
@@ -319,12 +318,5 @@ function AdminSettingsPageContent() {
 }
 
 export default function AdminSettingsPage() {
-  return (
-    <RouteGuard
-      requiredRoles={['admin', 'manager']}
-      requiredPermissions={['settings:view']}
-    >
-      <AdminSettingsPageContent />
-    </RouteGuard>
-  );
+  return <AdminSettingsPageContent />;
 }

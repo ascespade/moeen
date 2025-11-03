@@ -10,7 +10,7 @@ const supabase = createClient(
 // GET /api/crm/leads - جلب العملاء المحتمل
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -60,10 +60,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       leads,
-    
+
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

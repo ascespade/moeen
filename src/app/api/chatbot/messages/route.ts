@@ -1,16 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { requireAuth } from '@/lib/auth/authorize'
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-;
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   try {
@@ -41,17 +30,7 @@ export async function GET(request: NextRequest) {
 
     if (error) {
       return NextResponse.json(
-        { error: 
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-'Failed to fetch messages' },
+        { error: 'Failed to fetch messages' },
         { status: 500 }
       );
     }

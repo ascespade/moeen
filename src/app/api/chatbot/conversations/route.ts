@@ -1,23 +1,12 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { requireAuth } from '@/lib/auth/authorize';
+import { NextRequest, NextResponse } from 'next/server';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// GET /api/chatbot/conversations - جلب المحادث
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-ات
+// GET /api/chatbot/conversations - جلب المحادثات
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -50,17 +39,7 @@ export async function GET(request: NextRequest) {
     const { data: conversations, error } = await query;
 
     if (error) {
-   
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-   return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ conversations });

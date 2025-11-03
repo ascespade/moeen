@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Sidebar from '@/components/shell/Sidebar';
 import Header from '@/components/shell/Header';
-import { getBrowserSupabase } from '@/lib/supabaseClient';
+import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 
 export default function DashboardLayout({
   children,
@@ -13,66 +13,28 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const supabase = getBrowserSupabase();
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const { user, loading, isAuthenticated } = useCustomAuth();
 
   useEffect(() => {
-    const loadUser = async () => {
-      try {
-        // First, use localStorage immediately for fast render
-        const userStr = localStorage.getItem('user');
-        if (userStr) {
-          try {
-            const userData = JSON.parse(userStr);
-            setUser(userData);
-            setLoading(false); // Set loading to false immediately if we have stored user
-          } catch (e) {
-            // Invalid JSON, continue to Supabase check
-          }
-        }
-
-        // Then try Supabase session in background (don't block on this)
-        try {
-          const { data } = await supabase.auth.getSession();
-          if (data?.session) {
-            // Only update if we got new data, but don't wait for it
-            const { data: userData } = await supabase
-              .from('users')
-              .select('id, email, role, name')
-              .eq('id', data.session.user.id)
-              .maybeSingle();
-            if (userData) {
-              setUser({
-                id: userData.id,
-                email: userData.email,
-                role: userData.role,
-                name: userData.name,
-              });
-            }
-          }
-        } catch (error) {
-          // Ignore Supabase errors - we already have localStorage user
-        }
-      } catch (error) {
-        console.error('Error loading user:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadUser();
-  }, [supabase]);
+    // Redirect to login if not authenticated
+    if (!loading && !isAuthenticated) {
+      router.push('/login?redirect=' + encodeURIComponent(pathname));
+    }
+  }, [loading, isAuthenticated, router, pathname]);
 
   if (loading) {
     return (
       <div className='flex min-h-screen items-center justify-center bg-[var(--background)]'>
         <div className='text-center'>
-          <div className='mb-4 h-12 w-12 animate-spin rounded-full border-4 border-[var(--brand-border)] border-t-[var(--brand-primary)] mx-auto'></div>
+          <div className='mb-4 h-12 w-12 animate-spin rounded-full border-4 border-[var(--border)] border-t-[var(--brand-primary)] mx-auto'></div>
           <p className='text-[var(--text-secondary)]'>جاري التحميل...</p>
         </div>
       </div>
     );
+  }
+
+  if (!isAuthenticated || !user) {
+    return null; // Will redirect
   }
 
   return (

@@ -7,7 +7,7 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

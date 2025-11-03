@@ -1,6 +1,5 @@
 'use client';
 
-import { RouteGuard } from '@/components/admin/RouteGuard';
 import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -865,12 +864,5 @@ function RolesPageContent() {
 }
 
 export default function RolesPage() {
-  return (
-    <RouteGuard
-      requiredRoles={['admin']}
-      requiredPermissions={['roles:view']}
-    >
-      <RolesPageContent />
-    </RouteGuard>
-  );
+  return <RolesPageContent />;
 }

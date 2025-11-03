@@ -396,8 +396,31 @@ export async function POST(req: NextRequest) {
     // Get user permissions based on role
     const rolePermissions = PermissionManager.getRolePermissions(userData.role);
 
-    // Use Supabase session token if available (server client will have set cookies)
-    const sessionToken = (data as any).session?.access_token || null;
+    // Generate dynamic JWT token (contains all user info - no DB query needed in middleware)
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      return NextResponse.json(
+        { success: false, error: 'JWT secret not configured' },
+        { status: 500 }
+      );
+    }
+
+    const jwt = await import('jsonwebtoken');
+    const jwtToken = jwt.default.sign(
+      {
+        userId: userData.id,
+        email: userData.email,
+        role: userData.role,
+        status: userData.status,
+        permissions: rolePermissions,
+        // Don't require DB verification in middleware for performance
+        verifyStatus: false,
+      },
+      jwtSecret,
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+      }
+    );
 
     // Prepare user response object
     const userResponse = {
@@ -413,17 +436,30 @@ export async function POST(req: NextRequest) {
       success: true,
       data: {
         user: userResponse,
-        token: sessionToken,
+        token: jwtToken,
         permissions: rolePermissions,
       },
     };
 
-    console.log('[api/auth/login] login successful', {
-      userId: userResponse.id,
-      sessionToken: !!sessionToken,
+    // Create response and set cookie
+    const response = NextResponse.json(resBody);
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    // Set auth_token cookie (compatible with middleware)
+    response.cookies.set('auth_token', jwtToken, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: '/',
     });
 
-    return NextResponse.json(resBody);
+    console.log('[api/auth/login] login successful with JWT', {
+      userId: userResponse.id,
+      tokenGenerated: !!jwtToken,
+    });
+
+    return response;
   } catch (e: any) {
     console.error('Login error:', e);
     return NextResponse.json(

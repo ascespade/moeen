@@ -24,9 +24,11 @@ export interface AuthResult {
 
 export async function authorize(request: NextRequest): Promise<AuthResult> {
   try {
-    // First: check for our JWT auth-token cookie
+    // First: check for our JWT auth_token cookie (supports both names for compatibility)
     try {
-      const token = request.cookies?.get?.('auth-token')?.value || null;
+      const token = request.cookies?.get?.('auth_token')?.value ||
+                   request.cookies?.get?.('auth-token')?.value ||
+                   null;
       if (token) {
         const jwtSecret = process.env.JWT_SECRET;
         if (jwtSecret) {

@@ -10,7 +10,7 @@ const supabase = createClient(
 // API لجلب معلومات المرضى من الجدول الموج
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -100,10 +100,10 @@ export async function GET(request: NextRequest) {
               return age >= 18 && age <= 65;
             case '65+':
               return age > 65;
-       
+
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

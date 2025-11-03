@@ -116,19 +116,20 @@ export function canAccess(userPermissions: string[], resource: string, action: s
  * Get default route for user role
  */
 export function getDefaultRoute(role: string): string {
-  const routes: Record<string, string> = {
+  // Import from RouteManager for consistency
+  // Using inline map to avoid circular dependency
+  const routeMap: Record<string, string> = {
     admin: '/admin/dashboard',
+    manager: '/admin/dashboard',
     supervisor: '/dashboard/supervisor',
-    doctor: '/doctor-dashboard',
+    agent: '/dashboard',
+    doctor: '/dashboard/doctor',
     patient: '/dashboard/patient',
     staff: '/dashboard/staff',
-    manager: '/admin/dashboard',
-    agent: '/dashboard',
-    nurse: '/dashboard',
+    nurse: '/dashboard/staff',
     therapist: '/dashboard',
   };
-
-  return routes[role] || '/dashboard';
+  return routeMap[role] || '/dashboard';
 }
 
 /**

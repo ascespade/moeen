@@ -6,7 +6,7 @@ import { requireAuth } from '@/lib/auth/authorize';
 const slack = new SlackIntegration();
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -48,7 +48,7 @@ async function handleSlackEvent(event: any) {
 
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
+    const authResult = await requireAuth(["admin"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

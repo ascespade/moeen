@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
+import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { requireAuth } from '@/lib/auth/authorize';
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -15,16 +14,6 @@ const registerSchema = z.object({
   password: z.string().min(6),
   role: z.enum(['patient', 'doctor', 'admin', 'staff']),
 });
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request: NextRequest);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-
 
 export async function POST(request: NextRequest) {
   try {

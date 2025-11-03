@@ -5,20 +5,19 @@ import { requireAuth } from '@/lib/auth/authorize';
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+);
+
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin","supervisor"])(request: NextRequest);
+    const authResult = await requireAuth(["admin","supervisor"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
         { status: 401 }
       );
     }
-;
 
-export async function GET(request: NextRequest) {
-  try {
     // Get doctors as staff for now
     const { data: staff, error } = await supabase
       .from('doctors')

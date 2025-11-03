@@ -9,23 +9,12 @@ import { createClient } from '@/lib/supabase/server';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { requireAuth } from '@/lib/auth/authorize';
 
 const availabilitySchema = z.object({
   doctorId: z.string().uuid('Invalid doctor ID'),
   date: z.string().date('Invalid date format'),
   duration: z.number().min(15).max(240).default(30),
-})
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin","doctor","staff","supervisor","patient"])(request: NextRequest);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-;
+});
 
 export async function GET(request: NextRequest) {
   const startTime = Date.now();

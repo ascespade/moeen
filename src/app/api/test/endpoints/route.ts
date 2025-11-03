@@ -3,11 +3,13 @@
  * Test all API endpoints for functionality
  */
 
-import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET(_request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(_request: NextRequest);
+    const authResult = await requireAuth(["admin"])(_request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -15,9 +17,6 @@ import { requireAuth } from '@/lib/auth/authorize';
       );
     }
 
-
-export async function GET(_request: NextRequest) {
-  try {
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ||
       'https://socwpqzcalgvpzjwavgh.supabase.co';

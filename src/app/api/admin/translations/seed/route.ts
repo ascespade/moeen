@@ -2,17 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { TranslationSeeder } from '@/lib/translations/translation-seeder';
 import { requireAuth } from '@/lib/auth/authorize';
 
-const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SEC
-  try {
-    // Security: Require authentication
-    const authResult = await requireAuth(["admin","supervisor"])(req: NextRequest);
-    if (!authResult.authorized || !authResult.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-RET;
+const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
 
 export async function POST(req: NextRequest) {
   try {
