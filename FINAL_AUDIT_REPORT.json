@@ -1,0 +1,284 @@
+{
+  "timestamp": "2025-11-03T20:16:11.703Z",
+  "status": "NEEDS_IMPROVEMENT",
+  "summary": {
+    "totalErrors": 1,
+    "totalWarnings": 25,
+    "buildErrors": 0,
+    "lintErrors": 1,
+    "typeErrors": 0,
+    "codeQualityIssues": 24,
+    "structureIssues": 1,
+    "garbageFiles": 1,
+    "businessLogicIssues": 2,
+    "workflowIssues": 1,
+    "integrationIssues": 0
+  },
+  "details": {
+    "buildErrors": [],
+    "lintErrors": [
+      {
+        "error": "Lint check failed",
+        "severity": "high"
+      }
+    ],
+    "typeErrors": [],
+    "codeQuality": [
+      {
+        "file": "src/utils/performance-utils.ts",
+        "issue": "Using 'any' type (2 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/utils/api.ts",
+        "issue": "Using 'any' type (1 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/types/api.ts",
+        "issue": "Using 'any' type (3 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/theme/index.ts",
+        "issue": "Function too long (138 lines)",
+        "severity": "medium",
+        "suggestion": "Break into smaller functions (max 50 lines)"
+      },
+      {
+        "file": "src/scripts/apply_db_fix.ts",
+        "issue": "Using 'any' type (1 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/whatsapp-business-api.ts",
+        "issue": "Using 'any' type (3 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/supabase.ts",
+        "issue": "Using 'any' type (1 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/supabase-real.ts",
+        "issue": "Using 'any' type (1 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/slack-integration.ts",
+        "issue": "Using 'any' type (8 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/saudi-ministry-health-integration.ts",
+        "issue": "Using 'any' type (3 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/saudi-health-integration.ts",
+        "issue": "Using 'any' type (2 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/private-center-integration.ts",
+        "issue": "Using 'any' type (3 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/performance-optimizations.ts",
+        "issue": "Using 'any' type (2 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/performance-monitor.ts",
+        "issue": "Using 'any' type (1 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/dynamic-content-manager.ts",
+        "issue": "Using 'any' type (5 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/database.ts",
+        "issue": "Using 'any' type (3 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/database-utils.ts",
+        "issue": "Using 'any' type (13 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/conversation-flows.ts",
+        "issue": "Using 'any' type (5 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/cache-system.ts",
+        "issue": "Using 'any' type (3 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/audit-logger.ts",
+        "issue": "Using 'any' type (2 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/lib/accessibility.ts",
+        "issue": "Using 'any' type (1 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/hooks/useThrottle.ts",
+        "issue": "Using 'any' type (1 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/hooks/usePerformance.ts",
+        "issue": "Using 'any' type (1 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      },
+      {
+        "file": "src/hooks/useDebounce.ts",
+        "issue": "Using 'any' type (1 instances)",
+        "severity": "medium",
+        "suggestion": "Replace with proper types or unknown"
+      }
+    ],
+    "projectStructure": [
+      {
+        "issue": "Files with deep nesting (>6 levels)",
+        "files": [
+          "src/app/api/webhooks/payments/stripe/route.ts",
+          "src/app/api/webhooks/payments/moyasar/route.ts",
+          "src/app/api/payments/webhook/stripe/route.ts",
+          "src/app/api/patients/[id]/activate/route.ts",
+          "src/app/api/notifications/[id]/read/route.ts",
+          "src/app/api/admin/users/update-supervisor-to-admin/route.ts",
+          "src/app/api/admin/users/[id]/route.ts",
+          "src/app/api/admin/translations/seed/route.ts",
+          "src/app/api/admin/settings/security/route.ts",
+          "src/app/api/admin/settings/notifications/route.ts"
+        ],
+        "severity": "low",
+        "suggestion": "Consider reorganizing directory structure"
+      }
+    ],
+    "garbageFiles": [
+      {
+        "count": 296,
+        "files": [
+          "package.json.backup",
+          "src/components/shell/Header.tsx.backup",
+          "tmp/progress.log",
+          "tmp/auto-fixes.log",
+          "src/types/index.ts",
+          "src/types/common.ts",
+          "src/types/api.ts",
+          "src/theme/index.ts",
+          "src/services/index.ts",
+          "src/middleware/auth.ts",
+          "src/lib/validation.ts",
+          "src/lib/supabase.ts",
+          "src/lib/security.ts",
+          "src/lib/rate-limiter.ts",
+          "src/lib/index.ts",
+          "src/lib/database.ts",
+          "src/hooks/index.ts",
+          "src/design-system/index.ts",
+          "src/core/utils.ts",
+          "src/core/index.ts"
+        ],
+        "severity": "low",
+        "suggestion": "Remove unused/garbage files"
+      }
+    ],
+    "businessLogic": [
+      {
+        "file": "src/__tests__/api/patients.test.ts",
+        "issue": "Missing conflict detection",
+        "severity": "critical",
+        "suggestion": "Check for scheduling conflicts"
+      },
+      {
+        "file": "src/__tests__/api/appointments.test.ts",
+        "issue": "Missing conflict detection",
+        "severity": "critical",
+        "suggestion": "Check for scheduling conflicts"
+      }
+    ],
+    "workflow": [
+      {
+        "issue": "Utilities not being used",
+        "severity": "low",
+        "suggestion": "Start using centralized utilities"
+      }
+    ],
+    "integration": [],
+    "improvements": [],
+    "recommendations": []
+  },
+  "recommendations": [
+    {
+      "priority": "CRITICAL",
+      "category": "Business Logic",
+      "recommendation": "Add missing conflict detection and authorization checks",
+      "details": [
+        "Missing conflict detection",
+        "Missing conflict detection"
+      ]
+    },
+    {
+      "priority": "HIGH",
+      "category": "Code Quality",
+      "recommendation": "Improve code quality by replacing \"any\" types and breaking down long functions",
+      "details": [
+        "Using 'any' type (2 instances)",
+        "Using 'any' type (1 instances)",
+        "Using 'any' type (3 instances)",
+        "Function too long (138 lines)",
+        "Using 'any' type (1 instances)"
+      ]
+    },
+    {
+      "priority": "MEDIUM",
+      "category": "Code Style",
+      "recommendation": "Fix lint errors and warnings",
+      "details": [
+        "0 lint issues found"
+      ]
+    },
+    {
+      "priority": "LOW",
+      "category": "Project Cleanup",
+      "recommendation": "Remove garbage files",
+      "details": [
+        "296 potential garbage files found"
+      ]
+    }
+  ]
+}
