@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication for dashboard statistics
     const authResult = await requireAuth(['admin', 'supervisor', 'staff', 'doctor'])(request);
@@ -187,7 +187,7 @@ export async function GET(request: NextRequest) {
 }
 
 // Optional: POST endpoint to refresh/update statistics
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   // Use same logic as GET
   return await GET(request);
 }

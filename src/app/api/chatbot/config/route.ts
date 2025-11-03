@@ -7,7 +7,7 @@ const supabase = createClient(
 );
 
 // GET /api/chatbot/config - جلب إعدادات الشات بوت
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { data: config, error } = await supabase
       .from('chatbot_configs')
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/chatbot/config - حفظ إعدادات الشات بوت
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const {

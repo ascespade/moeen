@@ -8,7 +8,7 @@ const supabase = createClient(
 );
 
 // API لجلب معلومات الأطباء من الجدول الموجود
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
 }
 
 // API لإضافة طبيب جديد (للمدراء فقط)
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const {
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
 }
 
 // API لتحديث طبيب (للمدراء فقط)
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const { id, ...updateData } = body;
@@ -169,7 +169,7 @@ export async function PUT(request: NextRequest) {
 }
 
 // API لحذف طبيب (للمدراء فقط)
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

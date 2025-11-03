@@ -26,7 +26,7 @@ const forgotPasswordSchema = z.object({
   email: z.string().email('البريد الإلكتروني غير صحيح'),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
 
   try {

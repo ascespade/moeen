@@ -8,7 +8,7 @@ import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = getServiceSupabase();
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   // Security: Require authentication for dashboard metrics
   const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
   if (!authResult.authorized) {

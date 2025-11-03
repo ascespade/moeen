@@ -40,7 +40,7 @@ const fileAccessSchema = z.object({
   accessReason: z.string().min(1, 'Access reason required'),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const supabase = await createClient();
     const body = await request.json();

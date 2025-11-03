@@ -6,7 +6,7 @@ import { supabaseAdmin } from '@/lib/supabase/admin';
  * Quick endpoint to update supervisor@test.local to admin with full permissions
  * This is a one-time utility endpoint
  */
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const supabase = await createClient();
     const email = 'supervisor@test.local';

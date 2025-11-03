@@ -8,7 +8,7 @@ const supabase = createClient(
 );
 
 // API لجلب جهات الاتصال الطارئة
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
 }
 
 // API لإضافة جهة اتصال طارئة جديدة (للمدراء فقط)
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);
@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
 }
 
 // API لتحديث جهة اتصال طارئة (للمدراء فقط)
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);
@@ -155,7 +155,7 @@ export async function PUT(request: NextRequest) {
 }
 
 // API لحذف جهة اتصال طارئة (للمدراء فقط)
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);

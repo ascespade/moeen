@@ -8,7 +8,7 @@ const LOG_DIR = process.env.LOG_DIR ||
     ? path.join(process.cwd(), 'logs')
     : '/home/ubuntu/workspace/projects/moeen/logs');
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const statusFile = path.join(LOG_DIR, 'agent-status.json');
 

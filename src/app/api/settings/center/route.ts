@@ -8,7 +8,7 @@ const supabase = createClient(
 );
 
 // API لجلب معلومات المركز
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
 }
 
 // API لتحديث معلومات المركز (للمدراء فقط)
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const {

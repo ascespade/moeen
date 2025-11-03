@@ -17,7 +17,7 @@ const configSchema = z.object({
   isSecret: z.boolean().default(false),
 });
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin or supervisor
     const authResult = await requireAuth(['admin', 'supervisor'])(request);
@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -184,7 +184,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -257,7 +257,7 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);

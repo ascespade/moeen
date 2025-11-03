@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authorize } from '@/lib/auth/authorize';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // First: Try JWT from cookie (fastest path)
     const token = request.cookies.get('auth_token')?.value ||

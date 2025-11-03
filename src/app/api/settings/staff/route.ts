@@ -8,7 +8,7 @@ const supabase = createClient(
 );
 
 // API لجلب الموظفين
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);
@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
 }
 
 // API لإضافة موظف جديد (للمدراء فقط)
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);
@@ -161,7 +161,7 @@ export async function POST(request: NextRequest) {
 }
 
 // API لتحديث موظف (للمدراء فقط)
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);
@@ -203,7 +203,7 @@ export async function PUT(request: NextRequest) {
 }
 
 // API لحذف موظف (للمدراء فقط)
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);

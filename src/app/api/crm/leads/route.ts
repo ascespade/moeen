@@ -8,7 +8,7 @@ const supabase = createClient(
 );
 
 // GET /api/crm/leads - جلب العملاء المحتملين
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/crm/leads - إنشاء عميل محتمل جديد
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const {

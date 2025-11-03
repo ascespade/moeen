@@ -4,7 +4,7 @@ import { authorize } from '@/lib/auth/authorize';
 import { emailService } from '@/lib/notifications/email';
 import { smsService } from '@/lib/notifications/sms';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { user, error: authError } = await authorize(request);
 

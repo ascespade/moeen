@@ -40,7 +40,7 @@ const updateClaimSchema = z.object({
   notes: z.string().optional(),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize staff, supervisor, or admin
     const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(
@@ -183,7 +183,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize staff, supervisor, or admin
     const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(
@@ -252,7 +252,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize supervisor or admin only
     const authResult = await requireAuth(['supervisor', 'admin'])(request);

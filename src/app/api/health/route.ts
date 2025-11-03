@@ -1,39 +1,18 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    // Simulate database connection check
-    const dbConnected = true; // Replace with actual DB check
-    const timestamp = new Date().toISOString();
-
-    if (!dbConnected) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: 'Database connection failed',
-          timestamp,
-        },
-        { status: 503 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      data: {
-        status: 'healthy',
-        database: 'connected',
-        timestamp,
-        version: '1.0.0',
+    return NextResponse.json(
+      { 
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        service: 'moeen-health-center'
       },
-      message: 'System is healthy',
-    });
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
-      {
-        success: false,
-        error: 'Health check failed',
-        timestamp: new Date().toISOString(),
-      },
+      { error: 'Health check failed' },
       { status: 500 }
     );
   }

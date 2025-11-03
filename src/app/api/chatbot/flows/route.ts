@@ -7,7 +7,7 @@ const supabase = createClient(
 );
 
 // GET /api/chatbot/flows - جلب جميع التدفقات
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { data: flows, error } = await supabase
       .from('chatbot_flows')
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/chatbot/flows - إنشاء تدفق جديد
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const { name, description, status = 'draft', created_by } = body;

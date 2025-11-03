@@ -1,7 +1,7 @@
 import { getServiceSupabase } from '@/lib/supabaseClient';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { action, context } = await request.json();
 

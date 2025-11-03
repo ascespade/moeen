@@ -22,7 +22,7 @@ const bookingSchema = z.object({
   insuranceClaimId: z.string().uuid().optional(),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
   const { ipAddress, userAgent } = getClientInfo(request);
 

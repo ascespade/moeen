@@ -5,7 +5,7 @@ import { requireAuth } from '@/lib/auth/authorize';
 
 const slack = new SlackIntegration();
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
 
@@ -39,6 +39,6 @@ async function handleSlackEvent(event: any) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   return NextResponse.json({ error: 'Method not allowed' }, { status: 405 });
 }

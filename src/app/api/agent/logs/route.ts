@@ -5,7 +5,7 @@ import { requireAuth } from '@/lib/auth/authorize';
 
 const LOG_DIR = '/home/ubuntu/workspace/projects/moeen/logs';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);

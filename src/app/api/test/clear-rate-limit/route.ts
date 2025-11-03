@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { clearRateLimitCache } from '@/middleware/rate-limiter';
 import { requireAuth } from '@/lib/auth/authorize';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(["admin"])(request);

@@ -8,7 +8,7 @@ interface TimeSlot {
   available: boolean;
 }
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { user, error: authError } = await authorize(request);
 

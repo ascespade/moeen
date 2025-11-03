@@ -7,7 +7,7 @@ import { requireAuth } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin, manager, supervisor, or doctor
     const authResult = await requireAuth(['admin', 'manager', 'supervisor', 'doctor'])(request);

@@ -60,7 +60,7 @@ const responses: Record<string, string> = {
     '🚨 أرقام الطوارئ:\n\n997 - الطوارئ العامة\n911 - الإسعاف\n+966555381558 - مركز الهمم (واتساب)',
 };
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { message } = await request.json();
 
