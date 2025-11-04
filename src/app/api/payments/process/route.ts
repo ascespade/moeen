@@ -20,7 +20,23 @@ const paymentSchema = z.object({
   paymentData: z.record(z.string(), z.any()).optional(),
   description: z.string().optional(),
   metadata: z.record(z.string(), z.any()).optional(),
-});
+}
+    
+    // Check permissions using PermissionManager
+    const canCreate = PermissionManager.hasPermission(
+      user.role as any,
+      'route',
+      'create',
+      { userId: user.id }
+    );
+
+    if (!canCreate) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
+);
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16',

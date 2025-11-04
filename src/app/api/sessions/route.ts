@@ -1,7 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
-import { requireAuth } from '@/lib/auth/authorize';
+import { requireAuth }
+    
+    // Check permissions using PermissionManager
+    const canRead = PermissionManager.hasPermission(
+      user.role as any,
+      'route',
+      'read',
+      { userId: user.id }
+    );
+
+    if (!canRead) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
+ from '@/lib/auth/authorize';
+import { PermissionManager } from '@/lib/permissions';
 
 const sessionSchema = z.object({
   patient_id: z.string().uuid('Invalid patient ID'),

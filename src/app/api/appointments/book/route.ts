@@ -33,13 +33,24 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Check role permissions
-    if (!['patient', 'staff', 'admin'].includes(user.role)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
-
     const supabase = await createClient();
     const body = await request.json();
+
+    // Check role permissions using PermissionManager
+    const { PermissionManager } = await import('@/lib/permissions');
+    const canCreate = PermissionManager.hasPermission(
+      user.role as any,
+      'appointments',
+      'create',
+      {
+        userId: user.id,
+        resourceOwnerId: body.patientId, // Check if patient can book own appointment
+      }
+    );
+
+    if (!canCreate) {
+      return NextResponse.json({ error: 'Forbidden - Insufficient permissions' }, { status: 403 });
+    }
 
     // Validate input
     const validation = bookingSchema.safeParse(body);

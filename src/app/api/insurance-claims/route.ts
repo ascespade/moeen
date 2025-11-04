@@ -18,11 +18,29 @@ const insuranceClaimSchema = z.object({
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(["admin", "staff", "doctor", "supervisor"])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
         { status: 401 }
+      );
+    }
+
+    // Check permissions using PermissionManager
+    const { PermissionManager } = await import('@/lib/permissions');
+    const canRead = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'insurance-claims',
+      'read',
+      {
+        userId: authResult.user.id,
+      }
+    );
+
+    if (!canRead) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
       );
     }
 
@@ -69,7 +87,35 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
 export async function POST(request: NextRequest) {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(["doctor", "staff", "admin"])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
+
+    // Check permissions using PermissionManager
+    const { PermissionManager } = await import('@/lib/permissions');
+    const canCreate = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'insurance-claims',
+      'create',
+      {
+        userId: authResult.user.id,
+        resourceOwnerId: body.patient_id, // Check if doctor can create claim for patient
+      }
+    );
+
+    if (!canCreate) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
     const validation = insuranceClaimSchema.safeParse(body);
 
     if (!validation.success) {

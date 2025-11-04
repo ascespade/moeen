@@ -25,7 +25,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               className
             )}
             ref={ref}
-            onChange={e = aria-label="text input"> onCheckedChange?.(e.target.checked)}
+            onChange={e => onCheckedChange?.(e.target.checked)}
             {...props}
           />
         </div>

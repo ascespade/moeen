@@ -29,13 +29,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getUserPermissions(
-      authResult.user.role,
-      authResult.user.meta?.permissions || []
+    // Check permissions using PermissionManager
+    const canRead = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'doctors',
+      'read',
+      { userId: authResult.user.id }
     );
 
-    if (!PermissionManager.canAccess(userPermissions, 'doctors', 'view')) {
+    if (!canRead) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }
@@ -86,13 +88,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check permissions
-    const userPermissions = PermissionManager.getUserPermissions(
-      authResult.user.role,
-      authResult.user.meta?.permissions || []
+    // Check permissions using PermissionManager
+    const canCreate = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'doctors',
+      'create',
+      { userId: authResult.user.id }
     );
 
-    if (!PermissionManager.canAccess(userPermissions, 'doctors', 'create')) {
+    if (!canCreate) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }

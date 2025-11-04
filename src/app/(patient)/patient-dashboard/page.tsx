@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import { DashboardLayout } from '@/components/dashboard/layouts/DashboardLayout';
 import PatientDashboard from '@/components/dashboard/widgets/PatientDashboard';
 import {
@@ -68,8 +69,8 @@ const patientNavigation = [
 ];
 
 export default function PatientDashboardPage() {
-  return (
-    <DashboardLayout
+  return (    <UnifiedProtectedRoute allowedRoles={['patient']}>
+<DashboardLayout
       header={{
         title: "أحمد محمد علي",
         subtitle: "مريض - رقم الملف: 12345",
@@ -96,5 +97,6 @@ export default function PatientDashboardPage() {
         )
       }}
     />
+    </UnifiedProtectedRoute>
   );
 }
