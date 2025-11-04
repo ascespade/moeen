@@ -24,14 +24,14 @@ export default function AdminLayout({
         <nav className='sticky top-0 h-screen overflow-hidden flex-shrink-0' role="navigation" aria-label="القائمة الجانبية">
           <Sidebar />
         </nav>
-        
+
         {/* Main Content Area - Only this part loads */}
         <div className='flex-1 flex flex-col min-w-0 overflow-hidden'>
           {/* Header - Always visible, sticky */}
           <header className='sticky top-0 z-10 bg-background flex-shrink-0' role="banner" aria-label="رأس الصفحة">
             <Header />
           </header>
-          
+
           {/* Page Content - Only this part shows loading */}
           <main className='flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto overflow-x-hidden' role="main" aria-label="المحتوى الرئيسي">
             <Suspense fallback={<AdminLoading />}>

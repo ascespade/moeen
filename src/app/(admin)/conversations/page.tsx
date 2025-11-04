@@ -596,7 +596,7 @@ function ConversationsPageContent() {
 
   if (loading) {
     return (
-      <div className='flex items-center justify-center min-h-screen'>
+      <div className='flex items-center justify-center min-h-[400px]'>
         <div className='text-center'>
           <RefreshCw className='h-8 w-8 animate-spin mx-auto mb-4' />
           <p>جاري تحميل المحادثات...</p>
@@ -606,8 +606,9 @@ function ConversationsPageContent() {
   }
 
   return (
-    <div className='min-h-screen bg-background'>
-      <div className='container-app py-6'>
+    <>
+      <div className='min-h-[400px] bg-background'>
+        <div className='container-app py-6'>
         {/* Header */}
         <div className='flex justify-between items-center mb-8'>
           <div>
@@ -1082,8 +1083,9 @@ function ConversationsPageContent() {
             )}
           </DialogContent>
         </Dialog>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

@@ -53,11 +53,11 @@ export function AdminPageWrapper({
 
     // Get page config if not provided
     const pageConfig = getPageConfig(pathname);
-    const finalRequiredPermissions = requiredPermissions.length > 0 
-      ? requiredPermissions 
+    const finalRequiredPermissions = requiredPermissions.length > 0
+      ? requiredPermissions
       : (pageConfig?.requiredPermissions || []);
-    const finalRequiredRoles = requiredRoles.length > 0 
-      ? requiredRoles 
+    const finalRequiredRoles = requiredRoles.length > 0
+      ? requiredRoles
       : (pageConfig?.requiredRoles || []);
 
     // Check role permissions
