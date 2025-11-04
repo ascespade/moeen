@@ -1,10 +1,14 @@
 // Permission hooks for React components
-import { useMemo } from 'react';
+import { useMemo, useEffect, useState } from 'react';
+// Import only types and client-safe utilities (no server dependencies)
+import type { PermissionId, RoleId } from '@/lib/permissions/types';
 import {
-  PermissionManager,
-  type PermissionId,
-  type RoleId,
-} from '@/lib/permissions';
+  hasPermission,
+  hasAnyPermission,
+  hasAllPermissions,
+  canAccess,
+  getAccessibleResources,
+} from '@/lib/permissions/utils';
 
 interface UsePermissionsProps {
   userRole: RoleId;
@@ -17,52 +21,92 @@ export function usePermissions({
   customPermissions = [],
   restrictions = [],
 }: UsePermissionsProps) {
+  const [rolePermissions, setRolePermissions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch permissions from database via API (client-side safe)
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
+
+    // Use API endpoint for client-side fetching
+    fetch(`/api/permissions/role/${userRole}`)
+      .then(res => res.json())
+      .then(data => {
+        if (isMounted && data.success) {
+          setRolePermissions(data.permissions || []);
+          setLoading(false);
+        } else {
+          throw new Error('Failed to fetch permissions');
+        }
+      })
+      .catch(() => {
+        if (isMounted) {
+          // Fallback: admin always has wildcard, others get empty array
+          setRolePermissions(userRole === 'admin' ? ['*'] : []);
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [userRole]);
+
   const permissions = useMemo(() => {
-    const rolePermissions = PermissionManager.getRolePermissions(userRole);
     const allPermissions = [...rolePermissions, ...customPermissions];
 
     // Remove restricted permissions
     return allPermissions.filter(
       permission => !restrictions.includes(permission)
     );
-  }, [userRole, customPermissions, restrictions]);
+  }, [rolePermissions, customPermissions, restrictions]);
 
-  const hasPermission = (permission: PermissionId | string): boolean => {
-    return PermissionManager.hasPermission(permissions, permission);
+  const hasPermissionCheck = (permission: PermissionId | string): boolean => {
+    return hasPermission(permissions, permission);
   };
 
-  const hasAnyPermission = (
+  const hasAnyPermissionCheck = (
     permissionsToCheck: (PermissionId | string)[]
   ): boolean => {
-    return PermissionManager.hasAnyPermission(permissions, permissionsToCheck);
+    return hasAnyPermission(permissions, permissionsToCheck);
   };
 
-  const hasAllPermissions = (
+  const hasAllPermissionsCheck = (
     permissionsToCheck: (PermissionId | string)[]
   ): boolean => {
-    return PermissionManager.hasAllPermissions(permissions, permissionsToCheck);
+    return hasAllPermissions(permissions, permissionsToCheck);
   };
 
-  const canAccess = (resource: string, action: string): boolean => {
-    return PermissionManager.canAccess(permissions, resource, action);
+  const canAccessCheck = (resource: string, action: string): boolean => {
+    return canAccess(permissions, resource, action);
   };
 
-  const getAccessibleResources = (): string[] => {
-    return PermissionManager.getAccessibleResources(permissions);
+  const getAccessibleResourcesCheck = (): string[] => {
+    return getAccessibleResources(permissions);
   };
 
-  const getPermissionsByCategory = (category: string): string[] => {
-    return PermissionManager.getPermissionsByCategory(permissions, category);
+  const getPermissionsByCategoryCheck = (category: string): string[] => {
+    // Use dynamic import from client-safe exports
+    return import('@/lib/permissions/client').then(({ PERMISSIONS }) => {
+      return permissions.filter(permission => {
+        const permissionObj = Object.values(PERMISSIONS).find(
+          (p: any) => p.id === permission
+        );
+        return permissionObj?.category === category;
+      });
+    }).catch(() => permissions); // Fallback: return all permissions on error
   };
 
   return {
     permissions,
-    hasPermission,
-    hasAnyPermission,
-    hasAllPermissions,
-    canAccess,
-    getAccessibleResources,
-    getPermissionsByCategory,
+    loading,
+    hasPermission: hasPermissionCheck,
+    hasAnyPermission: hasAnyPermissionCheck,
+    hasAllPermissions: hasAllPermissionsCheck,
+    canAccess: canAccessCheck,
+    getAccessibleResources: getAccessibleResourcesCheck,
+    getPermissionsByCategory: getPermissionsByCategoryCheck,
   };
 }
 

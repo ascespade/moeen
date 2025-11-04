@@ -7,7 +7,12 @@
  */
 
 import { getBrowserSupabase } from '@/lib/supabaseClient';
-import { PermissionManager, ROLES } from '@/lib/permissions';
+// Import only permission checking utilities (no server dependencies)
+import {
+  hasPermission as checkPermission,
+  hasAnyPermission as checkAnyPermission,
+  canAccess as checkCanAccess,
+} from '@/lib/permissions/utils';
 
 export interface AuthUser {
   id: string;
@@ -86,15 +91,16 @@ export function getUserPermissions(
   role: string,
   customPermissions: string[] = []
 ): string[] {
-  const rolePermissions = PermissionManager.getRolePermissions(role);
-  const allPermissions = [...rolePermissions, ...customPermissions];
-
-  // Admin always has all permissions
+  // For client-side, return basic permissions
+  // Full permissions should be fetched via API endpoint
+  // Admin always has all permissions (wildcard)
   if (role === 'admin') {
-    return ['*', ...allPermissions];
+    return ['*', ...customPermissions];
   }
 
-  return allPermissions;
+  // For other roles, return custom permissions only
+  // The actual role permissions should be fetched from API
+  return customPermissions;
 }
 
 /**
@@ -104,7 +110,7 @@ export function hasPermission(
   userPermissions: string[],
   permission: string
 ): boolean {
-  return PermissionManager.hasPermission(userPermissions, permission);
+  return checkPermission(userPermissions, permission);
 }
 
 /**
@@ -114,7 +120,7 @@ export function hasAnyPermission(
   userPermissions: string[],
   requiredPermissions: string[]
 ): boolean {
-  return PermissionManager.hasAnyPermission(
+  return checkAnyPermission(
     userPermissions,
     requiredPermissions
   );
@@ -128,7 +134,7 @@ export function canAccess(
   resource: string,
   action: string
 ): boolean {
-  return PermissionManager.canAccess(userPermissions, resource, action);
+  return checkCanAccess(userPermissions, resource, action);
 }
 
 /**

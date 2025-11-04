@@ -6,7 +6,8 @@
  */
 
 import { AuthUser } from '@/lib/auth/unified-auth';
-import { PermissionManager } from '@/lib/permissions';
+// Import client-safe permission utilities
+import { hasAnyPermission } from '@/lib/permissions/utils';
 
 export interface NavItem {
   id: string;
@@ -140,7 +141,7 @@ function canAccessNavItem(user: AuthUser, item: NavItem): boolean {
       ? item.requiredPermission
       : [item.requiredPermission];
 
-    const hasAccess = PermissionManager.hasAnyPermission(
+    const hasAccess = hasAnyPermission(
       user.permissions,
       permissions
     );

@@ -18,9 +18,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           const decoded = jwt.verify(token, jwtSecret) as any;
 
           if (decoded.userId && decoded.email && decoded.role) {
-            // Get permissions from PermissionManager (fast, no DB query)
+            // Get permissions from PermissionManager (from database)
             const { PermissionManager } = await import('@/lib/permissions');
-            const permissions = PermissionManager.getRolePermissions(
+            const permissions = await PermissionManager.getRolePermissions(
               decoded.role
             );
 
@@ -59,10 +59,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           .maybeSingle();
 
         if (userData && userData.status === 'active') {
-          // Get permissions using PermissionManager (faster than DB queries)
+          // Get permissions using PermissionManager (from database)
           try {
             const { PermissionManager } = await import('@/lib/permissions');
-            const permissions = PermissionManager.getRolePermissions(
+            const permissions = await PermissionManager.getRolePermissions(
               userData.role
             );
 

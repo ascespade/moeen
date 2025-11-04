@@ -9,8 +9,10 @@ import { useAdminDashboard } from '@/hooks/useAdminDashboard';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import { cn } from '@/lib/utils';
 import {
+  Activity,
   AlertTriangle,
   Calendar,
+  Clock,
   DollarSign,
   Download,
   FileText,

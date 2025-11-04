@@ -3,7 +3,7 @@ import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 import { getDefaultRoute } from '@/lib/auth/RouteManager';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,10 +14,12 @@ export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const hasRedirected = useRef(false);
 
-  // Redirect if already logged in
+  // Redirect if already logged in - only once
   useEffect(() => {
-    if (!isLoading && isAuthenticated && user) {
+    if (!isLoading && isAuthenticated && user && !hasRedirected.current) {
+      hasRedirected.current = true;
       const route = getDefaultRoute(user.role);
       router.replace(route);
     }
@@ -31,14 +33,9 @@ export default function LoginPage() {
     try {
       const result = await login(email, password);
       if (result.success && result.user) {
-        // Get route based on user role
-        const route = getDefaultRoute(result.user.role || 'agent');
-
-        // Reset state
+        // Reset state - the useEffect will handle redirect
         setSubmitting(false);
-
-        // Redirect - cookie is already set by server
-        window.location.href = route;
+        // Don't redirect here - let useEffect handle it to avoid multiple reloads
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
         setSubmitting(false);
@@ -57,9 +54,9 @@ export default function LoginPage() {
     try {
       const result = await login(testEmail, testPassword);
       if (result.success && result.user) {
-        const route = getDefaultRoute(result.user.role || role);
+        // Reset state - the useEffect will handle redirect
         setSubmitting(false);
-        window.location.href = route;
+        // Don't redirect here - let useEffect handle it to avoid multiple reloads
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
         setSubmitting(false);
@@ -119,7 +116,7 @@ export default function LoginPage() {
 
             <form onSubmit={handleSubmit} className='space-y-6' aria-labelledby='login-form-heading'>
               <h2 id='login-form-heading' className='sr-only'>نموذج تسجيل الدخول</h2>
-              
+
               <div>
                 <label htmlFor='email' className='form-label'>البريد الإلكتروني</label>
                 <div className='relative'>

@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     try {
       const { PermissionManager } = await import('@/lib/permissions');
       const perms = data?.role
-        ? PermissionManager.getRolePermissions(data.role)
+        ? await PermissionManager.getRolePermissions(data.role)
         : [];
       return NextResponse.json({
         success: true,

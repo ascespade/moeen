@@ -5,7 +5,8 @@
  * Defines and manages business logic workflows for all user roles
  */
 
-import { UserRole } from '@/lib/permissions';
+// Import only type (safe - types are stripped at compile time)
+import type { UserRole } from '@/lib/permissions';
 
 export interface WorkflowStep {
   id: string;

@@ -178,7 +178,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
     if (codes.size === 0 && userData.role) {
       try {
         const { PermissionManager } = await import('@/lib/permissions');
-        const rolePermsList = PermissionManager.getRolePermissions(
+        const rolePermsList = await PermissionManager.getRolePermissions(
           userData.role
         );
         if (Array.isArray(rolePermsList)) {

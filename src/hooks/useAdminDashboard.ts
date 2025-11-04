@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 interface DashboardStats {
   totalPatients: number;
@@ -89,6 +89,7 @@ export function useAdminDashboard(
   const [staffWorkHours, setStaffWorkHours] = useState<StaffWorkHours[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isInitialMount = useRef(true);
 
   const fetchStats = useCallback(async () => {
     try {
@@ -168,10 +169,34 @@ export function useAdminDashboard(
     }
   }, [fetchStats, fetchActivities, fetchStaffHours]);
 
-  // Initial load
+  // Initial load and when period changes
   useEffect(() => {
-    refetch();
-  }, [refetch]);
+    const loadData = async () => {
+      if (isInitialMount.current) {
+        isInitialMount.current = false;
+        // Initial load - fetch all data
+        setLoading(true);
+        setError(null);
+        try {
+          await Promise.all([fetchStats(), fetchActivities(), fetchStaffHours()]);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        // Period changed - only refetch stats
+        setLoading(true);
+        setError(null);
+        try {
+          await fetchStats();
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [period]); // Only depend on period to avoid infinite loops - fetchStats depends on period
 
   return {
     stats,
