@@ -448,8 +448,10 @@ const APIKeysSettingsPage: React.FC = () => {
                           />
                           <div className='absolute left-2 top-1/2 -translate-y-1/2 flex gap-1'>
                             <button type='button'
-                              onClick={() => { toggleVisibility(keyConfig.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ toggleVisibility(keyConfig.i"> { toggleVisibility(keyConfig.id) } }}
+                              onClick={() => { toggleVisibility(keyConfig.id) }}
+                              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleVisibility(keyConfig.id); } }}
                               className='p-1 hover:bg-gray-100 rounded'
+                              aria-label={isVisible ? 'إخفاء المفتاح' : 'إظهار المفتاح'}
                             >
                               {isVisible ? (
                                 <EyeOff className='w-4 h-4' />
@@ -459,10 +461,9 @@ const APIKeysSettingsPage: React.FC = () => {
                             </button>
                             {keyConfig.key_value && (
                               <button type='button'
-                                onClick={() => { copyToClipboard(keyConfig.key_value) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{
-                            "> {
-                                  copyToClipboard(keyConfig.key_value)
-                                 } }}
+                                onClick={() => { copyToClipboard(keyConfig.key_value) }}
+                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); copyToClipboard(keyConfig.key_value); } }}
+                                aria-label="نسخ المفتاح"
                                 className='p-1 hover:bg-gray-100 rounded'
                               >
                                 <Copy className='w-4 h-4' />

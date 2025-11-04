@@ -1,10 +1,10 @@
 export default function GuidelinesPage() {
   return (
-    <ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-main className='p-6 grid gap-6'>
+    <>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="انتقل للمحتوى الرئيسي">
+        انتقل للمحتوى الرئيسي
+      </a>
+      <main className='p-6 grid gap-6'>
       <h1 className='text-2xl font-semibold'>UI Guidelines</h1>
 
       <section className='grid gap-3'>
@@ -12,7 +12,7 @@ main className='p-6 grid gap-6'>
         <div className='grid grid-cols-2 sm:grid-cols-4 gap-3'>
           <div className='rounded-lg border p-3'>
             <div className='h-10 rounded bg-default mb-2' />
-            <div className='text-sm'>Primary</section>
+            <div className='text-sm'>Primary</div>
           </div>
           <div className='rounded-lg border p-3'>
             <div className='h-10 rounded bg-amber-500 mb-2' />
@@ -30,7 +30,7 @@ main className='p-6 grid gap-6'>
       </section>
 
       <section className='grid gap-3'>
-        <div className='font-medium'>Spacing</section>
+        <div className='font-medium'>Spacing</div>
         <div className='flex items-center gap-4'>
           <div className='h-4 w-4 bg-gray-200' />
           <div className='h-4 w-8 bg-gray-200' />

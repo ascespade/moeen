@@ -93,7 +93,7 @@ const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>(
             onValueChange(value);
           }
         }}
-        aria-label={typeof children === 'string' ? children : '?????'}
+        aria-label={typeof children === 'string' ? children : 'تبويب'}
         ref={ref}
         {...props}
       >

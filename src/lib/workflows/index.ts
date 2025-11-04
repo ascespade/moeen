@@ -1,6 +1,6 @@
 /**
  * Workflows System
- * ???? ?????????
+ * نظام سير العمل
  *
  * Defines and manages business logic workflows for all user roles
  */

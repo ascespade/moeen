@@ -272,7 +272,8 @@ export default function SessionNotesPage() {
                             setSelectedGoals([...selectedGoals, goal.id]);
                             setGoalProgress({
                               ...goalProgress,
-                              [goal.id]: goal.current_progress,} aria-label="checkbox" aria-invalid="true");
+                              [goal.id]: goal.current_progress,
+                            });
                           } else {
                             setSelectedGoals(
                               selectedGoals.filter(id => id !== goal.id)
@@ -305,8 +306,8 @@ export default function SessionNotesPage() {
                               }
                               onChange={(e) => setGoalProgress({
                                   ...goalProgress,
-                                  [goal.id]: parseInt(e.target.value),} aria-label="range" aria-invalid="true")
-                              }
+                                  [goal.id]: parseInt(e.target.value),
+                                })}
                               className='w-full'
                             />
                             <div className='flex justify-between text-sm text-gray-600 dark:text-gray-400'>
@@ -366,8 +367,9 @@ export default function SessionNotesPage() {
             <div className='flex items-center gap-2 mb-4'>
               {[1, 2, 3, 4, 5].map(star => (
                 <button key={star}
-                  onClick={() => { setSessionRating(star) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSessionRating(star) } }}
-"> { setSessionRating(star) } }}
+                  onClick={() => { setSessionRating(star) }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSessionRating(star); } }}
+                  aria-label={`تقييم ${star} نجوم`}
                   className={`text-3xl transition-all ${
                     star <= sessionRating
                       ? 'text-yellow-400 hover:scale-110'
@@ -405,9 +407,13 @@ export default function SessionNotesPage() {
 
           {/* Actions */}
           <div className='space-y-3'>
-            <button onClick={handleSaveNotes} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSaveNotes } }}
+            <button 
+              onClick={handleSaveNotes} 
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSaveNotes(); } }}
               disabled={saving || !notes.trim()}
-              className='btn btn-default w-full py-4 text-lg disabled:opacity-50' aria-label="{saving ? (">
+              className='btn btn-default w-full py-4 text-lg disabled:opacity-50' 
+              aria-label={saving ? 'جاري الحفظ...' : 'حفظ الملاحظات'}
+            >
               {saving ? (
                 <span className='flex items-center justify-center gap-2'>
                   <span className='animate-spin'>⏳</span>
@@ -418,9 +424,11 @@ export default function SessionNotesPage() {
               )}
             </button>
 
-            <button onClick={() => { router.back() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ router.back() } }}
-         "> { router.back() } }}
+            <button 
+              onClick={() => { router.back() }} 
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); router.back(); } }}
               className='btn btn-outline w-full'
+              aria-label="العودة للخلف"
             >
               إلغاء
             </button>

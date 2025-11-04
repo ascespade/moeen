@@ -1,10 +1,10 @@
 export default function UIKitPage() {
   return (
-    <ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-main className='min-h-screen bg-[var(--default-surface)]'>
+    <>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="انتقل للمحتوى الرئيسي">
+        انتقل للمحتوى الرئيسي
+      </a>
+      <main className='min-h-screen bg-[var(--default-surface)]'>
       <div className='container-app py-6'>
         <div className='grid gap-6'>
           <h1 className='text-2xl font-semibold text-[var(--foreground)]'>
@@ -43,9 +43,9 @@ main className='min-h-screen bg-[var(--default-surface)]'>
           <section className='card p-6'>
             <div className='font-medium text-[var(--foreground)] mb-3'>
               Inputs
-            </section>
+            </div>
             <div className='grid sm:grid-cols-2 gap-2'>
-              <input className='form-input' placeholder='Text field' / aria-label="Text field" aria-invalid="true">
+              <input className='form-input' placeholder='Text field' aria-label="Text field" />
               <select className='form-input'>
                 <option>Option</option>
               </select>
@@ -60,7 +60,7 @@ main className='min-h-screen bg-[var(--default-surface)]'>
           <section className='card p-6'>
             <div className='font-medium text-[var(--foreground)] mb-3'>
               Cards & Badges
-            </section>
+            </div>
             <div className='grid sm:grid-cols-2 gap-3'>
               <div className='card p-4'>
                 <div className='text-sm text-[var(--foreground)]/60'>عنوان</div>

@@ -306,8 +306,8 @@ export default function DashboardPage() {
         <Tabs defaultValue='system' className='space-y-6'>
           <TabsList>
             <TabsTrigger value='system'>System Health</TabsTrigger>
-            <TabsTrigger value='healthcare'>??????? ??????</TabsTrigger>
-            <TabsTrigger value='crm'>????? ???????</TabsTrigger>
+            <TabsTrigger value='healthcare'>الرعاية الصحية</TabsTrigger>
+            <TabsTrigger value='crm'>إدارة العلاقات</TabsTrigger>
             <TabsTrigger value='automation'>Automation</TabsTrigger>
             <TabsTrigger value='social'>Social Media</TabsTrigger>
             <TabsTrigger value='workflows'>Workflows</TabsTrigger>
@@ -389,7 +389,7 @@ export default function DashboardPage() {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    ?????? ??????
+                    إجمالي المرضى
                   </CardTitle>
                   <Users className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
@@ -398,8 +398,8 @@ export default function DashboardPage() {
                     {metrics?.healthcare.patients.total || 0}
                   </div>
                   <p className='text-xs text-muted-foreground'>
-                    +{metrics?.healthcare.patients.growthRate || 0}% ?? ?????
-                    ??????
+                    +{metrics?.healthcare.patients.growthRate || 0}% من الشهر
+                    الماضي
                   </p>
                 </CardContent>
               </Card>
@@ -407,7 +407,7 @@ export default function DashboardPage() {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    ???????? ?????
+                    المواعيد اليوم
                   </CardTitle>
                   <Calendar className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
@@ -416,7 +416,7 @@ export default function DashboardPage() {
                     {metrics?.healthcare.appointments.today || 0}
                   </div>
                   <p className='text-xs text-muted-foreground'>
-                    {metrics?.healthcare.appointments.thisWeek || 0} ??? ???????
+                    {metrics?.healthcare.appointments.thisWeek || 0} في هذا الأسبوع
                   </p>
                 </CardContent>
               </Card>
@@ -424,7 +424,7 @@ export default function DashboardPage() {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    ??????? ???????
+                    الأطباء النشطون
                   </CardTitle>
                   <Activity className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
@@ -433,7 +433,7 @@ export default function DashboardPage() {
                     {metrics?.healthcare.doctors.active || 0}
                   </div>
                   <p className='text-xs text-muted-foreground'>
-                    ?? ??? {metrics?.healthcare.doctors.total || 0} ????
+                    من أصل {metrics?.healthcare.doctors.total || 0} طبيب
                   </p>
                 </CardContent>
               </Card>
@@ -441,7 +441,7 @@ export default function DashboardPage() {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    ????????? ???????
+                    الإيرادات الشهرية
                   </CardTitle>
                   <TrendingUp className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
@@ -449,11 +449,11 @@ export default function DashboardPage() {
                   <div className='text-2xl font-bold'>
                     {metrics?.healthcare.revenue.thisMonth?.toLocaleString() ||
                       0}{' '}
-                    ????
+                    ريال
                   </div>
                   <p className='text-xs text-muted-foreground'>
-                    +{metrics?.healthcare.revenue.growthRate || 0}% ?? ?????
-                    ??????
+                    +{metrics?.healthcare.revenue.growthRate || 0}% من الشهر
+                    الماضي
                   </p>
                 </CardContent>
               </Card>
@@ -462,9 +462,9 @@ export default function DashboardPage() {
             {/* Appointments Status */}
             <Card>
               <CardHeader>
-                <CardTitle>???? ????????</CardTitle>
+                <CardTitle>حالة المواعيد</CardTitle>
                 <CardDescription>
-                  ???? ???? ??? ???????? ???????
+                  ملخص حالة جميع المواعيد المجدولة
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -473,7 +473,7 @@ export default function DashboardPage() {
                     <div className='text-2xl font-bold text-green-600'>
                       {metrics?.healthcare.appointments.completed || 0}
                     </div>
-                    <div className='text-sm text-green-700'>??????</div>
+                    <div className='text-sm text-green-700'>مكتملة</div>
                   </div>
                   <div className='text-center p-4 bg-yellow-50 rounded-lg'>
                     <div className='text-2xl font-bold text-yellow-600'>
@@ -481,13 +481,13 @@ export default function DashboardPage() {
                         (metrics?.healthcare?.appointments?.completed || 0) -
                         (metrics?.healthcare?.appointments?.cancelled || 0)}
                     </div>
-                    <div className='text-sm text-yellow-700'>?????</div>
+                    <div className='text-sm text-yellow-700'>قيد الانتظار</div>
                   </div>
                   <div className='text-center p-4 bg-red-50 rounded-lg'>
                     <div className='text-2xl font-bold text-red-600'>
                       {metrics?.healthcare.appointments.cancelled || 0}
                     </div>
-                    <div className='text-sm text-red-700'>?????</div>
+                    <div className='text-sm text-red-700'>ملغاة</div>
                   </div>
                 </div>
               </CardContent>
@@ -496,8 +496,8 @@ export default function DashboardPage() {
             {/* Doctor Specialties */}
             <Card>
               <CardHeader>
-                <CardTitle>???????? ??????</CardTitle>
-                <CardDescription>????? ??????? ??? ??????</CardDescription>
+                <CardTitle>التخصصات الطبية</CardTitle>
+                <CardDescription>عدد الأطباء حسب التخصص</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className='space-y-2'>
@@ -515,7 +515,7 @@ export default function DashboardPage() {
                     )
                   ) || (
                     <div className='text-center text-gray-500 py-4'>
-                      ?? ???? ?????? ?????
+                      لا توجد تخصصات متاحة
                     </div>
                   )}
                 </div>
@@ -529,7 +529,7 @@ export default function DashboardPage() {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    ?????? ??????? ?????????
+                    إجمالي العملاء المحتملين
                   </CardTitle>
                   <Users className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
@@ -538,14 +538,14 @@ export default function DashboardPage() {
                     {metrics?.crm.leads.total || 0}
                   </div>
                   <p className='text-xs text-muted-foreground'>
-                    {metrics?.crm.leads.new || 0} ????
+                    {metrics?.crm.leads.new || 0} جديدة
                   </p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>???????</CardTitle>
+                  <CardTitle className='text-sm font-medium'>الصفقات</CardTitle>
                   <TrendingUp className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
                 <CardContent>
@@ -553,14 +553,14 @@ export default function DashboardPage() {
                     {metrics?.crm.deals.total || 0}
                   </div>
                   <p className='text-xs text-muted-foreground'>
-                    {metrics?.crm.deals.won || 0} ??????
+                    {metrics?.crm.deals.won || 0} محققة
                   </p>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>???????</CardTitle>
+                  <CardTitle className='text-sm font-medium'>الأنشطة</CardTitle>
                   <Activity className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
                 <CardContent>
@@ -568,7 +568,7 @@ export default function DashboardPage() {
                     {metrics?.crm.activities.total || 0}
                   </div>
                   <p className='text-xs text-muted-foreground'>
-                    {metrics?.crm.activities.calls || 0} ???????
+                    {metrics?.crm.activities.calls || 0} مكالمات
                   </p>
                 </CardContent>
               </Card>
@@ -576,7 +576,7 @@ export default function DashboardPage() {
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
-                    ???? ???????
+                    معدل التحويل
                   </CardTitle>
                   <CheckCircle className='h-4 w-4 text-muted-foreground' />
                 </CardHeader>
@@ -592,7 +592,7 @@ export default function DashboardPage() {
                     %
                   </div>
                   <p className='text-xs text-muted-foreground'>
-                    ?? ??????? ?????????
+                    من العملاء المحتملين
                   </p>
                 </CardContent>
               </Card>

@@ -72,16 +72,17 @@ export default function LoginPage() {
 
   if (isLoading) {
     return (
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='flex items-center justify-center min-h-screen' role='status' aria-live='polite'>
-        <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4' aria-hidden='true'></div>
-          <p>جاري التحميل...</p>
+      <>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="انتقل للمحتوى الرئيسي">
+          انتقل للمحتوى الرئيسي
+        </a>
+        <div className='flex items-center justify-center min-h-screen' role='status' aria-live='polite'>
+          <div className='text-center'>
+            <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4' aria-hidden='true'></div>
+            <p>جاري التحميل...</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -126,7 +127,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                     id='email'
                     name='email'
                     value={email}
-                    onChange={(e) = aria-label="email" aria-invalid="true"> setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className='form-input pr-10'
                     placeholder='you@example.com'
@@ -147,7 +148,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                     id='password'
                     name='password'
                     value={password}
-                    onChange={(e) = aria-label="password" aria-invalid="true"> setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     className='form-input pr-10'
                     placeholder='••••••••'
@@ -167,7 +168,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                     id='rememberMe'
                     name='rememberMe'
                     checked={rememberMe}
-                    onChange={(e) = aria-label="rememberMe" aria-invalid="true"> setRememberMe(e.target.checked)}
+                    onChange={(e) => setRememberMe(e.target.checked)}
                     className='text-default focus:ring-default h-4 w-4 rounded border-gray-300 focus:ring-2'
                     aria-label='تذكرني'
                     data-testid='remember-me-checkbox'
@@ -212,8 +213,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
               </h2>
               <div className='grid grid-cols-2 gap-2' role='group' aria-label='أزرار تسجيل الدخول السريع'>
                 <button type='button'
-                  onClick={() => handleQuickLogin('admin@test.com', 'Admin123!', 'admin')} aria-label="{
-                    if (e.ke"
+                  onClick={() => handleQuickLogin('admin@test.com', 'Admin123!', 'admin')}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
@@ -228,8 +228,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                   👑 Admin
                 </button>
                 <button type='button'
-                  onClick={() => handleQuickLogin('doctor@test.com', 'Doctor123!', 'doctor')} aria-label="{
-                    if (e.ke"
+                  onClick={() => handleQuickLogin('doctor@test.com', 'Doctor123!', 'doctor')}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
@@ -244,8 +243,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                   🩺 Doctor
                 </button>
                 <button type='button'
-                  onClick={() => handleQuickLogin('patient@test.com', 'Patient123!', 'patient')} aria-label="{
-                    if (e.ke"
+                  onClick={() => handleQuickLogin('patient@test.com', 'Patient123!', 'patient')}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
@@ -260,8 +258,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                   👤 Patient
                 </button>
                 <button type='button'
-                  onClick={() => handleQuickLogin('staff@test.com', 'Staff123!', 'staff')} aria-label="{
-                    if (e.ke"
+                  onClick={() => handleQuickLogin('staff@test.com', 'Staff123!', 'staff')}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();

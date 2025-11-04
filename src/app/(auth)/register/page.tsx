@@ -128,13 +128,13 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
-        <div className='card w-full max-w-md p-8 text-center'>
-          <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
+      <>
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          <span id="live-region"></span>
+        </div>
+        <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
+          <div className='card w-full max-w-md p-8 text-center'>
+            <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
           </div>
           <h1 className='mb-4 text-2xl font-bold text-gray-900 dark:text-white'>
@@ -351,6 +351,6 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+      </>
+    );
+  }

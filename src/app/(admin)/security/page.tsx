@@ -488,39 +488,51 @@ const SecurityPage: React.FC = () => {
 
         {/* Tabs */}
         <div className='flex space-x-1 bg-surface p-1 rounded-lg mb-6'>
-          <button onClick={() => { setSelectedTab('events') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedTab('events') } }"> { setSelectedTab('events') } }}
+          <button 
+            onClick={() => { setSelectedTab('events') }} 
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('events'); } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'events'
                 ? 'bg-white text-gray-900 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
+            aria-label="الأحداث الأمنية"
           >
             الأحداث الأمنية
           </button>
-          <button onClick={() => { setSelectedTab('sessions') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedTab('sessions') }"> { setSelectedTab('sessions') } }}
+          <button 
+            onClick={() => { setSelectedTab('sessions') }} 
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('sessions'); } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'sessions'
                 ? 'bg-white text-gray-900 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
+            aria-label="الجلسات النشطة"
           >
             الجلسات النشطة
           </button>
-          <button onClick={() => { setSelectedTab('alerts') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedTab('alerts') } }"> { setSelectedTab('alerts') } }}
+          <button 
+            onClick={() => { setSelectedTab('alerts') }} 
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('alerts'); } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'alerts'
                 ? 'bg-white text-gray-900 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
+            aria-label="التنبيهات"
           >
             التنبيهات
           </button>
-          <button onClick={() => { setSelectedTab('policies') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedTab('policies') }"> { setSelectedTab('policies') } }}
+          <button 
+            onClick={() => { setSelectedTab('policies') }} 
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('policies'); } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'policies'
                 ? 'bg-white text-gray-900 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
+            aria-label="السياسات"
           >
             السياسات
           </button>
