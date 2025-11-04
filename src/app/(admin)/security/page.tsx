@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -104,7 +105,7 @@ interface SecurityAlert {
   assigned_to?: string;
 }
 
-const SecurityPage: React.FC = () => {
+function SecurityPageContent() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([]);
@@ -899,6 +900,15 @@ const SecurityPage: React.FC = () => {
       </div>
     </>
   );
-};
+}
 
-export default SecurityPage;
+export default function SecurityPage() {
+  return (
+    <AdminPageWrapper
+      requiredPermissions={['security:view']}
+      pageTitle='الأمان والمراقبة'
+    >
+      <SecurityPageContent />
+    </AdminPageWrapper>
+  );
+}

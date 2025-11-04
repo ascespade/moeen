@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import {
   Card,
   CardContent,
@@ -192,7 +194,7 @@ interface PerformanceAlert {
   action?: string;
 }
 
-export default function PerformancePage() {
+function PerformancePageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [metrics, setMetrics] = useState<PerformanceMetric[]>([]);
@@ -1095,5 +1097,16 @@ export default function PerformancePage() {
         </Dialog>
       </div>
     </div>
+  );
+}
+
+export default function PerformancePage() {
+  return (
+    <AdminPageWrapper
+      requiredPermissions={['performance:view']}
+      pageTitle='مراقبة الأداء'
+    >
+      <PerformancePageContent />
+    </AdminPageWrapper>
   );
 }

@@ -140,13 +140,13 @@ function AdminDashboardPage() {
     );
   };
 
-  // Show loading state
+  // Show loading state - minimal, only in content area
   if (loading) {
     return (
-      <div className='flex min-h-screen items-center justify-center bg-[var(--background)]'>
+      <div className='flex items-center justify-center min-h-[400px]'>
         <div className='text-center'>
-          <div className='mb-4 h-12 w-12 animate-spin rounded-full border-4 border-[var(--brand-border)] border-t-[var(--brand-primary)] mx-auto'></div>
-          <p className='text-[var(--text-secondary)]'>
+          <div className='mb-4 h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-blue-600 mx-auto'></div>
+          <p className='text-sm text-gray-600'>
             جاري تحميل لوحة التحكم...
           </p>
         </div>
@@ -154,10 +154,10 @@ function AdminDashboardPage() {
     );
   }
 
-  // Show error state
+  // Show error state - minimal, only in content area
   if (error) {
     return (
-      <div className='min-h-screen bg-[var(--background)]'>
+      <div className='min-h-[400px]'>
         <AdminHeader
           title='لوحة تحكم الإدارة'
           description='حدث خطأ في تحميل البيانات'

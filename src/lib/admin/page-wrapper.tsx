@@ -1,22 +1,22 @@
 /**
  * Unified Admin Page Wrapper
  * wrapper موحد لجميع صفحات Admin
- * يضمن التحقق من الصلاحيات والتحميل بشكل موحد
+ * يضمن التحقق من الصلاحيات بشكل موحد بدون loading states كبيرة
  */
 
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { usePermissions } from '@/hooks/usePermissions';
+import { getPageConfig } from './page-config';
 
 interface AdminPageWrapperProps {
   children: React.ReactNode;
   requiredPermissions?: string[];
   requiredRoles?: string[];
   pageTitle?: string;
-  loadingComponent?: React.ReactNode;
 }
 
 export function AdminPageWrapper({
@@ -24,14 +24,15 @@ export function AdminPageWrapper({
   requiredPermissions = [],
   requiredRoles = [],
   pageTitle,
-  loadingComponent,
 }: AdminPageWrapperProps) {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
   const { hasPermission, loading: permissionsLoading } = usePermissions({
     userRole: user?.role || '',
   });
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     // Wait for auth to finish loading
@@ -39,24 +40,40 @@ export function AdminPageWrapper({
       return;
     }
 
+    setIsChecking(false);
+
     // Check authentication
     if (!isAuthenticated || !user) {
-      router.push('/login');
+      // Use window.location only for initial auth redirect
+      if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {
+        window.location.href = '/login';
+      }
       return;
     }
 
+    // Get page config if not provided
+    const pageConfig = getPageConfig(pathname);
+    const finalRequiredPermissions = requiredPermissions.length > 0 
+      ? requiredPermissions 
+      : (pageConfig?.requiredPermissions || []);
+    const finalRequiredRoles = requiredRoles.length > 0 
+      ? requiredRoles 
+      : (pageConfig?.requiredRoles || []);
+
     // Check role permissions
-    if (requiredRoles.length > 0 && !requiredRoles.includes(user.role)) {
+    if (finalRequiredRoles.length > 0 && !finalRequiredRoles.includes(user.role)) {
+      // Use Next.js router for internal navigation (no refresh)
       router.push('/admin/dashboard');
       return;
     }
 
     // Check specific permissions
-    if (requiredPermissions.length > 0) {
-      const hasAllPermissions = requiredPermissions.every(permission =>
+    if (finalRequiredPermissions.length > 0) {
+      const hasAllPermissions = finalRequiredPermissions.every(permission =>
         hasPermission(permission)
       );
       if (!hasAllPermissions) {
+        // Use Next.js router for internal navigation (no refresh)
         router.push('/admin/dashboard');
         return;
       }
@@ -72,22 +89,20 @@ export function AdminPageWrapper({
     requiredPermissions,
     hasPermission,
     router,
+    pathname,
   ]);
 
-  // Show loading state
-  if (authLoading || permissionsLoading || !isAuthorized) {
+  // Show minimal loading state - only in content area
+  if (isChecking || !isAuthorized) {
     return (
-      loadingComponent || (
-        <div className='flex min-h-screen items-center justify-center'>
-          <div className='text-center'>
-            <div className='mb-4 h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600 mx-auto'></div>
-            <p className='text-gray-600'>جاري التحميل...</p>
-          </div>
+      <div className='flex items-center justify-center min-h-[400px]'>
+        <div className='text-center'>
+          <div className='mb-4 h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-blue-600 mx-auto'></div>
+          <p className='text-sm text-gray-600'>جاري التحقق من الصلاحيات...</p>
         </div>
-      )
+      </div>
     );
   }
 
   return <>{children}</>;
 }
-

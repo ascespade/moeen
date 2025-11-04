@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -68,7 +70,7 @@ interface ContactActivity {
   user_name: string;
 }
 
-const ContactsPage: React.FC = () => {
+function ContactsPageContent() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -651,6 +653,15 @@ const ContactsPage: React.FC = () => {
       </div>
     </>
   );
-};
+}
 
-export default ContactsPage;
+export default function ContactsPage() {
+  return (
+    <AdminPageWrapper
+      requiredPermissions={['crm:view']}
+      pageTitle='إدارة جهات الاتصال'
+    >
+      <ContactsPageContent />
+    </AdminPageWrapper>
+  );
+}

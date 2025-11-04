@@ -216,8 +216,8 @@ export default function AdminSidebar() {
     .filter((section) => section.items.length > 0);
 
   return (
-    <div className='flex h-screen w-64 flex-col border-r border-[var(--brand-border)] bg-[var(--panel)]'>
-      <div className='flex h-16 items-center justify-between border-b border-[var(--brand-border)] px-6'>
+    <div className='flex h-screen w-64 flex-col border-r border-[var(--brand-border)] bg-[var(--panel)] overflow-hidden'>
+      <div className='flex h-16 items-center justify-between border-b border-[var(--brand-border)] px-6 flex-shrink-0'>
         <div className='flex items-center gap-3'>
           <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--brand-primary)]/10'>
             <Building2 className='h-5 w-5 text-[var(--brand-primary)]' />
@@ -231,7 +231,7 @@ export default function AdminSidebar() {
         </div>
       </div>
 
-      <nav className='flex-1 overflow-y-auto px-4 py-6 space-y-6'>
+      <nav className='flex-1 overflow-y-auto overflow-x-hidden px-4 py-6 space-y-6' dir='rtl'>
         {filteredSections.map((section) => (
           <div key={section.id} className='space-y-2'>
             <h3 className='px-3 text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]'>

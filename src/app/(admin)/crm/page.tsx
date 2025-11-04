@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import {
   Card,
   CardContent,
@@ -167,7 +169,7 @@ interface Deal {
   priority: 'low' | 'medium' | 'high' | 'urgent';
 }
 
-export default function CRMPage() {
+function CRMPageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [activeTab, setActiveTab] = useState<'leads' | 'contacts' | 'deals'>(
@@ -989,5 +991,17 @@ export default function CRMPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function CRMPage() {
+  const pageConfig = ADMIN_PAGES.crmDashboard;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <CRMPageContent />
+    </AdminPageWrapper>
   );
 }

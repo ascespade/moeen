@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import {
   Card,
   CardContent,
@@ -171,7 +173,7 @@ interface Message {
   };
 }
 
-export default function ConversationsPage() {
+function ConversationsPageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -1082,5 +1084,17 @@ export default function ConversationsPage() {
         </Dialog>
       </div>
     </div>
+  );
+}
+
+export default function ConversationsPage() {
+  const pageConfig = ADMIN_PAGES.messages;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <ConversationsPageContent />
+    </AdminPageWrapper>
   );
 }
