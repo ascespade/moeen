@@ -266,13 +266,12 @@ div className='container-app py-8'>
                     <label className='flex items-start gap-3 cursor-pointer'>
                       <input type='checkbox'
                         checked={selectedGoals.includes(goal.id)}
-                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                        onChange={(e) => {
                           if (e.target.checked) {
                             setSelectedGoals([...selectedGoals, goal.id]);
                             setGoalProgress({
                               ...goalProgress,
-                              [goal.id]: goal.current_progress,
-                            });
+                              [goal.id]: goal.current_progress,} aria-label="checkbox" aria-invalid="true");
                           } else {
                             setSelectedGoals(
                               selectedGoals.filter(id => id !== goal.id)
@@ -303,11 +302,9 @@ div className='container-app py-8'>
                               value={
                                 goalProgress[goal.id] || goal.current_progress
                               }
-                              onChange={e = aria-label="range" aria-invalid="true">
-                                setGoalProgress({
+                              onChange={(e) => setGoalProgress({
                                   ...goalProgress,
-                                  [goal.id]: parseInt(e.target.value),
-                                })
+                                  [goal.id]: parseInt(e.target.value),} aria-label="range" aria-invalid="true")
                               }
                               className='w-full'
                             />
@@ -367,8 +364,9 @@ div className='container-app py-8'>
             </label>
             <div className='flex items-center gap-2 mb-4'>
               {[1, 2, 3, 4, 5].map(star => (
-                <buttonkey={star}
-                  onClick={() => { setSessionRating(star)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSessionRating(star) } }}
+                <button key={star}
+                  onClick={() => { setSessionRating(star) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSessionRating(star) } }}
+"> { setSessionRating(star) } }}
                   className={`text-3xl transition-all ${
                     star <= sessionRating
                       ? 'text-yellow-400 hover:scale-110'
@@ -406,9 +404,9 @@ div className='container-app py-8'>
 
           {/* Actions */}
           <div className='space-y-3'>
-            <buttononClick={handleSaveNotes} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSaveNotes } }}
+            <button onClick={handleSaveNotes} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSaveNotes } }}
               disabled={saving || !notes.trim()}
-              className='btn btn-default w-full py-4 text-lg disabled:opacity-50' aria-label="Button">
+              className='btn btn-default w-full py-4 text-lg disabled:opacity-50' aria-label="{saving ? (">
               {saving ? (
                 <span className='flex items-center justify-center gap-2'>
                   <span className='animate-spin'>⏳</span>
@@ -419,7 +417,8 @@ div className='container-app py-8'>
               )}
             </button>
 
-            <buttononClick={() => { router.back()} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { router.back() } }}
+            <button onClick={() => { router.back() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ router.back() } }}
+         "> { router.back() } }}
               className='btn btn-outline w-full'
             >
               إلغاء

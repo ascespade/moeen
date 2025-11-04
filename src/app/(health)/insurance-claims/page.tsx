@@ -165,7 +165,8 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
       <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
         <div className='text-center'>
           <p className='mb-4 text-lg font-semibold text-red-600'>{error}</p>
-          <buttononClick={() => { loadClaims()} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { loadClaims() } }}
+          <button onClick={() => { loadClaims() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ loadClaims() } }}
+          "> { loadClaims() } }}
             className='rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
           >
             إعادة المحاولة
@@ -199,7 +200,7 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <buttononClick={() => { setShowCreateModal(true)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
+              <button onClick={() => { setShowCreateModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(true) } }"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة مطالبة
@@ -249,7 +250,7 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
               </label>
               <input type='text'
                 value={searchTerm}
-                onChange={e = aria-label="text" aria-invalid="true"> setSearchTerm(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)} aria-label="text" aria-invalid="true"
                 placeholder='ابحث بالاسم أو رقم المطالبة...'
                 className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
@@ -273,7 +274,7 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
             </div>
 
             <div className='flex items-end'>
-              <buttonclassName='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
                 تطبيق الفلاتر
               </button>
             </div>
@@ -352,16 +353,16 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
                     </td>
                     <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                       <div className='flex gap-2'>
-                        <buttononClick={() => { setShowDetailsModal(claim.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(claim.id) } }}
+                        <button onClick={() => { setShowDetailsModal(claim.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowDetailsModal(claim.id"> { setShowDetailsModal(claim.id) } }}
                           className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
                         >
                           عرض
                         </button>
-                        <buttonclassName='text-gray-600 hover:text-gray-900' aria-label="تعديل">
+                        <button className='text-gray-600 hover:text-gray-900' aria-label="تعديل">
                           تعديل
                         </button>
                         {claim.status === 'pending' && (
-                          <buttonclassName='text-default-success hover:text-green-700' aria-label="موافقة">
+                          <button className='text-default-success hover:text-green-700' aria-label="موافقة">
                             موافقة
                           </button>
                         )}
@@ -396,7 +397,7 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة مطالبة تأمينية</h3>
-              <buttononClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+              <button onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -478,7 +479,7 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
 
               <div className='flex gap-3 pt-4'>
                 <button type='button'
-                  onClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+                  onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
@@ -499,7 +500,7 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
           <div className='w-full max-w-4xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>تفاصيل المطالبة</h3>
-              <buttononClick={() => { setShowDetailsModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(null) } }}
+              <button onClick={() => { setShowDetailsModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowDetailsModal(null) } "> { setShowDetailsModal(null) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -634,13 +635,13 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
             )}
 
             <div className='flex gap-3 pt-6'>
-              <buttononClick={() => { setShowDetailsModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(null) } }}
+              <button onClick={() => { setShowDetailsModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowDetailsModal(null) } "> { setShowDetailsModal(null) } }}
                 className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 إغلاق
               </button>
               {selectedClaim.status === 'pending' && (
-                <buttonclassName='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="مراجعة المطالبة">
+                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="مراجعة المطالبة">
                   مراجعة المطالبة
                 </button>
               )}

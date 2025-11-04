@@ -325,7 +325,7 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
             {/* Submit Button */}
             <button type='submit'
               disabled={isLoading}
-              className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50' aria-label="Button">
+              className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50' aria-label="{isLoading ? (">
               {isLoading ? (
                 <div className='flex items-center justify-center gap-2'>
                   <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent'></div>

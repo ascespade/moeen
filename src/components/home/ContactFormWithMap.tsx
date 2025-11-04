@@ -246,7 +246,7 @@ export default function ContactFormWithMap() {
 
               <button type='submit'
                 disabled={isSending}
-                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50 shadow-lg hover:shadow-xl hover:scale-105' aria-label="Button">
+                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50 shadow-lg hover:shadow-xl hover:scale-105' aria-label="{isSending ? (">
                 {isSending ? (
                   <>
                     <div className='h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent'></div>

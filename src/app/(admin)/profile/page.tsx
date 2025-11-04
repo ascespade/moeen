@@ -18,13 +18,15 @@ main className='p-6 grid gap-4 max-w-2xl'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-3 items-center'>
           <div className='text-sm'>الثيم</div>
           <div className='flex items-center gap-2'>
-            <buttonclassName={`h-9 rounded-md border px-3 ${theme === 'light' ? 'bg-gray-900 text-white' : ''}`}
-              onClick={() => { setTheme('light')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setTheme('light') } }}
+            <button className={`h-9 rounded-md border px-3 ${theme === 'light' ? 'bg-gray-900 text-white' : ''}`}
+              onClick={() => { setTheme('light') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setTheme('light') } }}
+     "> { setTheme('light') } }}
             >
               فاتح
             </button>
-            <buttonclassName={`h-9 rounded-md border px-3 ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}
-              onClick={() => { setTheme('dark')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setTheme('dark') } }}
+            <button className={`h-9 rounded-md border px-3 ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}
+              onClick={() => { setTheme('dark') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setTheme('dark') } }}
+      "> { setTheme('dark') } }}
             >
               داكن
             </button>
@@ -33,13 +35,15 @@ main className='p-6 grid gap-4 max-w-2xl'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-3 items-center'>
           <div className='text-sm'>اللغة</div>
           <div className='flex items-center gap-2'>
-            <buttonclassName={`h-9 rounded-md border px-3 ${lang === 'ar' ? 'bg-gray-900 text-white' : ''}`}
-              onClick={() => { setLang('ar')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setLang('ar') } }}
+            <button className={`h-9 rounded-md border px-3 ${lang === 'ar' ? 'bg-gray-900 text-white' : ''}`}
+              onClick={() => { setLang('ar') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setLang('ar') } }}
+         "> { setLang('ar') } }}
             >
               العربية
             </button>
-            <buttonclassName={`h-9 rounded-md border px-3 ${lang === 'en' ? 'bg-gray-900 text-white' : ''}`}
-              onClick={() => { setLang('en')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setLang('en') } }}
+            <button className={`h-9 rounded-md border px-3 ${lang === 'en' ? 'bg-gray-900 text-white' : ''}`}
+              onClick={() => { setLang('en') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setLang('en') } }}
+         "> { setLang('en') } }}
             >
               English
             </button>

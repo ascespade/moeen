@@ -173,7 +173,7 @@ ServiceItem>) => {
                   <div className='flex items-center gap-2'>
                     <input type='file'
                       accept='image/*'
-                      onChange={e = aria-label="file" aria-invalid="true"> handleFileChange(e, idx)}
+                      onChange={(e) => handleFileChange(e, idx)} aria-label="file" aria-invalid="true"
                     />
                     {s.image && s.image !== 'uploading' && (
                       // eslint-disable-next-line @next/next/no-img-element

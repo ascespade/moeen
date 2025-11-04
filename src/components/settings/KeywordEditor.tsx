@@ -29,9 +29,9 @@ export default function KeywordEditor({
           onChange={(e) => setValue(e.target.value)} aria-label="أدخل كلمة طوارئ"
           onKeyDown={e => e.key === 'Enter' && add()}
         />
-        <buttonclassName='h-10 rounded-md border px-3'
-          onClick={add} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); add } }}
-          aria-label='Button'
+        <button className='h-10 rounded-md border px-3'
+          onClick={add} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); add } }}
+          aria-label="إضافة"
         >
           إضافة
         </button>
@@ -43,8 +43,8 @@ export default function KeywordEditor({
             className='inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-800 px-3 h-8 text-sm'
           >
             {k}
-            <buttonclassName='text-amber-900'
-              onClick={() => { remove(k)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" remove(k) } }}
+            <button className='text-amber-900'
+              onClick={() => { remove(k) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="×" remove(k) } }}
               aria-label='حذف الكلمة'
             >
               ×

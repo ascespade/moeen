@@ -68,7 +68,7 @@ function NotificationItem({
         )}
         <p className="text-sm">{notification.message}</p>
       </div>
-      <buttononClick={onClose} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
+      <button onClick={onClose} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
         className="flex-shrink-0 p-1 rounded hover:bg-black/10 dark:hover:bg-white/10"
         aria-label="????? ???????"
       >

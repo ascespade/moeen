@@ -773,12 +773,11 @@ Badge variant={config.variant} className={config.className}>
                   <TableHead className='w-12'>
                     <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                      onChange={(e) => {
                         if (e.target.checked) {
                           setSelectedConversations(
                             filteredConversations.map(c => c.id)
-                          );
-                        } else {
+                          );} aria-label="checkbox" aria-invalid="true" else {
                           setSelectedConversations([]);
                         }
                       }}
@@ -806,13 +805,12 @@ Badge variant={config.variant} className={config.className}>
                         checked={selectedConversations.includes(
                           conversation.id
                         )}
-                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                        onChange={(e) => {
                           if (e.target.checked) {
                             setSelectedConversations([
                               ...selectedConversations,
                               conversation.id,
-                            ]);
-                          } else {
+                            ]);} aria-label="checkbox" aria-invalid="true" else {
                             setSelectedConversations(
                               selectedConversations.filter(
                                 id => id !== conversation.id

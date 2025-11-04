@@ -80,7 +80,7 @@ string>('all');
         <inputclassName='h-10 rounded-md border px-3 w-full md:w-64'
           placeholder='بحث'
           value={q}
-          onChange={e = aria-label="بحث" aria-invalid="true"> setQ(e.target.value)}
+          onChange={(e) => setQ(e.target.value)} aria-label="بحث" aria-invalid="true"
         />
       </div>
 

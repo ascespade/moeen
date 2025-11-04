@@ -161,18 +161,20 @@ div className='min-h-screen bg-[var(--default-surface)]'>
             </div>
             <div className='flex items-center gap-3'>
               <div className='flex rounded-lg border border-gray-300'>
-                <buttononClick={() => { setViewMode('table')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('table') } }}
+                <button onClick={() => { setViewMode('table') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setViewMode('table') } }}
+  "> { setViewMode('table') } }}
                   className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   جدول
                 </button>
-                <buttononClick={() => { setViewMode('kanban')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('kanban') } }}
+                <button onClick={() => { setViewMode('kanban') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setViewMode('kanban') } }}
+ "> { setViewMode('kanban') } }}
                   className={`px-3 py-2 text-sm ${viewMode === 'kanban' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   كانبان
                 </button>
               </div>
-              <buttononClick={() => { setShowCreateModal(true)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
+              <button onClick={() => { setShowCreateModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(true) } }"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة عميل محتمل
@@ -256,7 +258,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </select>
             </div>
             <div className='flex items-end'>
-              <buttonclassName='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
                 تطبيق الفلاتر
               </button>
             </div>
@@ -348,10 +350,10 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                       </td>
                       <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                         <div className='flex gap-2'>
-                          <buttonclassName='text-[var(--default-default)] hover:text-[var(--default-default-hover)]' aria-label="عرض">
+                          <button className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]' aria-label="عرض">
                             عرض
                           </button>
-                          <buttonclassName='text-gray-600 hover:text-gray-900' aria-label="تعديل">
+                          <button className='text-gray-600 hover:text-gray-900' aria-label="تعديل">
                             تعديل
                           </button>
                         </div>
@@ -415,10 +417,10 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                           </div>
                         </div>
                         <div className='mt-3 flex gap-1'>
-                          <buttonclassName='flex-1 rounded bg-[var(--default-default)] px-2 py-1 text-xs text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="عرض">
+                          <button className='flex-1 rounded bg-[var(--default-default)] px-2 py-1 text-xs text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="عرض">
                             عرض
                           </button>
-                          <buttonclassName='rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-surface' aria-label="تحريك">
+                          <button className='rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-surface' aria-label="تحريك">
                             تحريك
                           </button>
                         </div>
@@ -450,7 +452,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة عميل محتمل جديد</h3>
-              <buttononClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+              <button onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -532,7 +534,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
               <div className='flex gap-3 pt-4'>
                 <button type='button'
-                  onClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+                  onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء

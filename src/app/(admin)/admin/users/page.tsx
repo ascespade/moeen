@@ -553,10 +553,9 @@ Badge variant={config.variant} className={config.className}>
                       <TableHead className='w-12'>
                         <input type='checkbox'
                           className='rounded border-gray-300'
-                          onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                          onChange={(e) => {
                             if (e.target.checked) {
-                              setSelectedUsers(filteredUsers.map(u => u.id));
-                            } else {
+                              setSelectedUsers(filteredUsers.map(u => u.id));} aria-label="checkbox" aria-invalid="true" else {
                               setSelectedUsers([]);
                             }
                           }}
@@ -578,10 +577,9 @@ Badge variant={config.variant} className={config.className}>
                           <input type='checkbox'
                             className='rounded border-gray-300'
                             checked={selectedUsers.includes(user.id)}
-                            onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                            onChange={(e) => {
                               if (e.target.checked) {
-                                setSelectedUsers([...selectedUsers, user.id]);
-                              } else {
+                                setSelectedUsers([...selectedUsers, user.id]);} aria-label="checkbox" aria-invalid="true" else {
                                 setSelectedUsers(
                                   selectedUsers.filter(id => id !== user.id)
                                 );

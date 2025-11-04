@@ -586,10 +586,9 @@ Badge variant={config.variant} className={config.className}>
                   <TableHead className='w-12'>
                     <input type='checkbox'
                       className='rounded border-[var(--brand-border)]'
-                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                      onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedAppointments(appointments.map(a => a.id));
-                        } else {
+                          setSelectedAppointments(appointments.map(a => a.id));} aria-label="checkbox" aria-invalid="true" else {
                           setSelectedAppointments([]);
                         }
                       }}
@@ -611,13 +610,12 @@ Badge variant={config.variant} className={config.className}>
                       <input type='checkbox'
                         className='rounded border-[var(--brand-border)]'
                         checked={selectedAppointments.includes(appointment.id)}
-                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                        onChange={(e) => {
                           if (e.target.checked) {
                             setSelectedAppointments([
                               ...selectedAppointments,
                               appointment.id,
-                            ]);
-                          } else {
+                            ]);} aria-label="checkbox" aria-invalid="true" else {
                             setSelectedAppointments(
                               selectedAppointments.filter(
                                 id => id !== appointment.id

@@ -281,7 +281,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
         <div className='text-center'>
           <div className='text-default-error text-xl mb-4'>⚠️</div>
           <p className='text-gray-600'>{error}</p>
-          <buttononClick={() => { window.location.reload()} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
+          <button onClick={() => { window.location.reload() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ window.location.reload() } }"> { window.location.reload() } }}
             className='mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
           >
             إعادة المحاولة
@@ -325,7 +325,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
               <input type='text'
                 placeholder='البحث بالاسم، الهاتف، أو البريد الإلكتروني...'
                 value={searchTerm}
-                onChange={e = aria-label="البحث بالاسم، الهاتف، أو البريد الإلكتروني..." aria-invalid="true"> setSearchTerm(e.target.value)}
+                onChange={(e) => setSearchTerm(e.target.value)} aria-label="البحث بالاسم، الهاتف، أو البريد الإلكتروني..." aria-invalid="true"
                 className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-default-default focus:border-transparent'
               />
             </div>

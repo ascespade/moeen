@@ -676,8 +676,8 @@ Mail className='h-3 w-3' />,
               <CardContent className='p-0'>
                 <div className='space-y-1'>
                   {folders.map(folder => (
-                    <buttonkey={folder.id}
-                      onClick={() => { setSelectedFolder(folder.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedFolder(folder.id) } }}
+                    <button key={folder.id}
+                      onClick={() => { setSelectedFolder(folder.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedFolder(folder.id)"> { setSelectedFolder(folder.id) } }}
                       className={`w-full flex items-center justify-between p-3 text-right hover:bg-muted transition-colors ${
                         selectedFolder === folder.id ? 'bg-muted' : ''
                       }`}
@@ -851,12 +851,11 @@ Mail className='h-3 w-3' />,
                       <TableHead className='w-12'>
                         <input type='checkbox'
                           className='rounded border-gray-300'
-                          onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                          onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedMessages(
                                 filteredMessages.map(m => m.id)
-                              );
-                            } else {
+                              );} aria-label="checkbox" aria-invalid="true" else {
                               setSelectedMessages([]);
                             }
                           }}
@@ -882,13 +881,12 @@ Mail className='h-3 w-3' />,
                           <input type='checkbox'
                             className='rounded border-gray-300'
                             checked={selectedMessages.includes(message.id)}
-                            onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                            onChange={(e) => {
                               if (e.target.checked) {
                                 setSelectedMessages([
                                   ...selectedMessages,
                                   message.id,
-                                ]);
-                              } else {
+                                ]);} aria-label="checkbox" aria-invalid="true" else {
                                 setSelectedMessages(
                                   selectedMessages.filter(
                                     id => id !== message.id

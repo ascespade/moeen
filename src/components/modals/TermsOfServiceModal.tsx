@@ -41,12 +41,12 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
           <h2 className='text-2xl font-bold text-[var(--text-primary)]'>
             شروط الاستخدام
           </h2>
-          <buttononClick={onClose} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
+          <button onClick={onClose} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
             className='rounded-full p-2 transition-colors'
             style={{
               backgroundColor: 'transparent',
             }}
-            onMouseEnter={e aria-label="Button" {
+            onMouseEnter={e aria-label="??" {
               e.currentTarget.style.backgroundColor =
                 'var(--brand-surface, rgba(0,0,0,0.05))';
             }}

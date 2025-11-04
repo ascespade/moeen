@@ -189,7 +189,7 @@ div className='container-app py-8'>
           <p className='text-gray-600 dark:text-gray-400 mb-6'>
             يجب على الأخصائي إنشاء خطة IEP للطفل
           </p>
-          <buttonclassName='btn btn-default' aria-label="إنشاء خطة IEP جديدة">إنشاء خطة IEP جديدة</button>
+          <button className='btn btn-default' aria-label="إنشاء خطة IEP جديدة">إنشاء خطة IEP جديدة</button>
         </div>
       ) : (
         <>
@@ -248,7 +248,7 @@ div className='container-app py-8'>
               <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
                 الأهداف
               </h2>
-              <buttonclassName='btn btn-outline' aria-label="+ إضافة هدف جديد">+ إضافة هدف جديد</button>
+              <button className='btn btn-outline' aria-label="+ إضافة هدف جديد">+ إضافة هدف جديد</button>
             </div>
 
             {goals.length === 0 ? (

@@ -139,7 +139,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <buttononClick={() => { setShowCreateModal(true)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
+              <button onClick={() => { setShowCreateModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(true) } }"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إنشاء تدفق
@@ -232,7 +232,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
             </div>
 
             <div className='flex items-end'>
-              <buttonclassName='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
                 تطبيق الفلاتر
               </button>
             </div>
@@ -299,10 +299,10 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 >
                   فتح المحرر
                 </Link>
-                <buttonclassName='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="نسخ">
+                <button className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="نسخ">
                   نسخ
                 </button>
-                <buttonclassName='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="أرشفة">
+                <button className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="أرشفة">
                   أرشفة
                 </button>
               </div>
@@ -332,7 +332,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-md rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إنشاء تدفق جديد</h3>
-              <buttononClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+              <button onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -385,7 +385,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
 
               <div className='flex gap-3 pt-4'>
                 <button type='button'
-                  onClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+                  onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء

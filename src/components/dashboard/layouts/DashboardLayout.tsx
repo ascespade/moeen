@@ -97,12 +97,14 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                   )}
                 >
                   <Search className='absolute left-3 w-4 h-4 text-neutral-400' />
-                  <input type='text'
+                  <input
+                    type='text'
                     placeholder='البحث في الداشبورد...'
                     value={searchQuery}
-                    onChange={e = aria-label="البحث في الداشبورد..." aria-invalid="true"> setSearchQuery(e.target.value)}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     onFocus={() => setIsSearchFocused(true)}
                     onBlur={() => setIsSearchFocused(false)}
+                    aria-label='البحث في الداشبورد'
                     className='w-full pl-10 pr-4 py-2 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg focus:outline-none focus:ring-0 text-sm'
                   />
                 </div>
@@ -248,10 +250,8 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           <nav className='flex-1 space-y-1 p-4' role="navigation" aria-label="القائمة">
             {navigation.map(item => (
               <div key={item.id}>
-                <buttononClick={() => {
-                    if (item.href) {
-                      // Handle navigation
-                    } aria-label="Button"
+                <button onClick={() => { if (item.href) {
+                      // Handle navigation }} aria-label="??"
                   }}
                   className={cn(
                     'w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors',
@@ -277,10 +277,8 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                 {item.children && !collapsed && (
                   <div className='mt-1 ml-8 space-y-1'>
                     {item.children.map(child => (
-                      <buttonkey={child.id}
-                        onClick={() => {
-                          // Handle navigation
-                        } aria-label="Button"}
+                      <button key={child.id}
+                        onClick={() => { // Handle navigation }} aria-label="??"}
                         className={cn(
                           'w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors',
                           activeItem === child.id

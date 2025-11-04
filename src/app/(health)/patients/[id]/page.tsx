@@ -179,7 +179,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
           <p className='text-red-600 text-lg mb-4'>
             {error || 'لم يتم العثور على المريض'}
           </p>
-          <buttononClick={() => { window.location.reload()} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
+          <button onClick={() => { window.location.reload() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ window.location.reload() } }"> { window.location.reload() } }}
             className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
@@ -213,12 +213,13 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <buttononClick={() => { setShowEditModal(true)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(true) } }}
+              <button onClick={() => { setShowEditModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowEditModal(true) } }}
+"> { setShowEditModal(true) } }}
                 className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 تعديل البيانات
               </button>
-              <buttonclassName='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حجز موعد">
+              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حجز موعد">
                 حجز موعد
               </button>
             </div>
@@ -270,8 +271,8 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
                 { id: 'relatives', label: 'الأقارب' },
                 { id: 'claims', label: 'المطالبات' },
               ].map(tab => (
-                <buttonkey={tab.id}
-                  onClick={() => { setActiveTab(tab.id as any)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab(tab.id as any) } }}
+                <button key={tab.id}
+                  onClick={() => { setActiveTab(tab.id as any) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab(tab.id as any) "> { setActiveTab(tab.id as any) } }}
                   className={`border-b-2 px-1 py-4 text-sm font-medium ${
                     activeTab === tab.id
                       ? 'border-[var(--default-default)] text-[var(--default-default)]'
@@ -426,7 +427,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>سجل الجلسات</h3>
-                  <buttonclassName='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة جلسة">
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة جلسة">
                     إضافة جلسة
                   </button>
                 </div>
@@ -469,7 +470,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>الوثائق</h3>
-                  <buttonclassName='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="رفع وثيقة">
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="رفع وثيقة">
                     رفع وثيقة
                   </button>
                 </div>
@@ -495,10 +496,10 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
                       <div className='flex items-center justify-between text-xs text-gray-500'>
                         <span>{doc.uploadDate}</span>
                         <div className='flex gap-2'>
-                          <buttonclassName='text-[var(--default-default)] hover:underline' aria-label="عرض">
+                          <button className='text-[var(--default-default)] hover:underline' aria-label="عرض">
                             عرض
                           </button>
-                          <buttonclassName='text-gray-500 hover:underline' aria-label="تحميل">
+                          <button className='text-gray-500 hover:underline' aria-label="تحميل">
                             تحميل
                           </button>
                         </div>
@@ -514,7 +515,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>الأقارب</h3>
-                  <buttonclassName='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة قريب">
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة قريب">
                     إضافة قريب
                   </button>
                 </div>
@@ -532,7 +533,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>المطالبات التأمينية</h3>
-                  <buttonclassName='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة مطالبة">
+                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة مطالبة">
                     إضافة مطالبة
                   </button>
                 </div>
@@ -584,7 +585,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>تعديل بيانات المريض</h3>
-              <buttononClick={() => { setShowEditModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(false) } }}
+              <button onClick={() => { setShowEditModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowEditModal(false) } }}"> { setShowEditModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -675,7 +676,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
 
               <div className='flex gap-3 pt-4'>
                 <button type='button'
-                  onClick={() => { setShowEditModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(false) } }}
+                  onClick={() => { setShowEditModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowEditModal(false) } }}"> { setShowEditModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء

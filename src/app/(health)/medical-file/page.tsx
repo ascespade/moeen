@@ -245,7 +245,7 @@ Badge variant={config.color} className='text-xs'>
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
-          <buttononClick={() => { window.location.reload()} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
+          <button onClick={() => { window.location.reload() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ window.location.reload() } }"> { window.location.reload() } }}
             className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة

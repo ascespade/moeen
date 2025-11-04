@@ -287,7 +287,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
               <input type='text'
                 placeholder='البحث في الإشعارات...'
                 value={searchQuery}
-                onChange={e = aria-label="البحث في الإشعارات..." aria-invalid="true"> setSearchQuery(e.target.value)}
+                onChange={(e) => setSearchQuery(e.target.value)} aria-label="البحث في الإشعارات..." aria-invalid="true"
                 className='w-full pl-10 pr-4 py-2 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm'
               />
             </div>

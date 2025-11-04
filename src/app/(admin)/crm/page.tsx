@@ -786,12 +786,11 @@ Badge variant={config.variant} className={config.className}>
                   <TableHead className='w-12'>
                     <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                      onChange={(e) => {
                         if (e.target.checked) {
                           setSelectedItems(
                             filteredData.map((item: any) => item.id)
-                          );
-                        } else {
+                          );} aria-label="checkbox" aria-invalid="true" else {
                           setSelectedItems([]);
                         }
                       }}
@@ -814,10 +813,9 @@ Badge variant={config.variant} className={config.className}>
                       <input type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedItems.includes(item.id)}
-                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                        onChange={(e) => {
                           if (e.target.checked) {
-                            setSelectedItems([...selectedItems, item.id]);
-                          } else {
+                            setSelectedItems([...selectedItems, item.id]);} aria-label="checkbox" aria-invalid="true" else {
                             setSelectedItems(
                               selectedItems.filter(id => id !== item.id)
                             );

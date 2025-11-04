@@ -51,11 +51,11 @@ export default function HeaderSimple() {
           <div className='flex items-center gap-2'>
             {/* Theme Toggle */}
             <div className='relative'>
-              <buttonclassName='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
-                onClick={(e) aria-label="Button" {
+              <button className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
+                onClick={(e) aria-label="??" {
                   e.stopPropagation();
                   setShowThemeDropdown(!showThemeDropdown);
-                } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); (e) aria-label="Button" {
+                } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); (e) aria-label="??" {
                   e.stopPropagation();
                   setShowThemeDropdown(!showThemeDropdown);
                  } }}}
@@ -73,22 +73,20 @@ export default function HeaderSimple() {
                   className='absolute top-full right-0 z-50 min-w-36 rounded-lg border border-gray-200 bg-white p-1 shadow-md dark:border-gray-700 dark:bg-gray-900'
                   tabIndex={0} onClick={e => e.stopPropagation()}
                 >
-                  <buttonclassName='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
+                  <button className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
                     onClick={() => { {
                       setTheme('light');
-                      setShowThemeDropdown(false);
-                    } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
+                      setShowThemeDropdown(false); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" {
                       setTheme('light');
                       setShowThemeDropdown(false);
                      } }}}
                   >
                     وضع نهاري
                   </button>
-                  <buttonclassName='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
+                  <button className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
                     onClick={() => { {
                       setTheme('dark');
-                      setShowThemeDropdown(false);
-                    } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
+                      setShowThemeDropdown(false); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" {
                       setTheme('dark');
                       setShowThemeDropdown(false);
                      } }}}
@@ -100,19 +98,19 @@ export default function HeaderSimple() {
             </div>
 
             {/* Direction Toggle */}
-            <buttonclassName='h-9 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
-              onClick={() => { setDir(dir === 'rtl' ? 'ltr' : 'rtl')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setDir(dir === 'rtl' ? 'ltr' : 'rtl') } }}
+            <button className='h-9 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
+              onClick={() => { setDir(dir === 'rtl' ? 'ltr' : 'rtl') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="{dir === 'rtl' ? 'RTL' : 'LT" setDir(dir === 'rtl' ? 'ltr' : 'rtl') } }}
             >
               {dir === 'rtl' ? 'RTL' : 'LTR'}
             </button>
 
             {/* Language Dropdown */}
             <div className='relative'>
-              <buttonclassName='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
-                onClick={(e) aria-label="Button" {
+              <button className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
+                onClick={(e) aria-label="??" {
                   e.stopPropagation();
                   setShowLangDropdown(!showLangDropdown);
-                } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); (e) aria-label="Button" {
+                } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); (e) aria-label="??" {
                   e.stopPropagation();
                   setShowLangDropdown(!showLangDropdown);
                  } }}}
@@ -126,13 +124,13 @@ export default function HeaderSimple() {
                   className='absolute top-full right-0 z-50 min-w-32 rounded-lg border border-gray-200 bg-white p-1 shadow-md dark:border-gray-700 dark:bg-gray-900'
                   tabIndex={0} onClick={e => e.stopPropagation()}
                 >
-                  <buttonclassName='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
-                    onClick={() => { setShowLangDropdown(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowLangDropdown(false) } }}
+                  <button className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
+                    onClick={() => { setShowLangDropdown(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="العربية" setShowLangDropdown(false) } }}
                   >
                     العربية
                   </button>
-                  <buttonclassName='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
-                    onClick={() => { setShowLangDropdown(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowLangDropdown(false) } }}
+                  <button className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
+                    onClick={() => { setShowLangDropdown(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="English" setShowLangDropdown(false) } }}
                   >
                     English
                   </button>

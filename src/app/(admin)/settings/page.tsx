@@ -57,8 +57,8 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 { id: 'notifications', label: 'الإشعارات', icon: '🔔' },
                 { id: 'templates', label: 'القوالب', icon: '📝' },
               ].map(tab => (
-                <buttonkey={tab.id}
-                  onClick={() => { setActiveTab(tab.id as any)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab(tab.id as any) } }}
+                <button key={tab.id}
+                  onClick={() => { setActiveTab(tab.id as any) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab(tab.id as any) "> { setActiveTab(tab.id as any) } }}
                   className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-right transition-colors ${
                     activeTab === tab.id
                       ? 'bg-[var(--default-default)] text-white'
@@ -153,7 +153,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                           defaultValue='AIzaSyB...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         / aria-label="password" aria-invalid="true">
-                        <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
+                        <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
                       </div>
@@ -167,7 +167,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                           defaultValue='sk-...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         / aria-label="password" aria-invalid="true">
-                        <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
+                        <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
                       </div>
@@ -181,7 +181,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                           defaultValue='EAA...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         / aria-label="password" aria-invalid="true">
-                        <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
+                        <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
                       </div>
@@ -242,7 +242,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                                 ? 'غير متصل'
                                 : 'خطأ'}
                           </span>
-                          <buttonclassName='rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface' aria-label="Button">
+                          <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface' aria-label="{integration.status === 'conne">
                             {integration.status === 'connected'
                               ? 'إعدادات'
                               : 'اتصال'}
@@ -354,7 +354,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               )}
 
               <div className='mt-8 flex justify-end border-t border-gray-200 pt-6 dark:border-gray-700'>
-                <buttonclassName='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ التغييرات">
+                <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ التغييرات">
                   حفظ التغييرات
                 </button>
               </div>

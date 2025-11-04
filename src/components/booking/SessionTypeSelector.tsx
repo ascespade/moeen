@@ -63,8 +63,16 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
       {sessionTypes.map(type => (
-        <buttonkey={type.id}
-          onClick={() => { onSelect(type)} aria-label="Button"
+        <button
+          key={type.id}
+          onClick={() => onSelect(type)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              onSelect(type);
+            }
+          }}
+          aria-label={`اختيار ${type.name_ar}`}
           className={`card p-6 text-right transition-all hover:shadow-lg ${
             selectedId === type.id
               ? 'ring-2 ring-[var(--default-default)] bg-[var(--default-default)]/5'

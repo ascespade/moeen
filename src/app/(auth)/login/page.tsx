@@ -212,7 +212,8 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
               </h2>
               <div className='grid grid-cols-2 gap-2' role='group' aria-label='أزرار تسجيل الدخول السريع'>
                 <button type='button'
-                  onClick={() => handleQuickLogin('admin@test.com', 'Admin123!', 'admin')} aria-label="Button"
+                  onClick={() => handleQuickLogin('admin@test.com', 'Admin123!', 'admin')} aria-label="{
+                    if (e.ke"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
@@ -227,7 +228,8 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                   👑 Admin
                 </button>
                 <button type='button'
-                  onClick={() => handleQuickLogin('doctor@test.com', 'Doctor123!', 'doctor')} aria-label="Button"
+                  onClick={() => handleQuickLogin('doctor@test.com', 'Doctor123!', 'doctor')} aria-label="{
+                    if (e.ke"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
@@ -242,7 +244,8 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                   🩺 Doctor
                 </button>
                 <button type='button'
-                  onClick={() => handleQuickLogin('patient@test.com', 'Patient123!', 'patient')} aria-label="Button"
+                  onClick={() => handleQuickLogin('patient@test.com', 'Patient123!', 'patient')} aria-label="{
+                    if (e.ke"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
@@ -257,7 +260,8 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                   👤 Patient
                 </button>
                 <button type='button'
-                  onClick={() => handleQuickLogin('staff@test.com', 'Staff123!', 'staff')} aria-label="Button"
+                  onClick={() => handleQuickLogin('staff@test.com', 'Staff123!', 'staff')} aria-label="{
+                    if (e.ke"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();

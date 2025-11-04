@@ -174,7 +174,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <buttononClick={() => { setShowCreateModal(true)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
+              <button onClick={() => { setShowCreateModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(true) } }"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إنشاء قالب
@@ -288,7 +288,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
             </div>
 
             <div className='flex items-end'>
-              <buttonclassName='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
+              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
                 تطبيق الفلاتر
               </button>
             </div>
@@ -369,7 +369,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                     </td>
                     <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                       <div className='flex gap-2'>
-                        <buttononClick={() => { setShowPreviewModal(template)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowPreviewModal(template) } }}
+                        <button onClick={() => { setShowPreviewModal(template) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPreviewModal(template"> { setShowPreviewModal(template) } }}
                           className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
                         >
                           معاينة
@@ -380,7 +380,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                         >
                           تعديل
                         </Link>
-                        <buttonclassName='text-default-success hover:text-green-700' aria-label="نسخ">
+                        <button className='text-default-success hover:text-green-700' aria-label="نسخ">
                           نسخ
                         </button>
                       </div>
@@ -414,7 +414,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إنشاء قالب جديد</h3>
-              <buttononClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+              <button onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -491,7 +491,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
 
               <div className='flex gap-3 pt-4'>
                 <button type='button'
-                  onClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+                  onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
@@ -512,7 +512,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>معاينة القالب</h3>
-              <buttononClick={() => { setShowPreviewModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowPreviewModal(null) } }}
+              <button onClick={() => { setShowPreviewModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPreviewModal(null) } "> { setShowPreviewModal(null) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -549,12 +549,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <buttononClick={() => { setShowPreviewModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowPreviewModal(null) } }}
+                <button onClick={() => { setShowPreviewModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPreviewModal(null) } "> { setShowPreviewModal(null) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إغلاق
                 </button>
-                <buttonclassName='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="استخدام القالب">
+                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="استخدام القالب">
                   استخدام القالب
                 </button>
               </div>

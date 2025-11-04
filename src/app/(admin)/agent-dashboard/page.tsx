@@ -250,7 +250,7 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
 
         {/* Refresh Button */}
         <div className='mt-6 text-center'>
-          <buttononClick={fetchStatus} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fetchStatus } }}
+          <button onClick={fetchStatus} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fetchStatus } }}
             className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-default-default hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-default-default' aria-label="🔄 Refresh Status">
             🔄 Refresh Status
           </button>

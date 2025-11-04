@@ -325,7 +325,7 @@ export default function Header() {
                 <Search className='absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
                 <input type='search'
                   value={searchQuery}
-                  onChange={e = aria-label="search" aria-invalid="true"> setSearchQuery(e.target.value)}
+                  onChange={(e) => setSearchQuery(e.target.value)} aria-label="search" aria-invalid="true"
                   className='w-full h-10 pr-10 pl-4 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-all'
                   placeholder={
                     t(I18N_KEYS.COMMON.SEARCH_PLACEHOLDER) || '????...'
@@ -370,8 +370,16 @@ export default function Header() {
             {/* AI Features Indicator */}
             {aiFeaturesEnabled && (
               <div className='relative' data-dropdown>
-                <buttononClick={() => { setShowAIFeatures(!showAIFeatures)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowAIFeatures(!showAIFeatures) } }}
+                <button
+                  onClick={() => setShowAIFeatures(!showAIFeatures)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowAIFeatures(!showAIFeatures);
+                    }
+                  }}
                   className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
+                  aria-label='?????? ?????? ?????????'
                   aria-haspopup='menu'
                   aria-expanded={showAIFeatures}
                 >
@@ -420,8 +428,16 @@ export default function Header() {
 
             {/* Notifications */}
             <div className='relative' data-dropdown>
-              <buttononClick={() => { setShowNotifDropdown(!showNotifDropdown)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowNotifDropdown(!showNotifDropdown) } }}
+              <button
+                onClick={() => setShowNotifDropdown(!showNotifDropdown)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowNotifDropdown(!showNotifDropdown);
+                  }
+                }}
                 className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
+                aria-label='?????????'
                 aria-haspopup='menu'
                 aria-expanded={showNotifDropdown}
               >
@@ -451,14 +467,15 @@ export default function Header() {
                         )}
                       </div>
                       {unreadCount > 0 && notifications.length > 0 && (
-                        <button onClick={async () aria-label="Button" {
+                        <button
+                          onClick={async () => {
                             try {
                               // Mark all as read
                               await Promise.all(
                                 notifications
                                   .filter((n: unknown) => !n.is_read)
                                   .map((n: unknown) =>
-                                    fetch(`/api/notifications/${n.id} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); async () aria-label="Button" {
+                                    fetch(`/api/notifications/${n.id }} aria-label="??" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); async () aria-label="??" {
                             try {
                               // Mark all as read
                               await Promise.all() => !n.is_read)
@@ -633,8 +650,16 @@ export default function Header() {
 
             {/* User Menu */}
             <div className='relative' data-dropdown>
-              <buttononClick={() => { setShowUserDropdown(!showUserDropdown)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowUserDropdown(!showUserDropdown) } }}
+              <button
+                onClick={() => setShowUserDropdown(!showUserDropdown)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowUserDropdown(!showUserDropdown);
+                  }
+                }}
                 className='flex items-center gap-2 h-10 px-2 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
+                aria-label='????? ????????'
                 aria-haspopup='menu'
                 aria-expanded={showUserDropdown}
               >
@@ -700,9 +725,17 @@ export default function Header() {
 
                   {/* Logout */}
                   <div className='border-t border-gray-200 dark:border-gray-700 p-2'>
-                    <buttononClick={handleLogout} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleLogout } }}
+                    <button
+                      onClick={handleLogout}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleLogout();
+                        }
+                      }}
                       className='w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-medium'
-                     aria-label="{t(I18N_KEYS.HEADER.LOGOUT) || '????? ??????'}">
+                      aria-label={t(I18N_KEYS.HEADER.LOGOUT) || '????? ??????'}
+                    >
                       <LogOut className='w-4 h-4' />
                       <span>
                         {t(I18N_KEYS.HEADER.LOGOUT) || '????? ??????'}

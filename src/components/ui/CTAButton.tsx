@@ -36,9 +36,9 @@ export default function CTAButton({
   };
 
   return (
-    <buttonclassName={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
-      onClick={onClick} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick } }}
-      aria-label='Button'
+    <button className={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+      onClick={onClick} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick } }}
+      aria-label="{children}"
     >
       {children}
     </button>

@@ -86,15 +86,21 @@ export function ThemeSwitch({
         <Sun
           className={`${iconSizes[size]} ${isLight ? 'text-[var(--brand-primary)]' : 'text-[var(--text-tertiary)]'}`}
         />
-        <buttononClick={() => { {
+        <button
+          onClick={() => {
             if (theme === 'light') setTheme('dark');
             else if (theme === 'dark') setTheme('system');
             else setTheme('light');
-          } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
-            if (theme === 'light') setTheme('dark');
-            else if (theme === 'dark') setTheme('system');
-            else setTheme('light');
-           } }}}
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              if (theme === 'light') setTheme('dark');
+              else if (theme === 'dark') setTheme('system');
+              else setTheme('light');
+            }
+          }}
+          aria-label='تبديل الثيم'
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${
             isDark ? 'bg-[var(--brand-primary)]' : 'bg-[var(--brand-border)]'
           }`}
@@ -140,11 +146,10 @@ export function ThemeSwitch({
                 const isSelected = theme === themeOption.value;
 
                 return (
-                  <buttonkey={themeOption.value}
+                  <button key={themeOption.value}
                     onClick={() => { {
                       setTheme(themeOption.value);
-                      setIsOpen(false);
-                    } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
+                      setIsOpen(false); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" {
                       setTheme(themeOption.value);
                       setIsOpen(false);
                      } }}}

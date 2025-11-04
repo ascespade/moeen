@@ -835,10 +835,9 @@ Badge variant={config.variant} className={config.className}>
                   <TableHead className='w-12'>
                     <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                      onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedMetrics(filteredMetrics.map(m => m.id));
-                        } else {
+                          setSelectedMetrics(filteredMetrics.map(m => m.id));} aria-label="checkbox" aria-invalid="true" else {
                           setSelectedMetrics([]);
                         }
                       }}
@@ -861,10 +860,9 @@ Badge variant={config.variant} className={config.className}>
                       <input type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedMetrics.includes(metric.id)}
-                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                        onChange={(e) => {
                           if (e.target.checked) {
-                            setSelectedMetrics([...selectedMetrics, metric.id]);
-                          } else {
+                            setSelectedMetrics([...selectedMetrics, metric.id]);} aria-label="checkbox" aria-invalid="true" else {
                             setSelectedMetrics(
                               selectedMetrics.filter(id => id !== metric.id)
                             );

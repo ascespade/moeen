@@ -331,7 +331,8 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
       {/* Tabs */}
       <div className='mb-6'>
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
-          <buttononClick={() => { setActiveTab('goals')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('goals') } }}
+          <button onClick={() => { setActiveTab('goals') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab('goals') } }}
+ "> { setActiveTab('goals') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'goals'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -340,7 +341,7 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             الأهداف والمراحل
           </button>
-          <buttononClick={() => { setActiveTab('assessments')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('assessments') } }}
+          <button onClick={() => { setActiveTab('assessments') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab('assessments') "> { setActiveTab('assessments') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'assessments'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -349,7 +350,7 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             التقييمات
           </button>
-          <buttononClick={() => { setActiveTab('reports')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('reports') } }}
+          <button onClick={() => { setActiveTab('reports') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab('reports') } }}"> { setActiveTab('reports') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'reports'
                 ? 'bg-white text-gray-900 shadow-sm'

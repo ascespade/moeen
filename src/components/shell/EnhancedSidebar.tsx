@@ -109,15 +109,16 @@ export default function EnhancedSidebar() {
             لوحة التحكم
           </h2>
         )}
-        <buttononClick={() => setCollapsed(!collapsed)} aria-label="Button"
+        <button
+          onClick={() => setCollapsed(!collapsed)}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               setCollapsed(!collapsed);
             }
           }}
+          aria-label={collapsed ? 'إظهار القائمة' : 'إخفاء القائمة'}
           className='p-2 rounded hover:bg-[var(--background-hover)]'
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? '→' : '←'}
         </button>
@@ -204,8 +205,9 @@ export default function EnhancedSidebar() {
 
       {/* Logout */}
       <div className='p-4 border-t border-[var(--border)]'>
-        <buttononClick={handleLogout}
-          onKeyDown={(e) = aria-label="Button"> {
+        <button onClick={handleLogout}
+          onKeyDown={(e) = aria-label="{
+            if (e.key === 'E"> {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               handleLogout();

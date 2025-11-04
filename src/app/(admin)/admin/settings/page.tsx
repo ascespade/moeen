@@ -239,8 +239,8 @@ div className='min-h-screen bg-[var(--background)]'>
 
               <nav className='p-2'>
                 {visibleTabs.map(tab => (
-                  <buttonkey={tab.id}
-                    onClick={() => { handleTabChange(tab.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleTabChange(tab.id) } }}
+                  <button key={tab.id}
+                    onClick={() => { handleTabChange(tab.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ handleTabChange(tab.id) } }}"> { handleTabChange(tab.id) } }}
                     className={cn(
                       'w-full text-right p-4 rounded-xl mb-2 transition-all duration-200 group',
                       'hover:bg-[var(--brand-primary)]/5 hover:border-[var(--brand-primary)]/20',

@@ -188,7 +188,8 @@ export default function MoeenChatbot({
   return (
     <>
       {/* Floating Button */}
-      <buttononClick={() => setIsOpen(!isOpen)} aria-label="Button"
+      <button onClick={() => setIsOpen(!isOpen)} aria-label="{
+          if (e.key === 'Ent"
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -323,8 +324,9 @@ export default function MoeenChatbot({
               </p>
               <div className='grid grid-cols-2 gap-2'>
                 {quickActions.map(action => (
-                  <buttonkey={action.id}
-                    onClick={() => handleQuickAction(action.action)} aria-label="Button"
+                  <button key={action.id}
+                    onClick={() => handleQuickAction(action.action)} aria-label="{
+                      if (e."
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -348,7 +350,7 @@ export default function MoeenChatbot({
             <div className='flex gap-2'>
               <input type='text'
                 value={input}
-                onChange={e = aria-label="text" aria-invalid="true"> setInput(e.target.value)}
+                onChange={(e) => setInput(e.target.value)} aria-label="text" aria-invalid="true"
                 onKeyPress={handleKeyPress}
                 placeholder='اكتب رسالتك...'
                 className='flex-1 rounded-md border border-[var(--brand-border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20'
@@ -356,7 +358,8 @@ export default function MoeenChatbot({
                 aria-label="حقل إدخال الرسالة"
                 aria-describedby="chatbot-input-help"
               />
-              <buttononClick={() => handleSendMessage()} aria-label="Button"
+              <button onClick={() => handleSendMessage()} aria-label="{
+                  if (e.key "
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();

@@ -205,7 +205,7 @@ div className='container-app py-8'>
       {/* Step 2: Select Date */}
       {step === 2 && selectedSessionType && (
         <div>
-          <buttononClick={() => { setStep(1)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(1) } }} className='btn btn-outline mb-6'>
+          <button onClick={() => { setStep(1) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setStep(1) } }} className='b"> { setStep(1) } }} className='btn btn-outline mb-6'>
             ← العودة
           </button>
 
@@ -236,11 +236,10 @@ div className='container-app py-8'>
           <div className='card p-8'>
             <input type='date'
               value={selectedDate}
-              onChange={e = aria-label="date" aria-invalid="true"> {
+              onChange={(e) => {
                 setSelectedDate(e.target.value);
                 if (e.target.value) {
-                  setStep(3);
-                }
+                  setStep(3);} aria-label="date" aria-invalid="true"
               }}
               min={today}
               max={maxDateStr}
@@ -256,7 +255,7 @@ div className='container-app py-8'>
       {/* Step 3: Select Time Slot */}
       {step === 3 && selectedSessionType && selectedDate && (
         <div>
-          <buttononClick={() => { setStep(2)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(2) } }} className='btn btn-outline mb-6'>
+          <button onClick={() => { setStep(2) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setStep(2) } }} className='b"> { setStep(2) } }} className='btn btn-outline mb-6'>
             ← العودة
           </button>
 
@@ -276,7 +275,7 @@ div className='container-app py-8'>
       {/* Step 4: Confirmation */}
       {step === 4 && selectedSessionType && selectedSlot && (
         <div>
-          <buttononClick={() => { setStep(3)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(3) } }} className='btn btn-outline mb-6'>
+          <button onClick={() => { setStep(3) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setStep(3) } }} className='b"> { setStep(3) } }} className='btn btn-outline mb-6'>
             ← العودة
           </button>
 
@@ -371,7 +370,7 @@ div className='container-app py-8'>
                   </label>
                   <input type='text'
                     value={patientName}
-                    onChange={e = aria-label="text" aria-invalid="true"> setPatientName(e.target.value)}
+                    onChange={(e) => setPatientName(e.target.value)} aria-label="text" aria-invalid="true"
                     className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='أدخل اسم الطفل'
                     required
@@ -398,9 +397,9 @@ div className='container-app py-8'>
                 )}
 
                 <button type='button'
-                  onClick={handleBookSession} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBookSession } }}
+                  onClick={handleBookSession} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBookSession } }}
                   disabled={loading || !patientName.trim()}
-                  className='btn btn-default w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed' aria-label="Button">
+                  className='btn btn-default w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed' aria-label="{loading ? (">
                   {loading ? (
                     <span className='flex items-center justify-center gap-2'>
                       <span className='animate-spin'>⏳</span>

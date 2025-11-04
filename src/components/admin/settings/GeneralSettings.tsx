@@ -309,8 +309,8 @@ export default function GeneralSettings({ onChange }: GeneralSettingsProps) {
             <Label>أيام العمل</Label>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-3'>
               {weekDays.map(day => (
-                <buttonkey={day.id}
-                  onClick={() => { toggleWorkDay(day.id)} aria-label="Button"
+                <button key={day.id}
+                  onClick={() => { toggleWorkDay(day.id) }} aria-label="??"
                   className={cn(
                     'p-3 rounded-lg border transition-all duration-200 text-sm font-medium',
                     config.businessHours.days.includes(day.id)

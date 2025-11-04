@@ -98,7 +98,7 @@ const InteractiveGallery = memo(function InteractiveGallery() {
           className='fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4'
           tabIndex={0} onClick={() => setSelectedImage(null)}
         >
-          <buttononClick={() => { setSelectedImage(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setSelectedImage(null) } }}
+          <button onClick={() => { setSelectedImage(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" setSelectedImage(null) } }}
             className='absolute top-4 left-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors z-10'
             aria-label='إغلاق'
           >

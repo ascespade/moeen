@@ -35,7 +35,7 @@ export default function EmptyState({
         {description}
       </p>
       {action && (
-        <buttononClick={action.onClick} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); action.onClick } }}
+        <button onClick={action.onClick} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); action.onClick } }}
           className='inline-flex items-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'
          aria-label="{action.label}">
           {action.label}

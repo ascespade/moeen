@@ -145,7 +145,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <buttonclassName='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة تكامل">
+              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة تكامل">
                 إضافة تكامل
               </button>
             </div>
@@ -243,7 +243,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               <div className='flex gap-2'>
                 {integration.status === 'connected' ? (
                   <>
-                    <buttononClick={() => { handleTestWebhook(integration.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleTestWebhook(integration.id) } }}
+                    <button onClick={() => { handleTestWebhook(integration.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ handleTestWebhook(integratio"> { handleTestWebhook(integration.id) } }}
                       className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-surface'
                       disabled={webhookTest[integration.id]}
                     >
@@ -251,14 +251,14 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                         ? 'جاري الاختبار...'
                         : 'اختبار Webhook'}
                     </button>
-                    <buttononClick={() => { handleDisconnect(integration.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleDisconnect(integration.id) } }}
+                    <button onClick={() => { handleDisconnect(integration.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ handleDisconnect(integration"> { handleDisconnect(integration.id) } }}
                       className='rounded-lg border border-red-300 px-3 py-2 text-sm text-default-error transition-colors hover:bg-surface'
                     >
                       قطع الاتصال
                     </button>
                   </>
                 ) : (
-                  <buttononClick={() => { handleConnect(integration.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleConnect(integration.id) } }}
+                  <button onClick={() => { handleConnect(integration.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ handleConnect(integration.id"> { handleConnect(integration.id) } }}
                     className='btn-default flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'
                   >
                     {integration.status === 'error' ? 'إعادة الاتصال' : 'اتصال'}
@@ -308,7 +308,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 <p className='mb-3 text-sm text-gray-600 dark:text-gray-300'>
                   {integration.description}
                 </p>
-                <buttonclassName='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-surface' aria-label="إضافة">
+                <button className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-surface' aria-label="إضافة">
                   إضافة
                 </button>
               </div>
@@ -323,7 +323,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-md rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إعداد التكامل</h3>
-              <buttononClick={() => { setShowConnectModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowConnectModal(null) } }}
+              <button onClick={() => { setShowConnectModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowConnectModal(null) } "> { setShowConnectModal(null) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -360,12 +360,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <buttononClick={() => { setShowConnectModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowConnectModal(null) } }}
+                <button onClick={() => { setShowConnectModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowConnectModal(null) } "> { setShowConnectModal(null) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <buttononClick={() => { setShowConnectModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowConnectModal(null) } }}
+                <button onClick={() => { setShowConnectModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowConnectModal(null) } "> { setShowConnectModal(null) } }}
                   className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   حفظ الإعدادات

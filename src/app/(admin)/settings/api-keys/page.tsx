@@ -448,7 +448,7 @@ div className='container mx-auto px-4 py-8 max-w-6xl' dir='rtl'>
                           />
                           <div className='absolute left-2 top-1/2 -translate-y-1/2 flex gap-1'>
                             <button type='button'
-                              onClick={() => { toggleVisibility(keyConfig.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { toggleVisibility(keyConfig.id) } }}
+                              onClick={() => { toggleVisibility(keyConfig.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ toggleVisibility(keyConfig.i"> { toggleVisibility(keyConfig.id) } }}
                               className='p-1 hover:bg-gray-100 rounded'
                             >
                               {isVisible ? (
@@ -459,9 +459,8 @@ div className='container mx-auto px-4 py-8 max-w-6xl' dir='rtl'>
                             </button>
                             {keyConfig.key_value && (
                               <button type='button'
-                                onClick={() => {
-                                  copyToClipboard(keyConfig.key_value)
-                                } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> {
+                                onClick={() => { copyToClipboard(keyConfig.key_value) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{
+                            "> {
                                   copyToClipboard(keyConfig.key_value)
                                  } }}
                                 className='p-1 hover:bg-gray-100 rounded'

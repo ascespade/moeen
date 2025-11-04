@@ -64,9 +64,9 @@ export default function VerifyEmailPage() {
             </div>
 
             <div className='space-y-3'>
-              <buttononClick={handleResend} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleResend } }}
+              <button onClick={handleResend} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleResend } }}
                 disabled={isResending || isResent}
-                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--default-default)] px-4 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50' aria-label="Button">
+                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--default-default)] px-4 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50' aria-label="{isResending ? (">
                 {isResending ? (
                   <>
                     <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent'></div>

@@ -121,17 +121,17 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <buttononClick={handleTest} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
+              <button onClick={handleTest} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
                 className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="اختبار">
                 اختبار
               </button>
-              <buttononClick={() => { setIsEditing(!isEditing)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setIsEditing(!isEditing) } }}
+              <button onClick={() => { setIsEditing(!isEditing) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setIsEditing(!isEditing) } }"> { setIsEditing(!isEditing) } }}
                 className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 {isEditing ? 'عرض' : 'تعديل'}
               </button>
               {isEditing && (
-                <buttononClick={handleSave} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
+                <button onClick={handleSave} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
                   className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ">
                   حفظ
                 </button>
@@ -202,7 +202,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                   >
                     <span className='text-sm font-medium'>{variable}</span>
                     {isEditing && (
-                      <buttononClick={() => { handleVariableRemove(variable)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleVariableRemove(variable) } }}
+                      <button onClick={() => { handleVariableRemove(variable) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ handleVariableRemove(variabl"> { handleVariableRemove(variable) } }}
                         className='text-sm text-default-error hover:text-red-700'
                       >
                         حذف
@@ -223,14 +223,14 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                         }
                       }}
                     />
-                    <buttononClick={() => { {
+                    <button onClick={() => { {
                         const input = document.querySelector(
                           'input[placeholder="إضافة متغير جديد"]'
                         ) as HTMLInputElement;
                         if (input?.value) {
                           handleVariableAdd(input.value);
-                          input.value = '';
-                        } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
+                          input.value = ''; }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ {
+                        co"> { {
                         const input = document.querySelector(
                           'input[placeholder="إضافة متغير جديد"]'
                         ) as HTMLInputElement;
@@ -255,10 +255,10 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               <div className='mb-6 flex items-center justify-between'>
                 <h3 className='text-lg font-semibold'>محتوى القالب</h3>
                 <div className='flex gap-2'>
-                  <buttonclassName='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface' aria-label="نسخ">
+                  <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface' aria-label="نسخ">
                     نسخ
                   </button>
-                  <buttonclassName='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface' aria-label="استيراد">
+                  <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface' aria-label="استيراد">
                     استيراد
                   </button>
                 </div>
@@ -272,11 +272,9 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                     </label>
                     <input type='text'
                       value={template.name}
-                      onChange={e = aria-label="text" aria-invalid="true">
-                        setTemplate(prev => ({
+                      onChange={(e) => setTemplate(prev => ({
                           ...prev,
-                          name: e.target.value,
-                        }))
+                          name: e.target.value,} aria-label="text" aria-invalid="true"))
                       }
                       className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     />
@@ -337,18 +335,18 @@ div className='min-h-screen bg-[var(--default-surface)]'>
 
               {/* Action Buttons */}
               <div className='flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700'>
-                <buttononClick={handleTest} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
+                <button onClick={handleTest} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
                   className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="اختبار القالب">
                   اختبار القالب
                 </button>
-                <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="نسخ القالب">
+                <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="نسخ القالب">
                   نسخ القالب
                 </button>
-                <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تصدير">
+                <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تصدير">
                   تصدير
                 </button>
                 {isEditing && (
-                  <buttononClick={handleSave} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
+                  <button onClick={handleSave} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
                     className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ التغييرات">
                     حفظ التغييرات
                   </button>
@@ -365,7 +363,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>اختبار القالب</h3>
-              <buttononClick={() => { setShowTestModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowTestModal(false) } }}
+              <button onClick={() => { setShowTestModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowTestModal(false) } }}"> { setShowTestModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -390,11 +388,9 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                       </label>
                       <input type='text'
                         value={testVariables[variable] || ''}
-                        onChange={e = aria-label="text" aria-invalid="true">
-                          setTestVariables(prev => ({
+                        onChange={(e) => setTestVariables(prev => ({
                             ...prev,
-                            [variable]: e.target.value,
-                          }))
+                            [variable]: e.target.value,} aria-label="text" aria-invalid="true"))
                         }
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         placeholder={`أدخل قيمة ${variable}`}
@@ -405,12 +401,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <buttononClick={() => { setShowTestModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowTestModal(false) } }}
+                <button onClick={() => { setShowTestModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowTestModal(false) } }}"> { setShowTestModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إغلاق
                 </button>
-                <buttonclassName='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="استخدام القالب">
+                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="استخدام القالب">
                   استخدام القالب
                 </button>
               </div>

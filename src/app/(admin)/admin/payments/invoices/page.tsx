@@ -78,7 +78,7 @@ div className='container-app py-8'>
             إدارة الفواتير والإيصالات
           </p>
         </div>
-        <buttonclassName='btn btn-default' aria-label="+ فاتورة جديدة">+ فاتورة جديدة</button>
+        <button className='btn btn-default' aria-label="+ فاتورة جديدة">+ فاتورة جديدة</button>
       </div>
 
       {/* Stats */}
@@ -184,7 +184,7 @@ div className='container-app py-8'>
                       : '-'}
                   </td>
                   <td className='px-6 py-4'>
-                    <buttononClick={() => { generateInvoicePDF(payment)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { generateInvoicePDF(payment) } }}
+                    <button onClick={() => { generateInvoicePDF(payment) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ generateInvoicePDF(payment) "> { generateInvoicePDF(payment) } }}
                       className='text-sm text-[var(--default-default)] hover:underline'
                     >
                       📄 فاتورة

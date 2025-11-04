@@ -259,7 +259,14 @@ function AuditLogsPageContent() {
                   </select>
                 </div>
                 <div className='flex items-end'>
-                  <buttononClick={fetchAuditLogs} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fetchAuditLogs } }}
+                  <button
+                    onClick={fetchAuditLogs}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        fetchAuditLogs();
+                      }
+                    }}
                     className='w-full rounded-lg bg-[var(--brand-primary)] py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
                     aria-label="تطبيق الفلاتر"
                   >

@@ -70,13 +70,13 @@ main className='min-h-screen bg-[var(--default-surface)]'>
                     </td>
                     <td className='p-3'>
                       <div className='flex items-center gap-2'>
-                        <buttonclassName='btn btn-outline btn-sm' aria-label="أرشفة">
+                        <button className='btn btn-outline btn-sm' aria-label="أرشفة">
                           أرشفة
                         </button>
-                        <buttonclassName='btn btn-outline btn-sm' aria-label="تحسين الرد">
+                        <button className='btn btn-outline btn-sm' aria-label="تحسين الرد">
                           تحسين الرد
                         </button>
-                        <buttonclassName='btn btn-outline btn-sm' aria-label="إنشاء قاعدة">
+                        <button className='btn btn-outline btn-sm' aria-label="إنشاء قاعدة">
                           إنشاء قاعدة
                         </button>
                       </div>

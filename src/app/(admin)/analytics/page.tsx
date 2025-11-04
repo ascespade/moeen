@@ -272,7 +272,7 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
 
         {/* View Tabs */}
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
-          <buttononClick={() => { setSelectedView('overview')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedView('overview') } }}
+          <button onClick={() => { setSelectedView('overview') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedView('overview') "> { setSelectedView('overview') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'overview'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -281,7 +281,7 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             نظرة عامة
           </button>
-          <buttononClick={() => { setSelectedView('patients')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedView('patients') } }}
+          <button onClick={() => { setSelectedView('patients') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedView('patients') "> { setSelectedView('patients') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'patients'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -290,7 +290,7 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             تحليل المرضى
           </button>
-          <buttononClick={() => { setSelectedView('therapy')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedView('therapy') } }}
+          <button onClick={() => { setSelectedView('therapy') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedView('therapy') }"> { setSelectedView('therapy') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'therapy'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -299,7 +299,7 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             تحليل العلاج
           </button>
-          <buttononClick={() => { setSelectedView('appointments')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedView('appointments') } }}
+          <button onClick={() => { setSelectedView('appointments') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedView('appointment"> { setSelectedView('appointments') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'appointments'
                 ? 'bg-white text-gray-900 shadow-sm'

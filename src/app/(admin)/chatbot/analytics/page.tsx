@@ -146,7 +146,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 <option value='month'>هذا الشهر</option>
                 <option value='year'>هذا العام</option>
               </select>
-              <buttonclassName='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تصدير التقرير">
+              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تصدير التقرير">
                 تصدير التقرير
               </button>
             </div>
@@ -210,7 +210,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-lg font-semibold'>الرسائل حسب الساعة</h3>
               <div className='flex gap-2'>
-                <buttononClick={() => { setSelectedMetric('messages')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedMetric('messages') } }}
+                <button onClick={() => { setSelectedMetric('messages') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedMetric('messages'"> { setSelectedMetric('messages') } }}
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'messages'
                       ? 'bg-[var(--default-default)] text-white'
@@ -219,7 +219,7 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 >
                   الرسائل
                 </button>
-                <buttononClick={() => { setSelectedMetric('users')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedMetric('users') } }}
+                <button onClick={() => { setSelectedMetric('users') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedMetric('users') }"> { setSelectedMetric('users') } }}
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'users'
                       ? 'bg-[var(--default-default)] text-white'

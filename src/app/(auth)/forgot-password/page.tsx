@@ -77,10 +77,10 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
             >
               العودة لتسجيل الدخول
             </Link>
-            <buttononClick={() => { {
+            <button onClick={() => { {
                 setIsSuccess(false);
-                setEmail('');
-              } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
+                setEmail(''); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ {
+                setIsSucce"> { {
                 setIsSuccess(false);
                 setEmail('');
                } }}}
@@ -137,10 +137,9 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
               <input type='email'
                 id='email'
                 value={email}
-                onChange={e = aria-label="email" aria-invalid="true"> {
+                onChange={(e) => {
                   setEmail(e.target.value);
-                  if (error) setError('');
-                }}
+                  if (error) setError('');} aria-label="email" aria-invalid="true"}
                 className='form-input'
                 placeholder='أدخل بريدك الإلكتروني'
                 disabled={isLoading}
@@ -151,7 +150,7 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
             {/* Submit Button */}
             <button type='submit'
               disabled={isLoading}
-              className='btn btn-default btn-lg w-full' aria-label="Button">
+              className='btn btn-default btn-lg w-full' aria-label="{isLoading ? (">
               {isLoading ? (
                 <>
                   <div className='loading-spinner'></div>
@@ -181,10 +180,10 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
         <div className='mt-6 text-center'>
           <p className='text-sm text-gray-500'>
             إذا لم تستلم البريد الإلكتروني، تحقق من مجلد الرسائل المزعجة أو{' '}
-            <buttononClick={() => { {
+            <button onClick={() => { {
                 setEmail('');
-                setError('');
-              } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
+                setError(''); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ {
+                setEmail('"> { {
                 setEmail('');
                 setError('');
                } }}}

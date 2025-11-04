@@ -762,12 +762,11 @@ Badge variant={config.variant} className={config.className}>
                   <TableHead className='w-12'>
                     <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                      onChange={(e) => {
                         if (e.target.checked) {
                           setSelectedNotifications(
                             filteredNotifications.map(n => n.id)
-                          );
-                        } else {
+                          );} aria-label="checkbox" aria-invalid="true" else {
                           setSelectedNotifications([]);
                         }
                       }}
@@ -792,13 +791,12 @@ Badge variant={config.variant} className={config.className}>
                         checked={selectedNotifications.includes(
                           notification.id
                         )}
-                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                        onChange={(e) => {
                           if (e.target.checked) {
                             setSelectedNotifications([
                               ...selectedNotifications,
                               notification.id,
-                            ]);
-                          } else {
+                            ]);} aria-label="checkbox" aria-invalid="true" else {
                             setSelectedNotifications(
                               selectedNotifications.filter(
                                 id => id !== notification.id

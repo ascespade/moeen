@@ -415,7 +415,7 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
       {/* Tabs */}
       <div className='mb-6'>
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
-          <buttononClick={() => { setActiveTab('members')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('members') } }}
+          <button onClick={() => { setActiveTab('members') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab('members') } }}"> { setActiveTab('members') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'members'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -424,7 +424,7 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             أعضاء الأسر
           </button>
-          <buttononClick={() => { setActiveTab('sessions')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('sessions') } }}
+          <button onClick={() => { setActiveTab('sessions') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab('sessions') } }"> { setActiveTab('sessions') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'sessions'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -433,7 +433,7 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             جلسات الدعم
           </button>
-          <buttononClick={() => { setActiveTab('resources')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('resources') } }}
+          <button onClick={() => { setActiveTab('resources') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab('resources') } "> { setActiveTab('resources') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'resources'
                 ? 'bg-white text-gray-900 shadow-sm'

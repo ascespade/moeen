@@ -16,14 +16,14 @@ export default function RTLToggle({
   const { settings, toggleRTL } = useTheme();
 
   return (
-    <buttononClick={toggleRTL} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleRTL } }}
+    <button onClick={toggleRTL} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleRTL } }}
       className={cn(
         'ds-button ds-button-ghost ds-button-sm',
         'flex items-center gap-2',
         className
       )}
       title={`Switch to ${settings.rtl ? 'LTR' : 'RTL'} mode`}
-      aria-label='Button'
+      aria-label="??"
     >
       <svg
         className='w-5 h-5'

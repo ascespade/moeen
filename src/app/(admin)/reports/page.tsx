@@ -686,10 +686,9 @@ Badge variant={config.variant} className={config.className}>
                   <TableHead className='w-12'>
                     <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                      onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedReports(filteredReports.map(r => r.id));
-                        } else {
+                          setSelectedReports(filteredReports.map(r => r.id));} aria-label="checkbox" aria-invalid="true" else {
                           setSelectedReports([]);
                         }
                       }}
@@ -712,10 +711,9 @@ Badge variant={config.variant} className={config.className}>
                       <input type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedReports.includes(report.id)}
-                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
+                        onChange={(e) => {
                           if (e.target.checked) {
-                            setSelectedReports([...selectedReports, report.id]);
-                          } else {
+                            setSelectedReports([...selectedReports, report.id]);} aria-label="checkbox" aria-invalid="true" else {
                             setSelectedReports(
                               selectedReports.filter(id => id !== report.id)
                             );

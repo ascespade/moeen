@@ -210,7 +210,8 @@ div className='container-app py-8'>
                 <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
                   {dayName}
                 </h3>
-                <buttononClick={() => { addSchedule(dayIndex)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { addSchedule(dayIndex) } }}
+                <button onClick={() => { addSchedule(dayIndex) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ addSchedule(dayIndex) } }}
+ "> { addSchedule(dayIndex) } }}
                   disabled={saving}
                   className='btn btn-outline text-sm'
                 >
@@ -232,13 +233,11 @@ div className='container-app py-8'>
                         </label>
                         <input type='time'
                           value={schedule.start_time}
-                          onChange={e = aria-label="time" aria-invalid="true">
-                            updateSchedule(
+                          onChange={(e) => updateSchedule(
                               schedule.id,
                               'start_time',
                               e.target.value
-                            )
-                          }
+                            )} aria-label="time" aria-invalid="true"
                           className='px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                         />
                       </div>
@@ -249,13 +248,11 @@ div className='container-app py-8'>
                         </label>
                         <input type='time'
                           value={schedule.end_time}
-                          onChange={e = aria-label="time" aria-invalid="true">
-                            updateSchedule(
+                          onChange={(e) => updateSchedule(
                               schedule.id,
                               'end_time',
                               e.target.value
-                            )
-                          }
+                            )} aria-label="time" aria-invalid="true"
                           className='px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                         />
                       </div>
@@ -263,13 +260,11 @@ div className='container-app py-8'>
                       <label className='flex items-center gap-2 cursor-pointer'>
                         <input type='checkbox'
                           checked={schedule.is_available}
-                          onChange={e = aria-label="checkbox" aria-invalid="true">
-                            updateSchedule(
+                          onChange={(e) => updateSchedule(
                               schedule.id,
                               'is_available',
                               e.target.checked
-                            )
-                          }
+                            )} aria-label="checkbox" aria-invalid="true"
                           className='w-5 h-5 rounded border-gray-300 dark:border-gray-600'
                         />
                         <span className='text-sm text-gray-700 dark:text-gray-300'>
@@ -277,7 +272,7 @@ div className='container-app py-8'>
                         </span>
                       </label>
 
-                      <buttononClick={() => { deleteSchedule(schedule.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { deleteSchedule(schedule.id) } }}
+                      <button onClick={() => { deleteSchedule(schedule.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ deleteSchedule(schedule.id) "> { deleteSchedule(schedule.id) } }}
                         className='mr-auto text-red-600 hover:text-red-700 text-sm'
                       >
                         حذف
