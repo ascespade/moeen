@@ -18,7 +18,7 @@ export function NotificationToast() {
     <div
       className="fixed top-4 right-4 z-50 space-y-2"
       role="region"
-      aria-label="????"
+      aria-label="الإشعارات"
       aria-live="polite"
     >
       {notifications.map(notification => (
@@ -68,9 +68,11 @@ function NotificationItem({
         )}
         <p className="text-sm">{notification.message}</p>
       </div>
-      <button onClick={onClose} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
+      <button 
+        onClick={onClose} 
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose(); } }}
         className="flex-shrink-0 p-1 rounded hover:bg-black/10 dark:hover:bg-white/10"
-        aria-label="????? ???????"
+        aria-label="إغلاق الإشعار"
       >
         <X className="w-4 h-4" aria-hidden="true" />
       </button>
