@@ -1,4 +1,4 @@
-import { createClient } from './supabase/client';
+import { getBrowserSupabase } from './supabaseClient';
 import { I18N_KEYS } from '@/constants/i18n-keys';
 
 export interface DynamicContent {
@@ -65,7 +65,7 @@ export interface FAQ {
  * Eliminates hardcoded values and ensures all content is database-driven
  */
 class DynamicContentManager {
-  private supabase = createClient();
+  private supabase = getBrowserSupabase(); // Use singleton browser client
   private cache = new Map<string, any>();
   private cacheExpiry = 5 * 60 * 1000; // 5 minutes
 
@@ -324,7 +324,7 @@ class DynamicContentManager {
   /**
    * Parse setting value from database result
    */
-  private parseSetting(settings: any[], key: string, defaultValue: any): any {
+  private parseSetting(settings: any[], key: string, defaultValue: unknown): any {
     const setting = settings.find(s => s.key === key);
     return setting ? setting.value : defaultValue;
   }

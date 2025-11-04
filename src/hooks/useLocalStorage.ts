@@ -25,7 +25,7 @@ export const useLocalStorage = <T>(
           value instanceof Function ? value(storedValue) : value;
         setStoredValue(valueToStore);
         storage.set(key, valueToStore);
-      } catch (error) {}
+      } catch (error) { console.error(error); }
     },
     [key, storedValue]
   );
@@ -34,7 +34,7 @@ export const useLocalStorage = <T>(
     try {
       setStoredValue(initialValue);
       storage.remove(key);
-    } catch (error) {}
+    } catch (error) { console.error(error); }
   }, [key, initialValue]);
 
   return [storedValue, setValue, removeValue];
@@ -63,7 +63,7 @@ export const useSessionStorage = <T>(
           value instanceof Function ? value(storedValue) : value;
         setStoredValue(valueToStore);
         storage.setSession(key, valueToStore);
-      } catch (error) {}
+      } catch (error) { console.error(error); }
     },
     [key, storedValue]
   );
@@ -72,7 +72,7 @@ export const useSessionStorage = <T>(
     try {
       setStoredValue(initialValue);
       storage.removeSession(key);
-    } catch (error) {}
+    } catch (error) { console.error(error); }
   }, [key, initialValue]);
 
   return [storedValue, setValue, removeValue];

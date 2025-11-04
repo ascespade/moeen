@@ -14,15 +14,13 @@ export default function ProfilePage() {
         <div className='grid grid-cols-1 md:grid-cols-2 gap-3 items-center'>
           <div className='text-sm'>الثيم</div>
           <div className='flex items-center gap-2'>
-            <button
-              className={`h-9 rounded-md border px-3 ${theme === 'light' ? 'bg-gray-900 text-white' : ''}`}
-              onClick={() => setTheme('light')}
+            <buttonclassName={`h-9 rounded-md border px-3 ${theme === 'light' ? 'bg-gray-900 text-white' : ''}`}
+              onClick={() = aria-label="Button"> { setTheme('light')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setTheme('light') } }}
             >
               فاتح
             </button>
-            <button
-              className={`h-9 rounded-md border px-3 ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}
-              onClick={() => setTheme('dark')}
+            <buttonclassName={`h-9 rounded-md border px-3 ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}
+              onClick={() = aria-label="Button"> { setTheme('dark')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setTheme('dark') } }}
             >
               داكن
             </button>
@@ -31,15 +29,13 @@ export default function ProfilePage() {
         <div className='grid grid-cols-1 md:grid-cols-2 gap-3 items-center'>
           <div className='text-sm'>اللغة</div>
           <div className='flex items-center gap-2'>
-            <button
-              className={`h-9 rounded-md border px-3 ${lang === 'ar' ? 'bg-gray-900 text-white' : ''}`}
-              onClick={() => setLang('ar')}
+            <buttonclassName={`h-9 rounded-md border px-3 ${lang === 'ar' ? 'bg-gray-900 text-white' : ''}`}
+              onClick={() = aria-label="Button"> { setLang('ar')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setLang('ar') } }}
             >
               العربية
             </button>
-            <button
-              className={`h-9 rounded-md border px-3 ${lang === 'en' ? 'bg-gray-900 text-white' : ''}`}
-              onClick={() => setLang('en')}
+            <buttonclassName={`h-9 rounded-md border px-3 ${lang === 'en' ? 'bg-gray-900 text-white' : ''}`}
+              onClick={() = aria-label="Button"> { setLang('en')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setLang('en') } }}
             >
               English
             </button>

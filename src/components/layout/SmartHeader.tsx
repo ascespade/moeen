@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 import { useI18n } from '@/hooks/useI18n';
 
 // Theme and Language Switches Component
@@ -81,11 +82,9 @@ function ThemeLanguageSwitches() {
   return (
     <>
       {/* Theme Toggle Button */}
-      <button
-        className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
-        onClick={toggleTheme}
-        disabled={isLoading}
-      >
+      <buttonclassName='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
+        onClick={toggleTheme} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme } }}
+        disabled={isLoading} aria-label="Button">
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600'></div>
         ) : theme === 'light' ? (
@@ -93,15 +92,15 @@ function ThemeLanguageSwitches() {
         ) : (
           <Moon className='h-4 w-4' />
         )}
-        <span className='hidden sm:inline'>{t('theme.label', 'الثيم')}</span>
+        <span className='hidden sm:inline'>
+          {t(I18N_KEYS.THEME.LABEL, 'الثيم')}
+        </span>
       </button>
 
       {/* Language Toggle Button */}
-      <button
-        className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
-        onClick={toggleLanguage}
-        disabled={isLoading}
-      >
+      <buttonclassName='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
+        onClick={toggleLanguage} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleLanguage } }}
+        disabled={isLoading} aria-label="Button">
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600'></div>
         ) : (
@@ -152,21 +151,27 @@ export default function SmartHeader() {
     if (isAuthenticated) {
       // Authenticated user navigation
       return [
-        { href: '/', label: t('nav.dashboard', 'لوحة التحكم') },
-        { href: ROUTES.HEALTH.PATIENTS, label: t('nav.patients', 'المرضى') },
+        { href: '/', label: t(I18N_KEYS.NAV.DASHBOARD, 'لوحة التحكم') },
+        {
+          href: ROUTES.HEALTH.PATIENTS,
+          label: t(I18N_KEYS.NAV.PATIENTS, 'المرضى'),
+        },
         {
           href: ROUTES.HEALTH.APPOINTMENTS,
-          label: t('nav.appointments', 'المواعيد'),
+          label: t(I18N_KEYS.NAV.APPOINTMENTS, 'المواعيد'),
         },
-        { href: ROUTES.HEALTH.SESSIONS, label: t('nav.sessions', 'الجلسات') },
+        {
+          href: ROUTES.HEALTH.SESSIONS,
+          label: t(I18N_KEYS.NAV.SESSIONS, 'الجلسات'),
+        },
       ];
     } else {
       // Public navigation
       return [
-        { href: '#services', label: t('nav.services', 'الخدمات') },
-        { href: '#about', label: t('nav.about', 'عن معين') },
-        { href: '#gallery', label: t('nav.gallery', 'المعرض') },
-        { href: '#contact', label: t('nav.contact', 'اتصل بنا') },
+        { href: '#services', label: t(I18N_KEYS.NAV.SERVICES, 'الخدمات') },
+        { href: '#about', label: t(I18N_KEYS.NAV.ABOUT, 'عن معين') },
+        { href: '#gallery', label: t(I18N_KEYS.NAV.GALLERY, 'المعرض') },
+        { href: '#contact', label: t(I18N_KEYS.NAV.CONTACT, 'اتصل بنا') },
       ];
     }
   };
@@ -207,18 +212,17 @@ export default function SmartHeader() {
             {!isAuthenticated && (
               <>
                 <Link href={ROUTES.LOGIN} className='btn btn-outline'>
-                  {t('nav.login', 'تسجيل الدخول')}
+                  {t(I18N_KEYS.NAV.LOGIN, 'تسجيل الدخول')}
                 </Link>
                 <Link href={ROUTES.REGISTER} className='btn btn-default'>
-                  {t('nav.register', 'إنشاء حساب')}
+                  {t(I18N_KEYS.NAV.REGISTER, 'إنشاء حساب')}
                 </Link>
               </>
             )}
 
             {/* Mobile Menu Button */}
-            <button
-              className='md:hidden p-2'
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            <buttonclassName='md:hidden p-2'
+              onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsMobileMenuOpen(!isMobileMenuOpen) } }}
             >
               {isMobileMenuOpen ? (
                 <X className='h-6 w-6' />
@@ -250,14 +254,14 @@ export default function SmartHeader() {
                     className='nav-link py-2'
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {t('nav.login', 'تسجيل الدخول')}
+                    {t(I18N_KEYS.NAV.LOGIN, 'تسجيل الدخول')}
                   </Link>
                   <Link
                     href={ROUTES.REGISTER}
                     className='nav-link py-2'
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {t('nav.register', 'إنشاء حساب')}
+                    {t(I18N_KEYS.NAV.REGISTER, 'إنشاء حساب')}
                   </Link>
                 </>
               )}

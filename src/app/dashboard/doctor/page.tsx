@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
@@ -90,7 +90,7 @@ export default function DoctorDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['doctor']}>
+    <UnifiedProtectedRoute allowedRoles={['doctor']}>
       <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
           {/* Header */}
@@ -316,6 +316,6 @@ export default function DoctorDashboard() {
           </div>
         </div>
       </div>
-    </ProtectedRoute>
+    </UnifiedProtectedRoute>
   );
 }

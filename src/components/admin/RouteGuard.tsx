@@ -17,7 +17,7 @@ export default function RouteGuard({
   children,
   requiredPermissions = [],
   requiredRoles = [],
-  fallbackPath = '/unauthorized'
+  fallbackPath = '/unauthorized',
 }: RouteGuardProps) {
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
   const [userRole, setUserRole] = useState<string>('');
@@ -76,7 +76,7 @@ export default function RouteGuard({
             signal: controller.signal,
             cache: 'no-store',
             credentials: 'include',
-            headers
+            headers,
           });
           clearTimeout(timeoutId);
 
@@ -90,8 +90,8 @@ export default function RouteGuard({
                   cache: 'no-store',
                   credentials: 'include',
                   headers: {
-                    'x-demo-email': userFromStorage.email || ''
-                  }
+                    'x-demo-email': userFromStorage.email || '',
+                  },
                 });
                 if (retry.ok) {
                   const retryResult = await retry.json();
@@ -100,15 +100,24 @@ export default function RouteGuard({
                     if (!isMounted) return;
                     setUserRole(fetchedUser.role);
                     // Check role
-                    if (requiredRoles.length > 0 && !requiredRoles.includes(fetchedUser.role)) {
+                    if (
+                      requiredRoles.length > 0 &&
+                      !requiredRoles.includes(fetchedUser.role)
+                    ) {
                       setIsAuthorized(false);
                       return;
                     }
                     // Check permissions (admins, managers, supervisors bypass granular perms)
                     if (requiredPermissions.length > 0) {
-                      const roleAllows = ['admin', 'manager', 'supervisor'].includes(fetchedUser.role);
+                      const roleAllows = [
+                        'admin',
+                        'manager',
+                        'supervisor',
+                      ].includes(fetchedUser.role);
                       const perms = fetchedUser.permissions || [];
-                      const hasAll = requiredPermissions.every(p => perms.includes(p));
+                      const hasAll = requiredPermissions.every(p =>
+                        perms.includes(p)
+                      );
                       if (!hasAll && !roleAllows) {
                         setIsAuthorized(false);
                         return;
@@ -126,18 +135,21 @@ export default function RouteGuard({
                 id: userFromStorage.id,
                 email: userFromStorage.email,
                 role: userFromStorage.role || 'admin',
-                permissions: userFromStorage.permissions || []
+                permissions: userFromStorage.permissions || [],
               };
               setUserRole(fallbackUser.role);
               // Role
-              if (requiredRoles.length > 0 && !requiredRoles.includes(fallbackUser.role)) {
+              if (
+                requiredRoles.length > 0 &&
+                !requiredRoles.includes(fallbackUser.role)
+              ) {
                 setIsAuthorized(false);
                 return;
               }
               // Permissions
               if (requiredPermissions.length > 0) {
-                const hasAllPermissions = requiredPermissions.every(permission =>
-                  fallbackUser.permissions.includes(permission)
+                const hasAllPermissions = requiredPermissions.every(
+                  permission => fallbackUser.permissions.includes(permission)
                 );
                 if (!hasAllPermissions) {
                   setIsAuthorized(false);
@@ -159,7 +171,10 @@ export default function RouteGuard({
             if (!redirectingRef.current) {
               redirectingRef.current = true;
               setIsAuthorized(false);
-              router.replace('/login?redirect=' + encodeURIComponent(window.location.pathname));
+              router.replace(
+                '/login?redirect=' +
+                  encodeURIComponent(window.location.pathname)
+              );
             }
             return;
           }
@@ -178,8 +193,12 @@ export default function RouteGuard({
           // Check permission-based access
           if (requiredPermissions.length > 0) {
             const userPermissions = user.permissions || [];
-            const roleAllows = ['admin', 'manager', 'supervisor'].includes(user.role);
-            const hasAllPermissions = requiredPermissions.every(permission => userPermissions.includes(permission));
+            const roleAllows = ['admin', 'manager', 'supervisor'].includes(
+              user.role
+            );
+            const hasAllPermissions = requiredPermissions.every(permission =>
+              userPermissions.includes(permission)
+            );
             if (!hasAllPermissions && !roleAllows) {
               setIsAuthorized(false);
               return;
@@ -199,11 +218,10 @@ export default function RouteGuard({
                 path: window.location.pathname,
                 requiredPermissions,
                 requiredRoles,
-                authorized: true
-              }
-            })
+                authorized: true,
+              },
+            }),
           }).catch(() => {}); // Ignore errors
-
         } catch (fetchError: any) {
           clearTimeout(timeoutId);
           if (fetchError.name === 'AbortError') {
@@ -212,18 +230,25 @@ export default function RouteGuard({
               // Use localStorage fallback immediately on timeout
               const fallbackUser = {
                 role: userFromStorage.role || 'admin',
-                permissions: userFromStorage.permissions || []
+                permissions: userFromStorage.permissions || [],
               };
               setUserRole(fallbackUser.role);
 
-              if (requiredRoles.length > 0 && !requiredRoles.includes(fallbackUser.role)) {
+              if (
+                requiredRoles.length > 0 &&
+                !requiredRoles.includes(fallbackUser.role)
+              ) {
                 setIsAuthorized(false);
                 return;
               }
 
               if (requiredPermissions.length > 0) {
-                const roleAllows = ['admin', 'manager', 'supervisor'].includes(fallbackUser.role);
-                const hasAllPermissions = requiredPermissions.every(permission => fallbackUser.permissions.includes(permission));
+                const roleAllows = ['admin', 'manager', 'supervisor'].includes(
+                  fallbackUser.role
+                );
+                const hasAllPermissions = requiredPermissions.every(
+                  permission => fallbackUser.permissions.includes(permission)
+                );
                 if (!hasAllPermissions && !roleAllows) {
                   setIsAuthorized(false);
                   return;
@@ -235,12 +260,16 @@ export default function RouteGuard({
               return;
             }
             if (isMounted) {
-              setErrorMessage('انتهت مهلة التحقق. جاري استخدام البيانات المحفوظة...');
+              setErrorMessage(
+                'انتهت مهلة التحقق. جاري استخدام البيانات المحفوظة...'
+              );
             }
           } else {
             console.error('Auth fetch error:', fetchError);
             if (isMounted) {
-              setErrorMessage('فشل في التحقق من الصلاحيات. يرجى التأكد من اتصالك بالإنترنت.');
+              setErrorMessage(
+                'فشل في التحقق من الصلاحيات. يرجى التأكد من اتصالك بالإنترنت.'
+              );
             }
           }
 
@@ -250,18 +279,25 @@ export default function RouteGuard({
             if (!isMounted) return;
             const fallbackUser = {
               role: userFromStorage.role || 'admin',
-              permissions: userFromStorage.permissions || []
+              permissions: userFromStorage.permissions || [],
             };
             setUserRole(fallbackUser.role);
 
-            if (requiredRoles.length > 0 && !requiredRoles.includes(fallbackUser.role)) {
+            if (
+              requiredRoles.length > 0 &&
+              !requiredRoles.includes(fallbackUser.role)
+            ) {
               setIsAuthorized(false);
               return;
             }
 
             if (requiredPermissions.length > 0) {
-              const roleAllows = ['admin', 'manager', 'supervisor'].includes(fallbackUser.role);
-              const hasAllPermissions = requiredPermissions.every(permission => fallbackUser.permissions.includes(permission));
+              const roleAllows = ['admin', 'manager', 'supervisor'].includes(
+                fallbackUser.role
+              );
+              const hasAllPermissions = requiredPermissions.every(permission =>
+                fallbackUser.permissions.includes(permission)
+              );
               if (!hasAllPermissions && !roleAllows) {
                 setIsAuthorized(false);
                 return;
@@ -280,13 +316,15 @@ export default function RouteGuard({
             // Don't redirect immediately, show error first
             setTimeout(() => {
               if (isMounted) {
-                router.replace('/login?redirect=' + encodeURIComponent(window.location.pathname));
+                router.replace(
+                  '/login?redirect=' +
+                    encodeURIComponent(window.location.pathname)
+                );
               }
             }, 2000);
           }
           return;
         }
-
       } catch (error) {
         console.error('Error checking authorization:', error);
         if (isMounted && !redirectingRef.current) {
@@ -312,16 +350,22 @@ export default function RouteGuard({
       <div className='min-h-screen bg-[var(--background)] flex items-center justify-center'>
         <div className='text-center max-w-md mx-auto px-4'>
           <div className='w-12 h-12 border-4 border-[var(--brand-border)] border-t-[var(--brand-primary)] rounded-full animate-spin mx-auto mb-4'></div>
-          <p className='text-[var(--text-secondary)] mb-2'>جاري التحقق من الصلاحيات...</p>
+          <p className='text-[var(--text-secondary)] mb-2'>
+            جاري التحقق من الصلاحيات...
+          </p>
           {errorMessage && (
             <div
               className='mt-4 p-4 rounded-lg border'
               style={{
-                backgroundColor: 'color-mix(in srgb, var(--brand-error) 10%, transparent)',
-                borderColor: 'color-mix(in srgb, var(--brand-error) 20%, transparent)'
+                backgroundColor:
+                  'color-mix(in srgb, var(--brand-error) 10%, transparent)',
+                borderColor:
+                  'color-mix(in srgb, var(--brand-error) 20%, transparent)',
               }}
             >
-              <p className='text-sm' style={{ color: 'var(--brand-error)' }}>{errorMessage}</p>
+              <p className='text-sm' style={{ color: 'var(--brand-error)' }}>
+                {errorMessage}
+              </p>
             </div>
           )}
         </div>
@@ -338,11 +382,16 @@ export default function RouteGuard({
             <div
               className='w-20 h-20 mx-auto rounded-full flex items-center justify-center border'
               style={{
-                backgroundColor: 'color-mix(in srgb, var(--brand-error) 10%, transparent)',
-                borderColor: 'color-mix(in srgb, var(--brand-error) 20%, transparent)'
+                backgroundColor:
+                  'color-mix(in srgb, var(--brand-error) 10%, transparent)',
+                borderColor:
+                  'color-mix(in srgb, var(--brand-error) 20%, transparent)',
               }}
             >
-              <Lock className='w-10 h-10' style={{ color: 'var(--brand-error)' }} />
+              <Lock
+                className='w-10 h-10'
+                style={{ color: 'var(--brand-error)' }}
+              />
             </div>
 
             <div>
@@ -384,16 +433,22 @@ export default function RouteGuard({
             <div
               className='border rounded-lg p-4'
               style={{
-                backgroundColor: 'color-mix(in srgb, var(--brand-warning) 10%, transparent)',
-                borderColor: 'color-mix(in srgb, var(--brand-warning) 20%, transparent)'
+                backgroundColor:
+                  'color-mix(in srgb, var(--brand-warning) 10%, transparent)',
+                borderColor:
+                  'color-mix(in srgb, var(--brand-warning) 20%, transparent)',
               }}
             >
-              <div className='flex items-center gap-2' style={{ color: 'var(--brand-warning)' }}>
+              <div
+                className='flex items-center gap-2'
+                style={{ color: 'var(--brand-warning)' }}
+              >
                 <AlertTriangle className='w-4 h-4' />
                 <span className='font-medium'>تنبيه</span>
               </div>
               <p className='text-sm text-[var(--text-secondary)] mt-1'>
-                تم تسجيل محاولة الوصول غير المصرح بها. إذا كنت تعتقد أن هذا خطأ، يرجى التواصل مع المدير.
+                تم تسجيل محاولة الوصول غير المصرح بها. إذا كنت تعتقد أن هذا خطأ،
+                يرجى التواصل مع المدير.
               </p>
             </div>
           </AdminCard>

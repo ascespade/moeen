@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { TranslationSeeder } from '@/lib/translations/translation-seeder';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
 
@@ -28,7 +29,7 @@ export async function POST(req: NextRequest) {
       success: true,
       message: 'Translations seeded successfully',
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[admin/translations/seed] Error:', error);
     return NextResponse.json(
       {
@@ -39,4 +40,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-

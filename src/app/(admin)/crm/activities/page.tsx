@@ -190,21 +190,18 @@ export default function CRMActivitiesPage() {
             </div>
             <div className='flex items-center gap-3'>
               <div className='flex rounded-lg border border-gray-300'>
-                <button
-                  onClick={() => setViewMode('list')}
+                <buttononClick={() = aria-label="Button"> { setViewMode('list')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('list') } }}
                   className={`px-3 py-2 text-sm ${viewMode === 'list' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   قائمة
                 </button>
-                <button
-                  onClick={() => setViewMode('calendar')}
+                <buttononClick={() = aria-label="Button"> { setViewMode('calendar')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('calendar') } }}
                   className={`px-3 py-2 text-sm ${viewMode === 'calendar' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   تقويم
                 </button>
               </div>
-              <button
-                onClick={() => setShowCreateModal(true)}
+              <buttononClick={() = aria-label="Button"> { setShowCreateModal(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة نشاط
@@ -291,7 +288,7 @@ export default function CRMActivitiesPage() {
               </select>
             </div>
             <div className='flex items-end'>
-              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+              <buttonclassName='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
                 تطبيق الفلاتر
               </button>
             </div>
@@ -333,14 +330,14 @@ export default function CRMActivitiesPage() {
                     </div>
                   </div>
                   <div className='flex gap-2'>
-                    <button className='rounded bg-[var(--default-default)] px-3 py-1 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+                    <buttonclassName='rounded bg-[var(--default-default)] px-3 py-1 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="عرض">
                       عرض
                     </button>
-                    <button className='rounded border border-gray-300 px-3 py-1 text-sm text-gray-700 transition-colors hover:bg-surface'>
+                    <buttonclassName='rounded border border-gray-300 px-3 py-1 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="تعديل">
                       تعديل
                     </button>
                     {activity.status === 'pending' && (
-                      <button className='rounded bg-default-success px-3 py-1 text-sm text-white transition-colors hover:bg-green-700'>
+                      <buttonclassName='rounded bg-default-success px-3 py-1 text-sm text-white transition-colors hover:bg-green-700' aria-label="إكمال">
                         إكمال
                       </button>
                     )}
@@ -383,8 +380,7 @@ export default function CRMActivitiesPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة نشاط جديد</h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
+              <buttononClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -458,17 +454,14 @@ export default function CRMActivitiesPage() {
                 </div>
               </div>
               <div className='flex gap-3 pt-4'>
-                <button
-                  type='button'
-                  onClick={() => setShowCreateModal(false)}
+                <buttontype='button'
+                  onClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <button
-                  type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
-                >
+                <buttontype='submit'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة النشاط">
                   إضافة النشاط
                 </button>
               </div>

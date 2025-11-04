@@ -65,21 +65,21 @@ export const api = {
   get: <T = any>(endpoint: string, options?: RequestInit) =>
     api.request<T>(endpoint, { ...options, method: 'GET' }),
 
-  post: <T = any>(endpoint: string, data?: any, options?: RequestInit) =>
+  post: <T = any>(endpoint: string, data?: unknown, options?: RequestInit) =>
     api.request<T>(endpoint, {
       ...options,
       method: 'POST',
       body: data ? JSON.stringify(data) : null,
     }),
 
-  put: <T = any>(endpoint: string, data?: any, options?: RequestInit) =>
+  put: <T = any>(endpoint: string, data?: unknown, options?: RequestInit) =>
     api.request<T>(endpoint, {
       ...options,
       method: 'PUT',
       body: data ? JSON.stringify(data) : null,
     }),
 
-  patch: <T = any>(endpoint: string, data?: any, options?: RequestInit) =>
+  patch: <T = any>(endpoint: string, data?: unknown, options?: RequestInit) =>
     api.request<T>(endpoint, {
       ...options,
       method: 'PATCH',
@@ -105,7 +105,7 @@ export const addRequestInterceptor = (
 
 // Response interceptors
 export const addResponseInterceptor = (
-  onSuccess?: (response: any) => any,
+  onSuccess?: (response: unknown) => any,
   onError?: (error: ApiError) => any
 ) => {
   const originalRequest = api.request;

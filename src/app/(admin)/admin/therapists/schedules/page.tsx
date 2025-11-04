@@ -206,8 +206,7 @@ export default function TherapistSchedulesPage() {
                 <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
                   {dayName}
                 </h3>
-                <button
-                  onClick={() => addSchedule(dayIndex)}
+                <buttononClick={() = aria-label="Button"> { addSchedule(dayIndex)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { addSchedule(dayIndex) } }}
                   disabled={saving}
                   className='btn btn-outline text-sm'
                 >
@@ -277,8 +276,7 @@ export default function TherapistSchedulesPage() {
                         </span>
                       </label>
 
-                      <button
-                        onClick={() => deleteSchedule(schedule.id)}
+                      <buttononClick={() = aria-label="Button"> { deleteSchedule(schedule.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { deleteSchedule(schedule.id) } }}
                         className='mr-auto text-red-600 hover:text-red-700 text-sm'
                       >
                         حذف

@@ -7,6 +7,8 @@ import {
 } from '@/lib/validation/schemas';
 import { getClientInfo } from '@/lib/utils/request-helpers';
 
+export const revalidate = 60;
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }

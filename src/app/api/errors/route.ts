@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const errorData = await request.json();
 
     const supabase = await createClient();
@@ -19,6 +29,10 @@ export async function POST(request: NextRequest) {
     });
 
     if (error) {
+      return NextResponse.json(
+        { error: 'Failed to store error log' },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ success: true });
@@ -30,8 +44,19 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest) {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '50');
     const offset = parseInt(searchParams.get('offset') || '0');

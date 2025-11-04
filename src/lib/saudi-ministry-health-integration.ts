@@ -381,7 +381,7 @@ export class SaudiMinistryHealthIntegration {
   }
 
   // Utility Functions
-  private mapSehaToHealthRecord(sehaData: any): MinistryHealthRecord {
+  private mapSehaToHealthRecord(sehaData: unknown): MinistryHealthRecord {
     return {
       nationalId: sehaData.nationalId,
       fullName: sehaData.fullName,
@@ -427,11 +427,11 @@ export class SaudiMinistryHealthIntegration {
     return saudiPhoneRegex.test(phone);
   }
 
-  private isValidSaudiAddress(address: any): boolean {
+  private isValidSaudiAddress(address: unknown): boolean {
     return !!(address.city && address.district && address.street);
   }
 
-  private isValidInsuranceData(insurance: any): boolean {
+  private isValidInsuranceData(insurance: unknown): boolean {
     return !!(
       insurance.provider &&
       insurance.policyNumber &&
@@ -439,7 +439,7 @@ export class SaudiMinistryHealthIntegration {
     );
   }
 
-  private isValidMedicalHistory(medicalHistory: any): boolean {
+  private isValidMedicalHistory(medicalHistory: unknown): boolean {
     return (
       Array.isArray(medicalHistory.chronicConditions) &&
       Array.isArray(medicalHistory.allergies) &&

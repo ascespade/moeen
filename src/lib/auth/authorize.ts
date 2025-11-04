@@ -24,9 +24,12 @@ export interface AuthResult {
 
 export async function authorize(request: NextRequest): Promise<AuthResult> {
   try {
-    // First: check for our JWT auth-token cookie
+    // First: check for our JWT auth_token cookie (supports both names for compatibility)
     try {
-      const token = request.cookies?.get?.('auth-token')?.value || null;
+      const token =
+        request.cookies?.get?.('auth_token')?.value ||
+        request.cookies?.get?.('auth-token')?.value ||
+        null;
       if (token) {
         const jwtSecret = process.env.JWT_SECRET;
         if (jwtSecret) {
@@ -45,7 +48,6 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
             };
           } catch (e) {
             // invalid token - fallthrough to supabase session
-            console.warn('[authorize] invalid auth-token JWT', e);
           }
         }
       }
@@ -86,65 +88,72 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
 
     try {
       // Try simpler query first (without nested joins that might hang)
-      const rolePermsResult = await Promise.race([
+      const rolePermsResult = (await Promise.race([
         supabase
           .from('user_roles')
           .select('role_id')
           .eq('user_id', userData.id)
           .eq('is_active', true)
           .maybeSingle(),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 3000))
-      ]) as any;
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('timeout')), 3000)
+        ),
+      ])) as any;
 
       rolePerms = rolePermsResult?.data;
 
       // If we got a role_id, try to get permissions
       if (rolePerms?.role_id) {
         try {
-          const permResult = await Promise.race([
+          const permResult = (await Promise.race([
             supabase
               .from('role_permissions')
               .select('permission_id, permissions:permission_id(code)')
               .eq('role_id', rolePerms.role_id),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000))
-          ]) as any;
+            new Promise((_, reject) =>
+              setTimeout(() => reject(new Error('timeout')), 2000)
+            ),
+          ])) as any;
 
           rolePerms = { role_permissions: permResult?.data || [] };
         } catch (e) {
-          console.warn('[authorize] Failed to fetch role permissions:', e);
           rolePerms = null;
         }
       }
     } catch (e) {
-      console.warn('[authorize] Failed to fetch user_roles:', e);
       rolePerms = null;
     }
 
     try {
-      const userPermsResult = await Promise.race([
+      const userPermsResult = (await Promise.race([
         supabase
           .from('user_permissions')
           .select('permission_id, permissions:permission_id(code)')
           .eq('user_id', userData.id)
           .eq('is_active', true),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 2000))
-      ]) as any;
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('timeout')), 2000)
+        ),
+      ])) as any;
 
       userPerms = userPermsResult?.data || [];
     } catch (e) {
-      console.warn('[authorize] Failed to fetch user_permissions:', e);
       userPerms = [];
     }
 
-    let codes = new Set<string>();
+    const codes = new Set<string>();
 
     try {
       // Handle rolePerms - could be single object or array
       if (rolePerms) {
-        const rolePermsArray = Array.isArray(rolePerms) ? rolePerms : [rolePerms];
+        const rolePermsArray = Array.isArray(rolePerms)
+          ? rolePerms
+          : [rolePerms];
         rolePermsArray.forEach((rp: any) => {
           if (rp?.role_permissions) {
-            const permArray = Array.isArray(rp.role_permissions) ? rp.role_permissions : [rp.role_permissions];
+            const permArray = Array.isArray(rp.role_permissions)
+              ? rp.role_permissions
+              : [rp.role_permissions];
             permArray.forEach((x: any) => {
               if (x?.permissions?.code) codes.add(x.permissions.code);
             });
@@ -153,19 +162,25 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
       }
 
       // Handle userPerms
-      const userPermsArray = Array.isArray(userPerms) ? userPerms : (userPerms ? [userPerms] : []);
+      const userPermsArray = Array.isArray(userPerms)
+        ? userPerms
+        : userPerms
+          ? [userPerms]
+          : [];
       userPermsArray.forEach((up: any) => {
         if (up?.permissions?.code) codes.add(up.permissions.code);
       });
     } catch (error) {
-      console.warn('[authorize] Error processing permissions:', error);
+      // Error processing permissions - continue with fallback
     }
 
     // Fallback: If no permissions found, use PermissionManager
     if (codes.size === 0 && userData.role) {
       try {
         const { PermissionManager } = await import('@/lib/permissions');
-        const rolePermsList = PermissionManager.getRolePermissions(userData.role);
+        const rolePermsList = PermissionManager.getRolePermissions(
+          userData.role
+        );
         if (Array.isArray(rolePermsList)) {
           rolePermsList.forEach((p: string) => codes.add(p));
         } else {
@@ -178,7 +193,6 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
           }
         }
       } catch (e) {
-        console.warn('[authorize] PermissionManager fallback failed:', e);
         // Ultimate fallback: basic permissions based on role
         if (userData.role === 'admin' || userData.role === 'manager') {
           codes.add('dashboard:view');

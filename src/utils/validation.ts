@@ -55,7 +55,7 @@ export const isValidUuid = (uuid: string): boolean => {
   return uuidRegex.test(uuid);
 };
 
-export const isNotEmpty = (value: any): boolean => {
+export const isNotEmpty = (value: unknown): boolean => {
   if (typeof value === 'string') {
     return value.trim().length > 0;
   }
@@ -68,11 +68,11 @@ export const isNotEmpty = (value: any): boolean => {
   return value !== null && value !== undefined;
 };
 
-export const isNumeric = (value: any): boolean => {
+export const isNumeric = (value: unknown): boolean => {
   return !isNaN(parseFloat(value)) && isFinite(value);
 };
 
-export const isInteger = (value: any): boolean => {
+export const isInteger = (value: unknown): boolean => {
   return Number.isInteger(Number(value));
 };
 
@@ -98,7 +98,10 @@ export const matchesPattern = (value: string, pattern: RegExp): boolean => {
 
 export const validateForm = <T extends Record<string, any>>(
   data: T,
-  rules: Record<keyof T, (value: any) => { isValid: boolean; error?: string }>
+  rules: Record<
+    keyof T,
+    (value: unknown) => { isValid: boolean; error?: string }
+  >
 ): { isValid: boolean; errors: Record<keyof T, string> } => {
   const errors: Record<keyof T, string> = {} as Record<keyof T, string>;
   let isValid = true;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
 
 // Fallback messages when database is not available
 function getFallbackMessages(locale: string, ns: string) {
@@ -72,6 +73,8 @@ function getFallbackMessages(locale: string, ns: string) {
     source: 'fallback',
   });
 }
+
+export const revalidate = 60;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

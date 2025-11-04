@@ -2,12 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // Only staff, supervisor, and admin can access reports
@@ -88,38 +98,45 @@ export async function GET(request: NextRequest) {
 
     // Calculate metrics
     const totalPatients = patients?.length || 0;
-    const activatedPatients = patients?.filter(p => p.activated).length || 0;
+    const activatedPatients =
+      patients?.filter((p: unknown) => p.activated).length || 0;
     const newPatients = patients?.length || 0;
 
     const totalAppointments = appointments?.length || 0;
     const completedAppointments =
-      appointments?.filter(a => a.status === 'completed').length || 0;
+      appointments?.filter((a: unknown) => a.status === 'completed').length ||
+      0;
     const cancelledAppointments =
-      appointments?.filter(a => a.status === 'cancelled').length || 0;
+      appointments?.filter((a: unknown) => a.status === 'cancelled').length ||
+      0;
     const upcomingAppointments =
       appointments?.filter(
-        a => a.status === 'pending' || a.status === 'confirmed'
+        (a: unknown) => a.status === 'pending' || a.status === 'confirmed'
       ).length || 0;
 
     const totalRevenue =
       payments
-        ?.filter(p => p.status === 'completed')
-        .reduce((sum, p) => sum + parseFloat(p.amount.toString()), 0) || 0;
+        ?.filter((p: unknown) => p.status === 'completed')
+        .reduce(
+          (sum: number, p: unknown) => sum + parseFloat(p.amount.toString()),
+          0
+        ) || 0;
 
     const pendingPayments =
-      payments?.filter(p => p.status === 'pending').length || 0;
+      payments?.filter((p: unknown) => p.status === 'pending').length || 0;
     const completedPayments =
-      payments?.filter(p => p.status === 'completed').length || 0;
+      payments?.filter((p: unknown) => p.status === 'completed').length || 0;
 
     const totalClaims = claims?.length || 0;
     const approvedClaims =
-      claims?.filter(c => c.claim_status === 'approved').length || 0;
+      claims?.filter((c: unknown) => c.claim_status === 'approved').length || 0;
     const pendingClaims =
       claims?.filter(
-        c => c.claim_status === 'pending' || c.claim_status === 'submitted'
+        (c: unknown) =>
+          c.claim_status === 'pending' || c.claim_status === 'submitted'
       ).length || 0;
     const rejectedClaims =
-      claims?.filter(c => c.claim_status === 'rejected').length || 0;
+      claims?.filter((c: unknown) => c.claim_status === 'rejected').length || 0;
 
     // Calculate conversion rates
     const activationRate =
@@ -134,7 +151,7 @@ export async function GET(request: NextRequest) {
     // Payment method breakdown
     const paymentMethods =
       payments?.reduce(
-        (acc, payment) => {
+        (acc: unknown, payment: unknown) => {
           const method = payment.method;
           acc[method] = (acc[method] || 0) + 1;
           return acc;
@@ -145,9 +162,9 @@ export async function GET(request: NextRequest) {
     // Daily statistics for charts
     const dailyStats: Array<{
       date: string;
-      patients: any;
-      appointments: any;
-      revenue: any;
+      patients: unknown;
+      appointments: unknown;
+      revenue: unknown;
     }> = [];
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
       const dayStart = new Date(d);
@@ -156,20 +173,20 @@ export async function GET(request: NextRequest) {
       dayEnd.setHours(23, 59, 59, 999);
 
       const dayPatients =
-        patients?.filter(p => {
+        patients?.filter((p: unknown) => {
           const created = new Date(p.created_at);
           return created >= dayStart && created <= dayEnd;
         }).length || 0;
 
       const dayAppointments =
-        appointments?.filter(a => {
+        appointments?.filter((a: unknown) => {
           const scheduled = new Date(a.scheduled_at);
           return scheduled >= dayStart && scheduled <= dayEnd;
         }).length || 0;
 
       const dayRevenue =
         payments
-          ?.filter(p => {
+          ?.filter((p: unknown) => {
             const created = new Date(p.created_at);
             return (
               created >= dayStart &&
@@ -177,7 +194,10 @@ export async function GET(request: NextRequest) {
               p.status === 'completed'
             );
           })
-          .reduce((sum, p) => sum + parseFloat(p.amount.toString()), 0) || 0;
+          .reduce(
+            (sum: number, p: unknown) => sum + parseFloat(p.amount.toString()),
+            0
+          ) || 0;
 
       dailyStats.push({
         date: d.toISOString().split('T')[0] || '',

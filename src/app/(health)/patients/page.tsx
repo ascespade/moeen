@@ -119,7 +119,7 @@ export default function PatientsPage() {
 
         // Transform data to include stats
         const patientsWithStats: PatientWithStats[] = (patientsData || []).map(
-          patient => ({
+          (patient: any) => ({
             ...patient,
             name: `${patient.first_name} ${patient.last_name}`,
             age: patient.date_of_birth
@@ -265,8 +265,7 @@ export default function PatientsPage() {
         <div className='text-center'>
           <div className='text-default-error text-xl mb-4'>⚠️</div>
           <p className='text-gray-600'>{error}</p>
-          <button
-            onClick={() => window.location.reload()}
+          <buttononClick={() = aria-label="Button"> { window.location.reload()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
             className='mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
           >
             إعادة المحاولة
@@ -337,7 +336,7 @@ export default function PatientsPage() {
 
         {/* Patients Grid */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {filteredPatients.map(patient => (
+          {filteredPatients.map((patient: any) => (
             <div
               key={patient.id}
               className='bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow'

@@ -6,6 +6,7 @@ import PrelineInit from '@/components/preline/PrelineInit';
 import '@/styles/centralized.css';
 import type { Metadata } from 'next';
 import ScrollRestoration from './scroll-restoration';
+import { NotificationToast } from '@/components/ui/NotificationToast';
 
 // Force dynamic rendering for all pages
 export const dynamic = 'force-dynamic';
@@ -71,12 +72,14 @@ export default function RootLayout({
       <body
         className='antialiased bg-background text-foreground font-sans'
         suppressHydrationWarning
+        role="application"
       >
         <ThemeProvider>
           <DesignSystemProvider initialConfig={{ spacing: 'compact' }}>
             <I18nProvider>
               <ScrollRestoration />
               <PrelineInit />
+              <NotificationToast />
               {children}
             </I18nProvider>
           </DesignSystemProvider>

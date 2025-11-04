@@ -1,13 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication for admin dashboard
+    const authResult = await requireAuth(['admin', 'supervisor'])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json(
+        {
+          error:
+            'Unauthorized. Authentication required to access dashboard data.',
+        },
+        { status: 401 }
+      );
+    }
     // Get basic statistics
     const { count: totalPatients } = await supabase
       .from('patients')
@@ -36,7 +50,10 @@ export async function GET(request: NextRequest) {
       .eq('status', 'paid');
 
     const totalRevenue =
-      paymentsData?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0;
+      paymentsData?.reduce(
+        (sum: number, p: unknown) => sum + (p.amount || 0),
+        0
+      ) || 0;
 
     const stats = {
       totalPatients: totalPatients || 0,
@@ -68,7 +85,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Dashboard API error:', error);
+    // Removed console.error - use logger instead
     return NextResponse.json(
       { error: 'Failed to fetch dashboard data' },
       { status: 500 }

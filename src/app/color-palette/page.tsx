@@ -56,20 +56,24 @@ const colorPalette = [
 ];
 
 export default function ColorPalettePage() {
-  const [computedColors, setComputedColors] = useState<Record<string, string>>({});
+  const [computedColors, setComputedColors] = useState<Record<string, string>>(
+    {}
+  );
 
   useEffect(() => {
     // Get computed values of CSS variables
     const root = document.documentElement;
     const computed: Record<string, string> = {};
-    
+
     colorPalette.forEach(color => {
       if (color.cssVar) {
-        const computedValue = getComputedStyle(root).getPropertyValue(color.cssVar).trim();
+        const computedValue = getComputedStyle(root)
+          .getPropertyValue(color.cssVar)
+          .trim();
         computed[color.cssVar] = computedValue || color.value;
       }
     });
-    
+
     setComputedColors(computed);
   }, []);
 
@@ -97,7 +101,11 @@ export default function ColorPalettePage() {
                 <div className='flex items-center gap-4 mb-4'>
                   <div
                     className='w-16 h-16 rounded-lg shadow-md'
-                    style={{ backgroundColor: color.cssVar ? computedColors[color.cssVar] || color.value : color.value }}
+                    style={{
+                      backgroundColor: color.cssVar
+                        ? computedColors[color.cssVar] || color.value
+                        : color.value,
+                    }}
                   ></div>
                   <div>
                     <h3 className='text-lg font-bold text-foreground'>
@@ -107,7 +115,9 @@ export default function ColorPalettePage() {
                       {color.cssVar || 'N/A'}
                     </p>
                     <p className='text-sm text-muted-foreground font-mono'>
-                      {color.cssVar ? computedColors[color.cssVar] || 'جاري التحميل...' : color.value}
+                      {color.cssVar
+                        ? computedColors[color.cssVar] || 'جاري التحميل...'
+                        : color.value}
                     </p>
                   </div>
                 </div>

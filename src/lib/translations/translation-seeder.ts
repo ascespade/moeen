@@ -749,7 +749,12 @@ class TranslationSeeder {
         en: 'Previous',
         module: 'common',
       },
-      { key: 'common.excellent', ar: 'ممتاز', en: 'Excellent', module: 'common' },
+      {
+        key: 'common.excellent',
+        ar: 'ممتاز',
+        en: 'Excellent',
+        module: 'common',
+      },
       { key: 'common.good', ar: 'جيد', en: 'Good', module: 'common' },
       {
         key: 'common.needs_improvement',

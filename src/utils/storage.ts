@@ -17,7 +17,7 @@ export const storage = {
 
     try {
       localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {}
+    } catch (error) { console.error(error); }
   },
 
   remove: (key: string): void => {
@@ -25,7 +25,7 @@ export const storage = {
 
     try {
       localStorage.removeItem(key);
-    } catch (error) {}
+    } catch (error) { console.error(error); }
   },
 
   clear: (): void => {
@@ -33,7 +33,7 @@ export const storage = {
 
     try {
       localStorage.clear();
-    } catch (error) {}
+    } catch (error) { console.error(error); }
   },
 
   // Session Storage
@@ -53,7 +53,7 @@ export const storage = {
 
     try {
       sessionStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {}
+    } catch (error) { console.error(error); }
   },
 
   removeSession: (key: string): void => {
@@ -61,7 +61,7 @@ export const storage = {
 
     try {
       sessionStorage.removeItem(key);
-    } catch (error) {}
+    } catch (error) { console.error(error); }
   },
 
   clearSession: (): void => {
@@ -69,7 +69,7 @@ export const storage = {
 
     try {
       sessionStorage.clear();
-    } catch (error) {}
+    } catch (error) { console.error(error); }
   },
 };
 
@@ -87,7 +87,7 @@ export const STORAGE_KEYS = {
 
 // Storage helpers
 export const getUser = () => storage.get(STORAGE_KEYS.USER);
-export const setUser = (user: any) => storage.set(STORAGE_KEYS.USER, user);
+export const setUser = (user: unknown) => storage.set(STORAGE_KEYS.USER, user);
 export const removeUser = () => storage.remove(STORAGE_KEYS.USER);
 
 export const getToken = () => storage.get(STORAGE_KEYS.TOKEN);
@@ -110,7 +110,7 @@ export const setLanguage = (language: string) =>
   storage.set(STORAGE_KEYS.LANGUAGE, language);
 
 export const getSettings = () => storage.get(STORAGE_KEYS.SETTINGS);
-export const setSettings = (settings: any) =>
+export const setSettings = (settings: unknown) =>
   storage.set(STORAGE_KEYS.SETTINGS, settings);
 
 export const clearAuth = () => {

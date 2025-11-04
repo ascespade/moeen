@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const insuranceClaimSchema = z.object({
   patient_id: z.string().uuid('Invalid patient ID'),
@@ -14,8 +15,42 @@ const insuranceClaimSchema = z.object({
   status: z.string().optional(),
 });
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth([
+      'admin',
+      'staff',
+      'doctor',
+      'supervisor',
+    ])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // Check permissions using PermissionManager
+    const { PermissionManager } = await import('@/lib/permissions');
+    const canRead = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'insurance-claims',
+      'read',
+      {
+        userId: authResult.user.id,
+      }
+    );
+
+    if (!canRead) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId') || '';
     const status = searchParams.get('status') || '';
@@ -32,7 +67,7 @@ export async function GET(request: NextRequest) {
 
     // Filter by status if provided
     if (status) {
-      claims = claims.filter((claim: any) => claim.status === status);
+      claims = claims.filter((claim: unknown) => claim.status === status);
     }
 
     // Apply pagination
@@ -59,7 +94,35 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['doctor', 'staff', 'admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
+
+    // Check permissions using PermissionManager
+    const { PermissionManager } = await import('@/lib/permissions');
+    const canCreate = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'insurance-claims',
+      'create',
+      {
+        userId: authResult.user.id,
+        resourceOwnerId: body.patient_id, // Check if doctor can create claim for patient
+      }
+    );
+
+    if (!canCreate) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
     const validation = insuranceClaimSchema.safeParse(body);
 
     if (!validation.success) {

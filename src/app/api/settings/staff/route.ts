@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -7,8 +8,19 @@ const supabase = createClient(
 );
 
 // API لجلب الموظفين
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const department = searchParams.get('department');
     const status = searchParams.get('status') || 'active';
@@ -54,7 +66,15 @@ export async function GET(request: NextRequest) {
     const { data, error } = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     return NextResponse.json({ staff: data });
@@ -67,8 +87,17 @@ export async function GET(request: NextRequest) {
 }
 
 // API لإضافة موظف جديد (للمدراء فقط)
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const {
       user_id,
@@ -129,7 +158,15 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     return NextResponse.json({ success: true, data });
@@ -142,13 +179,30 @@ export async function POST(request: NextRequest) {
 }
 
 // API لتحديث موظف (للمدراء فقط)
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { id, ...updateData } = body;
 
     if (!id) {
-      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'ID is required' },
+        {
+          status: 400,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const { data, error } = await supabase
@@ -162,7 +216,15 @@ export async function PUT(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     return NextResponse.json({ success: true, data });
@@ -175,13 +237,30 @@ export async function PUT(request: NextRequest) {
 }
 
 // API لحذف موظف (للمدراء فقط)
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
     if (!id) {
-      return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'ID is required' },
+        {
+          status: 400,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const { error } = await supabase
@@ -190,7 +269,15 @@ export async function DELETE(request: NextRequest) {
       .eq('id', id);
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     return NextResponse.json({ success: true });

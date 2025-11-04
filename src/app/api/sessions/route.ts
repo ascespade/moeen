@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
+import { requireAuth } from '@/lib/auth/authorize';
+import { PermissionManager } from '@/lib/permissions';
 
 const sessionSchema = z.object({
   patient_id: z.string().uuid('Invalid patient ID'),
@@ -15,8 +17,19 @@ const sessionSchema = z.object({
   insurance_claim_number: z.string().optional(),
 });
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId') || '';
     const doctorId = searchParams.get('doctorId') || '';

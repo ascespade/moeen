@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { logger } from '@/lib/logger';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,14 +9,22 @@ const supabase = createClient(
 );
 
 // POST /api/webhook/whatsapp - استقبال رسائل WhatsApp
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
 
     // التحقق من صحة الطلب
     const verifyToken = request.headers.get('x-verify-token');
     if (verifyToken !== process.env.WHATSAPP_VERIFY_TOKEN) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // معالجة رسائل WhatsApp
@@ -41,20 +50,29 @@ export async function POST(request: NextRequest) {
 }
 
 // GET /api/webhook/whatsapp - التحقق من webhook
+export const revalidate = 60;
+
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const mode = searchParams.get('hub.mode');
-  const token = searchParams.get('hub.verify_token');
-  const challenge = searchParams.get('hub.challenge');
+  try {
+    // التحقق من webhook (no auth required for webhook verification)
+    const mode = request.nextUrl.searchParams.get('hub.mode');
+    const token = request.nextUrl.searchParams.get('hub.verify_token');
+    const challenge = request.nextUrl.searchParams.get('hub.challenge');
 
-  if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
-    return new NextResponse(challenge);
+    if (mode === 'subscribe' && token === process.env.WHATSAPP_VERIFY_TOKEN) {
+      return new NextResponse(challenge, { status: 200 });
+    }
+
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
-
-  return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
 }
 
-async function processWhatsAppMessage(message: any, value: any) {
+async function processWhatsAppMessage(message: unknown, value: unknown) {
   try {
     const phoneNumber = message.from;
     const messageText = message.text?.body || '';

@@ -56,7 +56,7 @@ export interface SlackNotification {
     | 'emergency_alert';
   recipient: string;
   message: string;
-  data?: any;
+  data?: unknown;
   priority: 'low' | 'medium' | 'high' | 'urgent';
 }
 
@@ -100,7 +100,7 @@ export class SlackIntegration {
       });
 
       if (response.ok && response.channels) {
-        response.channels.forEach((channel: any) => {
+        response.channels.forEach((channel: unknown) => {
           this.channels.set(channel.id, {
             id: channel.id,
             name: channel.name,
@@ -128,7 +128,7 @@ export class SlackIntegration {
       });
 
       if (response.ok && response.members) {
-        response.members.forEach((user: any) => {
+        response.members.forEach((user: unknown) => {
           this.users.set(user.id, {
             id: user.id,
             name: user.name,
@@ -181,8 +181,8 @@ export class SlackIntegration {
   async sendAppointmentNotification(
     appointmentId: string,
     type: 'created' | 'confirmed' | 'cancelled' | 'reminder',
-    appointment: any,
-    doctor: any,
+    appointment: unknown,
+    doctor: unknown,
     patient: any
   ): Promise<void> {
     try {
@@ -292,9 +292,9 @@ export class SlackIntegration {
 
   // Create appointment blocks for Slack
   private createAppointmentBlocks(
-    appointment: any,
-    doctor: any,
-    patient: any,
+    appointment: unknown,
+    doctor: unknown,
+    patient: unknown,
     status: string
   ): any[] {
     const statusEmoji = {
@@ -408,7 +408,7 @@ export class SlackIntegration {
   }
 
   // Handle Slack events
-  async handleSlackEvent(event: any): Promise<void> {
+  async handleSlackEvent(event: unknown): Promise<void> {
     try {
       switch (event.type) {
         case 'message':
@@ -426,7 +426,7 @@ export class SlackIntegration {
   }
 
   // Handle incoming messages
-  private async handleMessage(event: any): Promise<void> {
+  private async handleMessage(event: unknown): Promise<void> {
     // Skip bot messages and messages without text
     if (event.bot_id || !event.text) return;
 
@@ -441,12 +441,12 @@ export class SlackIntegration {
   }
 
   // Handle app mentions
-  private async handleAppMention(event: any): Promise<void> {
+  private async handleAppMention(event: unknown): Promise<void> {
     // Handle when the bot is mentioned
   }
 
   // Handle interactive messages (button clicks, etc.)
-  private async handleInteractiveMessage(event: any): Promise<void> {
+  private async handleInteractiveMessage(event: unknown): Promise<void> {
     const action = event.actions[0];
 
     switch (action.action_id) {
@@ -460,7 +460,7 @@ export class SlackIntegration {
   }
 
   // Handle doctor response
-  private async handleDoctorResponse(event: any): Promise<void> {
+  private async handleDoctorResponse(event: unknown): Promise<void> {
     // Extract appointment and patient info from thread context
     // Send response back to patient via appropriate channel
   }

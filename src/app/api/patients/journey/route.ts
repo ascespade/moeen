@@ -40,7 +40,7 @@ const fileAccessSchema = z.object({
   accessReason: z.string().min(1, 'Access reason required'),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const supabase = await createClient();
     const body = await request.json();
@@ -57,11 +57,11 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-async function activatePatient(request: NextRequest, body: any) {
+async function activatePatient(request: NextRequest, body: unknown) {
   try {
     // Authorize staff, supervisor, or admin
     const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(
@@ -149,11 +149,11 @@ async function activatePatient(request: NextRequest, body: any) {
       message: 'Patient activated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-async function updateChecklist(request: NextRequest, body: any) {
+async function updateChecklist(request: NextRequest, body: unknown) {
   try {
     // Authorize patient, staff, or admin
     const authResult = await requireAuth(['patient', 'staff', 'admin'])(
@@ -200,7 +200,7 @@ async function updateChecklist(request: NextRequest, body: any) {
         patientId,
         appointmentId,
         checklistItems,
-        completedAt: checklistItems.every((item: any) => item.completed)
+        completedAt: checklistItems.every((item: unknown) => item.completed)
           ? new Date().toISOString()
           : null,
         updatedBy: authResult.user!.id,
@@ -224,7 +224,7 @@ async function updateChecklist(request: NextRequest, body: any) {
       metadata: {
         patientId,
         appointmentId,
-        completedItems: checklistItems.filter((item: any) => item.completed)
+        completedItems: checklistItems.filter((item: unknown) => item.completed)
           .length,
         totalItems: checklistItems.length,
       },
@@ -236,11 +236,11 @@ async function updateChecklist(request: NextRequest, body: any) {
       message: 'Checklist updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-async function requestFileAccess(request: NextRequest, body: any) {
+async function requestFileAccess(request: NextRequest, body: unknown) {
   try {
     // Authorize patient, staff, or admin
     const authResult = await requireAuth(['patient', 'staff', 'admin'])(
@@ -351,11 +351,11 @@ async function requestFileAccess(request: NextRequest, body: any) {
       message: 'File access granted',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-async function createPatientFile(patientId: string, supabase: any) {
+async function createPatientFile(patientId: string, supabase: unknown) {
   // Create initial patient file structure
   const { error } = await supabase.from('patient_files').insert({
     patientId,
@@ -370,7 +370,7 @@ async function createPatientFile(patientId: string, supabase: any) {
   }
 }
 
-async function sendActivationNotification(patient: any, supabase: any) {
+async function sendActivationNotification(patient: unknown, supabase: unknown) {
   // Send activation notification to patient
   await supabase.from('notifications').insert({
     type: 'patient_activated',

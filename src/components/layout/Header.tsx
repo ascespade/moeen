@@ -63,7 +63,7 @@ export default function Header() {
             >
               Contact
             </Link>
-          </nav>
+          </div>
 
           {/* CTA Buttons */}
           <div className='hidden md:flex items-center space-x-4'>
@@ -81,12 +81,11 @@ export default function Header() {
             >
               Get Started
             </Link>
-          </div>
+          </nav>
 
           {/* Mobile menu button */}
-          <button
-            className='md:hidden p-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors'
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          <buttonclassName='md:hidden p-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors'
+            onClick={() => { setIsMenuOpen(!isMenuOpen)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsMenuOpen(!isMenuOpen) } }}
           >
             <svg
               className='w-6 h-6'
@@ -169,7 +168,7 @@ export default function Header() {
                 >
                   Get Started
                 </Link>
-              </div>
+              </nav>
             </nav>
           </div>
         )}

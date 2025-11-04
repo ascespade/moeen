@@ -34,7 +34,7 @@ const registerSchema = z
     path: ['confirmPassword'],
   });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
 
   try {

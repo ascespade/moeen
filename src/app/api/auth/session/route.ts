@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Get token from cookie
     const token = request.cookies.get('auth_token')?.value;
@@ -15,7 +17,7 @@ export async function GET(request: NextRequest) {
     // Decode token (simplified - use JWT in production)
     try {
       const decoded = JSON.parse(atob(token));
-      
+
       return NextResponse.json({
         success: true,
         data: {

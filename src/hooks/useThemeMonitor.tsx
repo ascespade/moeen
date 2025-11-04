@@ -6,7 +6,10 @@
 'use client';
 
 import { analyzeComponentStyles } from '@/lib/color-intelligence';
-import { loadThemeSettings, type AdvancedThemeSettings } from '@/lib/theme-settings';
+import {
+  loadThemeSettings,
+  type AdvancedThemeSettings,
+} from '@/lib/theme-settings';
 import { useCallback, useEffect, useRef } from 'react';
 
 export interface ThemeMonitorOptions {
@@ -50,12 +53,38 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
 
       // Skip known noisy elements
       if (element.tagName === 'SVG' || element.closest('svg')) return;
-      if (element.tagName === 'A' && element.classList.contains('group')) return;
+      if (element.tagName === 'A' && element.classList.contains('group'))
+        return;
 
       // Skip non-interactive text elements - don't add shadows or borders to them
-      const isTextElement = ['P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'SPAN', 'LABEL', 'LI', 'SECTION', 'ARTICLE', 'HEADER', 'FOOTER', 'MAIN', 'ASIDE'].includes(element.tagName);
-      const isInteractive = element.tagName === 'BUTTON' || element.tagName === 'A' || element.tagName === 'INPUT' || element.tagName === 'TEXTAREA' || element.tagName === 'SELECT' || element.getAttribute('role') === 'button' || element.getAttribute('role') === 'link' || element.getAttribute('tabindex') !== null;
-      
+      const isTextElement = [
+        'P',
+        'H1',
+        'H2',
+        'H3',
+        'H4',
+        'H5',
+        'H6',
+        'SPAN',
+        'LABEL',
+        'LI',
+        'SECTION',
+        'ARTICLE',
+        'HEADER',
+        'FOOTER',
+        'MAIN',
+        'ASIDE',
+      ].includes(element.tagName);
+      const isInteractive =
+        element.tagName === 'BUTTON' ||
+        element.tagName === 'A' ||
+        element.tagName === 'INPUT' ||
+        element.tagName === 'TEXTAREA' ||
+        element.tagName === 'SELECT' ||
+        element.getAttribute('role') === 'button' ||
+        element.getAttribute('role') === 'link' ||
+        element.getAttribute('tabindex') !== null;
+
       // Don't apply shadow or other visual adjustments to non-interactive text elements
       if (isTextElement && !isInteractive) {
         return;
@@ -93,20 +122,30 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
             if (element.className) {
               if (typeof element.className === 'string') {
                 classNameStr = element.className.split(' ')[0] || '';
-              } else if (typeof element.className === 'object' && 'baseVal' in element.className) {
+              } else if (
+                typeof element.className === 'object' &&
+                'baseVal' in element.className
+              ) {
                 // SVGAnimatedString case
-                classNameStr = (element.className as any).baseVal?.split(' ')[0] || '';
-              } else if (typeof element.className === 'object' && 'value' in element.className) {
-                classNameStr = (element.className as any).value?.split(' ')[0] || '';
+                classNameStr =
+                  (element.className as any).baseVal?.split(' ')[0] || '';
+              } else if (
+                typeof element.className === 'object' &&
+                'value' in element.className
+              ) {
+                classNameStr =
+                  (element.className as any).value?.split(' ')[0] || '';
               }
             }
           } catch (e) {
             // Ignore className errors
           }
-          
+
           const report: ThemeAdjustmentReport = {
             timestamp: new Date(),
-            component: element.tagName.toLowerCase() + (classNameStr ? `.${classNameStr}` : ''),
+            component:
+              element.tagName.toLowerCase() +
+              (classNameStr ? `.${classNameStr}` : ''),
             adjustments: analysis.adjustments,
             contrastRatio: analysis.contrastRatio,
             meetsStandard: analysis.meetsStandard,
@@ -136,8 +175,9 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
     }
 
     // Scan all elements with data-theme-auto attribute
-    const elementsToCheck = document.querySelectorAll<HTMLElement>('[data-theme-auto]');
-    elementsToCheck.forEach((element) => {
+    const elementsToCheck =
+      document.querySelectorAll<HTMLElement>('[data-theme-auto]');
+    elementsToCheck.forEach(element => {
       applyThemeAdjustments(element);
     });
 
@@ -150,10 +190,10 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
       '[class*="bg-"]',
     ];
 
-    commonSelectors.forEach((selector) => {
+    commonSelectors.forEach(selector => {
       try {
         const elements = document.querySelectorAll<HTMLElement>(selector);
-        elements.forEach((element) => {
+        elements.forEach(element => {
           // Only adjust if element is visible
           if (element.offsetParent !== null) {
             applyThemeAdjustments(element);
@@ -175,16 +215,17 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
 
     // Set up MutationObserver to watch for new components
     if (settingsRef.current.themeManagement.colorIntelligence.realTimeUpdate) {
-      observerRef.current = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-          mutation.addedNodes.forEach((node) => {
+      observerRef.current = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+          mutation.addedNodes.forEach(node => {
             if (node.nodeType === Node.ELEMENT_NODE) {
               const element = node as HTMLElement;
               applyThemeAdjustments(element);
 
               // Also check children
-              const children = element.querySelectorAll<HTMLElement>('[data-theme-auto]');
-              children.forEach((child) => {
+              const children =
+                element.querySelectorAll<HTMLElement>('[data-theme-auto]');
+              children.forEach(child => {
                 applyThemeAdjustments(child);
               });
             }
@@ -227,4 +268,3 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
     reports: reportsRef.current,
   };
 }
-

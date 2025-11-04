@@ -86,12 +86,15 @@ export function ThemeSwitch({
         <Sun
           className={`${iconSizes[size]} ${isLight ? 'text-[var(--brand-primary)]' : 'text-[var(--text-tertiary)]'}`}
         />
-        <button
-          onClick={() => {
+        <buttononClick={() = aria-label="Button"> { {
             if (theme === 'light') setTheme('dark');
             else if (theme === 'dark') setTheme('system');
             else setTheme('light');
-          }}
+          } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
+            if (theme === 'light') setTheme('dark');
+            else if (theme === 'dark') setTheme('system');
+            else setTheme('light');
+           } }}}
           className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${
             isDark ? 'bg-[var(--brand-primary)]' : 'bg-[var(--brand-border)]'
           }`}
@@ -126,7 +129,7 @@ export function ThemeSwitch({
           {/* Backdrop */}
           <div
             className='fixed inset-0 z-10'
-            onClick={() => setIsOpen(false)}
+            tabIndex={0} onClick={() => setIsOpen(false)}
           />
 
           {/* Dropdown */}
@@ -137,12 +140,14 @@ export function ThemeSwitch({
                 const isSelected = theme === themeOption.value;
 
                 return (
-                  <button
-                    key={themeOption.value}
-                    onClick={() => {
+                  <buttonkey={themeOption.value}
+                    onClick={() = aria-label="Button"> { {
                       setTheme(themeOption.value);
                       setIsOpen(false);
-                    }}
+                    } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
+                      setTheme(themeOption.value);
+                      setIsOpen(false);
+                     } }}}
                     className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors hover:bg-[var(--surface-hover)] ${
                       isSelected
                         ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'

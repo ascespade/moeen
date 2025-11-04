@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-11-04T01:58:30.899Z",
+  "passed": [
+    "Supabase Connection: SUCCESS",
+    "Table users: EXISTS",
+    "Table patients: EXISTS",
+    "Table doctors: EXISTS",
+    "Table appointments: EXISTS",
+    "Table insurance_claims: EXISTS"
+  ],
+  "failed": [],
+  "total": 6,
+  "successRate": "100.00%"
+}

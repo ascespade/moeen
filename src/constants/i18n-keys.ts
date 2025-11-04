@@ -24,6 +24,19 @@ export const I18N_KEYS = {
     YES: 'common.yes',
     NO: 'common.no',
     OK: 'common.ok',
+    ENABLED: 'common.enabled',
+    DISABLED: 'common.disabled',
+    ACTIVE: 'common.active',
+    INACTIVE: 'common.inactive',
+    SYSTEM_NAME: 'common.systemName',
+    SEARCH_PLACEHOLDER: 'common.searchPlaceholder',
+    OPEN_MENU: 'common.openMenu',
+    REQUIRED: 'common.required',
+    COMPLETED: 'common.completed',
+    PROCESSING: 'common.processing',
+    ACTIVATING: 'common.activating',
+    SUBMITTING: 'common.submitting',
+    CREATING: 'common.creating',
   },
 
   // Navigation
@@ -64,6 +77,9 @@ export const I18N_KEYS = {
     INVALID_CREDENTIALS: 'auth.invalid_credentials',
     ACCOUNT_CREATED: 'auth.account_created',
     LOGIN_SUCCESS: 'auth.login_success',
+    UNAUTHORIZED: 'auth.unauthorized',
+    INSUFFICIENT_PERMISSIONS: 'auth.insufficient_permissions',
+    BACK_TO_DASHBOARD: 'auth.back_to_dashboard',
   },
 
   // Dashboard
@@ -98,6 +114,33 @@ export const I18N_KEYS = {
     STATUS: 'patients.status',
     ACTIVE: 'patients.active',
     INACTIVE: 'patients.inactive',
+    CHECKLIST: {
+      TITLE: 'patient.checklist.title',
+      DESCRIPTION: 'patient.checklist.description',
+      PROGRESS: 'patient.checklist.progress',
+      REQUIRED_COMPLETED: 'patient.checklist.required_completed',
+      REQUIRED_WARNING: 'patient.checklist.required_warning',
+      SUBMIT: 'patient.checklist.submit',
+    },
+    ACTIVATION: {
+      TITLE: 'patient.activation.title',
+      DESCRIPTION: 'patient.activation.description',
+      PROGRESS: 'patient.activation.progress',
+      COMPLETE_STEP: 'patient.activation.complete_step',
+      READY_TO_ACTIVATE: 'patient.activation.ready_to_activate',
+      ACTIVATE_ACCOUNT: 'patient.activation.activate_account',
+      STEPS: {
+        PROFILE_COMPLETE: 'patient.activation.steps.profile_complete',
+        PROFILE_COMPLETE_DESC: 'patient.activation.steps.profile_complete_desc',
+        INSURANCE_VERIFIED: 'patient.activation.steps.insurance_verified',
+        INSURANCE_VERIFIED_DESC:
+          'patient.activation.steps.insurance_verified_desc',
+        PAYMENT_SETTLED: 'patient.activation.steps.payment_settled',
+        PAYMENT_SETTLED_DESC: 'patient.activation.steps.payment_settled_desc',
+        FIRST_VISIT: 'patient.activation.steps.first_visit',
+        FIRST_VISIT_DESC: 'patient.activation.steps.first_visit_desc',
+      },
+    },
   },
 
   // Appointments
@@ -149,6 +192,24 @@ export const I18N_KEYS = {
     APPROVED: 'insurance.approved',
     REJECTED: 'insurance.rejected',
     PENDING: 'insurance.pending',
+    CLAIMS_TITLE: 'insurance.claims.title',
+    CREATE_NEW: 'insurance.claims.create_new',
+    SEARCH_PLACEHOLDER: 'insurance.claims.search_placeholder',
+    ALL_STATUSES: 'insurance.claims.all_statuses',
+    DRAFT: 'insurance.claims.draft',
+    UNDER_REVIEW: 'insurance.claims.under_review',
+    PROVIDER: 'insurance.claims.provider',
+    SELECT_PROVIDER: 'insurance.claims.select_provider',
+    DESCRIPTION: 'insurance.claims.description',
+    DESCRIPTION_PLACEHOLDER: 'insurance.claims.description_placeholder',
+    DIAGNOSIS: 'insurance.claims.diagnosis',
+    DIAGNOSIS_PLACEHOLDER: 'insurance.claims.diagnosis_placeholder',
+    TREATMENT: 'insurance.claims.treatment',
+    TREATMENT_PLACEHOLDER: 'insurance.claims.treatment_placeholder',
+    CREATE: 'insurance.claims.create',
+    REFERENCE: 'insurance.claims.reference',
+    SUBMIT: 'insurance.claims.submit',
+    NO_CLAIMS: 'insurance.claims.no_claims',
   },
 
   // Settings
@@ -165,6 +226,45 @@ export const I18N_KEYS = {
     RESET: 'settings.reset',
   },
 
+  // Admin
+  ADMIN: {
+    TITLE: 'admin.title',
+    MODULES: 'admin.modules',
+    AI_FEATURES: 'admin.aiFeatures',
+    SECURITY: 'admin.security',
+    AUTOMATION: 'admin.automation',
+    SYSTEM_CONFIGURATION: 'admin.systemConfiguration',
+    SYSTEM_CONFIGURATION_DESCRIPTION: 'admin.systemConfigurationDescription',
+    HEALTHCARE_MODULES: 'admin.healthcareModules',
+    CAPABILITIES: 'admin.capabilities',
+    INTEGRATIONS: 'admin.integrations',
+    SECURITY_SETTINGS: 'admin.securitySettings',
+    AUTOMATION_SETTINGS: 'admin.automationSettings',
+    SCHEDULED_JOBS: 'admin.scheduledJobs',
+    ACTIVE: 'admin.active',
+  },
+
+  // Header
+  HEADER: {
+    WELCOME: 'header.welcome',
+    PROFILE: 'header.profile',
+    SETTINGS: 'header.settings',
+    LOGOUT: 'header.logout',
+    NOTIFICATIONS: 'header.notifications',
+    NO_NOTIFICATIONS: 'header.noNotifications',
+    NOTIFICATION: 'header.notification',
+    MARK_AS_READ: 'header.markAsRead',
+    AI_FEATURES: 'header.aiFeatures',
+    CHATBOT: 'header.chatbot',
+    CHATBOT_STATUS: 'header.chatbotStatus',
+    VOICE_BOT: 'header.voiceBot',
+    VOICE_BOT_STATUS: 'header.voiceBotStatus',
+    EMOTION_ANALYTICS: 'header.emotionAnalytics',
+    EMOTION_ANALYTICS_STATUS: 'header.emotionAnalyticsStatus',
+    EARLY_DIAGNOSIS: 'header.earlyDiagnosis',
+    EARLY_DIAGNOSIS_STATUS: 'header.earlyDiagnosisStatus',
+  },
+
   // Theme and Language
   THEME: {
     LABEL: 'theme.label',
@@ -177,6 +277,7 @@ export const I18N_KEYS = {
     LABEL: 'language.label',
     ARABIC: 'language.arabic',
     ENGLISH: 'language.english',
+    SWITCH_TO: 'language.switch_to',
   },
 
   // Homepage specific

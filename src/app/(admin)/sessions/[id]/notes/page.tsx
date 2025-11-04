@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { createClient } from '@/lib/supabase/client';
 import logger from '@/lib/monitoring/logger';
+import { createClient } from '@/lib/supabase/client';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface Goal {
   id: string;
@@ -76,7 +76,7 @@ export default function SessionNotesPage() {
 
         // Get current progress for each goal
         const goalsWithProgress = await Promise.all(
-          (goalsData || []).map(async goal => {
+          (goalsData || []).map(async (goal: any) => {
             const { data: progressData } = await supabase.rpc(
               'calculate_goal_progress',
               { p_goal_id: goal.id }
@@ -365,9 +365,8 @@ export default function SessionNotesPage() {
             </label>
             <div className='flex items-center gap-2 mb-4'>
               {[1, 2, 3, 4, 5].map(star => (
-                <button
-                  key={star}
-                  onClick={() => setSessionRating(star)}
+                <buttonkey={star}
+                  onClick={() = aria-label="Button"> { setSessionRating(star)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSessionRating(star) } }}
                   className={`text-3xl transition-all ${
                     star <= sessionRating
                       ? 'text-yellow-400 hover:scale-110'
@@ -405,11 +404,9 @@ export default function SessionNotesPage() {
 
           {/* Actions */}
           <div className='space-y-3'>
-            <button
-              onClick={handleSaveNotes}
+            <button onClick={handleSaveNotes} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSaveNotes } }}
               disabled={saving || !notes.trim()}
-              className='btn btn-default w-full py-4 text-lg disabled:opacity-50'
-            >
+              className='btn btn-default w-full py-4 text-lg disabled:opacity-50' aria-label="Button">
               {saving ? (
                 <span className='flex items-center justify-center gap-2'>
                   <span className='animate-spin'>⏳</span>
@@ -420,8 +417,7 @@ export default function SessionNotesPage() {
               )}
             </button>
 
-            <button
-              onClick={() => router.back()}
+            <buttononClick={() = aria-label="Button"> { router.back()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { router.back() } }}
               className='btn btn-outline w-full'
             >
               إلغاء

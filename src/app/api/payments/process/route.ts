@@ -65,18 +65,19 @@ export async function POST(_request: NextRequest) {
     const currencyCode = currency || 'SAR';
 
     // Verify appointment exists and get details
+    // IMPORTANT: Database uses snake_case
     const { data: appointment, error: appointmentError } = await supabase
       .from('appointments')
       .select(
         `
         id,
-        patientId,
-        doctorId,
-        scheduledAt,
+        patient_id,
+        doctor_id,
+        scheduled_at,
         status,
-        paymentStatus,
-        patients(id, fullName, email),
-        doctors(id, fullName, speciality)
+        payment_status,
+        patients!inner(id, full_name, email),
+        doctors!inner(id, full_name, speciality)
       `
       )
       .eq('id', appointmentId)
@@ -89,7 +90,7 @@ export async function POST(_request: NextRequest) {
       );
     }
 
-    if (appointment.paymentStatus === 'paid') {
+    if (appointment.payment_status === 'paid') {
       return NextResponse.json(
         { error: 'Appointment already paid' },
         { status: 400 }
@@ -173,19 +174,21 @@ export async function POST(_request: NextRequest) {
     }
 
     // Update appointment payment status
+    // IMPORTANT: Database uses snake_case
     await supabase
       .from('appointments')
-      .update({ paymentStatus: paymentResult.status })
+      .update({ payment_status: paymentResult.status })
       .eq('id', appointmentId);
 
     // Create audit log
+    // IMPORTANT: Database uses snake_case
     await supabase.from('audit_logs').insert({
       action: 'payment_processed',
-      entityType: 'payment',
-      entityId: payment.id,
-      userId: authUser.id,
+      resource_type: 'payment',
+      resource_id: payment.id,
+      user_id: authUser.id,
       metadata: {
-        appointmentId,
+        appointment_id: appointmentId,
         amount,
         method,
         status: paymentResult.status,

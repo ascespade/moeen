@@ -1,7 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import logger from '@/lib/monitoring/logger';
+import { requireAuth } from '@/lib/auth/authorize';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { name, email, phone, subject, message } = body;
 
@@ -14,8 +25,8 @@ export async function POST(request: NextRequest) {
     }
 
     // TODO: Save to database or send email
-    // For now, just log it
-    console.log('Contact form submission:', {
+    // Log using logger instead of console.log
+    logger.info('Contact form submission', {
       name,
       email,
       phone,
@@ -29,12 +40,10 @@ export async function POST(request: NextRequest) {
       message: 'تم إرسال رسالتك بنجاح. سنرد عليك قريباً.',
     });
   } catch (error) {
-    console.error('Contact form error:', error);
+    logger.error('Contact form error', { error });
     return NextResponse.json(
       { error: 'حدث خطأ أثناء إرسال الرسالة. يرجى المحاولة مرة أخرى.' },
       { status: 500 }
     );
   }
 }
-
-

@@ -169,8 +169,7 @@ export default function PatientDetailsPage({
           <p className='text-red-600 text-lg mb-4'>
             {error || 'لم يتم العثور على المريض'}
           </p>
-          <button
-            onClick={() => window.location.reload()}
+          <buttononClick={() = aria-label="Button"> { window.location.reload()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
             className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
@@ -204,13 +203,12 @@ export default function PatientDetailsPage({
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <button
-                onClick={() => setShowEditModal(true)}
+              <buttononClick={() = aria-label="Button"> { setShowEditModal(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(true) } }}
                 className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 تعديل البيانات
               </button>
-              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+              <buttonclassName='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حجز موعد">
                 حجز موعد
               </button>
             </div>
@@ -262,9 +260,8 @@ export default function PatientDetailsPage({
                 { id: 'relatives', label: 'الأقارب' },
                 { id: 'claims', label: 'المطالبات' },
               ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
+                <buttonkey={tab.id}
+                  onClick={() = aria-label="Button"> { setActiveTab(tab.id as any)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab(tab.id as any) } }}
                   className={`border-b-2 px-1 py-4 text-sm font-medium ${
                     activeTab === tab.id
                       ? 'border-[var(--default-default)] text-[var(--default-default)]'
@@ -274,8 +271,8 @@ export default function PatientDetailsPage({
                   {tab.label}
                 </button>
               ))}
-            </nav>
-          </div>
+            </div>
+          </nav>
 
           <div className='p-6'>
             {/* Personal Info Tab */}
@@ -419,7 +416,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>سجل الجلسات</h3>
-                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+                  <buttonclassName='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة جلسة">
                     إضافة جلسة
                   </button>
                 </div>
@@ -462,7 +459,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>الوثائق</h3>
-                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+                  <buttonclassName='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="رفع وثيقة">
                     رفع وثيقة
                   </button>
                 </div>
@@ -488,10 +485,10 @@ export default function PatientDetailsPage({
                       <div className='flex items-center justify-between text-xs text-gray-500'>
                         <span>{doc.uploadDate}</span>
                         <div className='flex gap-2'>
-                          <button className='text-[var(--default-default)] hover:underline'>
+                          <buttonclassName='text-[var(--default-default)] hover:underline' aria-label="عرض">
                             عرض
                           </button>
-                          <button className='text-gray-500 hover:underline'>
+                          <buttonclassName='text-gray-500 hover:underline' aria-label="تحميل">
                             تحميل
                           </button>
                         </div>
@@ -507,7 +504,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>الأقارب</h3>
-                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+                  <buttonclassName='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة قريب">
                     إضافة قريب
                   </button>
                 </div>
@@ -525,7 +522,7 @@ export default function PatientDetailsPage({
               <div>
                 <div className='mb-6 flex items-center justify-between'>
                   <h3 className='text-lg font-semibold'>المطالبات التأمينية</h3>
-                  <button className='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+                  <buttonclassName='btn-default rounded-lg px-4 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة مطالبة">
                     إضافة مطالبة
                   </button>
                 </div>
@@ -577,8 +574,7 @@ export default function PatientDetailsPage({
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>تعديل بيانات المريض</h3>
-              <button
-                onClick={() => setShowEditModal(false)}
+              <buttononClick={() = aria-label="Button"> { setShowEditModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -672,17 +668,14 @@ export default function PatientDetailsPage({
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button
-                  type='button'
-                  onClick={() => setShowEditModal(false)}
+                <buttontype='button'
+                  onClick={() = aria-label="Button"> { setShowEditModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <button
-                  type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
-                >
+                <buttontype='submit'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ التغييرات">
                   حفظ التغييرات
                 </button>
               </div>

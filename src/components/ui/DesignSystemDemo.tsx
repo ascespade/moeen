@@ -54,7 +54,7 @@ export default function DesignSystemDemo() {
           <CTAButton variant='primary' size='sm'>
             Success
           </CTAButton>
-        </div>
+        </section>
 
         <div className='ds-flex ds-justify-center ds-gap-4 mt-6'>
           <CTAButton variant='primary' size='sm'>
@@ -105,7 +105,7 @@ export default function DesignSystemDemo() {
             description='Built with TypeScript, comprehensive documentation, and excellent tooling.'
             gradient='bg-gradient-to-br from-orange-500 to-red-600'
           />
-        </div>
+        </section>
       </section>
 
       {/* Stats Section */}
@@ -134,7 +134,7 @@ export default function DesignSystemDemo() {
             label='Support'
             gradient='bg-gradient-to-r from-orange-500 to-yellow-600'
           />
-        </div>
+        </section>
       </section>
 
       {/* Color Palette Section */}
@@ -144,7 +144,7 @@ export default function DesignSystemDemo() {
         </h2>
         <div className='ds-grid ds-grid-cols-2 md:ds-grid-cols-4 lg:ds-grid-cols-6 ds-gap-4'>
           <div className='ds-card ds-card-sm text-center'>
-            <div className='w-full h-16 bg-brand-primary rounded-lg mb-2'></div>
+            <div className='w-full h-16 bg-brand-primary rounded-lg mb-2'></section>
             <p className='text-sm font-medium'>Primary</p>
           </div>
           <div className='ds-card ds-card-sm text-center'>
@@ -195,7 +195,7 @@ export default function DesignSystemDemo() {
             <p className='text-xs text-text-muted'>
               This is extra small text for fine print and legal information.
             </p>
-          </div>
+          </section>
         </div>
       </section>
 
@@ -208,7 +208,7 @@ export default function DesignSystemDemo() {
           <div className='ds-card-content'>
             <div className='space-y-4'>
               <div className='ds-flex ds-items-center ds-gap-4'>
-                <div className='w-4 h-4 bg-brand-primary rounded'></div>
+                <div className='w-4 h-4 bg-brand-primary rounded'></section>
                 <span>4px - Extra Small</span>
               </div>
               <div className='ds-flex ds-items-center ds-gap-4'>

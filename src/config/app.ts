@@ -8,3 +8,22 @@ export const appConfig = {
 };
 
 export default appConfig;
+
+export const centralConfig = {
+  api: {
+    baseUrl: '/api',
+    timeout: 30000,
+  },
+  auth: {
+    sessionDuration: 604800000,
+    refreshThreshold: 86400000,
+  },
+  database: {
+    maxConnections: 10,
+    queryTimeout: 30000,
+  },
+  ui: {
+    debounceDelay: 300,
+    animationDuration: 200,
+  },
+};

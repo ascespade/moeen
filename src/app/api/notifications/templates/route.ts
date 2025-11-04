@@ -28,12 +28,20 @@ const templateSchema = z.object({
   language: z.enum(['ar', 'en']).default('ar'),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const supabase = await createClient();
@@ -83,11 +91,13 @@ export async function POST(request: NextRequest) {
       message: 'Template created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -120,6 +130,6 @@ export async function GET(request: NextRequest) {
       count: templates?.length || 0,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

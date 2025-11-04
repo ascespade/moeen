@@ -86,6 +86,12 @@ dashboard/logs.json
 # Migration files (usually not needed for code completion)
 migrations/
 
+# Large SQL migration files (not needed for code completion)
+supabase/00_complete_migration.sql
+supabase/00_complete_seed.sql
+*.session.sql
+moeen.session.sql
+
 # Supabase local
 .supabase/
 

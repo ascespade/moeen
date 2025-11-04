@@ -9,7 +9,7 @@ interface AsyncState<T> {
 
 interface AsyncOptions {
   immediate?: boolean;
-  onSuccess?: (data: any) => void;
+  onSuccess?: (data: unknown) => void;
   onError?: (error: Error) => void;
 }
 

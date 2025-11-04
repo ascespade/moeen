@@ -21,7 +21,7 @@ export const defaultThemeConfig: ThemeConfig = {
   accentColor: '#10b981',
   borderRadius: 'md',
   fontFamily: 'sans',
-  rtl: true // Arabic RTL by default
+  rtl: true, // Arabic RTL by default
 };
 
 export class ThemeManager {
@@ -68,29 +68,41 @@ export class ThemeManager {
     }
 
     const root = document.documentElement;
-    
+
     // Apply CSS custom properties
     root.style.setProperty('--theme-primary', config.primaryColor);
     root.style.setProperty('--theme-secondary', config.secondaryColor);
     root.style.setProperty('--theme-accent', config.accentColor);
-    root.style.setProperty('--theme-radius', this.getBorderRadiusValue(config.borderRadius));
-    root.style.setProperty('--theme-font', this.getFontFamilyValue(config.fontFamily));
+    root.style.setProperty(
+      '--theme-radius',
+      this.getBorderRadiusValue(config.borderRadius)
+    );
+    root.style.setProperty(
+      '--theme-font',
+      this.getFontFamilyValue(config.fontFamily)
+    );
 
     // Apply dark/light mode
-    if (config.mode === 'dark' || (config.mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (
+      config.mode === 'dark' ||
+      (config.mode === 'system' &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
       root.classList.add('dark');
     } else {
       root.classList.remove('dark');
     }
   }
 
-  private static getBorderRadiusValue(radius: ThemeConfig['borderRadius']): string {
+  private static getBorderRadiusValue(
+    radius: ThemeConfig['borderRadius']
+  ): string {
     const radiusMap = {
       none: '0px',
       sm: '0.125rem',
       md: '0.375rem',
       lg: '0.5rem',
-      xl: '0.75rem'
+      xl: '0.75rem',
     };
     return radiusMap[radius];
   }
@@ -99,7 +111,7 @@ export class ThemeManager {
     const fontMap = {
       sans: 'ui-sans-serif, system-ui, sans-serif',
       serif: 'ui-serif, Georgia, serif',
-      mono: 'ui-monospace, "Cascadia Code", "Source Code Pro", monospace'
+      mono: 'ui-monospace, "Cascadia Code", "Source Code Pro", monospace',
     };
     return fontMap[font];
   }

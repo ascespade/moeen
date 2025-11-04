@@ -134,6 +134,8 @@ export async function PATCH(
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }

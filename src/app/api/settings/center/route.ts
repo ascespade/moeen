@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -7,8 +8,19 @@ const supabase = createClient(
 );
 
 // API لجلب معلومات المركز
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const includeStaff = searchParams.get('include_staff') === 'true';
     const includeEmergencyContacts =
@@ -22,7 +34,15 @@ export async function GET(request: NextRequest) {
       .single();
 
     if (centerError) {
-      return NextResponse.json({ error: centerError.message }, { status: 500 });
+      return NextResponse.json(
+        { error: centerError.message },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const response: any = { center: centerInfo };
@@ -82,7 +102,7 @@ export async function GET(request: NextRequest) {
 }
 
 // API لتحديث معلومات المركز (للمدراء فقط)
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const {
@@ -133,7 +153,15 @@ export async function PUT(request: NextRequest) {
       .single();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     return NextResponse.json({ success: true, data });

@@ -30,7 +30,7 @@ export const defaultDynamicThemeConfig: DynamicThemeConfig = {
       accentColor: '#f59e0b',
       borderRadius: 'md',
       fontFamily: 'sans',
-      rtl: false
+      rtl: false,
     },
     afternoon: {
       mode: 'light',
@@ -39,7 +39,7 @@ export const defaultDynamicThemeConfig: DynamicThemeConfig = {
       accentColor: '#f59e0b',
       borderRadius: 'md',
       fontFamily: 'sans',
-      rtl: false
+      rtl: false,
     },
     evening: {
       mode: 'dark',
@@ -48,7 +48,7 @@ export const defaultDynamicThemeConfig: DynamicThemeConfig = {
       accentColor: '#f59e0b',
       borderRadius: 'md',
       fontFamily: 'sans',
-      rtl: false
+      rtl: false,
     },
     night: {
       mode: 'dark',
@@ -57,14 +57,14 @@ export const defaultDynamicThemeConfig: DynamicThemeConfig = {
       accentColor: '#f59e0b',
       borderRadius: 'md',
       fontFamily: 'sans',
-      rtl: false
-    }
+      rtl: false,
+    },
   },
   userPreferences: {
     reduceMotion: false,
     highContrast: false,
-    fontSize: 'medium'
-  }
+    fontSize: 'medium',
+  },
 };
 
 export class DynamicThemeManager {
@@ -108,7 +108,7 @@ export class DynamicThemeManager {
     }
 
     const root = document.documentElement;
-    
+
     // Apply user preferences
     if (config.userPreferences.reduceMotion) {
       root.style.setProperty('--motion-reduce', 'reduce');
@@ -125,9 +125,12 @@ export class DynamicThemeManager {
     const fontSizeMap = {
       small: '0.875rem',
       medium: '1rem',
-      large: '1.125rem'
+      large: '1.125rem',
     };
-    root.style.setProperty('--font-size-base', fontSizeMap[config.userPreferences.fontSize]);
+    root.style.setProperty(
+      '--font-size-base',
+      fontSizeMap[config.userPreferences.fontSize]
+    );
 
     // Apply current theme
     ThemeManager.applyTheme(config);
@@ -170,7 +173,9 @@ export class DynamicThemeManager {
     }
   }
 
-  static updateConfig(updates: Partial<DynamicThemeConfig>): DynamicThemeConfig {
+  static updateConfig(
+    updates: Partial<DynamicThemeConfig>
+  ): DynamicThemeConfig {
     const current = this.loadConfig();
     const updated = { ...current, ...updates };
     this.saveConfig(updated);

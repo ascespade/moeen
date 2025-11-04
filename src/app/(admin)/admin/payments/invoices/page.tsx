@@ -74,7 +74,7 @@ export default function InvoicesPage() {
             إدارة الفواتير والإيصالات
           </p>
         </div>
-        <button className='btn btn-default'>+ فاتورة جديدة</button>
+        <buttonclassName='btn btn-default' aria-label="+ فاتورة جديدة">+ فاتورة جديدة</button>
       </div>
 
       {/* Stats */}
@@ -180,8 +180,7 @@ export default function InvoicesPage() {
                       : '-'}
                   </td>
                   <td className='px-6 py-4'>
-                    <button
-                      onClick={() => generateInvoicePDF(payment)}
+                    <buttononClick={() = aria-label="Button"> { generateInvoicePDF(payment)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { generateInvoicePDF(payment) } }}
                       className='text-sm text-[var(--default-default)] hover:underline'
                     >
                       📄 فاتورة

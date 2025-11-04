@@ -9,16 +9,16 @@ export default function ThemeSwitcher() {
 
   return (
     <Button
-      variant="ghost"
-      size="sm"
+      variant='ghost'
+      size='sm'
       onClick={toggleTheme}
-      className="p-2"
-      aria-label="Toggle theme"
+      className='p-2'
+      aria-label='Toggle theme'
     >
       {theme === 'dark' ? (
-        <Sun className="h-5 w-5" />
+        <Sun className='h-5 w-5' />
       ) : (
-        <Moon className="h-5 w-5" />
+        <Moon className='h-5 w-5' />
       )}
     </Button>
   );

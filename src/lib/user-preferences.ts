@@ -178,4 +178,3 @@ export function applyPreferences(preferences: UserPreferences): void {
   html.setAttribute('lang', preferences.language);
   html.setAttribute('dir', preferences.language === 'ar' ? 'rtl' : 'ltr');
 }
-

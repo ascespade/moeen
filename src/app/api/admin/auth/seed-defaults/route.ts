@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
 const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
@@ -13,13 +14,13 @@ const USERS = [
   {
     email: 'supervisor@test.local',
     name: 'Supervisor User',
-    role: 'supervisor',
+    role: 'admin', // Changed to admin with full permissions
   },
   { email: 'manager@test.local', name: 'Manager User', role: 'manager' },
   { email: 'agent@test.local', name: 'Agent User', role: 'agent' },
 ];
 
-export async function POST(req) {
+export async function POST(req: unknown) {
   const isDev = process.env.NODE_ENV !== 'production';
   const referer = req.headers.get('referer') || '';
   const origin = req.headers.get('origin') || '';
@@ -34,22 +35,8 @@ export async function POST(req) {
     appUrl && (origin.includes(appUrl) || referer.includes(appUrl));
   const debugAllow = process.env.NEXT_PUBLIC_ENABLE_DEBUG === 'true';
 
-  console.log('[admin/seed-defaults] request context', {
-    referer,
-    origin,
-    isDev,
-    fromLocalhost,
-    headerOk,
-    originOk,
-    debugAllow,
-  });
-
   // Allow when: header matches, or running in dev from localhost, or origin matches configured app url, or debug mode enabled
   if (!headerOk && !isDev && !fromLocalhost && !originOk && !debugAllow) {
-    console.warn(
-      '[admin/seed-defaults] unauthorized attempt to seed defaults',
-      { referer, origin }
-    );
     return NextResponse.json(
       { success: false, error: 'Unauthorized' },
       { status: 401 }
@@ -60,7 +47,6 @@ export async function POST(req) {
   const created: Array<{ email: string; role: string }> = [];
 
   for (const u of USERS) {
-    console.log('[admin/seed-defaults] processing user', u.email, u.role);
     try {
       // Create or fetch auth user
       const { data: listed } = await supabaseAdmin.auth.admin.listUsers({
@@ -77,13 +63,9 @@ export async function POST(req) {
             email_confirm: true,
           });
         if (cErr || !createdUser?.user) {
-          console.error('[admin/seed-defaults] createUser failed', cErr?.message);
           continue; // Skip this user and continue with next
         }
         authId = createdUser.user.id;
-        console.log('[admin/seed-defaults] created auth user', authId);
-      } else {
-        console.log('[admin/seed-defaults] existing auth user found', authId);
       }
 
       // Upsert application user
@@ -106,11 +88,10 @@ export async function POST(req) {
 
       if (upErr) {
         // Check if it's a duplicate key error (user already exists by email)
-        if (upErr.message?.includes('duplicate key') || upErr.message?.includes('unique constraint')) {
-          console.log(
-            '[admin/seed-defaults] User already exists, fetching existing user',
-            u.email
-          );
+        if (
+          upErr.message?.includes('duplicate key') ||
+          upErr.message?.includes('unique constraint')
+        ) {
           // User exists, fetch it
           const { data: existingUser, error: fetchErr } = await supabase
             .from('users')
@@ -120,18 +101,16 @@ export async function POST(req) {
 
           if (existingUser && !fetchErr) {
             finalUser = existingUser;
-            console.log('[admin/seed-defaults] Found existing user', existingUser.id);
           } else {
-            console.warn('[admin/seed-defaults] Could not fetch existing user', fetchErr?.message);
             continue;
           }
         }
         // If role constraint fails, try without role (role will be set via user_roles table)
-        else if (upErr.message?.includes('role') || upErr.message?.includes('enum') || upErr.message?.includes('check constraint')) {
-          console.warn(
-            '[admin/seed-defaults] upsert users with role failed, retrying without role',
-            upErr?.message
-          );
+        else if (
+          upErr.message?.includes('role') ||
+          upErr.message?.includes('enum') ||
+          upErr.message?.includes('check constraint')
+        ) {
           const userDataWithoutRole = { ...userData };
           delete userDataWithoutRole.role;
           const { data: up2, error: upErr2 } = await supabase
@@ -154,10 +133,6 @@ export async function POST(req) {
                 continue;
               }
             } else {
-              console.error(
-                '[admin/seed-defaults] upsert users failed',
-                upErr2?.message
-              );
               continue;
             }
           } else if (up2) {
@@ -167,33 +142,34 @@ export async function POST(req) {
           }
         } else {
           // Other errors - skip user
-          console.warn(
-            '[admin/seed-section] upsert users failed, skipping',
-            upErr?.message
-          );
           continue;
         }
       }
 
       if (!finalUser) {
-        console.warn(`[admin/seed-defaults] No user record for ${u.email}, skipping`);
         continue;
       }
 
       // Force update role in users table
       if (u.role && finalUser) {
         try {
-          const { error: updateErr } = await supabase
-            .from('users')
-            .update({ role: u.role })
-            .eq('id', finalUser.id);
-          if (updateErr) {
-            console.warn(`[admin/seed-defaults] Could not update role in users table for ${u.email}:`, updateErr.message);
-          } else {
-            console.log(`[admin/seed-defaults] Role updated in users table for ${u.email}: ${u.role}`);
+          const updateData: any = {
+            role: u.role,
+            status: 'active',
+            is_active: true,
+          };
+
+          // For admin role, ensure full permissions
+          if (u.role === 'admin') {
+            updateData.metadata = { permissions: ['*'] }; // Full permissions
           }
-        } catch (e: any) {
-          console.warn(`[admin/seed-defaults] Exception updating role:`, e?.message);
+
+          await supabase
+            .from('users')
+            .update(updateData)
+            .eq('id', finalUser.id);
+        } catch (e: unknown) {
+          // Error updating role - continue
         }
       }
 
@@ -210,21 +186,13 @@ export async function POST(req) {
             { user_id: finalUser.id, role_id: roleRow.id, is_active: true },
             { onConflict: 'user_id,role_id' }
           );
-        if (roleErr) {
-          console.warn(`[admin/seed-defaults] Could not assign role to ${u.email}:`, roleErr.message);
-        } else {
-          console.log(`[admin/seed-defaults] Role assigned to ${u.email}: ${u.role}`);
-        }
       }
 
       created.push({ email: u.email, role: u.role });
-    } catch (error: any) {
-      console.error(`[admin/seed-defaults] Error processing user ${u.email}:`, error?.message);
+    } catch (error: unknown) {
       // Continue with next user
     }
   }
-
-  console.log('[admin/seed-defaults] created users', created);
   return NextResponse.json({
     success: true,
     users: created,

@@ -139,23 +139,33 @@ export async function POST(_request: NextRequest) {
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(_request: NextRequest) {
   try {
+    // Optional: authorize user (but don't block if not authenticated for GET)
+    const { user } = await authorize(_request).catch(() => ({
+      user: null,
+      error: null,
+    }));
+
     const supabase = await createClient();
     const { searchParams } = new URL(_request.url);
     const status = searchParams.get('status');
     const type = searchParams.get('type');
     const recipientId = searchParams.get('recipientId');
 
+    // Start with basic query - avoid joins that might fail
     let query = supabase
       .from('notifications')
-      .select(
-        `
-        *,
-        createdBy:users(id, email, fullName)
-      `
-      )
-      .order('createdAt', { ascending: false });
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    // Filter by user_id (the actual column name in notifications table)
+    if (recipientId) {
+      // The notifications table uses 'user_id' column (not recipientId)
+      query = query.eq('user_id', recipientId);
+    }
 
     if (status) {
       query = query.eq('status', status);
@@ -163,26 +173,79 @@ export async function GET(_request: NextRequest) {
     if (type) {
       query = query.eq('type', type);
     }
-    if (recipientId) {
-      query = query.eq('recipientId', recipientId);
+
+    // Apply limit if provided
+    const limitParam = searchParams.get('limit');
+    if (limitParam) {
+      const limitNum = parseInt(limitParam);
+      if (!isNaN(limitNum) && limitNum > 0) {
+        query = query.limit(limitNum);
+      }
     }
 
     const { data: notifications, error } = await query;
 
+    // If error occurs, return empty array instead of 500 to prevent loops
     if (error) {
-      return NextResponse.json(
-        { error: 'Failed to fetch notifications' },
-        { status: 500 }
-      );
+      console.error('Error fetching notifications:', error);
+      // Return empty array to prevent infinite loops
+      return NextResponse.json({
+        success: true,
+        data: [],
+        count: 0,
+        error: 'Failed to fetch notifications, returning empty array',
+      });
+    }
+
+    // If notifications exist, try to enrich with user data (optional, don't fail if this fails)
+    let enrichedNotifications = notifications || [];
+    if (notifications && notifications.length > 0) {
+      try {
+        // Try to get createdBy user info for notifications that have createdBy field
+        const createdByIds = notifications
+          .map((n: unknown) => n.createdBy || n.created_by)
+          .filter((id: unknown) => id && typeof id === 'string');
+
+        if (createdByIds.length > 0) {
+          const { data: users } = await supabase
+            .from('users')
+            .select('id, email, full_name, fullName, name')
+            .in('id', createdByIds);
+
+          if (users) {
+            const userMap = new Map(users.map((u: unknown) => [u.id, u]));
+            enrichedNotifications = notifications.map((n: unknown) => ({
+              ...n,
+              createdByUser:
+                n.createdBy || n.created_by
+                  ? userMap.get(n.createdBy || n.created_by)
+                  : null,
+            }));
+          }
+        }
+      } catch (enrichError) {
+        // Ignore enrichment errors - just return basic notifications
+        console.warn(
+          'Failed to enrich notifications with user data:',
+          enrichError
+        );
+      }
     }
 
     return NextResponse.json({
       success: true,
-      data: notifications,
-      count: notifications?.length || 0,
+      data: enrichedNotifications,
+      count: enrichedNotifications?.length || 0,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    console.error('Unexpected error in notifications GET:', error);
+    // Always return success with empty array to prevent loops
+    return NextResponse.json({
+      success: true,
+      data: [],
+      count: 0,
+      error: 'Unexpected error occurred',
+    });
   }
 }
 

@@ -17,7 +17,9 @@ const configSchema = z.object({
   isSecret: z.boolean().default(false),
 });
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin or supervisor
     const authResult = await requireAuth(['admin', 'supervisor'])(request);
@@ -35,7 +37,7 @@ export async function GET(request: NextRequest) {
       .order('key', { ascending: true });
 
     if (error) {
-      console.error('Error fetching configs:', error);
+      // Removed console.error - use logger instead
       // Return default configs if table doesn't exist
       const defaultConfigs = [
         {
@@ -102,11 +104,11 @@ export async function GET(request: NextRequest) {
       data: configs || [],
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -180,11 +182,11 @@ export async function POST(request: NextRequest) {
       message: 'Configuration created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -253,11 +255,11 @@ export async function PUT(request: NextRequest) {
       message: 'Configuration updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -303,6 +305,6 @@ export async function DELETE(request: NextRequest) {
       message: 'Configuration deleted successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

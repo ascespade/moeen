@@ -5,62 +5,79 @@ node_modules/
 
 # Testing
 coverage/
-playwright-report/
+.nyc_output
 test-results/
-*.test.ts.snap
+playwright-report/
+*.spec.ts.snap
 
-# Production
+# Next.js
+.next/
+out/
 build/
 dist/
-.out/
-.next/
+.vercel
 
-# Misc
-.DS_Store
-*.pem
-.vscode/
-.idea/
+# Production
+*.log
+*.pid
+*.seed
+*.pid.lock
 
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Local env files
-.env*.local
+# Environment variables
+.env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# Vercel
-.vercel
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
 
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
 
-# Logs
-logs/
-*.log
-ai_logs.db
-dashboard/logs.json
+# Archive
+.archive/
 
-# Reports
-reports/
-test-reports/
-
-# Agent system (non-project files)
-.agent-system/
-.cursor/
-.agent-work/
-
-# Isolated trash
-.isolated_trash/
-
-# Build cache
-.turbo/
+# Temporary files
+*.tmp
+*.temp
 .cache/
+tmp/
+temp/
 
-# Supabase
-.supabase/
+# Reports (keep only essential ones)
+# *.json reports are archived, but keep package.json, tsconfig.json, etc.
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Backup files
+*.backup
+*~
+
+# Test files
+test-results/
+playwright-report/
+coverage/
+
+# Build outputs
+# Test results
+test-results/
+playwright-report/
+tmp/
+# Reports
+# OS files

@@ -1,0 +1,17 @@
+# ESLint ignore file
+node_modules
+.next
+.vercel
+dist
+build
+coverage
+test-results
+playwright-report
+.agent-system
+scripts
+*.config.js
+*.config.ts
+migrations
+*.sql
+*.mjs
+*.cjs

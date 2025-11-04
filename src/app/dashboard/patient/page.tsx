@@ -10,14 +10,16 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
-import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useTheme } from '@/components/providers/ThemeProvider';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 
 interface PatientData {
   id: string;
@@ -79,16 +81,16 @@ export default function PatientDashboard() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['patient']}>
+    <UnifiedProtectedRoute allowedRoles={['patient']}>
       <div className='min-h-screen bg-gray-50 dark:bg-gray-900'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
           {/* Header */}
           <div className='mb-8'>
             <h1 className='text-3xl font-bold text-gray-900 dark:text-white'>
-              {t('patient.dashboard.welcome')}, {patientData?.fullName}
+              {t(I18N_KEYS.PATIENTS.TITLE)}, {patientData?.fullName}
             </h1>
             <p className='mt-2 text-gray-600 dark:text-gray-400'>
-              {t('patient.dashboard.subtitle')}
+              {t(I18N_KEYS.PATIENTS.TITLE)}
             </p>
           </div>
 
@@ -99,10 +101,10 @@ export default function PatientDashboard() {
                 <AlertCircle className='h-6 w-6 text-orange-600 mr-3' />
                 <div>
                   <h3 className='font-semibold text-orange-800 dark:text-orange-200'>
-                    {t('patient.activation.required')}
+                    {t(I18N_KEYS.PATIENTS.ACTIVATION.TITLE)}
                   </h3>
                   <p className='text-orange-700 dark:text-orange-300'>
-                    {t('patient.activation.description')}
+                    {t(I18N_KEYS.PATIENTS.ACTIVATION.DESCRIPTION)}
                   </p>
                 </div>
               </div>
@@ -116,15 +118,17 @@ export default function PatientDashboard() {
                 <CalendarDays className='h-8 w-8 text-blue-600 mr-4' />
                 <div>
                   <h3 className='font-semibold text-gray-900 dark:text-white'>
-                    {t('patient.actions.book_appointment')}
+                    {t(I18N_KEYS.APPOINTMENTS.BOOK_APPOINTMENT)}
                   </h3>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
-                    {t('patient.actions.book_description')}
+                    {t(I18N_KEYS.APPOINTMENTS.TITLE)}
                   </p>
                 </div>
               </div>
-              <Button className='w-full mt-4'>
-                {t('patient.actions.book_now')}
+              <Button className='w-full mt-4' asChild>
+                <Link href='/patient/appointments/new'>
+                  {t(I18N_KEYS.APPOINTMENTS.BOOK_APPOINTMENT)}
+                </Link>
               </Button>
             </Card>
 
@@ -133,10 +137,10 @@ export default function PatientDashboard() {
                 <FileText className='h-8 w-8 text-green-600 mr-4' />
                 <div>
                   <h3 className='font-semibold text-gray-900 dark:text-white'>
-                    {t('patient.actions.view_file')}
+                    {t(I18N_KEYS.PATIENTS.TITLE)}
                   </h3>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
-                    {t('patient.actions.file_description')}
+                    {t(I18N_KEYS.PATIENTS.TITLE)}
                   </p>
                 </div>
               </div>
@@ -144,10 +148,13 @@ export default function PatientDashboard() {
                 className='w-full mt-4'
                 disabled={!patientData?.activated}
                 variant={patientData?.activated ? 'primary' : 'secondary'}
+                asChild
               >
-                {patientData?.activated
-                  ? t('patient.actions.open_file')
-                  : t('patient.actions.file_locked')}
+                {patientData?.activated ? (
+                  <Link href='/patient/health'>{t(I18N_KEYS.COMMON.OPEN)}</Link>
+                ) : (
+                  <span>{t(I18N_KEYS.COMMON.ERROR)}</span>
+                )}
               </Button>
             </Card>
 
@@ -156,15 +163,17 @@ export default function PatientDashboard() {
                 <CreditCard className='h-8 w-8 text-purple-600 mr-4' />
                 <div>
                   <h3 className='font-semibold text-gray-900 dark:text-white'>
-                    {t('patient.actions.payments')}
+                    {t(I18N_KEYS.PATIENTS.TITLE)}
                   </h3>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
-                    {t('patient.actions.payments_description')}
+                    {t(I18N_KEYS.PATIENTS.TITLE)}
                   </p>
                 </div>
               </div>
-              <Button className='w-full mt-4' variant='outline'>
-                {t('patient.actions.view_payments')}
+              <Button className='w-full mt-4' variant='outline' asChild>
+                <Link href='/patient/billing'>
+                  {t(I18N_KEYS.PATIENTS.TITLE)}
+                </Link>
               </Button>
             </Card>
 
@@ -173,15 +182,17 @@ export default function PatientDashboard() {
                 <Shield className='h-8 w-8 text-indigo-600 mr-4' />
                 <div>
                   <h3 className='font-semibold text-gray-900 dark:text-white'>
-                    {t('patient.actions.insurance')}
+                    {t(I18N_KEYS.NAV.INSURANCE)}
                   </h3>
                   <p className='text-sm text-gray-600 dark:text-gray-400'>
-                    {t('patient.actions.insurance_description')}
+                    {t(I18N_KEYS.INSURANCE.TITLE)}
                   </p>
                 </div>
               </div>
-              <Button className='w-full mt-4' variant='outline'>
-                {t('patient.actions.view_insurance')}
+              <Button className='w-full mt-4' variant='outline' asChild>
+                <Link href='/patient/insurance'>
+                  {t(I18N_KEYS.NAV.INSURANCE)}
+                </Link>
               </Button>
             </Card>
           </div>
@@ -192,7 +203,7 @@ export default function PatientDashboard() {
             <div className='lg:col-span-2'>
               <Card className='p-6'>
                 <h2 className='text-xl font-semibold text-gray-900 dark:text-white mb-4'>
-                  {t('patient.dashboard.next_appointment')}
+                  {t(I18N_KEYS.DASHBOARD.TODAY_APPOINTMENTS)}
                 </h2>
                 {patientData?.nextAppointment ? (
                   <div className='space-y-4'>
@@ -204,7 +215,7 @@ export default function PatientDashboard() {
                             {patientData.nextAppointment.date}
                           </p>
                           <p className='text-sm text-gray-600 dark:text-gray-400'>
-                            {t('patient.dashboard.with_doctor')}:{' '}
+                            {t(I18N_KEYS.PATIENTS.TITLE)}:{' '}
                             {patientData.nextAppointment.doctor}
                           </p>
                         </div>
@@ -218,10 +229,12 @@ export default function PatientDashboard() {
                   <div className='text-center py-8'>
                     <CalendarDays className='h-12 w-12 text-gray-400 mx-auto mb-4' />
                     <p className='text-gray-600 dark:text-gray-400'>
-                      {t('patient.dashboard.no_appointments')}
+                      {t(I18N_KEYS.DASHBOARD.TODAY_APPOINTMENTS)}
                     </p>
-                    <Button className='mt-4'>
-                      {t('patient.actions.book_appointment')}
+                    <Button className='mt-4' asChild>
+                      <Link href='/patient/appointments/new'>
+                        {t(I18N_KEYS.APPOINTMENTS.BOOK_APPOINTMENT)}
+                      </Link>
                     </Button>
                   </div>
                 )}
@@ -233,12 +246,12 @@ export default function PatientDashboard() {
               {/* Account Status */}
               <Card className='p-6'>
                 <h3 className='font-semibold text-gray-900 dark:text-white mb-4'>
-                  {t('patient.dashboard.account_status')}
+                  {t(I18N_KEYS.PATIENTS.STATUS)}
                 </h3>
                 <div className='space-y-3'>
                   <div className='flex items-center justify-between'>
                     <span className='text-sm text-gray-600 dark:text-gray-400'>
-                      {t('patient.dashboard.activation_status')}
+                      {t(I18N_KEYS.PATIENTS.ACTIVATION.TITLE)}
                     </span>
                     <Badge
                       variant={patientData?.activated ? 'primary' : 'secondary'}
@@ -249,17 +262,17 @@ export default function PatientDashboard() {
                       }
                     >
                       {patientData?.activated
-                        ? t('common.activated')
-                        : t('common.pending')}
+                        ? t(I18N_KEYS.COMMON.ACTIVE)
+                        : t(I18N_KEYS.COMMON.LOADING)}
                     </Badge>
                   </div>
                   <div className='flex items-center justify-between'>
                     <span className='text-sm text-gray-600 dark:text-gray-400'>
-                      {t('patient.dashboard.insurance_status')}
+                      {t(I18N_KEYS.INSURANCE.TITLE)}
                     </span>
                     <Badge variant='outline'>
                       {patientData?.insuranceStatus?.status ||
-                        t('common.unknown')}
+                        t(I18N_KEYS.COMMON.ERROR)}
                     </Badge>
                   </div>
                 </div>
@@ -268,12 +281,12 @@ export default function PatientDashboard() {
               {/* Quick Stats */}
               <Card className='p-6'>
                 <h3 className='font-semibold text-gray-900 dark:text-white mb-4'>
-                  {t('patient.dashboard.quick_stats')}
+                  {t(I18N_KEYS.DASHBOARD.STATISTICS)}
                 </h3>
                 <div className='space-y-3'>
                   <div className='flex items-center justify-between'>
                     <span className='text-sm text-gray-600 dark:text-gray-400'>
-                      {t('patient.dashboard.total_appointments')}
+                      {t(I18N_KEYS.DASHBOARD.TODAY_APPOINTMENTS)}
                     </span>
                     <span className='font-medium text-gray-900 dark:text-white'>
                       {patientData?.recentAppointments?.length || 0}
@@ -281,7 +294,7 @@ export default function PatientDashboard() {
                   </div>
                   <div className='flex items-center justify-between'>
                     <span className='text-sm text-gray-600 dark:text-gray-400'>
-                      {t('patient.dashboard.outstanding_payment')}
+                      {t(I18N_KEYS.PATIENTS.TITLE)}
                     </span>
                     <span className='font-medium text-gray-900 dark:text-white'>
                       {patientData?.paymentStatus?.outstanding || 0} SAR
@@ -293,6 +306,6 @@ export default function PatientDashboard() {
           </div>
         </div>
       </div>
-    </ProtectedRoute>
+    </UnifiedProtectedRoute>
   );
 }

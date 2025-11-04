@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { authorize } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(_request: NextRequest) {
   try {
     const { user, error } = await authorize(_request);

@@ -30,7 +30,10 @@ export default function KeywordEditor({
           onChange={e => setValue(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && add()}
         />
-        <button className='h-10 rounded-md border px-3' onClick={add}>
+        <buttonclassName='h-10 rounded-md border px-3'
+          onClick={add} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); add } }}
+          aria-label='Button'
+        >
           إضافة
         </button>
       </div>
@@ -41,7 +44,10 @@ export default function KeywordEditor({
             className='inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-800 px-3 h-8 text-sm'
           >
             {k}
-            <button className='text-amber-900' onClick={() => remove(k)}>
+            <buttonclassName='text-amber-900'
+              onClick={() = aria-label="Button"> { remove(k)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" remove(k) } }}
+              aria-label='حذف الكلمة'
+            >
               ×
             </button>
           </span>

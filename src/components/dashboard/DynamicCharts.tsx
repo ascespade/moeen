@@ -178,12 +178,12 @@ export function DynamicPieChart({
   const total = data.reduce((sum, item) => sum + item.count, 0);
   // Updated to use CSS variables instead of hardcoded colors
   const colors = [
-    'var(--brand-accent)',    // Blue - #2563eb equivalent
-    'var(--brand-success)',   // Green - #10b981 equivalent
-    'var(--brand-warning)',   // Amber - #f59e0b equivalent
-    'var(--brand-error)',     // Red - #ef4444 equivalent
-    'var(--brand-primary)',   // Orange - primary brand color
-    'var(--brand-info)',      // Sky blue - #06b6d4 equivalent
+    'var(--brand-accent)', // Blue - #2563eb equivalent
+    'var(--brand-success)', // Green - #10b981 equivalent
+    'var(--brand-warning)', // Amber - #f59e0b equivalent
+    'var(--brand-error)', // Red - #ef4444 equivalent
+    'var(--brand-primary)', // Orange - primary brand color
+    'var(--brand-info)', // Sky blue - #06b6d4 equivalent
   ];
 
   let currentAngle = 0;
@@ -304,7 +304,7 @@ export function DynamicStatsCards({ data }: { data: any }) {
                 {card.title}
               </p>
               <p className='text-2xl font-bold text-gray-900 dark:text-white'>
-                {typeof card.value === 'number' 
+                {typeof card.value === 'number'
                   ? localizedNumber(card.value.toString())
                   : localizedNumber(card.value)}
               </p>

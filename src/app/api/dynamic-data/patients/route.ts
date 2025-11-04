@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -7,8 +8,19 @@ const supabase = createClient(
 );
 
 // API لجلب معلومات المرضى من الجدول الموجود
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const includeUsers = searchParams.get('include_users') === 'true';
     const gender = searchParams.get('gender');
@@ -28,7 +40,7 @@ export async function GET(request: NextRequest) {
       let filteredData = data;
       if (gender) {
         filteredData = data?.filter(
-          (patient: any) =>
+          (patient: unknown) =>
             patient.gender?.toLowerCase() === gender.toLowerCase()
         );
       }
@@ -36,7 +48,7 @@ export async function GET(request: NextRequest) {
       // فلترة حسب العمر إذا طُلب ذلك
       if (ageRange && filteredData) {
         const now = new Date();
-        filteredData = filteredData.filter((patient: any) => {
+        filteredData = filteredData.filter((patient: unknown) => {
           if (!patient.date_of_birth) return false;
 
           const birthDate = new Date(patient.date_of_birth);
@@ -68,7 +80,7 @@ export async function GET(request: NextRequest) {
       let filteredData = data;
       if (gender) {
         filteredData = data?.filter(
-          (patient: any) =>
+          (patient: unknown) =>
             patient.gender?.toLowerCase() === gender.toLowerCase()
         );
       }
@@ -76,7 +88,7 @@ export async function GET(request: NextRequest) {
       // فلترة حسب العمر إذا طُلب ذلك
       if (ageRange && filteredData) {
         const now = new Date();
-        filteredData = filteredData.filter((patient: any) => {
+        filteredData = filteredData.filter((patient: unknown) => {
           if (!patient.date_of_birth) return false;
 
           const birthDate = new Date(patient.date_of_birth);
@@ -106,7 +118,7 @@ export async function GET(request: NextRequest) {
 }
 
 // API لإضافة مريض جديد (للمدراء والموظفين)
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const {
@@ -180,7 +192,7 @@ export async function POST(request: NextRequest) {
 }
 
 // API لتحديث مريض (للمدراء والموظفين)
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const { id, ...updateData } = body;
@@ -213,7 +225,7 @@ export async function PUT(request: NextRequest) {
 }
 
 // API لحذف مريض (للمدراء فقط)
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');

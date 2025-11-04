@@ -1,9 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import ForgotPasswordPage from '@/app/(auth)/forgot-password/page';
 
 describe('ForgotPasswordPage', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders forgot password form correctly', () => {

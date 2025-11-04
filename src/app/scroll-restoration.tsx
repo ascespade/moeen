@@ -31,7 +31,7 @@ export default function ScrollRestoration() {
 
     // Save scroll position periodically
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
+
     // Restore immediately if navigating back/forward
     if (window.performance && window.performance.navigation.type === 2) {
       // Back/Forward navigation
@@ -52,4 +52,3 @@ export default function ScrollRestoration() {
 
   return null;
 }
-

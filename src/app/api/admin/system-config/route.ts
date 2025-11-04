@@ -19,7 +19,7 @@ const configSchema = z.object({
   category: z.string().default('general'),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -70,11 +70,13 @@ export async function POST(request: NextRequest) {
       message: 'Configuration saved successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const supabase = await createClient();
     const { searchParams } = new URL(request.url);
@@ -108,6 +110,6 @@ export async function GET(request: NextRequest) {
       count: configs?.length || 0,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

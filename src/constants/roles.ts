@@ -10,12 +10,18 @@ export interface Permission {
   actions: ('create' | 'read' | 'update' | 'delete' | 'manage')[];
 }
 
-export const ROLES: Record<UserRole, { label: string; labelAr: string; permissions: Permission[] }> = {
+export const ROLES: Record<
+  UserRole,
+  { label: string; labelAr: string; permissions: Permission[] }
+> = {
   admin: {
     label: 'Administrator',
     labelAr: 'مدير النظام',
     permissions: [
-      { resource: '*', actions: ['create', 'read', 'update', 'delete', 'manage'] },
+      {
+        resource: '*',
+        actions: ['create', 'read', 'update', 'delete', 'manage'],
+      },
     ],
   },
   doctor: {
@@ -23,7 +29,10 @@ export const ROLES: Record<UserRole, { label: string; labelAr: string; permissio
     labelAr: 'طبيب',
     permissions: [
       { resource: 'patients', actions: ['create', 'read', 'update'] },
-      { resource: 'appointments', actions: ['create', 'read', 'update', 'delete'] },
+      {
+        resource: 'appointments',
+        actions: ['create', 'read', 'update', 'delete'],
+      },
       { resource: 'medical-records', actions: ['create', 'read', 'update'] },
       { resource: 'prescriptions', actions: ['create', 'read', 'update'] },
       { resource: 'messages', actions: ['create', 'read'] },
@@ -45,7 +54,10 @@ export const ROLES: Record<UserRole, { label: string; labelAr: string; permissio
     labelAr: 'موظف',
     permissions: [
       { resource: 'patients', actions: ['create', 'read', 'update'] },
-      { resource: 'appointments', actions: ['create', 'read', 'update', 'delete'] },
+      {
+        resource: 'appointments',
+        actions: ['create', 'read', 'update', 'delete'],
+      },
       { resource: 'payments', actions: ['create', 'read', 'update'] },
       { resource: 'insurance', actions: ['create', 'read', 'update'] },
       { resource: 'messages', actions: ['create', 'read'] },
@@ -80,7 +92,7 @@ export function hasPermission(
   action: 'create' | 'read' | 'update' | 'delete' | 'manage'
 ): boolean {
   const roleData = ROLES[role];
-  
+
   if (!roleData) return false;
 
   // Admin has all permissions
@@ -88,7 +100,9 @@ export function hasPermission(
 
   // Check specific permissions
   return roleData.permissions.some(
-    p => (p.resource === resource || p.resource === '*') && p.actions.includes(action)
+    p =>
+      (p.resource === resource || p.resource === '*') &&
+      p.actions.includes(action)
   );
 }
 

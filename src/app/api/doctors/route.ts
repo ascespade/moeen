@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
+import { requireAuth } from '@/lib/auth/authorize';
+import { PermissionManager } from '@/lib/permissions';
 import { z } from 'zod';
+import { AuditLogger, AuditAction } from '@/lib/audit-logger';
 
 const doctorSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -15,8 +18,39 @@ const doctorSchema = z.object({
   working_hours: z.any().optional(),
 });
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication for accessing doctors data
+    const authResult = await requireAuth([
+      'admin',
+      'supervisor',
+      'staff',
+      'doctor',
+      'patient',
+    ])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // Check permissions using PermissionManager
+    const canRead = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'doctors',
+      'read',
+      { userId: authResult.user.id }
+    );
+
+    if (!canRead) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
     const { searchParams } = new URL(request.url);
     const specialty = searchParams.get('specialty') || '';
     const searchTerm = searchParams.get('search') || '';
@@ -44,7 +78,6 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Error fetching doctors:', error);
     return NextResponse.json(
       { error: 'Failed to fetch doctors' },
       { status: 500 }
@@ -54,6 +87,30 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Security: Require authentication and proper permissions
+    const authResult = await requireAuth(['admin', 'supervisor'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // Check permissions using PermissionManager
+    const canCreate = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'doctors',
+      'create',
+      { userId: authResult.user.id }
+    );
+
+    if (!canCreate) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const validation = doctorSchema.safeParse(body);
 
@@ -91,13 +148,24 @@ export async function POST(request: NextRequest) {
       working_hours: validation.data.working_hours,
     });
 
+    // Audit log: Doctor creation
+    await AuditLogger.log({
+      action: AuditAction.CREATE,
+      table_name: 'doctors',
+      record_id: doctor.id,
+      new_values: {
+        doctor_id: doctor.id,
+        license_number: validation.data.license_number,
+      },
+      metadata: { createdBy: authResult.user.id },
+    });
+
     return NextResponse.json({
       success: true,
       data: { ...doctor, doctorRecord },
       message: 'Doctor created successfully',
     });
   } catch (error) {
-    console.error('Error creating doctor:', error);
     return NextResponse.json(
       { error: 'Failed to create doctor' },
       { status: 500 }

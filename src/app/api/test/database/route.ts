@@ -1,14 +1,26 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
+const supabaseServiceKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
 
-export async function GET(request: NextRequest) {
-  const testType = request.nextUrl.searchParams.get('type') || 'connection';
+export const revalidate = 60;
 
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    const testType = request.nextUrl.searchParams.get('type') || 'connection';
     if (!supabaseUrl || !supabaseAnonKey) {
       return NextResponse.json(
         {
@@ -66,12 +78,15 @@ export async function GET(request: NextRequest) {
 
         for (const table of tables) {
           try {
-            const { error } = await supabase.from(table).select('count').limit(1);
+            const { error } = await supabase
+              .from(table)
+              .select('count')
+              .limit(1);
             tableResults[table] = {
               accessible: !error,
               error: error?.message || null,
             };
-          } catch (err: any) {
+          } catch (err: unknown) {
             tableResults[table] = {
               accessible: false,
               error: err.message,
@@ -237,11 +252,12 @@ export async function GET(request: NextRequest) {
 
         // Test appointments -> patients relationship
         try {
-          const { data: appointmentsData, error: appointmentsError } = await supabase
-            .from('appointments')
-            .select('patient_id, id')
-            .limit(1);
-          
+          const { data: appointmentsData, error: appointmentsError } =
+            await supabase
+              .from('appointments')
+              .select('patient_id, id')
+              .limit(1);
+
           if (!appointmentsError) {
             // Try to join with patients
             if (appointmentsData && appointmentsData.length > 0) {
@@ -251,11 +267,13 @@ export async function GET(request: NextRequest) {
                 .select('id, first_name, last_name')
                 .eq('id', appointment.patient_id)
                 .single();
-              
+
               relationResults['appointments -> patients'] = {
                 working: !patientError,
                 error: patientError?.message || null,
-                note: patientError ? 'Appointment exists but patient join failed' : 'Join successful',
+                note: patientError
+                  ? 'Appointment exists but patient join failed'
+                  : 'Join successful',
               };
             } else {
               relationResults['appointments -> patients'] = {
@@ -270,7 +288,7 @@ export async function GET(request: NextRequest) {
               error: appointmentsError.message,
             };
           }
-        } catch (err: any) {
+        } catch (err: unknown) {
           relationResults['appointments -> patients'] = {
             working: false,
             error: err.message,
@@ -283,13 +301,15 @@ export async function GET(request: NextRequest) {
             .from('appointments')
             .select('patient_id')
             .limit(1);
-          
+
           relationResults['foreign key column exists'] = {
             working: !fkError,
             error: fkError?.message || null,
-            note: !fkError ? 'patient_id column accessible' : 'Column check failed',
+            note: !fkError
+              ? 'patient_id column accessible'
+              : 'Column check failed',
           };
-        } catch (err: any) {
+        } catch (err: unknown) {
           relationResults['foreign key column exists'] = {
             working: false,
             error: err.message,
@@ -322,11 +342,16 @@ export async function GET(request: NextRequest) {
             const idxDuration = Date.now() - idxStart;
 
             indexResults[`${idx.table}.${idx.column}`] = {
-              performance: idxDuration < 100 ? 'fast' : idxDuration < 500 ? 'medium' : 'slow',
+              performance:
+                idxDuration < 100
+                  ? 'fast'
+                  : idxDuration < 500
+                    ? 'medium'
+                    : 'slow',
               duration: idxDuration,
               error: error?.message || null,
             };
-          } catch (err: any) {
+          } catch (err: unknown) {
             indexResults[`${idx.table}.${idx.column}`] = {
               performance: 'error',
               error: err.message,
@@ -359,7 +384,7 @@ export async function GET(request: NextRequest) {
           { status: 400 }
         );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
@@ -370,4 +395,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-

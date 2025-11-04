@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const {
       doctorId,
@@ -196,7 +196,9 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const patientId = searchParams.get('patientId');
@@ -262,12 +264,12 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function sendWhatsAppConfirmation(phone: string, appointment: any) {
+async function sendWhatsAppConfirmation(phone: string, appointment: unknown) {
   // هذا مثال لإرسال رسالة WhatsApp
   // في التطبيق الحقيقي، ستحتاج إلى تكامل مع WhatsApp Business API
 
   const message = `تم حجز موعدك بنجاح!
-  
+
 التفاصيل:
 👨‍⚕️ الطبيب: ${appointment.doctors.first_name} ${appointment.doctors.last_name}
 🏥 التخصص: ${appointment.doctors.specialty}

@@ -4,7 +4,15 @@ import PrivacyPolicyModal from '@/components/modals/PrivacyPolicyModal';
 import TermsOfServiceModal from '@/components/modals/TermsOfServiceModal';
 import { ROUTES } from '@/constants/routes';
 import { CONTACT_INFO, SOCIAL_LINKS, UI_CONSTANTS } from '@/lib/constants/ui';
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Twitter } from 'lucide-react';
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { memo, useState } from 'react';
@@ -32,7 +40,8 @@ const Footer = memo(function Footer() {
             </div>
             <p className='text-sm leading-relaxed'>
               مركز طبي متخصص في رعاية ذوي الاحتياجات الخاصة، نقدم خدمات شاملة
-              تشمل العلاج الطبيعي والوظيفي والنطق والسمع مع أحدث التقنيات الطبية.
+              تشمل العلاج الطبيعي والوظيفي والنطق والسمع مع أحدث التقنيات
+              الطبية.
             </p>
             <div className='flex gap-3'>
               <a
@@ -174,7 +183,9 @@ const Footer = memo(function Footer() {
             <ul className='space-y-3'>
               <li className='flex items-start gap-3'>
                 <MapPin className='w-5 h-5 text-[var(--brand-default)] mt-0.5 flex-shrink-0' />
-                <span className='text-sm leading-relaxed'>{CONTACT_INFO.ADDRESS}</span>
+                <span className='text-sm leading-relaxed'>
+                  {CONTACT_INFO.ADDRESS}
+                </span>
               </li>
               <li className='flex items-start gap-3'>
                 <Phone className='w-5 h-5 text-[var(--brand-default)] mt-0.5 flex-shrink-0' />
@@ -213,15 +224,13 @@ const Footer = memo(function Footer() {
               © {currentYear} مركز الهمم. جميع الحقوق محفوظة.
             </p>
             <div className='flex gap-6 items-center'>
-              <button
-                onClick={() => setIsPrivacyOpen(true)}
+              <button onClick={() => { setIsPrivacyOpen(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsPrivacyOpen(true) } }}
                 className='text-sm text-gray-400 hover:text-[var(--brand-default)] transition-colors cursor-pointer'
               >
                 سياسة الخصوصية
               </button>
               <span className='text-gray-600'>|</span>
-              <button
-                onClick={() => setIsTermsOpen(true)}
+              <button onClick={() => { setIsTermsOpen(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsTermsOpen(true) } }}
                 className='text-sm text-gray-400 hover:text-[var(--brand-default)] transition-colors cursor-pointer'
               >
                 شروط الاستخدام

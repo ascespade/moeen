@@ -7,7 +7,9 @@ const supabase = createClient(
 );
 
 // GET /api/healthcare/patients - جلب المرضى
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const search = searchParams.get('search');
@@ -84,7 +86,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/healthcare/patients - إنشاء مريض جديد
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const {

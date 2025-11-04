@@ -57,17 +57,16 @@ export const config = {
 
 // Configuration validation helper
 export const validateConfig = () => {
-  const requiredEnvVars = [
-    'DATABASE_URL',
-    'AUTH_SECRET'
-  ];
-  
+  const requiredEnvVars = ['DATABASE_URL', 'AUTH_SECRET'];
+
   const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
-  
+
   if (missingVars.length > 0) {
-    console.warn(`Missing required environment variables: ${missingVars.join(', ')}`);
+    console.warn(
+      `Missing required environment variables: ${missingVars.join(', ')}`
+    );
   }
-  
+
   console.log('Configuration loaded successfully');
   return missingVars.length === 0;
 };

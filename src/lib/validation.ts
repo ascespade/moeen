@@ -109,7 +109,10 @@ export const validationSchemas = {
       .min(2, 'Name must be at least 2 characters')
       .max(100, 'Name must be less than 100 characters')
       .transform(sanitizeText),
-    role: z.enum(['admin', 'doctor', 'patient', 'staff', 'supervisor'] as [UserRole, ...UserRole[]]),
+    role: z.enum(['admin', 'doctor', 'patient', 'staff', 'supervisor'] as [
+      UserRole,
+      ...UserRole[],
+    ]),
   }),
 
   // CSRF token validation

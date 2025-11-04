@@ -4,9 +4,28 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication for dashboard statistics
+    const authResult = await requireAuth([
+      'admin',
+      'supervisor',
+      'staff',
+      'doctor',
+    ])(request);
+    if (!authResult.authorized) {
+      return NextResponse.json(
+        {
+          error: 'Unauthorized. Authentication required to access statistics.',
+        },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const period = searchParams.get('period') || 'month';
 
@@ -15,7 +34,7 @@ export async function GET(request: NextRequest) {
     // Calculate date ranges based on period
     const now = new Date();
     let startDate: Date;
-    
+
     switch (period) {
       case 'today':
         startDate = new Date(now.setHours(0, 0, 0, 0));
@@ -73,14 +92,20 @@ export async function GET(request: NextRequest) {
       .select('amount, created_at')
       .eq('status', 'paid');
 
-    const totalRevenue = payments?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0;
-    
-    const monthlyPayments = payments?.filter(p => {
-      const paymentDate = new Date(p.created_at);
-      return paymentDate >= startDate;
-    }) || [];
-    
-    const monthlyRevenue = monthlyPayments.reduce((sum, p) => sum + (p.amount || 0), 0);
+    const totalRevenue =
+      payments?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) ||
+      0;
+
+    const monthlyPayments =
+      payments?.filter((p: unknown) => {
+        const paymentDate = new Date(p.created_at);
+        return paymentDate >= startDate;
+      }) || [];
+
+    const monthlyRevenue = monthlyPayments.reduce(
+      (sum: number, p: unknown) => sum + (p.amount || 0),
+      0
+    );
 
     // Get claims
     const { count: totalClaims } = await supabase
@@ -162,12 +187,14 @@ export async function GET(request: NextRequest) {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('Dashboard statistics API error:', error);
+    // Use logger instead of console.error
+    const logger = (await import('@/lib/monitoring/logger')).default;
+    logger.error('Dashboard statistics API error', { error });
     return NextResponse.json(
-      { 
+      {
         success: false,
         error: 'Internal server error',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
@@ -175,7 +202,7 @@ export async function GET(request: NextRequest) {
 }
 
 // Optional: POST endpoint to refresh/update statistics
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   // Use same logic as GET
   return await GET(request);
 }

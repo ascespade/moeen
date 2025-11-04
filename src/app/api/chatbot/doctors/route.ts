@@ -1,12 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const specialty = searchParams.get('specialty');
@@ -33,7 +35,7 @@ export async function GET(request: NextRequest) {
 
     // Get available time slots for each doctor
     const doctorsWithSlots = await Promise.all(
-      doctors.map(async doctor => {
+      doctors.map(async (doctor: unknown) => {
         const availableSlots = await getAvailableTimeSlots(
           doctor.id,
           date || undefined
@@ -69,7 +71,7 @@ async function getAvailableTimeSlots(doctorId: string, date?: string) {
     .eq('status', 'scheduled');
 
   const bookedTimes =
-    existingAppointments?.map(apt => apt.appointment_time) || [];
+    existingAppointments?.map((apt: unknown) => apt.appointment_time) || [];
 
   // Generate available time slots (9 AM to 5 PM, every hour)
   const availableSlots: string[] = [];

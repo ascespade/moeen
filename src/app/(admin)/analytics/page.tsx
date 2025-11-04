@@ -268,8 +268,7 @@ const AnalyticsPage: React.FC = () => {
 
         {/* View Tabs */}
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
-          <button
-            onClick={() => setSelectedView('overview')}
+          <buttononClick={() = aria-label="Button"> { setSelectedView('overview')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedView('overview') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'overview'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -278,8 +277,7 @@ const AnalyticsPage: React.FC = () => {
           >
             نظرة عامة
           </button>
-          <button
-            onClick={() => setSelectedView('patients')}
+          <buttononClick={() = aria-label="Button"> { setSelectedView('patients')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedView('patients') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'patients'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -288,8 +286,7 @@ const AnalyticsPage: React.FC = () => {
           >
             تحليل المرضى
           </button>
-          <button
-            onClick={() => setSelectedView('therapy')}
+          <buttononClick={() = aria-label="Button"> { setSelectedView('therapy')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedView('therapy') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'therapy'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -298,8 +295,7 @@ const AnalyticsPage: React.FC = () => {
           >
             تحليل العلاج
           </button>
-          <button
-            onClick={() => setSelectedView('appointments')}
+          <buttononClick={() = aria-label="Button"> { setSelectedView('appointments')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedView('appointments') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'appointments'
                 ? 'bg-white text-gray-900 shadow-sm'

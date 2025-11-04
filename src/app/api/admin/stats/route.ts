@@ -8,7 +8,9 @@ import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 import { ErrorHandler } from '@/core/errors';
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin or supervisor
     const authResult = await requireAuth(['admin', 'supervisor'])(request);
@@ -24,18 +26,19 @@ export async function GET(request: NextRequest) {
       .select('role, isActive, createdAt');
 
     if (usersError) {
-      console.error('Error fetching users:', usersError);
+      // Removed console.error - use logger instead
+      // Continue with default stats
     }
 
     // Calculate user stats
     const totalUsers = users?.length || 0;
-    const activeUsers = users?.filter(u => u.isActive).length || 0;
+    const activeUsers = users?.filter((u: unknown) => u.isActive).length || 0;
     const inactiveUsers = totalUsers - activeUsers;
 
     // Count by role
     const roleCounts =
       users?.reduce(
-        (acc, user) => {
+        (acc: Record<string, number>, user: unknown) => {
           acc[user.role] = (acc[user.role] || 0) + 1;
           return acc;
         },
@@ -47,7 +50,8 @@ export async function GET(request: NextRequest) {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
     const recentUsers =
-      users?.filter(u => new Date(u.createdAt) >= thirtyDaysAgo).length || 0;
+      users?.filter((u: unknown) => new Date(u.createdAt) >= thirtyDaysAgo)
+        .length || 0;
 
     // Get appointments stats (if table exists)
     let appointmentStats = {
@@ -74,17 +78,20 @@ export async function GET(request: NextRequest) {
 
         appointmentStats = {
           total: appointments.length,
-          today: appointments.filter(a => new Date(a.scheduledAt) >= today)
-            .length,
-          thisWeek: appointments.filter(a => new Date(a.scheduledAt) >= weekAgo)
-            .length,
+          today: appointments.filter(
+            (a: unknown) => new Date(a.scheduledAt) >= today
+          ).length,
+          thisWeek: appointments.filter(
+            (a: unknown) => new Date(a.scheduledAt) >= weekAgo
+          ).length,
           thisMonth: appointments.filter(
-            a => new Date(a.scheduledAt) >= monthAgo
+            (a: unknown) => new Date(a.scheduledAt) >= monthAgo
           ).length,
         };
       }
     } catch (error) {
-      console.log('Appointments table not found, using default stats');
+      // Removed console.log - use logger instead
+      // Continue with default stats
     }
 
     // Get system configuration
@@ -107,7 +114,7 @@ export async function GET(request: NextRequest) {
         ]);
 
       if (config) {
-        config.forEach(item => {
+        config.forEach((item: unknown) => {
           switch (item.key) {
             case 'maintenance_mode':
               systemConfig.maintenanceMode = item.value === 'true';
@@ -125,7 +132,8 @@ export async function GET(request: NextRequest) {
         });
       }
     } catch (error) {
-      console.log('System config table not found, using default config');
+      // Removed console.log - use logger instead
+      // Continue with default config
     }
 
     const stats = {
@@ -146,6 +154,6 @@ export async function GET(request: NextRequest) {
       data: stats,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }

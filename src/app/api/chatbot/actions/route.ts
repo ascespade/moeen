@@ -101,6 +101,8 @@ export async function POST(_request: NextRequest) {
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(_request: NextRequest) {
   try {
     // Authorize user

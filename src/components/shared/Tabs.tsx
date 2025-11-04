@@ -27,17 +27,16 @@ export function Tabs({ tabs, defaultTab, onChange, className }: TabsProps) {
     onChange?.(tabId);
   };
 
-  const activeTabContent = tabs.find((tab) => tab.id === activeTab)?.content;
+  const activeTabContent = tabs.find(tab => tab.id === activeTab)?.content;
 
   return (
     <div className={cn('w-full', className)}>
       {/* Tab Headers */}
-      <div className="border-b border-gray-200">
-        <nav className="flex space-x-4" aria-label="Tabs">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => handleTabChange(tab.id)}
+      <div className='border-b border-gray-200'>
+        <nav className='flex space-x-4' aria-label='Tabs'>
+          {tabs.map(tab => (
+            <buttonkey={tab.id}
+              onClick={() = aria-label="Button"> { handleTabChange(tab.id)}
               className={cn(
                 'flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 transition-colors',
                 activeTab === tab.id
@@ -49,11 +48,11 @@ export function Tabs({ tabs, defaultTab, onChange, className }: TabsProps) {
               {tab.label}
             </button>
           ))}
-        </nav>
-      </div>
+        </div>
+      </nav>
 
       {/* Tab Content */}
-      <div className="mt-4">{activeTabContent}</div>
+      <div className='mt-4'>{activeTabContent}</div>
     </div>
   );
 }

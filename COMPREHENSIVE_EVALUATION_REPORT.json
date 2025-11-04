@@ -1,0 +1,165 @@
+{
+  "evaluation": {
+    "structure": {
+      "score": 100,
+      "maxScore": 100,
+      "issues": [],
+      "strengths": [
+        "Next.js App Router structure present",
+        "Components directory organized",
+        "Lib directory for utilities",
+        "API routes separated from pages",
+        "Route groups for organization",
+        "Layout files for shared UI"
+      ]
+    },
+    "organization": {
+      "score": 80,
+      "maxScore": 100,
+      "issues": [
+        "294 duplicate files found"
+      ],
+      "strengths": [
+        "Well-organized directory structure",
+        "Archive directory for old files",
+        "Essential documentation present",
+        ".gitignore properly configured"
+      ]
+    },
+    "cleanCode": {
+      "score": 83.93865844089076,
+      "maxScore": 100,
+      "issues": [
+        "17.9% of files use any type"
+      ],
+      "strengths": [
+        "High TypeScript usage",
+        "Good error handling coverage",
+        "Consistent naming conventions",
+        "Good code documentation"
+      ]
+    },
+    "centralization": {
+      "score": 91.66666666666666,
+      "maxScore": 100,
+      "issues": [
+        "Some utilities not centralized"
+      ],
+      "strengths": [
+        "Centralized CSS variables",
+        "Centralized constants",
+        "Centralized permissions system",
+        "Centralized workflows"
+      ]
+    },
+    "accessibility": {
+      "score": 31.5,
+      "maxScore": 100,
+      "issues": [
+        "Low aria-label usage",
+        "Low semantic HTML usage",
+        "Limited keyboard navigation"
+      ],
+      "strengths": [
+        "Good alt text usage"
+      ]
+    },
+    "ux": {
+      "score": 37.666666666666664,
+      "maxScore": 100,
+      "issues": [
+        "Limited loading states",
+        "Limited user feedback"
+      ],
+      "strengths": [
+        "Good error state handling",
+        "Good responsive design"
+      ]
+    },
+    "design": {
+      "score": 66.43333333333334,
+      "maxScore": 100,
+      "issues": [
+        "Inconsistent color usage"
+      ],
+      "strengths": [
+        "Design system files present",
+        "Theme system present",
+        "Consistent spacing"
+      ]
+    },
+    "security": {
+      "score": 94,
+      "maxScore": 100,
+      "issues": [],
+      "strengths": [
+        "Authentication system present",
+        "Authorization system present",
+        "Input validation system",
+        "Protected route components",
+        "Most APIs are secured"
+      ]
+    },
+    "maintainability": {
+      "score": 88.64776632302406,
+      "maxScore": 100,
+      "issues": [],
+      "strengths": [
+        "Modular component structure",
+        "Good documentation",
+        "Good TypeScript usage",
+        "Test files present"
+      ]
+    },
+    "errorHandling": {
+      "score": 75.66666666666667,
+      "maxScore": 100,
+      "issues": [
+        "Limited error logging"
+      ],
+      "strengths": [
+        "Excellent error handling",
+        "Error boundaries present",
+        "User-friendly error messages"
+      ]
+    },
+    "performance": {
+      "score": 23.25,
+      "maxScore": 100,
+      "issues": [
+        "Limited code splitting",
+        "Limited image optimization",
+        "Limited caching",
+        "Limited lazy loading"
+      ],
+      "strengths": [
+        "Database indexing"
+      ]
+    },
+    "speed": {
+      "score": 70,
+      "maxScore": 100,
+      "issues": [
+        "Build failed - cannot evaluate speed"
+      ],
+      "strengths": [
+        "Barrel exports for faster imports",
+        "Reasonable dependency count",
+        "Production optimizations enabled"
+      ]
+    },
+    "marketCompetition": {
+      "score": 96,
+      "maxScore": 100,
+      "issues": [
+        "Missing 1 key features"
+      ],
+      "strengths": [
+        "Modern tech stack",
+        "Scalable architecture"
+      ]
+    }
+  },
+  "overallPercentage": "72.2",
+  "timestamp": "2025-11-04T00:44:58.334Z"
+}

@@ -484,8 +484,7 @@ const SecurityPage: React.FC = () => {
 
         {/* Tabs */}
         <div className='flex space-x-1 bg-surface p-1 rounded-lg mb-6'>
-          <button
-            onClick={() => setSelectedTab('events')}
+          <buttononClick={() = aria-label="Button"> { setSelectedTab('events')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedTab('events') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'events'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -494,8 +493,7 @@ const SecurityPage: React.FC = () => {
           >
             الأحداث الأمنية
           </button>
-          <button
-            onClick={() => setSelectedTab('sessions')}
+          <buttononClick={() = aria-label="Button"> { setSelectedTab('sessions')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedTab('sessions') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'sessions'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -504,8 +502,7 @@ const SecurityPage: React.FC = () => {
           >
             الجلسات النشطة
           </button>
-          <button
-            onClick={() => setSelectedTab('alerts')}
+          <buttononClick={() = aria-label="Button"> { setSelectedTab('alerts')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedTab('alerts') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'alerts'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -514,8 +511,7 @@ const SecurityPage: React.FC = () => {
           >
             التنبيهات
           </button>
-          <button
-            onClick={() => setSelectedTab('policies')}
+          <buttononClick={() = aria-label="Button"> { setSelectedTab('policies')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedTab('policies') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'policies'
                 ? 'bg-white text-gray-900 shadow-sm'

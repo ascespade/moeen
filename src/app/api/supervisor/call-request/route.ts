@@ -1,9 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import logger from '@/lib/monitoring/logger';
+import { requireAuth } from '@/lib/auth/authorize';
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { reason, priority = 'high' } = await request.json();
 
     const supabase = await createClient();
@@ -14,7 +24,15 @@ export async function POST(request: NextRequest) {
       error: authError,
     } = await supabase.auth.getUser();
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // Get user details
@@ -134,9 +152,20 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET: للمشرف لرؤية الطلبات
-export async function GET(request: NextRequest) {
+// GET: للمشرف لرؤية الطلب
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const supabase = await createClient();
 
     // Check if user is supervisor/admin
@@ -144,7 +173,15 @@ export async function GET(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const { data: userData } = await supabase
@@ -154,7 +191,15 @@ export async function GET(request: NextRequest) {
       .single();
 
     if (!userData || !['supervisor', 'admin'].includes(userData.role)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+      return NextResponse.json(
+        { error: 'Forbidden' },
+        {
+          status: 403,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // Get call requests

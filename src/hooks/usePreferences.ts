@@ -1,12 +1,12 @@
 'use client';
 
 import {
-    applyPreferences,
-    loadPreferences,
-    savePreferences,
-    type Language,
-    type ThemeMode,
-    type UserPreferences,
+  applyPreferences,
+  loadPreferences,
+  savePreferences,
+  type Language,
+  type ThemeMode,
+  type UserPreferences,
 } from '@/lib/user-preferences';
 import { useEffect, useState } from 'react';
 
@@ -30,7 +30,10 @@ export function usePreferences() {
       })
       .catch(() => {
         // Use default preferences on error
-        const defaults = { theme: 'light' as ThemeMode, language: 'ar' as Language };
+        const defaults = {
+          theme: 'light' as ThemeMode,
+          language: 'ar' as Language,
+        };
         setPreferences(defaults);
         applyPreferences(defaults);
       })
@@ -46,10 +49,10 @@ export function usePreferences() {
     // Update state immediately
     const newPreferences = { ...preferences, ...updates };
     setPreferences(newPreferences);
-    
+
     // Apply to DOM immediately
     applyPreferences(newPreferences);
-    
+
     // Save to storage (async, don't wait)
     savePreferences(updates).catch(() => {
       // Silently fail - preferences already applied to DOM
@@ -65,12 +68,12 @@ export function usePreferences() {
   const toggleTheme = async (): Promise<void> => {
     const currentTheme = preferences.theme;
     const newTheme: ThemeMode = currentTheme === 'light' ? 'dark' : 'light';
-    
+
     // Update state immediately for responsive UI
     const updatedPreferences = { ...preferences, theme: newTheme };
     setPreferences(updatedPreferences);
     applyPreferences(updatedPreferences);
-    
+
     // Save to storage
     await savePreferences({ theme: newTheme });
   };
@@ -102,5 +105,3 @@ export function usePreferences() {
     updatePreference,
   };
 }
-
-

@@ -1,13 +1,57 @@
 import { realDB } from '@/lib/supabase-real';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'all';
+
+    // Public data types that don't require authentication (for homepage)
+    const publicTypes = [
+      'services',
+      'hero',
+      'testimonials',
+      'gallery',
+      'contact',
+    ];
+    const isPublicRequest = publicTypes.includes(type);
+
+    // Only require authentication for accessing all data or sensitive data
+    if (!isPublicRequest && type !== 'all') {
+      // For non-public specific types, require auth
+      const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+        request
+      );
+      if (!authResult.authorized) {
+        return NextResponse.json(
+          {
+            error: 'Unauthorized. Authentication required to access this data.',
+          },
+          { status: 401 }
+        );
+      }
+    }
+
+    // For 'all' type, require authentication
+    if (type === 'all') {
+      const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+        request
+      );
+      if (!authResult.authorized) {
+        return NextResponse.json(
+          {
+            error: 'Unauthorized. Authentication required to access all data.',
+          },
+          { status: 401 }
+        );
+      }
+    }
 
     const supabase = getServiceSupabase();
 
@@ -19,8 +63,10 @@ export async function GET(request: NextRequest) {
       .limit(1)
       .maybeSingle();
 
-    if (centerError)
-      console.warn('center_info fetch error:', centerError.message);
+    if (centerError) {
+      // Removed console.warn - use logger instead
+      // Log error internally without exposing to client
+    }
 
     // Fetch homepage-related settings from settings table (keys stored as JSON)
     const keys = [
@@ -36,11 +82,13 @@ export async function GET(request: NextRequest) {
       .select('key, value')
       .in('key', keys);
 
-    if (settingsError)
-      console.warn('settings fetch error:', settingsError.message);
+    if (settingsError) {
+      // Removed console.warn - use logger instead
+      // Log error internally without exposing to client
+    }
 
     const settingsMap: Record<string, any> = {};
-    (settingsData || []).forEach((item: any) => {
+    (settingsData || []).forEach((item: unknown) => {
       try {
         settingsMap[item.key] =
           typeof item.value === 'string' ? JSON.parse(item.value) : item.value;
@@ -111,7 +159,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(dynamicData);
   } catch (error) {
-    console.error('Error in dynamic-data API:', error);
+    // Use logger instead of console.error
+    const logger = (await import('@/lib/monitoring/logger')).default;
+    logger.error('Error in dynamic-data API', { error });
     return NextResponse.json(
       { error: 'فشل في جلب البيانات الديناميكية' },
       { status: 500 }

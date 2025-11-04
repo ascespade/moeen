@@ -30,15 +30,14 @@ export function ThemeToggle({
 
   if (variant === 'compact') {
     return (
-      <button
-        onClick={toggleTheme}
+      <buttononClick={toggleTheme} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme } }}
         className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${className}`}
         aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
       >
         {isDark ? (
-          <Sun className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+          <Sun className='h-5 w-5 text-gray-600 dark:text-gray-300' />
         ) : (
-          <Moon className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+          <Moon className='h-5 w-5 text-gray-600 dark:text-gray-300' />
         )}
       </button>
     );
@@ -46,18 +45,12 @@ export function ThemeToggle({
 
   return (
     <Button
-      variant="outline"
+      variant='outline'
       onClick={toggleTheme}
       className={`flex items-center gap-2 ${className}`}
     >
-      {isDark ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
-      )}
-      {showLabel && (
-        <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
-      )}
+      {isDark ? <Sun className='h-4 w-4' /> : <Moon className='h-4 w-4' />}
+      {showLabel && <span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>}
     </Button>
   );
 }

@@ -1,10 +1,17 @@
-import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
+import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 
-const LOG_DIR = '/home/ubuntu/workspace/projects/moeen/logs';
+// Support both Windows and Linux paths
+const LOG_DIR =
+  process.env.LOG_DIR ||
+  (process.platform === 'win32'
+    ? path.join(process.cwd(), 'logs')
+    : '/home/ubuntu/workspace/projects/moeen/logs');
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const taskFile = path.join(LOG_DIR, 'tasks.json');
 

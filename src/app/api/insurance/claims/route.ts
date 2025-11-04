@@ -40,7 +40,7 @@ const updateClaimSchema = z.object({
   notes: z.string().optional(),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize staff, supervisor, or admin
     const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(
@@ -179,11 +179,13 @@ export async function POST(request: NextRequest) {
       message: 'Insurance claim created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize staff, supervisor, or admin
     const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(
@@ -248,11 +250,11 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize supervisor or admin only
     const authResult = await requireAuth(['supervisor', 'admin'])(request);
@@ -318,11 +320,11 @@ export async function PUT(request: NextRequest) {
       message: 'Insurance claim updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-async function submitToInsuranceProvider(claim: any, provider: string) {
+async function submitToInsuranceProvider(claim: unknown, provider: string) {
   try {
     // This would integrate with actual insurance provider APIs
     // For now, we'll simulate the submission
@@ -335,7 +337,8 @@ async function submitToInsuranceProvider(claim: any, provider: string) {
       other: null,
     };
 
-    const endpoint = providerEndpoints[provider];
+    const endpoint =
+      providerEndpoints[provider as keyof typeof providerEndpoints];
 
     if (!endpoint) {
       return {

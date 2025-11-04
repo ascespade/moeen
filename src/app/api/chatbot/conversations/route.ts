@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { NextRequest, NextResponse } from 'next/server';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -7,7 +7,9 @@ const supabase = createClient(
 );
 
 // GET /api/chatbot/conversations - جلب المحادثات
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const whatsapp_number = searchParams.get('whatsapp_number');
@@ -52,7 +54,7 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/chatbot/conversations - إنشاء محادثة جديدة
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const {

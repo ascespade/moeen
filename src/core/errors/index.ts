@@ -458,7 +458,11 @@ export class ErrorResponseFormatter {
 
 // Async Error Wrapper
 export const asyncHandler = (
-  fn: (req: unknown, res: unknown, next: (error?: Error) => void) => Promise<unknown> | unknown
+  fn: (
+    req: unknown,
+    res: unknown,
+    next: (error?: Error) => void
+  ) => Promise<unknown> | unknown
 ) => {
   return (req: unknown, res: unknown, next: (error?: Error) => void) => {
     Promise.resolve(fn(req, res, next)).catch(next);

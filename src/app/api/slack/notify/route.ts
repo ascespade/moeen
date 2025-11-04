@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SlackIntegration } from '@/lib/slack-integration';
 import { createClient } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const slack = new SlackIntegration();
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const {
       type,
       appointmentId,

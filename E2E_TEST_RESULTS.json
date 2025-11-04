@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-11-04T01:59:47.568Z",
+  "duration": 590,
+  "summary": {
+    "passed": 0,
+    "failed": 0,
+    "total": 0,
+    "successRate": "0%"
+  },
+  "passed": [],
+  "failed": []
+}

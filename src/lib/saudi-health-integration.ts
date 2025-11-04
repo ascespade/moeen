@@ -163,7 +163,7 @@ export class SaudiHealthSystemIntegration {
     }
   }
 
-  private mapSehaToHealthRecord(sehaData: any): SaudiHealthRecord {
+  private mapSehaToHealthRecord(sehaData: unknown): SaudiHealthRecord {
     return {
       nationalId: sehaData.nationalId,
       fullName: sehaData.fullName,

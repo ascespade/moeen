@@ -6,25 +6,25 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { useAuth } from '@/hooks/useAuth';
 import {
-    BookOpen,
-    Calendar,
-    Clock,
-    Edit,
-    Eye,
-    FileText,
-    Heart,
-    Lightbulb,
-    Mail,
-    MapPin,
-    MessageCircle,
-    MoreVertical,
-    Phone,
-    Plus,
-    Shield,
-    Star,
-    User,
-    Users,
-    Video
+  BookOpen,
+  Calendar,
+  Clock,
+  Edit,
+  Eye,
+  FileText,
+  Heart,
+  Lightbulb,
+  Mail,
+  MapPin,
+  MessageCircle,
+  MoreVertical,
+  Phone,
+  Plus,
+  Shield,
+  Star,
+  User,
+  Users,
+  Video,
 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -118,41 +118,54 @@ const FamilySupportPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const { createClient } = await import('@/lib/supabase/client');
       const supabase = createClient();
-      
+
       // Load family members with patient data
       const { data: familyMembersData, error: familyError } = await supabase
         .from('family_members')
         .select('*, patients(first_name, last_name, date_of_birth, gender)')
         .order('created_at', { ascending: false });
-      
+
       if (familyError) throw familyError;
-      
+
       // Transform family members
-      const transformedFamilyMembers = (familyMembersData || []).map((member: any) => ({
-        id: member.id,
-        patient_id: member.patient_id,
-        first_name: member.name ? member.name.split(' ')[0] : member.name || 'Unknown',
-        last_name: member.name ? member.name.split(' ').slice(1).join(' ') : '',
-        relationship: member.relationship || 'آخر',
-        phone: member.phone || '',
-        email: member.email,
-        emergency_contact: member.is_primary_contact || false,
-        default_caregiver: member.is_primary_contact || false,
-        notes: member.notes,
-        created_at: member.created_at,
-        updated_at: member.updated_at,
-        patients: member.patients ? {
-          first_name: member.patients.first_name,
-          last_name: member.patients.last_name,
-          age: member.patients.date_of_birth ? 
-            Math.floor((new Date().getTime() - new Date(member.patients.date_of_birth).getTime()) / (1000 * 60 * 60 * 24 * 365)) : 0,
-          condition: member.patients.medical_history || '',
-          avatar: '/logo.png',
-        } : undefined,
-      }));
+      const transformedFamilyMembers = (familyMembersData || []).map(
+        (member: any) => ({
+          id: member.id,
+          patient_id: member.patient_id,
+          first_name: member.name
+            ? member.name.split(' ')[0]
+            : member.name || 'Unknown',
+          last_name: member.name
+            ? member.name.split(' ').slice(1).join(' ')
+            : '',
+          relationship: member.relationship || 'آخر',
+          phone: member.phone || '',
+          email: member.email,
+          emergency_contact: member.is_primary_contact || false,
+          default_caregiver: member.is_primary_contact || false,
+          notes: member.notes,
+          created_at: member.created_at,
+          updated_at: member.updated_at,
+          patients: member.patients
+            ? {
+                first_name: member.patients.first_name,
+                last_name: member.patients.last_name,
+                age: member.patients.date_of_birth
+                  ? Math.floor(
+                      (new Date().getTime() -
+                        new Date(member.patients.date_of_birth).getTime()) /
+                        (1000 * 60 * 60 * 24 * 365)
+                    )
+                  : 0,
+                condition: member.patients.medical_history || '',
+                avatar: '/logo.png',
+              }
+            : undefined,
+        })
+      );
 
       // Load support sessions
       const { data: sessionsData, error: sessionsError } = await supabase
@@ -160,9 +173,9 @@ const FamilySupportPage: React.FC = () => {
         .select('*, patients(first_name, last_name), users(name)')
         .order('session_date', { ascending: false })
         .order('session_time', { ascending: false });
-      
+
       if (sessionsError) throw sessionsError;
-      
+
       const transformedSessions = (sessionsData || []).map((session: any) => ({
         id: session.id,
         family_member_id: session.patient_id,
@@ -177,18 +190,22 @@ const FamilySupportPage: React.FC = () => {
         follow_up_notes: session.notes || '',
         created_at: session.created_at,
         updated_at: session.created_at,
-        family_members: session.patients ? {
-          first_name: session.patients.first_name,
-          last_name: session.patients.last_name,
-          relationship: 'أسرة',
-          phone: '',
-        } : undefined,
-        counselors: session.users ? {
-          first_name: session.users.name || '',
-          last_name: '',
-          specialty: 'استشارة',
-          avatar: '/logo.png',
-        } : undefined,
+        family_members: session.patients
+          ? {
+              first_name: session.patients.first_name,
+              last_name: session.patients.last_name,
+              relationship: 'أسرة',
+              phone: '',
+            }
+          : undefined,
+        counselors: session.users
+          ? {
+              first_name: session.users.name || '',
+              last_name: '',
+              specialty: 'استشارة',
+              avatar: '/logo.png',
+            }
+          : undefined,
       }));
 
       // Load resources
@@ -196,20 +213,26 @@ const FamilySupportPage: React.FC = () => {
         .from('resources')
         .select('*')
         .order('created_at', { ascending: false });
-      
+
       if (resourcesError) throw resourcesError;
-      
-      const transformedResources = (resourcesData || []).map((resource: any) => ({
-        id: resource.id,
-        title: resource.resource_title || '',
-        description: resource.description || '',
-        category: resource.category || 'عام',
-        type: (resource.resource_type || 'document') as 'document' | 'video' | 'link' | 'guide',
-        url: resource.url,
-        file_path: resource.file_path,
-        tags: Array.isArray(resource.tags) ? resource.tags : [],
-        created_at: resource.created_at,
-      }));
+
+      const transformedResources = (resourcesData || []).map(
+        (resource: any) => ({
+          id: resource.id,
+          title: resource.resource_title || '',
+          description: resource.description || '',
+          category: resource.category || 'عام',
+          type: (resource.resource_type || 'document') as
+            | 'document'
+            | 'video'
+            | 'link'
+            | 'guide',
+          url: resource.url,
+          file_path: resource.file_path,
+          tags: Array.isArray(resource.tags) ? resource.tags : [],
+          created_at: resource.created_at,
+        })
+      );
 
       setFamilyMembers(transformedFamilyMembers);
       setSupportSessions(transformedSessions);
@@ -388,8 +411,7 @@ const FamilySupportPage: React.FC = () => {
       {/* Tabs */}
       <div className='mb-6'>
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
-          <button
-            onClick={() => setActiveTab('members')}
+          <buttononClick={() = aria-label="Button"> { setActiveTab('members')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('members') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'members'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -398,8 +420,7 @@ const FamilySupportPage: React.FC = () => {
           >
             أعضاء الأسر
           </button>
-          <button
-            onClick={() => setActiveTab('sessions')}
+          <buttononClick={() = aria-label="Button"> { setActiveTab('sessions')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('sessions') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'sessions'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -408,8 +429,7 @@ const FamilySupportPage: React.FC = () => {
           >
             جلسات الدعم
           </button>
-          <button
-            onClick={() => setActiveTab('resources')}
+          <buttononClick={() = aria-label="Button"> { setActiveTab('resources')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('resources') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'resources'
                 ? 'bg-white text-gray-900 shadow-sm'

@@ -54,7 +54,7 @@ const ModernHero = memo(function ModernHero({
             />
             {/* Multi-layer Gradient Overlay */}
             <div className='absolute inset-0 bg-gradient-to-br from-primary-900/50 via-primary-800/40 to-primary-600/20 dark:from-neutral-900/60 dark:via-neutral-800/50 dark:to-neutral-700/30' />
-          </div>
+          </section>
         ))}
 
         {/* Decorative Floating Elements */}
@@ -264,9 +264,8 @@ const ModernHero = memo(function ModernHero({
         {/* Enhanced Image Slider Indicators */}
         <div className='flex justify-center gap-3 mt-12'>
           {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImageIndex(index)}
+            <button key={index}
+              onClick={() => { setCurrentImageIndex(index)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setCurrentImageIndex(index) } }}
               className={`group relative h-3 rounded-full transition-all duration-500 ease-out ${
                 index === currentImageIndex
                   ? 'w-12 bg-primary-400 shadow-lg'

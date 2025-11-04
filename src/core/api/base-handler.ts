@@ -208,7 +208,7 @@ export class BaseApiHandler {
         created_at: new Date().toISOString(),
       });
     } catch (error) {
-      console.error('Failed to create audit log:', error);
+      // Failed to create audit log - silently continue
     }
   }
 

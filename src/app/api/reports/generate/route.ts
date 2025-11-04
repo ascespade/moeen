@@ -3,32 +3,32 @@
  * Generate comprehensive reports with analytics and export functionality
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 
-import { ErrorHandler } from "@/core/errors";
-import { ValidationHelper } from "@/core/validation";
-import { authorize, requireRole } from "@/lib/auth/authorize";
-import { createClient } from "@/lib/supabase/server";
+import { ErrorHandler } from '@/core/errors';
+import { ValidationHelper } from '@/core/validation';
+import { authorize, requireRole } from '@/lib/auth/authorize';
+import { createClient } from '@/lib/supabase/server';
 
 const reportSchema = z.object({
   type: z.enum([
-    "dashboard_metrics",
-    "patient_statistics",
-    "appointment_analytics",
-    "revenue_report",
-    "insurance_claims",
-    "staff_performance",
-    "doctor_workload",
-    "custom",
+    'dashboard_metrics',
+    'patient_statistics',
+    'appointment_analytics',
+    'revenue_report',
+    'insurance_claims',
+    'staff_performance',
+    'doctor_workload',
+    'custom',
   ]),
   dateRange: z.object({
     startDate: z.string().date(),
     endDate: z.string().date(),
   }),
   filters: z.record(z.string(), z.any()).optional(),
-  format: z.enum(["json", "csv", "pdf"]).default("json"),
-  groupBy: z.enum(["day", "week", "month", "year"]).optional(),
+  format: z.enum(['json', 'csv', 'pdf']).default('json'),
+  groupBy: z.enum(['day', 'week', 'month', 'year']).optional(),
 });
 
 export async function POST(_request: NextRequest) {
@@ -38,23 +38,20 @@ export async function POST(_request: NextRequest) {
     if (
       authError ||
       !authUser ||
-      !requireRole(["staff", "supervisor", "admin"])(authUser)
+      !requireRole(['staff', 'supervisor', 'admin'])(authUser)
     ) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const supabase = await createClient();
     const body = await _request.json();
 
     // Validate input
-    const validation = await ValidationHelper.validateAsync(
-      reportSchema,
-      body,
-    );
+    const validation = await ValidationHelper.validateAsync(reportSchema, body);
     if (!validation.success) {
       return NextResponse.json(
         { error: validation.error.message },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -63,68 +60,68 @@ export async function POST(_request: NextRequest) {
     // Generate report based on type
     let reportData;
     switch (type) {
-      case "dashboard_metrics":
+      case 'dashboard_metrics':
         reportData = await __generateDashboardMetrics(
-          (supabase as any),
+          supabase as any,
           dateRange,
-          filters,
+          filters
         );
         break;
-      case "patient_statistics":
+      case 'patient_statistics':
         reportData = await __generatePatientStatistics(
-          (supabase as any),
+          supabase as any,
           dateRange,
           filters,
-          groupBy || "",
+          groupBy || ''
         );
         break;
-      case "appointment_analytics":
+      case 'appointment_analytics':
         reportData = await __generateAppointmentAnalytics(
-          (supabase as any),
+          supabase as any,
           dateRange,
           filters,
-          groupBy || "",
+          groupBy || ''
         );
         break;
-      case "revenue_report":
+      case 'revenue_report':
         reportData = await __generateRevenueReport(
-          (supabase as any),
+          supabase as any,
           dateRange,
           filters,
-          groupBy || "",
+          groupBy || ''
         );
         break;
-      case "insurance_claims":
+      case 'insurance_claims':
         reportData = await __generateInsuranceClaimsReport(
-          (supabase as any),
+          supabase as any,
           dateRange,
-          filters,
+          filters
         );
         break;
-      case "staff_performance":
+      case 'staff_performance':
         reportData = await __generateStaffPerformanceReport(
-          (supabase as any),
+          supabase as any,
           dateRange,
-          filters,
+          filters
         );
         break;
-      case "doctor_workload":
+      case 'doctor_workload':
         reportData = await __generateDoctorWorkloadReport(
-          (supabase as any),
+          supabase as any,
           dateRange,
-          filters,
+          filters
         );
         break;
       default:
         return NextResponse.json(
-          { error: "Invalid report type" },
-          { status: 400 },
+          { error: 'Invalid report type' },
+          { status: 400 }
         );
     }
 
     // Save report to database
     const { data: savedReport, error: saveError } = await (supabase as any)
-      .from("reports_admin")
+      .from('reports_admin')
       .insert({
         type,
         payload: reportData,
@@ -138,15 +135,15 @@ export async function POST(_request: NextRequest) {
 
     if (saveError) {
       return NextResponse.json(
-        { error: "Failed to save report" },
-        { status: 500 },
+        { error: 'Failed to save report' },
+        { status: 500 }
       );
     }
 
     // Create audit log
-    await (supabase as any).from("audit_logs").insert({
-      action: "report_generated",
-      entityType: "report",
+    await (supabase as any).from('audit_logs').insert({
+      action: 'report_generated',
+      entityType: 'report',
       entityId: savedReport.id,
       userId: authUser.id,
       metadata: {
@@ -165,7 +162,7 @@ export async function POST(_request: NextRequest) {
         data: reportData,
         format,
       },
-      message: "Report generated successfully",
+      message: 'Report generated successfully',
     });
   } catch (error) {
     return ErrorHandler.getInstance().handle(error as Error);
@@ -175,7 +172,7 @@ export async function POST(_request: NextRequest) {
 async function __generateDashboardMetrics(
   supabase: unknown,
   dateRange: unknown,
-  filters: unknown,
+  filters: unknown
 ) {
   const { startDate, endDate } = dateRange as any;
 
@@ -183,20 +180,20 @@ async function __generateDashboardMetrics(
   const [patientsResult, appointmentsResult, paymentsResult] =
     await Promise.all([
       (supabase as any)
-        .from("patients")
-        .select("id, createdAt, isActivated")
-        .gte("createdAt", startDate)
-        .lte("createdAt", endDate),
+        .from('patients')
+        .select('id, createdAt, isActivated')
+        .gte('createdAt', startDate)
+        .lte('createdAt', endDate),
       (supabase as any)
-        .from("appointments")
-        .select("id, status, paymentStatus, scheduledAt")
-        .gte("scheduledAt", startDate)
-        .lte("scheduledAt", endDate),
+        .from('appointments')
+        .select('id, status, paymentStatus, scheduledAt')
+        .gte('scheduledAt', startDate)
+        .lte('scheduledAt', endDate),
       (supabase as any)
-        .from("payments")
-        .select("id, amount, status, createdAt")
-        .gte("createdAt", startDate)
-        .lte("createdAt", endDate),
+        .from('payments')
+        .select('id, amount, status, createdAt')
+        .gte('createdAt', startDate)
+        .lte('createdAt', endDate),
     ]);
 
   const patients = patientsResult.data || [];
@@ -206,22 +203,22 @@ async function __generateDashboardMetrics(
   // Calculate metrics
   const totalPatients = patients.length;
   const activatedPatients = patients.filter(
-    (p: any) => p.isActivated,
+    (p: unknown) => p.isActivated
   ).length;
   const totalAppointments = appointments.length;
   const completedAppointments = appointments.filter(
-    (a: any) => a.status === "completed",
+    (a: unknown) => a.status === 'completed'
   ).length;
   const totalRevenue = payments
-    .filter((p: any) => p.status === "paid")
-    .reduce((sum: any, p: any) => sum + (p.amount || 0), 0);
+    .filter((p: unknown) => p.status === 'paid')
+    .reduce((sum: unknown, p: unknown) => sum + (p.amount || 0), 0);
 
   // Daily breakdown
   const dailyStats = __generateDailyBreakdown(
     appointments,
     payments,
     startDate,
-    endDate,
+    endDate
   );
 
   return {
@@ -240,9 +237,9 @@ async function __generateDashboardMetrics(
     },
     dailyStats,
     trends: {
-      patientGrowth: __calculateGrowthRate(patients, "createdAt"),
-      appointmentGrowth: __calculateGrowthRate(appointments, "scheduledAt"),
-      revenueGrowth: __calculateGrowthRate(payments, "createdAt"),
+      patientGrowth: __calculateGrowthRate(patients, 'createdAt'),
+      appointmentGrowth: __calculateGrowthRate(appointments, 'scheduledAt'),
+      revenueGrowth: __calculateGrowthRate(payments, 'createdAt'),
     },
   };
 }
@@ -251,12 +248,12 @@ async function __generatePatientStatistics(
   supabase: unknown,
   dateRange: unknown,
   filters: unknown,
-  groupBy: string,
+  groupBy: string
 ) {
   const { startDate, endDate } = dateRange as any;
 
   const { data: patients } = await (supabase as any)
-    .from("patients")
+    .from('patients')
     .select(
       `
       id,
@@ -265,27 +262,27 @@ async function __generatePatientStatistics(
       activationDate,
       insuranceProvider,
       emergencyContact
-    `,
+    `
     )
-    .gte("createdAt", startDate)
-    .lte("createdAt", endDate);
+    .gte('createdAt', startDate)
+    .lte('createdAt', endDate);
 
   if (!patients) return {};
 
   // Group by specified period
-  const grouped = __groupDataByPeriod(patients, "createdAt", groupBy || "");
+  const grouped = __groupDataByPeriod(patients, 'createdAt', groupBy || '');
 
   // Calculate statistics
   const stats = {
     total: patients.length,
-    activated: patients.filter((p: any) => p.isActivated).length,
-    pending: patients.filter((p: any) => !p.isActivated).length,
-    byInsurance: __groupByField(patients, "insuranceProvider"),
+    activated: patients.filter((p: unknown) => p.isActivated).length,
+    pending: patients.filter((p: unknown) => !p.isActivated).length,
+    byInsurance: __groupByField(patients, 'insuranceProvider'),
     byAgeGroup: __calculateAgeGroups(patients),
-    activationTrend: grouped.map((group) => ({
+    activationTrend: grouped.map(group => ({
       period: group.period,
       total: group.data.length,
-      activated: group.data.filter((p: any) => p.isActivated).length,
+      activated: group.data.filter((p: unknown) => p.isActivated).length,
     })),
   };
 
@@ -296,12 +293,12 @@ async function __generateAppointmentAnalytics(
   supabase: unknown,
   dateRange: unknown,
   filters: unknown,
-  groupBy: string,
+  groupBy: string
 ) {
   const { startDate, endDate } = dateRange as any;
 
   const { data: appointments } = await (supabase as any)
-    .from("appointments")
+    .from('appointments')
     .select(
       `
       id,
@@ -311,32 +308,32 @@ async function __generateAppointmentAnalytics(
       duration,
       patientId,
       doctorId
-    `,
+    `
     )
-    .gte("scheduledAt", startDate)
-    .lte("scheduledAt", endDate);
+    .gte('scheduledAt', startDate)
+    .lte('scheduledAt', endDate);
 
   if (!appointments) return {};
 
   const grouped = __groupDataByPeriod(
     appointments,
-    "scheduledAt",
-    groupBy || "",
+    'scheduledAt',
+    groupBy || ''
   );
 
   return {
     total: appointments.length,
-    byStatus: __groupByField(appointments, "status"),
-    byType: __groupByField(appointments, "type"),
+    byStatus: __groupByField(appointments, 'status'),
+    byType: __groupByField(appointments, 'type'),
     averageDuration:
       appointments.reduce(
-        (sum: any, apt: any) => sum + (apt.duration || 30),
-        0,
+        (sum: unknown, apt: unknown) => sum + (apt.duration || 30),
+        0
       ) / appointments.length,
-    trends: grouped.map((group) => ({
+    trends: grouped.map(group => ({
       period: group.period,
       total: group.data.length,
-      completed: group.data.filter((a: any) => a.status === "completed")
+      completed: group.data.filter((a: unknown) => a.status === 'completed')
         .length,
     })),
   };
@@ -346,12 +343,12 @@ async function __generateRevenueReport(
   supabase: unknown,
   dateRange: unknown,
   filters: unknown,
-  groupBy: string,
+  groupBy: string
 ) {
   const { startDate, endDate } = dateRange as any;
 
   const { data: payments } = await (supabase as any)
-    .from("payments")
+    .from('payments')
     .select(
       `
       id,
@@ -360,23 +357,29 @@ async function __generateRevenueReport(
       method,
       createdAt,
       appointmentId
-    `,
+    `
     )
-    .gte("createdAt", startDate)
-    .lte("createdAt", endDate);
+    .gte('createdAt', startDate)
+    .lte('createdAt', endDate);
 
   if (!payments) return {};
 
-  const paidPayments = payments.filter((p) => p.status === "paid");
-  const grouped = __groupDataByPeriod(paidPayments, "createdAt", groupBy || "");
+  const paidPayments = payments.filter(p => p.status === 'paid');
+  const grouped = __groupDataByPeriod(paidPayments, 'createdAt', groupBy || '');
 
   return {
-    totalRevenue: paidPayments.reduce((sum, p) => sum + (p.amount || 0), 0),
-    byMethod: __groupByField(paidPayments, "method"),
-    byStatus: __groupByField(payments, "status"),
-    dailyRevenue: grouped.map((group) => ({
+    totalRevenue: paidPayments.reduce(
+      (sum: number, p: unknown) => sum + (p.amount || 0),
+      0
+    ),
+    byMethod: __groupByField(paidPayments, 'method'),
+    byStatus: __groupByField(payments, 'status'),
+    dailyRevenue: grouped.map(group => ({
       period: group.period,
-      revenue: group.data.reduce((sum, p) => sum + (p.amount || 0), 0),
+      revenue: group.data.reduce(
+        (sum: number, p: unknown) => sum + (p.amount || 0),
+        0
+      ),
       count: group.data.length,
     })),
   };
@@ -385,12 +388,12 @@ async function __generateRevenueReport(
 async function __generateInsuranceClaimsReport(
   supabase: unknown,
   dateRange: unknown,
-  filters: unknown,
+  filters: unknown
 ) {
   const { startDate, endDate } = dateRange as any;
 
   const { data: claims } = await (supabase as any)
-    .from("insurance_claims")
+    .from('insurance_claims')
     .select(
       `
       id,
@@ -399,21 +402,21 @@ async function __generateInsuranceClaimsReport(
       amount,
       createdAt,
       patientId
-    `,
+    `
     )
-    .gte("createdAt", startDate)
-    .lte("createdAt", endDate);
+    .gte('createdAt', startDate)
+    .lte('createdAt', endDate);
 
   if (!claims) return {};
 
   return {
     total: claims.length,
-    byProvider: __groupByField(claims, "provider"),
-    byStatus: __groupByField(claims, "claimStatus"),
+    byProvider: __groupByField(claims, 'provider'),
+    byStatus: __groupByField(claims, 'claimStatus'),
     totalAmount: claims.reduce((sum, c) => sum + (c.amount || 0), 0),
     approvalRate:
       claims.length > 0
-        ? (claims.filter((c) => c.claimStatus === "approved").length /
+        ? (claims.filter(c => c.claimStatus === 'approved').length /
             claims.length) *
           100
         : 0,
@@ -423,19 +426,19 @@ async function __generateInsuranceClaimsReport(
 async function __generateStaffPerformanceReport(
   supabase: unknown,
   dateRange: unknown,
-  filters: unknown,
+  filters: unknown
 ) {
   // Implementation for staff performance metrics
-  return { message: "Staff performance report implementation pending" };
+  return { message: 'Staff performance report implementation pending' };
 }
 
 async function __generateDoctorWorkloadReport(
   supabase: unknown,
   dateRange: unknown,
-  filters: unknown,
+  filters: unknown
 ) {
   // Implementation for doctor workload metrics
-  return { message: "Doctor workload report implementation pending" };
+  return { message: 'Doctor workload report implementation pending' };
 }
 
 // Helper functions
@@ -443,7 +446,7 @@ function __generateDailyBreakdown(
   appointments: unknown[],
   payments: unknown[],
   startDate: string,
-  endDate: string,
+  endDate: string
 ) {
   const days: Array<{ date: string; appointments: number; revenue: number }> =
     [];
@@ -451,20 +454,20 @@ function __generateDailyBreakdown(
   const end = new Date(endDate);
 
   while (current <= end) {
-    const dateStr = current.toISOString().split("T")[0] || "";
-    const dayAppointments = appointments.filter((a: any) =>
-      a.scheduledAt?.startsWith(dateStr),
+    const dateStr = current.toISOString().split('T')[0] || '';
+    const dayAppointments = appointments.filter((a: unknown) =>
+      a.scheduledAt?.startsWith(dateStr)
     );
-    const dayPayments = payments.filter((p: any) =>
-      p.createdAt?.startsWith(dateStr),
+    const dayPayments = payments.filter((p: unknown) =>
+      p.createdAt?.startsWith(dateStr)
     );
 
     days.push({
       date: dateStr,
       appointments: dayAppointments.length,
       revenue: (dayPayments as any)
-        .filter((p: any) => p.status === "paid")
-        .reduce((sum: any, p: any) => sum + (p.amount || 0), 0),
+        .filter((p: unknown) => p.status === 'paid')
+        .reduce((sum: unknown, p: unknown) => sum + (p.amount || 0), 0),
     });
 
     current.setDate(current.getDate() + 1);
@@ -478,7 +481,7 @@ function __calculateGrowthRate(data: any[], dateField: string) {
 
   const sorted = data.sort(
     (a, b) =>
-      new Date(a[dateField]).getTime() - new Date(b[dateField]).getTime(),
+      new Date(a[dateField]).getTime() - new Date(b[dateField]).getTime()
   );
 
   const firstHalf = sorted.slice(0, Math.floor(sorted.length / 2));
@@ -490,34 +493,30 @@ function __calculateGrowthRate(data: any[], dateField: string) {
   return firstCount > 0 ? ((secondCount - firstCount) / firstCount) * 100 : 0;
 }
 
-function __groupDataByPeriod(
-  data: any[],
-  dateField: string,
-  period: string,
-) {
+function __groupDataByPeriod(data: any[], dateField: string, period: string) {
   const groups = new Map();
 
-  data.forEach((item) => {
+  data.forEach(item => {
     const date = new Date(item[dateField]);
     let key;
 
     switch (period) {
-      case "day":
-        key = date.toISOString().split("T")[0];
+      case 'day':
+        key = date.toISOString().split('T')[0];
         break;
-      case "week":
+      case 'week':
         const weekStart = new Date(date);
         weekStart.setDate(date.getDate() - date.getDay());
-        key = weekStart.toISOString().split("T")[0];
+        key = weekStart.toISOString().split('T')[0];
         break;
-      case "month":
-        key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+      case 'month':
+        key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
         break;
-      case "year":
+      case 'year':
         key = date.getFullYear().toString();
         break;
       default:
-        key = date.toISOString().split("T")[0];
+        key = date.toISOString().split('T')[0];
     }
 
     if (!groups.has(key)) {
@@ -535,8 +534,8 @@ function __groupDataByPeriod(
 function __groupByField(data: any[], field: string) {
   const groups = new Map();
 
-  data.forEach((item) => {
-    const value = item[field] || "Unknown";
+  data.forEach(item => {
+    const value = item[field] || 'Unknown';
     groups.set(value, (groups.get(value) || 0) + 1);
   });
 
@@ -545,14 +544,14 @@ function __groupByField(data: any[], field: string) {
 
 function __calculateAgeGroups(patients: any[]) {
   const groups = {
-    "0-18": 0,
-    "19-35": 0,
-    "36-50": 0,
-    "51-65": 0,
-    "65+": 0,
+    '0-18': 0,
+    '19-35': 0,
+    '36-50': 0,
+    '51-65': 0,
+    '65+': 0,
   };
 
-  patients.forEach((patient) => {
+  patients.forEach(patient => {
     // This would need actual birth date calculation
     // For now, return empty groups
   });

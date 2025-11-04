@@ -443,9 +443,8 @@ const APIKeysSettingsPage: React.FC = () => {
                             className='pr-24 font-mono text-sm'
                           />
                           <div className='absolute left-2 top-1/2 -translate-y-1/2 flex gap-1'>
-                            <button
-                              type='button'
-                              onClick={() => toggleVisibility(keyConfig.id)}
+                            <buttontype='button'
+                              onClick={() = aria-label="Button"> { toggleVisibility(keyConfig.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { toggleVisibility(keyConfig.id) } }}
                               className='p-1 hover:bg-gray-100 rounded'
                             >
                               {isVisible ? (
@@ -455,11 +454,12 @@ const APIKeysSettingsPage: React.FC = () => {
                               )}
                             </button>
                             {keyConfig.key_value && (
-                              <button
-                                type='button'
-                                onClick={() =>
+                              <buttontype='button'
+                                onClick={() = aria-label="Button"> {
                                   copyToClipboard(keyConfig.key_value)
-                                }
+                                } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> {
+                                  copyToClipboard(keyConfig.key_value)
+                                 } }}
                                 className='p-1 hover:bg-gray-100 rounded'
                               >
                                 <Copy className='w-4 h-4' />

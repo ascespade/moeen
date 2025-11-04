@@ -1,8 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
+import { requireAuth } from '@/lib/auth/authorize';
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const searchTerm = searchParams.get('search') || '';
     const limit = parseInt(searchParams.get('limit') || '50');

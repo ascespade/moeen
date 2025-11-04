@@ -154,7 +154,7 @@ export interface LogEntry {
   message: string;
   service: string;
   timestamp: string;
-  metadata?: any;
+  metadata?: unknown;
 }
 
 export interface LogListResponse extends PaginatedResponse<LogEntry> {

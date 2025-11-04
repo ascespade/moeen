@@ -2,7 +2,13 @@
 
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/Select';
 import { cn } from '@/lib/utils';
 import { Filter, RefreshCw, Search } from 'lucide-react';
 import { ReactNode } from 'react';
@@ -37,10 +43,10 @@ export default function AdminFilterBar({
   onRefresh,
   onApplyFilters,
   children,
-  className
+  className,
 }: AdminFilterBarProps) {
   return (
-    <AdminCard className={cn('mb-6', className)} padding="md">
+    <AdminCard className={cn('mb-6', className)} padding='md'>
       <div className='flex flex-col md:flex-row gap-4'>
         {/* Search Input */}
         {onSearchChange && (
@@ -50,22 +56,26 @@ export default function AdminFilterBar({
               <Input
                 placeholder={searchPlaceholder}
                 value={searchValue}
-                onChange={(e) => onSearchChange(e.target.value)}
+                onChange={e => onSearchChange(e.target.value)}
                 className='pr-10 h-10 border-[var(--brand-border)] focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)]'
               />
             </div>
           </div>
         )}
-        
+
         {/* Filter Selects */}
         <div className='flex gap-3'>
           {filters.map((filter, index) => (
-            <Select key={index} value={filter.value} onValueChange={filter.onChange}>
+            <Select
+              key={index}
+              value={filter.value}
+              onValueChange={filter.onChange}
+            >
               <SelectTrigger className='w-40 h-10 border-[var(--brand-border)]'>
                 <SelectValue placeholder={filter.label} />
               </SelectTrigger>
               <SelectContent>
-                {filter.options.map((option) => (
+                {filter.options.map(option => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
                   </SelectItem>
@@ -73,7 +83,7 @@ export default function AdminFilterBar({
               </SelectContent>
             </Select>
           ))}
-          
+
           {/* Refresh Button */}
           {onRefresh && (
             <Button
@@ -84,7 +94,7 @@ export default function AdminFilterBar({
               <RefreshCw className='h-4 w-4' />
             </Button>
           )}
-          
+
           {/* Apply Filters Button */}
           {onApplyFilters && (
             <Button
@@ -95,7 +105,7 @@ export default function AdminFilterBar({
               تطبيق الفلاتر
             </Button>
           )}
-          
+
           {/* Custom children */}
           {children}
         </div>

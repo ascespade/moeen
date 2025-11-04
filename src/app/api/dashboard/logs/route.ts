@@ -4,11 +4,23 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = getServiceSupabase();
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const service = searchParams.get('service');
     const level = searchParams.get('level');
@@ -65,7 +77,7 @@ async function getActivityLogs(filters: {
     if (error) throw error;
 
     return (
-      data?.map(log => ({
+      data?.map((log: unknown) => ({
         id: log.id,
         timestamp: log.timestamp,
         service: log.service_name,

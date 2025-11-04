@@ -1,9 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import logger from '@/lib/monitoring/logger';
+import { requireAuth } from '@/lib/auth/authorize';
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const searchParams = request.nextUrl.searchParams;
     const sessionTypeId = searchParams.get('sessionTypeId');
     const date = searchParams.get('date');
@@ -87,7 +99,7 @@ export async function GET(request: NextRequest) {
         .eq('appointment_date', date)
         .in(
           'doctor_id',
-          schedules.map((s: any) => s.therapist_id)
+          schedules.map((s: unknown) => s.therapist_id)
         )
         .in('status', ['scheduled', 'confirmed', 'in_progress']);
 
@@ -110,11 +122,11 @@ export async function GET(request: NextRequest) {
       // Filter out booked slots
       const bookedForThisTherapist =
         bookedAppointments?.filter(
-          (apt: any) => apt.doctor_id === schedule.therapist_id
+          (apt: unknown) => apt.doctor_id === schedule.therapist_id
         ) || [];
 
       for (const slot of timeSlots) {
-        const isBooked = bookedForThisTherapist.some((apt: any) =>
+        const isBooked = bookedForThisTherapist.some((apt: unknown) =>
           timesOverlap(
             slot.start,
             slot.end,

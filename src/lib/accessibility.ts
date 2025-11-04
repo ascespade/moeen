@@ -264,7 +264,7 @@ export class AccessibilityManager {
   }
 
   // Notify listeners
-  private notifyListeners(event: string, data: any): void {
+  private notifyListeners(event: string, data: unknown): void {
     const listeners = this.listeners.get(event);
     if (listeners) {
       listeners.forEach(callback => callback(data));

@@ -24,17 +24,16 @@ const VideoStorySection = memo(function VideoStorySection() {
                 className='object-cover'
                 sizes='(max-width: 1024px) 100vw, 50vw'
               />
-              
+
               {/* Play Button Overlay */}
               <div className='absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center'>
-                <button
-                  onClick={() => setIsVideoPlaying(true)}
+                <button onClick={() => { setIsVideoPlaying(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsVideoPlaying(true) } }}
                   className='w-20 h-20 bg-[var(--brand-primary)] rounded-full flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform group-hover:scale-110'
                   aria-label='تشغيل الفيديو'
                 >
                   <Play className='w-10 h-10 text-white mr-1' fill='white' />
                 </button>
-              </div>
+              </section>
 
               {/* Decorative Elements */}
               <div className='absolute -top-6 -right-6 w-32 h-32 bg-[var(--brand-primary)]/20 rounded-full blur-2xl -z-10' />
@@ -68,19 +67,20 @@ const VideoStorySection = memo(function VideoStorySection() {
                 قصة نجاحنا
               </span>
             </div>
-            
+
             <h2 className='text-4xl md:text-5xl font-bold text-[var(--text-primary)] leading-tight'>
               نحن هنا من أجلك
               <span className='block text-[var(--brand-primary)] mt-2'>
                 وهدفنا نجاحك
               </span>
             </h2>
-            
+
             <p className='text-lg text-[var(--text-secondary)] leading-relaxed'>
               مركز الهمم لرعاية ذوي الاحتياجات الخاصة في جدة - حي الصفا. نعمل
-              بتفانٍ لتوفير أفضل خدمات تأهيلية متخصصة تشمل جلسات التخاطب، التأهيل
-              السمعي، تعديل السلوك، العلاج الوظيفي، والتكامل الحسي. فريقنا المتخصص
-              يسعى دائماً لتحقيق نتائج إيجابية في حياة مرضانا وعائلاتهم.
+              بتفانٍ لتوفير أفضل خدمات تأهيلية متخصصة تشمل جلسات التخاطب،
+              التأهيل السمعي، تعديل السلوك، العلاج الوظيفي، والتكامل الحسي.
+              فريقنا المتخصص يسعى دائماً لتحقيق نتائج إيجابية في حياة مرضانا
+              وعائلاتهم.
             </p>
 
             <div className='space-y-4 pt-4'>
@@ -124,18 +124,17 @@ const VideoStorySection = memo(function VideoStorySection() {
       {isVideoPlaying && (
         <div
           className='fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4'
-          onClick={() => setIsVideoPlaying(false)}
+          tabIndex={0} onClick={() => setIsVideoPlaying(false)}
         >
           <div
             className='relative w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden'
-            onClick={(e) => e.stopPropagation()}
+            tabIndex={0} onClick={e => e.stopPropagation()}
           >
             {/* Video would go here */}
             <div className='absolute inset-0 flex items-center justify-center'>
               <p className='text-white'>سيتم إضافة الفيديو قريباً</p>
             </div>
-            <button
-              onClick={() => setIsVideoPlaying(false)}
+            <button onClick={() => { setIsVideoPlaying(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsVideoPlaying(false) } }}
               className='absolute top-4 left-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/70'
             >
               ✕
@@ -149,4 +148,3 @@ const VideoStorySection = memo(function VideoStorySection() {
 
 VideoStorySection.displayName = 'VideoStorySection';
 export default VideoStorySection;
-

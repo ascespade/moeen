@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -7,8 +8,19 @@ const supabase = createClient(
 );
 
 // API لجلب الإعدادات العامة
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication
+    const authResult = await requireAuth(['admin'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
     const key = searchParams.get('key');
@@ -31,7 +43,15 @@ export async function GET(request: NextRequest) {
     const { data, error } = await query;
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // تحويل البيانات إلى شكل مناسب
@@ -73,7 +93,7 @@ export async function GET(request: NextRequest) {
 }
 
 // API لتحديث الإعدادات (للمدراء فقط)
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
     const { key, value, type, category, description, is_public, is_encrypted } =
@@ -101,7 +121,15 @@ export async function PUT(request: NextRequest) {
       .select();
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     return NextResponse.json({ success: true, data: data[0] });
@@ -114,13 +142,21 @@ export async function PUT(request: NextRequest) {
 }
 
 // API لحذف إعداد (للمدراء فقط)
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const key = searchParams.get('key');
 
     if (!key) {
-      return NextResponse.json({ error: 'Key is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Key is required' },
+        {
+          status: 400,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const { error } = await supabase
@@ -129,7 +165,15 @@ export async function DELETE(request: NextRequest) {
       .eq('key', key);
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { error: error.message },
+        {
+          status: 500,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     return NextResponse.json({ success: true });

@@ -4,6 +4,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
+import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = getServiceSupabase();
 
@@ -170,7 +171,11 @@ async function getCurrentUser(authHeader: string) {
   }
 }
 
-async function logAdminAction(userId: string, action: string, details: any) {
+async function logAdminAction(
+  userId: string,
+  action: string,
+  details: unknown
+) {
   try {
     await supabase.from('audit_logs').insert({
       user_id: userId,

@@ -124,8 +124,7 @@ export default function SessionsPage() {
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
-          <button
-            onClick={() => window.location.reload()}
+          <buttononClick={() = aria-label="Button"> { window.location.reload()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
             className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
@@ -159,14 +158,12 @@ export default function SessionsPage() {
               <option value='cancelled'>ملغية</option>
             </select>
             <div className='flex rounded-lg border border-gray-300'>
-              <button
-                onClick={() => setViewMode('cards')}
+              <buttononClick={() = aria-label="Button"> { setViewMode('cards')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('cards') } }}
                 className={`px-3 py-2 text-sm ${viewMode === 'cards' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 بطاقات
               </button>
-              <button
-                onClick={() => setViewMode('table')}
+              <buttononClick={() = aria-label="Button"> { setViewMode('table')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('table') } }}
                 className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 جدول
@@ -255,21 +252,21 @@ export default function SessionsPage() {
 
                 <div className='flex gap-2'>
                   {session.status === 'upcoming' && (
-                    <button className='btn-default flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+                    <buttonclassName='btn-default flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="بدء الجلسة">
                       بدء الجلسة
                     </button>
                   )}
                   {session.status === 'in-progress' && (
-                    <button className='flex-1 rounded-lg bg-default-success py-2 text-sm text-white transition-colors hover:bg-green-700'>
+                    <buttonclassName='flex-1 rounded-lg bg-default-success py-2 text-sm text-white transition-colors hover:bg-green-700' aria-label="إنهاء الجلسة">
                       إنهاء الجلسة
                     </button>
                   )}
                   {session.status === 'completed' && (
-                    <button className='flex-1 rounded-lg border border-gray-300 py-2 text-sm text-gray-700 transition-colors hover:bg-surface'>
+                    <buttonclassName='flex-1 rounded-lg border border-gray-300 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="عرض التفاصيل">
                       عرض التفاصيل
                     </button>
                   )}
-                  <button className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface'>
+                  <buttonclassName='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="تعديل">
                     تعديل
                   </button>
                 </div>
@@ -338,16 +335,16 @@ export default function SessionsPage() {
                       <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                         <div className='flex gap-2'>
                           {session.status === 'upcoming' && (
-                            <button className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'>
+                            <buttonclassName='text-[var(--default-default)] hover:text-[var(--default-default-hover)]' aria-label="بدء">
                               بدء
                             </button>
                           )}
                           {session.status === 'in-progress' && (
-                            <button className='text-default-success hover:text-green-700'>
+                            <buttonclassName='text-default-success hover:text-green-700' aria-label="إنهاء">
                               إنهاء
                             </button>
                           )}
-                          <button className='text-gray-600 hover:text-gray-900'>
+                          <buttonclassName='text-gray-600 hover:text-gray-900' aria-label="تعديل">
                             تعديل
                           </button>
                         </div>

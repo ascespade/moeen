@@ -82,9 +82,12 @@ class Logger {
           },
           context,
           timestamp: new Date().toISOString(),
-          userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'server',
+          userAgent:
+            typeof navigator !== 'undefined' ? navigator.userAgent : 'server',
           url:
-            typeof window !== 'undefined' ? window.location.href : 'server-side',
+            typeof window !== 'undefined'
+              ? window.location.href
+              : 'server-side',
         }),
       });
     } catch (sendError) {
@@ -99,9 +102,12 @@ export const logger = new Logger();
 
 // Export convenience functions
 export const log = {
-  debug: (message: string, context?: LogContext) => logger.debug(message, context),
-  info: (message: string, context?: LogContext) => logger.info(message, context),
-  warn: (message: string, context?: LogContext) => logger.warn(message, context),
+  debug: (message: string, context?: LogContext) =>
+    logger.debug(message, context),
+  info: (message: string, context?: LogContext) =>
+    logger.info(message, context),
+  warn: (message: string, context?: LogContext) =>
+    logger.warn(message, context),
   error: (message: string, error?: Error | unknown, context?: LogContext) =>
     logger.error(message, error, context),
 };

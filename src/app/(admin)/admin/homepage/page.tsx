@@ -24,7 +24,7 @@ export default function AdminHomepageEditor() {
       try {
         const res = await fetch('/api/dynamic-data?type=services');
         const data = await res.json();
-        const items = (data.services || []).map((s: any, idx: number) => ({
+        const items = (data.services || []).map((s: ServiceItem, idx: number) => ({
           id: s.id ?? idx + 1,
           title: s.title,
           description: s.description,

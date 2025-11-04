@@ -5,6 +5,8 @@ import { useT } from '@/hooks/useT';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { I18N_KEYS } from '@/constants/i18n-keys';
+
 import {
   CheckCircle,
   Clock,
@@ -39,32 +41,34 @@ export default function ActivationFlow({
   const [steps, setSteps] = useState<ActivationStep[]>([
     {
       id: 'profile_complete',
-      title: t('patient.activation.steps.profile_complete'),
-      description: t('patient.activation.steps.profile_complete_desc'),
+      title: t(I18N_KEYS.PATIENTS.ACTIVATION.STEPS.PROFILE_COMPLETE),
+      description: t(I18N_KEYS.PATIENTS.ACTIVATION.STEPS.PROFILE_COMPLETE_DESC),
       completed: false,
       required: true,
       icon: <FileText className='h-5 w-5' />,
     },
     {
       id: 'insurance_verified',
-      title: t('patient.activation.steps.insurance_verified'),
-      description: t('patient.activation.steps.insurance_verified_desc'),
+      title: t(I18N_KEYS.PATIENTS.ACTIVATION.STEPS.INSURANCE_VERIFIED),
+      description: t(
+        I18N_KEYS.PATIENTS.ACTIVATION.STEPS.INSURANCE_VERIFIED_DESC
+      ),
       completed: false,
       required: true,
       icon: <Shield className='h-5 w-5' />,
     },
     {
       id: 'payment_settled',
-      title: t('patient.activation.steps.payment_settled'),
-      description: t('patient.activation.steps.payment_settled_desc'),
+      title: t(I18N_KEYS.PATIENTS.ACTIVATION.STEPS.PAYMENT_SETTLED),
+      description: t(I18N_KEYS.PATIENTS.ACTIVATION.STEPS.PAYMENT_SETTLED_DESC),
       completed: false,
       required: true,
       icon: <CreditCard className='h-5 w-5' />,
     },
     {
       id: 'first_visit_completed',
-      title: t('patient.activation.steps.first_visit'),
-      description: t('patient.activation.steps.first_visit_desc'),
+      title: t(I18N_KEYS.PATIENTS.ACTIVATION.STEPS.FIRST_VISIT),
+      description: t(I18N_KEYS.PATIENTS.ACTIVATION.STEPS.FIRST_VISIT_DESC),
       completed: false,
       required: true,
       icon: <CheckCircle className='h-5 w-5' />,
@@ -132,16 +136,16 @@ export default function ActivationFlow({
     <Card className='p-6'>
       <div className='mb-6'>
         <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-2'>
-          {t('patient.activation.title')}
+          {t(I18N_KEYS.PATIENTS.ACTIVATION.TITLE)}
         </h2>
         <p className='text-gray-600 dark:text-gray-400'>
-          {t('patient.activation.description')}
+          {t(I18N_KEYS.PATIENTS.ACTIVATION.DESCRIPTION)}
         </p>
 
         {/* Progress Bar */}
         <div className='mt-4'>
           <div className='flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2'>
-            <span>{t('patient.activation.progress')}</span>
+            <span>{t(I18N_KEYS.PATIENTS.ACTIVATION.PROGRESS)}</span>
             <span>{Math.round(progressPercentage)}%</span>
           </div>
           <div className='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2'>
@@ -184,7 +188,7 @@ export default function ActivationFlow({
                 <div className='flex items-center space-x-2'>
                   {step.required && (
                     <Badge variant='secondary' className='text-xs'>
-                      {t('common.required')}
+                      {t(I18N_KEYS.COMMON.REQUIRED)}
                     </Badge>
                   )}
                   {step.completed && (
@@ -192,7 +196,7 @@ export default function ActivationFlow({
                       variant='primary'
                       className='bg-green-100 text-green-800'
                     >
-                      {t('common.completed')}
+                      {t(I18N_KEYS.COMMON.COMPLETED)}
                     </Badge>
                   )}
                 </div>
@@ -210,8 +214,8 @@ export default function ActivationFlow({
                     disabled={isProcessing}
                   >
                     {isProcessing
-                      ? t('common.processing')
-                      : t('patient.activation.complete_step')}
+                      ? t(I18N_KEYS.COMMON.PROCESSING)
+                      : t(I18N_KEYS.PATIENTS.ACTIVATION.COMPLETE_STEP)}
                   </Button>
                 </div>
               )}
@@ -225,7 +229,7 @@ export default function ActivationFlow({
         <div className='mt-6 pt-6 border-t border-gray-200 dark:border-gray-700'>
           <div className='text-center'>
             <p className='text-sm text-gray-600 dark:text-gray-400 mb-4'>
-              {t('patient.activation.ready_to_activate')}
+              {t(I18N_KEYS.PATIENTS.ACTIVATION.READY_TO_ACTIVATE)}
             </p>
             <Button
               onClick={handleActivateAccount}
@@ -233,8 +237,8 @@ export default function ActivationFlow({
               className='px-8'
             >
               {isProcessing
-                ? t('common.activating')
-                : t('patient.activation.activate_account')}
+                ? t(I18N_KEYS.COMMON.ACTIVATING)
+                : t(I18N_KEYS.PATIENTS.ACTIVATION.ACTIVATE_ACCOUNT)}
             </Button>
           </div>
         </div>

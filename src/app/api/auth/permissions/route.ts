@@ -1,32 +1,55 @@
+/**
+ * Get User Permissions API
+ * API ?????? ??? ??????? ????????
+ */
+
 import { NextRequest, NextResponse } from 'next/server';
-import { ROLES } from '@/constants/roles';
+import { customAuthHub } from '@/lib/auth/CustomAuthHub';
+import jwt from 'jsonwebtoken';
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(req: NextRequest) {
   try {
-    // Get user role from headers (set by auth middleware)
-    const userRole = request.headers.get('x-user-role') as any;
-    const userEmail = request.headers.get('x-user-email');
+    // Get token from cookie or header
+    const token =
+      req.cookies.get('auth_token')?.value ||
+      req.headers.get('authorization')?.replace('Bearer ', '');
 
-    if (!userRole) {
+    if (!token) {
       return NextResponse.json(
         { success: false, error: 'Not authenticated' },
         { status: 401 }
       );
     }
 
-    const roleData = ROLES[userRole];
+    // Verify token
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      return NextResponse.json(
+        { success: false, error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
+    const decoded = jwt.verify(token, secret) as any;
+
+    // Get permissions
+    const permissions = await customAuthHub.getUserPermissions(decoded.userId);
+
+    if (!permissions) {
+      return NextResponse.json(
+        { success: false, error: 'Could not fetch permissions' },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      data: {
-        role: userRole,
-        email: userEmail,
-        permissions: roleData?.permissions || [],
-        label: roleData?.label || userRole,
-        labelAr: roleData?.labelAr || userRole,
-      },
+      permissions,
     });
   } catch (error) {
+    console.error('Get permissions error:', error);
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

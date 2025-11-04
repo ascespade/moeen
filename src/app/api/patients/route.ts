@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
+import { requireAuth } from '@/lib/auth/authorize';
+import { PermissionManager } from '@/lib/permissions';
+import logger from '@/lib/monitoring/logger';
+import { AuditLogger, AuditAction } from '@/lib/audit-logger';
 
 const patientSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -18,8 +22,39 @@ const patientSchema = z.object({
   insurance_number: z.string().optional(),
 });
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
+    // Security: Require authentication and proper permissions
+    const authResult = await requireAuth([
+      'admin',
+      'doctor',
+      'staff',
+      'supervisor',
+    ])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // Check permissions using PermissionManager
+    const canRead = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'patients',
+      'read',
+      { userId: authResult.user.id }
+    );
+
+    if (!canRead) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const searchTerm = searchParams.get('search') || '';
     const role = searchParams.get('role') || 'patient';
@@ -30,6 +65,14 @@ export async function GET(request: NextRequest) {
 
     // Apply pagination
     const paginatedPatients = patients.slice(offset, offset + limit);
+
+    // Audit log: PHI access (HIPAA compliance)
+    await AuditLogger.logPHIAccess(
+      AuditAction.PATIENT_SEARCHED,
+      'patients',
+      'multiple',
+      { searchTerm, role, resultCount: patients.length }
+    );
 
     return NextResponse.json({
       success: true,
@@ -42,7 +85,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Error fetching patients:', error);
+    logger.error('Error fetching patients', { error });
     return NextResponse.json(
       { error: 'Failed to fetch patients' },
       { status: 500 }
@@ -52,6 +95,31 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Security: Require authentication and proper permissions
+    const authResult = await requireAuth(['admin', 'doctor', 'staff'])(request);
+    if (!authResult.authorized || !authResult.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+
+    // Check permissions using unified permission system
+    // Check permissions using PermissionManager
+    const canCreate = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'patients',
+      'create',
+      { userId: authResult.user.id }
+    );
+
+    if (!canCreate) {
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
     const validation = patientSchema.safeParse(body);
 
@@ -89,13 +157,21 @@ export async function POST(request: NextRequest) {
       status: 'active',
     });
 
+    // Audit log: Patient creation (HIPAA compliance)
+    await AuditLogger.logPHIAccess(
+      AuditAction.PATIENT_CREATED,
+      'patients',
+      patient.id,
+      { createdBy: authResult.user.id }
+    );
+
     return NextResponse.json({
       success: true,
       data: { ...patient, patientRecord },
       message: 'Patient created successfully',
     });
   } catch (error) {
-    console.error('Error creating patient:', error);
+    logger.error('Error creating patient', { error });
     return NextResponse.json(
       { error: 'Failed to create patient' },
       { status: 500 }

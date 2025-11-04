@@ -60,7 +60,25 @@ const ServicesWithImages = memo(function ServicesWithImages() {
   }, []);
 
   if (loading) {
-    return <div className='text-center py-12'>جاري تحميل الخدمات...</div>;
+    return (
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+        {[1, 2, 3, 4, 5, 6].map(i => (
+          <div
+            key={i}
+            className='bg-[var(--brand-surface)] rounded-lg h-96 animate-pulse'
+          />
+        ))}
+      </div>
+    );
+  }
+
+  // If no services loaded, show empty state or fallback
+  if (services.length === 0) {
+    return (
+      <div className='text-center py-12 text-[var(--text-secondary)]'>
+        <p>لا توجد خدمات متاحة حالياً</p>
+      </div>
+    );
   }
 
   return (

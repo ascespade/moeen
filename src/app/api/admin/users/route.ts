@@ -41,7 +41,7 @@ const updateUserSchema = z.object({
   permissions: z.array(z.string()).optional(),
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -146,11 +146,13 @@ export async function POST(request: NextRequest) {
       message: 'User created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin or supervisor
     const authResult = await requireAuth(['admin', 'supervisor'])(request);
@@ -209,11 +211,11 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -279,11 +281,11 @@ export async function PUT(request: NextRequest) {
       message: 'User updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
@@ -338,11 +340,11 @@ export async function DELETE(request: NextRequest) {
       message: 'User deleted successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error);
+    return ErrorHandler.getInstance().handle(error as Error);
   }
 }
 
-async function createPatientProfile(userId: string, profile: any) {
+async function createPatientProfile(userId: string, profile: unknown) {
   const supabase = await createClient();
 
   const { error } = await supabase.from('patients').insert({
@@ -358,7 +360,7 @@ async function createPatientProfile(userId: string, profile: any) {
   return error;
 }
 
-async function createDoctorProfile(userId: string, profile: any) {
+async function createDoctorProfile(userId: string, profile: unknown) {
   const supabase = await createClient();
 
   const { error } = await supabase.from('doctors').insert({

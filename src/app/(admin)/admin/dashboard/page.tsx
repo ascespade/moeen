@@ -2,17 +2,15 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { AdminCard, AdminHeader, AdminStatsCard } from '@/components/admin/ui';
+import { AdminCard, AdminStatsCard, AdminHeader } from '@/components/admin/ui';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import { cn } from '@/lib/utils';
 import {
-  Activity,
   AlertTriangle,
   Calendar,
-  Clock,
   DollarSign,
   Download,
   FileText,
@@ -23,16 +21,16 @@ import {
   Users,
 } from 'lucide-react';
 
-// Types from hook
-interface RecentActivity {
-  id: string;
-  type: 'appointment' | 'claim' | 'patient' | 'staff' | 'payment';
-  title: string;
-  description: string;
-  timestamp: string;
-  status: 'success' | 'warning' | 'error' | 'info';
-  user?: string;
-}
+// Types from hook (used in component)
+// interface RecentActivity {
+//   id: string;
+//   type: 'appointment' | 'claim' | 'patient' | 'staff' | 'payment';
+//   title: string;
+//   description: string;
+//   timestamp: string;
+//   status: 'success' | 'warning' | 'error' | 'info';
+//   user?: string;
+// }
 
 interface StaffWorkHours {
   id: string;
@@ -206,10 +204,14 @@ function AdminDashboardContent() {
                 cache: 'no-store',
                 credentials: 'include',
               });
-            } catch {}
+            } catch (error) {
+              console.error('Logout error:', error);
+            }
             try {
               localStorage.removeItem('user');
-            } catch {}
+            } catch (error) {
+              console.error('LocalStorage error:', error);
+            }
             window.location.replace('/login');
           }}
         >
@@ -217,7 +219,7 @@ function AdminDashboardContent() {
         </Button>
         <select
           value={selectedPeriod}
-          onChange={e => setSelectedPeriod(e.target.value as any)}
+          onChange={e => setSelectedPeriod(e.target.value as 'today' | 'week' | 'month' | 'year')}
           className='rounded-lg border border-[var(--brand-border)] px-4 py-2 text-sm bg-[var(--panel)] text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)]/20'
         >
           <option value='today'>اليوم</option>
@@ -285,7 +287,7 @@ function AdminDashboardContent() {
             icon={UserCheck}
             iconColor='var(--brand-warning)'
           />
-        </div>
+        </main>
 
         {/* Secondary Stats */}
         <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
@@ -567,7 +569,7 @@ function AdminDashboardContent() {
                       <div className='flex items-center gap-3'>
                         <div className='w-10 h-10 rounded-full bg-[var(--brand-primary)]/10 flex items-center justify-center'>
                           <span className='text-sm font-semibold text-[var(--brand-primary)]'>
-                            {staff.name.split(' ')[0].charAt(0)}
+                            {staff.name?.split(' ')[0]?.charAt(0) || '?'}
                           </span>
                         </div>
                         <div>

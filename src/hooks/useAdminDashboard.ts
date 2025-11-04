@@ -81,7 +81,9 @@ const defaultStats: DashboardStats = {
   upcomingSessions: 0,
 };
 
-export function useAdminDashboard(period: 'today' | 'week' | 'month' | 'year' = 'month'): UseAdminDashboardReturn {
+export function useAdminDashboard(
+  period: 'today' | 'week' | 'month' | 'year' = 'month'
+): UseAdminDashboardReturn {
   const [stats, setStats] = useState<DashboardStats>(defaultStats);
   const [activities, setActivities] = useState<RecentActivity[]>([]);
   const [staffWorkHours, setStaffWorkHours] = useState<StaffWorkHours[]>([]);
@@ -90,9 +92,11 @@ export function useAdminDashboard(period: 'today' | 'week' | 'month' | 'year' = 
 
   const fetchStats = useCallback(async () => {
     try {
-      const response = await fetch(`/api/dashboard/statistics?period=${period}`);
+      const response = await fetch(
+        `/api/dashboard/statistics?period=${period}`
+      );
       const result = await response.json();
-      
+
       if (result.success && result.data) {
         setStats({
           totalPatients: result.data.total_patients || 0,
@@ -127,7 +131,7 @@ export function useAdminDashboard(period: 'today' | 'week' | 'month' | 'year' = 
     try {
       const response = await fetch('/api/admin/recent-activities?limit=10');
       const result = await response.json();
-      
+
       if (result.success) {
         setActivities(result.data || []);
       } else {
@@ -142,7 +146,7 @@ export function useAdminDashboard(period: 'today' | 'week' | 'month' | 'year' = 
     try {
       const response = await fetch('/api/admin/staff-work-hours?limit=10');
       const result = await response.json();
-      
+
       if (result.success) {
         setStaffWorkHours(result.data || []);
       } else {
@@ -156,13 +160,9 @@ export function useAdminDashboard(period: 'today' | 'week' | 'month' | 'year' = 
   const refetch = useCallback(async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
-      await Promise.all([
-        fetchStats(),
-        fetchActivities(), 
-        fetchStaffHours()
-      ]);
+      await Promise.all([fetchStats(), fetchActivities(), fetchStaffHours()]);
     } finally {
       setLoading(false);
     }
@@ -181,7 +181,7 @@ export function useAdminDashboard(period: 'today' | 'week' | 'month' | 'year' = 
     error,
     refetch,
     refetchActivities: fetchActivities,
-    refetchStaffHours: fetchStaffHours
+    refetchStaffHours: fetchStaffHours,
   };
 }
 

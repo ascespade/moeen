@@ -183,34 +183,19 @@ const PatientRecords: React.FC = () => {
   };
 
   const loadMedicalRecords = async () => {
-    // محاكاة تحميل السجلات الطبية
-    const mockRecords: MedicalRecord[] = [
-      {
-        id: '1',
-        patientId: '1',
-        date: '2024-01-10',
-        doctorName: 'د. سارة أحمد',
-        diagnosis: 'فحص دوري',
-        treatment: 'فحص شامل، تحاليل دم',
-        notes: 'المريض في حالة جيدة، يحتاج متابعة دورية',
-        attachments: ['lab-results.pdf', 'x-ray.jpg'],
-        followUpRequired: true,
-        followUpDate: '2024-02-10',
-      },
-      {
-        id: '2',
-        patientId: '2',
-        date: '2024-01-12',
-        doctorName: 'د. محمد حسن',
-        diagnosis: 'علاج طبيعي للظهر',
-        treatment: 'تمارين تقوية، جلسات علاج طبيعي',
-        notes: 'تحسن ملحوظ في الحركة، يحتاج استمرار العلاج',
-        attachments: ['therapy-plan.pdf'],
-        followUpRequired: true,
-        followUpDate: '2024-01-26',
-      },
-    ];
-    setMedicalRecords(mockRecords);
+    // جلب السجلات الطبية من قاعدة البيانات
+    try {
+      const response = await fetch('/api/patients/medical-records');
+      if (!response.ok) throw new Error('Failed to load records');
+      const records: MedicalRecord[] = await response.json();
+      setMedicalRecords(records);
+      return;
+    } catch (error) {
+      console.error('Error loading medical records:', error);
+    }
+
+    // Fallback: Empty array (no mock data)
+    setMedicalRecords([]);
   };
 
   const handleAddPatient = async () => {
@@ -377,7 +362,7 @@ const PatientRecords: React.FC = () => {
                         ? 'bg-surface border-blue-200'
                         : ''
                     }`}
-                    onClick={() => setSelectedPatient(patient)}
+                    tabIndex={0} onClick={() => setSelectedPatient(patient)}
                   >
                     <div className='flex justify-between items-start'>
                       <div>

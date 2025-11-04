@@ -1,15 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authorize } from '@/lib/auth/authorize';
 
-export async function GET(request: NextRequest) {
+export const revalidate = 60;
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    // Try to get user from headers (sent from client localStorage)
+    // First: Try JWT from cookie (fastest path)
+    const token =
+      request.cookies.get('auth_token')?.value ||
+      request.cookies.get('auth-token')?.value;
+
+    if (token) {
+      try {
+        const jwtSecret = process.env.JWT_SECRET;
+        if (jwtSecret) {
+          const jwt = await import('jsonwebtoken');
+          const decoded = jwt.verify(token, jwtSecret) as any;
+
+          if (decoded.userId && decoded.email && decoded.role) {
+            // Get permissions from PermissionManager (fast, no DB query)
+            const { PermissionManager } = await import('@/lib/permissions');
+            const permissions = PermissionManager.getRolePermissions(
+              decoded.role
+            );
+
+            return NextResponse.json({
+              success: true,
+              user: {
+                id: decoded.userId,
+                email: decoded.email,
+                role: decoded.role,
+                permissions: Array.isArray(permissions) ? permissions : [],
+              },
+            });
+          }
+        }
+      } catch (e) {
+        // Invalid JWT, continue to other methods
+      }
+    }
+
+    // Second: Try to get user from headers (sent from client localStorage)
     const clientUserId = request.headers.get('x-user-id');
     const clientUserEmail = request.headers.get('x-user-email');
     const clientUserRole = request.headers.get('x-user-role');
 
     if (clientUserId && clientUserEmail && clientUserRole) {
-      console.log('[api/auth/me] Using client-provided user info', { clientUserEmail });
       try {
         const { createClient } = await import('@/lib/supabase/server');
         const supabase = await createClient();
@@ -26,7 +62,9 @@ export async function GET(request: NextRequest) {
           // Get permissions using PermissionManager (faster than DB queries)
           try {
             const { PermissionManager } = await import('@/lib/permissions');
-            const permissions = PermissionManager.getRolePermissions(userData.role);
+            const permissions = PermissionManager.getRolePermissions(
+              userData.role
+            );
 
             return NextResponse.json({
               success: true,
@@ -45,18 +83,20 @@ export async function GET(request: NextRequest) {
                 id: userData.id,
                 email: userData.email,
                 role: userData.role,
-                permissions: userData.role === 'admin' ? ['*', 'dashboard:view'] : ['dashboard:view'],
+                permissions:
+                  userData.role === 'admin'
+                    ? ['*', 'dashboard:view']
+                    : ['dashboard:view'],
               },
             });
           }
         }
       } catch (e) {
-        console.warn('[api/auth/me] Client user verification failed:', e);
+        // Client user verification failed - continue to normal auth flow
       }
     }
 
     const { user, error } = await authorize(request);
-    console.log('[api/auth/me] authorize result', { userId: user?.id, error });
 
     // Primary path: Supabase auth session
     if (user && !error) {
@@ -98,7 +138,7 @@ export async function GET(request: NextRequest) {
               .select('permission_id')
               .eq('role_id', ur.role_id);
             const ids = (rolePermRows || [])
-              .map(rp => rp.permission_id)
+              .map((rp: { permission_id: string }) => rp.permission_id)
               .filter(Boolean);
             if (ids.length) {
               const { data: permRows } = await supabase
@@ -106,7 +146,7 @@ export async function GET(request: NextRequest) {
                 .select('code')
                 .in('id', ids as string[]);
               permCodes = (permRows || [])
-                .map(p => p.code)
+                .map((p: { code?: string }) => p.code)
                 .filter(Boolean) as string[];
             }
           }
@@ -115,7 +155,7 @@ export async function GET(request: NextRequest) {
             .select('permission_id')
             .eq('user_id', userData.id);
           const uids = (userPermRows || [])
-            .map(up => up.permission_id)
+            .map((up: { permission_id: string }) => up.permission_id)
             .filter(Boolean);
           if (uids.length) {
             const { data: permRows } = await supabase
@@ -123,7 +163,9 @@ export async function GET(request: NextRequest) {
               .select('code')
               .in('id', uids as string[]);
             permCodes.push(
-              ...((permRows || []).map(p => p.code).filter(Boolean) as string[])
+              ...((permRows || [])
+                .map((p: { code?: string }) => p.code)
+                .filter(Boolean) as string[])
             );
           }
 
@@ -143,7 +185,6 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    console.log('[api/auth/me] returning 401 unauthorized', { error });
     return NextResponse.json(
       {
         success: false,
@@ -153,7 +194,6 @@ export async function GET(request: NextRequest) {
       { status: 401 }
     );
   } catch (error) {
-    console.error('[api/auth/me] unexpected error:', error);
     return NextResponse.json(
       {
         success: false,

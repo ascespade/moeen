@@ -12,7 +12,7 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 test.describe('theme Module - Edge Cases', () => {
-  test('theme - Empty data handling', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Empty data handling', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
@@ -33,7 +33,7 @@ test.describe('theme Module - Edge Cases', () => {
     }
   });
 
-  test('theme - Large data handling', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Large data handling', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
@@ -49,7 +49,7 @@ test.describe('theme Module - Edge Cases', () => {
     }
   });
 
-  test('theme - Special characters', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Special characters', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
@@ -65,7 +65,7 @@ test.describe('theme Module - Edge Cases', () => {
     }
   });
 
-  test('theme - Unicode characters', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Unicode characters', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
@@ -81,7 +81,7 @@ test.describe('theme Module - Edge Cases', () => {
     }
   });
 
-  test('theme - Rapid interactions', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Rapid interactions', async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
@@ -100,7 +100,7 @@ test.describe('theme Module - Edge Cases', () => {
     }
   });
 
-  test('theme - Network timeout', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Network timeout', async ({ page }) => {
     // Simulate slow network
     await page.route('**/*', route => {
       setTimeout(() => {
@@ -114,7 +114,7 @@ test.describe('theme Module - Edge Cases', () => {
     await expect(page.locator('body')).toBeVisible();
   });
 
-  test('theme - Memory usage', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Memory usage', async ({ page }) => {
     // Test memory usage with multiple operations
     for (let i = 0; i < 5; i++) {
       await page.goto('/');
@@ -132,7 +132,7 @@ test.describe('theme Module - Edge Cases', () => {
     await expect(page.locator('body')).toBeVisible();
   });
 
-  test('theme - Database edge cases', async () => {
+  test(I18N_KEYS.THEME.LABEL - Database edge cases', async () => {
     // Test database with edge cases
     const { data, error } = await supabase
       .from('_supabase_migrations')
@@ -150,7 +150,7 @@ test.describe('theme Module - Edge Cases', () => {
     expect(nullError).toBeNull();
   });
 
-  test('theme - Concurrent users', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Concurrent users', async ({ page }) => {
     // Simulate concurrent user interactions
     const promises = [];
 
@@ -164,7 +164,7 @@ test.describe('theme Module - Edge Cases', () => {
     await expect(page.locator('body')).toBeVisible();
   });
 
-  test('theme - Browser compatibility', async ({ page }) => {
+  test(I18N_KEYS.THEME.LABEL - Browser compatibility', async ({ page }) => {
     // Test browser compatibility features
     await page.goto('/');
     await page.waitForLoadState('networkidle');

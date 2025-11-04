@@ -121,6 +121,15 @@ const nextConfig = {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react', '@headlessui/react'],
   },
+  
+  // Compression
+  compress: true,
+  
+  // SWC Minify
+  swcMinify: true,
+  
+  // Production source maps (disabled for performance)
+  productionBrowserSourceMaps: false,
 
   // Output configuration for Docker
   output: 'standalone',
