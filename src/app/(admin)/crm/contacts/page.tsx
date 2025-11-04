@@ -281,10 +281,10 @@ function ContactsPageContent() {
             </div>
             <div className='flex gap-2'>
               <select
-              value={filterStatus}
-              onChange={e => setFilterStatus(e.target.value)}
-              className='px-3 py-2 border border-gray-300 rounded-md text-sm'
-            >
+                value={filterStatus}
+                onChange={e => setFilterStatus(e.target.value)}
+                className='px-3 py-2 border border-gray-300 rounded-md text-sm'
+              >
               <option value='all'>جميع الحالات</option>
               <option value='lead'>عميل محتمل</option>
               <option value='prospect'>عميل واعد</option>
@@ -301,7 +301,7 @@ function ContactsPageContent() {
               <option value='إحالة'>إحالة</option>
               <option value='إعلان'>إعلان</option>
               <option value='معرض'>معرض</option>
-            </select>
+              </select>
             </div>
           </div>
         </div>
