@@ -49,7 +49,7 @@ const InteractiveGallery = memo(function InteractiveGallery() {
           <p className='text-xl text-[var(--text-secondary)] max-w-3xl mx-auto'>
             استكشف مرافقنا الحديثة والمجهزة بأحدث التقنيات الطبية
           </p>
-        </section>
+        </div>
 
         <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
           {galleryImages.map((image, index) => (
@@ -145,10 +145,14 @@ const InteractiveGallery = memo(function InteractiveGallery() {
                 onClick={e => {
                   e.stopPropagation();
                   setSelectedImage(img.id);
-                } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e => {
-                  e.stopPropagation();
-                  setSelectedImage(img.id);
-                 } }}}
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setSelectedImage(img.id);
+                  }
+                }}
                 className={`w-2 h-2 rounded-full transition-all ${
                   selectedImage === img.id ? 'bg-white w-8' : 'bg-white/40'
                 }`}

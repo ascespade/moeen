@@ -59,7 +59,7 @@ const SuccessStories = memo(function SuccessStories() {
           <p className='text-xl text-[var(--text-secondary)] max-w-3xl mx-auto'>
             نفتخر بنتائج عملنا ونجاحات مرضانا. كل قصة نجاح هي دافع لنا للاستمرار
           </p>
-        </section>
+        </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
           {stories.map(story => (

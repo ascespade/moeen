@@ -103,9 +103,9 @@ const BusinessSection = memo(function BusinessSection() {
             نقدم خدمات متخصصة وعالية الجودة مع التزام بأعلى معايير الرعاية
             الصحية
           </p>
-        </section>
+        </div>
 
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reminders-8 mb-16'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16'>
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (

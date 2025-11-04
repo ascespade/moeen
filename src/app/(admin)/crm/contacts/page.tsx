@@ -264,10 +264,10 @@ function ContactsPageContent() {
               onClick={() => router.push('/crm/contacts/new')}
               className='bg-[var(--default-default)] hover:brightness-95'
             >
-            <Plus className='w-4 h-4 mr-2' />
-            إضافة جهة اتصال
-          </Button>
-        </div>
+              <Plus className='w-4 h-4 mr-2' />
+              إضافة جهة اتصال
+            </Button>
+          </div>
 
         {/* Search and Filters */}
         <div className='flex flex-col md:flex-row gap-4 mb-6'>
@@ -303,16 +303,16 @@ function ContactsPageContent() {
               <option value='معرض'>معرض</option>
             </select>
           </div>
-          </div>
+        </div>
         </div>
 
         {/* Stats Cards */}
         <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
           <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>
-              إجمالي جهات الاتصال
-            </CardTitle>
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>
+                إجمالي جهات الاتصال
+              </CardTitle>
             <Users className='h-4 w-4 text-muted-foreground' />
           </CardHeader>
           <CardContent>

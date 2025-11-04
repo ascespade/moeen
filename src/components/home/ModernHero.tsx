@@ -54,7 +54,7 @@ const ModernHero = memo(function ModernHero({
             />
             {/* Multi-layer Gradient Overlay */}
             <div className='absolute inset-0 bg-gradient-to-br from-primary-900/50 via-primary-800/40 to-primary-600/20 dark:from-neutral-900/60 dark:via-neutral-800/50 dark:to-neutral-700/30' />
-          </section>
+          </div>
         ))}
 
         {/* Decorative Floating Elements */}
@@ -77,7 +77,7 @@ const ModernHero = memo(function ModernHero({
       </div>
 
       {/* Content */}
-      <div className='container-2xl relative z-10 py-20 px-4 sm:px-6 lg:px-8'>
+      <div className='container-app relative z-10 py-20 px-4 sm:px-6 lg:px-8'>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]'>
           {/* Left: Text Content */}
           <div
