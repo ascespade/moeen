@@ -604,7 +604,7 @@ function SecurityPageContent() {
           <>
             {/* Security Events Tab */}
             {selectedTab === 'events' && (
-            <div className='space-y-4'>
+              <div className='space-y-4'>
               {filteredEvents.length === 0 ? (
                 <Card>
                   <CardContent className='p-12 text-center'>
@@ -675,8 +675,8 @@ function SecurityPageContent() {
                   </Card>
                 ))
               )}
-            </div>
-          )}
+              </div>
+            )}
 
           {/* Active Sessions Tab */}
           {selectedTab === 'sessions' && (
@@ -897,7 +897,7 @@ function SecurityPageContent() {
           )}
         </>
       )}
-    </div>
+      </div>
     </>
   );
 }

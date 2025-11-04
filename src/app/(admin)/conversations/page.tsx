@@ -608,8 +608,8 @@ function ConversationsPageContent() {
   return (
     <div className='min-h-[400px] bg-[var(--background)]'>
       <div className='container-app py-6'>
-          {/* Header */}
-          <div className='flex justify-between items-center mb-8'>
+        {/* Header */}
+        <div className='flex justify-between items-center mb-8'>
             <div>
               <h1 className='text-3xl font-bold'>إدارة المحادثات</h1>
               <p className='text-muted-foreground'>

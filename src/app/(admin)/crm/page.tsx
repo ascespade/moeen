@@ -600,7 +600,7 @@ function CRMPageContent() {
       <div className='container-app py-6'>
         {/* Header */}
         <div className='flex justify-between items-center mb-8'>
-            <div>
+          <div>
               <h1 className='text-3xl font-bold'>إدارة العملاء (CRM)</h1>
               <p className='text-muted-foreground'>
                 إدارة العملاء المحتملين والجهات والصفقات
