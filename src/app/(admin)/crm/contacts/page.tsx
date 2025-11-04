@@ -302,6 +302,7 @@ function ContactsPageContent() {
               <option value='إعلان'>إعلان</option>
               <option value='معرض'>معرض</option>
             </select>
+            </div>
           </div>
         </div>
         </div>

@@ -31,7 +31,7 @@ const ModernHero = memo(function ModernHero({
   }, []);
 
   return (
-    <section className='relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-100 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900'>
+    <section className='relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[var(--brand-primary)]/10 via-[var(--background)] to-[var(--brand-primary)]/5 dark:from-[var(--background)] dark:via-[var(--brand-surface)] dark:to-[var(--background)]'>
       {/* Enhanced Background with Multiple Layers */}
       <div className='absolute inset-0'>
         {/* Background Images with Smooth Transitions */}
@@ -53,16 +53,16 @@ const ModernHero = memo(function ModernHero({
               sizes='100vw'
             />
             {/* Multi-layer Gradient Overlay */}
-            <div className='absolute inset-0 bg-gradient-to-br from-primary-900/50 via-primary-800/40 to-primary-600/20 dark:from-neutral-900/60 dark:via-neutral-800/50 dark:to-neutral-700/30' />
+            <div className='absolute inset-0 bg-gradient-to-br from-[var(--brand-primary)]/50 via-[var(--brand-primary)]/40 to-[var(--brand-primary)]/20 dark:from-[var(--background)]/60 dark:via-[var(--brand-surface)]/50 dark:to-[var(--brand-surface)]/30' />
           </div>
         ))}
 
         {/* Decorative Floating Elements */}
         <div className='absolute inset-0 pointer-events-none'>
-          <div className='absolute top-20 left-10 w-20 h-20 bg-primary-500/20 rounded-full blur-xl animate-pulse' />
-          <div className='absolute top-40 right-20 w-32 h-32 bg-secondary-500/15 rounded-full blur-2xl animate-pulse delay-1000' />
-          <div className='absolute bottom-32 left-1/4 w-24 h-24 bg-info-500/15 rounded-full blur-xl animate-pulse delay-2000' />
-          <div className='absolute top-1/2 right-10 w-16 h-16 bg-success-500/20 rounded-full blur-lg animate-bounce-gentle delay-3000' />
+          <div className='absolute top-20 left-10 w-20 h-20 bg-[var(--brand-primary)]/20 rounded-full blur-xl animate-pulse' />
+          <div className='absolute top-40 right-20 w-32 h-32 bg-[var(--brand-secondary)]/15 rounded-full blur-2xl animate-pulse delay-1000' />
+          <div className='absolute bottom-32 left-1/4 w-24 h-24 bg-[var(--brand-accent)]/15 rounded-full blur-xl animate-pulse delay-2000' />
+          <div className='absolute top-1/2 right-10 w-16 h-16 bg-[var(--brand-primary)]/20 rounded-full blur-lg animate-pulse delay-3000' />
         </div>
 
         {/* Pattern Overlay */}
@@ -81,11 +81,11 @@ const ModernHero = memo(function ModernHero({
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]'>
           {/* Left: Text Content */}
           <div
-            className={`text-neutral-900 dark:text-white space-y-8 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}
+            className={`text-[var(--text-primary)] space-y-8 ${isLoaded ? 'animate-fade-in' : 'opacity-0'}`}
           >
             {/* Enhanced Badge */}
             <div className='inline-block'>
-              <span className='inline-flex items-center gap-2 px-4 py-2 bg-primary-500/90 text-white backdrop-blur-sm rounded-full text-sm font-semibold shadow-lg hover-lift'>
+              <span className='inline-flex items-center gap-2 px-4 py-2 bg-[var(--brand-primary)] text-white backdrop-blur-sm rounded-full text-sm font-semibold shadow-lg hover:scale-105 transition-transform'>
                 <MapPin className='w-4 h-4' />
                 جدة - حي الصفا
               </span>
@@ -94,16 +94,16 @@ const ModernHero = memo(function ModernHero({
             {/* Enhanced Heading */}
             <h1 className='text-display-4xl sm:text-display-5xl md:text-display-6xl lg:text-display-7xl font-black leading-tight tracking-tight'>
               <span className='block mb-2'>مركز الهمم</span>
-              <span className='block text-primary-600 dark:text-primary-400 animate-fade-in delay-300'>
+              <span className='block text-[var(--brand-primary)] animate-fade-in'>
                 لرعاية ذوي الاحتياجات الخاصة
               </span>
             </h1>
 
             {/* Enhanced Description */}
-            <p className='text-display-lg sm:text-display-xl leading-relaxed text-neutral-700 dark:text-neutral-200 max-w-2xl font-medium'>
+            <p className='text-lg sm:text-xl leading-relaxed text-[var(--text-secondary)] max-w-2xl font-medium'>
               في جدة، نقدم رعاية متخصصة وشاملة لذوي الاحتياجات الخاصة. نوفر
               خدمات
-              <span className='text-primary-600 dark:text-primary-400 font-semibold'>
+              <span className='text-[var(--brand-primary)] font-semibold'>
                 {' '}
                 تأهيلية عالية الجودة{' '}
               </span>
@@ -115,7 +115,7 @@ const ModernHero = memo(function ModernHero({
               <Button
                 onClick={onAppointmentClick}
                 size='lg'
-                className='group bg-primary-600 hover:bg-primary-700 text-white font-bold px-8 py-4 text-lg shadow-xl hover:shadow-2xl hover-scale focus-ring transition-all duration-300'
+                className='group bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white font-bold px-8 py-4 text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300'
               >
                 <Calendar className='w-5 h-5 ml-2 group-hover:rotate-12 transition-transform' />
                 احجز موعدك الآن
@@ -125,7 +125,7 @@ const ModernHero = memo(function ModernHero({
                 onClick={onLearnMoreClick}
                 variant='outline'
                 size='lg'
-                className='group border-2 border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white font-bold px-8 py-4 text-lg backdrop-blur-sm bg-white/80 dark:bg-neutral-800/80 shadow-lg hover:shadow-xl hover-lift focus-ring transition-all duration-300'
+                className='group border-2 border-[var(--brand-primary)] text-[var(--brand-primary)] hover:bg-[var(--brand-primary)] hover:text-white font-bold px-8 py-4 text-lg backdrop-blur-sm bg-[var(--panel)] shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300'
               >
                 <span className='group-hover:scale-110 transition-transform inline-block mr-2'>
                   <Star className='w-5 h-5' />
