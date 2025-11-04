@@ -16,7 +16,7 @@ function ReviewCenterPageContent() {
         setLoading(true);
         const response = await fetch('/api/admin/review');
         const result = await response.json();
-        
+
         if (result.success && result.data) {
           setRows(result.data);
         } else {

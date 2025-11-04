@@ -112,9 +112,6 @@ function AnalyticsPageContent() {
     } finally {
       setLoading(false);
     }
-
-    // Legacy mock data removed - using real API
-    */
   };
 
   const getGrowthIcon = (rate: number) => {
