@@ -354,13 +354,14 @@ export default function NotificationsPage() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
-        {config.label}
-      </Badge>
+      <>
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          <span id="live-region"></span>
+        </div>
+        <Badge variant={config.variant} className={config.className}>
+          {config.label}
+        </Badge>
+      </>
     );
   };
 
@@ -766,10 +767,13 @@ Badge variant={config.variant} className={config.className}>
                         if (e.target.checked) {
                           setSelectedNotifications(
                             filteredNotifications.map(n => n.id)
-                          );} aria-label="checkbox" aria-invalid="true" else {
+                          );
+                        } else {
                           setSelectedNotifications([]);
                         }
                       }}
+                      aria-label="تحديد الكل"
+                      aria-invalid="true"
                     />
                   </TableHead>
                   <TableHead>العنوان</TableHead>
@@ -796,7 +800,8 @@ Badge variant={config.variant} className={config.className}>
                             setSelectedNotifications([
                               ...selectedNotifications,
                               notification.id,
-                            ]);} aria-label="checkbox" aria-invalid="true" else {
+                            ]);
+                          } else {
                             setSelectedNotifications(
                               selectedNotifications.filter(
                                 id => id !== notification.id
@@ -804,6 +809,8 @@ Badge variant={config.variant} className={config.className}>
                             );
                           }
                         }}
+                        aria-label="تحديد الإشعار"
+                        aria-invalid="true"
                       />
                     </TableCell>
                     <TableCell>

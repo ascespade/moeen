@@ -27,7 +27,14 @@ const VideoStorySection = memo(function VideoStorySection() {
 
               {/* Play Button Overlay */}
               <div className='absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center'>
-                <button onClick={() => { setIsVideoPlaying(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" setIsVideoPlaying(true) } }}
+                <button
+                  onClick={() => { setIsVideoPlaying(true) }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setIsVideoPlaying(true);
+                    }
+                  }}
                   className='w-20 h-20 bg-[var(--brand-primary)] rounded-full flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform group-hover:scale-110'
                   aria-label='تشغيل الفيديو'
                 >
@@ -134,7 +141,15 @@ const VideoStorySection = memo(function VideoStorySection() {
             <div className='absolute inset-0 flex items-center justify-center'>
               <p className='text-white'>سيتم إضافة الفيديو قريباً</p>
             </div>
-            <button onClick={() => { setIsVideoPlaying(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" setIsVideoPlaying(false) } }}
+            <button
+              onClick={() => { setIsVideoPlaying(false) }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setIsVideoPlaying(false);
+                }
+              }}
+              aria-label="إيقاف الفيديو"
               className='absolute top-4 left-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/70'
             >
               ✕

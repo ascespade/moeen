@@ -264,19 +264,19 @@ export default function Header() {
     router.push('/login');
   };
 
-  const userName = user?.full_name || user?.name || user?.email || '??????';
+  const userName = user?.full_name || user?.name || user?.email || 'مستخدم';
   const userRole = user?.role || 'user';
   const userEmail = user?.email || '';
 
   // Get role display name
   const roleNames: Record<string, string> = {
-    admin: '????',
-    supervisor: '????',
-    doctor: '????',
-    patient: '????',
-    staff: '????',
-    manager: '????',
-    nurse: '????',
+    admin: 'مدير',
+    supervisor: 'مشرف',
+    doctor: 'طبيب',
+    patient: 'مريض',
+    staff: 'موظف',
+    manager: 'مدير',
+    nurse: 'ممرض',
   };
 
   return (
@@ -311,10 +311,10 @@ export default function Header() {
               </div>
               <div className='hidden md:block'>
                 <div className='text-base font-bold text-gray-900 dark:text-white'>
-                  {t(I18N_KEYS.COMMON.SYSTEM_NAME) || '???? ?????'}
+                  {t(I18N_KEYS.COMMON.SYSTEM_NAME) || 'نظام معين'}
                 </div>
                 <div className='text-xs text-gray-500 dark:text-gray-400'>
-                  ???? ??????? ????????
+                  إدارة الأنشطة والمواعيد
                 </div>
               </div>
             </Link>
@@ -328,7 +328,7 @@ export default function Header() {
                   onChange={(e) => setSearchQuery(e.target.value)} aria-label="search" aria-invalid="true"
                   className='w-full h-10 pr-10 pl-4 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-all'
                   placeholder={
-                    t(I18N_KEYS.COMMON.SEARCH_PLACEHOLDER) || '????...'
+                    t(I18N_KEYS.COMMON.SEARCH_PLACEHOLDER) || 'بحث...'
                   }
                   aria-label={t(I18N_KEYS.COMMON.SEARCH)}
                 />
@@ -379,7 +379,7 @@ export default function Header() {
                     }
                   }}
                   className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
-                  aria-label='?????? ?????? ?????????'
+                  aria-label='فتح قائمة الميزات'
                   aria-haspopup='menu'
                   aria-expanded={showAIFeatures}
                 >
@@ -396,10 +396,10 @@ export default function Header() {
                     <div className='mb-3 px-2'>
                       <div className='text-sm font-semibold text-gray-900 dark:text-white'>
                         {t(I18N_KEYS.HEADER.AI_FEATURES) ||
-                          '????? ?????? ?????????'}
+                          'ميزات الذكاء الاصطناعي'}
                       </div>
                       <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>
-                        ??????? ??????
+                        إدارة المحادثات
                       </div>
                     </div>
                     <div className='grid gap-2'>
@@ -411,7 +411,7 @@ export default function Header() {
                             </div>
                             <div className='flex-1'>
                               <div className='text-sm font-medium text-gray-900 dark:text-white'>
-                                {t(I18N_KEYS.HEADER.CHATBOT) || '??????? ?????'}
+                                {t(I18N_KEYS.HEADER.CHATBOT) || 'المساعد معين'}
                               </div>
                               <div className='text-xs text-gray-500 dark:text-gray-400'>
                                 {t(I18N_KEYS.HEADER.CHATBOT_STATUS) || '???'}
@@ -437,7 +437,7 @@ export default function Header() {
                   }
                 }}
                 className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
-                aria-label="????"
+                aria-label="إشعارات"
                 aria-haspopup='menu'
                 aria-expanded={showNotifDropdown}
               >
@@ -457,12 +457,12 @@ export default function Header() {
                     <div className='flex items-center justify-between'>
                       <div>
                         <div className='text-sm font-semibold text-gray-900 dark:text-white'>
-                          {t(I18N_KEYS.HEADER.NOTIFICATIONS) || '?????????'}
+                          {t(I18N_KEYS.HEADER.NOTIFICATIONS) || 'الإشعارات'}
                         </div>
                         {unreadCount > 0 && (
                           <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>
-                            {unreadCount} ?????{unreadCount > 1 ? '??' : ''}{' '}
-                            ?????
+                            {unreadCount} إشعار{unreadCount > 1 ? 'ات' : ''}{' '}
+                            غير مقروء
                           </div>
                         )}
                       </div>
@@ -504,7 +504,7 @@ export default function Header() {
                           }}
                           className='text-xs text-[var(--brand-primary)] hover:underline'
                         >
-                          ????? ???? ??????
+                          تحديد الكل كمقروء
                         </button>
                       )}
                     </div>
@@ -514,7 +514,7 @@ export default function Header() {
                       <div className='p-8 text-center'>
                         <div className='w-6 h-6 border-2 border-[var(--brand-primary)] border-t-transparent rounded-full animate-spin mx-auto mb-3'></div>
                         <div className='text-sm text-gray-500 dark:text-gray-400'>
-                          ???? ???????...
+                          جاري التحميل...
                         </div>
                       </div>
                     ) : notifications.length === 0 ? (
@@ -522,7 +522,7 @@ export default function Header() {
                         <Bell className='w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3' />
                         <div className='text-sm text-gray-500 dark:text-gray-400'>
                           {t(I18N_KEYS.HEADER.NO_NOTIFICATIONS) ||
-                            '?? ???? ???????'}
+                            'لا توجد إشعارات'}
                         </div>
                       </div>
                     ) : (
@@ -606,7 +606,7 @@ export default function Header() {
                                     <div className='text-sm font-medium text-gray-900 dark:text-white'>
                                       {notification.title ||
                                         notification.message ||
-                                        '?????'}
+                                        'رسالة'}
                                     </div>
                                     {notification.message &&
                                       notification.message !==
@@ -635,7 +635,7 @@ export default function Header() {
                         onClick={() => setShowNotifDropdown(false)}
                         className='block w-full text-center text-sm text-[var(--brand-primary)] hover:underline py-2'
                       >
-                        ??? ???? ?????????
+                        عرض جميع الإشعارات
                       </Link>
                     </div>
                   )}
@@ -654,7 +654,7 @@ export default function Header() {
                   }
                 }}
                 className='flex items-center gap-2 h-10 px-2 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
-                aria-label='????? ????????'
+                aria-label='فتح القائمة'
                 aria-haspopup='menu'
                 aria-expanded={showUserDropdown}
               >
@@ -705,7 +705,7 @@ export default function Header() {
                     >
                       <User className='w-4 h-4' />
                       <span>
-                        {t(I18N_KEYS.HEADER.PROFILE) || '????? ??????'}
+                        {t(I18N_KEYS.HEADER.PROFILE) || 'الملف الشخصي'}
                       </span>
                     </Link>
                     <Link
@@ -714,7 +714,7 @@ export default function Header() {
                       className='flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
                     >
                       <Settings className='w-4 h-4' />
-                      <span>{t(I18N_KEYS.HEADER.SETTINGS) || '?????????'}</span>
+                      <span>{t(I18N_KEYS.HEADER.SETTINGS) || 'الإعدادات'}</span>
                     </Link>
                   </div>
 
@@ -729,11 +729,11 @@ export default function Header() {
                         }
                       }}
                       className='w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-medium'
-                      aria-label={t(I18N_KEYS.HEADER.LOGOUT) || '????? ??????'}
+                      aria-label={t(I18N_KEYS.HEADER.LOGOUT) || 'تسجيل الخروج'}
                     >
                       <LogOut className='w-4 h-4' />
                       <span>
-                        {t(I18N_KEYS.HEADER.LOGOUT) || '????? ??????'}
+                        {t(I18N_KEYS.HEADER.LOGOUT) || 'تسجيل الخروج'}
                       </span>
                     </button>
                   </div>

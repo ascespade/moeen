@@ -481,13 +481,14 @@ export default function CRMPage() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
-        {config.label}
-      </Badge>
+      <>
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          <span id="live-region"></span>
+        </div>
+        <Badge variant={config.variant} className={config.className}>
+          {config.label}
+        </Badge>
+      </>
     );
   };
 
@@ -790,10 +791,13 @@ Badge variant={config.variant} className={config.className}>
                         if (e.target.checked) {
                           setSelectedItems(
                             filteredData.map((item: any) => item.id)
-                          );} aria-label="checkbox" aria-invalid="true" else {
+                          );
+                        } else {
                           setSelectedItems([]);
                         }
                       }}
+                      aria-label="تحديد الكل"
+                      aria-invalid="true"
                     />
                   </TableHead>
                   <TableHead>الاسم</TableHead>
@@ -815,12 +819,15 @@ Badge variant={config.variant} className={config.className}>
                         checked={selectedItems.includes(item.id)}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setSelectedItems([...selectedItems, item.id]);} aria-label="checkbox" aria-invalid="true" else {
+                            setSelectedItems([...selectedItems, item.id]);
+                          } else {
                             setSelectedItems(
                               selectedItems.filter(id => id !== item.id)
                             );
                           }
                         }}
+                        aria-label="تحديد العنصر"
+                        aria-invalid="true"
                       />
                     </TableCell>
                     <TableCell>

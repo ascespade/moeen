@@ -218,13 +218,29 @@ const Footer = memo(function Footer() {
               © {currentYear} مركز الهمم. جميع الحقوق محفوظة.
             </p>
             <div className='flex gap-6 items-center'>
-              <button onClick={() => { setIsPrivacyOpen(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" setIsPrivacyOpen(true) } }}
+              <button
+                onClick={() => { setIsPrivacyOpen(true) }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setIsPrivacyOpen(true);
+                  }
+                }}
+                aria-label="فتح سياسة الخصوصية"
                 className='text-sm text-gray-400 hover:text-[var(--brand-default)] transition-colors cursor-pointer'
               >
                 سياسة الخصوصية
               </button>
               <span className='text-gray-600'>|</span>
-              <button onClick={() => { setIsTermsOpen(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" setIsTermsOpen(true) } }}
+              <button
+                onClick={() => { setIsTermsOpen(true) }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setIsTermsOpen(true);
+                  }
+                }}
+                aria-label="فتح شروط الخدمة"
                 className='text-sm text-gray-400 hover:text-[var(--brand-default)] transition-colors cursor-pointer'
               >
                 شروط الاستخدام

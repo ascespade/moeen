@@ -114,7 +114,7 @@ async function generateCSV(data: unknown, customFields?: string[]) {
   const csvContent = [
     headers.join(','),
     ...Object.values(data).map((row: unknown) =>
-      headers.map(<header=> `"${row[header] || ''}"`).join(',')
+      headers.map((header) => `"${row[header] || ''}"`).join(',')
     ),
   ].join('\n');
 

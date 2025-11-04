@@ -110,9 +110,10 @@ tsconfig.tsbuildinfo
 
 # Documentation (too many files slow down indexing)
 docs/audits-and-reports/
-*.md
+# Keep only essential documentation
 !README.md
 !docs/README.md
+!docs/essential/**/*.md
 
 # GitHub workflows (not needed for code completion)
 .github/workflows/

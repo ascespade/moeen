@@ -95,12 +95,18 @@ export default function HeaderSimple() {
                     وضع نهاري
                   </button>
                   <button className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
-                    onClick={() => { {
-                      setTheme('dark');
-                      setShowThemeDropdown(false); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" {
+                    onClick={() => {
                       setTheme('dark');
                       setShowThemeDropdown(false);
-                     } }}}
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setTheme('dark');
+                        setShowThemeDropdown(false);
+                      }
+                    }}
+                    aria-label="التبديل إلى الوضع الليلي"
                   >
                     وضع ليلي
                   </button>
@@ -109,23 +115,36 @@ export default function HeaderSimple() {
             </div>
 
             {/* Direction Toggle */}
-            <button className='h-9 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
-              onClick={() => { setDir(dir === 'rtl' ? 'ltr' : 'rtl') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="{dir === 'rtl' ? 'RTL' : 'LT" setDir(dir === 'rtl' ? 'ltr' : 'rtl') } }}
+            <button
+              className='h-9 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
+              onClick={() => { setDir(dir === 'rtl' ? 'ltr' : 'rtl') }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setDir(dir === 'rtl' ? 'ltr' : 'rtl');
+                }
+              }}
+              aria-label={dir === 'rtl' ? 'التبديل إلى وضع LTR' : 'التبديل إلى وضع RTL'}
             >
               {dir === 'rtl' ? 'RTL' : 'LTR'}
             </button>
 
             {/* Language Dropdown */}
             <div className='relative'>
-              <button className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
-                onClick={(e) aria-label="??" {
+              <button
+                className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
+                onClick={(e) => {
                   e.stopPropagation();
                   setShowLangDropdown(!showLangDropdown);
-                } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); (e) aria-label="??" {
-                  e.stopPropagation();
-                  setShowLangDropdown(!showLangDropdown);
-                 } }}}
-                aria-label='تبديل اللغة'
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setShowLangDropdown(!showLangDropdown);
+                  }
+                }}
+                aria-label="فتح قائمة اللغات"
               >
                 <Languages className='h-4 w-4' />
                 <span className='hidden sm:inline'>اللغة</span>

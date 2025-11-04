@@ -19,11 +19,11 @@ export default function ReviewCenterPage() {
   );
 
   return (
-    <ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-main className='min-h-screen bg-[var(--default-surface)]'>
+    <>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="انتقل للمحتوى الرئيسي">
+        انتقل للمحتوى الرئيسي
+      </a>
+      <main className='min-h-screen bg-[var(--default-surface)]' id="main-content">
       <div className='container-app py-6'>
         <div className='grid gap-4'>
           <div className='grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 items-center'>

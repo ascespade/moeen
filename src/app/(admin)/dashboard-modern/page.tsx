@@ -237,9 +237,8 @@ export default function ModernAdminDashboard() {
   );
 
   return (
-    <div>
-      </AdminHeader>
-
+    <div className="flex flex-col h-screen">
+      <AdminHeader />
       <main className='flex-1 overflow-auto' id="main-content">
         {/* Period Selector */}
         <div className='p-6 pb-0'>

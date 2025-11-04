@@ -220,11 +220,11 @@ const IntegrationsPage: React.FC = () => {
   if (!isAuthenticated) return null;
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container mx-auto px-4 py-8' dir='rtl'>
+    <>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        <span id="live-region"></span>
+      </div>
+      <div className='container mx-auto px-4 py-8' dir='rtl'>
       <div className='mb-8'>
         <h1 className='text-3xl font-bold text-gray-900'>التكاملات الخارجية</h1>
         <p className='text-gray-600 mt-2'>
@@ -316,7 +316,8 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           </Card>
         ))}
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

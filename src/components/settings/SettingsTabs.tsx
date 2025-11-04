@@ -236,11 +236,19 @@ export default function SettingsTabs() {
             </select>
           </div>
           <div>
-            <buttondisabled={saving}
+            <button
+              disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ voice: settings?.voice || { stt: null, tts: null }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??"
-                save({ voice: settings?.voice || { stt: null, tts: null  } }} })
-              }
+              onClick={() => {
+                save({ voice: settings?.voice || { stt: null, tts: null } });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  save({ voice: settings?.voice || { stt: null, tts: null } });
+                }
+              }}
+              aria-label={saving ? 'جاري الحفظ...' : 'حفظ إعدادات الصوت'}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>
@@ -468,9 +476,16 @@ export default function SettingsTabs() {
           <div>
             <buttondisabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ notifications: settings?.notifications || { }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??"
-                save({ notifications: settings?.notifications || { } }} })
-              }
+              onClick={() => {
+                save({ notifications: settings?.notifications || { } });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  save({ notifications: settings?.notifications || { } });
+                }
+              }}
+              aria-label={saving ? 'جاري الحفظ...' : 'حفظ إعدادات الإشعارات'}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>
@@ -501,9 +516,16 @@ export default function SettingsTabs() {
           <div>
             <buttondisabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ emergency: settings?.emergency || { keywords: [] }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??"
-                save({ emergency: settings?.emergency || { keywords: []  } }} })
-              }
+              onClick={() => {
+                save({ emergency: settings?.emergency || { keywords: [] } });
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  save({ emergency: settings?.emergency || { keywords: [] } });
+                }
+              }}
+              aria-label={saving ? 'جاري الحفظ...' : 'حفظ إعدادات الطوارئ'}
             >
               {saving ? 'جارٍ الحفظ...' : 'حفظ'}
             </button>

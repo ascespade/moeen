@@ -42,19 +42,26 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
           <h2 className='text-2xl font-bold text-[var(--text-primary)]'>
             سياسة الخصوصية
           </h2>
-          <button onClick={onClose} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
+          <button
+            onClick={onClose}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onClose();
+              }
+            }}
             className='rounded-full p-2 transition-colors'
             style={{
               backgroundColor: 'transparent',
             }}
-            onMouseEnter={e aria-label="??" {
+            onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor =
                 'var(--brand-surface, rgba(0,0,0,0.05))';
             }}
             onMouseLeave={e => {
               e.currentTarget.style.backgroundColor = 'transparent';
             }}
-            aria-label='إغلاق'
+            aria-label='إغلاق سياسة الخصوصية'
           >
             <X className='h-6 w-6 text-[var(--text-primary)]' />
           </button>

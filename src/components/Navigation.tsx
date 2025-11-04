@@ -48,9 +48,16 @@ export default function Navigation() {
 >
       {/* Mobile menu button */}
       <div className='lg:hidden fixed top-4 left-4 z-50'>
-        <button onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" setIsMobileMenuOpen(!isMobileMenuOpen) } }}
+        <button
+          onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen) }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setIsMobileMenuOpen(!isMobileMenuOpen);
+            }
+          }}
           className='p-2 bg-white/10 backdrop-blur-md rounded-xl text-white hover:bg-white/20 transition-colors'
-          aria-label='??? ???????'
+          aria-label='فتح القائمة'
         >
           {isMobileMenuOpen ? (
             <X className='w-6 h-6' />
@@ -120,7 +127,14 @@ export default function Navigation() {
                 const Sun = action.icon;
                 return (
                   <button key={action.name}
-                    onClick={() => { handleQuickAction(action.action) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" handleQuickAction(action.action) } }}
+                    onClick={() => { handleQuickAction(action.action) }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleQuickAction(action.action);
+                      }
+                    }}
+                    aria-label={`تنفيذ ${action.name}`}
                     className='w-full flex items-center space-x-3 px-4 py-2 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors'
                   >
                     <Sun className='w-4 h-4' />

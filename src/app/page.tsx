@@ -7,16 +7,12 @@ import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='min-h-screen bg-gradient-to-br from-[var(--background)] to-[var(--background-secondary)]' role="application">
+    <div className='min-h-screen bg-gradient-to-br from-[var(--background)] to-[var(--background-secondary)]' role="application">
       {/* Skip Link */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="التخطي للمحتوى الرئيسي">
         التخطي للمحتوى الرئيسي
       </a>
-      
+
       {/* Header */}
       <header className='border-b border-[var(--border)] bg-[var(--background-secondary)]/50 backdrop-blur' role="banner">
         <div className='container mx-auto px-4 py-4 flex items-center justify-between'>
