@@ -429,14 +429,14 @@ function SecurityPageContent() {
             </div>
             <div className='flex gap-2'>
               <Button onClick={loadSecurityData} variant='outline' size='sm'>
-              <RefreshCw className='w-4 h-4 mr-2' />
-              تحديث
-            </Button>
-            <Button variant='outline' size='sm'>
-              <Download className='w-4 h-4 mr-2' />
-              تصدير تقرير
-            </Button>
-          </div>
+                <RefreshCw className='w-4 h-4 mr-2' />
+                تحديث
+              </Button>
+              <Button variant='outline' size='sm'>
+                <Download className='w-4 h-4 mr-2' />
+                تصدير تقرير
+              </Button>
+            </div>
         </div>
 
         {/* Security Overview */}

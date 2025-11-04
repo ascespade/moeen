@@ -273,11 +273,11 @@ function ContactsPageContent() {
           <div className='flex flex-col md:flex-row gap-4 mb-6'>
             <div className='flex-1'>
               <Input
-              placeholder='البحث في جهات الاتصال...'
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className='pr-10'
-            />
+                placeholder='البحث في جهات الاتصال...'
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+                className='pr-10'
+              />
           </div>
           <div className='flex gap-2'>
             <select
