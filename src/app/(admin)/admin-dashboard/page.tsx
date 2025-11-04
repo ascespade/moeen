@@ -515,7 +515,7 @@ export default function DashboardPage() {
                     )
                   ) || (
                     <div className='text-center text-gray-500 py-4'>
-                      ?? ???? ?????? ?????
+                      لا توجد تخصصات متاحة
                     </div>
                   )}
                 </div>

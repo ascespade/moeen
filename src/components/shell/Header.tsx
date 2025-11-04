@@ -414,7 +414,7 @@ export default function Header() {
                                 {t(I18N_KEYS.HEADER.CHATBOT) || 'المساعد معين'}
                               </div>
                               <div className='text-xs text-gray-500 dark:text-gray-400'>
-                                {t(I18N_KEYS.HEADER.CHATBOT_STATUS) || '???'}
+                                {t(I18N_KEYS.HEADER.CHATBOT_STATUS) || 'حالة المساعد'}
                               </div>
                             </div>
                           </div>
