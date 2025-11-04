@@ -209,9 +209,33 @@ export default function PerformancePage() {
   const [totalPages, setTotalPages] = useState(1);
   const [isMetricDialogOpen, setIsMetricDialogOpen] = useState(false);
 
-  // Mock data
+  // Fetch real data from API
   useEffect(() => {
-    const mockMetrics: PerformanceMetric[] = [
+    const fetchMetrics = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/admin/performance-metrics');
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setMetrics(result.data);
+          setTotalPages(Math.ceil(result.data.length / 10));
+        } else {
+          setMetrics([]);
+          setTotalPages(0);
+        }
+      } catch (error) {
+        console.error('Error fetching performance metrics:', error);
+        setMetrics([]);
+        setTotalPages(0);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMetrics();
+    // Legacy mock data removed - using real API
+    /*const mockMetrics: PerformanceMetric[] = [
       {
         id: '1',
         name: 'استجابة النظام',
@@ -353,35 +377,10 @@ export default function PerformancePage() {
       },
     ];
 
-    const mockAlerts: PerformanceAlert[] = [
-      {
-        id: '1',
-        metricId: '6',
-        metricName: 'استخدام الذاكرة',
-        severity: 'medium',
-        message: 'استخدام الذاكرة وصل إلى 85% - قريب من الحد التحذيري',
-        timestamp: '2024-01-15T14:30:00Z',
-        isResolved: false,
-        action: 'مراقبة مستمرة',
-      },
-      {
-        id: '2',
-        metricId: '3',
-        metricName: 'استخدام قاعدة البيانات',
-        severity: 'low',
-        message: 'استخدام قاعدة البيانات في ازدياد - 78%',
-        timestamp: '2024-01-15T14:15:00Z',
-        isResolved: true,
-        resolvedAt: '2024-01-15T14:20:00Z',
-        resolvedBy: 'أحمد التقني',
-        action: 'تم تحسين الاستعلامات',
-      },
-    ];
-
-    setMetrics(mockMetrics);
-    setAlerts(mockAlerts);
-    setTotalPages(Math.ceil(mockMetrics.length / 10));
-    setLoading(false);
+    // Alerts will be fetched from API if available
+    setAlerts([]);
+    // Legacy mock data removed - using real API
+    */
   }, []);
 
   const filteredMetrics = metrics.filter(metric => {

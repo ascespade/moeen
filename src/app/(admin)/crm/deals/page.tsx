@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,45 +27,37 @@ interface Deal {
   tags: string[];
 }
 
-const mockDeals: Deal[] = [
-  {
-    id: '1',
-    title: 'عقد إدارة المواعيد - مستشفى الملك فهد',
-    value: 150000,
-    stage: 'negotiation',
-    probability: 75,
-    expectedCloseDate: '2024-02-15',
-    contactId: '1',
-    contactName: 'أحمد العتيبي',
-    assignedTo: 'سارة أحمد',
-    source: 'موقع إلكتروني',
-    createdAt: '2024-01-01',
-    lastActivity: '2024-01-15',
-    notes: 'في مرحلة المفاوضات النهائية',
-    tags: ['عالي القيمة', 'مستشفى'],
-  },
-  {
-    id: '2',
-    title: 'نظام إدارة المرضى - عيادة الأسنان',
-    value: 75000,
-    stage: 'proposal',
-    probability: 60,
-    expectedCloseDate: '2024-01-30',
-    contactId: '2',
-    contactName: 'فاطمة السعيد',
-    assignedTo: 'محمد حسن',
-    source: 'إحالة',
-    createdAt: '2024-01-05',
-    lastActivity: '2024-01-12',
-    tags: ['عيادة', 'متوسط القيمة'],
-  },
-];
-
 export default function CRMDealsPage() {
+  const [deals, setDeals] = useState<Deal[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStage, setSelectedStage] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('kanban');
   const [showCreateModal, setShowCreateModal] = useState(false);
+
+  // Fetch real data from API
+  useEffect(() => {
+    const fetchDeals = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/admin/crm-data?type=deals');
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setDeals(result.data);
+        } else {
+          setDeals([]);
+        }
+      } catch (error) {
+        console.error('Error fetching deals:', error);
+        setDeals([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDeals();
+  }, []);
 
   const getStageColor = (stage: Deal['stage']) => {
     switch (stage) {
@@ -105,7 +97,7 @@ export default function CRMDealsPage() {
     }
   };
 
-  const filteredDeals = mockDeals.filter(deal => {
+  const filteredDeals = deals.filter(deal => {
     const matchesSearch =
       deal.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       deal.contactName.toLowerCase().includes(searchTerm.toLowerCase());
@@ -167,7 +159,7 @@ export default function CRMDealsPage() {
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-default'>
-              {mockDeals.length}
+              {deals.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
               إجمالي الصفقات
@@ -175,13 +167,13 @@ export default function CRMDealsPage() {
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-success'>
-              {mockDeals.filter(d => d.stage === 'closed-won').length}
+              {deals.filter(d => d.stage === 'closed-won').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>مكتملة</div>
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-purple-600'>
-              {mockDeals.reduce((sum, d) => sum + d.value, 0).toLocaleString()}{' '}
+              {deals.reduce((sum, d) => sum + (d.value || 0), 0).toLocaleString()}{' '}
               ريال
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -191,8 +183,10 @@ export default function CRMDealsPage() {
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-default'>
               {Math.round(
-                mockDeals.reduce((sum, d) => sum + d.probability, 0) /
-                  mockDeals.length
+                deals.length > 0
+                  ? deals.reduce((sum, d) => sum + (d.probability || 0), 0) /
+                    deals.length
+                  : 0
               )}
               %
             </div>

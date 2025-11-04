@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
 import {
@@ -181,7 +183,7 @@ interface Message {
   };
 }
 
-export default function MessagesPage() {
+function MessagesPageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [messages, setMessages] = useState<Message[]>([]);
@@ -1145,5 +1147,17 @@ export default function MessagesPage() {
         </Dialog>
       </div>
     </div>
+  );
+}
+
+export default function MessagesPage() {
+  const pageConfig = ADMIN_PAGES.messages;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <MessagesPageContent />
+    </AdminPageWrapper>
   );
 }

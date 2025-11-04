@@ -131,8 +131,36 @@ const SecurityPage: React.FC = () => {
   const loadSecurityData = async () => {
     try {
       setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockEvents: SecurityEvent[] = [
+      // Fetch real data from API
+      const response = await fetch('/api/admin/security-data');
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        // Transform API data to component format
+        setSecurityEvents(result.data.events || []);
+        setPolicies(result.data.policies || []);
+        setSessions(result.data.sessions || []);
+        setAlerts(result.data.alerts || []);
+      } else {
+        // Set empty arrays on error - no mock data
+        setSecurityEvents([]);
+        setPolicies([]);
+        setSessions([]);
+        setAlerts([]);
+      }
+    } catch (error) {
+      console.error('Error loading security data:', error);
+      setSecurityEvents([]);
+      setPolicies([]);
+      setSessions([]);
+      setAlerts([]);
+      setError('فشل في تحميل بيانات الأمان');
+    } finally {
+      setLoading(false);
+    }
+
+    // Legacy mock data removed - using real API
+    /*const mockEvents: SecurityEvent[] = [
         {
           id: '1',
           type: 'login',
@@ -268,15 +296,8 @@ const SecurityPage: React.FC = () => {
         },
       ];
 
-      setSecurityEvents(mockEvents);
-      setPolicies(mockPolicies);
-      setSessions(mockSessions);
-      setAlerts(mockAlerts);
-    } catch (error) {
-      setError('فشل في تحميل بيانات الأمان');
-    } finally {
-      setLoading(false);
-    }
+    // Legacy mock data removed - using real API
+    */
   };
 
   const getEventIcon = (type: string) => {
@@ -488,8 +509,8 @@ const SecurityPage: React.FC = () => {
 
         {/* Tabs */}
         <div className='flex space-x-1 bg-surface p-1 rounded-lg mb-6'>
-          <button 
-            onClick={() => { setSelectedTab('events') }} 
+          <button
+            onClick={() => { setSelectedTab('events') }}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('events'); } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'events'
@@ -500,8 +521,8 @@ const SecurityPage: React.FC = () => {
           >
             الأحداث الأمنية
           </button>
-          <button 
-            onClick={() => { setSelectedTab('sessions') }} 
+          <button
+            onClick={() => { setSelectedTab('sessions') }}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('sessions'); } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'sessions'
@@ -512,8 +533,8 @@ const SecurityPage: React.FC = () => {
           >
             الجلسات النشطة
           </button>
-          <button 
-            onClick={() => { setSelectedTab('alerts') }} 
+          <button
+            onClick={() => { setSelectedTab('alerts') }}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('alerts'); } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'alerts'
@@ -524,8 +545,8 @@ const SecurityPage: React.FC = () => {
           >
             التنبيهات
           </button>
-          <button 
-            onClick={() => { setSelectedTab('policies') }} 
+          <button
+            onClick={() => { setSelectedTab('policies') }}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('policies'); } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'policies'

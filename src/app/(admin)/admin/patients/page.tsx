@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useAdminPatients } from '@/hooks/useAdminPatients';
@@ -737,5 +739,13 @@ function PatientsPageContent() {
 }
 
 export default function PatientsPage() {
-  return <PatientsPageContent />;
+  const pageConfig = ADMIN_PAGES.patients;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <PatientsPageContent />
+    </AdminPageWrapper>
+  );
 }

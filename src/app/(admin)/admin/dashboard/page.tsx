@@ -8,6 +8,8 @@ import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import { cn } from '@/lib/utils';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import {
   Activity,
   AlertTriangle,
@@ -88,7 +90,7 @@ const activityTypeConfig = {
   },
 } as const;
 
-function AdminDashboardContent() {
+function AdminDashboardPage() {
   const [selectedPeriod, setSelectedPeriod] = useState<
     'today' | 'week' | 'month' | 'year'
   >('month');
@@ -695,5 +697,13 @@ function AdminDashboardContent() {
 }
 
 export default function AdminDashboard() {
-  return <AdminDashboardContent />;
+  const pageConfig = ADMIN_PAGES.dashboard;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <AdminDashboardPage />
+    </AdminPageWrapper>
+  );
 }

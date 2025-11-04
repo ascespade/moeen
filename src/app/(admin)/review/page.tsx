@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 
 type Item = { id: string; user: string; suggestion: string; createdAt: string };
 const seed: Item[] = Array.from({ length: 6 }).map((_, i) => ({
@@ -10,7 +12,7 @@ const seed: Item[] = Array.from({ length: 6 }).map((_, i) => ({
   createdAt: new Date().toISOString(),
 }));
 
-export default function ReviewCenterPage() {
+function ReviewCenterPageContent() {
   const [rows] = useState<Item[]>(seed);
   const [q, setQ] = useState('');
 
@@ -90,5 +92,17 @@ export default function ReviewCenterPage() {
       </div>
       </main>
     </>
+  );
+}
+
+export default function ReviewCenterPage() {
+  const pageConfig = ADMIN_PAGES.review;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <ReviewCenterPageContent />
+    </AdminPageWrapper>
   );
 }

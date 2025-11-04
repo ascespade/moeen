@@ -1,5 +1,7 @@
 'use client';
 
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -1289,5 +1291,13 @@ function RolesPageContent() {
 }
 
 export default function RolesPage() {
-  return <RolesPageContent />;
+  const pageConfig = ADMIN_PAGES.roles;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <RolesPageContent />
+    </AdminPageWrapper>
+  );
 }

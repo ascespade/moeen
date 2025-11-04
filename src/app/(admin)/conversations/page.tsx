@@ -192,9 +192,33 @@ export default function ConversationsPage() {
   const [isConversationDialogOpen, setIsConversationDialogOpen] =
     useState(false);
 
-  // Mock data
+  // Fetch real data from API
   useEffect(() => {
-    const mockConversations: Conversation[] = [
+    const fetchConversations = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/admin/conversations?page=${currentPage}&limit=10`);
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setConversations(result.data);
+          setTotalPages(Math.ceil((result.total || 0) / 10));
+        } else {
+          setConversations([]);
+          setTotalPages(0);
+        }
+      } catch (error) {
+        console.error('Error fetching conversations:', error);
+        setConversations([]);
+        setTotalPages(0);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchConversations();
+    // Legacy mock data removed - using real API
+    /*const mockConversations: Conversation[] = [
       {
         id: '1',
         participantId: '1',
@@ -350,10 +374,9 @@ export default function ConversationsPage() {
       },
     ];
 
-    setConversations(mockConversations);
-    setTotalPages(Math.ceil(mockConversations.length / 10));
-    setLoading(false);
-  }, []);
+    // Legacy mock data removed - using real API
+    */
+  }, [currentPage]);
 
   const filteredConversations = conversations.filter(conversation => {
     const matchesSearch =

@@ -1,11 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 export const revalidate = 60;
 
@@ -20,27 +15,93 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Get doctors as staff for now
+    const supabase = await createClient();
+
+    // Get staff from users table with work hours from attendance_records
     const { data: staff, error } = await supabase
-      .from('doctors')
-      .select('id, first_name, last_name, specialization')
-      .order('first_name', { ascending: true });
+      .from('users')
+      .select(
+        `
+        id,
+        full_name,
+        email,
+        role,
+        position,
+        department,
+        status,
+        work_schedules (
+          id,
+          start_time,
+          end_time,
+          day_of_week,
+          is_active
+        )
+      `
+      )
+      .in('role', ['doctor', 'nurse', 'staff', 'therapist', 'supervisor'])
+      .eq('status', 'active')
+      .order('full_name', { ascending: true });
 
     if (error) throw error;
 
-    // Generate mock work hours data
-    const staffWorkHours = staff.map((member: unknown) => ({
-      id: member.id,
-      name: `${member.first_name} ${member.last_name}`,
-      position: member.specialization || 'طبيب',
-      totalHours: Math.floor(Math.random() * 200) + 100,
-      todayHours: Math.floor(Math.random() * 8) + 1,
-      thisWeekHours: Math.floor(Math.random() * 40) + 20,
-      thisMonthHours: Math.floor(Math.random() * 160) + 80,
-      isOnDuty: Math.random() > 0.5,
-      lastCheckIn: '08:00',
-      lastCheckOut: '17:00',
-    }));
+    // Get attendance records for today, this week, and this month
+    const today = new Date().toISOString().split('T')[0];
+    const weekStart = new Date();
+    weekStart.setDate(weekStart.getDate() - 7);
+    const monthStart = new Date();
+    monthStart.setMonth(monthStart.getMonth() - 1);
+
+    const { data: todayAttendance } = await supabase
+      .from('attendance_records')
+      .select('user_id, check_in_time, check_out_time, total_hours, date')
+      .eq('date', today);
+
+    const { data: weeklyAttendance } = await supabase
+      .from('attendance_records')
+      .select('user_id, total_hours, date')
+      .gte('date', weekStart.toISOString().split('T')[0])
+      .lte('date', today);
+
+    const { data: monthlyAttendance } = await supabase
+      .from('attendance_records')
+      .select('user_id, total_hours, date')
+      .gte('date', monthStart.toISOString().split('T')[0])
+      .lte('date', today);
+
+    // Calculate real work hours from attendance records
+    const staffWorkHours = (staff || []).map((member: any) => {
+      const todayRecord = todayAttendance?.find(
+        (a: any) => a.user_id === member.id
+      );
+      const weeklyHours =
+        weeklyAttendance
+          ?.filter((a: any) => a.user_id === member.id)
+          ?.reduce((sum: number, record: any) => sum + (record.total_hours || 0), 0) || 0;
+      const monthlyHours =
+        monthlyAttendance
+          ?.filter((a: any) => a.user_id === member.id)
+          ?.reduce((sum: number, record: any) => sum + (record.total_hours || 0), 0) || 0;
+
+      const isOnDuty =
+        todayRecord && todayRecord.check_in_time && !todayRecord.check_out_time;
+
+      return {
+        id: member.id,
+        name: member.full_name || member.email,
+        position: member.position || getPositionTitle(member.role),
+        totalHours: monthlyHours,
+        todayHours: todayRecord?.total_hours || 0,
+        thisWeekHours: weeklyHours,
+        thisMonthHours: monthlyHours,
+        isOnDuty,
+        lastCheckIn: todayRecord?.check_in_time
+          ? formatTime(todayRecord.check_in_time)
+          : null,
+        lastCheckOut: todayRecord?.check_out_time
+          ? formatTime(todayRecord.check_out_time)
+          : null,
+      };
+    });
 
     return NextResponse.json({
       success: true,

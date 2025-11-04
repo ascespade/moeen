@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
 import {
@@ -140,7 +142,7 @@ interface Notification {
   };
 }
 
-export default function NotificationsPage() {
+function NotificationsPageContent() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -1010,5 +1012,17 @@ export default function NotificationsPage() {
         </Dialog>
       </div>
     </div>
+  );
+}
+
+export default function NotificationsPage() {
+  const pageConfig = ADMIN_PAGES.notifications;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <NotificationsPageContent />
+    </AdminPageWrapper>
   );
 }

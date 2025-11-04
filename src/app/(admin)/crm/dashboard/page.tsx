@@ -1,5 +1,7 @@
 'use client';
 
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import {
   Calendar,
   Clock,
@@ -62,7 +64,7 @@ interface DashboardStats {
   totalDoctors: number;
 }
 
-const CRMDashboard: React.FC = () => {
+function CRMDashboardContent() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -540,6 +542,16 @@ const CRMDashboard: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
-export default CRMDashboard;
+export default function CRMDashboard() {
+  const pageConfig = ADMIN_PAGES.crmDashboard;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <CRMDashboardContent />
+    </AdminPageWrapper>
+  );
+}

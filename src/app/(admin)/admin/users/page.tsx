@@ -1,5 +1,7 @@
 'use client';
 
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import {
   AdminFilterBar,
   AdminHeader,
@@ -749,5 +751,13 @@ function UsersPageContent() {
 }
 
 export default function UsersPage() {
-  return <UsersPageContent />;
+  const pageConfig = ADMIN_PAGES.users;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <UsersPageContent />
+    </AdminPageWrapper>
+  );
 }

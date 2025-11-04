@@ -92,8 +92,27 @@ const ContactsPage: React.FC = () => {
   const loadContacts = async () => {
     try {
       setLoading(true);
-      // في التطبيق الحقيقي، سيتم جلب البيانات من API
-      const mockContacts: Contact[] = [
+      // Fetch real data from API
+      const response = await fetch('/api/admin/crm-data?type=contacts');
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        setContacts(result.data);
+        setActivities([]); // Activities will be fetched separately if needed
+      } else {
+        setContacts([]);
+        setActivities([]);
+      }
+    } catch (error) {
+      console.error('Error loading contacts:', error);
+      setContacts([]);
+      setActivities([]);
+    } finally {
+      setLoading(false);
+    }
+
+    // Legacy mock data removed - using real API
+    /*const mockContacts: Contact[] = [
         {
           id: '1',
           first_name: 'أحمد',
@@ -164,13 +183,8 @@ const ContactsPage: React.FC = () => {
         },
       ];
 
-      setContacts(mockContacts);
-      setActivities(mockActivities);
-    } catch (error) {
-      setError('فشل في تحميل جهات الاتصال');
-    } finally {
-      setLoading(false);
-    }
+    // Legacy mock data removed - using real API
+    */
   };
 
   const getStatusBadge = (status: string) => {

@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,50 +30,37 @@ interface Lead {
   tags: string[];
 }
 
-const mockLeads: Lead[] = [
-  {
-    id: '1',
-    name: 'أحمد العتيبي',
-    email: 'ahmed@company.com',
-    phone: '0501234567',
-    company: 'شركة التقنية المتقدمة',
-    position: 'مدير تقنية المعلومات',
-    status: 'qualified',
-    source: 'موقع إلكتروني',
-    score: 85,
-    estimatedValue: 50000,
-    probability: 70,
-    expectedCloseDate: '2024-02-15',
-    assignedTo: 'سارة أحمد',
-    lastActivity: '2024-01-15',
-    notes: 'مهتم بحلول إدارة المواعيد',
-    tags: ['تقنية', 'عالي القيمة'],
-  },
-  {
-    id: '2',
-    name: 'فاطمة السعيد',
-    email: 'fatima@hospital.com',
-    phone: '0507654321',
-    company: 'مستشفى الملك فهد',
-    position: 'مديرة التمريض',
-    status: 'contacted',
-    source: 'إحالة',
-    score: 72,
-    estimatedValue: 30000,
-    probability: 40,
-    expectedCloseDate: '2024-03-01',
-    assignedTo: 'محمد حسن',
-    lastActivity: '2024-01-12',
-    notes: 'تحتاج عرض توضيحي',
-    tags: ['صحة', 'مستشفى'],
-  },
-];
-
 export default function CRMLeadsPage() {
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');
   const [showCreateModal, setShowCreateModal] = useState(false);
+
+  // Fetch real data from API
+  useEffect(() => {
+    const fetchLeads = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/admin/crm-data?type=leads');
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setLeads(result.data);
+        } else {
+          setLeads([]);
+        }
+      } catch (error) {
+        console.error('Error fetching leads:', error);
+        setLeads([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeads();
+  }, []);
 
   const getStatusColor = (status: Lead['status']) => {
     switch (status) {
@@ -117,7 +104,7 @@ export default function CRMLeadsPage() {
     }
   };
 
-  const filteredLeads = mockLeads.filter(lead => {
+  const filteredLeads = leads.filter(lead => {
     const matchesSearch =
       lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lead.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -171,7 +158,7 @@ export default function CRMLeadsPage() {
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-default'>
-              {mockLeads.length}
+              {leads.length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
               إجمالي العملاء المحتملين
@@ -179,7 +166,7 @@ export default function CRMLeadsPage() {
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-success'>
-              {mockLeads.filter(l => l.status === 'qualified').length}
+              {leads.filter(l => l.status === 'qualified').length}
             </div>
             <div className='text-gray-600 dark:text-gray-300'>مؤهلين</div>
           </div>
@@ -197,8 +184,10 @@ export default function CRMLeadsPage() {
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-default'>
               {Math.round(
-                mockLeads.reduce((sum, l) => sum + l.probability, 0) /
-                  mockLeads.length
+                leads.length > 0
+                  ? leads.reduce((sum, l) => sum + (l.probability || 0), 0) /
+                    leads.length
+                  : 0
               )}
               %
             </div>

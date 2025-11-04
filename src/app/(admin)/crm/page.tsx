@@ -185,9 +185,39 @@ export default function CRMPage() {
   const [totalPages, setTotalPages] = useState(1);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
-  // Mock data
+  // Fetch real data from API
   useEffect(() => {
-    const mockLeads: Lead[] = [
+    const fetchCRMData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/admin/crm-data');
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setLeads(result.data.leads || []);
+          setContacts(result.data.contacts || []);
+          setDeals(result.data.deals || []);
+          setTotalPages(1);
+        } else {
+          setLeads([]);
+          setContacts([]);
+          setDeals([]);
+          setTotalPages(0);
+        }
+      } catch (error) {
+        console.error('Error fetching CRM data:', error);
+        setLeads([]);
+        setContacts([]);
+        setDeals([]);
+        setTotalPages(0);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCRMData();
+    // Legacy mock data removed - using real API
+    /*const mockLeads: Lead[] = [
       {
         id: '1',
         name: 'أحمد محمد العلي',
@@ -341,11 +371,8 @@ export default function CRMPage() {
       },
     ];
 
-    setLeads(mockLeads);
-    setContacts(mockContacts);
-    setDeals(mockDeals);
-    setTotalPages(1);
-    setLoading(false);
+    // Legacy mock data removed - using real API
+    */
   }, []);
 
   const getCurrentData = () => {

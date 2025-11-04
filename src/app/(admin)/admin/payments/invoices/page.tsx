@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { createClient } from '@/lib/supabase/client';
 import logger from '@/lib/monitoring/logger';
 
@@ -13,7 +15,7 @@ interface Invoice {
   created_at: string;
 }
 
-export default function InvoicesPage() {
+function InvoicesPageContent() {
   const [payments, setPayments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -201,5 +203,17 @@ export default function InvoicesPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function InvoicesPage() {
+  const pageConfig = ADMIN_PAGES.payments;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <InvoicesPageContent />
+    </AdminPageWrapper>
   );
 }

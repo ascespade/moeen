@@ -1,5 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 
 import Image from 'next/image';
 
@@ -385,5 +387,13 @@ function AuditLogsPageContent() {
 }
 
 export default function AuditLogsPage() {
-  return <AuditLogsPageContent />;
+  const pageConfig = ADMIN_PAGES.auditLogs;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <AuditLogsPageContent />
+    </AdminPageWrapper>
+  );
 }

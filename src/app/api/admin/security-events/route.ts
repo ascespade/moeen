@@ -50,11 +50,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     if (error) {
       console.error('Error fetching security events:', error);
-      // Return mock data if table doesn't exist
+      // Return empty array if table doesn't exist or query fails
       return NextResponse.json({
-        success: true,
+        success: false,
+        error: 'Failed to fetch security events',
         data: [],
-        message: 'No security events found',
+        message: error.message || 'Database query failed',
       });
     }
 

@@ -1,5 +1,7 @@
 'use client';
 
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { AdminCard, AdminHeader } from '@/components/admin/ui';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
@@ -362,5 +364,13 @@ function AdminSettingsPageContent() {
 }
 
 export default function AdminSettingsPage() {
-  return <AdminSettingsPageContent />;
+  const pageConfig = ADMIN_PAGES.settings;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <AdminSettingsPageContent />
+    </AdminPageWrapper>
+  );
 }

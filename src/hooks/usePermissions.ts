@@ -34,7 +34,29 @@ export function usePermissions({
       .then(res => res.json())
       .then(data => {
         if (isMounted && data.success) {
-          setRolePermissions(data.permissions || []);
+          let permissions = data.permissions || [];
+
+          // Handle different response formats
+          // If permissions are objects with resource/actions, convert to string array
+          if (Array.isArray(permissions) && permissions.length > 0) {
+            if (typeof permissions[0] === 'object' && permissions[0].resource) {
+              // Convert from {resource: '*', actions: [...]} format to ['*'] or ['resource:action', ...]
+              const permissionStrings: string[] = [];
+              permissions.forEach((perm: any) => {
+                if (perm.resource === '*') {
+                  permissionStrings.push('*');
+                } else if (perm.resource && perm.actions) {
+                  // Convert resource:action format
+                  perm.actions.forEach((action: string) => {
+                    permissionStrings.push(`${perm.resource}:${action}`);
+                  });
+                }
+              });
+              permissions = permissionStrings;
+            }
+          }
+
+          setRolePermissions(permissions);
           setLoading(false);
         } else {
           throw new Error('Failed to fetch permissions');

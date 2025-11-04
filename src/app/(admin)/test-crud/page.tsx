@@ -1,5 +1,7 @@
 'use client';
 
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import {
@@ -677,5 +679,17 @@ RefreshCw className='w-5 h-5 text-[var(--brand-primary)] animate-spin' />
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function DynamicDataPage() {
+  const pageConfig = ADMIN_PAGES.dynamicData;
+  return (
+    <AdminPageWrapper
+      requiredPermissions={pageConfig.requiredPermissions}
+      pageTitle={pageConfig.title}
+    >
+      <DynamicDataPageContent />
+    </AdminPageWrapper>
   );
 }
