@@ -278,8 +278,8 @@ function ContactsPageContent() {
                 onChange={e => setSearchTerm(e.target.value)}
                 className='pr-10'
               />
-          </div>
-          <div className='flex gap-2'>
+            </div>
+            <div className='flex gap-2'>
             <select
               value={filterStatus}
               onChange={e => setFilterStatus(e.target.value)}
