@@ -14,13 +14,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getUserPermissions(
-      authResult.user.role,
-      authResult.user.meta?.permissions || []
+    // Check permissions using PermissionManager
+    const canRead = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'crm',
+      'read',
+      { userId: authResult.user.id }
     );
 
-    if (!PermissionManager.canAccess(userPermissions, 'crm', 'view')) {
+    if (!canRead) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }
@@ -45,7 +47,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch crm' }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+    return NextResponse.json({ error: 'Failed to fetch crm' }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } });
   }
 }
 

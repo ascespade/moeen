@@ -1,23 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
-import { requireAuth }
-    
-    // Check permissions using PermissionManager
-    const canRead = PermissionManager.hasPermission(
-      user.role as any,
-      'route',
-      'read',
-      { userId: user.id }
-    );
-
-    if (!canRead) {
-      return NextResponse.json(
-        { error: 'Forbidden - Insufficient permissions' },
-        { status: 403 }
-      );
-    }
- from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 import { PermissionManager } from '@/lib/permissions';
 import logger from '@/lib/monitoring/logger';
 import { AuditLogger, AuditAction } from '@/lib/audit-logger';
@@ -49,14 +33,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getUserPermissions(
-      authResult.user.role,
-      authResult.user.meta?.permissions || []
+    // Check permissions using PermissionManager
+    const canRead = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'patients',
+      'read',
+      { userId: authResult.user.id }
     );
 
-    // Check if user has permission to view patients
-    if (!PermissionManager.canAccess(userPermissions, 'patients', 'view')) {
+    if (!canRead) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }
@@ -113,13 +98,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getUserPermissions(
-      authResult.user.role,
-      authResult.user.meta?.permissions || []
+    // Check permissions using PermissionManager
+    const canCreate = PermissionManager.hasPermission(
+      authResult.user.role as any,
+      'patients',
+      'create',
+      { userId: authResult.user.id }
     );
 
-    // Check if user has permission to create patients
-    if (!PermissionManager.canAccess(userPermissions, 'patients', 'create')) {
+    if (!canCreate) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }

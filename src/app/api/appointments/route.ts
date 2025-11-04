@@ -9,12 +9,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
 
   try {
-    const { user, error: authError }
+    const { user, error: authError } = await authorize(request);
+    
+    if (authError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } });
+    }
     
     // Check permissions using PermissionManager
     const canRead = PermissionManager.hasPermission(
       user.role as any,
-      'route',
+      'appointments',
       'read',
       { userId: user.id }
     );
@@ -24,11 +28,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }
       );
-    }
- = await authorize(request);
-
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
     }
 
     const { ipAddress, userAgent } = getClientInfo(request);
