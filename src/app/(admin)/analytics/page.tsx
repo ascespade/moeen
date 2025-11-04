@@ -114,10 +114,6 @@ function AnalyticsPageContent() {
     loadAnalyticsData();
   }, [loadAnalyticsData]);
 
-  useEffect(() => {
-    loadAnalyticsData();
-  }, [loadAnalyticsData]);
-
   const getGrowthIcon = (rate: number) => {
     if (rate > 0)
       return <TrendingUp className='w-4 h-4 text-default-success' />;
