@@ -428,7 +428,7 @@ function SecurityPageContent() {
               <p className='text-gray-600 mt-2'>مراقبة الأمان وحماية البيانات</p>
             </div>
             <div className='flex gap-2'>
-            <Button onClick={loadSecurityData} variant='outline' size='sm'>
+              <Button onClick={loadSecurityData} variant='outline' size='sm'>
               <RefreshCw className='w-4 h-4 mr-2' />
               تحديث
             </Button>

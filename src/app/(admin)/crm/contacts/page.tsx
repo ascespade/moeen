@@ -272,7 +272,7 @@ function ContactsPageContent() {
           {/* Search and Filters */}
           <div className='flex flex-col md:flex-row gap-4 mb-6'>
             <div className='flex-1'>
-            <Input
+              <Input
               placeholder='البحث في جهات الاتصال...'
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
