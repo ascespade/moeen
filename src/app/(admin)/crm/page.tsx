@@ -599,7 +599,7 @@ function CRMPageContent() {
     <>
       <div className='min-h-[400px] bg-background'>
         <div className='container-app py-6'>
-        {/* Header */}
+          {/* Header */}
         <div className='flex justify-between items-center mb-8'>
           <div>
             <h1 className='text-3xl font-bold'>إدارة العملاء (CRM)</h1>

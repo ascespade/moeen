@@ -251,7 +251,7 @@ function ContactsPageContent() {
       <div className='container mx-auto px-4 py-8' dir='rtl'>
         {/* Header */}
         <div className='mb-8'>
-        <div className='flex items-center justify-between mb-4'>
+          <div className='flex items-center justify-between mb-4'>
           <div>
             <h1 className='text-3xl font-bold text-gray-900'>
               إدارة جهات الاتصال
@@ -304,9 +304,9 @@ function ContactsPageContent() {
             </select>
           </div>
         </div>
-      </div>
+        </div>
 
-      {/* Stats Cards */}
+        {/* Stats Cards */}
       <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>

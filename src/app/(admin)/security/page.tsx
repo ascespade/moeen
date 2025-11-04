@@ -418,8 +418,8 @@ function SecurityPageContent() {
         <span id="live-region"></span>
       </div>
       <div className='container mx-auto px-4 py-8' dir='rtl'>
-      {/* Header */}
-      <div className='mb-8'>
+        {/* Header */}
+        <div className='mb-8'>
         <div className='flex items-center justify-between mb-4'>
           <div>
             <h1 className='text-3xl font-bold text-gray-900'>
@@ -594,16 +594,16 @@ function SecurityPageContent() {
             </select>
           </div>
         </div>
-      </div>
-
-      {loading ? (
-        <div className='flex justify-center items-center h-64'>
-          <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
         </div>
-      ) : (
-        <>
-          {/* Security Events Tab */}
-          {selectedTab === 'events' && (
+
+        {loading ? (
+          <div className='flex justify-center items-center h-64'>
+            <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--default-default)]'></div>
+          </div>
+        ) : (
+          <>
+            {/* Security Events Tab */}
+            {selectedTab === 'events' && (
             <div className='space-y-4'>
               {filteredEvents.length === 0 ? (
                 <Card>
@@ -894,9 +894,9 @@ function SecurityPageContent() {
                 ))
               )}
             </div>
-          )}
-        </>
-      )}
+            )}
+          </>
+        )}
       </div>
     </>
   );
