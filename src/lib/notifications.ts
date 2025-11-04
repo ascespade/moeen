@@ -1,6 +1,6 @@
 /**
  * Notification System
- * ???? ?????????
+ * نظام الإشعارات
  */
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';

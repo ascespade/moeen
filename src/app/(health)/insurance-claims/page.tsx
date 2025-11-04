@@ -133,11 +133,11 @@ export default function InsuranceClaimsPage() {
 
   if (loading) {
     return (
-      <main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
+      <>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="انتقل للمحتوى الرئيسي">
+          انتقل للمحتوى الرئيسي
+        </a>
+        <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
         <div className='text-center'>
           <div className='mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]' />
           <p className='text-gray-600 dark:text-gray-400'>

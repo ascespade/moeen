@@ -1,6 +1,6 @@
 /**
  * Verify JWT Token API - Optimized
- * API ?????? ?? Token - ?????
+ * API التحقق من Token - محسّن
  *
  * ? Fast verification
  * ? Cached permissions

@@ -1,6 +1,6 @@
 /**
  * Notifications API Route
- * ????? API ?????????
+ * مسار API الإشعارات
  */
 
 import { NextRequest, NextResponse } from 'next/server';

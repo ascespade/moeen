@@ -1,6 +1,6 @@
 /**
  * Comprehensive Permissions System
- * ???? ????????? ??????
+ * نظام الصلاحيات الشامل
  *
  * Defines permissions for all user roles and provides permission checking utilities
  */
@@ -369,15 +369,15 @@ export function getRolePermissions(role: UserRole): RolePermission[] {
 
 export function getRoleLabel(role: UserRole, lang: 'en' | 'ar' = 'ar'): string {
   const labels: Record<UserRole, { en: string; ar: string }> = {
-    admin: { en: 'Administrator', ar: '???? ??????' },
-    doctor: { en: 'Doctor', ar: '????' },
-    patient: { en: 'Patient', ar: '????' },
-    staff: { en: 'Staff', ar: '???? ?????????' },
-    supervisor: { en: 'Supervisor', ar: '????' },
-    manager: { en: 'Manager', ar: '????' },
-    therapist: { en: 'Therapist', ar: '?????' },
-    nurse: { en: 'Nurse', ar: '????/?????' },
-    agent: { en: 'Agent', ar: '????' },
+    admin: { en: 'Administrator', ar: 'مدير النظام' },
+    doctor: { en: 'Doctor', ar: 'طبيب' },
+    patient: { en: 'Patient', ar: 'مريض' },
+    staff: { en: 'Staff', ar: 'موظف إداري' },
+    supervisor: { en: 'Supervisor', ar: 'مشرف' },
+    manager: { en: 'Manager', ar: 'مدير' },
+    therapist: { en: 'Therapist', ar: 'معالج' },
+    nurse: { en: 'Nurse', ar: 'ممرض/ممرضة' },
+    agent: { en: 'Agent', ar: 'وكيل' },
   };
 
   return labels[role]?.[lang] || role;
