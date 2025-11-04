@@ -16,7 +16,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // التحقق من صحة الطلب
     const verifyToken = request.headers.get('x-verify-token');
     if (verifyToken !== process.env.WHATSAPP_VERIFY_TOKEN) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // معالجة رسائل WhatsApp
@@ -42,6 +50,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 }
 
 // GET /api/webhook/whatsapp - التحقق من webhook
+export const revalidate = 60;
+
 export async function GET(request: NextRequest) {
   try {
     // التحقق من webhook (no auth required for webhook verification)
@@ -53,10 +63,7 @@ export async function GET(request: NextRequest) {
       return new NextResponse(challenge, { status: 200 });
     }
 
-    return NextResponse.json(
-      { error: 'Forbidden' },
-      { status: 403 }
-    );
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   } catch (error) {
     return NextResponse.json(
       { error: 'Internal server error' },

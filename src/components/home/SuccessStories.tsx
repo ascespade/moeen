@@ -59,10 +59,10 @@ const SuccessStories = memo(function SuccessStories() {
           <p className='text-xl text-[var(--text-secondary)] max-w-3xl mx-auto'>
             نفتخر بنتائج عملنا ونجاحات مرضانا. كل قصة نجاح هي دافع لنا للاستمرار
           </p>
-        </div>
+        </section>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-          {stories.map((story) => (
+          {stories.map(story => (
             <Card
               key={story.id}
               className='overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0'
@@ -77,7 +77,7 @@ const SuccessStories = memo(function SuccessStories() {
                   sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent' />
-                
+
                 {/* Profile Info */}
                 <div className='absolute bottom-4 right-4 text-white'>
                   <h4 className='text-xl font-bold mb-1'>{story.name}</h4>
@@ -126,5 +126,3 @@ const SuccessStories = memo(function SuccessStories() {
 
 SuccessStories.displayName = 'SuccessStories';
 export default SuccessStories;
-
-

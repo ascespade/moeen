@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
+export const revalidate = 60;
+
 export async function GET() {
   try {
     // Security: Require authentication
@@ -33,7 +35,8 @@ export async function GET() {
       .eq('status', 'completed');
 
     const totalRevenue =
-      revenue?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) || 0;
+      revenue?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) ||
+      0;
 
     return NextResponse.json({
       stats: {

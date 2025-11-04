@@ -39,7 +39,9 @@ export function DataTable<T extends Record<string, any>>({
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [sortKey, setSortKey] = React.useState<string | null>(null);
-  const [sortDirection, setSortDirection] = React.useState<'asc' | 'desc'>('asc');
+  const [sortDirection, setSortDirection] = React.useState<'asc' | 'desc'>(
+    'asc'
+  );
 
   const handleSort = (key: string) => {
     if (sortKey === key) {
@@ -54,8 +56,8 @@ export function DataTable<T extends Record<string, any>>({
     let filtered = [...data];
 
     if (searchTerm) {
-      filtered = filtered.filter((row) =>
-        Object.values(row).some((value) =>
+      filtered = filtered.filter(row =>
+        Object.values(row).some(value =>
           String(value).toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
@@ -66,7 +68,7 @@ export function DataTable<T extends Record<string, any>>({
         const aVal = a[sortKey];
         const bVal = b[sortKey];
         const modifier = sortDirection === 'asc' ? 1 : -1;
-        
+
         if (aVal < bVal) return -1 * modifier;
         if (aVal > bVal) return 1 * modifier;
         return 0;
@@ -77,15 +79,15 @@ export function DataTable<T extends Record<string, any>>({
   }, [data, searchTerm, sortKey, sortDirection]);
 
   return (
-    <div className="space-y-4">
+    <div className='space-y-4'>
       {searchable && (
-        <div className="flex items-center gap-2">
-          <Search className="h-4 w-4 text-gray-400" />
+        <div className='flex items-center gap-2'>
+          <Search className='h-4 w-4 text-gray-400' />
           <Input
             placeholder={searchPlaceholder}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="max-w-sm"
+            onChange={e => setSearchTerm(e.target.value)}
+            className='max-w-sm'
           />
         </div>
       )}
@@ -93,22 +95,21 @@ export function DataTable<T extends Record<string, any>>({
       <Table>
         <TableHeader>
           <TableRow>
-            {columns.map((column) => (
+            {columns.map(column => (
               <TableHead key={column.key}>
                 {column.sortable ? (
                   <Button
-                    variant="ghost"
+                    variant='ghost'
                     onClick={() => handleSort(column.key)}
-                    className="flex items-center gap-1"
+                    className='flex items-center gap-1'
                   >
                     {column.header}
-                    {sortKey === column.key && (
-                      sortDirection === 'asc' ? (
-                        <ChevronUp className="h-4 w-4" />
+                    {sortKey === column.key &&
+                      (sortDirection === 'asc' ? (
+                        <ChevronUp className='h-4 w-4' />
                       ) : (
-                        <ChevronDown className="h-4 w-4" />
-                      )
-                    )}
+                        <ChevronDown className='h-4 w-4' />
+                      ))}
                   </Button>
                 ) : (
                   column.header
@@ -124,7 +125,7 @@ export function DataTable<T extends Record<string, any>>({
               onClick={() => onRowClick?.(row)}
               className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
             >
-              {columns.map((column) => (
+              {columns.map(column => (
                 <TableCell key={column.key}>
                   {column.render
                     ? column.render(row)

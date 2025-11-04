@@ -7,6 +7,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const authResult = await requireAuth(['admin', 'manager'])(request);
@@ -22,22 +24,29 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .eq('category', 'modules');
 
     if (error) {
-      return NextResponse.json({ 
-        error: 'Failed to fetch module settings',
-        details: error.message 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          error: 'Failed to fetch module settings',
+          details: error.message,
+        },
+        { status: 500 }
+      );
     }
 
-    const modules = (configs || []).reduce((acc: Record<string, any>, config: unknown) => {
-      try {
-        acc[config.key] = typeof config.value === 'string' 
-          ? JSON.parse(config.value) 
-          : config.value;
-      } catch {
-        acc[config.key] = config.value;
-      }
-      return acc;
-    }, {});
+    const modules = (configs || []).reduce(
+      (acc: Record<string, any>, config: unknown) => {
+        try {
+          acc[config.key] =
+            typeof config.value === 'string'
+              ? JSON.parse(config.value)
+              : config.value;
+        } catch {
+          acc[config.key] = config.value;
+        }
+        return acc;
+      },
+      {}
+    );
 
     // Default modules configuration
     const defaultModules = {
@@ -48,20 +57,22 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       emr: { enabled: true, features: [], settings: {} },
       finance: { enabled: true, features: [], settings: {} },
       admin: { enabled: true, features: [], settings: {} },
-      settings: { enabled: true, features: [], settings: {} }
+      settings: { enabled: true, features: [], settings: {} },
     };
 
     return NextResponse.json({
       success: true,
-      data: { ...defaultModules, ...modules }
+      data: { ...defaultModules, ...modules },
     });
-
   } catch (error) {
     console.error('Error in module settings API:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -75,27 +86,30 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const body = await request.json();
     const supabase = await createClient();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     const userId = user?.id || 'system';
 
     // Save each module configuration
     const moduleKeys = Object.keys(body);
     const updates = await Promise.all(
-      moduleKeys.map(async (moduleKey) => {
+      moduleKeys.map(async moduleKey => {
         const moduleConfig = body[moduleKey];
-        
-        const { error } = await supabase
-          .from('system_config')
-          .upsert({
+
+        const { error } = await supabase.from('system_config').upsert(
+          {
             key: moduleKey,
             value: JSON.stringify(moduleConfig),
             category: 'modules',
             description: `Module configuration: ${moduleKey}`,
             updated_at: new Date().toISOString(),
-            updated_by: userId
-          }, {
-            onConflict: 'key'
-          });
+            updated_by: userId,
+          },
+          {
+            onConflict: 'key',
+          }
+        );
 
         if (error) {
           return { module: moduleKey, error: error.message };
@@ -112,24 +126,25 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       user_id: userId,
       details: {
         category: 'modules',
-        changedModules: moduleKeys
-      }
+        changedModules: moduleKeys,
+      },
     });
 
     return NextResponse.json({
       success: true,
       data: {
         message: 'Module settings saved successfully',
-        updates
-      }
+        updates,
+      },
     });
-
   } catch (error) {
     console.error('Error saving module settings:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
-

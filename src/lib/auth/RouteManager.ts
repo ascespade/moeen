@@ -1,7 +1,7 @@
 /**
  * Route Manager - Optimized & Simple
  * مدير المسارات - محسّن وبسيط
- * 
+ *
  * ✅ Simple business logic
  * ✅ Fast route resolution
  * ✅ Clear role mapping
@@ -46,7 +46,13 @@ export function canAccessRoute(
   routePath: string
 ): boolean {
   // Public routes - always accessible
-  const publicRoutes = ['/', '/login', '/register', '/forgot-password', '/reset-password'];
+  const publicRoutes = [
+    '/',
+    '/login',
+    '/register',
+    '/forgot-password',
+    '/reset-password',
+  ];
   if (publicRoutes.includes(routePath)) {
     return true;
   }
@@ -58,7 +64,15 @@ export function canAccessRoute(
 
   // Dashboard routes - all authenticated users
   if (routePath.startsWith('/dashboard')) {
-    return ['admin', 'manager', 'supervisor', 'agent', 'doctor', 'patient', 'staff'].includes(userRole);
+    return [
+      'admin',
+      'manager',
+      'supervisor',
+      'agent',
+      'doctor',
+      'patient',
+      'staff',
+    ].includes(userRole);
   }
 
   // Profile routes - all authenticated users
@@ -68,9 +82,11 @@ export function canAccessRoute(
 
   // Settings - check permission
   if (routePath.startsWith('/settings')) {
-    return hasPermission(userPermissions, 'settings.view') || 
-           hasPermission(userPermissions, 'settings.manage') ||
-           userRole === 'admin';
+    return (
+      hasPermission(userPermissions, 'settings.view') ||
+      hasPermission(userPermissions, 'settings.manage') ||
+      userRole === 'admin'
+    );
   }
 
   // Default: deny access
@@ -89,7 +105,15 @@ export function getNavigationRoutes(
       path: '/dashboard',
       label: 'لوحة التحكم',
       icon: 'dashboard',
-      roles: ['admin', 'manager', 'supervisor', 'agent', 'doctor', 'patient', 'staff'],
+      roles: [
+        'admin',
+        'manager',
+        'supervisor',
+        'agent',
+        'doctor',
+        'patient',
+        'staff',
+      ],
     },
   ];
 
@@ -169,7 +193,15 @@ export function getNavigationRoutes(
     path: '/profile',
     label: 'الملف الشخصي',
     icon: 'profile',
-    roles: ['admin', 'manager', 'supervisor', 'agent', 'doctor', 'patient', 'staff'],
+    roles: [
+      'admin',
+      'manager',
+      'supervisor',
+      'agent',
+      'doctor',
+      'patient',
+      'staff',
+    ],
   });
 
   // Settings - if has permission
@@ -190,7 +222,10 @@ export function getNavigationRoutes(
     }
 
     // Check permission access
-    if (route.permissions && !route.permissions.some(p => hasPermission(userPermissions, p))) {
+    if (
+      route.permissions &&
+      !route.permissions.some(p => hasPermission(userPermissions, p))
+    ) {
       return false;
     }
 
@@ -203,7 +238,10 @@ export function getNavigationRoutes(
  */
 function hasPermission(userPermissions: string[], permission: string): boolean {
   // Admin has all permissions
-  if (userPermissions.includes('*') || userPermissions.includes('admin.access')) {
+  if (
+    userPermissions.includes('*') ||
+    userPermissions.includes('admin.access')
+  ) {
     return true;
   }
 

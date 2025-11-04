@@ -18,23 +18,32 @@ export function usePermissions() {
       return;
     }
 
-    authHub.getUserPermissions(user.id).then((perms) => {
-      setPermissions(perms);
-      setLoading(false);
-    }).catch((error) => {
-      console.error('Failed to load permissions:', error);
-      setLoading(false);
-    });
+    authHub
+      .getUserPermissions(user.id)
+      .then(perms => {
+        setPermissions(perms);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Failed to load permissions:', error);
+        setLoading(false);
+      });
   }, [user, authLoading]);
 
-  const checkPermission = useCallback(async (resource: string, action: string): Promise<boolean> => {
-    if (!user) return false;
-    return authHub.checkPermission(user.id, resource, action);
-  }, [user]);
+  const checkPermission = useCallback(
+    async (resource: string, action: string): Promise<boolean> => {
+      if (!user) return false;
+      return authHub.checkPermission(user.id, resource, action);
+    },
+    [user]
+  );
 
-  const hasRole = useCallback((role: string): boolean => {
-    return permissions?.role === role;
-  }, [permissions]);
+  const hasRole = useCallback(
+    (role: string): boolean => {
+      return permissions?.role === role;
+    },
+    [permissions]
+  );
 
   return {
     permissions,

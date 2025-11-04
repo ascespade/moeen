@@ -4,7 +4,13 @@ import { useAuth } from '@/lib/auth/hooks/useAuth';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, ReactNode } from 'react';
 
-const PUBLIC_ROUTES = ['/login', '/register', '/forgot-password', '/reset-password', '/'];
+const PUBLIC_ROUTES = [
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/reset-password',
+  '/',
+];
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -18,7 +24,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     if (loading) return;
 
-    const isPublicRoute = PUBLIC_ROUTES.some(route => pathname === route || pathname.startsWith(route + '/'));
+    const isPublicRoute = PUBLIC_ROUTES.some(
+      route => pathname === route || pathname.startsWith(route + '/')
+    );
 
     if (!user && !isPublicRoute) {
       // Redirect to login if not authenticated
@@ -32,8 +40,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   // Show loading state
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
+      <div className='min-h-screen flex items-center justify-center'>
+        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary' />
       </div>
     );
   }

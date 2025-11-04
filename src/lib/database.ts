@@ -178,7 +178,7 @@ export class DatabaseManager {
     return result.rows[0];
   }
 
-  async updatePatient(patientId: number, updates: any) {
+  async updatePatient(patientId: number, updates: unknown) {
     const fields = Object.keys(updates);
     const values = Object.values(updates);
     const setClause = fields

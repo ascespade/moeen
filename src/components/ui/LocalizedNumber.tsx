@@ -29,11 +29,11 @@ interface LocalizedNumberProps {
 
 /**
  * Component to display numbers with automatic Arabic/English localization
- * 
+ *
  * @example
- * <LocalizedNumber value={1247} format /> 
+ * <LocalizedNumber value={1247} format />
  * // Displays: ١,٢٤٧ (Arabic) or 1,247 (English)
- * 
+ *
  * @example
  * <LocalizedNumber value={98} suffix="%" />
  * // Displays: ٩٨٪ (Arabic) or 98% (English)
@@ -46,20 +46,21 @@ export function LocalizedNumber({
   className = '',
 }: LocalizedNumberProps) {
   const localizedNumber = useLocalizedNumber();
-  
+
   const stringValue = typeof value === 'number' ? value.toString() : value;
-  const formattedValue = format 
+  const formattedValue = format
     ? Number(stringValue.replace(/,/g, '')).toLocaleString()
     : stringValue;
-  
+
   const localized = localizedNumber(formattedValue);
-  
+
   return (
     <span className={className}>
-      {prefix}{localized}{suffix}
+      {prefix}
+      {localized}
+      {suffix}
     </span>
   );
 }
 
 export default LocalizedNumber;
-

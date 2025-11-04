@@ -33,7 +33,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Authorize admin only
     const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const supabase = await createClient();
@@ -86,6 +94,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return ErrorHandler.getInstance().handle(error as Error);
   }
 }
+
+export const revalidate = 60;
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {

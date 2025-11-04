@@ -10,7 +10,13 @@ export interface DesignGuideline {
 
 export interface AgentRule {
   ruleType: string;
-  action: 'enforce' | 'monitor' | 'autoAdjust' | 'autoCorrect' | 'monitorNewComponents' | 'generate';
+  action:
+    | 'enforce'
+    | 'monitor'
+    | 'autoAdjust'
+    | 'autoCorrect'
+    | 'monitorNewComponents'
+    | 'generate';
   description: string;
   target?: string;
   severity?: 'error' | 'warning' | 'info';
@@ -48,7 +54,8 @@ export const defaultAgentSettings: AgentSettings = {
       },
     },
     strictProjectRules: {
-      description: 'قواعد صارمة لا يمكن كسرها لضمان سلامة المشروع وجودة التصميم.',
+      description:
+        'قواعد صارمة لا يمكن كسرها لضمان سلامة المشروع وجودة التصميم.',
       rules: [
         {
           ruleType: 'noFakeData',
@@ -195,7 +202,7 @@ export function saveAgentSettings(settings: AgentSettings): void {
 export function shouldEnforceRule(ruleType: string): boolean {
   const settings = loadAgentSettings();
   const rule = settings.agentSettings.strictProjectRules.rules.find(
-    (r) => r.ruleType === ruleType
+    r => r.ruleType === ruleType
   );
   return rule?.action === 'enforce' || rule?.action === 'autoCorrect';
 }
@@ -203,10 +210,12 @@ export function shouldEnforceRule(ruleType: string): boolean {
 /**
  * Get rule severity
  */
-export function getRuleSeverity(ruleType: string): 'error' | 'warning' | 'info' {
+export function getRuleSeverity(
+  ruleType: string
+): 'error' | 'warning' | 'info' {
   const settings = loadAgentSettings();
   const rule = settings.agentSettings.strictProjectRules.rules.find(
-    (r) => r.ruleType === ruleType
+    r => r.ruleType === ruleType
   );
   return rule?.severity || 'warning';
 }
@@ -217,7 +226,7 @@ export function getRuleSeverity(ruleType: string): 'error' | 'warning' | 'info' 
 export function getEnforcedRules(): AgentRule[] {
   const settings = loadAgentSettings();
   return settings.agentSettings.strictProjectRules.rules.filter(
-    (r) => r.action === 'enforce' || r.action === 'autoCorrect'
+    r => r.action === 'enforce' || r.action === 'autoCorrect'
   );
 }
 
@@ -231,18 +240,16 @@ export interface RuleViolation {
   description: string;
 }
 
-export function validateAgainstRules(
-  context: {
-    componentName?: string;
-    hasFakeData?: boolean;
-    primaryColorChanged?: boolean;
-    hasEmptyLinks?: boolean;
-    isDuplicate?: boolean;
-    accessibilityIssues?: string[];
-    themeIssues?: string[];
-    usesNonPaletteColors?: boolean;
-  }
-): RuleViolation[] {
+export function validateAgainstRules(context: {
+  componentName?: string;
+  hasFakeData?: boolean;
+  primaryColorChanged?: boolean;
+  hasEmptyLinks?: boolean;
+  isDuplicate?: boolean;
+  accessibilityIssues?: string[];
+  themeIssues?: string[];
+  usesNonPaletteColors?: boolean;
+}): RuleViolation[] {
   const violations: RuleViolation[] = [];
   const settings = loadAgentSettings();
 
@@ -257,7 +264,10 @@ export function validateAgainstRules(
   }
 
   // Check preservePrimaryColors rule
-  if (context.primaryColorChanged && shouldEnforceRule('preservePrimaryColors')) {
+  if (
+    context.primaryColorChanged &&
+    shouldEnforceRule('preservePrimaryColors')
+  ) {
     violations.push({
       ruleType: 'preservePrimaryColors',
       severity: getRuleSeverity('preservePrimaryColors'),
@@ -289,7 +299,7 @@ export function validateAgainstRules(
   // Check accessibility issues
   if (context.accessibilityIssues && context.accessibilityIssues.length > 0) {
     const rule = settings.agentSettings.strictProjectRules.rules.find(
-      (r) => r.ruleType === 'accessibilityCheck'
+      r => r.ruleType === 'accessibilityCheck'
     );
     if (rule) {
       violations.push({
@@ -302,7 +312,10 @@ export function validateAgainstRules(
   }
 
   // Check centralized palette
-  if (context.usesNonPaletteColors && shouldEnforceRule('centralizedPaletteEnforcement')) {
+  if (
+    context.usesNonPaletteColors &&
+    shouldEnforceRule('centralizedPaletteEnforcement')
+  ) {
     violations.push({
       ruleType: 'centralizedPaletteEnforcement',
       severity: getRuleSeverity('centralizedPaletteEnforcement'),
@@ -313,4 +326,3 @@ export function validateAgainstRules(
 
   return violations;
 }
-

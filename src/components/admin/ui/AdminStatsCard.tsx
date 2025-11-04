@@ -29,75 +29,73 @@ export default function AdminStatsCard({
   trend,
   className,
   children,
-  animate = true
+  animate = true,
 }: AdminStatsCardProps) {
   return (
-    <AdminCard 
+    <AdminCard
       className={cn('text-center relative overflow-hidden', className)}
       hover={true}
       animate={animate}
     >
       {/* Background decoration */}
       <div className='absolute top-0 right-0 w-20 h-20 rounded-full bg-[var(--brand-primary)]/5 -translate-y-10 translate-x-10' />
-      
+
       <div className='relative z-10'>
         {/* Icon */}
         {Icon && (
           <div className='mb-4 flex justify-center'>
-            <div 
+            <div
               className='w-14 h-14 rounded-xl flex items-center justify-center shadow-md'
-              style={{ 
+              style={{
                 backgroundColor: `color-mix(in srgb, ${iconColor} 8%, transparent)`,
-                border: `1px solid color-mix(in srgb, ${iconColor} 20%, transparent)`
+                border: `1px solid color-mix(in srgb, ${iconColor} 20%, transparent)`,
               }}
             >
-              <Icon 
-                className='w-7 h-7' 
+              <Icon
+                className='w-7 h-7'
                 style={{ color: iconColor }} // Keep dynamic color from props
               />
             </div>
           </div>
         )}
-        
+
         {/* Main value */}
         <div className='mb-2'>
-          <div 
+          <div
             className='text-3xl md:text-4xl font-bold'
             style={{ color: iconColor || 'var(--brand-primary)' }}
           >
             {typeof value === 'number' ? value.toLocaleString() : value}
           </div>
         </div>
-        
+
         {/* Title */}
         <div className='mb-3 text-[var(--text-primary)] font-semibold text-lg'>
           {title}
         </div>
-        
+
         {/* Subtitle */}
         {subtitle && (
           <div className='text-[var(--text-secondary)] text-sm mb-2'>
             {subtitle}
           </div>
         )}
-        
+
         {/* Trend */}
         {trend && (
-          <div className={cn(
-            'text-sm font-medium flex items-center justify-center gap-1',
-            trend.isPositive ? 'text-green-600' : 'text-red-600'
-          )}>
+          <div
+            className={cn(
+              'text-sm font-medium flex items-center justify-center gap-1',
+              trend.isPositive ? 'text-green-600' : 'text-red-600'
+            )}
+          >
             <span>{trend.isPositive ? '↗' : '↘'}</span>
             <span>{Math.abs(trend.value)}%</span>
           </div>
         )}
-        
+
         {/* Custom children */}
-        {children && (
-          <div className='mt-4'>
-            {children}
-          </div>
-        )}
+        {children && <div className='mt-4'>{children}</div>}
       </div>
     </AdminCard>
   );

@@ -1,0 +1,95 @@
+{
+  "evaluation": {
+    "structure": {
+      "score": 0,
+      "maxScore": 100,
+      "details": []
+    },
+    "organization": {
+      "score": 0,
+      "maxScore": 100,
+      "details": []
+    },
+    "cleanCode": {
+      "score": 0,
+      "maxScore": 100,
+      "details": []
+    },
+    "centralization": {
+      "score": 100,
+      "maxScore": 100,
+      "details": [
+        "Centralized CSS exists",
+        "Centralized notifications",
+        "Centralized permissions",
+        "Centralized workflows",
+        "Centralized LazyComponents",
+        "Centralized LoadingSkeleton"
+      ]
+    },
+    "accessibility": {
+      "score": 43.666666666666664,
+      "maxScore": 100,
+      "details": [
+        "NotificationToast with aria-live",
+        "Aria-labels: 15/50 files",
+        "Semantic HTML: 4/20 files",
+        "Keyboard navigation: 7 files"
+      ]
+    },
+    "ux": {
+      "score": 91.33333333333333,
+      "maxScore": 100,
+      "details": [
+        "LoadingSkeleton component exists",
+        "NotificationManager system exists",
+        "NotificationToast integrated in layout",
+        "Loading states: 17/30 files"
+      ]
+    },
+    "design": {
+      "score": 0,
+      "maxScore": 100,
+      "details": []
+    },
+    "security": {
+      "score": 0,
+      "maxScore": 100,
+      "details": []
+    },
+    "maintainability": {
+      "score": 0,
+      "maxScore": 100,
+      "details": []
+    },
+    "errorHandling": {
+      "score": 0,
+      "maxScore": 100,
+      "details": []
+    },
+    "performance": {
+      "score": 92.33082706766918,
+      "maxScore": 100,
+      "details": [
+        "Revalidate: 99/133 (74.4%)",
+        "LazyComponents system exists",
+        "Compression enabled",
+        "SWC minify enabled",
+        "Package imports optimized",
+        "LoadingSkeleton component exists"
+      ]
+    },
+    "speed": {
+      "score": 0,
+      "maxScore": 100,
+      "details": []
+    },
+    "marketCompetition": {
+      "score": 0,
+      "maxScore": 100,
+      "details": []
+    }
+  },
+  "overallPercentage": "81.8",
+  "timestamp": "2025-11-04T07:50:18.932Z"
+}

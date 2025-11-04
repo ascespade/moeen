@@ -5,20 +5,20 @@ import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import {
-    Award,
-    BarChart3,
-    CheckCircle2,
-    Shield,
-    TrendingUp,
-    Users,
-    Zap
+  Award,
+  BarChart3,
+  CheckCircle2,
+  Shield,
+  TrendingUp,
+  Users,
+  Zap,
 } from 'lucide-react';
 import Link from 'next/link';
 import { memo } from 'react';
 
 const BusinessStats = memo(function BusinessStats() {
   const localizedNumber = useLocalizedNumber();
-  
+
   return (
     <>
       <div className='bg-[var(--panel)] rounded-xl p-6 text-center border border-[var(--brand-border)]'>
@@ -100,9 +100,10 @@ const BusinessSection = memo(function BusinessSection() {
             لماذا تختار مركز الهمم؟
           </h2>
           <p className='text-xl text-[var(--text-secondary)] max-w-3xl mx-auto'>
-            نقدم خدمات متخصصة وعالية الجودة مع التزام بأعلى معايير الرعاية الصحية
+            نقدم خدمات متخصصة وعالية الجودة مع التزام بأعلى معايير الرعاية
+            الصحية
           </p>
-        </div>
+        </section>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reminders-8 mb-16'>
           {features.map((feature, index) => {
@@ -113,11 +114,11 @@ const BusinessSection = memo(function BusinessSection() {
                 className='border border-[var(--brand-border)] hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-[var(--panel)]'
               >
                 <CardContent className='p-6'>
-                  <div 
+                  <div
                     className='w-12 h-12 rounded-lg flex items-center justify-center mb-4'
                     style={{ backgroundColor: `${feature.color}15` }}
                   >
-                    <Icon 
+                    <Icon
                       className='w-6 h-6'
                       style={{ color: feature.color }}
                     />
@@ -141,8 +142,9 @@ const BusinessSection = memo(function BusinessSection() {
                 التزامنا بالجودة والتميز
               </h3>
               <p className='text-lg text-[var(--text-secondary)] mb-6 leading-relaxed'>
-                في مركز الهمم، نؤمن بأن كل فرد يستحق أفضل رعاية صحية ممكنة. لذلك نلتزم
-                بتقديم خدمات عالية الجودة تعتمد على أحدث الأبحاث والدراسات العلمية.
+                في مركز الهمم، نؤمن بأن كل فرد يستحق أفضل رعاية صحية ممكنة. لذلك
+                نلتزم بتقديم خدمات عالية الجودة تعتمد على أحدث الأبحاث والدراسات
+                العلمية.
               </p>
               <div className='space-y-3 mb-6'>
                 {[
@@ -158,9 +160,7 @@ const BusinessSection = memo(function BusinessSection() {
                 ))}
               </div>
               <Button asChild size='lg' className='btn-default'>
-                <Link href='/about'>
-                  تعرف على المزيد
-                </Link>
+                <Link href='/about'>تعرف على المزيد</Link>
               </Button>
             </div>
             <div className='grid grid-cols-2 gap-6'>
@@ -175,5 +175,3 @@ const BusinessSection = memo(function BusinessSection() {
 
 BusinessSection.displayName = 'BusinessSection';
 export default BusinessSection;
-
-

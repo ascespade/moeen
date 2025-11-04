@@ -3,6 +3,8 @@ import { getServiceSupabase } from '@/lib/supabaseClient';
 
 const supabase = getServiceSupabase();
 
+export const revalidate = 60;
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { lang: string } }

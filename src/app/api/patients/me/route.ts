@@ -2,12 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 
 import { authorize } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(_request: NextRequest) {
   try {
     const { user, error } = await authorize(_request);
 
     if (error || !user) {
-      return NextResponse.json({ error }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // Mock patient data for testing

@@ -2,18 +2,24 @@
 
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 import {
-    Activity,
-    AlertCircle,
-    CheckCircle,
-    Clock,
-    Database,
-    Link as LinkIcon,
-    RefreshCw,
-    Server,
-    XCircle,
-    Zap
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/Card';
+import {
+  Activity,
+  AlertCircle,
+  CheckCircle,
+  Clock,
+  Database,
+  Link as LinkIcon,
+  RefreshCw,
+  Server,
+  XCircle,
+  Zap,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -27,15 +33,26 @@ interface TestResult {
   details?: any;
 }
 
-const ALL_TESTS: Omit<TestResult, 'status' | 'message' | 'duration' | 'details'>[] = [
+const ALL_TESTS: Omit<
+  TestResult,
+  'status' | 'message' | 'duration' | 'details'
+>[] = [
   // Connection Tests
-  { id: 'db-connection', name: 'اتصال قاعدة البيانات الأساسي', category: 'connection' },
+  {
+    id: 'db-connection',
+    name: 'اتصال قاعدة البيانات الأساسي',
+    category: 'connection',
+  },
   { id: 'db-credentials', name: 'فحص بيانات الاعتماد', category: 'connection' },
   { id: 'db-ping', name: 'اختبار سرعة الاستجابة', category: 'connection' },
 
   // Table Tests
   { id: 'tables-exist', name: 'فحص وجود الجداول', category: 'connection' },
-  { id: 'tables-access', name: 'فحص صلاحيات الوصول للجداول', category: 'connection' },
+  {
+    id: 'tables-access',
+    name: 'فحص صلاحيات الوصول للجداول',
+    category: 'connection',
+  },
 
   // CRUD Tests
   { id: 'query-select', name: 'اختبار SELECT (قراءة)', category: 'crud' },
@@ -47,13 +64,25 @@ const ALL_TESTS: Omit<TestResult, 'status' | 'message' | 'duration' | 'details'>
 
   // Performance Tests
   { id: 'query-speed', name: 'قياس سرعة الاستعلامات', category: 'performance' },
-  { id: 'index-performance', name: 'أداء الفهارس (Indexes)', category: 'performance' },
+  {
+    id: 'index-performance',
+    name: 'أداء الفهارس (Indexes)',
+    category: 'performance',
+  },
   { id: 'batch-operations', name: 'العمليات المجمعة', category: 'performance' },
 
   // Relations Tests
-  { id: 'foreign-keys', name: 'اختبار المفاتيح الخارجية', category: 'relations' },
+  {
+    id: 'foreign-keys',
+    name: 'اختبار المفاتيح الخارجية',
+    category: 'relations',
+  },
   { id: 'joins', name: 'اختبار JOIN بين الجداول', category: 'relations' },
-  { id: 'cascade-delete', name: 'اختبار Cascade Delete', category: 'relations' },
+  {
+    id: 'cascade-delete',
+    name: 'اختبار Cascade Delete',
+    category: 'relations',
+  },
 ];
 
 export default function CRUDTestPage() {
@@ -61,7 +90,9 @@ export default function CRUDTestPage() {
     ALL_TESTS.map(t => ({ ...t, status: 'pending' as const }))
   );
   const [isRunning, setIsRunning] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<'all' | TestResult['category']>('all');
+  const [selectedCategory, setSelectedCategory] = useState<
+    'all' | TestResult['category']
+  >('all');
 
   const runTest = async (testId: string): Promise<TestResult> => {
     const test = tests.find(t => t.id === testId);
@@ -115,9 +146,9 @@ export default function CRUDTestPage() {
         case 'tables-access':
           const tablesRes = await fetch('/api/test/database?type=tables');
           const tablesData = await tablesRes.json();
-          const accessibleTables = Object.values(tablesData.tables || {}).filter(
-            (t: any) => t.accessible
-          ).length;
+          const accessibleTables = Object.values(
+            tablesData.tables || {}
+          ).filter((t: any) => t.accessible).length;
           const totalTables = Object.keys(tablesData.tables || {}).length;
           return {
             ...test,
@@ -258,10 +289,12 @@ export default function CRUDTestPage() {
         case 'joins':
           const relationsRes = await fetch('/api/test/database?type=relations');
           const relationsData = await relationsRes.json();
-          const workingRelations = Object.values(relationsData.relations || {}).filter(
-            (r: any) => r.working
+          const workingRelations = Object.values(
+            relationsData.relations || {}
+          ).filter((r: any) => r.working).length;
+          const totalRelations = Object.keys(
+            relationsData.relations || {}
           ).length;
-          const totalRelations = Object.keys(relationsData.relations || {}).length;
           return {
             ...test,
             status: workingRelations > 0 ? 'success' : 'error',
@@ -353,7 +386,9 @@ export default function CRUDTestPage() {
       case 'error':
         return <XCircle className='w-5 h-5 text-[var(--brand-error)]' />;
       case 'running':
-        return <RefreshCw className='w-5 h-5 text-[var(--brand-primary)] animate-spin' />;
+        return (
+          <RefreshCw className='w-5 h-5 text-[var(--brand-primary)] animate-spin' />
+        );
       default:
         return <AlertCircle className='w-5 h-5 text-[var(--text-muted)]' />;
     }
@@ -415,7 +450,8 @@ export default function CRUDTestPage() {
             </h1>
           </div>
           <p className='text-[var(--text-secondary)] text-lg'>
-            اختبار شامل لجميع جوانب قاعدة البيانات: الاتصال، CRUD، الأداء، والعلاقات
+            اختبار شامل لجميع جوانب قاعدة البيانات: الاتصال، CRUD، الأداء،
+            والعلاقات
           </p>
         </div>
 
@@ -425,7 +461,9 @@ export default function CRUDTestPage() {
             <CardContent className='pt-6'>
               <div className='flex items-center justify-between'>
                 <div>
-                  <p className='text-sm text-[var(--text-secondary)]'>إجمالي الاختبارات</p>
+                  <p className='text-sm text-[var(--text-secondary)]'>
+                    إجمالي الاختبارات
+                  </p>
                   <p className='text-2xl font-bold text-[var(--text-primary)]'>
                     {tests.length}
                   </p>
@@ -467,14 +505,19 @@ export default function CRUDTestPage() {
             <CardContent className='pt-6'>
               <div className='flex items-center justify-between'>
                 <div>
-                  <p className='text-sm text-[var(--text-secondary)]'>متوسط الزمن</p>
+                  <p className='text-sm text-[var(--text-secondary)]'>
+                    متوسط الزمن
+                  </p>
                   <p className='text-2xl font-bold text-[var(--text-primary)]'>
                     {(() => {
                       const durations = tests
                         .filter(t => t.duration)
                         .map(t => t.duration!);
                       return durations.length > 0
-                        ? Math.round(durations.reduce((a, b) => a + b, 0) / durations.length)
+                        ? Math.round(
+                            durations.reduce((a, b) => a + b, 0) /
+                              durations.length
+                          )
                         : 0;
                     })()}
                     ms
@@ -497,7 +540,9 @@ export default function CRUDTestPage() {
             const passed =
               cat.id === 'all'
                 ? passedTests
-                : tests.filter(t => t.category === cat.id && t.status === 'success').length;
+                : tests.filter(
+                    t => t.category === cat.id && t.status === 'success'
+                  ).length;
 
             return (
               <Button
@@ -556,7 +601,8 @@ export default function CRUDTestPage() {
           <CardHeader>
             <CardTitle>نتائج الاختبارات</CardTitle>
             <CardDescription>
-              نتائج مفصلة لجميع اختبارات قاعدة البيانات ({filteredTests.length} اختبار)
+              نتائج مفصلة لجميع اختبارات قاعدة البيانات ({filteredTests.length}{' '}
+              اختبار)
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -617,9 +663,9 @@ export default function CRUDTestPage() {
                   حول صفحة الاختبارات
                 </h4>
                 <p className='text-sm text-[var(--text-secondary)]'>
-                  هذه الصفحة تختبر جميع جوانب قاعدة البيانات: الاتصال، العمليات CRUD (إنشاء، قراءة،
-                  تحديث، حذف)، الأداء، الفهارس، والعلاقات بين الجداول. استخدمها للتحقق من أن كل
-                  شيء يعمل بشكل صحيح.
+                  هذه الصفحة تختبر جميع جوانب قاعدة البيانات: الاتصال، العمليات
+                  CRUD (إنشاء، قراءة، تحديث، حذف)، الأداء، الفهارس، والعلاقات
+                  بين الجداول. استخدمها للتحقق من أن كل شيء يعمل بشكل صحيح.
                 </p>
               </div>
             </div>

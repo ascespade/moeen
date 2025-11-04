@@ -15,10 +15,17 @@ const insuranceClaimSchema = z.object({
   status: z.string().optional(),
 });
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin", "staff", "doctor", "supervisor"])(request);
+    const authResult = await requireAuth([
+      'admin',
+      'staff',
+      'doctor',
+      'supervisor',
+    ])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -88,7 +95,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 export async function POST(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["doctor", "staff", "admin"])(request);
+    const authResult = await requireAuth(['doctor', 'staff', 'admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

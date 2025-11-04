@@ -21,7 +21,7 @@ export default function DirectionToggle() {
   return (
     <button
       type='button'
-      onClick={toggle}
+      onClick={toggle} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle } }}
       className='fixed bottom-4 end-4 z-50 hs-tooltip inline-flex items-center gap-2 rounded-full px-4 py-2 bg-[var(--default-default)] text-white shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2'
       aria-label='Toggle direction'
     >

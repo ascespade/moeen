@@ -8,9 +8,13 @@ import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = getServiceSupabase();
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   // Security: Require authentication for dashboard metrics
-  const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+  const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+    request
+  );
   if (!authResult.authorized) {
     return NextResponse.json(
       { error: 'Unauthorized. Authentication required to access metrics.' },
@@ -527,7 +531,8 @@ async function getHealthcareMetrics() {
     ).length;
 
     const appointmentsToday = appointments.filter(
-      (a: unknown) => new Date(a.appointment_date).toDateString() === today.toDateString()
+      (a: unknown) =>
+        new Date(a.appointment_date).toDateString() === today.toDateString()
     ).length;
 
     const appointmentsThisWeek = appointments.filter(
@@ -636,9 +641,13 @@ async function getCrmMetrics() {
       (l: unknown) => new Date(l.created_at) >= thisMonth
     ).length;
 
-    const qualifiedLeads = leads.filter((l: unknown) => l.status === 'qualified').length;
+    const qualifiedLeads = leads.filter(
+      (l: unknown) => l.status === 'qualified'
+    ).length;
 
-    const convertedLeads = leads.filter((l: unknown) => l.status === 'converted').length;
+    const convertedLeads = leads.filter(
+      (l: unknown) => l.status === 'converted'
+    ).length;
 
     const wonDeals = deals.filter((d: unknown) => d.status === 'won').length;
 
@@ -652,7 +661,9 @@ async function getCrmMetrics() {
 
     const calls = activities.filter((a: unknown) => a.type === 'call').length;
 
-    const meetings = activities.filter((a: unknown) => a.type === 'meeting').length;
+    const meetings = activities.filter(
+      (a: unknown) => a.type === 'meeting'
+    ).length;
 
     const tasks = activities.filter((a: unknown) => a.type === 'task').length;
 

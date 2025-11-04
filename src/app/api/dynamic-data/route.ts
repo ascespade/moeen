@@ -5,22 +5,34 @@ import { requireAuth } from '@/lib/auth/authorize';
 
 export const dynamic = 'force-dynamic';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'all';
 
     // Public data types that don't require authentication (for homepage)
-    const publicTypes = ['services', 'hero', 'testimonials', 'gallery', 'contact'];
+    const publicTypes = [
+      'services',
+      'hero',
+      'testimonials',
+      'gallery',
+      'contact',
+    ];
     const isPublicRequest = publicTypes.includes(type);
 
     // Only require authentication for accessing all data or sensitive data
     if (!isPublicRequest && type !== 'all') {
       // For non-public specific types, require auth
-      const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+      const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+        request
+      );
       if (!authResult.authorized) {
         return NextResponse.json(
-          { error: 'Unauthorized. Authentication required to access this data.' },
+          {
+            error: 'Unauthorized. Authentication required to access this data.',
+          },
           { status: 401 }
         );
       }
@@ -28,10 +40,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // For 'all' type, require authentication
     if (type === 'all') {
-      const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+      const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+        request
+      );
       if (!authResult.authorized) {
         return NextResponse.json(
-          { error: 'Unauthorized. Authentication required to access all data.' },
+          {
+            error: 'Unauthorized. Authentication required to access all data.',
+          },
           { status: 401 }
         );
       }

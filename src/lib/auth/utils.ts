@@ -1,7 +1,7 @@
 /**
  * Auth Utilities - Helper Functions
  * أدوات المصادقة - دوال مساعدة
- * 
+ *
  * Common utilities for authentication
  */
 
@@ -55,7 +55,15 @@ export function validatePassword(password: string): {
  * Check if role is valid
  */
 export function isValidRole(role: string): boolean {
-  const validRoles = ['admin', 'manager', 'supervisor', 'agent', 'doctor', 'patient', 'staff'];
+  const validRoles = [
+    'admin',
+    'manager',
+    'supervisor',
+    'agent',
+    'doctor',
+    'patient',
+    'staff',
+  ];
   return validRoles.includes(role);
 }
 

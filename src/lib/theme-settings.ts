@@ -45,8 +45,18 @@ export interface ThemeRule {
     | 'realTimeMonitoring'
     | 'contextAwareAdjustment'
     | 'report';
-  action: 'autoAdjust' | 'forceAdjust' | 'replace' | 'dynamicApply' | 'monitorNewComponents' | 'generate';
-  target: 'allComponents' | 'componentsWithLowVisibility' | 'accentColors' | 'projectComponents';
+  action:
+    | 'autoAdjust'
+    | 'forceAdjust'
+    | 'replace'
+    | 'dynamicApply'
+    | 'monitorNewComponents'
+    | 'generate';
+  target:
+    | 'allComponents'
+    | 'componentsWithLowVisibility'
+    | 'accentColors'
+    | 'projectComponents';
   threshold?: number;
   method?: string;
   colorsToAvoid?: string[];
@@ -73,9 +83,13 @@ export const defaultThemeSettings: AdvancedThemeSettings = {
     mode: 'real-time',
     themes: {
       light: {
-        primaryColor: '#e46c0a', /* البرتقالي الأساسي - Primary Orange */
+        primaryColor: '#e46c0a' /* البرتقالي الأساسي - Primary Orange */,
         secondaryColor: '#ffffff',
-        accentColors: ['#ff9800', '#ffb400', '#ff6b6b'], /* ألوان ثانوية متناسقة مع البرتقالي */
+        accentColors: [
+          '#ff9800',
+          '#ffb400',
+          '#ff6b6b',
+        ] /* ألوان ثانوية متناسقة مع البرتقالي */,
         backgroundColor: '#ffffff',
         textColor: '#1e293b',
         contrastMinRatio: 4.5,
@@ -83,21 +97,30 @@ export const defaultThemeSettings: AdvancedThemeSettings = {
         handleHiddenComponents: true,
         dynamicShadows: true,
         gradientSupport: true,
-        description: 'الوضع الفاتح يستخدم البرتقالي كاللون الأساسي مع ألوان ثانوية متناسقة.',
+        description:
+          'الوضع الفاتح يستخدم البرتقالي كاللون الأساسي مع ألوان ثانوية متناسقة.',
       },
       dark: {
-        primaryColor: '#ff6633', /* Orange-red for interactive elements - matches image (#FF6633 or #F05030) */
-        secondaryColor: '#282828', /* Dark panel for cards - matches image (#282828 or #2C2C2C) */
-        accentColors: ['#ff6633', '#ff9800', '#ff854d'], /* Orange-red accents matching image */
-        backgroundColor: '#1a1a1a', /* Very dark background - matches image (#1A1A1A or #1C1C1C) */
-        textColor: '#ffffff', /* Pure white text - matches image */
+        primaryColor:
+          '#ff6633' /* Orange-red for interactive elements - matches image (#FF6633 or #F05030) */,
+        secondaryColor:
+          '#282828' /* Dark panel for cards - matches image (#282828 or #2C2C2C) */,
+        accentColors: [
+          '#ff6633',
+          '#ff9800',
+          '#ff854d',
+        ] /* Orange-red accents matching image */,
+        backgroundColor:
+          '#1a1a1a' /* Very dark background - matches image (#1A1A1A or #1C1C1C) */,
+        textColor: '#ffffff' /* Pure white text - matches image */,
         contrastMinRatio: 4.5,
         ensureVisibility: true,
         handleHiddenComponents: true,
         avoidColors: ['#000080', '#00008b', '#222222'],
         dynamicShadows: true,
         gradientSupport: true,
-        description: 'الوضع الداكن يستخدم خلفية داكنة جداً (#1A1A1A) مع نص أبيض نقي (#FFFFFF) وألوان تفاعلية برتقالية محمرة (#FF6633) لتطابق التصميم المرجعي.',
+        description:
+          'الوضع الداكن يستخدم خلفية داكنة جداً (#1A1A1A) مع نص أبيض نقي (#FFFFFF) وألوان تفاعلية برتقالية محمرة (#FF6633) لتطابق التصميم المرجعي.',
       },
     },
     centralizedColorSystem: true,
@@ -119,14 +142,16 @@ export const defaultThemeSettings: AdvancedThemeSettings = {
         action: 'autoAdjust',
         target: 'allComponents',
         threshold: 4.5,
-        description: 'تأكد من وضوح كل المكونات بالنسبة للون الخلفية الحالي، طبق تلقائيًا معايير WCAG AA.',
+        description:
+          'تأكد من وضوح كل المكونات بالنسبة للون الخلفية الحالي، طبق تلقائيًا معايير WCAG AA.',
       },
       {
         ruleType: 'hiddenComponentFix',
         action: 'forceAdjust',
         target: 'componentsWithLowVisibility',
         method: 'adjustColorOrOpacity',
-        description: 'أي مكون شبه مخفي يتم تعديله ديناميكيًا من حيث اللون، الظل أو Opacity.',
+        description:
+          'أي مكون شبه مخفي يتم تعديله ديناميكيًا من حيث اللون، الظل أو Opacity.',
       },
       {
         ruleType: 'avoidColors',
@@ -134,7 +159,8 @@ export const defaultThemeSettings: AdvancedThemeSettings = {
         target: 'allComponents',
         colorsToAvoid: ['#000080', '#00008b', '#222222'],
         replacementStrategy: 'pickFromModernCentralPalette',
-        description: 'استبدل أي لون غير مرغوب به بلون عصري ومتناسق من لوحة الألوان المركزية.',
+        description:
+          'استبدل أي لون غير مرغوب به بلون عصري ومتناسق من لوحة الألوان المركزية.',
       },
       {
         ruleType: 'adaptiveAccent',
@@ -154,7 +180,8 @@ export const defaultThemeSettings: AdvancedThemeSettings = {
         ruleType: 'realTimeMonitoring',
         action: 'monitorNewComponents',
         target: 'allComponents',
-        description: 'مراقبة أي مكون جديد أو معدل فور إضافته، وضبط الألوان والتباين تلقائيًا لحظيًا.',
+        description:
+          'مراقبة أي مكون جديد أو معدل فور إضافته، وضبط الألوان والتباين تلقائيًا لحظيًا.',
       },
       {
         ruleType: 'contextAwareAdjustment',
@@ -167,7 +194,8 @@ export const defaultThemeSettings: AdvancedThemeSettings = {
         ruleType: 'report',
         action: 'generate',
         target: 'projectComponents',
-        description: 'إصدار تقرير لحظي لكل تعديل، أي لون تم تغييره، أي مكون تم تحسينه، وأي مكون كان منخفض التباين.',
+        description:
+          'إصدار تقرير لحظي لكل تعديل، أي لون تم تغييره، أي مكون تم تحسينه، وأي مكون كان منخفض التباين.',
       },
     ],
   },
@@ -218,4 +246,3 @@ export function getCurrentThemeColors(
 ): ThemeColorConfig {
   return settings.themeManagement.themes[mode];
 }
-

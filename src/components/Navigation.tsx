@@ -44,9 +44,9 @@ export default function Navigation() {
     <>
       {/* Mobile menu button */}
       <div className='lg:hidden fixed top-4 left-4 z-50'>
-        <button
-          onClick={() = aria-label="Button"> setIsMobileMenuOpen(!isMobileMenuOpen)}
+        <buttononClick={() = aria-label="Button"> { setIsMobileMenuOpen(!isMobileMenuOpen)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsMobileMenuOpen(!isMobileMenuOpen) } }}
           className='p-2 bg-white/10 backdrop-blur-md rounded-xl text-white hover:bg-white/20 transition-colors'
+          aria-label='??? ???????'
         >
           {isMobileMenuOpen ? (
             <X className='w-6 h-6' />
@@ -60,7 +60,7 @@ export default function Navigation() {
       {isMobileMenuOpen && (
         <div
           className='lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm'
-          onClick={() => setIsMobileMenuOpen(false)}
+          tabIndex={0} onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
@@ -104,7 +104,7 @@ export default function Navigation() {
                 </Link>
               );
             })}
-          </nav>
+          </div>
 
           {/* Quick Actions */}
           <div className='p-6 border-t border-white/20'>
@@ -115,9 +115,8 @@ export default function Navigation() {
               {quickActions.map(action => {
                 const Sun = action.icon;
                 return (
-                  <button
-                    key={action.name}
-                    onClick={() = aria-label="Button"> handleQuickAction(action.action)}
+                  <buttonkey={action.name}
+                    onClick={() = aria-label="Button"> { handleQuickAction(action.action)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" handleQuickAction(action.action) } }}
                     className='w-full flex items-center space-x-3 px-4 py-2 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors'
                   >
                     <Sun className='w-4 h-4' />
@@ -125,7 +124,7 @@ export default function Navigation() {
                   </button>
                 );
               })}
-            </div>
+            </nav>
           </div>
 
           {/* Status Indicator */}

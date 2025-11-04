@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
@@ -31,7 +33,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 export async function POST(request: NextRequest) {
   try {
     // Security: Require authentication and proper permissions for creating notifications
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+      request
+    );
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -45,7 +49,9 @@ export async function POST(request: NextRequest) {
       authResult.user.meta?.permissions || []
     );
 
-    if (!PermissionManager.canAccess(userPermissions, 'notifications', 'manage')) {
+    if (
+      !PermissionManager.canAccess(userPermissions, 'notifications', 'manage')
+    ) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }

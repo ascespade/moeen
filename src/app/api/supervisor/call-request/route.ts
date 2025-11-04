@@ -24,7 +24,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       error: authError,
     } = await supabase.auth.getUser();
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // Get user details
@@ -145,6 +153,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 }
 
 // GET: للمشرف لرؤية الطلب
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
@@ -163,7 +173,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: { user },
     } = await supabase.auth.getUser();
     if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const { data: userData } = await supabase
@@ -173,7 +191,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (!userData || !['supervisor', 'admin'].includes(userData.role)) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'Forbidden' },
+        {
+          status: 403,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // Get call requests

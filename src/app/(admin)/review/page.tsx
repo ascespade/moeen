@@ -67,13 +67,13 @@ export default function ReviewCenterPage() {
                     </td>
                     <td className='p-3'>
                       <div className='flex items-center gap-2'>
-                        <button className='btn btn-outline btn-sm'>
+                        <buttonclassName='btn btn-outline btn-sm' aria-label="أرشفة">
                           أرشفة
                         </button>
-                        <button className='btn btn-outline btn-sm'>
+                        <buttonclassName='btn btn-outline btn-sm' aria-label="تحسين الرد">
                           تحسين الرد
                         </button>
-                        <button className='btn btn-outline btn-sm'>
+                        <buttonclassName='btn btn-outline btn-sm' aria-label="إنشاء قاعدة">
                           إنشاء قاعدة
                         </button>
                       </div>

@@ -49,7 +49,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
 
     if (!canCreate) {
-      return NextResponse.json({ error: 'Forbidden - Insufficient permissions' }, { status: 403 });
+      return NextResponse.json(
+        { error: 'Forbidden - Insufficient permissions' },
+        { status: 403 }
+      );
     }
 
     // Validate input

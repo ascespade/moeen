@@ -164,8 +164,7 @@ export default function ChatbotTemplatesPage() {
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <button
-                onClick={() => setShowCreateModal(true)}
+              <buttononClick={() = aria-label="Button"> { setShowCreateModal(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إنشاء قالب
@@ -280,7 +279,7 @@ export default function ChatbotTemplatesPage() {
             </div>
 
             <div className='flex items-end'>
-              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+              <buttonclassName='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
                 تطبيق الفلاتر
               </button>
             </div>
@@ -361,8 +360,7 @@ export default function ChatbotTemplatesPage() {
                     </td>
                     <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                       <div className='flex gap-2'>
-                        <button
-                          onClick={() => setShowPreviewModal(template)}
+                        <buttononClick={() = aria-label="Button"> { setShowPreviewModal(template)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowPreviewModal(template) } }}
                           className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
                         >
                           معاينة
@@ -373,7 +371,7 @@ export default function ChatbotTemplatesPage() {
                         >
                           تعديل
                         </Link>
-                        <button className='text-default-success hover:text-green-700'>
+                        <buttonclassName='text-default-success hover:text-green-700' aria-label="نسخ">
                           نسخ
                         </button>
                       </div>
@@ -407,8 +405,7 @@ export default function ChatbotTemplatesPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إنشاء قالب جديد</h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
+              <buttononClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -486,17 +483,14 @@ export default function ChatbotTemplatesPage() {
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button
-                  type='button'
-                  onClick={() => setShowCreateModal(false)}
+                <buttontype='button'
+                  onClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <button
-                  type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
-                >
+                <buttontype='submit'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إنشاء القالب">
                   إنشاء القالب
                 </button>
               </div>
@@ -511,8 +505,7 @@ export default function ChatbotTemplatesPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>معاينة القالب</h3>
-              <button
-                onClick={() => setShowPreviewModal(null)}
+              <buttononClick={() = aria-label="Button"> { setShowPreviewModal(null)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowPreviewModal(null) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -549,13 +542,12 @@ export default function ChatbotTemplatesPage() {
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button
-                  onClick={() => setShowPreviewModal(null)}
+                <buttononClick={() = aria-label="Button"> { setShowPreviewModal(null)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowPreviewModal(null) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إغلاق
                 </button>
-                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+                <buttonclassName='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="استخدام القالب">
                   استخدام القالب
                 </button>
               </div>

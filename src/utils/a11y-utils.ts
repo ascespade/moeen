@@ -1,4 +1,3 @@
-
 /**
  * Accessibility Utility Functions
  */

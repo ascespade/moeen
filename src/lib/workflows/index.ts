@@ -1,7 +1,7 @@
 /**
  * Workflows System
  * ???? ?????????
- * 
+ *
  * Defines and manages business logic workflows for all user roles
  */
 
@@ -108,10 +108,11 @@ export const DOCTOR_WORKFLOW: Workflow = {
     {
       id: 'view-schedule',
       name: 'View Schedule',
-      description: 'View today\'s appointments',
+      description: "View today's appointments",
       requiredPermissions: ['appointments:read'],
       apiEndpoint: '/api/appointments',
-      databaseOperation: 'SELECT FROM appointments WHERE doctor_id = ? AND date = TODAY',
+      databaseOperation:
+        'SELECT FROM appointments WHERE doctor_id = ? AND date = TODAY',
     },
     {
       id: 'patient-arrival',
@@ -127,7 +128,8 @@ export const DOCTOR_WORKFLOW: Workflow = {
       description: 'Start session with patient',
       requiredPermissions: ['appointments:update', 'sessions:create'],
       apiEndpoint: '/api/sessions',
-      databaseOperation: 'INSERT INTO sessions, UPDATE appointments SET status = "in_session"',
+      databaseOperation:
+        'INSERT INTO sessions, UPDATE appointments SET status = "in_session"',
     },
     {
       id: 'medical-records',
@@ -162,7 +164,8 @@ export const DOCTOR_WORKFLOW: Workflow = {
       description: 'Complete session and update records',
       requiredPermissions: ['sessions:update', 'appointments:update'],
       apiEndpoint: '/api/sessions/[id]/complete',
-      databaseOperation: 'UPDATE sessions SET status = "completed", UPDATE appointments SET status = "completed"',
+      databaseOperation:
+        'UPDATE sessions SET status = "completed", UPDATE appointments SET status = "completed"',
       businessLogic: 'finalizeSession, updatePatientProgress',
     },
     {
@@ -171,7 +174,8 @@ export const DOCTOR_WORKFLOW: Workflow = {
       description: 'Complete all cases and review summary',
       requiredPermissions: ['appointments:read'],
       apiEndpoint: '/api/doctors/[id]/summary',
-      databaseOperation: 'SELECT FROM appointments WHERE doctor_id = ? AND date = TODAY',
+      databaseOperation:
+        'SELECT FROM appointments WHERE doctor_id = ? AND date = TODAY',
       businessLogic: 'generateDailySummary, reviewCompletedCases',
     },
   ],
@@ -200,7 +204,8 @@ export const RECEPTION_STAFF_WORKFLOW: Workflow = {
       description: 'Check in patient and update appointment status',
       requiredPermissions: ['check-in:create', 'appointments:update'],
       apiEndpoint: '/api/appointments/[id]/check-in',
-      databaseOperation: 'UPDATE appointments SET status = "checked_in", check_in_time = NOW()',
+      databaseOperation:
+        'UPDATE appointments SET status = "checked_in", check_in_time = NOW()',
       businessLogic: 'validateAppointment, checkInsurance',
     },
     {
@@ -216,9 +221,13 @@ export const RECEPTION_STAFF_WORKFLOW: Workflow = {
       id: 'insurance-claim-creation',
       name: 'Insurance Claim Creation',
       description: 'Create or update insurance claim',
-      requiredPermissions: ['insurance-claims:create', 'insurance-claims:update'],
+      requiredPermissions: [
+        'insurance-claims:create',
+        'insurance-claims:update',
+      ],
       apiEndpoint: '/api/insurance-claims',
-      databaseOperation: 'INSERT INTO insurance_claims, UPDATE insurance_claims',
+      databaseOperation:
+        'INSERT INTO insurance_claims, UPDATE insurance_claims',
       businessLogic: 'validateInsurance, createClaim, submitClaim',
     },
     {
@@ -244,7 +253,8 @@ export const RECEPTION_STAFF_WORKFLOW: Workflow = {
       description: 'Patient completes session and departs',
       requiredPermissions: ['appointments:read', 'payments:read'],
       apiEndpoint: '/api/appointments/[id]/complete',
-      databaseOperation: 'UPDATE appointments SET status = "completed", checkout_time = NOW()',
+      databaseOperation:
+        'UPDATE appointments SET status = "completed", checkout_time = NOW()',
       businessLogic: 'finalizeAppointment, generateReceipt',
     },
   ],
@@ -292,7 +302,8 @@ export const INSURANCE_WORKFLOW: Workflow = {
       description: 'Receive response from insurance provider',
       requiredPermissions: ['insurance-claims:read', 'insurance-claims:update'],
       apiEndpoint: '/api/insurance-claims/[id]/status',
-      databaseOperation: 'UPDATE insurance_claims SET status = "approved"/"rejected"',
+      databaseOperation:
+        'UPDATE insurance_claims SET status = "approved"/"rejected"',
       businessLogic: 'processInsuranceResponse, calculatePatientPortion',
     },
     {

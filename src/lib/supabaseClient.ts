@@ -9,8 +9,10 @@ export function getBrowserSupabase() {
     return browserClientInstance;
   }
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
+  const url =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+  const anon =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
 
   // Create new instance only if it doesn't exist
   browserClientInstance = createBrowserClient(url, anon);
@@ -20,8 +22,10 @@ export function getBrowserSupabase() {
 export async function getServerSupabase() {
   const { createServerClient } = await import('@supabase/ssr');
   const { cookies } = await import('next/headers');
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
+  const url =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+  const anon =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
   const cookieStore = await cookies();
   return createServerClient(url, anon, {
     cookies: {
@@ -43,7 +47,11 @@ export async function getServerSupabase() {
 
 export function getServiceSupabase() {
   const { createClient } = require('@supabase/supabase-js');
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-  const service = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE || 'placeholder-service-key';
+  const url =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+  const service =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_SERVICE_ROLE ||
+    'placeholder-service-key';
   return createClient(url, service);
 }

@@ -6,12 +6,16 @@ node_modules/
 # Testing
 coverage/
 .nyc_output
+test-results/
+playwright-report/
+*.spec.ts.snap
 
 # Next.js
 .next/
 out/
 build/
 dist/
+.vercel
 
 # Production
 *.log
@@ -30,6 +34,7 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # IDE
 .vscode/
@@ -50,6 +55,29 @@ next-env.d.ts
 *.tmp
 *.temp
 .cache/
+tmp/
+temp/
+
+# Reports (keep only essential ones)
+# *.json reports are archived, but keep package.json, tsconfig.json, etc.
 
 # OS
 Thumbs.db
+.DS_Store
+
+# Backup files
+*.backup
+*~
+
+# Test files
+test-results/
+playwright-report/
+coverage/
+
+# Build outputs
+# Test results
+test-results/
+playwright-report/
+tmp/
+# Reports
+# OS files

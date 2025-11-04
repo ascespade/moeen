@@ -1,7 +1,7 @@
 /**
  * Permission Checker - Simple & Clean
  * مدقق الصلاحيات - بسيط ونظيف
- * 
+ *
  * ✅ Client-safe (no server-only imports)
  */
 
@@ -18,7 +18,10 @@ export function hasPermission(
   if (!permissions) return false;
 
   // Admin has all permissions
-  if (permissions.role === 'admin' || permissions.permissionCodes.includes('*')) {
+  if (
+    permissions.role === 'admin' ||
+    permissions.permissionCodes.includes('*')
+  ) {
     return true;
   }
 
@@ -63,7 +66,14 @@ export function getAccessibleRoutes(
   const routes: string[] = ['/dashboard', '/profile'];
 
   if (role === 'admin' || role === 'manager') {
-    routes.push('/admin', '/admin/dashboard', '/admin/users', '/admin/patients', '/admin/appointments', '/admin/settings');
+    routes.push(
+      '/admin',
+      '/admin/dashboard',
+      '/admin/users',
+      '/admin/patients',
+      '/admin/appointments',
+      '/admin/settings'
+    );
   }
 
   if (hasPermission(permissions, 'patients', 'read')) {

@@ -54,19 +54,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     if (adminRole?.id) {
       // Remove all existing role assignments
-      await supabase
-        .from('user_roles')
-        .delete()
-        .eq('user_id', userData.id);
+      await supabase.from('user_roles').delete().eq('user_id', userData.id);
 
       // Add admin role
-      await supabase
-        .from('user_roles')
-        .upsert({
+      await supabase.from('user_roles').upsert(
+        {
           user_id: userData.id,
           role_id: adminRole.id,
           is_active: true,
-        }, { onConflict: 'user_id,role_id' });
+        },
+        { onConflict: 'user_id,role_id' }
+      );
     }
 
     return NextResponse.json({
@@ -86,4 +84,3 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
   }
 }
-

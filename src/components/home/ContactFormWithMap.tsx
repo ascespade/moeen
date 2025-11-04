@@ -154,8 +154,8 @@ export default function ContactFormWithMap() {
             أرسل لنا رسالة
           </h2>
           <p className='mb-8 text-lg text-[var(--text-secondary)]'>
-            املأ النموذج أدناه وسنرد عليك في أقرب وقت ممكن. نحن نقدر تواصلك
-            معنا ونعمل على تقديم أفضل خدمة ممكنة.
+            املأ النموذج أدناه وسنرد عليك في أقرب وقت ممكن. نحن نقدر تواصلك معنا
+            ونعمل على تقديم أفضل خدمة ممكنة.
           </p>
 
           {isSubmitted ? (
@@ -249,11 +249,9 @@ export default function ContactFormWithMap() {
                 />
               </div>
 
-              <button
-                type='submit'
+              <buttontype='submit'
                 disabled={isSending}
-                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50 shadow-lg hover:shadow-xl hover:scale-105'
-              >
+                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50 shadow-lg hover:shadow-xl hover:scale-105' aria-label="Button">
                 {isSending ? (
                   <>
                     <div className='h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent'></div>
@@ -280,7 +278,11 @@ export default function ContactFormWithMap() {
                 key={index}
                 href={info.link}
                 target={info.link.startsWith('http') ? '_blank' : '_self'}
-                rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                rel={
+                  info.link.startsWith('http')
+                    ? 'noopener noreferrer'
+                    : undefined
+                }
                 className='group flex items-start gap-4 rounded-lg p-4 transition-all hover:bg-[var(--brand-primary)]/10 hover:shadow-md'
               >
                 <div className='mt-1 text-[var(--brand-primary)] transition-transform group-hover:scale-110'>
@@ -308,8 +310,8 @@ export default function ContactFormWithMap() {
               أوقات الاستجابة
             </h4>
             <p className='text-sm text-[var(--text-secondary)]'>
-              نحن نرد على جميع الرسائل خلال 24 ساعة في أيام العمل.
-              للاستفسارات العاجلة، يرجى الاتصال بنا مباشرة.
+              نحن نرد على جميع الرسائل خلال 24 ساعة في أيام العمل. للاستفسارات
+              العاجلة، يرجى الاتصال بنا مباشرة.
             </p>
           </div>
         </div>
@@ -317,4 +319,3 @@ export default function ContactFormWithMap() {
     </div>
   );
 }
-

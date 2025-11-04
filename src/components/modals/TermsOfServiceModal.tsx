@@ -20,7 +20,7 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
       style={{
         backgroundColor: 'var(--modal-backdrop, rgba(0, 0, 0, 0.5))',
       }}
-      onClick={onClose}
+      tabIndex={0} onClick={onClose}
     >
       <div
         className='relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl transition-all'
@@ -28,7 +28,7 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
           backgroundColor: 'var(--panel, var(--background))',
           border: '1px solid var(--brand-border)',
         }}
-        onClick={(e) => e.stopPropagation()}
+        tabIndex={0} onClick={e => e.stopPropagation()}
       >
         {/* Header */}
         <div
@@ -41,16 +41,16 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
           <h2 className='text-2xl font-bold text-[var(--text-primary)]'>
             شروط الاستخدام
           </h2>
-          <button
-            onClick={onClose}
+          <button onClick={onClose} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
             className='rounded-full p-2 transition-colors'
             style={{
               backgroundColor: 'transparent',
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--brand-surface, rgba(0,0,0,0.05))';
+            onMouseEnter={e aria-label="Button" {
+              e.currentTarget.style.backgroundColor =
+                'var(--brand-surface, rgba(0,0,0,0.05))';
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               e.currentTarget.style.backgroundColor = 'transparent';
             }}
             aria-label='إغلاق'
@@ -68,10 +68,10 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   1. قبول الشروط
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  يرجى قراءة شروط الاستخدام هذه بعناية قبل استخدام موقع مركز الهمم
-                  لرعاية ذوي الاحتياجات الخاصة وخدماته. باستخدام موقعنا أو خدماتنا،
-                  أنت توافق على الالتزام بهذه الشروط. إذا كنت لا توافق على هذه
-                  الشروط، يرجى عدم استخدام موقعنا.
+                  يرجى قراءة شروط الاستخدام هذه بعناية قبل استخدام موقع مركز
+                  الهمم لرعاية ذوي الاحتياجات الخاصة وخدماته. باستخدام موقعنا أو
+                  خدماتنا، أنت توافق على الالتزام بهذه الشروط. إذا كنت لا توافق
+                  على هذه الشروط، يرجى عدم استخدام موقعنا.
                 </p>
               </section>
 
@@ -81,16 +81,16 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                 </h3>
                 <ul className='list-disc list-inside space-y-2 text-[var(--text-secondary)] mr-4'>
                   <li>
-                    <strong>المركز:</strong> مركز الهمم لرعاية ذوي الاحتياجات الخاصة
-                    في جدة
+                    <strong>المركز:</strong> مركز الهمم لرعاية ذوي الاحتياجات
+                    الخاصة في جدة
                   </li>
                   <li>
-                    <strong>الموقع:</strong> يشمل موقعنا الإلكتروني وجميع الصفحات
-                    والتطبيقات المرتبطة به
+                    <strong>الموقع:</strong> يشمل موقعنا الإلكتروني وجميع
+                    الصفحات والتطبيقات المرتبطة به
                   </li>
                   <li>
-                    <strong>الخدمات:</strong> جميع الخدمات الطبية والتأهيلية التي
-                    نقدمها
+                    <strong>الخدمات:</strong> جميع الخدمات الطبية والتأهيلية
+                    التي نقدمها
                   </li>
                   <li>
                     <strong>المستخدم:</strong> أي شخص يزور أو يستخدم موقعنا أو
@@ -111,14 +111,15 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                     تقديم معلومات دقيقة وصحيحة عند التسجيل أو استخدام الخدمات
                   </li>
                   <li>
-                    الحفاظ على سرية معلومات تسجيل الدخول والمسؤولية عن جميع الأنشطة
-                    التي تتم تحت حسابك
+                    الحفاظ على سرية معلومات تسجيل الدخول والمسؤولية عن جميع
+                    الأنشطة التي تتم تحت حسابك
                   </li>
                   <li>
                     عدم استخدام الموقع لأي أغراض غير قانونية أو غير أخلاقية
                   </li>
                   <li>
-                    عدم محاولة الوصول غير المصرح به إلى أي جزء من الموقع أو أنظمته
+                    عدم محاولة الوصول غير المصرح به إلى أي جزء من الموقع أو
+                    أنظمته
                   </li>
                   <li>عدم إلحاق الضرر أو تعطيل الموقع أو خدماته</li>
                 </ul>
@@ -131,9 +132,9 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
                   نقدم خدمات طبية وتأهيلية متخصصة لذوي الاحتياجات الخاصة. جميع
                   الخدمات مقدمة من قبل أطباء ومختصين معتمدين. نحن نلتزم بأعلى
-                  معايير الجودة والرعاية الطبية وفقاً للقوانين واللوائح السعودية.
-                  يرجى ملاحظة أن المعلومات على موقعنا لا تشكل استشارة طبية مباشرة
-                  ولا تحل محل الاستشارة الطبية الشخصية.
+                  معايير الجودة والرعاية الطبية وفقاً للقوانين واللوائح
+                  السعودية. يرجى ملاحظة أن المعلومات على موقعنا لا تشكل استشارة
+                  طبية مباشرة ولا تحل محل الاستشارة الطبية الشخصية.
                 </p>
               </section>
 
@@ -151,9 +152,12 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   <li>
                     عدم الحضور بدون إشعار قد يؤدي إلى فرض رسوم أو تعليق الخدمة
                   </li>
-                  <li>نحتفظ بالحق في تغيير أو إعادة جدولة المواعيد عند الحاجة</li>
                   <li>
-                    جميع الجلسات تخضع لسياسة الاسترجاع والإلغاء الموضحة عند الحجز
+                    نحتفظ بالحق في تغيير أو إعادة جدولة المواعيد عند الحاجة
+                  </li>
+                  <li>
+                    جميع الجلسات تخضع لسياسة الاسترجاع والإلغاء الموضحة عند
+                    الحجز
                   </li>
                 </ul>
               </section>
@@ -164,9 +168,9 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
                   جميع الرسوم والمدفوعات يجب أن تتم وفقاً للأسعار المعلن عنها.
-                  نحن نحتفظ بالحق في تغيير الأسعار مع إشعار مسبق. يمكن أن يتم الدفع
-                  نقداً أو عبر البطاقات الائتمانية أو التأمين الصحي وفقاً لسياسة
-                  المركز.
+                  نحن نحتفظ بالحق في تغيير الأسعار مع إشعار مسبق. يمكن أن يتم
+                  الدفع نقداً أو عبر البطاقات الائتمانية أو التأمين الصحي وفقاً
+                  لسياسة المركز.
                 </p>
               </section>
 
@@ -175,9 +179,9 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   7. الملكية الفكرية
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  جميع محتويات الموقع، بما في ذلك النصوص، الصور، الشعارات، والتقنيات
-                  مملوكة للمركز أو مرخصة له. لا يجوز نسخ، توزيع، أو استخدام أي جزء
-                  من المحتوى دون الحصول على إذن كتابي مسبق.
+                  جميع محتويات الموقع، بما في ذلك النصوص، الصور، الشعارات،
+                  والتقنيات مملوكة للمركز أو مرخصة له. لا يجوز نسخ، توزيع، أو
+                  استخدام أي جزء من المحتوى دون الحصول على إذن كتابي مسبق.
                 </p>
               </section>
 
@@ -188,8 +192,8 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
                   نقدم الموقع والخدمات "كما هي" و"حسب التوفر". لا نضمن أن الموقع
                   سيكون دائماً متاحاً أو خالياً من الأخطاء. المعلومات الطبية على
-                  الموقع هي لأغراض إعلامية فقط ولا تحل محل الاستشارة الطبية المباشرة
-                  مع أخصائي مؤهل.
+                  الموقع هي لأغراض إعلامية فقط ولا تحل محل الاستشارة الطبية
+                  المباشرة مع أخصائي مؤهل.
                 </p>
               </section>
 
@@ -198,10 +202,10 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   9. تحديد المسؤولية
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  لن نكون مسؤولين عن أي أضرار مباشرة أو غير مباشرة ناتجة عن استخدام
-                  موقعنا أو خدماتنا، بما في ذلك على سبيل المثال لا الحصر: فقدان
-                  البيانات، الأرباح، أو فرص الأعمال. المسؤولية المحددة في حدود ما
-                  يسمح به القانون.
+                  لن نكون مسؤولين عن أي أضرار مباشرة أو غير مباشرة ناتجة عن
+                  استخدام موقعنا أو خدماتنا، بما في ذلك على سبيل المثال لا
+                  الحصر: فقدان البيانات، الأرباح، أو فرص الأعمال. المسؤولية
+                  المحددة في حدود ما يسمح به القانون.
                 </p>
               </section>
 
@@ -210,9 +214,9 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   10. التعديلات على الشروط
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  نحتفظ بالحق في تعديل هذه الشروط في أي وقت. سيتم إشعارك بأي تغييرات
-                  مهمة عبر الموقع. استمرار استخدامك للموقع بعد التعديلات يعني
-                  موافقتك على الشروط المحدثة.
+                  نحتفظ بالحق في تعديل هذه الشروط في أي وقت. سيتم إشعارك بأي
+                  تغييرات مهمة عبر الموقع. استمرار استخدامك للموقع بعد التعديلات
+                  يعني موافقتك على الشروط المحدثة.
                 </p>
               </section>
 
@@ -221,8 +225,9 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   11. القانون الحاكم
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  تخضع هذه الشروط وتفسر وفقاً لقوانين المملكة العربية السعودية. أي
-                  نزاعات تنشأ عن هذه الشروط ستخضع للاختصاص القضائي للمحاكم السعودية.
+                  تخضع هذه الشروط وتفسر وفقاً لقوانين المملكة العربية السعودية.
+                  أي نزاعات تنشأ عن هذه الشروط ستخضع للاختصاص القضائي للمحاكم
+                  السعودية.
                 </p>
               </section>
 
@@ -231,7 +236,8 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   12. التواصل
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  إذا كان لديك أي أسئلة بشأن شروط الاستخدام هذه، يرجى التواصل معنا:
+                  إذا كان لديك أي أسئلة بشأن شروط الاستخدام هذه، يرجى التواصل
+                  معنا:
                 </p>
                 <ul className='list-none space-y-2 text-[var(--text-secondary)] mt-3'>
                   <li>📧 البريد الإلكتروني: info@alhemam.sa</li>
@@ -245,14 +251,13 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   آخر تحديث: {new Date().toLocaleDateString('ar-SA')}
                 </p>
               </section>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </section>
+          </section>
+        </section>
+      </section>
+    </section>
   );
 });
 
 TermsOfServiceModal.displayName = 'TermsOfServiceModal';
 export default TermsOfServiceModal;
-

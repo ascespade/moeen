@@ -77,21 +77,24 @@ export default function I18nProvider({ children }: I18nProviderProps) {
     }
   }, [language, isLoading]);
 
-  const t = useCallback((key: string, fallback?: string): string => {
-    // Try to get translation from database
-    if (translations[key]) {
-      return translations[key];
-    }
-    // Try with namespace.key format if key doesn't include namespace
-    if (!key.includes('.')) {
-      const commonKey = `common.${key}`;
-      if (translations[commonKey]) {
-        return translations[commonKey];
+  const t = useCallback(
+    (key: string, fallback?: string): string => {
+      // Try to get translation from database
+      if (translations[key]) {
+        return translations[key];
       }
-    }
-    // Return fallback or key
-    return fallback || key;
-  }, [translations]);
+      // Try with namespace.key format if key doesn't include namespace
+      if (!key.includes('.')) {
+        const commonKey = `common.${key}`;
+        if (translations[commonKey]) {
+          return translations[commonKey];
+        }
+      }
+      // Return fallback or key
+      return fallback || key;
+    },
+    [translations]
+  );
 
   const toggleLanguage = useCallback(() => {
     setLanguage(prev => (prev === 'ar' ? 'en' : 'ar'));

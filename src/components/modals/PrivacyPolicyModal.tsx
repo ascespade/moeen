@@ -21,7 +21,7 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backgroundColor: 'var(--modal-backdrop, rgba(0, 0, 0, 0.5))',
       }}
-      onClick={onClose}
+      tabIndex={0} onClick={onClose}
     >
       <div
         className='relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl transition-all'
@@ -29,7 +29,7 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
           backgroundColor: 'var(--panel, var(--background))',
           border: '1px solid var(--brand-border)',
         }}
-        onClick={(e) => e.stopPropagation()}
+        tabIndex={0} onClick={e => e.stopPropagation()}
       >
         {/* Header */}
         <div
@@ -42,16 +42,16 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
           <h2 className='text-2xl font-bold text-[var(--text-primary)]'>
             سياسة الخصوصية
           </h2>
-          <button
-            onClick={onClose}
+          <button onClick={onClose} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
             className='rounded-full p-2 transition-colors'
             style={{
               backgroundColor: 'transparent',
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--brand-surface, rgba(0,0,0,0.05))';
+            onMouseEnter={e aria-label="Button" {
+              e.currentTarget.style.backgroundColor =
+                'var(--brand-surface, rgba(0,0,0,0.05))';
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               e.currentTarget.style.backgroundColor = 'transparent';
             }}
             aria-label='إغلاق'
@@ -69,9 +69,10 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
                   1. مقدمة
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  نحن في مركز الهمم لرعاية ذوي الاحتياجات الخاصة في جدة نلتزم بحماية
-                  خصوصيتك وسرية معلوماتك الشخصية. تشرح سياسة الخصوصية هذه كيفية جمع
-                  واستخدام وحماية معلوماتك عند استخدام موقعنا الإلكتروني وخدماتنا.
+                  نحن في مركز الهمم لرعاية ذوي الاحتياجات الخاصة في جدة نلتزم
+                  بحماية خصوصيتك وسرية معلوماتك الشخصية. تشرح سياسة الخصوصية هذه
+                  كيفية جمع واستخدام وحماية معلوماتك عند استخدام موقعنا
+                  الإلكتروني وخدماتنا.
                 </p>
               </section>
 
@@ -84,15 +85,16 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
                 </p>
                 <ul className='list-disc list-inside space-y-2 text-[var(--text-secondary)] mr-4'>
                   <li>
-                    المعلومات الشخصية: الاسم، رقم الهاتف، العنوان البريدي، البريد
-                    الإلكتروني
+                    المعلومات الشخصية: الاسم، رقم الهاتف، العنوان البريدي،
+                    البريد الإلكتروني
                   </li>
                   <li>
                     المعلومات الطبية: السجلات الطبية، التاريخ المرضي، معلومات
                     التأمين الصحي
                   </li>
                   <li>
-                    معلومات الاستخدام: بيانات الاستخدام، معلومات الجهاز، عنوان IP
+                    معلومات الاستخدام: بيانات الاستخدام، معلومات الجهاز، عنوان
+                    IP
                   </li>
                   <li>
                     ملفات تعريف الارتباط: لتحسين تجربة المستخدم وتتبع النشاط
@@ -122,10 +124,10 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
                   4. حماية المعلومات
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  نستخدم معايير أمنية متقدمة لحماية معلوماتك الشخصية والطبية، بما في
-                  ذلك التشفير، جدران الحماية، والوصول المحدود للمعلومات فقط للأشخاص
-                  المصرح لهم. نلتزم بمعايير حماية البيانات الصحية (HIPAA) ولوائح
-                  حماية البيانات في المملكة العربية السعودية.
+                  نستخدم معايير أمنية متقدمة لحماية معلوماتك الشخصية والطبية،
+                  بما في ذلك التشفير، جدران الحماية، والوصول المحدود للمعلومات
+                  فقط للأشخاص المصرح لهم. نلتزم بمعايير حماية البيانات الصحية
+                  (HIPAA) ولوائح حماية البيانات في المملكة العربية السعودية.
                 </p>
               </section>
 
@@ -135,8 +137,8 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
                   نحن لا نبيع أو نؤجر معلوماتك الشخصية لأطراف ثالثة. قد نشارك
-                  المعلومات فقط مع مقدمي الخدمات الموثوق بهم، أو عند الطلب القانوني،
-                  أو لحماية حقوقنا وسلامة مرضانا.
+                  المعلومات فقط مع مقدمي الخدمات الموثوق بهم، أو عند الطلب
+                  القانوني، أو لحماية حقوقنا وسلامة مرضانا.
                 </p>
               </section>
 
@@ -161,9 +163,9 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
                   7. ملفات تعريف الارتباط
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  نستخدم ملفات تعريف الارتباط (Cookies) لتحسين تجربتك على موقعنا.
-                  يمكنك التحكم في ملفات تعريف الارتباط من خلال إعدادات المتصفح الخاص
-                  بك.
+                  نستخدم ملفات تعريف الارتباط (Cookies) لتحسين تجربتك على
+                  موقعنا. يمكنك التحكم في ملفات تعريف الارتباط من خلال إعدادات
+                  المتصفح الخاص بك.
                 </p>
               </section>
 
@@ -172,8 +174,8 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
                   8. التغييرات على سياسة الخصوصية
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  قد نحدث سياسة الخصوصية هذه من وقت لآخر. سنقوم بإشعارك بأي تغييرات
-                  مهمة عن طريق نشر السياسة المحدثة على موقعنا.
+                  قد نحدث سياسة الخصوصية هذه من وقت لآخر. سنقوم بإشعارك بأي
+                  تغييرات مهمة عن طريق نشر السياسة المحدثة على موقعنا.
                 </p>
               </section>
 
@@ -190,8 +192,8 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
                   <li>📞 الهاتف: 0126173693</li>
                   <li>📱 الجوال: 0555381558</li>
                   <li>
-                    📍 العنوان: جدة، شارع الأمير محمد بن عبدالعزيز (التحلية)، فندق
-                    دبليو إيه، الدور الثامن، حي الصفا
+                    📍 العنوان: جدة، شارع الأمير محمد بن عبدالعزيز (التحلية)،
+                    فندق دبليو إيه، الدور الثامن، حي الصفا
                   </li>
                 </ul>
               </section>
@@ -201,14 +203,13 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
                   آخر تحديث: {new Date().toLocaleDateString('ar-SA')}
                 </p>
               </section>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </section>
+          </section>
+        </section>
+      </section>
+    </section>
   );
 });
 
 PrivacyPolicyModal.displayName = 'PrivacyPolicyModal';
 export default PrivacyPolicyModal;
-

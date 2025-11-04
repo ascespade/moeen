@@ -11,23 +11,16 @@ import { memo } from 'react';
 
 // Theme and Language Switches Component
 const ThemeLanguageSwitches = memo(function ThemeLanguageSwitches() {
-  const {
-    theme,
-    language,
-    isLoading,
-    toggleTheme,
-    toggleLanguage,
-  } = usePreferences();
+  const { theme, language, isLoading, toggleTheme, toggleLanguage } =
+    usePreferences();
   const { t } = useI18n(language);
 
   return (
     <>
       {/* Theme Toggle Button */}
-      <button
-        className='inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-[var(--foreground)] bg-[var(--panel)] hover:bg-[var(--brand-surface)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] disabled:opacity-50 transition-colors'
-        onClick={toggleTheme}
-        disabled={isLoading}
-      >
+      <buttonclassName='inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-[var(--foreground)] bg-[var(--panel)] hover:bg-[var(--brand-surface)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] disabled:opacity-50 transition-colors'
+        onClick={toggleTheme} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme } }}
+        disabled={isLoading} aria-label="Button">
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-[var(--brand-border)] border-t-[var(--brand-primary)]'></div>
         ) : theme === 'light' ? (
@@ -35,15 +28,15 @@ const ThemeLanguageSwitches = memo(function ThemeLanguageSwitches() {
         ) : (
           <Moon className='h-4 w-4' />
         )}
-        <span className='hidden sm:inline'>{t(I18N_KEYS.THEME.LABEL, 'الثيم')}</span>
+        <span className='hidden sm:inline'>
+          {t(I18N_KEYS.THEME.LABEL, 'الثيم')}
+        </span>
       </button>
 
       {/* Language Toggle Button */}
-      <button
-        className='inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-[var(--foreground)] bg-[var(--panel)] hover:bg-[var(--brand-surface)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] disabled:opacity-50 transition-colors'
-        onClick={toggleLanguage}
-        disabled={isLoading}
-      >
+      <buttonclassName='inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-[var(--foreground)] bg-[var(--panel)] hover:bg-[var(--brand-surface)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] disabled:opacity-50 transition-colors'
+        onClick={toggleLanguage} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleLanguage } }}
+        disabled={isLoading} aria-label="Button">
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-[var(--brand-border)] border-t-[var(--brand-primary)]'></div>
         ) : (

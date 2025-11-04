@@ -197,11 +197,9 @@ export default function ResetPasswordPage() {
             </div>
 
             {/* Submit Button */}
-            <button
-              type='submit'
+            <buttontype='submit'
               disabled={isLoading}
-              className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50'
-            >
+              className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50' aria-label="Button">
               {isLoading ? (
                 <div className='flex items-center justify-center gap-2'>
                   <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent'></div>

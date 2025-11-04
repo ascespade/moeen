@@ -395,7 +395,7 @@ const ContactsPage: React.FC = () => {
                           ? 'border-[var(--default-default)] bg-surface'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
-                      onClick={() => setSelectedContact(contact)}
+                      tabIndex={0} onClick={() => setSelectedContact(contact)}
                     >
                       <div className='flex items-start justify-between'>
                         <div className='flex items-center gap-4'>

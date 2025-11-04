@@ -1,6 +1,6 @@
 // Permission middleware for route protection
 import { NextRequest, NextResponse } from 'next/server';
-import { PermissionManager, type RoleId } from '@/lib/permissions';
+import { PermissionManager } from '@/lib/permissions';
 
 interface RoutePermission {
   path: string;
@@ -12,12 +12,28 @@ interface RoutePermission {
 const ROUTE_PERMISSIONS: RoutePermission[] = [
   // Admin routes
   { path: '/admin', permissions: ['users:view'], roles: ['admin', 'manager'] },
-  { path: '/admin/users', permissions: ['users:view'], roles: ['admin', 'manager'] },
+  {
+    path: '/admin/users',
+    permissions: ['users:view'],
+    roles: ['admin', 'manager'],
+  },
   { path: '/admin/roles', permissions: ['roles:view'], roles: ['admin'] },
-  { path: '/admin/audit-logs', permissions: ['security:audit_logs'], roles: ['admin'] },
+  {
+    path: '/admin/audit-logs',
+    permissions: ['security:audit_logs'],
+    roles: ['admin'],
+  },
   { path: '/admin/logs', permissions: ['security:logs'], roles: ['admin'] },
-  { path: '/admin/payments', permissions: ['payments:view'], roles: ['admin', 'manager'] },
-  { path: '/admin/therapists', permissions: ['doctors:view'], roles: ['admin', 'manager'] },
+  {
+    path: '/admin/payments',
+    permissions: ['payments:view'],
+    roles: ['admin', 'manager'],
+  },
+  {
+    path: '/admin/therapists',
+    permissions: ['doctors:view'],
+    roles: ['admin', 'manager'],
+  },
 
   // Dashboard routes
   { path: '/dashboard', permissions: ['dashboard:view'] },
@@ -59,19 +75,51 @@ const ROUTE_PERMISSIONS: RoutePermission[] = [
   { path: '/review', permissions: ['review:view'] },
 
   // API routes protection patterns (used for reference)
-  { path: '/api/admin', permissions: ['users:view'], roles: ['admin', 'manager'] },
+  {
+    path: '/api/admin',
+    permissions: ['users:view'],
+    roles: ['admin', 'manager'],
+  },
   { path: '/api/dashboard', permissions: ['dashboard:view'] },
-  { path: '/api/analytics', permissions: ['analytics:view'], roles: ['admin', 'supervisor'] },
+  {
+    path: '/api/analytics',
+    permissions: ['analytics:view'],
+    roles: ['admin', 'supervisor'],
+  },
   { path: '/api/patients', permissions: ['patients:view'] },
   { path: '/api/doctors', permissions: ['doctors:view'] },
   { path: '/api/appointments', permissions: ['appointments:view'] },
-  { path: '/api/crm', permissions: ['crm:view'], roles: ['admin', 'supervisor', 'staff'] },
-  { path: '/api/chatbot', permissions: ['chatbot:view'], roles: ['admin', 'supervisor', 'staff', 'agent'] },
-  { path: '/api/payments', permissions: ['payments:view'], roles: ['admin', 'staff'] },
-  { path: '/api/settings', permissions: ['settings:view'], roles: ['admin', 'supervisor'] },
+  {
+    path: '/api/crm',
+    permissions: ['crm:view'],
+    roles: ['admin', 'supervisor', 'staff'],
+  },
+  {
+    path: '/api/chatbot',
+    permissions: ['chatbot:view'],
+    roles: ['admin', 'supervisor', 'staff', 'agent'],
+  },
+  {
+    path: '/api/payments',
+    permissions: ['payments:view'],
+    roles: ['admin', 'staff'],
+  },
+  {
+    path: '/api/settings',
+    permissions: ['settings:view'],
+    roles: ['admin', 'supervisor'],
+  },
   { path: '/api/notifications', permissions: ['notifications:view'] },
-  { path: '/api/medical-records', permissions: ['medical_records:view'], roles: ['admin', 'doctor', 'staff'] },
-  { path: '/api/audit-logs', permissions: ['security:audit_logs'], roles: ['admin'] },
+  {
+    path: '/api/medical-records',
+    permissions: ['medical_records:view'],
+    roles: ['admin', 'doctor', 'staff'],
+  },
+  {
+    path: '/api/audit-logs',
+    permissions: ['security:audit_logs'],
+    roles: ['admin'],
+  },
 ];
 
 export function checkRoutePermission(
@@ -80,8 +128,8 @@ export function checkRoutePermission(
   userPermissions: string[]
 ): { allowed: boolean; reason?: string } {
   // Find matching route
-  const route = ROUTE_PERMISSIONS.find(route =>
-    pathname === route.path || pathname.startsWith(route.path + '/')
+  const route = ROUTE_PERMISSIONS.find(
+    route => pathname === route.path || pathname.startsWith(route.path + '/')
   );
 
   if (!route) {

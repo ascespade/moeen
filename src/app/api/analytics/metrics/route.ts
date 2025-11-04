@@ -6,7 +6,9 @@ import { PermissionManager } from '@/lib/permissions';
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication for analytics metrics
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+      request
+    );
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

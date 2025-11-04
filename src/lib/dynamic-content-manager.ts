@@ -324,7 +324,7 @@ class DynamicContentManager {
   /**
    * Parse setting value from database result
    */
-  private parseSetting(settings: any[], key: string, defaultValue: any): any {
+  private parseSetting(settings: any[], key: string, defaultValue: unknown): any {
     const setting = settings.find(s => s.key === key);
     return setting ? setting.value : defaultValue;
   }

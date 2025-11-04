@@ -26,7 +26,8 @@ export default function UnifiedProtectedRoute({
   requiredPermissions,
   fallback,
 }: UnifiedProtectedRouteProps) {
-  const { user, isAuthenticated, isLoading, hasPermission, hasAnyPermission } = useUnifiedAuth();
+  const { user, isAuthenticated, isLoading, hasPermission, hasAnyPermission } =
+    useUnifiedAuth();
   const router = useRouter();
   const pathname = usePathname();
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -63,7 +64,11 @@ export default function UnifiedProtectedRoute({
         : [requiredPermissions];
 
       // Admin, manager, supervisor bypass permission checks
-      if (user.role === 'admin' || user.role === 'manager' || user.role === 'supervisor') {
+      if (
+        user.role === 'admin' ||
+        user.role === 'manager' ||
+        user.role === 'supervisor'
+      ) {
         setHasChecked(true);
         setIsAuthorized(true);
         return;
@@ -118,6 +123,7 @@ export default function UnifiedProtectedRoute({
             <button
               onClick={() => router.push(user ? getDefaultRoute(user.role) : '/login')}
               className='px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700'
+              aria-label='العودة للوحة التحكم'
             >
               العودة للوحة التحكم
             </button>

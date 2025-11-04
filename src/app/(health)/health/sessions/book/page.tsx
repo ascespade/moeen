@@ -201,7 +201,7 @@ export default function BookSessionPage() {
       {/* Step 2: Select Date */}
       {step === 2 && selectedSessionType && (
         <div>
-          <button onClick={() => setStep(1)} className='btn btn-outline mb-6'>
+          <buttononClick={() = aria-label="Button"> { setStep(1)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(1) } }} className='btn btn-outline mb-6'>
             ← العودة
           </button>
 
@@ -253,7 +253,7 @@ export default function BookSessionPage() {
       {/* Step 3: Select Time Slot */}
       {step === 3 && selectedSessionType && selectedDate && (
         <div>
-          <button onClick={() => setStep(2)} className='btn btn-outline mb-6'>
+          <buttononClick={() = aria-label="Button"> { setStep(2)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(2) } }} className='btn btn-outline mb-6'>
             ← العودة
           </button>
 
@@ -273,7 +273,7 @@ export default function BookSessionPage() {
       {/* Step 4: Confirmation */}
       {step === 4 && selectedSessionType && selectedSlot && (
         <div>
-          <button onClick={() => setStep(3)} className='btn btn-outline mb-6'>
+          <buttononClick={() = aria-label="Button"> { setStep(3)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(3) } }} className='btn btn-outline mb-6'>
             ← العودة
           </button>
 
@@ -395,12 +395,10 @@ export default function BookSessionPage() {
                   </div>
                 )}
 
-                <button
-                  type='button'
-                  onClick={handleBookSession}
+                <buttontype='button'
+                  onClick={handleBookSession} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBookSession } }}
                   disabled={loading || !patientName.trim()}
-                  className='btn btn-default w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed'
-                >
+                  className='btn btn-default w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed' aria-label="Button">
                   {loading ? (
                     <span className='flex items-center justify-center gap-2'>
                       <span className='animate-spin'>⏳</span>

@@ -21,7 +21,7 @@ export const API_ENDPOINTS = {
     RESET_PASSWORD: '/api/auth/reset-password',
   },
 
-  // Users - Enhanced from constants/api.ts merge  
+  // Users - Enhanced from constants/api.ts merge
   USERS: {
     LIST: '/api/users',
     CREATE: '/api/users',

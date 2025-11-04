@@ -2,12 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // Only staff, supervisor, and admin can access reports
@@ -88,14 +98,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Calculate metrics
     const totalPatients = patients?.length || 0;
-    const activatedPatients = patients?.filter((p: unknown) => p.activated).length || 0;
+    const activatedPatients =
+      patients?.filter((p: unknown) => p.activated).length || 0;
     const newPatients = patients?.length || 0;
 
     const totalAppointments = appointments?.length || 0;
     const completedAppointments =
-      appointments?.filter((a: unknown) => a.status === 'completed').length || 0;
+      appointments?.filter((a: unknown) => a.status === 'completed').length ||
+      0;
     const cancelledAppointments =
-      appointments?.filter((a: unknown) => a.status === 'cancelled').length || 0;
+      appointments?.filter((a: unknown) => a.status === 'cancelled').length ||
+      0;
     const upcomingAppointments =
       appointments?.filter(
         (a: unknown) => a.status === 'pending' || a.status === 'confirmed'
@@ -104,7 +117,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const totalRevenue =
       payments
         ?.filter((p: unknown) => p.status === 'completed')
-        .reduce((sum: number, p: unknown) => sum + parseFloat(p.amount.toString()), 0) || 0;
+        .reduce(
+          (sum: number, p: unknown) => sum + parseFloat(p.amount.toString()),
+          0
+        ) || 0;
 
     const pendingPayments =
       payments?.filter((p: unknown) => p.status === 'pending').length || 0;
@@ -116,7 +132,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       claims?.filter((c: unknown) => c.claim_status === 'approved').length || 0;
     const pendingClaims =
       claims?.filter(
-        (c: unknown) => c.claim_status === 'pending' || c.claim_status === 'submitted'
+        (c: unknown) =>
+          c.claim_status === 'pending' || c.claim_status === 'submitted'
       ).length || 0;
     const rejectedClaims =
       claims?.filter((c: unknown) => c.claim_status === 'rejected').length || 0;
@@ -177,7 +194,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               p.status === 'completed'
             );
           })
-          .reduce((sum: number, p: unknown) => sum + parseFloat(p.amount.toString()), 0) || 0;
+          .reduce(
+            (sum: number, p: unknown) => sum + parseFloat(p.amount.toString()),
+            0
+          ) || 0;
 
       dailyStats.push({
         date: d.toISOString().split('T')[0] || '',

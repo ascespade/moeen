@@ -193,7 +193,7 @@ const PatientRecords: React.FC = () => {
     } catch (error) {
       console.error('Error loading medical records:', error);
     }
-    
+
     // Fallback: Empty array (no mock data)
     setMedicalRecords([]);
   };
@@ -362,7 +362,7 @@ const PatientRecords: React.FC = () => {
                         ? 'bg-surface border-blue-200'
                         : ''
                     }`}
-                    onClick={() => setSelectedPatient(patient)}
+                    tabIndex={0} onClick={() => setSelectedPatient(patient)}
                   >
                     <div className='flex justify-between items-start'>
                       <div>

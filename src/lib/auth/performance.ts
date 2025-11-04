@@ -1,7 +1,7 @@
 /**
  * Performance Utilities for Auth
  * أدوات الأداء للمصادقة
- * 
+ *
  * Performance optimizations and monitoring
  */
 

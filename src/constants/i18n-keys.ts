@@ -133,7 +133,8 @@ export const I18N_KEYS = {
         PROFILE_COMPLETE: 'patient.activation.steps.profile_complete',
         PROFILE_COMPLETE_DESC: 'patient.activation.steps.profile_complete_desc',
         INSURANCE_VERIFIED: 'patient.activation.steps.insurance_verified',
-        INSURANCE_VERIFIED_DESC: 'patient.activation.steps.insurance_verified_desc',
+        INSURANCE_VERIFIED_DESC:
+          'patient.activation.steps.insurance_verified_desc',
         PAYMENT_SETTLED: 'patient.activation.steps.payment_settled',
         PAYMENT_SETTLED_DESC: 'patient.activation.steps.payment_settled_desc',
         FIRST_VISIT: 'patient.activation.steps.first_visit',

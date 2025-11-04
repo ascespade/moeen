@@ -17,6 +17,8 @@ const configSchema = z.object({
   isSecret: z.boolean().default(false),
 });
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin or supervisor

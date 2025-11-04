@@ -7,10 +7,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin, manager, or supervisor
-    const authResult = await requireAuth(['admin', 'manager', 'supervisor'])(request);
+    const authResult = await requireAuth(['admin', 'manager', 'supervisor'])(
+      request
+    );
     if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -25,7 +29,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // Get staff members with their work hours
     let staffQuery = supabase
       .from('users')
-      .select(`
+      .select(
+        `
         id,
         full_name,
         email,
@@ -43,7 +48,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           day_of_week,
           is_active
         )
-      `)
+      `
+      )
       .in('role', ['doctor', 'nurse', 'staff', 'therapist'])
       .eq('status', 'active')
       .order('full_name');
@@ -60,35 +66,42 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     if (staffError) {
       console.error('Error fetching staff:', staffError);
-      return NextResponse.json({ 
-        error: 'Failed to fetch staff data',
-        details: staffError.message 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          error: 'Failed to fetch staff data',
+          details: staffError.message,
+        },
+        { status: 500 }
+      );
     }
 
     // Get attendance records for today
     const today = new Date().toISOString().split('T')[0];
     const { data: todayAttendance } = await supabase
       .from('attendance_records')
-      .select(`
+      .select(
+        `
         user_id,
         check_in_time,
         check_out_time,
         total_hours,
         status,
         date
-      `)
+      `
+      )
       .eq('date', today);
 
     // Get weekly attendance
     const weekStart = getWeekStart(new Date()).toISOString().split('T')[0];
     const { data: weeklyAttendance } = await supabase
       .from('attendance_records')
-      .select(`
+      .select(
+        `
         user_id,
         total_hours,
         date
-      `)
+      `
+      )
       .gte('date', weekStart)
       .lte('date', today);
 
@@ -96,25 +109,38 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const monthStart = getMonthStart(new Date()).toISOString().split('T')[0];
     const { data: monthlyAttendance } = await supabase
       .from('attendance_records')
-      .select(`
+      .select(
+        `
         user_id,
         total_hours,
         date
-      `)
+      `
+      )
       .gte('date', monthStart)
       .lte('date', today);
 
     // Transform data
     const staffWorkHours = (staff || []).map((member: unknown) => {
-      const todayRecord = todayAttendance?.find((a: unknown) => a.user_id === member.id);
-      const weeklyHours = weeklyAttendance
-        ?.filter((a: unknown) => a.user_id === member.id)
-        ?.reduce((sum: number, record: unknown) => sum + (record.total_hours || 0), 0) || 0;
-      const monthlyHours = monthlyAttendance
-        ?.filter((a: unknown) => a.user_id === member.id)
-        ?.reduce((sum: number, record: unknown) => sum + (record.total_hours || 0), 0) || 0;
+      const todayRecord = todayAttendance?.find(
+        (a: unknown) => a.user_id === member.id
+      );
+      const weeklyHours =
+        weeklyAttendance
+          ?.filter((a: unknown) => a.user_id === member.id)
+          ?.reduce(
+            (sum: number, record: unknown) => sum + (record.total_hours || 0),
+            0
+          ) || 0;
+      const monthlyHours =
+        monthlyAttendance
+          ?.filter((a: unknown) => a.user_id === member.id)
+          ?.reduce(
+            (sum: number, record: unknown) => sum + (record.total_hours || 0),
+            0
+          ) || 0;
 
-      const isOnDuty = todayRecord && todayRecord.check_in_time && !todayRecord.check_out_time;
+      const isOnDuty =
+        todayRecord && todayRecord.check_in_time && !todayRecord.check_out_time;
 
       return {
         id: member.id,
@@ -124,43 +150,66 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         position: member.position || getRoleDisplayName(member.role),
         department: member.department || 'غير محدد',
         role: member.role,
-        
+
         // Work hours data
         totalHours: monthlyHours,
         todayHours: todayRecord?.total_hours || 0,
         thisWeekHours: weeklyHours,
         thisMonthHours: monthlyHours,
-        
+
         // Status
         isOnDuty,
-        lastCheckIn: todayRecord?.check_in_time ? 
-          formatTime(todayRecord.check_in_time) : null,
-        lastCheckOut: todayRecord?.check_out_time ? 
-          formatTime(todayRecord.check_out_time) : null,
-        
+        lastCheckIn: todayRecord?.check_in_time
+          ? formatTime(todayRecord.check_in_time)
+          : null,
+        lastCheckOut: todayRecord?.check_out_time
+          ? formatTime(todayRecord.check_out_time)
+          : null,
+
         // Additional info
         attendanceStatus: todayRecord?.status || 'absent',
         lastLoginAt: member.last_login_at,
-        workSchedules: member.work_schedules || []
+        workSchedules: member.work_schedules || [],
       };
     });
 
     // Filter by on-duty status if requested
-    const filteredStaff = status === 'on_duty' 
-      ? staffWorkHours.filter((s: unknown) => s.isOnDuty)
-      : status === 'off_duty' 
-      ? staffWorkHours.filter((s: unknown) => !s.isOnDuty)
-      : staffWorkHours;
+    const filteredStaff =
+      status === 'on_duty'
+        ? staffWorkHours.filter((s: unknown) => s.isOnDuty)
+        : status === 'off_duty'
+          ? staffWorkHours.filter((s: unknown) => !s.isOnDuty)
+          : staffWorkHours;
 
     // Calculate summary statistics
     const summary = {
       totalStaff: staffWorkHours.length,
       onDutyStaff: staffWorkHours.filter((s: unknown) => s.isOnDuty).length,
       offDutyStaff: staffWorkHours.filter((s: unknown) => !s.isOnDuty).length,
-      avgHoursToday: staffWorkHours.length > 0 ? staffWorkHours.reduce((sum: number, s: unknown) => sum + s.todayHours, 0) / staffWorkHours.length : 0,
-      avgHoursWeek: staffWorkHours.length > 0 ? staffWorkHours.reduce((sum: number, s: unknown) => sum + s.thisWeekHours, 0) / staffWorkHours.length : 0,
-      avgHoursMonth: staffWorkHours.length > 0 ? staffWorkHours.reduce((sum: number, s: unknown) => sum + s.thisMonthHours, 0) / staffWorkHours.length : 0,
-      departments: [...new Set(staffWorkHours.map((s: unknown) => s.department))]
+      avgHoursToday:
+        staffWorkHours.length > 0
+          ? staffWorkHours.reduce(
+              (sum: number, s: unknown) => sum + s.todayHours,
+              0
+            ) / staffWorkHours.length
+          : 0,
+      avgHoursWeek:
+        staffWorkHours.length > 0
+          ? staffWorkHours.reduce(
+              (sum: number, s: unknown) => sum + s.thisWeekHours,
+              0
+            ) / staffWorkHours.length
+          : 0,
+      avgHoursMonth:
+        staffWorkHours.length > 0
+          ? staffWorkHours.reduce(
+              (sum: number, s: unknown) => sum + s.thisMonthHours,
+              0
+            ) / staffWorkHours.length
+          : 0,
+      departments: [
+        ...new Set(staffWorkHours.map((s: unknown) => s.department)),
+      ],
     };
 
     return NextResponse.json({
@@ -170,16 +219,18 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       meta: {
         total: filteredStaff.length,
         date: today,
-        filters: { department, status }
-      }
+        filters: { department, status },
+      },
     });
-
   } catch (error) {
     console.error('Error in staff work hours API:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -192,7 +243,7 @@ function getRoleDisplayName(role: string): string {
     therapist: 'معالج',
     admin: 'مدير',
     manager: 'مدير عام',
-    supervisor: 'مشرف'
+    supervisor: 'مشرف',
   };
   return roleNames[role] || role;
 }
@@ -201,7 +252,7 @@ function formatTime(timestamp: string): string {
   return new Date(timestamp).toLocaleTimeString('ar-SA', {
     hour: '2-digit',
     minute: '2-digit',
-    hour12: false
+    hour12: false,
   });
 }
 

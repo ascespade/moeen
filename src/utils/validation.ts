@@ -98,7 +98,10 @@ export const matchesPattern = (value: string, pattern: RegExp): boolean => {
 
 export const validateForm = <T extends Record<string, any>>(
   data: T,
-  rules: Record<keyof T, (value: unknown) => { isValid: boolean; error?: string }>
+  rules: Record<
+    keyof T,
+    (value: unknown) => { isValid: boolean; error?: string }
+  >
 ): { isValid: boolean; errors: Record<keyof T, string> } => {
   const errors: Record<keyof T, string> = {} as Record<keyof T, string>;
   let isValid = true;

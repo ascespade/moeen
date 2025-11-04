@@ -95,7 +95,9 @@ export async function POST(req: NextRequest) {
     } as any;
 
     const expiresInStr: string = JWT_EXPIRES_IN || '7d';
-    const token = jwt.sign(payload, jwtSecret, { expiresIn: expiresInStr } as any);
+    const token = jwt.sign(payload, jwtSecret, {
+      expiresIn: expiresInStr,
+    } as any);
 
     const response = NextResponse.json({
       success: true,

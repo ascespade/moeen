@@ -14,7 +14,7 @@ export function ProtectedRoute({
   children,
   resource,
   action,
-  fallback = <div className="p-4 text-center text-red-600">Access Denied</div>,
+  fallback = <div className='p-4 text-center text-red-600'>Access Denied</div>,
 }: ProtectedRouteProps) {
   const { checkPermission, loading } = usePermissions();
   const [hasAccess, setHasAccess] = useState(false);
@@ -22,7 +22,7 @@ export function ProtectedRoute({
 
   useEffect(() => {
     if (!loading) {
-      checkPermission(resource, action).then((access) => {
+      checkPermission(resource, action).then(access => {
         setHasAccess(access);
         setChecking(false);
       });
@@ -31,8 +31,8 @@ export function ProtectedRoute({
 
   if (checking || loading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+      <div className='flex items-center justify-center p-8'>
+        <div className='animate-spin rounded-full h-8 w-8 border-b-2 border-primary' />
       </div>
     );
   }

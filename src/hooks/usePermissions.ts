@@ -1,6 +1,10 @@
 // Permission hooks for React components
 import { useMemo } from 'react';
-import { PermissionManager, type PermissionId, type RoleId } from '@/lib/permissions';
+import {
+  PermissionManager,
+  type PermissionId,
+  type RoleId,
+} from '@/lib/permissions';
 
 interface UsePermissionsProps {
   userRole: RoleId;
@@ -8,28 +12,34 @@ interface UsePermissionsProps {
   restrictions?: string[];
 }
 
-export function usePermissions({ 
-  userRole, 
-  customPermissions = [], 
-  restrictions = [] 
+export function usePermissions({
+  userRole,
+  customPermissions = [],
+  restrictions = [],
 }: UsePermissionsProps) {
   const permissions = useMemo(() => {
     const rolePermissions = PermissionManager.getRolePermissions(userRole);
     const allPermissions = [...rolePermissions, ...customPermissions];
-    
+
     // Remove restricted permissions
-    return allPermissions.filter(permission => !restrictions.includes(permission));
+    return allPermissions.filter(
+      permission => !restrictions.includes(permission)
+    );
   }, [userRole, customPermissions, restrictions]);
 
   const hasPermission = (permission: PermissionId | string): boolean => {
     return PermissionManager.hasPermission(permissions, permission);
   };
 
-  const hasAnyPermission = (permissionsToCheck: (PermissionId | string)[]): boolean => {
+  const hasAnyPermission = (
+    permissionsToCheck: (PermissionId | string)[]
+  ): boolean => {
     return PermissionManager.hasAnyPermission(permissions, permissionsToCheck);
   };
 
-  const hasAllPermissions = (permissionsToCheck: (PermissionId | string)[]): boolean => {
+  const hasAllPermissions = (
+    permissionsToCheck: (PermissionId | string)[]
+  ): boolean => {
     return PermissionManager.hasAllPermissions(permissions, permissionsToCheck);
   };
 
@@ -52,18 +62,25 @@ export function usePermissions({
     hasAllPermissions,
     canAccess,
     getAccessibleResources,
-    getPermissionsByCategory
+    getPermissionsByCategory,
   };
 }
 
 // Hook for checking specific permission
-export function usePermission(permission: PermissionId | string, userRole: RoleId) {
+export function usePermission(
+  permission: PermissionId | string,
+  userRole: RoleId
+) {
   const { hasPermission } = usePermissions({ userRole });
   return hasPermission(permission);
 }
 
 // Hook for checking resource access
-export function useResourceAccess(resource: string, action: string, userRole: RoleId) {
+export function useResourceAccess(
+  resource: string,
+  action: string,
+  userRole: RoleId
+) {
   const { canAccess } = usePermissions({ userRole });
   return canAccess(resource, action);
 }

@@ -5,7 +5,7 @@ import { requireAuth } from '@/lib/auth/authorize';
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -44,10 +44,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

@@ -43,10 +43,10 @@ export default function AdminTable({
   cardDescription,
   pagination,
   emptyState,
-  isLoading = false
+  isLoading = false,
 }: AdminTableProps) {
   const hasContent = Boolean(children);
-  
+
   return (
     <AdminCard className={className}>
       {/* Table Header */}
@@ -58,9 +58,7 @@ export default function AdminTable({
             </h3>
           )}
           {cardDescription && (
-            <p className='text-[var(--text-secondary)]'>
-              {cardDescription}
-            </p>
+            <p className='text-[var(--text-secondary)]'>{cardDescription}</p>
           )}
         </div>
       )}
@@ -78,8 +76,8 @@ export default function AdminTable({
               <TableHeader>
                 <TableRow className='bg-[var(--brand-surface)]'>
                   {headers.map((header, index) => (
-                    <TableHead 
-                      key={index} 
+                    <TableHead
+                      key={index}
                       className='font-semibold text-[var(--text-primary)] border-b border-[var(--brand-border)]'
                     >
                       {header}
@@ -87,9 +85,7 @@ export default function AdminTable({
                   ))}
                 </TableRow>
               </TableHeader>
-              <TableBody>
-                {children}
-              </TableBody>
+              <TableBody>{children}</TableBody>
             </Table>
           </div>
         ) : emptyState ? (
@@ -111,46 +107,58 @@ export default function AdminTable({
       {pagination && hasContent && (
         <div className='flex items-center justify-between mt-6 pt-4 border-t border-[var(--brand-border)]'>
           <div className='text-sm text-[var(--text-secondary)]'>
-            عرض {Math.min(pagination.itemsPerPage, pagination.totalItems)} من {pagination.totalItems} عنصر
+            عرض {Math.min(pagination.itemsPerPage, pagination.totalItems)} من{' '}
+            {pagination.totalItems} عنصر
           </div>
-          
+
           <div className='flex items-center gap-2'>
             <Button
               variant='outline'
               size='sm'
-              onClick={() => pagination.onPageChange(Math.max(1, pagination.currentPage - 1))}
+              onClick={() =>
+                pagination.onPageChange(Math.max(1, pagination.currentPage - 1))
+              }
               disabled={pagination.currentPage === 1}
               className='border-[var(--brand-border)]'
             >
               <ChevronRight className='h-4 w-4' />
             </Button>
-            
+
             <div className='flex items-center gap-1'>
-              {Array.from({ length: Math.min(5, pagination.totalPages) }, (_, i) => {
-                const page = i + 1;
-                return (
-                  <Button
-                    key={page}
-                    variant={pagination.currentPage === page ? 'default' : 'outline'}
-                    size='sm'
-                    onClick={() => pagination.onPageChange(page)}
-                    className={cn(
-                      'w-8 h-8 p-0',
-                      pagination.currentPage === page 
-                        ? 'bg-[var(--brand-primary)] text-white' 
-                        : 'border-[var(--brand-border)]'
-                    )}
-                  >
-                    {page}
-                  </Button>
-                );
-              })}
+              {Array.from(
+                { length: Math.min(5, pagination.totalPages) },
+                (_, i) => {
+                  const page = i + 1;
+                  return (
+                    <Button
+                      key={page}
+                      variant={
+                        pagination.currentPage === page ? 'default' : 'outline'
+                      }
+                      size='sm'
+                      onClick={() => pagination.onPageChange(page)}
+                      className={cn(
+                        'w-8 h-8 p-0',
+                        pagination.currentPage === page
+                          ? 'bg-[var(--brand-primary)] text-white'
+                          : 'border-[var(--brand-border)]'
+                      )}
+                    >
+                      {page}
+                    </Button>
+                  );
+                }
+              )}
             </div>
-            
+
             <Button
               variant='outline'
               size='sm'
-              onClick={() => pagination.onPageChange(Math.min(pagination.totalPages, pagination.currentPage + 1))}
+              onClick={() =>
+                pagination.onPageChange(
+                  Math.min(pagination.totalPages, pagination.currentPage + 1)
+                )
+              }
               disabled={pagination.currentPage === pagination.totalPages}
               className='border-[var(--brand-border)]'
             >

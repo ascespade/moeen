@@ -185,7 +185,7 @@ export default function PatientIEPPage() {
           <p className='text-gray-600 dark:text-gray-400 mb-6'>
             يجب على الأخصائي إنشاء خطة IEP للطفل
           </p>
-          <button className='btn btn-default'>إنشاء خطة IEP جديدة</button>
+          <buttonclassName='btn btn-default' aria-label="إنشاء خطة IEP جديدة">إنشاء خطة IEP جديدة</button>
         </div>
       ) : (
         <>
@@ -244,7 +244,7 @@ export default function PatientIEPPage() {
               <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
                 الأهداف
               </h2>
-              <button className='btn btn-outline'>+ إضافة هدف جديد</button>
+              <buttonclassName='btn btn-outline' aria-label="+ إضافة هدف جديد">+ إضافة هدف جديد</button>
             </div>
 
             {goals.length === 0 ? (

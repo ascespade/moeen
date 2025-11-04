@@ -35,7 +35,7 @@ export const PERMISSIONS = {
     description: 'Access to main dashboard',
     category: 'dashboard',
     resource: 'dashboard',
-    action: 'view'
+    action: 'view',
   },
   'analytics:view': {
     id: 'analytics:view',
@@ -43,7 +43,7 @@ export const PERMISSIONS = {
     description: 'Access to analytics and reports',
     category: 'analytics',
     resource: 'analytics',
-    action: 'view'
+    action: 'view',
   },
   'reports:view': {
     id: 'reports:view',
@@ -51,7 +51,7 @@ export const PERMISSIONS = {
     description: 'Access to system reports',
     category: 'reports',
     resource: 'reports',
-    action: 'view'
+    action: 'view',
   },
   'reports:export': {
     id: 'reports:export',
@@ -59,7 +59,7 @@ export const PERMISSIONS = {
     description: 'Export reports to various formats',
     category: 'reports',
     resource: 'reports',
-    action: 'export'
+    action: 'export',
   },
 
   // User Management
@@ -69,7 +69,7 @@ export const PERMISSIONS = {
     description: 'View user list and details',
     category: 'users',
     resource: 'users',
-    action: 'view'
+    action: 'view',
   },
   'users:create': {
     id: 'users:create',
@@ -77,7 +77,7 @@ export const PERMISSIONS = {
     description: 'Create new users',
     category: 'users',
     resource: 'users',
-    action: 'create'
+    action: 'create',
   },
   'users:edit': {
     id: 'users:edit',
@@ -85,7 +85,7 @@ export const PERMISSIONS = {
     description: 'Edit user information',
     category: 'users',
     resource: 'users',
-    action: 'edit'
+    action: 'edit',
   },
   'users:delete': {
     id: 'users:delete',
@@ -93,7 +93,7 @@ export const PERMISSIONS = {
     description: 'Delete users from system',
     category: 'users',
     resource: 'users',
-    action: 'delete'
+    action: 'delete',
   },
   'users:activate': {
     id: 'users:activate',
@@ -101,7 +101,7 @@ export const PERMISSIONS = {
     description: 'Activate/deactivate users',
     category: 'users',
     resource: 'users',
-    action: 'activate'
+    action: 'activate',
   },
 
   // Role Management
@@ -111,7 +111,7 @@ export const PERMISSIONS = {
     description: 'View roles and permissions',
     category: 'roles',
     resource: 'roles',
-    action: 'view'
+    action: 'view',
   },
   'roles:create': {
     id: 'roles:create',
@@ -119,7 +119,7 @@ export const PERMISSIONS = {
     description: 'Create new roles',
     category: 'roles',
     resource: 'roles',
-    action: 'create'
+    action: 'create',
   },
   'roles:edit': {
     id: 'roles:edit',
@@ -127,7 +127,7 @@ export const PERMISSIONS = {
     description: 'Edit role permissions',
     category: 'roles',
     resource: 'roles',
-    action: 'edit'
+    action: 'edit',
   },
   'roles:delete': {
     id: 'roles:delete',
@@ -135,7 +135,7 @@ export const PERMISSIONS = {
     description: 'Delete roles from system',
     category: 'roles',
     resource: 'roles',
-    action: 'delete'
+    action: 'delete',
   },
 
   // Patient Management
@@ -145,7 +145,7 @@ export const PERMISSIONS = {
     description: 'View patient list and details',
     category: 'patients',
     resource: 'patients',
-    action: 'view'
+    action: 'view',
   },
   'patients:create': {
     id: 'patients:create',
@@ -153,7 +153,7 @@ export const PERMISSIONS = {
     description: 'Create new patient records',
     category: 'patients',
     resource: 'patients',
-    action: 'create'
+    action: 'create',
   },
   'patients:edit': {
     id: 'patients:edit',
@@ -161,7 +161,7 @@ export const PERMISSIONS = {
     description: 'Edit patient information',
     category: 'patients',
     resource: 'patients',
-    action: 'edit'
+    action: 'edit',
   },
   'patients:delete': {
     id: 'patients:delete',
@@ -169,7 +169,7 @@ export const PERMISSIONS = {
     description: 'Delete patient records',
     category: 'patients',
     resource: 'patients',
-    action: 'delete'
+    action: 'delete',
   },
   'patients:medical_records': {
     id: 'patients:medical_records',
@@ -177,7 +177,7 @@ export const PERMISSIONS = {
     description: 'View and edit medical records',
     category: 'patients',
     resource: 'medical_records',
-    action: 'view'
+    action: 'view',
   },
 
   // Doctor Management
@@ -187,7 +187,7 @@ export const PERMISSIONS = {
     description: 'View doctor list and details',
     category: 'doctors',
     resource: 'doctors',
-    action: 'view'
+    action: 'view',
   },
   'doctors:create': {
     id: 'doctors:create',
@@ -195,7 +195,7 @@ export const PERMISSIONS = {
     description: 'Create new doctor profiles',
     category: 'doctors',
     resource: 'doctors',
-    action: 'create'
+    action: 'create',
   },
   'doctors:edit': {
     id: 'doctors:edit',
@@ -203,7 +203,7 @@ export const PERMISSIONS = {
     description: 'Edit doctor information',
     category: 'doctors',
     resource: 'doctors',
-    action: 'edit'
+    action: 'edit',
   },
   'doctors:delete': {
     id: 'doctors:delete',
@@ -211,7 +211,7 @@ export const PERMISSIONS = {
     description: 'Delete doctor profiles',
     category: 'doctors',
     resource: 'doctors',
-    action: 'delete'
+    action: 'delete',
   },
   'doctors:schedules': {
     id: 'doctors:schedules',
@@ -219,7 +219,7 @@ export const PERMISSIONS = {
     description: 'Manage doctor schedules',
     category: 'doctors',
     resource: 'schedules',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Appointments
@@ -229,7 +229,7 @@ export const PERMISSIONS = {
     description: 'View appointment list and details',
     category: 'appointments',
     resource: 'appointments',
-    action: 'view'
+    action: 'view',
   },
   'appointments:create': {
     id: 'appointments:create',
@@ -237,7 +237,7 @@ export const PERMISSIONS = {
     description: 'Create new appointments',
     category: 'appointments',
     resource: 'appointments',
-    action: 'create'
+    action: 'create',
   },
   'appointments:edit': {
     id: 'appointments:edit',
@@ -245,7 +245,7 @@ export const PERMISSIONS = {
     description: 'Edit appointment details',
     category: 'appointments',
     resource: 'appointments',
-    action: 'edit'
+    action: 'edit',
   },
   'appointments:delete': {
     id: 'appointments:delete',
@@ -253,7 +253,7 @@ export const PERMISSIONS = {
     description: 'Cancel or delete appointments',
     category: 'appointments',
     resource: 'appointments',
-    action: 'delete'
+    action: 'delete',
   },
   'appointments:manage': {
     id: 'appointments:manage',
@@ -261,7 +261,7 @@ export const PERMISSIONS = {
     description: 'Full appointment management',
     category: 'appointments',
     resource: 'appointments',
-    action: 'manage'
+    action: 'manage',
   },
 
   // CRM Management
@@ -271,7 +271,7 @@ export const PERMISSIONS = {
     description: 'Access CRM dashboard',
     category: 'crm',
     resource: 'crm',
-    action: 'view'
+    action: 'view',
   },
   'crm:leads': {
     id: 'crm:leads',
@@ -279,7 +279,7 @@ export const PERMISSIONS = {
     description: 'Manage customer leads',
     category: 'crm',
     resource: 'leads',
-    action: 'manage'
+    action: 'manage',
   },
   'crm:contacts': {
     id: 'crm:contacts',
@@ -287,7 +287,7 @@ export const PERMISSIONS = {
     description: 'Manage customer contacts',
     category: 'crm',
     resource: 'contacts',
-    action: 'manage'
+    action: 'manage',
   },
   'crm:deals': {
     id: 'crm:deals',
@@ -295,7 +295,7 @@ export const PERMISSIONS = {
     description: 'Manage sales deals',
     category: 'crm',
     resource: 'deals',
-    action: 'manage'
+    action: 'manage',
   },
   'crm:activities': {
     id: 'crm:activities',
@@ -303,7 +303,7 @@ export const PERMISSIONS = {
     description: 'Manage CRM activities',
     category: 'crm',
     resource: 'activities',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Chatbot & AI
@@ -313,7 +313,7 @@ export const PERMISSIONS = {
     description: 'Access chatbot management',
     category: 'chatbot',
     resource: 'chatbot',
-    action: 'view'
+    action: 'view',
   },
   'chatbot:flows': {
     id: 'chatbot:flows',
@@ -321,7 +321,7 @@ export const PERMISSIONS = {
     description: 'Create and edit chatbot flows',
     category: 'chatbot',
     resource: 'flows',
-    action: 'manage'
+    action: 'manage',
   },
   'chatbot:templates': {
     id: 'chatbot:templates',
@@ -329,7 +329,7 @@ export const PERMISSIONS = {
     description: 'Manage chatbot templates',
     category: 'chatbot',
     resource: 'templates',
-    action: 'manage'
+    action: 'manage',
   },
   'chatbot:analytics': {
     id: 'chatbot:analytics',
@@ -337,7 +337,7 @@ export const PERMISSIONS = {
     description: 'View chatbot analytics',
     category: 'chatbot',
     resource: 'analytics',
-    action: 'view'
+    action: 'view',
   },
   'chatbot:integrations': {
     id: 'chatbot:integrations',
@@ -345,7 +345,7 @@ export const PERMISSIONS = {
     description: 'Manage chatbot integrations',
     category: 'chatbot',
     resource: 'integrations',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Conversations
@@ -355,7 +355,7 @@ export const PERMISSIONS = {
     description: 'View conversation history',
     category: 'conversations',
     resource: 'conversations',
-    action: 'view'
+    action: 'view',
   },
   'conversations:manage': {
     id: 'conversations:manage',
@@ -363,7 +363,7 @@ export const PERMISSIONS = {
     description: 'Manage conversation flows',
     category: 'conversations',
     resource: 'conversations',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Payments & Billing
@@ -373,7 +373,7 @@ export const PERMISSIONS = {
     description: 'View payment information',
     category: 'payments',
     resource: 'payments',
-    action: 'view'
+    action: 'view',
   },
   'payments:manage': {
     id: 'payments:manage',
@@ -381,7 +381,7 @@ export const PERMISSIONS = {
     description: 'Process and manage payments',
     category: 'payments',
     resource: 'payments',
-    action: 'manage'
+    action: 'manage',
   },
   'payments:invoices': {
     id: 'payments:invoices',
@@ -389,7 +389,7 @@ export const PERMISSIONS = {
     description: 'Create and manage invoices',
     category: 'payments',
     resource: 'invoices',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Settings & Configuration
@@ -399,7 +399,7 @@ export const PERMISSIONS = {
     description: 'View system settings',
     category: 'settings',
     resource: 'settings',
-    action: 'view'
+    action: 'view',
   },
   'settings:edit': {
     id: 'settings:edit',
@@ -407,7 +407,7 @@ export const PERMISSIONS = {
     description: 'Edit system settings',
     category: 'settings',
     resource: 'settings',
-    action: 'edit'
+    action: 'edit',
   },
   'settings:api_keys': {
     id: 'settings:api_keys',
@@ -415,7 +415,7 @@ export const PERMISSIONS = {
     description: 'Manage API keys and integrations',
     category: 'settings',
     resource: 'api_keys',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Security & Audit
@@ -425,7 +425,7 @@ export const PERMISSIONS = {
     description: 'Access security dashboard',
     category: 'security',
     resource: 'security',
-    action: 'view'
+    action: 'view',
   },
   'security:audit_logs': {
     id: 'security:audit_logs',
@@ -433,7 +433,7 @@ export const PERMISSIONS = {
     description: 'View system audit logs',
     category: 'security',
     resource: 'audit_logs',
-    action: 'view'
+    action: 'view',
   },
   'security:logs': {
     id: 'security:logs',
@@ -441,7 +441,7 @@ export const PERMISSIONS = {
     description: 'View system logs',
     category: 'security',
     resource: 'logs',
-    action: 'view'
+    action: 'view',
   },
 
   // Notifications
@@ -451,7 +451,7 @@ export const PERMISSIONS = {
     description: 'View system notifications',
     category: 'notifications',
     resource: 'notifications',
-    action: 'view'
+    action: 'view',
   },
   'notifications:manage': {
     id: 'notifications:manage',
@@ -459,7 +459,7 @@ export const PERMISSIONS = {
     description: 'Manage notification settings',
     category: 'notifications',
     resource: 'notifications',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Messages
@@ -469,7 +469,7 @@ export const PERMISSIONS = {
     description: 'View message center',
     category: 'messages',
     resource: 'messages',
-    action: 'view'
+    action: 'view',
   },
   'messages:send': {
     id: 'messages:send',
@@ -477,7 +477,7 @@ export const PERMISSIONS = {
     description: 'Send messages to users',
     category: 'messages',
     resource: 'messages',
-    action: 'send'
+    action: 'send',
   },
 
   // Integrations
@@ -487,7 +487,7 @@ export const PERMISSIONS = {
     description: 'View system integrations',
     category: 'integrations',
     resource: 'integrations',
-    action: 'view'
+    action: 'view',
   },
   'integrations:manage': {
     id: 'integrations:manage',
@@ -495,7 +495,7 @@ export const PERMISSIONS = {
     description: 'Manage system integrations',
     category: 'integrations',
     resource: 'integrations',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Performance & Monitoring
@@ -505,7 +505,7 @@ export const PERMISSIONS = {
     description: 'View system performance metrics',
     category: 'performance',
     resource: 'performance',
-    action: 'view'
+    action: 'view',
   },
 
   // Profile Management
@@ -515,7 +515,7 @@ export const PERMISSIONS = {
     description: 'View own profile',
     category: 'profile',
     resource: 'profile',
-    action: 'view'
+    action: 'view',
   },
   'profile:edit': {
     id: 'profile:edit',
@@ -523,7 +523,7 @@ export const PERMISSIONS = {
     description: 'Edit own profile',
     category: 'profile',
     resource: 'profile',
-    action: 'edit'
+    action: 'edit',
   },
 
   // Dynamic Data
@@ -533,7 +533,7 @@ export const PERMISSIONS = {
     description: 'View dynamic data management',
     category: 'dynamic_data',
     resource: 'dynamic_data',
-    action: 'view'
+    action: 'view',
   },
   'dynamic_data:manage': {
     id: 'dynamic_data:manage',
@@ -541,7 +541,7 @@ export const PERMISSIONS = {
     description: 'Manage dynamic data content',
     category: 'dynamic_data',
     resource: 'dynamic_data',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Flow Management
@@ -551,7 +551,7 @@ export const PERMISSIONS = {
     description: 'View workflow management',
     category: 'flow',
     resource: 'flow',
-    action: 'view'
+    action: 'view',
   },
   'flow:manage': {
     id: 'flow:manage',
@@ -559,7 +559,7 @@ export const PERMISSIONS = {
     description: 'Manage workflow processes',
     category: 'flow',
     resource: 'flow',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Review & Quality
@@ -569,7 +569,7 @@ export const PERMISSIONS = {
     description: 'View quality reviews',
     category: 'review',
     resource: 'review',
-    action: 'view'
+    action: 'view',
   },
   'review:manage': {
     id: 'review:manage',
@@ -577,7 +577,7 @@ export const PERMISSIONS = {
     description: 'Manage quality reviews',
     category: 'review',
     resource: 'review',
-    action: 'manage'
+    action: 'manage',
   },
 
   // Sessions
@@ -587,7 +587,7 @@ export const PERMISSIONS = {
     description: 'View therapy sessions',
     category: 'sessions',
     resource: 'sessions',
-    action: 'view'
+    action: 'view',
   },
   'sessions:manage': {
     id: 'sessions:manage',
@@ -595,7 +595,7 @@ export const PERMISSIONS = {
     description: 'Manage therapy sessions',
     category: 'sessions',
     resource: 'sessions',
-    action: 'manage'
+    action: 'manage',
   },
   'sessions:notes': {
     id: 'sessions:notes',
@@ -603,8 +603,8 @@ export const PERMISSIONS = {
     description: 'Create and edit session notes',
     category: 'sessions',
     resource: 'session_notes',
-    action: 'manage'
-  }
+    action: 'manage',
+  },
 } as const;
 
 // Define roles with their permissions
@@ -614,7 +614,7 @@ export const ROLES: Record<string, Role> = {
     name: 'Administrator',
     description: 'Full system access with all permissions',
     permissions: Object.keys(PERMISSIONS),
-    level: 100
+    level: 100,
   },
   manager: {
     id: 'manager',
@@ -669,9 +669,9 @@ export const ROLES: Record<string, Role> = {
       'review:manage',
       'sessions:view',
       'sessions:manage',
-      'sessions:notes'
+      'sessions:notes',
     ],
-    level: 80
+    level: 80,
   },
   supervisor: {
     id: 'supervisor',
@@ -711,9 +711,9 @@ export const ROLES: Record<string, Role> = {
       'review:view',
       'sessions:view',
       'sessions:manage',
-      'sessions:notes'
+      'sessions:notes',
     ],
-    level: 60
+    level: 60,
   },
   doctor: {
     id: 'doctor',
@@ -734,9 +734,9 @@ export const ROLES: Record<string, Role> = {
       'profile:edit',
       'sessions:view',
       'sessions:manage',
-      'sessions:notes'
+      'sessions:notes',
     ],
-    level: 40
+    level: 40,
   },
   nurse: {
     id: 'nurse',
@@ -751,9 +751,9 @@ export const ROLES: Record<string, Role> = {
       'messages:view',
       'profile:view',
       'profile:edit',
-      'sessions:view'
+      'sessions:view',
     ],
-    level: 30
+    level: 30,
   },
   staff: {
     id: 'staff',
@@ -768,9 +768,9 @@ export const ROLES: Record<string, Role> = {
       'notifications:view',
       'messages:view',
       'profile:view',
-      'profile:edit'
+      'profile:edit',
     ],
-    level: 20
+    level: 20,
   },
   agent: {
     id: 'agent',
@@ -789,9 +789,9 @@ export const ROLES: Record<string, Role> = {
       'messages:view',
       'messages:send',
       'profile:view',
-      'profile:edit'
+      'profile:edit',
     ],
-    level: 15
+    level: 15,
   },
   patient: {
     id: 'patient',
@@ -803,9 +803,9 @@ export const ROLES: Record<string, Role> = {
       'appointments:view',
       'appointments:create',
       'notifications:view',
-      'messages:view'
+      'messages:view',
     ],
-    level: 10
+    level: 10,
   },
   demo: {
     id: 'demo',
@@ -832,24 +832,36 @@ export const ROLES: Record<string, Role> = {
       'dynamic_data:view',
       'flow:view',
       'review:view',
-      'sessions:view'
+      'sessions:view',
     ],
-    level: 5
-  }
+    level: 5,
+  },
 };
 
 // Permission checking utilities
 export class PermissionManager {
   static hasPermission(userPermissions: string[], permission: string): boolean {
-    return userPermissions.includes(permission) || userPermissions.includes('*');
+    return (
+      userPermissions.includes(permission) || userPermissions.includes('*')
+    );
   }
 
-  static hasAnyPermission(userPermissions: string[], permissions: string[]): boolean {
-    return permissions.some(permission => this.hasPermission(userPermissions, permission));
+  static hasAnyPermission(
+    userPermissions: string[],
+    permissions: string[]
+  ): boolean {
+    return permissions.some(permission =>
+      this.hasPermission(userPermissions, permission)
+    );
   }
 
-  static hasAllPermissions(userPermissions: string[], permissions: string[]): boolean {
-    return permissions.every(permission => this.hasPermission(userPermissions, permission));
+  static hasAllPermissions(
+    userPermissions: string[],
+    permissions: string[]
+  ): boolean {
+    return permissions.every(permission =>
+      this.hasPermission(userPermissions, permission)
+    );
   }
 
   static getRolePermissions(roleId: string): string[] {
@@ -857,12 +869,19 @@ export class PermissionManager {
     return role ? role.permissions : [];
   }
 
-  static getUserPermissions(userRole: string, customPermissions: string[] = []): string[] {
+  static getUserPermissions(
+    userRole: string,
+    customPermissions: string[] = []
+  ): string[] {
     const rolePermissions = this.getRolePermissions(userRole);
     return [...rolePermissions, ...customPermissions];
   }
 
-  static canAccess(userPermissions: string[], resource: string, action: string): boolean {
+  static canAccess(
+    userPermissions: string[],
+    resource: string,
+    action: string
+  ): boolean {
     const permission = `${resource}:${action}`;
     return this.hasPermission(userPermissions, permission);
   }
@@ -878,9 +897,14 @@ export class PermissionManager {
     return Array.from(resources);
   }
 
-  static getPermissionsByCategory(userPermissions: string[], category: string): string[] {
+  static getPermissionsByCategory(
+    userPermissions: string[],
+    category: string
+  ): string[] {
     return userPermissions.filter(permission => {
-      const permissionObj = Object.values(PERMISSIONS).find(p => p.id === permission);
+      const permissionObj = Object.values(PERMISSIONS).find(
+        p => p.id === permission
+      );
       return permissionObj?.category === category;
     });
   }

@@ -129,8 +129,7 @@ export default function ChatbotFlowsPage() {
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <button
-                onClick={() => setShowCreateModal(true)}
+              <buttononClick={() = aria-label="Button"> { setShowCreateModal(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إنشاء تدفق
@@ -224,7 +223,7 @@ export default function ChatbotFlowsPage() {
             </div>
 
             <div className='flex items-end'>
-              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+              <buttonclassName='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
                 تطبيق الفلاتر
               </button>
             </div>
@@ -291,10 +290,10 @@ export default function ChatbotFlowsPage() {
                 >
                   فتح المحرر
                 </Link>
-                <button className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface'>
+                <buttonclassName='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="نسخ">
                   نسخ
                 </button>
-                <button className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface'>
+                <buttonclassName='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="أرشفة">
                   أرشفة
                 </button>
               </div>
@@ -324,8 +323,7 @@ export default function ChatbotFlowsPage() {
           <div className='w-full max-w-md rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إنشاء تدفق جديد</h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
+              <buttononClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -379,17 +377,14 @@ export default function ChatbotFlowsPage() {
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button
-                  type='button'
-                  onClick={() => setShowCreateModal(false)}
+                <buttontype='button'
+                  onClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <button
-                  type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
-                >
+                <buttontype='submit'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إنشاء التدفق">
                   إنشاء التدفق
                 </button>
               </div>

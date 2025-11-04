@@ -7,6 +7,8 @@ const supabase = createClient(
 );
 
 // GET /api/chatbot/intents - جلب جميع النيات
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { data: intents, error } = await supabase

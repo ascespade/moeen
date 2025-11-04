@@ -63,7 +63,10 @@ export function getStoredPermissions(): string[] {
 export function saveUser(user: AuthUser): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
-  localStorage.setItem(STORAGE_KEYS.PERMISSIONS, JSON.stringify(user.permissions));
+  localStorage.setItem(
+    STORAGE_KEYS.PERMISSIONS,
+    JSON.stringify(user.permissions)
+  );
 }
 
 /**
@@ -79,7 +82,10 @@ export function clearAuth(): void {
 /**
  * Get user permissions based on role
  */
-export function getUserPermissions(role: string, customPermissions: string[] = []): string[] {
+export function getUserPermissions(
+  role: string,
+  customPermissions: string[] = []
+): string[] {
   const rolePermissions = PermissionManager.getRolePermissions(role);
   const allPermissions = [...rolePermissions, ...customPermissions];
 
@@ -94,21 +100,34 @@ export function getUserPermissions(role: string, customPermissions: string[] = [
 /**
  * Check if user has permission
  */
-export function hasPermission(userPermissions: string[], permission: string): boolean {
+export function hasPermission(
+  userPermissions: string[],
+  permission: string
+): boolean {
   return PermissionManager.hasPermission(userPermissions, permission);
 }
 
 /**
  * Check if user has any of the required permissions
  */
-export function hasAnyPermission(userPermissions: string[], requiredPermissions: string[]): boolean {
-  return PermissionManager.hasAnyPermission(userPermissions, requiredPermissions);
+export function hasAnyPermission(
+  userPermissions: string[],
+  requiredPermissions: string[]
+): boolean {
+  return PermissionManager.hasAnyPermission(
+    userPermissions,
+    requiredPermissions
+  );
 }
 
 /**
  * Check if user can access a resource
  */
-export function canAccess(userPermissions: string[], resource: string, action: string): boolean {
+export function canAccess(
+  userPermissions: string[],
+  resource: string,
+  action: string
+): boolean {
   return PermissionManager.canAccess(userPermissions, resource, action);
 }
 
@@ -157,7 +176,11 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
     if (!response.ok) {
       // Only log non-401 errors
       if (response.status !== 401) {
-        console.warn('[UnifiedAuth] Error fetching user:', response.status, response.statusText);
+        console.warn(
+          '[UnifiedAuth] Error fetching user:',
+          response.status,
+          response.statusText
+        );
       }
       return null;
     }
@@ -171,15 +194,20 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
     if (!userData) return null;
 
     // Get permissions from role if not provided
-    const finalPermissions = permissions.length > 0
-      ? permissions
-      : getUserPermissions(userData.role || 'patient');
+    const finalPermissions =
+      permissions.length > 0
+        ? permissions
+        : getUserPermissions(userData.role || 'patient');
 
     const user: AuthUser = {
       id: userData.id,
       email: userData.email || userData.email_address || '',
       role: userData.role || 'patient',
-      name: userData.name || userData.full_name || userData.email?.split('@')[0] || '',
+      name:
+        userData.name ||
+        userData.full_name ||
+        userData.email?.split('@')[0] ||
+        '',
       permissions: finalPermissions,
     };
 
@@ -221,7 +249,7 @@ export async function initializeAuth(): Promise<AuthUser | null> {
     try {
       const hasSession = await Promise.race([
         checkSupabaseSession(),
-        new Promise<boolean>(resolve => setTimeout(() => resolve(false), 1000))
+        new Promise<boolean>(resolve => setTimeout(() => resolve(false), 1000)),
       ]);
 
       if (hasSession) {
@@ -279,7 +307,7 @@ export async function loginWithCredentials(
   } catch (error) {
     return {
       success: false,
-      error: error instanceof Error ? error.message : 'Login failed'
+      error: error instanceof Error ? error.message : 'Login failed',
     };
   }
 }

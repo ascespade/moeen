@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSupabase } from '@/lib/supabaseClient';
 
+export const revalidate = 60;
+
 export async function GET() {
   try {
     // Security: Require authentication

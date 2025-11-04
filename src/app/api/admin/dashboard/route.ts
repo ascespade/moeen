@@ -7,13 +7,18 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication for admin dashboard
     const authResult = await requireAuth(['admin', 'supervisor'])(request);
     if (!authResult.authorized) {
       return NextResponse.json(
-        { error: 'Unauthorized. Authentication required to access dashboard data.' },
+        {
+          error:
+            'Unauthorized. Authentication required to access dashboard data.',
+        },
         { status: 401 }
       );
     }
@@ -45,7 +50,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .eq('status', 'paid');
 
     const totalRevenue =
-      paymentsData?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) || 0;
+      paymentsData?.reduce(
+        (sum: number, p: unknown) => sum + (p.amount || 0),
+        0
+      ) || 0;
 
     const stats = {
       totalPatients: totalPatients || 0,

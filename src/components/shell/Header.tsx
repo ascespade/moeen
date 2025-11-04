@@ -8,7 +8,19 @@ import { useSystemConfig } from '@/lib/config/system-config';
 import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 import { useEffect, useState } from 'react';
-import { Bell, Search, User, Settings, LogOut, ChevronDown, Clock, Calendar, Menu, X, Bot } from 'lucide-react';
+import {
+  Bell,
+  Search,
+  User,
+  Settings,
+  LogOut,
+  ChevronDown,
+  Clock,
+  Calendar,
+  Menu,
+  X,
+  Bot,
+} from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -18,10 +30,11 @@ export default function Header() {
   // Use custom auth hook (preferred) or fallback to unified auth
   const customAuth = useCustomAuth();
   const unifiedAuth = useUnifiedAuth();
-  
+
   // Prefer custom auth if available and authenticated
   const user = customAuth.user || unifiedAuth.user;
-  const isAuthenticated = customAuth.isAuthenticated || unifiedAuth.isAuthenticated;
+  const isAuthenticated =
+    customAuth.isAuthenticated || unifiedAuth.isAuthenticated;
   const logout = customAuth.logout || unifiedAuth.logout;
   const router = useRouter();
   const pathname = usePathname();
@@ -61,14 +74,19 @@ export default function Header() {
       try {
         setNotificationsLoading(true);
         // Fetch real notifications from database using user_id
-        const response = await fetch(`/api/notifications/schedule?recipientId=${user.id}&limit=10`, {
-          credentials: 'include',
-          cache: 'no-store',
-        });
+        const response = await fetch(
+          `/api/notifications/schedule?recipientId=${user.id}&limit=10`,
+          {
+            credentials: 'include',
+            cache: 'no-store',
+          }
+        );
 
         // If response is not ok, treat as empty and stop retrying after max retries
         if (!response.ok) {
-          console.warn(`Notifications API returned ${response.status}, using empty array`);
+          console.warn(
+            `Notifications API returned ${response.status}, using empty array`
+          );
           if (isMounted) {
             setNotifications([]);
             setNotificationsLoading(false);
@@ -76,19 +94,28 @@ export default function Header() {
           retryCount++;
           // Stop retrying if we've exceeded max retries
           if (retryCount >= MAX_RETRIES) {
-            console.warn('Max retries reached for notifications, stopping fetch');
+            console.warn(
+              'Max retries reached for notifications, stopping fetch'
+            );
             return;
           }
           return;
         }
 
-        const data = await response.json().catch(() => ({ success: false, data: [] }));
+        const data = await response
+          .json()
+          .catch(() => ({ success: false, data: [] }));
 
         if (data.success && Array.isArray(data.data)) {
           // Filter notifications for this user and get real data
           const userNotifications = data.data.filter((n: unknown) => {
             // Match by recipientId or user_id
-            return (n.recipientId === user.id || n.user_id === user.id || n.recipient_id === user.id || n.userId === user.id);
+            return (
+              n.recipientId === user.id ||
+              n.user_id === user.id ||
+              n.recipient_id === user.id ||
+              n.userId === user.id
+            );
           });
 
           // Sort: unread first, then by date
@@ -142,7 +169,9 @@ export default function Header() {
     };
   }, [isAuthenticated, user?.id]);
 
-  const unreadCount = notifications.filter((n: unknown) => !n.is_read && !n.read).length;
+  const unreadCount = notifications.filter(
+    (n: unknown) => !n.is_read && !n.read
+  ).length;
 
   // Set initial time and mounted flag on client-side only
   useEffect(() => {
@@ -207,7 +236,8 @@ export default function Header() {
 
   // Get AI features status
   const aiFeaturesEnabled = Object.values(systemConfig.ai_features).some(
-    feature => typeof feature === 'object' && 'enabled' in feature && feature.enabled
+    feature =>
+      typeof feature === 'object' && 'enabled' in feature && feature.enabled
   );
 
   const handleLogout = async () => {
@@ -267,7 +297,10 @@ export default function Header() {
             </button>
 
             {/* Logo */}
-            <Link href='/admin/dashboard' className='hidden sm:flex items-center gap-3 group'>
+            <Link
+              href='/admin/dashboard'
+              className='hidden sm:flex items-center gap-3 group'
+            >
               <div className='relative'>
                 <div className='grid h-10 w-10 place-items-center rounded-xl text-white bg-gradient-to-br from-[var(--brand-primary)] to-[var(--brand-primary)]/80 shadow-lg group-hover:shadow-xl transition-shadow'>
                   <span className='text-lg font-bold'>?</span>
@@ -280,7 +313,9 @@ export default function Header() {
                 <div className='text-base font-bold text-gray-900 dark:text-white'>
                   {t(I18N_KEYS.COMMON.SYSTEM_NAME) || '???? ?????'}
                 </div>
-                <div className='text-xs text-gray-500 dark:text-gray-400'>???? ??????? ????????</div>
+                <div className='text-xs text-gray-500 dark:text-gray-400'>
+                  ???? ??????? ????????
+                </div>
               </div>
             </Link>
 
@@ -291,9 +326,11 @@ export default function Header() {
                 <input
                   type='search'
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={e => setSearchQuery(e.target.value)}
                   className='w-full h-10 pr-10 pl-4 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-all'
-                  placeholder={t(I18N_KEYS.COMMON.SEARCH_PLACEHOLDER) || '????...'}
+                  placeholder={
+                    t(I18N_KEYS.COMMON.SEARCH_PLACEHOLDER) || '????...'
+                  }
                   aria-label={t(I18N_KEYS.COMMON.SEARCH)}
                 />
                 <div className='absolute left-3 top-1/2 transform -translate-y-1/2 hidden lg:flex items-center gap-1 px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-xs text-gray-500'>
@@ -334,8 +371,7 @@ export default function Header() {
             {/* AI Features Indicator */}
             {aiFeaturesEnabled && (
               <div className='relative' data-dropdown>
-                <button
-                  onClick={() => setShowAIFeatures(!showAIFeatures)}
+                <buttononClick={() = aria-label="Button"> { setShowAIFeatures(!showAIFeatures)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowAIFeatures(!showAIFeatures) } }}
                   className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
                   aria-haspopup='menu'
                   aria-expanded={showAIFeatures}
@@ -352,9 +388,12 @@ export default function Header() {
                   >
                     <div className='mb-3 px-2'>
                       <div className='text-sm font-semibold text-gray-900 dark:text-white'>
-                        {t(I18N_KEYS.HEADER.AI_FEATURES) || '????? ?????? ?????????'}
+                        {t(I18N_KEYS.HEADER.AI_FEATURES) ||
+                          '????? ?????? ?????????'}
                       </div>
-                      <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>??????? ??????</div>
+                      <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>
+                        ??????? ??????
+                      </div>
                     </div>
                     <div className='grid gap-2'>
                       {systemConfig.ai_features.chatbot.enabled && (
@@ -382,8 +421,7 @@ export default function Header() {
 
             {/* Notifications */}
             <div className='relative' data-dropdown>
-              <button
-                onClick={() => setShowNotifDropdown(!showNotifDropdown)}
+              <buttononClick={() = aria-label="Button"> { setShowNotifDropdown(!showNotifDropdown)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowNotifDropdown(!showNotifDropdown) } }}
                 className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
                 aria-haspopup='menu'
                 aria-expanded={showNotifDropdown}
@@ -408,30 +446,38 @@ export default function Header() {
                         </div>
                         {unreadCount > 0 && (
                           <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>
-                            {unreadCount} ?????{unreadCount > 1 ? '??' : ''} ?????
+                            {unreadCount} ?????{unreadCount > 1 ? '??' : ''}{' '}
+                            ?????
                           </div>
                         )}
                       </div>
                       {unreadCount > 0 && notifications.length > 0 && (
-                        <button
-                          onClick={async () => {
+                        <button onClick={async () aria-label="Button" {
                             try {
                               // Mark all as read
                               await Promise.all(
                                 notifications
                                   .filter((n: unknown) => !n.is_read)
                                   .map((n: unknown) =>
-                                    fetch(`/api/notifications/${n.id}/read`, {
+                                    fetch(`/api/notifications/${n.id} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); async () aria-label="Button" {
+                            try {
+                              // Mark all as read
+                              await Promise.all() => !n.is_read)
+                                  .map((n: unknown) =>
+                                    fetch(`/api/notifications/${n.id } }}/read`, {
                                       method: 'POST',
                                       credentials: 'include',
                                     }).catch(() => {})
                                   )
                               );
                               // Refresh notifications
-                              const response = await fetch(`/api/notifications/schedule?recipientId=${user?.id}&limit=5`, {
-                                credentials: 'include',
-                                cache: 'no-store',
-                              });
+                              const response = await fetch(
+                                `/api/notifications/schedule?recipientId=${user?.id}&limit=5`,
+                                {
+                                  credentials: 'include',
+                                  cache: 'no-store',
+                                }
+                              );
                               if (response.ok) {
                                 const data = await response.json();
                                 if (data.success && data.data) {
@@ -439,7 +485,10 @@ export default function Header() {
                                 }
                               }
                             } catch (error) {
-                              console.error('Error marking notifications as read:', error);
+                              console.error(
+                                'Error marking notifications as read:',
+                                error
+                              );
                             }
                           }}
                           className='text-xs text-[var(--brand-primary)] hover:underline'
@@ -453,90 +502,118 @@ export default function Header() {
                     {notificationsLoading ? (
                       <div className='p-8 text-center'>
                         <div className='w-6 h-6 border-2 border-[var(--brand-primary)] border-t-transparent rounded-full animate-spin mx-auto mb-3'></div>
-                        <div className='text-sm text-gray-500 dark:text-gray-400'>???? ???????...</div>
+                        <div className='text-sm text-gray-500 dark:text-gray-400'>
+                          ???? ???????...
+                        </div>
                       </div>
                     ) : notifications.length === 0 ? (
                       <div className='p-8 text-center'>
                         <Bell className='w-12 h-12 mx-auto text-gray-300 dark:text-gray-600 mb-3' />
                         <div className='text-sm text-gray-500 dark:text-gray-400'>
-                          {t(I18N_KEYS.HEADER.NO_NOTIFICATIONS) || '?? ???? ???????'}
+                          {t(I18N_KEYS.HEADER.NO_NOTIFICATIONS) ||
+                            '?? ???? ???????'}
                         </div>
                       </div>
                     ) : (
                       <div className='p-2'>
-                        {notifications.slice(0, 5).map((notification: unknown) => {
-                          const isUnread = !notification.is_read && !notification.read;
-                          const createdDate = notification.created_at || notification.createdAt;
-                          const timeAgo = createdDate
-                            ? new Date(createdDate).toLocaleString('ar-SA', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              })
-                            : '';
+                        {notifications
+                          .slice(0, 5)
+                          .map((notification: unknown) => {
+                            const isUnread =
+                              !notification.is_read && !notification.read;
+                            const createdDate =
+                              notification.created_at || notification.createdAt;
+                            const timeAgo = createdDate
+                              ? new Date(createdDate).toLocaleString('ar-SA', {
+                                  year: 'numeric',
+                                  month: 'short',
+                                  day: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit',
+                                })
+                              : '';
 
-                          return (
-                            <div
-                              key={notification.id}
-                              onClick={async () => {
-                                if (isUnread) {
-                                  try {
-                                    // Try POST first
-                                    let markResponse = await fetch(`/api/notifications/${notification.id}/read`, {
-                                      method: 'POST',
-                                      credentials: 'include',
-                                    });
+                            return (
+                              <div
+                                key={notification.id}
+                                tabIndex={0} onClick={async () => {
+                                  if (isUnread) {
+                                    try {
+                                      // Try POST first
+                                      let markResponse = await fetch(
+                                        `/api/notifications/${notification.id}/read`,
+                                        {
+                                          method: 'POST',
+                                          credentials: 'include',
+                                        }
+                                      );
 
-                                    // If POST fails, try PATCH
-                                    if (!markResponse.ok) {
-                                      markResponse = await fetch(`/api/notifications/${notification.id}/read`, {
-                                        method: 'PATCH',
-                                        credentials: 'include',
-                                      });
-                                    }
+                                      // If POST fails, try PATCH
+                                      if (!markResponse.ok) {
+                                        markResponse = await fetch(
+                                          `/api/notifications/${notification.id}/read`,
+                                          {
+                                            method: 'PATCH',
+                                            credentials: 'include',
+                                          }
+                                        );
+                                      }
 
-                                    // Update local state if successful
-                                    if (markResponse.ok) {
-                                      setNotifications(
-                                        notifications.map((n: unknown) =>
-                                          n.id === notification.id ? { ...n, is_read: true, status: 'read' } : n
-                                        )
+                                      // Update local state if successful
+                                      if (markResponse.ok) {
+                                        setNotifications(
+                                          notifications.map((n: unknown) =>
+                                            n.id === notification.id
+                                              ? {
+                                                  ...n,
+                                                  is_read: true,
+                                                  status: 'read',
+                                                }
+                                              : n
+                                          )
+                                        );
+                                      }
+                                    } catch (error) {
+                                      console.error(
+                                        'Error marking notification as read:',
+                                        error
                                       );
                                     }
-                                  } catch (error) {
-                                    console.error('Error marking notification as read:', error);
                                   }
-                                }
-                              }}
-                              className={`rounded-lg border p-3 mb-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer ${
-                                isUnread
-                                  ? 'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10'
-                                  : 'border-gray-200 dark:border-gray-700'
-                              }`}
-                            >
-                              <div className='flex items-start gap-3'>
-                                {isUnread && (
-                                  <div className='w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0'></div>
-                                )}
-                                <div className='flex-1 min-w-0'>
-                                  <div className='text-sm font-medium text-gray-900 dark:text-white'>
-                                    {notification.title || notification.message || '?????'}
-                                  </div>
-                                  {notification.message && notification.message !== notification.title && (
-                                    <div className='text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2'>
-                                      {notification.message}
+                                }}
+                                className={`rounded-lg border p-3 mb-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer ${
+                                  isUnread
+                                    ? 'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10'
+                                    : 'border-gray-200 dark:border-gray-700'
+                                }`}
+                              >
+                                <div className='flex items-start gap-3'>
+                                  {isUnread && (
+                                    <div className='w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0'></div>
+                                  )}
+                                  <div className='flex-1 min-w-0'>
+                                    <div className='text-sm font-medium text-gray-900 dark:text-white'>
+                                      {notification.title ||
+                                        notification.message ||
+                                        '?????'}
                                     </div>
-                                  )}
-                                  {timeAgo && (
-                                    <div className='text-xs text-gray-500 dark:text-gray-500 mt-1'>{timeAgo}</div>
-                                  )}
+                                    {notification.message &&
+                                      notification.message !==
+                                        notification.title && (
+                                        <div className='text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2'>
+                                          {notification.message}
+                                        </div>
+                                      )}
+                                    {timeAgo && (
+                                      <div className='text-xs text-gray-500 dark:text-gray-500 mt-1'>
+                                        {timeAgo}
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })}
+                            );
+                          })}
                       </div>
                     )}
                   </div>
@@ -557,8 +634,7 @@ export default function Header() {
 
             {/* User Menu */}
             <div className='relative' data-dropdown>
-              <button
-                onClick={() => setShowUserDropdown(!showUserDropdown)}
+              <buttononClick={() = aria-label="Button"> { setShowUserDropdown(!showUserDropdown)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowUserDropdown(!showUserDropdown) } }}
                 className='flex items-center gap-2 h-10 px-2 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
                 aria-haspopup='menu'
                 aria-expanded={showUserDropdown}
@@ -591,7 +667,9 @@ export default function Header() {
                         <div className='text-sm font-semibold text-gray-900 dark:text-white truncate'>
                           {userName}
                         </div>
-                        <div className='text-xs text-gray-500 dark:text-gray-400 truncate'>{userEmail}</div>
+                        <div className='text-xs text-gray-500 dark:text-gray-400 truncate'>
+                          {userEmail}
+                        </div>
                         <div className='text-xs font-medium text-[var(--brand-primary)] mt-0.5'>
                           {roleNames[userRole] || userRole}
                         </div>
@@ -607,7 +685,9 @@ export default function Header() {
                       className='flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
                     >
                       <User className='w-4 h-4' />
-                      <span>{t(I18N_KEYS.HEADER.PROFILE) || '????? ??????'}</span>
+                      <span>
+                        {t(I18N_KEYS.HEADER.PROFILE) || '????? ??????'}
+                      </span>
                     </Link>
                     <Link
                       href='/admin/settings'
@@ -621,12 +701,13 @@ export default function Header() {
 
                   {/* Logout */}
                   <div className='border-t border-gray-200 dark:border-gray-700 p-2'>
-                    <button
-                      onClick={handleLogout}
+                    <buttononClick={handleLogout} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleLogout } }}
                       className='w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors font-medium'
-                    >
+                     aria-label="{t(I18N_KEYS.HEADER.LOGOUT) || '????? ??????'}">
                       <LogOut className='w-4 h-4' />
-                      <span>{t(I18N_KEYS.HEADER.LOGOUT) || '????? ??????'}</span>
+                      <span>
+                        {t(I18N_KEYS.HEADER.LOGOUT) || '????? ??????'}
+                      </span>
                     </button>
                   </div>
                 </div>

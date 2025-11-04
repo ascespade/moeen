@@ -39,6 +39,16 @@ async function handleSlackEvent(event: unknown) {
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
-  return NextResponse.json({ error: 'Method not allowed' }, { status: 405, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+  return NextResponse.json(
+    { error: 'Method not allowed' },
+    {
+      status: 405,
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+      },
+    }
+  );
 }

@@ -136,7 +136,7 @@ export default function ChatbotAnalyticsPage() {
                 <option value='month'>هذا الشهر</option>
                 <option value='year'>هذا العام</option>
               </select>
-              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+              <buttonclassName='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تصدير التقرير">
                 تصدير التقرير
               </button>
             </div>
@@ -200,8 +200,7 @@ export default function ChatbotAnalyticsPage() {
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-lg font-semibold'>الرسائل حسب الساعة</h3>
               <div className='flex gap-2'>
-                <button
-                  onClick={() => setSelectedMetric('messages')}
+                <buttononClick={() = aria-label="Button"> { setSelectedMetric('messages')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedMetric('messages') } }}
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'messages'
                       ? 'bg-[var(--default-default)] text-white'
@@ -210,8 +209,7 @@ export default function ChatbotAnalyticsPage() {
                 >
                   الرسائل
                 </button>
-                <button
-                  onClick={() => setSelectedMetric('users')}
+                <buttononClick={() = aria-label="Button"> { setSelectedMetric('users')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedMetric('users') } }}
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'users'
                       ? 'bg-[var(--default-default)] text-white'

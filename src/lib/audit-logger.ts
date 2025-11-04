@@ -1,7 +1,7 @@
 /**
  * Audit Logger - HIPAA/GDPR Compliance
  * نظام تسجيل العمليات للأمان والامتثال
- * 
+ *
  * This module provides comprehensive audit logging for:
  * - HIPAA compliance (PHI access tracking)
  * - GDPR compliance (data access logs)
@@ -20,46 +20,46 @@ export enum AuditAction {
   LOGIN_FAILED = 'login_failed',
   PASSWORD_RESET = 'password_reset',
   PASSWORD_CHANGED = 'password_changed',
-  
+
   // CRUD Operations
   CREATE = 'create',
   READ = 'read',
   UPDATE = 'update',
   DELETE = 'delete',
-  
+
   // Patient Operations (PHI Access)
   PATIENT_CREATED = 'patient_created',
   PATIENT_VIEWED = 'patient_viewed',
   PATIENT_UPDATED = 'patient_updated',
   PATIENT_DELETED = 'patient_deleted',
   PATIENT_SEARCHED = 'patient_searched',
-  
+
   // Medical Records (PHI Access)
   MEDICAL_RECORD_CREATED = 'medical_record_created',
   MEDICAL_RECORD_VIEWED = 'medical_record_viewed',
   MEDICAL_RECORD_UPDATED = 'medical_record_updated',
   MEDICAL_RECORD_DELETED = 'medical_record_deleted',
-  
+
   // Appointments
   APPOINTMENT_CREATED = 'appointment_created',
   APPOINTMENT_VIEWED = 'appointment_viewed',
   APPOINTMENT_UPDATED = 'appointment_updated',
   APPOINTMENT_CANCELLED = 'appointment_cancelled',
-  
+
   // Permissions & Authorization
   PERMISSION_GRANTED = 'permission_granted',
   PERMISSION_REVOKED = 'permission_revoked',
   ROLE_CHANGED = 'role_changed',
-  
+
   // Security Events
   UNAUTHORIZED_ACCESS = 'unauthorized_access',
   RATE_LIMIT_EXCEEDED = 'rate_limit_exceeded',
   SUSPICIOUS_ACTIVITY = 'suspicious_activity',
-  
+
   // Data Export/Deletion (GDPR)
   DATA_EXPORTED = 'data_exported',
   DATA_DELETED = 'data_deleted',
-  
+
   // Configuration Changes
   SETTINGS_UPDATED = 'settings_updated',
   SYSTEM_CONFIG_CHANGED = 'system_config_changed',
@@ -84,18 +84,21 @@ export class AuditLogger {
   static async log(entry: AuditLogEntry): Promise<void> {
     try {
       const supabase = await createClient();
-      
+
       // Get user from session
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       const userId = session?.user?.id;
-      
+
       // Get IP address and user agent from headers
       const headersList = await headers();
-      const ipAddress = headersList.get('x-forwarded-for') || 
-                       headersList.get('x-real-ip') || 
-                       'unknown';
+      const ipAddress =
+        headersList.get('x-forwarded-for') ||
+        headersList.get('x-real-ip') ||
+        'unknown';
       const userAgent = headersList.get('user-agent') || 'unknown';
-      
+
       // Prepare audit log data
       const auditData = {
         action: entry.action,
@@ -110,9 +113,7 @@ export class AuditLogger {
       };
 
       // Insert into audit_logs table
-      const { error } = await supabase
-        .from('audit_logs')
-        .insert(auditData);
+      const { error } = await supabase.from('audit_logs').insert(auditData);
 
       if (error) {
         console.error('Audit log error:', error);
@@ -174,9 +175,12 @@ export class AuditLogger {
     action: 'read' | 'export' | 'delete',
     metadata?: Record<string, any>
   ): Promise<void> {
-    const auditAction = action === 'read' ? AuditAction.READ :
-                       action === 'export' ? AuditAction.DATA_EXPORTED :
-                       AuditAction.DATA_DELETED;
+    const auditAction =
+      action === 'read'
+        ? AuditAction.READ
+        : action === 'export'
+          ? AuditAction.DATA_EXPORTED
+          : AuditAction.DATA_DELETED;
 
     await this.log({
       action: auditAction,
@@ -194,7 +198,10 @@ export class AuditLogger {
    * Log security events
    */
   static async logSecurityEvent(
-    action: AuditAction.UNAUTHORIZED_ACCESS | AuditAction.RATE_LIMIT_EXCEEDED | AuditAction.SUSPICIOUS_ACTIVITY,
+    action:
+      | AuditAction.UNAUTHORIZED_ACCESS
+      | AuditAction.RATE_LIMIT_EXCEEDED
+      | AuditAction.SUSPICIOUS_ACTIVITY,
     metadata?: Record<string, any>
   ): Promise<void> {
     await this.log({
@@ -213,7 +220,10 @@ export class AuditLogger {
    * Log permission changes
    */
   static async logPermissionChange(
-    action: AuditAction.PERMISSION_GRANTED | AuditAction.PERMISSION_REVOKED | AuditAction.ROLE_CHANGED,
+    action:
+      | AuditAction.PERMISSION_GRANTED
+      | AuditAction.PERMISSION_REVOKED
+      | AuditAction.ROLE_CHANGED,
     targetUserId: number | string,
     oldValue: any,
     newValue: any,

@@ -2,7 +2,8 @@
 import logger from '@/lib/monitoring/logger';
 
 import { useCallback } from 'react';
-import { useT } from '@/hooks/useT';import { I18N_KEYS } from '@/constants/i18n-keys';
+import { useT } from '@/hooks/useT';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 
 // import { toast } from '@/components/ui/Toast';
 // import { logger } from '@/lib/logger';
@@ -33,7 +34,9 @@ export function useErrorHandler() {
       } else if (typeof error === 'string') {
         errorMessage = error;
       } else if (error && typeof error === 'object' && 'message' in error) {
-        errorMessage = String((error as { message?: string }).message || fallbackMessage);
+        errorMessage = String(
+          (error as { message?: string }).message || fallbackMessage
+        );
       }
 
       // Log error if enabled
@@ -50,7 +53,7 @@ export function useErrorHandler() {
               userAgent: navigator.userAgent,
               url: window.location.href,
             }),
-          }).catch((error) => {
+          }).catch(error => {
             // Silently fail - error logging service unavailable
             if (process.env.NODE_ENV === 'development') {
               console.error('Failed to log error to service:', error);
@@ -74,7 +77,10 @@ export function useErrorHandler() {
   async function handleAsyncErrorImpl<T>(
     asyncFn: () => Promise<T>,
     options: ErrorHandlerOptions,
-    errorHandler: (error: unknown, options: ErrorHandlerOptions) => { message: string; code: string }
+    errorHandler: (
+      error: unknown,
+      options: ErrorHandlerOptions
+    ) => { message: string; code: string }
   ): Promise<T | undefined> {
     try {
       return await asyncFn();
@@ -85,7 +91,10 @@ export function useErrorHandler() {
   }
 
   const handleAsyncError = useCallback(
-    <T,>(asyncFn: () => Promise<T>, options: ErrorHandlerOptions = {}): Promise<T | undefined> => {
+    <T,>(
+      asyncFn: () => Promise<T>,
+      options: ErrorHandlerOptions = {}
+    ): Promise<T | undefined> => {
       return handleAsyncErrorImpl(asyncFn, options, handleError);
     },
     [handleError]

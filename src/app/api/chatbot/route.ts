@@ -3,10 +3,17 @@ import { realDB } from '@/lib/supabase-real';
 import { requireAuth } from '@/lib/auth/authorize';
 import { PermissionManager } from '@/lib/permissions';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication and proper permissions
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff', 'agent'])(request);
+    const authResult = await requireAuth([
+      'admin',
+      'supervisor',
+      'staff',
+      'agent',
+    ])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -55,7 +62,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 export async function POST(request: NextRequest) {
   try {
     // Security: Require authentication and proper permissions
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+      request
+    );
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

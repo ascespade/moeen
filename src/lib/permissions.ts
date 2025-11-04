@@ -1,24 +1,31 @@
 /**
  * Comprehensive Permissions System
  * ???? ????????? ??????
- * 
+ *
  * Defines permissions for all user roles and provides permission checking utilities
  */
 
-export type UserRole = 
-  | 'admin' 
-  | 'doctor' 
-  | 'patient' 
-  | 'staff' 
-  | 'supervisor' 
-  | 'manager' 
-  | 'therapist' 
+export type UserRole =
+  | 'admin'
+  | 'doctor'
+  | 'patient'
+  | 'staff'
+  | 'supervisor'
+  | 'manager'
+  | 'therapist'
   | 'nurse'
   | 'agent';
 
 export type Permission = string;
 export type Resource = string;
-export type Action = 'create' | 'read' | 'update' | 'delete' | 'manage' | 'approve' | 'reject';
+export type Action =
+  | 'create'
+  | 'read'
+  | 'update'
+  | 'delete'
+  | 'manage'
+  | 'approve'
+  | 'reject';
 
 export interface RolePermission {
   resource: Resource;
@@ -35,20 +42,47 @@ export interface RolePermission {
  */
 export const ROLE_PERMISSIONS: Record<UserRole, RolePermission[]> = {
   admin: [
-    { resource: '*', actions: ['create', 'read', 'update', 'delete', 'manage'] },
+    {
+      resource: '*',
+      actions: ['create', 'read', 'update', 'delete', 'manage'],
+    },
   ],
-  
+
   doctor: [
-    { resource: 'patients', actions: ['read', 'update'], conditions: { ownOnly: true } },
-    { resource: 'appointments', actions: ['create', 'read', 'update', 'delete'], conditions: { ownOnly: true } },
-    { resource: 'medical-records', actions: ['create', 'read', 'update'], conditions: { ownOnly: true } },
-    { resource: 'prescriptions', actions: ['create', 'read', 'update'], conditions: { ownOnly: true } },
-    { resource: 'insurance-claims', actions: ['create', 'read'], conditions: { ownOnly: true } },
+    {
+      resource: 'patients',
+      actions: ['read', 'update'],
+      conditions: { ownOnly: true },
+    },
+    {
+      resource: 'appointments',
+      actions: ['create', 'read', 'update', 'delete'],
+      conditions: { ownOnly: true },
+    },
+    {
+      resource: 'medical-records',
+      actions: ['create', 'read', 'update'],
+      conditions: { ownOnly: true },
+    },
+    {
+      resource: 'prescriptions',
+      actions: ['create', 'read', 'update'],
+      conditions: { ownOnly: true },
+    },
+    {
+      resource: 'insurance-claims',
+      actions: ['create', 'read'],
+      conditions: { ownOnly: true },
+    },
     { resource: 'messages', actions: ['create', 'read'] },
     { resource: 'profile', actions: ['read', 'update'] },
-    { resource: 'sessions', actions: ['create', 'read', 'update'], conditions: { ownOnly: true } },
+    {
+      resource: 'sessions',
+      actions: ['create', 'read', 'update'],
+      conditions: { ownOnly: true },
+    },
   ],
-  
+
   patient: [
     { resource: 'own-medical-records', actions: ['read'] },
     { resource: 'own-appointments', actions: ['create', 'read'] },
@@ -58,17 +92,20 @@ export const ROLE_PERMISSIONS: Record<UserRole, RolePermission[]> = {
     { resource: 'messages', actions: ['create', 'read'] },
     { resource: 'chatbot', actions: ['create', 'read'] },
   ],
-  
+
   staff: [
     { resource: 'patients', actions: ['create', 'read', 'update'] },
-    { resource: 'appointments', actions: ['create', 'read', 'update', 'delete'] },
+    {
+      resource: 'appointments',
+      actions: ['create', 'read', 'update', 'delete'],
+    },
     { resource: 'payments', actions: ['create', 'read', 'update'] },
     { resource: 'insurance-claims', actions: ['create', 'read', 'update'] },
     { resource: 'messages', actions: ['create', 'read'] },
     { resource: 'profile', actions: ['read', 'update'] },
     { resource: 'check-in', actions: ['create', 'update'] },
   ],
-  
+
   supervisor: [
     { resource: 'reports', actions: ['read'] },
     { resource: 'analytics', actions: ['read'] },
@@ -79,34 +116,78 @@ export const ROLE_PERMISSIONS: Record<UserRole, RolePermission[]> = {
     { resource: 'payments', actions: ['read'] },
     { resource: 'profile', actions: ['read', 'update'] },
   ],
-  
+
   manager: [
-    { resource: 'users', actions: ['create', 'read', 'update'], conditions: { departmentOnly: true } },
-    { resource: 'patients', actions: ['read'], conditions: { departmentOnly: true } },
-    { resource: 'appointments', actions: ['read'], conditions: { departmentOnly: true } },
-    { resource: 'reports', actions: ['read'], conditions: { departmentOnly: true } },
-    { resource: 'settings', actions: ['read', 'update'], conditions: { departmentOnly: true } },
+    {
+      resource: 'users',
+      actions: ['create', 'read', 'update'],
+      conditions: { departmentOnly: true },
+    },
+    {
+      resource: 'patients',
+      actions: ['read'],
+      conditions: { departmentOnly: true },
+    },
+    {
+      resource: 'appointments',
+      actions: ['read'],
+      conditions: { departmentOnly: true },
+    },
+    {
+      resource: 'reports',
+      actions: ['read'],
+      conditions: { departmentOnly: true },
+    },
+    {
+      resource: 'settings',
+      actions: ['read', 'update'],
+      conditions: { departmentOnly: true },
+    },
     { resource: 'profile', actions: ['read', 'update'] },
   ],
-  
+
   therapist: [
-    { resource: 'patients', actions: ['read', 'update'], conditions: { ownOnly: true } },
-    { resource: 'appointments', actions: ['create', 'read', 'update'], conditions: { ownOnly: true } },
-    { resource: 'medical-records', actions: ['create', 'read', 'update'], conditions: { ownOnly: true } },
+    {
+      resource: 'patients',
+      actions: ['read', 'update'],
+      conditions: { ownOnly: true },
+    },
+    {
+      resource: 'appointments',
+      actions: ['create', 'read', 'update'],
+      conditions: { ownOnly: true },
+    },
+    {
+      resource: 'medical-records',
+      actions: ['create', 'read', 'update'],
+      conditions: { ownOnly: true },
+    },
     { resource: 'messages', actions: ['create', 'read'] },
     { resource: 'profile', actions: ['read', 'update'] },
-    { resource: 'sessions', actions: ['create', 'read', 'update'], conditions: { ownOnly: true } },
+    {
+      resource: 'sessions',
+      actions: ['create', 'read', 'update'],
+      conditions: { ownOnly: true },
+    },
   ],
-  
+
   nurse: [
     { resource: 'patients', actions: ['read'], conditions: { ownOnly: true } },
-    { resource: 'appointments', actions: ['read'], conditions: { ownOnly: true } },
-    { resource: 'medical-records', actions: ['read', 'update'], conditions: { ownOnly: true, readOnly: true } },
+    {
+      resource: 'appointments',
+      actions: ['read'],
+      conditions: { ownOnly: true },
+    },
+    {
+      resource: 'medical-records',
+      actions: ['read', 'update'],
+      conditions: { ownOnly: true, readOnly: true },
+    },
     { resource: 'medications', actions: ['read', 'update'] },
     { resource: 'messages', actions: ['create', 'read'] },
     { resource: 'profile', actions: ['read', 'update'] },
   ],
-  
+
   agent: [
     { resource: 'chatbot', actions: ['create', 'read', 'update'] },
     { resource: 'messages', actions: ['create', 'read'] },
@@ -152,13 +233,13 @@ export class PermissionManager {
     if (role === 'admin') return true;
 
     const rolePermissions = ROLE_PERMISSIONS[role] || [];
-    
+
     for (const perm of rolePermissions) {
       // Check wildcard permissions
       if (perm.resource === '*') {
         return true;
       }
-      
+
       // Check exact resource match
       if (perm.resource === resource && perm.actions.includes(action)) {
         // Check conditions
@@ -171,12 +252,12 @@ export class PermissionManager {
               }
             }
           }
-          
+
           // Check readOnly condition
           if (perm.conditions.readOnly && action !== 'read') {
             return false;
           }
-          
+
           // Check departmentOnly condition
           if (perm.conditions.departmentOnly && context) {
             if (context.departmentId && context.userDepartmentId) {
@@ -186,11 +267,11 @@ export class PermissionManager {
             }
           }
         }
-        
+
         return true;
       }
     }
-    
+
     return false;
   }
 
@@ -206,7 +287,7 @@ export class PermissionManager {
    */
   static getAccessibleResources(role: UserRole): Resource[] {
     const permissions = ROLE_PERMISSIONS[role] || [];
-    return permissions.map(p => p.resource === '*' ? '*' : p.resource);
+    return permissions.map(p => (p.resource === '*' ? '*' : p.resource));
   }
 
   /**
@@ -214,7 +295,15 @@ export class PermissionManager {
    */
   static getResourceActions(role: UserRole, resource: Resource): Action[] {
     if (role === 'admin') {
-      return ['create', 'read', 'update', 'delete', 'manage', 'approve', 'reject'];
+      return [
+        'create',
+        'read',
+        'update',
+        'delete',
+        'manage',
+        'approve',
+        'reject',
+      ];
     }
 
     const permissions = ROLE_PERMISSIONS[role] || [];
@@ -241,10 +330,10 @@ export class PermissionManager {
    */
   static canAccessRoute(role: UserRole, route: string): boolean {
     const defaultRoute = DEFAULT_ROUTES[role];
-    
+
     // Admin can access all routes
     if (role === 'admin') return true;
-    
+
     // Check if route matches role's allowed routes
     const roleRoutes: Record<UserRole, string[]> = {
       admin: ['/admin'],

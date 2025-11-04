@@ -54,7 +54,11 @@ export const formatRelativeTime = (date: Date | string): string => {
 
 import { formatNumberByLanguage } from '@/hooks/useLocalizedNumber';
 
-export const formatNumber = (num: number, decimals: number = 0, language: 'ar' | 'en' = 'ar'): string => {
+export const formatNumber = (
+  num: number,
+  decimals: number = 0,
+  language: 'ar' | 'en' = 'ar'
+): string => {
   const formatted = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,

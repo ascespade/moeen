@@ -71,7 +71,7 @@ import {
   MapPin,
   FileText,
   Video,
-  PhoneCall
+  PhoneCall,
 } from 'lucide-react';
 
 function AppointmentsPageContent() {
@@ -92,14 +92,16 @@ function AppointmentsPageContent() {
     updateAppointment,
     createAppointment,
     cancelAppointment,
-    confirmAppointment
+    confirmAppointment,
   } = useAdminAppointments();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
-  const [selectedAppointments, setSelectedAppointments] = useState<string[]>([]);
+  const [selectedAppointments, setSelectedAppointments] = useState<string[]>(
+    []
+  );
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
   // Update hook filters when local filters change
@@ -133,7 +135,7 @@ function AppointmentsPageContent() {
       createdAt: appointment.created_at,
       updatedAt: appointment.updated_at || appointment.created_at,
       location: appointment.location,
-      room: appointment.room
+      room: appointment.room,
     };
   });
 
@@ -143,29 +145,86 @@ function AppointmentsPageContent() {
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
-      scheduled: { label: 'مجدول', variant: 'outline' as const, className: 'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]' },
-      confirmed: { label: 'مؤكد', variant: 'default' as const, className: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]' },
-      in_progress: { label: 'جاري', variant: 'secondary' as const, className: 'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]' },
-      completed: { label: 'مكتمل', variant: 'default' as const, className: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]' },
-      cancelled: { label: 'ملغي', variant: 'error' as const, className: 'bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] text-[var(--brand-error)] border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]' },
-      no_show: { label: 'لم يحضر', variant: 'error' as const, className: 'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]' }
+      scheduled: {
+        label: 'مجدول',
+        variant: 'outline' as const,
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]',
+      },
+      confirmed: {
+        label: 'مؤكد',
+        variant: 'default' as const,
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]',
+      },
+      in_progress: {
+        label: 'جاري',
+        variant: 'secondary' as const,
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]',
+      },
+      completed: {
+        label: 'مكتمل',
+        variant: 'default' as const,
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]',
+      },
+      cancelled: {
+        label: 'ملغي',
+        variant: 'error' as const,
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] text-[var(--brand-error)] border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]',
+      },
+      no_show: {
+        label: 'لم يحضر',
+        variant: 'error' as const,
+        className:
+          'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]',
+      },
     };
 
-    const config = statusConfig[status as keyof typeof statusConfig] || { label: status, variant: 'outline' as const, className: '' };
-    return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
+    const config = statusConfig[status as keyof typeof statusConfig] || {
+      label: status,
+      variant: 'outline' as const,
+      className: '',
+    };
+    return (
+      <Badge variant={config.variant} className={config.className}>
+        {config.label}
+      </Badge>
+    );
   };
 
   const getTypeBadge = (type: string) => {
     const typeConfig = {
-      in_person: { label: 'حضوري', icon: <MapPin className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]' },
-      video: { label: 'فيديو', icon: <Video className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]' },
-      phone: { label: 'هاتفي', icon: <PhoneCall className="h-3 w-3" />, className: 'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]' }
+      in_person: {
+        label: 'حضوري',
+        icon: <MapPin className='h-3 w-3' />,
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]',
+      },
+      video: {
+        label: 'فيديو',
+        icon: <Video className='h-3 w-3' />,
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]',
+      },
+      phone: {
+        label: 'هاتفي',
+        icon: <PhoneCall className='h-3 w-3' />,
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]',
+      },
     };
 
-    const config = typeConfig[type as keyof typeof typeConfig] || { label: type, icon: null, className: '' };
+    const config = typeConfig[type as keyof typeof typeConfig] || {
+      label: type,
+      icon: null,
+      className: '',
+    };
     return (
-      <Badge variant="outline" className={config.className}>
-        <span className="flex items-center gap-1">
+      <Badge variant='outline' className={config.className}>
+        <span className='flex items-center gap-1'>
           {config.icon}
           {config.label}
         </span>
@@ -177,7 +236,7 @@ function AppointmentsPageContent() {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
@@ -187,22 +246,32 @@ function AppointmentsPageContent() {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'scheduled': return <Clock className="h-4 w-4 text-blue-500" />;
-      case 'confirmed': return <CheckCircle className="h-4 w-4 text-green-500" />;
-      case 'in_progress': return <Clock className="h-4 w-4 text-yellow-500" />;
-      case 'completed': return <CheckCircle className="h-4 w-4 text-green-500" />;
-      case 'cancelled': return <XCircle className="h-4 w-4 text-red-500" />;
-      case 'no_show': return <AlertTriangle className="h-4 w-4 text-gray-500" />;
-      default: return <Clock className="h-4 w-4 text-gray-500" />;
+      case 'scheduled':
+        return <Clock className='h-4 w-4 text-blue-500' />;
+      case 'confirmed':
+        return <CheckCircle className='h-4 w-4 text-green-500' />;
+      case 'in_progress':
+        return <Clock className='h-4 w-4 text-yellow-500' />;
+      case 'completed':
+        return <CheckCircle className='h-4 w-4 text-green-500' />;
+      case 'cancelled':
+        return <XCircle className='h-4 w-4 text-red-500' />;
+      case 'no_show':
+        return <AlertTriangle className='h-4 w-4 text-gray-500' />;
+      default:
+        return <Clock className='h-4 w-4 text-gray-500' />;
     }
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[var(--background)]">
-        <div className="text-center">
-          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" style={{ color: 'var(--brand-primary)' }} />
-          <p className="text-[var(--text-secondary)]">جاري تحميل المواعيد...</p>
+      <div className='flex items-center justify-center min-h-screen bg-[var(--background)]'>
+        <div className='text-center'>
+          <RefreshCw
+            className='h-8 w-8 animate-spin mx-auto mb-4'
+            style={{ color: 'var(--brand-primary)' }}
+          />
+          <p className='text-[var(--text-secondary)]'>جاري تحميل المواعيد...</p>
         </div>
       </div>
     );
@@ -210,12 +279,20 @@ function AppointmentsPageContent() {
 
   if (hookError) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[var(--background)]">
-        <div className="text-center max-w-md">
-          <AlertTriangle className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--brand-error)' }} />
-          <p className="mb-4" style={{ color: 'var(--brand-error)' }}>{hookError}</p>
-          <Button onClick={refetch} className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'>
-            <RefreshCw className="w-4 h-4 ml-2" />
+      <div className='flex items-center justify-center min-h-screen bg-[var(--background)]'>
+        <div className='text-center max-w-md'>
+          <AlertTriangle
+            className='w-12 h-12 mx-auto mb-4'
+            style={{ color: 'var(--brand-error)' }}
+          />
+          <p className='mb-4' style={{ color: 'var(--brand-error)' }}>
+            {hookError}
+          </p>
+          <Button
+            onClick={refetch}
+            className='bg-[var(--brand-primary)] hover:bg-[var(--brand-primary-hover)] text-white'
+          >
+            <RefreshCw className='w-4 h-4 ml-2' />
             إعادة المحاولة
           </Button>
         </div>
@@ -224,96 +301,114 @@ function AppointmentsPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <div className="container-app py-6">
+    <div className='min-h-screen bg-[var(--background)]'>
+      <div className='container-app py-6'>
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className='flex justify-between items-center mb-8'>
           <div>
-            <h1 className="text-3xl font-bold">إدارة المواعيد</h1>
-            <p className="text-muted-foreground">
+            <h1 className='text-3xl font-bold'>إدارة المواعيد</h1>
+            <p className='text-muted-foreground'>
               إدارة وحجز مواعيد المرضى مع الأطباء
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className='flex items-center gap-4'>
             {hasPermission('appointments:create') && (
-              <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+              <Dialog
+                open={isCreateDialogOpen}
+                onOpenChange={setIsCreateDialogOpen}
+              >
                 <DialogTrigger asChild>
                   <Button>
-                    <Plus className="h-4 w-4 mr-2" />
+                    <Plus className='h-4 w-4 mr-2' />
                     حجز موعد
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl">
+                <DialogContent className='max-w-2xl'>
                   <DialogHeader>
                     <DialogTitle>حجز موعد جديد</DialogTitle>
                     <DialogDescription>
                       قم بملء البيانات المطلوبة لحجز موعد جديد
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                  <div className='space-y-4'>
+                    <div className='grid grid-cols-2 gap-4'>
                       <div>
-                        <label className="text-sm font-medium">المريض</label>
+                        <label className='text-sm font-medium'>المريض</label>
                         <Select>
                           <SelectTrigger>
-                            <SelectValue placeholder="اختر المريض" />
+                            <SelectValue placeholder='اختر المريض' />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="1">أحمد محمد العلي</SelectItem>
-                            <SelectItem value="2">فاطمة أحمد السعد</SelectItem>
-                            <SelectItem value="3">محمد عبدالله القحطاني</SelectItem>
+                            <SelectItem value='1'>أحمد محمد العلي</SelectItem>
+                            <SelectItem value='2'>فاطمة أحمد السعد</SelectItem>
+                            <SelectItem value='3'>
+                              محمد عبدالله القحطاني
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
-                        <label className="text-sm font-medium">الطبيب</label>
+                        <label className='text-sm font-medium'>الطبيب</label>
                         <Select>
                           <SelectTrigger>
-                            <SelectValue placeholder="اختر الطبيب" />
+                            <SelectValue placeholder='اختر الطبيب' />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="1">د. أحمد محمد العلي - الطب العام</SelectItem>
-                            <SelectItem value="2">د. فاطمة أحمد السعد - أمراض القلب</SelectItem>
-                            <SelectItem value="3">د. محمد عبدالله القحطاني - الجراحة العامة</SelectItem>
+                            <SelectItem value='1'>
+                              د. أحمد محمد العلي - الطب العام
+                            </SelectItem>
+                            <SelectItem value='2'>
+                              د. فاطمة أحمد السعد - أمراض القلب
+                            </SelectItem>
+                            <SelectItem value='3'>
+                              د. محمد عبدالله القحطاني - الجراحة العامة
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className='grid grid-cols-2 gap-4'>
                       <div>
-                        <label className="text-sm font-medium">التاريخ</label>
-                        <Input type="date" />
+                        <label className='text-sm font-medium'>التاريخ</label>
+                        <Input type='date' />
                       </div>
                       <div>
-                        <label className="text-sm font-medium">الوقت</label>
-                        <Input type="time" />
+                        <label className='text-sm font-medium'>الوقت</label>
+                        <Input type='time' />
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className='grid grid-cols-2 gap-4'>
                       <div>
-                        <label className="text-sm font-medium">نوع الموعد</label>
+                        <label className='text-sm font-medium'>
+                          نوع الموعد
+                        </label>
                         <Select>
                           <SelectTrigger>
-                            <SelectValue placeholder="اختر النوع" />
+                            <SelectValue placeholder='اختر النوع' />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="in_person">حضوري</SelectItem>
-                            <SelectItem value="video">فيديو</SelectItem>
-                            <SelectItem value="phone">هاتفي</SelectItem>
+                            <SelectItem value='in_person'>حضوري</SelectItem>
+                            <SelectItem value='video'>فيديو</SelectItem>
+                            <SelectItem value='phone'>هاتفي</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
-                        <label className="text-sm font-medium">المدة (دقيقة)</label>
-                        <Input type="number" placeholder="30" />
+                        <label className='text-sm font-medium'>
+                          المدة (دقيقة)
+                        </label>
+                        <Input type='number' placeholder='30' />
                       </div>
                     </div>
                     <div>
-                      <label className="text-sm font-medium">سبب الموعد</label>
-                      <Input placeholder="مثال: فحص دوري" />
+                      <label className='text-sm font-medium'>سبب الموعد</label>
+                      <Input placeholder='مثال: فحص دوري' />
                     </div>
-                    <div className="flex justify-end gap-2">
-                      <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+                    <div className='flex justify-end gap-2'>
+                      <Button
+                        variant='outline'
+                        onClick={() => setIsCreateDialogOpen(false)}
+                      >
                         إلغاء
                       </Button>
                       <Button onClick={() => setIsCreateDialogOpen(false)}>
@@ -324,73 +419,88 @@ function AppointmentsPageContent() {
                 </DialogContent>
               </Dialog>
             )}
-            <Button variant="outline">
-              <Download className="h-4 w-4 mr-2" />
+            <Button variant='outline'>
+              <Download className='h-4 w-4 mr-2' />
               تصدير
             </Button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">إجمالي المواعيد</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>
+                إجمالي المواعيد
+              </CardTitle>
+              <Calendar className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{hookPagination?.totalItems || 0}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className='text-2xl font-bold'>
+                {hookPagination?.totalItems || 0}
+              </div>
+              <p className='text-xs text-muted-foreground'>
                 {filteredAppointments.length} موعد بعد الفلترة
               </p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">اليوم</CardTitle>
-              <CalendarDays className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>اليوم</CardTitle>
+              <CalendarDays className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                {appointments.filter(a => {
-                  if (!a.date) return false;
-                  const appointmentDate = new Date(a.date);
-                  const today = new Date();
-                  return appointmentDate.toDateString() === today.toDateString();
-                }).length}
+              <div className='text-2xl font-bold'>
+                {
+                  appointments.filter(a => {
+                    if (!a.date) return false;
+                    const appointmentDate = new Date(a.date);
+                    const today = new Date();
+                    return (
+                      appointmentDate.toDateString() === today.toDateString()
+                    );
+                  }).length
+                }
               </div>
-              <p className="text-xs text-muted-foreground">
-                مواعيد مجدولة
-              </p>
+              <p className='text-xs text-muted-foreground'>مواعيد مجدولة</p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">مكتملة</CardTitle>
-              <CheckCircle className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>مكتملة</CardTitle>
+              <CheckCircle className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
+              <div className='text-2xl font-bold'>
                 {appointments.filter(a => a.status === 'completed').length}
               </div>
-              <p className="text-xs text-muted-foreground">
-                {Math.round((appointments.filter(a => a.status === 'completed').length / appointments.length) * 100)}% من الإجمالي
+              <p className='text-xs text-muted-foreground'>
+                {Math.round(
+                  (appointments.filter(a => a.status === 'completed').length /
+                    appointments.length) *
+                    100
+                )}
+                % من الإجمالي
               </p>
             </CardContent>
           </Card>
 
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">ملغية</CardTitle>
-              <XCircle className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>ملغية</CardTitle>
+              <XCircle className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                {appointments.filter(a => a.status === 'cancelled' || a.status === 'no_show').length}
+              <div className='text-2xl font-bold'>
+                {
+                  appointments.filter(
+                    a => a.status === 'cancelled' || a.status === 'no_show'
+                  ).length
+                }
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p className='text-xs text-muted-foreground'>
                 مواعيد ملغية أو لم يحضر
               </p>
             </CardContent>
@@ -398,60 +508,60 @@ function AppointmentsPageContent() {
         </div>
 
         {/* Filters */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Card className='mb-6'>
+          <CardContent className='pt-6'>
+            <div className='flex flex-col md:flex-row gap-4'>
+              <div className='flex-1'>
+                <div className='relative'>
+                  <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground' />
                   <Input
-                    placeholder="البحث بالاسم أو السبب..."
+                    placeholder='البحث بالاسم أو السبب...'
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    onChange={e => setSearchTerm(e.target.value)}
+                    className='pl-10'
                   />
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className='flex gap-2'>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="الحالة" />
+                  <SelectTrigger className='w-40'>
+                    <SelectValue placeholder='الحالة' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">جميع الحالات</SelectItem>
-                    <SelectItem value="scheduled">مجدول</SelectItem>
-                    <SelectItem value="confirmed">مؤكد</SelectItem>
-                    <SelectItem value="in_progress">جاري</SelectItem>
-                    <SelectItem value="completed">مكتمل</SelectItem>
-                    <SelectItem value="cancelled">ملغي</SelectItem>
-                    <SelectItem value="no_show">لم يحضر</SelectItem>
+                    <SelectItem value='all'>جميع الحالات</SelectItem>
+                    <SelectItem value='scheduled'>مجدول</SelectItem>
+                    <SelectItem value='confirmed'>مؤكد</SelectItem>
+                    <SelectItem value='in_progress'>جاري</SelectItem>
+                    <SelectItem value='completed'>مكتمل</SelectItem>
+                    <SelectItem value='cancelled'>ملغي</SelectItem>
+                    <SelectItem value='no_show'>لم يحضر</SelectItem>
                   </SelectContent>
                 </Select>
                 <Select value={typeFilter} onValueChange={setTypeFilter}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="النوع" />
+                  <SelectTrigger className='w-40'>
+                    <SelectValue placeholder='النوع' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">جميع الأنواع</SelectItem>
-                    <SelectItem value="in_person">حضوري</SelectItem>
-                    <SelectItem value="video">فيديو</SelectItem>
-                    <SelectItem value="phone">هاتفي</SelectItem>
+                    <SelectItem value='all'>جميع الأنواع</SelectItem>
+                    <SelectItem value='in_person'>حضوري</SelectItem>
+                    <SelectItem value='video'>فيديو</SelectItem>
+                    <SelectItem value='phone'>هاتفي</SelectItem>
                   </SelectContent>
                 </Select>
                 <Select value={dateFilter} onValueChange={setDateFilter}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="التاريخ" />
+                  <SelectTrigger className='w-40'>
+                    <SelectValue placeholder='التاريخ' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">جميع التواريخ</SelectItem>
-                    <SelectItem value="today">اليوم</SelectItem>
-                    <SelectItem value="tomorrow">غداً</SelectItem>
-                    <SelectItem value="this_week">هذا الأسبوع</SelectItem>
-                    <SelectItem value="this_month">هذا الشهر</SelectItem>
+                    <SelectItem value='all'>جميع التواريخ</SelectItem>
+                    <SelectItem value='today'>اليوم</SelectItem>
+                    <SelectItem value='tomorrow'>غداً</SelectItem>
+                    <SelectItem value='this_week'>هذا الأسبوع</SelectItem>
+                    <SelectItem value='this_month'>هذا الشهر</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button variant="outline">
-                  <Filter className="h-4 w-4 mr-2" />
+                <Button variant='outline'>
+                  <Filter className='h-4 w-4 mr-2' />
                   فلتر
                 </Button>
               </div>
@@ -463,19 +573,17 @@ function AppointmentsPageContent() {
         <Card>
           <CardHeader>
             <CardTitle>قائمة المواعيد</CardTitle>
-            <CardDescription>
-              عرض وإدارة جميع مواعيد المركز
-            </CardDescription>
+            <CardDescription>عرض وإدارة جميع مواعيد المركز</CardDescription>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-12">
+                  <TableHead className='w-12'>
                     <input
-                      type="checkbox"
-                      className="rounded border-[var(--brand-border)]"
-                      onChange={(e) => {
+                      type='checkbox'
+                      className='rounded border-[var(--brand-border)]'
+                      onChange={e => {
                         if (e.target.checked) {
                           setSelectedAppointments(appointments.map(a => a.id));
                         } else {
@@ -490,35 +598,44 @@ function AppointmentsPageContent() {
                   <TableHead>النوع</TableHead>
                   <TableHead>الحالة</TableHead>
                   <TableHead>السبب</TableHead>
-                  <TableHead className="text-right">الإجراءات</TableHead>
+                  <TableHead className='text-right'>الإجراءات</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {appointments.map((appointment) => (
+                {appointments.map(appointment => (
                   <TableRow key={appointment.id}>
                     <TableCell>
                       <input
-                        type="checkbox"
-                        className="rounded border-[var(--brand-border)]"
+                        type='checkbox'
+                        className='rounded border-[var(--brand-border)]'
                         checked={selectedAppointments.includes(appointment.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
-                            setSelectedAppointments([...selectedAppointments, appointment.id]);
+                            setSelectedAppointments([
+                              ...selectedAppointments,
+                              appointment.id,
+                            ]);
                           } else {
-                            setSelectedAppointments(selectedAppointments.filter(id => id !== appointment.id));
+                            setSelectedAppointments(
+                              selectedAppointments.filter(
+                                id => id !== appointment.id
+                              )
+                            );
                           }
                         }}
                       />
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground grid place-items-center text-sm">
+                      <div className='flex items-center gap-3'>
+                        <div className='h-8 w-8 rounded-full bg-primary text-primary-foreground grid place-items-center text-sm'>
                           {appointment.patientName.charAt(0)}
                         </div>
                         <div>
-                          <div className="font-medium">{appointment.patientName}</div>
-                          <div className="text-xs text-muted-foreground flex items-center gap-1">
-                            <Phone className="h-3 w-3" />
+                          <div className='font-medium'>
+                            {appointment.patientName}
+                          </div>
+                          <div className='text-xs text-muted-foreground flex items-center gap-1'>
+                            <Phone className='h-3 w-3' />
                             {appointment.patientPhone}
                           </div>
                         </div>
@@ -526,93 +643,98 @@ function AppointmentsPageContent() {
                     </TableCell>
                     <TableCell>
                       <div>
-                        <div className="font-medium">{appointment.doctorName}</div>
-                        <div className="text-xs text-muted-foreground">{appointment.doctorSpecialization}</div>
+                        <div className='font-medium'>
+                          {appointment.doctorName}
+                        </div>
+                        <div className='text-xs text-muted-foreground'>
+                          {appointment.doctorSpecialization}
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-sm">
-                        <div className="font-medium">{appointment.date ? formatDate(appointment.date) : 'غير محدد'}</div>
-                        <div className="text-muted-foreground flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {formatTime(appointment.time)} ({appointment.duration} دقيقة)
+                      <div className='text-sm'>
+                        <div className='font-medium'>
+                          {appointment.date
+                            ? formatDate(appointment.date)
+                            : 'غير محدد'}
+                        </div>
+                        <div className='text-muted-foreground flex items-center gap-1'>
+                          <Clock className='h-3 w-3' />
+                          {formatTime(appointment.time)} ({appointment.duration}{' '}
+                          دقيقة)
                         </div>
                         {appointment.location && (
-                          <div className="text-xs text-muted-foreground flex items-center gap-1">
-                            <MapPin className="h-3 w-3" />
+                          <div className='text-xs text-muted-foreground flex items-center gap-1'>
+                            <MapPin className='h-3 w-3' />
                             {appointment.location} - {appointment.room}
                           </div>
                         )}
                       </div>
                     </TableCell>
+                    <TableCell>{getTypeBadge(appointment.type)}</TableCell>
                     <TableCell>
-                      {getTypeBadge(appointment.type)}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
+                      <div className='flex items-center gap-2'>
                         {getStatusIcon(appointment.status)}
                         {getStatusBadge(appointment.status)}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-sm">
-                        {appointment.reason}
-                      </div>
+                      <div className='text-sm'>{appointment.reason}</div>
                       {appointment.notes && (
-                        <div className="text-xs text-muted-foreground truncate max-w-32">
+                        <div className='text-xs text-muted-foreground truncate max-w-32'>
                           {appointment.notes}
                         </div>
                       )}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className='text-right'>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0">
-                            <MoreHorizontal className="h-4 w-4" />
+                          <Button variant='ghost' className='h-8 w-8 p-0'>
+                            <MoreHorizontal className='h-4 w-4' />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent align='end'>
                           <DropdownMenuLabel>الإجراءات</DropdownMenuLabel>
                           <DropdownMenuItem>
-                            <Eye className="h-4 w-4 mr-2" />
+                            <Eye className='h-4 w-4 mr-2' />
                             عرض التفاصيل
                           </DropdownMenuItem>
                           {hasPermission('appointments:edit') && (
                             <DropdownMenuItem>
-                              <Edit className="h-4 w-4 mr-2" />
+                              <Edit className='h-4 w-4 mr-2' />
                               تعديل
                             </DropdownMenuItem>
                           )}
                           {appointment.status === 'scheduled' && (
                             <DropdownMenuItem>
-                              <CheckCircle className="h-4 w-4 mr-2" />
+                              <CheckCircle className='h-4 w-4 mr-2' />
                               تأكيد الموعد
                             </DropdownMenuItem>
                           )}
                           {appointment.status === 'confirmed' && (
                             <DropdownMenuItem>
-                              <Clock className="h-4 w-4 mr-2" />
+                              <Clock className='h-4 w-4 mr-2' />
                               بدء الموعد
                             </DropdownMenuItem>
                           )}
                           <DropdownMenuItem>
-                            <FileText className="h-4 w-4 mr-2" />
+                            <FileText className='h-4 w-4 mr-2' />
                             السجل الطبي
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem>
-                            <Phone className="h-4 w-4 mr-2" />
+                            <Phone className='h-4 w-4 mr-2' />
                             اتصال
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <Mail className="h-4 w-4 mr-2" />
+                            <Mail className='h-4 w-4 mr-2' />
                             إرسال رسالة
                           </DropdownMenuItem>
                           {hasPermission('appointments:delete') && (
                             <>
                               <DropdownMenuSeparator />
-                              <DropdownMenuItem className="text-destructive">
-                                <Trash2 className="h-4 w-4 mr-2" />
+                              <DropdownMenuItem className='text-destructive'>
+                                <Trash2 className='h-4 w-4 mr-2' />
                                 حذف
                               </DropdownMenuItem>
                             </>
@@ -626,39 +748,58 @@ function AppointmentsPageContent() {
             </Table>
 
             {/* Pagination */}
-            <div className="flex items-center justify-between mt-6">
-              <div className="text-sm text-muted-foreground">
-                عرض {appointments.length > 0 ? ((currentPageForPagination - 1) * 10 + 1) : 0} - {Math.min(currentPageForPagination * 10, hookPagination?.totalItems || 0)} من {hookPagination?.totalItems || 0} موعد
+            <div className='flex items-center justify-between mt-6'>
+              <div className='text-sm text-muted-foreground'>
+                عرض{' '}
+                {appointments.length > 0
+                  ? (currentPageForPagination - 1) * 10 + 1
+                  : 0}{' '}
+                -{' '}
+                {Math.min(
+                  currentPageForPagination * 10,
+                  hookPagination?.totalItems || 0
+                )}{' '}
+                من {hookPagination?.totalItems || 0} موعد
               </div>
-              <div className="flex items-center gap-2">
+              <div className='flex items-center gap-2'>
                 <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setPage(Math.max(1, currentPageForPagination - 1))}
+                  variant='outline'
+                  size='sm'
+                  onClick={() =>
+                    setPage(Math.max(1, currentPageForPagination - 1))
+                  }
                   disabled={currentPageForPagination === 1}
                 >
-                  <ChevronLeft className="h-4 w-4" />
+                  <ChevronLeft className='h-4 w-4' />
                 </Button>
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                    <Button
-                      key={page}
-                      variant={currentPageForPagination === page ? "primary" : "outline"}
-                      size="sm"
-                      onClick={() => setPage(page)}
-                      className="w-8 h-8 p-0"
-                    >
-                      {page}
-                    </Button>
-                  ))}
+                <div className='flex items-center gap-1'>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    page => (
+                      <Button
+                        key={page}
+                        variant={
+                          currentPageForPagination === page
+                            ? 'primary'
+                            : 'outline'
+                        }
+                        size='sm'
+                        onClick={() => setPage(page)}
+                        className='w-8 h-8 p-0'
+                      >
+                        {page}
+                      </Button>
+                    )
+                  )}
                 </div>
                 <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setPage(Math.min(totalPages, currentPageForPagination + 1))}
+                  variant='outline'
+                  size='sm'
+                  onClick={() =>
+                    setPage(Math.min(totalPages, currentPageForPagination + 1))
+                  }
                   disabled={currentPageForPagination === totalPages}
                 >
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className='h-4 w-4' />
                 </Button>
               </div>
             </div>

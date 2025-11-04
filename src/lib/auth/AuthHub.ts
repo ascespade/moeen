@@ -1,7 +1,7 @@
 /**
  * 🏗️ Centralized Authentication Hub
  * Single source of truth for all authentication & authorization
- * 
+ *
  * This class provides a centralized, singleton-based authentication system
  * that handles all auth operations with proper caching and error handling.
  */
@@ -28,10 +28,13 @@ export interface AuthResult {
 class AuthHub {
   private static instance: AuthHub;
   private supabase: SupabaseClient | null = null;
-  private permissionsCache = new Map<string, {
-    permissions: UserPermissions;
-    timestamp: number;
-  }>();
+  private permissionsCache = new Map<
+    string,
+    {
+      permissions: UserPermissions;
+      timestamp: number;
+    }
+  >();
   private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
   private constructor() {
@@ -128,7 +131,9 @@ class AuthHub {
   async getSession(): Promise<Session | null> {
     try {
       const supabase = this.getBrowserClient();
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       return session;
     } catch (error) {
       console.error('Get session error:', error);
@@ -139,7 +144,9 @@ class AuthHub {
   async refreshSession(): Promise<Session | null> {
     try {
       const supabase = this.getBrowserClient();
-      const { data: { session } } = await supabase.auth.refreshSession();
+      const {
+        data: { session },
+      } = await supabase.auth.refreshSession();
       return session;
     } catch (error) {
       console.error('Refresh session error:', error);
@@ -150,7 +157,9 @@ class AuthHub {
   async getUser(): Promise<User | null> {
     try {
       const supabase = this.getBrowserClient();
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       return user;
     } catch (error) {
       console.error('Get user error:', error);
@@ -173,7 +182,7 @@ class AuthHub {
       // Fetch from database using server client
       // We need to get the user's role from the users table
       const supabase = await createClient();
-      
+
       // Get user with role
       const { data: userData, error: userError } = await supabase
         .from('users')
@@ -209,8 +218,13 @@ class AuthHub {
   /**
    * Get permissions for a role
    */
-  private getRolePermissions(role: string): Array<{ resource: string; actions: string[] }> {
-    const rolePermissions: Record<string, Array<{ resource: string; actions: string[] }>> = {
+  private getRolePermissions(
+    role: string
+  ): Array<{ resource: string; actions: string[] }> {
+    const rolePermissions: Record<
+      string,
+      Array<{ resource: string; actions: string[] }>
+    > = {
       admin: [
         { resource: '*', actions: ['*'] },
         { resource: 'users', actions: ['create', 'read', 'update', 'delete'] },
@@ -234,7 +248,10 @@ class AuthHub {
         { resource: 'dashboard', actions: ['access'] },
       ],
       supervisor: [
-        { resource: 'appointments', actions: ['read', 'create', 'update', 'delete'] },
+        {
+          resource: 'appointments',
+          actions: ['read', 'create', 'update', 'delete'],
+        },
         { resource: 'patients', actions: ['read', 'write'] },
         { resource: 'staff', actions: ['read', 'manage'] },
         { resource: 'dashboard', actions: ['access'] },
@@ -266,7 +283,7 @@ class AuthHub {
 
       // Check specific permission
       const hasPermission = permissions.permissions.some(
-        (p) =>
+        p =>
           (p.resource === resource || p.resource === '*') &&
           (p.actions.includes(action) || p.actions.includes('*'))
       );
@@ -366,15 +383,15 @@ class AuthHub {
       return () => {};
     }
 
-    const { data: { subscription } } = this.supabase.auth.onAuthStateChange(
-      (event, session) => {
-        callback(event, session);
-        // Clear cache on sign out
-        if (event === 'SIGNED_OUT') {
-          this.clearAllCache();
-        }
+    const {
+      data: { subscription },
+    } = this.supabase.auth.onAuthStateChange((event, session) => {
+      callback(event, session);
+      // Clear cache on sign out
+      if (event === 'SIGNED_OUT') {
+        this.clearAllCache();
       }
-    );
+    });
 
     return () => subscription.unsubscribe();
   }

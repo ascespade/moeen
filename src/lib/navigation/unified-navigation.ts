@@ -140,7 +140,10 @@ function canAccessNavItem(user: AuthUser, item: NavItem): boolean {
       ? item.requiredPermission
       : [item.requiredPermission];
 
-    const hasAccess = PermissionManager.hasAnyPermission(user.permissions, permissions);
+    const hasAccess = PermissionManager.hasAnyPermission(
+      user.permissions,
+      permissions
+    );
     if (!hasAccess) {
       return false;
     }

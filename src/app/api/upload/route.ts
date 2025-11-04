@@ -7,7 +7,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const formData = await request.formData();
@@ -16,14 +24,30 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const patientId = formData.get('patientId') as string;
 
     if (!file) {
-      return NextResponse.json({ error: 'No file provided' }, { status: 400, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'No file provided' },
+        {
+          status: 400,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     if (
       !type ||
       !['medical_record', 'insurance_claim', 'profile'].includes(type)
     ) {
-      return NextResponse.json({ error: 'Invalid file type' }, { status: 400, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'Invalid file type' },
+        {
+          status: 400,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     // Validate file size (10MB max)
@@ -148,12 +172,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest) {
   try {
     const { user, error: authError } = await authorize(request);
 
     if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } };
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        {
+          status: 401,
+          headers: {
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        }
+      );
     }
 
     const { searchParams } = new URL(request.url);

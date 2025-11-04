@@ -79,7 +79,7 @@ import {
   MapPin,
   FileText,
   MessageSquare,
-  CalendarDays
+  CalendarDays,
 } from 'lucide-react';
 
 interface Lead {
@@ -89,7 +89,14 @@ interface Lead {
   email: string;
   phone: string;
   source: string;
-  status: 'new' | 'contacted' | 'qualified' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
+  status:
+    | 'new'
+    | 'contacted'
+    | 'qualified'
+    | 'proposal'
+    | 'negotiation'
+    | 'closed_won'
+    | 'closed_lost';
   priority: 'low' | 'medium' | 'high' | 'urgent';
   value: number;
   probability: number;
@@ -141,7 +148,13 @@ interface Deal {
   contactId: string;
   contactName: string;
   value: number;
-  stage: 'lead' | 'qualification' | 'proposal' | 'negotiation' | 'closed_won' | 'closed_lost';
+  stage:
+    | 'lead'
+    | 'qualification'
+    | 'proposal'
+    | 'negotiation'
+    | 'closed_won'
+    | 'closed_lost';
   probability: number;
   expectedCloseDate: string;
   assignedTo: string;
@@ -157,7 +170,9 @@ interface Deal {
 export default function CRMPage() {
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
-  const [activeTab, setActiveTab] = useState<'leads' | 'contacts' | 'deals'>('leads');
+  const [activeTab, setActiveTab] = useState<'leads' | 'contacts' | 'deals'>(
+    'leads'
+  );
   const [leads, setLeads] = useState<Lead[]>([]);
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [deals, setDeals] = useState<Deal[]>([]);
@@ -197,8 +212,8 @@ export default function CRMPage() {
         website: 'www.tech.com',
         socialMedia: {
           linkedin: 'linkedin.com/in/ahmed-ali',
-          twitter: '@ahmed_ali'
-        }
+          twitter: '@ahmed_ali',
+        },
       },
       {
         id: '2',
@@ -221,7 +236,7 @@ export default function CRMPage() {
         address: 'جدة، حي الروضة',
         industry: 'الرعاية الصحية',
         position: 'مدير تقنية المعلومات',
-        website: 'www.hope.com'
+        website: 'www.hope.com',
       },
       {
         id: '3',
@@ -244,8 +259,8 @@ export default function CRMPage() {
         address: 'الدمام، حي الفيصلية',
         industry: 'طب الأسنان',
         position: 'مالك العيادة',
-        website: 'www.dental.com'
-      }
+        website: 'www.dental.com',
+      },
     ];
 
     const mockContacts: Contact[] = [
@@ -265,7 +280,7 @@ export default function CRMPage() {
         notes: 'عميل راضي عن الخدمات',
         address: 'الرياض، حي العليا',
         industry: 'الرعاية الصحية',
-        website: 'www.care.com'
+        website: 'www.care.com',
       },
       {
         id: '2',
@@ -283,8 +298,8 @@ export default function CRMPage() {
         notes: 'عميل مهم يحتاج متابعة دورية',
         address: 'الطائف، حي الشهداء',
         industry: 'الرعاية الصحية',
-        website: 'www.healing.com'
-      }
+        website: 'www.healing.com',
+      },
     ];
 
     const mockDeals: Deal[] = [
@@ -304,7 +319,7 @@ export default function CRMPage() {
         notes: 'صفقة كبيرة تحتاج موافقة الإدارة',
         tags: ['نظام شامل', 'مستشفى'],
         source: 'الموقع الإلكتروني',
-        priority: 'high'
+        priority: 'high',
       },
       {
         id: '2',
@@ -322,8 +337,8 @@ export default function CRMPage() {
         notes: 'نظام مواعيد متقدم مع تكامل AI',
         tags: ['مواعيد', 'ذكي', 'AI'],
         source: 'الإحالة',
-        priority: 'medium'
-      }
+        priority: 'medium',
+      },
     ];
 
     setLeads(mockLeads);
@@ -335,104 +350,212 @@ export default function CRMPage() {
 
   const getCurrentData = () => {
     switch (activeTab) {
-      case 'leads': return leads;
-      case 'contacts': return contacts;
-      case 'deals': return deals;
-      default: return [];
+      case 'leads':
+        return leads;
+      case 'contacts':
+        return contacts;
+      case 'deals':
+        return deals;
+      default:
+        return [];
     }
   };
 
   const filteredData = getCurrentData().filter((item: any) => {
-    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (item.company && item.company.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                         item.email.toLowerCase().includes(searchTerm.toLowerCase());
-    
+    const matchesSearch =
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.company &&
+        item.company.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      item.email.toLowerCase().includes(searchTerm.toLowerCase());
+
     let matchesStatus = true;
     if (statusFilter !== 'all') {
-      matchesStatus = item.status === statusFilter || item.stage === statusFilter;
+      matchesStatus =
+        item.status === statusFilter || item.stage === statusFilter;
     }
-    
+
     let matchesPriority = true;
     if (priorityFilter !== 'all') {
       matchesPriority = item.priority === priorityFilter;
     }
-    
+
     return matchesSearch && matchesStatus && matchesPriority;
   });
 
-  const getStatusBadge = (status: string, type: 'lead' | 'contact' | 'deal' = 'lead') => {
+  const getStatusBadge = (
+    status: string,
+    type: 'lead' | 'contact' | 'deal' = 'lead'
+  ) => {
     const statusConfigs = {
       lead: {
-        new: { label: 'جديد', variant: 'outline' as const, className: 'bg-blue-100 text-blue-800' },
-        contacted: { label: 'تم الاتصال', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
-        qualified: { label: 'مؤهل', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-        proposal: { label: 'عرض', variant: 'secondary' as const, className: 'bg-purple-100 text-purple-800' },
-        negotiation: { label: 'تفاوض', variant: 'outline' as const, className: 'bg-orange-100 text-orange-800' },
-        closed_won: { label: 'مكتمل', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-        closed_lost: { label: 'مرفوض', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
+        new: {
+          label: 'جديد',
+          variant: 'outline' as const,
+          className: 'bg-blue-100 text-blue-800',
+        },
+        contacted: {
+          label: 'تم الاتصال',
+          variant: 'secondary' as const,
+          className: 'bg-yellow-100 text-yellow-800',
+        },
+        qualified: {
+          label: 'مؤهل',
+          variant: 'default' as const,
+          className: 'bg-green-100 text-green-800',
+        },
+        proposal: {
+          label: 'عرض',
+          variant: 'secondary' as const,
+          className: 'bg-purple-100 text-purple-800',
+        },
+        negotiation: {
+          label: 'تفاوض',
+          variant: 'outline' as const,
+          className: 'bg-orange-100 text-orange-800',
+        },
+        closed_won: {
+          label: 'مكتمل',
+          variant: 'default' as const,
+          className: 'bg-green-100 text-green-800',
+        },
+        closed_lost: {
+          label: 'مرفوض',
+          variant: 'error' as const,
+          className: 'bg-red-100 text-red-800',
+        },
       },
       contact: {
-        active: { label: 'نشط', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-        inactive: { label: 'غير نشط', variant: 'secondary' as const, className: 'bg-gray-100 text-gray-800' },
-        unsubscribed: { label: 'ملغي الاشتراك', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
+        active: {
+          label: 'نشط',
+          variant: 'default' as const,
+          className: 'bg-green-100 text-green-800',
+        },
+        inactive: {
+          label: 'غير نشط',
+          variant: 'secondary' as const,
+          className: 'bg-gray-100 text-gray-800',
+        },
+        unsubscribed: {
+          label: 'ملغي الاشتراك',
+          variant: 'error' as const,
+          className: 'bg-red-100 text-red-800',
+        },
       },
       deal: {
-        lead: { label: 'عميل محتمل', variant: 'outline' as const, className: 'bg-blue-100 text-blue-800' },
-        qualification: { label: 'تأهيل', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
-        proposal: { label: 'عرض', variant: 'secondary' as const, className: 'bg-purple-100 text-purple-800' },
-        negotiation: { label: 'تفاوض', variant: 'outline' as const, className: 'bg-orange-100 text-orange-800' },
-        closed_won: { label: 'مكتمل', variant: 'default' as const, className: 'bg-green-100 text-green-800' },
-        closed_lost: { label: 'مرفوض', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
-      }
+        lead: {
+          label: 'عميل محتمل',
+          variant: 'outline' as const,
+          className: 'bg-blue-100 text-blue-800',
+        },
+        qualification: {
+          label: 'تأهيل',
+          variant: 'secondary' as const,
+          className: 'bg-yellow-100 text-yellow-800',
+        },
+        proposal: {
+          label: 'عرض',
+          variant: 'secondary' as const,
+          className: 'bg-purple-100 text-purple-800',
+        },
+        negotiation: {
+          label: 'تفاوض',
+          variant: 'outline' as const,
+          className: 'bg-orange-100 text-orange-800',
+        },
+        closed_won: {
+          label: 'مكتمل',
+          variant: 'default' as const,
+          className: 'bg-green-100 text-green-800',
+        },
+        closed_lost: {
+          label: 'مرفوض',
+          variant: 'error' as const,
+          className: 'bg-red-100 text-red-800',
+        },
+      },
     };
-    
-    const config = (statusConfigs as any)[type]?.[status] ||
-                  { label: status, variant: 'outline' as const, className: '' };
-    return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
+
+    const config = (statusConfigs as any)[type]?.[status] || {
+      label: status,
+      variant: 'outline' as const,
+      className: '',
+    };
+    return (
+      <Badge variant={config.variant} className={config.className}>
+        {config.label}
+      </Badge>
+    );
   };
 
   const getPriorityBadge = (priority: string) => {
     const priorityConfig = {
-      low: { label: 'منخفض', variant: 'outline' as const, className: 'bg-gray-100 text-gray-800' },
-      medium: { label: 'متوسط', variant: 'secondary' as const, className: 'bg-yellow-100 text-yellow-800' },
-      high: { label: 'عالي', variant: 'default' as const, className: 'bg-orange-100 text-orange-800' },
-      urgent: { label: 'عاجل', variant: 'error' as const, className: 'bg-red-100 text-red-800' }
+      low: {
+        label: 'منخفض',
+        variant: 'outline' as const,
+        className: 'bg-gray-100 text-gray-800',
+      },
+      medium: {
+        label: 'متوسط',
+        variant: 'secondary' as const,
+        className: 'bg-yellow-100 text-yellow-800',
+      },
+      high: {
+        label: 'عالي',
+        variant: 'default' as const,
+        className: 'bg-orange-100 text-orange-800',
+      },
+      urgent: {
+        label: 'عاجل',
+        variant: 'error' as const,
+        className: 'bg-red-100 text-red-800',
+      },
     };
-    
-    const config = priorityConfig[priority as keyof typeof priorityConfig] || 
-                  { label: priority, variant: 'outline' as const, className: '' };
-    return <Badge variant={config.variant} className={config.className}>{config.label}</Badge>;
+
+    const config = priorityConfig[priority as keyof typeof priorityConfig] || {
+      label: priority,
+      variant: 'outline' as const,
+      className: '',
+    };
+    return (
+      <Badge variant={config.variant} className={config.className}>
+        {config.label}
+      </Badge>
+    );
   };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('ar-SA', {
       style: 'currency',
-      currency: 'SAR'
+      currency: 'SAR',
     }).format(amount);
   };
 
   const getTabIcon = (tab: string) => {
     switch (tab) {
-      case 'leads': return <Target className="h-4 w-4" />;
-      case 'contacts': return <Users className="h-4 w-4" />;
-      case 'deals': return <TrendingUp className="h-4 w-4" />;
-      default: return null;
+      case 'leads':
+        return <Target className='h-4 w-4' />;
+      case 'contacts':
+        return <Users className='h-4 w-4' />;
+      case 'deals':
+        return <TrendingUp className='h-4 w-4' />;
+      default:
+        return null;
     }
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4" />
+      <div className='flex items-center justify-center min-h-screen'>
+        <div className='text-center'>
+          <RefreshCw className='h-8 w-8 animate-spin mx-auto mb-4' />
           <p>جاري تحميل بيانات CRM...</p>
         </div>
       </div>
@@ -440,101 +563,107 @@ export default function CRMPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container-app py-6">
+    <div className='min-h-screen bg-background'>
+      <div className='container-app py-6'>
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className='flex justify-between items-center mb-8'>
           <div>
-            <h1 className="text-3xl font-bold">إدارة العملاء (CRM)</h1>
-            <p className="text-muted-foreground">
+            <h1 className='text-3xl font-bold'>إدارة العملاء (CRM)</h1>
+            <p className='text-muted-foreground'>
               إدارة العملاء المحتملين والجهات والصفقات
             </p>
           </div>
-          <div className="flex items-center gap-4">
-            <Button variant="outline">
-              <Download className="h-4 w-4 mr-2" />
+          <div className='flex items-center gap-4'>
+            <Button variant='outline'>
+              <Download className='h-4 w-4 mr-2' />
               تصدير
             </Button>
-            <Button variant="outline">
-              <Upload className="h-4 w-4 mr-2" />
+            <Button variant='outline'>
+              <Upload className='h-4 w-4 mr-2' />
               استيراد
             </Button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">العملاء المحتملين</CardTitle>
-              <Target className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>
+                العملاء المحتملين
+              </CardTitle>
+              <Target className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{leads.length}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className='text-2xl font-bold'>{leads.length}</div>
+              <p className='text-xs text-muted-foreground'>
                 {leads.filter(l => l.status === 'new').length} جديد
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">جهات الاتصال</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>
+                جهات الاتصال
+              </CardTitle>
+              <Users className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{contacts.length}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className='text-2xl font-bold'>{contacts.length}</div>
+              <p className='text-xs text-muted-foreground'>
                 {contacts.filter(c => c.status === 'active').length} نشط
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">الصفقات</CardTitle>
-              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>الصفقات</CardTitle>
+              <TrendingUp className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{deals.length}</div>
-              <p className="text-xs text-muted-foreground">
+              <div className='text-2xl font-bold'>{deals.length}</div>
+              <p className='text-xs text-muted-foreground'>
                 {deals.filter(d => d.stage === 'closed_won').length} مكتملة
               </p>
             </CardContent>
           </Card>
-          
+
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">إجمالي القيمة</CardTitle>
-              <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>
+                إجمالي القيمة
+              </CardTitle>
+              <DollarSign className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                {formatCurrency(deals.reduce((sum, deal) => sum + deal.value, 0))}
+              <div className='text-2xl font-bold'>
+                {formatCurrency(
+                  deals.reduce((sum, deal) => sum + deal.value, 0)
+                )}
               </div>
-              <p className="text-xs text-muted-foreground">
-                قيمة الصفقات
-              </p>
+              <p className='text-xs text-muted-foreground'>قيمة الصفقات</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Tabs */}
-        <div className="flex space-x-1 mb-6">
+        <div className='flex space-x-1 mb-6'>
           {[
             { id: 'leads', label: 'العملاء المحتملين', count: leads.length },
             { id: 'contacts', label: 'جهات الاتصال', count: contacts.length },
-            { id: 'deals', label: 'الصفقات', count: deals.length }
-          ].map((tab) => (
+            { id: 'deals', label: 'الصفقات', count: deals.length },
+          ].map(tab => (
             <Button
               key={tab.id}
               variant={activeTab === tab.id ? 'primary' : 'outline'}
               onClick={() => setActiveTab(tab.id as any)}
-              className="flex items-center gap-2"
+              className='flex items-center gap-2'
             >
               {getTabIcon(tab.id)}
               {tab.label}
-              <Badge variant="secondary" className="ml-2">
+              <Badge variant='secondary' className='ml-2'>
                 {tab.count}
               </Badge>
             </Button>
@@ -542,71 +671,76 @@ export default function CRMPage() {
         </div>
 
         {/* Filters */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <Card className='mb-6'>
+          <CardContent className='pt-6'>
+            <div className='flex flex-col md:flex-row gap-4'>
+              <div className='flex-1'>
+                <div className='relative'>
+                  <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground' />
                   <Input
-                    placeholder="البحث بالاسم أو الشركة..."
+                    placeholder='البحث بالاسم أو الشركة...'
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
+                    onChange={e => setSearchTerm(e.target.value)}
+                    className='pl-10'
                   />
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className='flex gap-2'>
                 <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="الحالة" />
+                  <SelectTrigger className='w-40'>
+                    <SelectValue placeholder='الحالة' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">جميع الحالات</SelectItem>
+                    <SelectItem value='all'>جميع الحالات</SelectItem>
                     {activeTab === 'leads' && (
                       <>
-                        <SelectItem value="new">جديد</SelectItem>
-                        <SelectItem value="contacted">تم الاتصال</SelectItem>
-                        <SelectItem value="qualified">مؤهل</SelectItem>
-                        <SelectItem value="proposal">عرض</SelectItem>
-                        <SelectItem value="negotiation">تفاوض</SelectItem>
-                        <SelectItem value="closed_won">مكتمل</SelectItem>
-                        <SelectItem value="closed_lost">مرفوض</SelectItem>
+                        <SelectItem value='new'>جديد</SelectItem>
+                        <SelectItem value='contacted'>تم الاتصال</SelectItem>
+                        <SelectItem value='qualified'>مؤهل</SelectItem>
+                        <SelectItem value='proposal'>عرض</SelectItem>
+                        <SelectItem value='negotiation'>تفاوض</SelectItem>
+                        <SelectItem value='closed_won'>مكتمل</SelectItem>
+                        <SelectItem value='closed_lost'>مرفوض</SelectItem>
                       </>
                     )}
                     {activeTab === 'contacts' && (
                       <>
-                        <SelectItem value="active">نشط</SelectItem>
-                        <SelectItem value="inactive">غير نشط</SelectItem>
-                        <SelectItem value="unsubscribed">ملغي الاشتراك</SelectItem>
+                        <SelectItem value='active'>نشط</SelectItem>
+                        <SelectItem value='inactive'>غير نشط</SelectItem>
+                        <SelectItem value='unsubscribed'>
+                          ملغي الاشتراك
+                        </SelectItem>
                       </>
                     )}
                     {activeTab === 'deals' && (
                       <>
-                        <SelectItem value="lead">عميل محتمل</SelectItem>
-                        <SelectItem value="qualification">تأهيل</SelectItem>
-                        <SelectItem value="proposal">عرض</SelectItem>
-                        <SelectItem value="negotiation">تفاوض</SelectItem>
-                        <SelectItem value="closed_won">مكتمل</SelectItem>
-                        <SelectItem value="closed_lost">مرفوض</SelectItem>
+                        <SelectItem value='lead'>عميل محتمل</SelectItem>
+                        <SelectItem value='qualification'>تأهيل</SelectItem>
+                        <SelectItem value='proposal'>عرض</SelectItem>
+                        <SelectItem value='negotiation'>تفاوض</SelectItem>
+                        <SelectItem value='closed_won'>مكتمل</SelectItem>
+                        <SelectItem value='closed_lost'>مرفوض</SelectItem>
                       </>
                     )}
                   </SelectContent>
                 </Select>
-                <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="الأولوية" />
+                <Select
+                  value={priorityFilter}
+                  onValueChange={setPriorityFilter}
+                >
+                  <SelectTrigger className='w-40'>
+                    <SelectValue placeholder='الأولوية' />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">جميع الأولويات</SelectItem>
-                    <SelectItem value="low">منخفض</SelectItem>
-                    <SelectItem value="medium">متوسط</SelectItem>
-                    <SelectItem value="high">عالي</SelectItem>
-                    <SelectItem value="urgent">عاجل</SelectItem>
+                    <SelectItem value='all'>جميع الأولويات</SelectItem>
+                    <SelectItem value='low'>منخفض</SelectItem>
+                    <SelectItem value='medium'>متوسط</SelectItem>
+                    <SelectItem value='high'>عالي</SelectItem>
+                    <SelectItem value='urgent'>عاجل</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button variant="outline">
-                  <Filter className="h-4 w-4 mr-2" />
+                <Button variant='outline'>
+                  <Filter className='h-4 w-4 mr-2' />
                   فلتر
                 </Button>
               </div>
@@ -617,7 +751,7 @@ export default function CRMPage() {
         {/* Data Table */}
         <Card>
           <CardHeader>
-            <div className="flex justify-between items-center">
+            <div className='flex justify-between items-center'>
               <div>
                 <CardTitle>
                   {activeTab === 'leads' && 'العملاء المحتملين'}
@@ -631,8 +765,13 @@ export default function CRMPage() {
                 </CardDescription>
               </div>
               <Button>
-                <Plus className="h-4 w-4 mr-2" />
-                إضافة {activeTab === 'leads' ? 'عميل محتمل' : activeTab === 'contacts' ? 'جهة اتصال' : 'صفقة'}
+                <Plus className='h-4 w-4 mr-2' />
+                إضافة{' '}
+                {activeTab === 'leads'
+                  ? 'عميل محتمل'
+                  : activeTab === 'contacts'
+                    ? 'جهة اتصال'
+                    : 'صفقة'}
               </Button>
             </div>
           </CardHeader>
@@ -640,13 +779,15 @@ export default function CRMPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-12">
+                  <TableHead className='w-12'>
                     <input
-                      type="checkbox"
-                      className="rounded border-gray-300"
-                      onChange={(e) => {
+                      type='checkbox'
+                      className='rounded border-gray-300'
+                      onChange={e => {
                         if (e.target.checked) {
-                          setSelectedItems(filteredData.map((item: any) => item.id));
+                          setSelectedItems(
+                            filteredData.map((item: any) => item.id)
+                          );
                         } else {
                           setSelectedItems([]);
                         }
@@ -660,7 +801,7 @@ export default function CRMPage() {
                   {activeTab === 'leads' && <TableHead>القيمة</TableHead>}
                   {activeTab === 'deals' && <TableHead>القيمة</TableHead>}
                   <TableHead>آخر نشاط</TableHead>
-                  <TableHead className="text-right">الإجراءات</TableHead>
+                  <TableHead className='text-right'>الإجراءات</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -668,27 +809,29 @@ export default function CRMPage() {
                   <TableRow key={item.id}>
                     <TableCell>
                       <input
-                        type="checkbox"
-                        className="rounded border-gray-300"
+                        type='checkbox'
+                        className='rounded border-gray-300'
                         checked={selectedItems.includes(item.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedItems([...selectedItems, item.id]);
                           } else {
-                            setSelectedItems(selectedItems.filter(id => id !== item.id));
+                            setSelectedItems(
+                              selectedItems.filter(id => id !== item.id)
+                            );
                           }
                         }}
                       />
                     </TableCell>
                     <TableCell>
-                      <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-full bg-primary text-primary-foreground grid place-items-center text-sm">
+                      <div className='flex items-center gap-3'>
+                        <div className='h-8 w-8 rounded-full bg-primary text-primary-foreground grid place-items-center text-sm'>
                           {item.name.charAt(0)}
                         </div>
                         <div>
-                          <div className="font-medium">{item.name}</div>
-                          <div className="text-xs text-muted-foreground flex items-center gap-1">
-                            <Phone className="h-3 w-3" />
+                          <div className='font-medium'>{item.name}</div>
+                          <div className='text-xs text-muted-foreground flex items-center gap-1'>
+                            <Phone className='h-3 w-3' />
                             {item.phone}
                           </div>
                         </div>
@@ -696,65 +839,68 @@ export default function CRMPage() {
                     </TableCell>
                     <TableCell>
                       <div>
-                        <div className="font-medium">{item.company || '-'}</div>
-                        <div className="text-xs text-muted-foreground">{item.email}</div>
+                        <div className='font-medium'>{item.company || '-'}</div>
+                        <div className='text-xs text-muted-foreground'>
+                          {item.email}
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      {getStatusBadge(item.status || item.stage, activeTab as any)}
+                      {getStatusBadge(
+                        item.status || item.stage,
+                        activeTab as any
+                      )}
                     </TableCell>
-                    <TableCell>
-                      {getPriorityBadge(item.priority)}
-                    </TableCell>
+                    <TableCell>{getPriorityBadge(item.priority)}</TableCell>
                     {(activeTab === 'leads' || activeTab === 'deals') && (
                       <TableCell>
-                        <div className="text-sm font-medium">
+                        <div className='text-sm font-medium'>
                           {formatCurrency(item.value)}
                         </div>
                         {activeTab === 'leads' && (
-                          <div className="text-xs text-muted-foreground">
+                          <div className='text-xs text-muted-foreground'>
                             {item.probability}% احتمال
                           </div>
                         )}
                       </TableCell>
                     )}
                     <TableCell>
-                      <div className="text-sm">
+                      <div className='text-sm'>
                         {formatDate(item.lastActivity)}
                       </div>
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className='text-right'>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" className="h-8 w-8 p-0">
-                            <MoreHorizontal className="h-4 w-4" />
+                          <Button variant='ghost' className='h-8 w-8 p-0'>
+                            <MoreHorizontal className='h-4 w-4' />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent align='end'>
                           <DropdownMenuLabel>الإجراءات</DropdownMenuLabel>
                           <DropdownMenuItem>
-                            <Eye className="h-4 w-4 mr-2" />
+                            <Eye className='h-4 w-4 mr-2' />
                             عرض التفاصيل
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <Edit className="h-4 w-4 mr-2" />
+                            <Edit className='h-4 w-4 mr-2' />
                             تعديل
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <Phone className="h-4 w-4 mr-2" />
+                            <Phone className='h-4 w-4 mr-2' />
                             اتصال
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <Mail className="h-4 w-4 mr-2" />
+                            <Mail className='h-4 w-4 mr-2' />
                             إرسال رسالة
                           </DropdownMenuItem>
                           <DropdownMenuItem>
-                            <Calendar className="h-4 w-4 mr-2" />
+                            <Calendar className='h-4 w-4 mr-2' />
                             جدولة موعد
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-destructive">
-                            <Trash2 className="h-4 w-4 mr-2" />
+                          <DropdownMenuItem className='text-destructive'>
+                            <Trash2 className='h-4 w-4 mr-2' />
                             حذف
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -766,39 +912,43 @@ export default function CRMPage() {
             </Table>
 
             {/* Pagination */}
-            <div className="flex items-center justify-between mt-6">
-              <div className="text-sm text-muted-foreground">
+            <div className='flex items-center justify-between mt-6'>
+              <div className='text-sm text-muted-foreground'>
                 عرض {filteredData.length} من {getCurrentData().length} عنصر
               </div>
-              <div className="flex items-center gap-2">
+              <div className='flex items-center gap-2'>
                 <Button
-                  variant="outline"
-                  size="sm"
+                  variant='outline'
+                  size='sm'
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
                 >
-                  <ChevronLeft className="h-4 w-4" />
+                  <ChevronLeft className='h-4 w-4' />
                 </Button>
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                    <Button
-                      key={page}
-                      variant={currentPage === page ? "primary" : "outline"}
-                      size="sm"
-                      onClick={() => setCurrentPage(page)}
-                      className="w-8 h-8 p-0"
-                    >
-                      {page}
-                    </Button>
-                  ))}
+                <div className='flex items-center gap-1'>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    page => (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? 'primary' : 'outline'}
+                        size='sm'
+                        onClick={() => setCurrentPage(page)}
+                        className='w-8 h-8 p-0'
+                      >
+                        {page}
+                      </Button>
+                    )
+                  )}
                 </div>
                 <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  variant='outline'
+                  size='sm'
+                  onClick={() =>
+                    setCurrentPage(Math.min(totalPages, currentPage + 1))
+                  }
                   disabled={currentPage === totalPages}
                 >
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className='h-4 w-4' />
                 </Button>
               </div>
             </div>

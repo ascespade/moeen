@@ -8,6 +8,8 @@ interface TimeSlot {
   available: boolean;
 }
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { user, error: authError } = await authorize(request);

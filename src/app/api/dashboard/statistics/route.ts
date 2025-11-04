@@ -6,13 +6,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication for dashboard statistics
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff', 'doctor'])(request);
+    const authResult = await requireAuth([
+      'admin',
+      'supervisor',
+      'staff',
+      'doctor',
+    ])(request);
     if (!authResult.authorized) {
       return NextResponse.json(
-        { error: 'Unauthorized. Authentication required to access statistics.' },
+        {
+          error: 'Unauthorized. Authentication required to access statistics.',
+        },
         { status: 401 }
       );
     }
@@ -83,14 +92,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .select('amount, created_at')
       .eq('status', 'paid');
 
-    const totalRevenue = payments?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) || 0;
+    const totalRevenue =
+      payments?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) ||
+      0;
 
-    const monthlyPayments = payments?.filter((p: unknown) => {
-      const paymentDate = new Date(p.created_at);
-      return paymentDate >= startDate;
-    }) || [];
+    const monthlyPayments =
+      payments?.filter((p: unknown) => {
+        const paymentDate = new Date(p.created_at);
+        return paymentDate >= startDate;
+      }) || [];
 
-    const monthlyRevenue = monthlyPayments.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0);
+    const monthlyRevenue = monthlyPayments.reduce(
+      (sum: number, p: unknown) => sum + (p.amount || 0),
+      0
+    );
 
     // Get claims
     const { count: totalClaims } = await supabase
@@ -179,7 +194,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       {
         success: false,
         error: 'Internal server error',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );

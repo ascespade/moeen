@@ -2,6 +2,8 @@ import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);

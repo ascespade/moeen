@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useT } from '@/hooks/useT';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';import { I18N_KEYS } from '@/constants/i18n-keys';
+import { Badge } from '@/components/ui/Badge';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 
 import {
   CheckCircle,
@@ -49,7 +50,9 @@ export default function ActivationFlow({
     {
       id: 'insurance_verified',
       title: t(I18N_KEYS.PATIENTS.ACTIVATION.STEPS.INSURANCE_VERIFIED),
-      description: t(I18N_KEYS.PATIENTS.ACTIVATION.STEPS.INSURANCE_VERIFIED_DESC),
+      description: t(
+        I18N_KEYS.PATIENTS.ACTIVATION.STEPS.INSURANCE_VERIFIED_DESC
+      ),
       completed: false,
       required: true,
       icon: <Shield className='h-5 w-5' />,

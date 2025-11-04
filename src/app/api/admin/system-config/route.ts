@@ -74,6 +74,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const supabase = await createClient();

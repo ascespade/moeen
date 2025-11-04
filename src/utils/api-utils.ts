@@ -1,4 +1,3 @@
-
 /**
  * API Utility Functions
  * Reusable functions for API routes
@@ -12,7 +11,10 @@ export interface ApiError {
   status?: number;
 }
 
-export function createErrorResponse(error: unknown, defaultStatus = 500): NextResponse {
+export function createErrorResponse(
+  error: unknown,
+  defaultStatus = 500
+): NextResponse {
   if (error instanceof Error) {
     return NextResponse.json(
       { error: error.message },
@@ -25,11 +27,17 @@ export function createErrorResponse(error: unknown, defaultStatus = 500): NextRe
   );
 }
 
-export function createSuccessResponse(data: unknown, status = 200): NextResponse {
+export function createSuccessResponse(
+  data: unknown,
+  status = 200
+): NextResponse {
   return NextResponse.json({ success: true, data }, { status });
 }
 
-export function validateRequest(request: NextRequest, requiredFields: string[]): { valid: boolean; missing: string[] } {
+export function validateRequest(
+  request: NextRequest,
+  requiredFields: string[]
+): { valid: boolean; missing: string[] } {
   // Implementation for request validation
   return { valid: true, missing: [] };
 }

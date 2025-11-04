@@ -2,7 +2,12 @@
 
 import React from 'react';
 import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
-import { DashboardLayout, DashboardHeader, DashboardSidebar, DashboardContent } from '@/components/dashboard/layouts/DashboardLayout';
+import {
+  DashboardLayout,
+  DashboardHeader,
+  DashboardSidebar,
+  DashboardContent,
+} from '@/components/dashboard/layouts/DashboardLayout';
 import DoctorDashboard from '@/components/dashboard/widgets/DoctorDashboard';
 import {
   Calendar,
@@ -14,7 +19,7 @@ import {
   Stethoscope,
   Pill,
   Heart,
-  Activity
+  Activity,
 } from 'lucide-react';
 
 const doctorNavigation = [
@@ -66,32 +71,32 @@ export default function DoctorDashboardPage() {
   return (
     <UnifiedProtectedRoute allowedRoles={['doctor', 'therapist']}>
       <DashboardLayout
-      header={{
-        title: "د. أحمد محمد",
-        subtitle: "طبيب أسرة - عيادة الهمم",
-        user: {
-          name: "د. أحمد محمد",
-          role: "طبيب أسرة",
-          avatar: undefined
-        },
-        onSearch: (query) => console.log('Search:', query),
-        showNotifications: true,
-        notificationCount: 3,
-        onNotificationsClick: () => console.log('Show notifications')
-      }}
-      sidebar={{
-        navigation: doctorNavigation,
-        activeItem: "dashboard",
-        collapsed: false
-      }}
-      content={{
-        children: (
-          <DashboardContent>
-            <DoctorDashboard doctorId="doctor-123" />
-          </DashboardContent>
-        )
-      }}
-    />
+        header={{
+          title: 'د. أحمد محمد',
+          subtitle: 'طبيب أسرة - عيادة الهمم',
+          user: {
+            name: 'د. أحمد محمد',
+            role: 'طبيب أسرة',
+            avatar: undefined,
+          },
+          onSearch: query => console.log('Search:', query),
+          showNotifications: true,
+          notificationCount: 3,
+          onNotificationsClick: () => console.log('Show notifications'),
+        }}
+        sidebar={{
+          navigation: doctorNavigation,
+          activeItem: 'dashboard',
+          collapsed: false,
+        }}
+        content={{
+          children: (
+            <DashboardContent>
+              <DoctorDashboard doctorId='doctor-123' />
+            </DashboardContent>
+          ),
+        }}
+      />
     </UnifiedProtectedRoute>
   );
 }

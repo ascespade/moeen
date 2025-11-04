@@ -5,24 +5,30 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/Select';
 import { Switch } from '@/components/ui/Switch';
 import { Textarea } from '@/components/ui/Textarea';
 import {
-    BarChart3,
-    BookOpen,
-    Brain,
-    Calendar,
-    CheckCircle,
-    FileText,
-    MessageCircle,
-    Pause,
-    Play,
-    RefreshCw,
-    Bot as Robot,
-    Share2 as Share,
-    Users,
-    Zap
+  BarChart3,
+  BookOpen,
+  Brain,
+  Calendar,
+  CheckCircle,
+  FileText,
+  MessageCircle,
+  Pause,
+  Play,
+  RefreshCw,
+  Bot as Robot,
+  Share2 as Share,
+  Users,
+  Zap,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -91,8 +97,8 @@ const defaultAIConfig: AIConfig = {
     workingHours: {
       enabled: true,
       start: '08:00',
-      end: '18:00'
-    }
+      end: '18:00',
+    },
   },
   automation: {
     enabled: true,
@@ -100,40 +106,40 @@ const defaultAIConfig: AIConfig = {
     followUpMessages: true,
     reportGeneration: true,
     socialMediaPosts: false,
-    weeklyLearningReport: true
+    weeklyLearningReport: true,
   },
   learning: {
     enabled: true,
     dataCollection: true,
     conversationAnalysis: true,
     performanceOptimization: true,
-    userBehaviorAnalysis: false
+    userBehaviorAnalysis: false,
   },
   integrations: {
     openai: {
       enabled: true,
       apiKey: '',
       model: 'gpt-4',
-      maxTokens: 1000
+      maxTokens: 1000,
     },
     whatsapp: {
       enabled: true,
       businessAccountId: '',
-      accessToken: ''
-    }
-  }
+      accessToken: '',
+    },
+  },
 };
 
 const languages = [
   { value: 'ar', label: 'العربية' },
   { value: 'en', label: 'English' },
-  { value: 'both', label: 'ثنائي اللغة' }
+  { value: 'both', label: 'ثنائي اللغة' },
 ];
 
 const openaiModels = [
   { value: 'gpt-4', label: 'GPT-4 (الأكثر ذكاءً)' },
   { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo (سريع)' },
-  { value: 'gpt-3.5-turbo-16k', label: 'GPT-3.5 Turbo 16K (محادثات طويلة)' }
+  { value: 'gpt-3.5-turbo-16k', label: 'GPT-3.5 Turbo 16K (محادثات طويلة)' },
 ];
 
 export default function AISettings({ onChange }: AISettingsProps) {
@@ -146,7 +152,7 @@ export default function AISettings({ onChange }: AISettingsProps) {
       try {
         const response = await fetch('/api/admin/settings/ai');
         const result = await response.json();
-        
+
         if (result.success && result.data) {
           setConfig(prev => ({ ...prev, ...result.data }));
         }
@@ -163,7 +169,7 @@ export default function AISettings({ onChange }: AISettingsProps) {
   const updateConfig = (section: keyof AIConfig, updates: any) => {
     setConfig(prev => ({
       ...prev,
-      [section]: { ...prev[section], ...updates }
+      [section]: { ...prev[section], ...updates },
     }));
     onChange();
   };
@@ -176,12 +182,12 @@ export default function AISettings({ onChange }: AISettingsProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: 'مرحبا، هذا اختبار للشات بوت',
-          config: config.chatbot
-        })
+          config: config.chatbot,
+        }),
       });
-      
+
       const result = await response.json();
-      
+
       if (result.success) {
         alert('تم اختبار الشات بوت بنجاح! ✅');
       } else {
@@ -199,7 +205,10 @@ export default function AISettings({ onChange }: AISettingsProps) {
     return (
       <div className='space-y-6'>
         {[1, 2, 3].map(i => (
-          <div key={i} className='h-32 bg-[var(--brand-surface)] rounded-lg animate-pulse' />
+          <div
+            key={i}
+            className='h-32 bg-[var(--brand-surface)] rounded-lg animate-pulse'
+          />
         ))}
       </div>
     );
@@ -213,21 +222,29 @@ export default function AISettings({ onChange }: AISettingsProps) {
           <div className='flex items-center gap-3'>
             <MessageCircle className='w-6 h-6 text-[var(--brand-primary)]' />
             <div>
-              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>إعدادات الشات بوت</h3>
-              <p className='text-sm text-[var(--text-secondary)]'>تخصيص مساعد الهمم الذكي</p>
+              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>
+                إعدادات الشات بوت
+              </h3>
+              <p className='text-sm text-[var(--text-secondary)]'>
+                تخصيص مساعد الهمم الذكي
+              </p>
             </div>
           </div>
-          
+
           <div className='flex items-center gap-3'>
-            <Badge 
+            <Badge
               variant={config.chatbot.enabled ? 'default' : 'outline'}
-              className={config.chatbot.enabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}
+              className={
+                config.chatbot.enabled
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-gray-100 text-gray-600'
+              }
             >
               {config.chatbot.enabled ? 'نشط' : 'متوقف'}
             </Badge>
             <Switch
               checked={config.chatbot.enabled}
-              onCheckedChange={(enabled) => updateConfig('chatbot', { enabled })}
+              onCheckedChange={enabled => updateConfig('chatbot', { enabled })}
             />
           </div>
         </div>
@@ -238,16 +255,18 @@ export default function AISettings({ onChange }: AISettingsProps) {
             <Input
               id='botName'
               value={config.chatbot.name}
-              onChange={(e) => updateConfig('chatbot', { name: e.target.value })}
+              onChange={e => updateConfig('chatbot', { name: e.target.value })}
               disabled={!config.chatbot.enabled}
             />
           </div>
 
           <div className='space-y-2'>
             <Label htmlFor='language'>اللغة</Label>
-            <Select 
-              value={config.chatbot.language} 
-              onValueChange={(value) => updateConfig('chatbot', { language: value })}
+            <Select
+              value={config.chatbot.language}
+              onValueChange={value =>
+                updateConfig('chatbot', { language: value })
+              }
               disabled={!config.chatbot.enabled}
             >
               <SelectTrigger>
@@ -268,7 +287,9 @@ export default function AISettings({ onChange }: AISettingsProps) {
             <Textarea
               id='welcomeMessage'
               value={config.chatbot.welcomeMessage}
-              onChange={(e) => updateConfig('chatbot', { welcomeMessage: e.target.value })}
+              onChange={e =>
+                updateConfig('chatbot', { welcomeMessage: e.target.value })
+              }
               disabled={!config.chatbot.enabled}
               rows={3}
               className='text-right'
@@ -281,7 +302,11 @@ export default function AISettings({ onChange }: AISettingsProps) {
               id='responseDelay'
               type='number'
               value={config.chatbot.responseDelay}
-              onChange={(e) => updateConfig('chatbot', { responseDelay: parseInt(e.target.value) })}
+              onChange={e =>
+                updateConfig('chatbot', {
+                  responseDelay: parseInt(e.target.value),
+                })
+              }
               disabled={!config.chatbot.enabled}
               min={0}
               max={5000}
@@ -294,7 +319,11 @@ export default function AISettings({ onChange }: AISettingsProps) {
               id='maxConversationLength'
               type='number'
               value={config.chatbot.maxConversationLength}
-              onChange={(e) => updateConfig('chatbot', { maxConversationLength: parseInt(e.target.value) })}
+              onChange={e =>
+                updateConfig('chatbot', {
+                  maxConversationLength: parseInt(e.target.value),
+                })
+              }
               disabled={!config.chatbot.enabled}
               min={10}
               max={100}
@@ -312,33 +341,45 @@ export default function AISettings({ onChange }: AISettingsProps) {
             <Switch
               id='enableLearning'
               checked={config.chatbot.enableLearning}
-              onCheckedChange={(enabled) => updateConfig('chatbot', { enableLearning: enabled })}
+              onCheckedChange={enabled =>
+                updateConfig('chatbot', { enableLearning: enabled })
+              }
               disabled={!config.chatbot.enabled}
             />
           </div>
 
           <div className='flex items-center justify-between'>
-            <Label htmlFor='enableAnalytics' className='flex items-center gap-2'>
+            <Label
+              htmlFor='enableAnalytics'
+              className='flex items-center gap-2'
+            >
               <BarChart3 className='w-4 h-4' />
               تفعيل تحليلات المحادثات
             </Label>
             <Switch
               id='enableAnalytics'
               checked={config.chatbot.enableAnalytics}
-              onCheckedChange={(enabled) => updateConfig('chatbot', { enableAnalytics: enabled })}
+              onCheckedChange={enabled =>
+                updateConfig('chatbot', { enableAnalytics: enabled })
+              }
               disabled={!config.chatbot.enabled}
             />
           </div>
 
           <div className='flex items-center justify-between'>
-            <Label htmlFor='fallbackToHuman' className='flex items-center gap-2'>
+            <Label
+              htmlFor='fallbackToHuman'
+              className='flex items-center gap-2'
+            >
               <Users className='w-4 h-4' />
               التحويل للمساعد البشري عند الحاجة
             </Label>
             <Switch
               id='fallbackToHuman'
               checked={config.chatbot.fallbackToHuman}
-              onCheckedChange={(enabled) => updateConfig('chatbot', { fallbackToHuman: enabled })}
+              onCheckedChange={enabled =>
+                updateConfig('chatbot', { fallbackToHuman: enabled })
+              }
               disabled={!config.chatbot.enabled}
             />
           </div>
@@ -372,27 +413,55 @@ export default function AISettings({ onChange }: AISettingsProps) {
         <div className='flex items-center gap-3 pb-4 border-b border-[var(--brand-border)]'>
           <Zap className='w-6 h-6 text-[var(--brand-primary)]' />
           <div>
-            <h3 className='text-lg font-semibold text-[var(--text-primary)]'>الأتمتة الذكية</h3>
-            <p className='text-sm text-[var(--text-secondary)]'>تفعيل العمليات التلقائية</p>
+            <h3 className='text-lg font-semibold text-[var(--text-primary)]'>
+              الأتمتة الذكية
+            </h3>
+            <p className='text-sm text-[var(--text-secondary)]'>
+              تفعيل العمليات التلقائية
+            </p>
           </div>
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           <div className='space-y-4'>
             {[
-              { key: 'appointmentReminders', label: 'تذكير المواعيد التلقائي', icon: Calendar },
-              { key: 'followUpMessages', label: 'رسائل المتابعة', icon: MessageCircle },
-              { key: 'reportGeneration', label: 'إنشاء التقارير التلقائي', icon: FileText }
+              {
+                key: 'appointmentReminders',
+                label: 'تذكير المواعيد التلقائي',
+                icon: Calendar,
+              },
+              {
+                key: 'followUpMessages',
+                label: 'رسائل المتابعة',
+                icon: MessageCircle,
+              },
+              {
+                key: 'reportGeneration',
+                label: 'إنشاء التقارير التلقائي',
+                icon: FileText,
+              },
             ].map(({ key, label, icon: Icon }) => (
-              <div key={key} className='flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg'>
-                <Label htmlFor={key} className='flex items-center gap-3 cursor-pointer'>
+              <div
+                key={key}
+                className='flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg'
+              >
+                <Label
+                  htmlFor={key}
+                  className='flex items-center gap-3 cursor-pointer'
+                >
                   <Icon className='w-4 h-4 text-[var(--brand-primary)]' />
                   {label}
                 </Label>
                 <Switch
                   id={key}
-                  checked={config.automation[key as keyof typeof config.automation] as boolean}
-                  onCheckedChange={(enabled) => updateConfig('automation', { [key]: enabled })}
+                  checked={
+                    config.automation[
+                      key as keyof typeof config.automation
+                    ] as boolean
+                  }
+                  onCheckedChange={enabled =>
+                    updateConfig('automation', { [key]: enabled })
+                  }
                   disabled={!config.automation.enabled}
                 />
               </div>
@@ -401,18 +470,38 @@ export default function AISettings({ onChange }: AISettingsProps) {
 
           <div className='space-y-4'>
             {[
-              { key: 'socialMediaPosts', label: 'منشورات وسائل التواصل', icon: Share },
-              { key: 'weeklyLearningReport', label: 'تقرير التعلم الأسبوعي', icon: BookOpen }
+              {
+                key: 'socialMediaPosts',
+                label: 'منشورات وسائل التواصل',
+                icon: Share,
+              },
+              {
+                key: 'weeklyLearningReport',
+                label: 'تقرير التعلم الأسبوعي',
+                icon: BookOpen,
+              },
             ].map(({ key, label, icon: Icon }) => (
-              <div key={key} className='flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg'>
-                <Label htmlFor={key} className='flex items-center gap-3 cursor-pointer'>
+              <div
+                key={key}
+                className='flex items-center justify-between p-4 border border-[var(--brand-border)] rounded-lg'
+              >
+                <Label
+                  htmlFor={key}
+                  className='flex items-center gap-3 cursor-pointer'
+                >
                   <Icon className='w-4 h-4 text-[var(--brand-primary)]' />
                   {label}
                 </Label>
                 <Switch
                   id={key}
-                  checked={config.automation[key as keyof typeof config.automation] as boolean}
-                  onCheckedChange={(enabled) => updateConfig('automation', { [key]: enabled })}
+                  checked={
+                    config.automation[
+                      key as keyof typeof config.automation
+                    ] as boolean
+                  }
+                  onCheckedChange={enabled =>
+                    updateConfig('automation', { [key]: enabled })
+                  }
                   disabled={!config.automation.enabled}
                 />
               </div>
@@ -426,19 +515,25 @@ export default function AISettings({ onChange }: AISettingsProps) {
         <div className='flex items-center gap-3 pb-4 border-b border-[var(--brand-border)]'>
           <Brain className='w-6 h-6 text-[var(--brand-primary)]' />
           <div>
-            <h3 className='text-lg font-semibold text-[var(--text-primary)]'>تكامل OpenAI</h3>
-            <p className='text-sm text-[var(--text-secondary)]'>إعدادات API الذكاء الاصطناعي</p>
+            <h3 className='text-lg font-semibold text-[var(--text-primary)]'>
+              تكامل OpenAI
+            </h3>
+            <p className='text-sm text-[var(--text-secondary)]'>
+              إعدادات API الذكاء الاصطناعي
+            </p>
           </div>
         </div>
 
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           <div className='space-y-2'>
             <Label htmlFor='openaiModel'>نموذج GPT</Label>
-            <Select 
-              value={config.integrations.openai.model} 
-              onValueChange={(value) => updateConfig('integrations', {
-                openai: { ...config.integrations.openai, model: value }
-              })}
+            <Select
+              value={config.integrations.openai.model}
+              onValueChange={value =>
+                updateConfig('integrations', {
+                  openai: { ...config.integrations.openai, model: value },
+                })
+              }
               disabled={!config.integrations.openai.enabled}
             >
               <SelectTrigger>
@@ -460,9 +555,14 @@ export default function AISettings({ onChange }: AISettingsProps) {
               id='maxTokens'
               type='number'
               value={config.integrations.openai.maxTokens}
-              onChange={(e) => updateConfig('integrations', {
-                openai: { ...config.integrations.openai, maxTokens: parseInt(e.target.value) }
-              })}
+              onChange={e =>
+                updateConfig('integrations', {
+                  openai: {
+                    ...config.integrations.openai,
+                    maxTokens: parseInt(e.target.value),
+                  },
+                })
+              }
               disabled={!config.integrations.openai.enabled}
               min={100}
               max={4000}
@@ -475,9 +575,14 @@ export default function AISettings({ onChange }: AISettingsProps) {
               id='openaiKey'
               type='password'
               value={config.integrations.openai.apiKey}
-              onChange={(e) => updateConfig('integrations', {
-                openai: { ...config.integrations.openai, apiKey: e.target.value }
-              })}
+              onChange={e =>
+                updateConfig('integrations', {
+                  openai: {
+                    ...config.integrations.openai,
+                    apiKey: e.target.value,
+                  },
+                })
+              }
               disabled={!config.integrations.openai.enabled}
               placeholder='sk-...'
               dir='ltr'
@@ -494,7 +599,9 @@ export default function AISettings({ onChange }: AISettingsProps) {
             <Robot className='w-6 h-6 text-blue-600' />
           </div>
           <div className='flex-1'>
-            <h4 className='font-semibold text-[var(--text-primary)] mb-1'>حالة الذكاء الاصطناعي</h4>
+            <h4 className='font-semibold text-[var(--text-primary)] mb-1'>
+              حالة الذكاء الاصطناعي
+            </h4>
             <div className='flex items-center gap-4 text-sm'>
               <div className='flex items-center gap-2'>
                 <CheckCircle className='w-4 h-4 text-green-500' />
@@ -509,18 +616,21 @@ export default function AISettings({ onChange }: AISettingsProps) {
               </div>
             </div>
           </div>
-          
+
           <Button
             onClick={testChatbot}
             disabled={testingChatbot || !config.chatbot.enabled}
             size='sm'
             className='bg-blue-600 hover:bg-blue-700 text-white'
           >
-            {testingChatbot ? <Pause className='w-4 h-4' /> : <Play className='w-4 h-4' />}
+            {testingChatbot ? (
+              <Pause className='w-4 h-4' />
+            ) : (
+              <Play className='w-4 h-4' />
+            )}
           </Button>
         </div>
       </AdminCard>
     </div>
   );
 }
-

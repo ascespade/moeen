@@ -3,10 +3,12 @@ import { createClient } from '@/lib/supabase/server';
 import logger from '@/lib/monitoring/logger';
 import { requireAuth } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

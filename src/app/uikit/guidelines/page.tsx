@@ -8,7 +8,7 @@ export default function GuidelinesPage() {
         <div className='grid grid-cols-2 sm:grid-cols-4 gap-3'>
           <div className='rounded-lg border p-3'>
             <div className='h-10 rounded bg-default mb-2' />
-            <div className='text-sm'>Primary</div>
+            <div className='text-sm'>Primary</section>
           </div>
           <div className='rounded-lg border p-3'>
             <div className='h-10 rounded bg-amber-500 mb-2' />
@@ -26,7 +26,7 @@ export default function GuidelinesPage() {
       </section>
 
       <section className='grid gap-3'>
-        <div className='font-medium'>Spacing</div>
+        <div className='font-medium'>Spacing</section>
         <div className='flex items-center gap-4'>
           <div className='h-4 w-4 bg-gray-200' />
           <div className='h-4 w-8 bg-gray-200' />
@@ -39,7 +39,7 @@ export default function GuidelinesPage() {
       </section>
 
       <section className='grid gap-3'>
-        <div className='font-medium'>Typography (Cairo)</div>
+        <div className='font-medium'>Typography (Cairo)</section>
         <div className='grid gap-1'>
           <div className='text-2xl font-semibold'>عنوان كبير 24px</div>
           <div className='text-xl font-semibold'>عنوان 20px</div>
@@ -50,13 +50,13 @@ export default function GuidelinesPage() {
       </section>
 
       <section className='grid gap-3'>
-        <div className='font-medium'>Interaction States</div>
+        <div className='font-medium'>Interaction States</section>
         <div className='flex flex-wrap gap-2'>
-          <button className='h-10 px-4 rounded-md btn-default'>Default</button>
-          <button className='h-10 px-4 rounded-md btn-default' disabled>
+          <button className='h-10 px-4 rounded-md btn-default' aria-label="Default">Default</button>
+          <button className='h-10 px-4 rounded-md btn-default' disabled aria-label="Disabled">
             Disabled
           </button>
-          <button className='h-10 px-4 rounded-md border focus:outline-none focus:ring-2 focus:ring-default-default'>
+          <button className='h-10 px-4 rounded-md border focus:outline-none focus:ring-2 focus:ring-default-default' aria-label="Focus">
             Focus
           </button>
         </div>

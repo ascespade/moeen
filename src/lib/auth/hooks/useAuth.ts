@@ -11,7 +11,7 @@ export function useAuth() {
 
   useEffect(() => {
     // Get initial session
-    authHub.getSession().then((session) => {
+    authHub.getSession().then(session => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);

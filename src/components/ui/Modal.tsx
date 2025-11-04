@@ -48,7 +48,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
           'fixed inset-0 bg-black/40',
           open ? 'opacity-100' : 'opacity-0'
         )}
-        onClick={onClose}
+        tabIndex={0} onClick={onClose}
       />
       <div
         ref={dialogRef}

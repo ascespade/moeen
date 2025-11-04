@@ -18,10 +18,18 @@ const doctorSchema = z.object({
   working_hours: z.any().optional(),
 });
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication for accessing doctors data
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff', 'doctor', 'patient'])(request);
+    const authResult = await requireAuth([
+      'admin',
+      'supervisor',
+      'staff',
+      'doctor',
+      'patient',
+    ])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -145,7 +153,10 @@ export async function POST(request: NextRequest) {
       action: AuditAction.CREATE,
       table_name: 'doctors',
       record_id: doctor.id,
-      new_values: { doctor_id: doctor.id, license_number: validation.data.license_number },
+      new_values: {
+        doctor_id: doctor.id,
+        license_number: validation.data.license_number,
+      },
       metadata: { createdBy: authResult.user.id },
     });
 

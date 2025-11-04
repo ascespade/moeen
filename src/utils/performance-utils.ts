@@ -1,9 +1,10 @@
-
 /**
  * Performance Utility Functions
  */
 
-export async function measureTime<T>(fn: () => Promise<T>): Promise<{ result: T; time: number }> {
+export async function measureTime<T>(
+  fn: () => Promise<T>
+): Promise<{ result: T; time: number }> {
   const start = performance.now();
   const result = await fn();
   const time = performance.now() - start;

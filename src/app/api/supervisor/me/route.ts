@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication and supervisor/admin role
@@ -74,7 +76,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // Calculate staff activity metrics
     const today = new Date().toISOString().split('T')[0];
     const staffActivity = await Promise.all(
-      (staffMembers || []).slice(0, 10).map(async (staff) => {
+      (staffMembers || []).slice(0, 10).map(async staff => {
         try {
           // Get today's appointments for this staff member
           const { count: todayTasks, error: todayError } = await supabase
@@ -84,24 +86,32 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             .eq('appointment_date', today);
 
           if (todayError) {
-            console.warn(`Error fetching today tasks for staff ${staff.id}:`, todayError);
+            console.warn(
+              `Error fetching today tasks for staff ${staff.id}:`,
+              todayError
+            );
           }
 
           // Get completed appointments
-          const { count: completedTasks, error: completedError } = await supabase
-            .from('appointments')
-            .select('*', { count: 'exact', head: true })
-            .eq('doctor_id', staff.id)
-            .eq('status', 'completed')
-            .gte('appointment_date', today);
+          const { count: completedTasks, error: completedError } =
+            await supabase
+              .from('appointments')
+              .select('*', { count: 'exact', head: true })
+              .eq('doctor_id', staff.id)
+              .eq('status', 'completed')
+              .gte('appointment_date', today);
 
           if (completedError) {
-            console.warn(`Error fetching completed tasks for staff ${staff.id}:`, completedError);
+            console.warn(
+              `Error fetching completed tasks for staff ${staff.id}:`,
+              completedError
+            );
           }
 
           const totalTasks = todayTasks || 0;
           const completed = completedTasks || 0;
-          const efficiency = totalTasks > 0 ? Math.round((completed / totalTasks) * 100) : 0;
+          const efficiency =
+            totalTasks > 0 ? Math.round((completed / totalTasks) * 100) : 0;
 
           return {
             id: staff.id,
@@ -112,7 +122,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             efficiency,
           };
         } catch (error) {
-          console.warn(`Error calculating metrics for staff ${staff.id}:`, error);
+          console.warn(
+            `Error calculating metrics for staff ${staff.id}:`,
+            error
+          );
           return {
             id: staff.id,
             name: staff.full_name || staff.email || 'Unknown',
@@ -149,10 +162,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     try {
       // Total appointments
-      const { count: appointmentsCount, error: appointmentsError } = await supabase
-        .from('appointments')
-        .select('*', { count: 'exact', head: true })
-        .in('status', ['scheduled', 'confirmed', 'in_progress']);
+      const { count: appointmentsCount, error: appointmentsError } =
+        await supabase
+          .from('appointments')
+          .select('*', { count: 'exact', head: true })
+          .in('status', ['scheduled', 'confirmed', 'in_progress']);
 
       if (appointmentsError) {
         console.warn('Error fetching appointments count:', appointmentsError);
@@ -173,7 +187,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       if (claimsError) {
         console.warn('Error fetching claims data:', claimsError);
       } else {
-        revenue = claimsData?.reduce((sum, claim) => sum + (claim.amount || 0), 0) || 0;
+        revenue =
+          claimsData?.reduce((sum, claim) => sum + (claim.amount || 0), 0) || 0;
       }
 
       // Claims processed (approved + rejected)
@@ -183,7 +198,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .in('status', ['approved', 'rejected']);
 
       if (claimsCountError) {
-        console.warn('Error fetching claims processed count:', claimsCountError);
+        console.warn(
+          'Error fetching claims processed count:',
+          claimsCountError
+        );
       } else {
         claimsProcessed = claimsCount || 0;
       }
@@ -206,7 +224,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       if (alertsError) {
         console.warn('Error fetching alerts:', alertsError);
       } else {
-        alerts = (upcomingAppointments || []).slice(0, 3).map((apt) => ({
+        alerts = (upcomingAppointments || []).slice(0, 3).map(apt => ({
           id: `alert-${apt.id}`,
           type: 'info' as const,
           message: `Upcoming appointment on ${apt.appointment_date}`,
@@ -231,12 +249,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         console.warn('Error fetching reports:', reportsError);
       } else {
         reports =
-          reportsData?.map((report) => ({
+          reportsData?.map(report => ({
             id: report.id,
             name: report.name || 'Untitled Report',
             type: report.type || 'general',
             generatedAt: report.created_at,
-            status: (report.status || 'ready') as 'ready' | 'processing' | 'failed',
+            status: (report.status || 'ready') as
+              | 'ready'
+              | 'processing'
+              | 'failed',
           })) || [];
       }
     } catch (error) {

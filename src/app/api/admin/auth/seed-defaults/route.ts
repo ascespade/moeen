@@ -88,7 +88,10 @@ export async function POST(req: unknown) {
 
       if (upErr) {
         // Check if it's a duplicate key error (user already exists by email)
-        if (upErr.message?.includes('duplicate key') || upErr.message?.includes('unique constraint')) {
+        if (
+          upErr.message?.includes('duplicate key') ||
+          upErr.message?.includes('unique constraint')
+        ) {
           // User exists, fetch it
           const { data: existingUser, error: fetchErr } = await supabase
             .from('users')
@@ -103,7 +106,11 @@ export async function POST(req: unknown) {
           }
         }
         // If role constraint fails, try without role (role will be set via user_roles table)
-        else if (upErr.message?.includes('role') || upErr.message?.includes('enum') || upErr.message?.includes('check constraint')) {
+        else if (
+          upErr.message?.includes('role') ||
+          upErr.message?.includes('enum') ||
+          upErr.message?.includes('check constraint')
+        ) {
           const userDataWithoutRole = { ...userData };
           delete userDataWithoutRole.role;
           const { data: up2, error: upErr2 } = await supabase
@@ -146,7 +153,11 @@ export async function POST(req: unknown) {
       // Force update role in users table
       if (u.role && finalUser) {
         try {
-          const updateData: any = { role: u.role, status: 'active', is_active: true };
+          const updateData: any = {
+            role: u.role,
+            status: 'active',
+            is_active: true,
+          };
 
           // For admin role, ensure full permissions
           if (u.role === 'admin') {

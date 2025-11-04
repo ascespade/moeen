@@ -115,7 +115,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
 
         {help && !error && (
-          <p className='text-sm text-neutral-500 dark:text-neutral-400'>{help}</p>
+          <p className='text-sm text-neutral-500 dark:text-neutral-400'>
+            {help}
+          </p>
         )}
       </div>
     );

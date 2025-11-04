@@ -20,7 +20,10 @@ export default function PrelineInit() {
       try {
         const prelineModule = await import('preline/preline');
         // Preline may export differently, try multiple possible exports
-        const HSStaticMethods = prelineModule?.HSStaticMethods || prelineModule?.default || prelineModule;
+        const HSStaticMethods =
+          prelineModule?.HSStaticMethods ||
+          prelineModule?.default ||
+          prelineModule;
         if (HSStaticMethods && typeof HSStaticMethods === 'object') {
           window.HSStaticMethods = HSStaticMethods;
           if (typeof HSStaticMethods.autoInit === 'function') {
@@ -29,7 +32,10 @@ export default function PrelineInit() {
         }
       } catch (error) {
         // Silently fail if Preline can't be loaded - don't block the app
-        console.warn('Preline initialization failed (this is optional):', error);
+        console.warn(
+          'Preline initialization failed (this is optional):',
+          error
+        );
       }
     };
 
@@ -56,4 +62,3 @@ export default function PrelineInit() {
 
   return null;
 }
-

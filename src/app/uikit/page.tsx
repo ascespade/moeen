@@ -12,16 +12,16 @@ export default function UIKitPage() {
               Buttons
             </div>
             <div className='flex flex-wrap gap-2'>
-              <button className='btn btn-default'>Primary</button>
-              <button className='btn btn-info'>Secondary</button>
-              <button className='btn btn-outline'>Ghost</button>
+              <button className='btn btn-default' aria-label="Primary">Primary</button>
+              <button className='btn btn-info' aria-label="Secondary">Secondary</button>
+              <button className='btn btn-outline' aria-label="Ghost">Ghost</button>
               <button
                 className='btn btn-outline'
                 style={{
                   backgroundColor: 'var(--default-warning)',
                   color: 'white',
                 }}
-              >
+               aria-label="Accent">
                 Accent
               </button>
               <button
@@ -30,16 +30,16 @@ export default function UIKitPage() {
                   backgroundColor: 'var(--default-error)',
                   color: 'white',
                 }}
-              >
+               aria-label="Destructive">
                 Destructive
               </button>
-            </div>
+            </section>
           </section>
 
           <section className='card p-6'>
             <div className='font-medium text-[var(--foreground)] mb-3'>
               Inputs
-            </div>
+            </section>
             <div className='grid sm:grid-cols-2 gap-2'>
               <input className='form-input' placeholder='Text field' />
               <select className='form-input'>
@@ -56,7 +56,7 @@ export default function UIKitPage() {
           <section className='card p-6'>
             <div className='font-medium text-[var(--foreground)] mb-3'>
               Cards & Badges
-            </div>
+            </section>
             <div className='grid sm:grid-cols-2 gap-3'>
               <div className='card p-4'>
                 <div className='text-sm text-[var(--foreground)]/60'>عنوان</div>

@@ -53,9 +53,9 @@ export default function LoginPage() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+      <div className='flex items-center justify-center min-h-screen'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4'></div>
           <p>جاري التحميل...</p>
         </div>
       </div>
@@ -147,12 +147,10 @@ export default function LoginPage() {
                 </Link>
               </div>
 
-              <button
-                type='submit'
+              <buttontype='submit'
                 disabled={submitting}
                 className='btn btn-default btn-lg w-full font-semibold'
-                data-testid='login-button'
-              >
+                data-testid='login-button' aria-label="Button">
                 {submitting ? (
                   <>
                     <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent'></div>
@@ -172,141 +170,222 @@ export default function LoginPage() {
               <p className='mb-4 text-center text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400'>
                 🔧 تسجيل دخول سريع (للتجربة)
               </p>
-                <div className='grid grid-cols-2 gap-2'>
-                  <button
-                    type='button'
-                    onClick={async () => {
-                      setEmail('admin@test.com');
-                      setPassword('Admin123!');
-                      setError(null);
-                      setSubmitting(true);
-                      try {
-                        const result = await login('admin@test.com', 'Admin123!');
-                        if (result.success && result.user) {
-                          const route = getDefaultRoute(result.user.role || 'admin');
-                          setSubmitting(false);
-                          window.location.href = route;
-                        } else {
-                          setError(result.error || 'بيانات الاعتماد غير صحيحة.');
-                          setSubmitting(false);
-                        }
-                      } catch (err: any) {
-                        setError(err?.message || 'حدث خطأ');
+              <div className='grid grid-cols-2 gap-2'>
+                <buttontype='button'
+                  onClick={async () aria-label="Button" {
+                    setEmail('admin@test.com');
+                    setPassword('Admin123!');
+                    setError(null);
+                    setSubmitting(true);
+                    try {
+                      const result = await login('admin@test.com', 'Admin123!');
+                      if (result.success && result.user) {
+                        const route = getDefaultRoute(
+                          result.user.role || 'admin'
+                        );
+                        setSubmitting(false);
+                        window.location.href = route;
+                      } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); async () aria-label="Button" {
+                    setEmail('admin@test.com');
+                    setPassword('Admin123!');
+                    setError(null);
+                    setSubmitting(true);
+                    try {
+                      const result = await login('admin@test.com', 'Admin123!');
+                      if (result.success && result.user) {
+                        const route = getDefaultRoute(
+                          result.user.role || 'admin'
+                        );
+                        setSubmitting(false);
+                        window.location.href = route;
+                       } }} else {
+                        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                         setSubmitting(false);
                       }
-                    }}
-                    disabled={submitting}
-                    className='btn btn-sm bg-red-500 hover:bg-red-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
-                    title='Admin Dashboard'
-                  >
-                    👑 Admin
-                  </button>
-                  <button
-                    type='button'
-                    onClick={async () => {
-                      setEmail('doctor@test.com');
-                      setPassword('Doctor123!');
-                      setError(null);
-                      setSubmitting(true);
-                      try {
-                        const result = await login('doctor@test.com', 'Doctor123!');
-                        if (result.success) {
-                          const userStr = localStorage.getItem('user');
-                          const role = userStr ? JSON.parse(userStr).role : 'agent';
-                          const route = getDefaultRoute(role);
-                          router.replace(route);
-                        } else {
-                          setError(result.error || 'بيانات الاعتماد غير صحيحة.');
-                          setSubmitting(false);
-                        }
-                      } catch (err: any) {
-                        setError(err?.message || 'حدث خطأ');
+                    } catch (err: any) {
+                      setError(err?.message || 'حدث خطأ');
+                      setSubmitting(false);
+                    }
+                  }}
+                  disabled={submitting}
+                  className='btn btn-sm bg-red-500 hover:bg-red-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                  title='Admin Dashboard'
+                >
+                  👑 Admin
+                </button>
+                <buttontype='button'
+                  onClick={async () aria-label="Button" {
+                    setEmail('doctor@test.com');
+                    setPassword('Doctor123!');
+                    setError(null);
+                    setSubmitting(true);
+                    try {
+                      const result = await login(
+                        'doctor@test.com',
+                        'Doctor123!'
+                      );
+                      if (result.success) {
+                        const userStr = localStorage.getItem('user');
+                        const role = userStr
+                          ? JSON.parse(userStr).role
+                          : 'agent';
+                        const route = getDefaultRoute(role);
+                        router.replace(route);
+                      } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); async () aria-label="Button" {
+                    setEmail('doctor@test.com');
+                    setPassword('Doctor123!');
+                    setError(null);
+                    setSubmitting(true);
+                    try {
+                      const result = await login(
+                        'doctor@test.com',
+                        'Doctor123!'
+                      );
+                      if (result.success) {
+                        const userStr = localStorage.getItem('user');
+                        const role = userStr
+                          ? JSON.parse(userStr).role
+                          : 'agent';
+                        const route = getDefaultRoute(role);
+                        router.replace(route);
+                       } }} else {
+                        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                         setSubmitting(false);
                       }
-                    }}
-                    disabled={submitting}
-                    className='btn btn-sm bg-blue-500 hover:bg-blue-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
-                    title='Doctor (Agent Role)'
-                  >
-                    🩺 Doctor
-                  </button>
-                  <button
-                    type='button'
-                    onClick={async () => {
-                      setEmail('patient@test.com');
-                      setPassword('Patient123!');
-                      setError(null);
-                      setSubmitting(true);
-                      try {
-                        const result = await login('patient@test.com', 'Patient123!');
-                        if (result.success) {
-                          const userStr = localStorage.getItem('user');
-                          const role = userStr ? JSON.parse(userStr).role : 'agent';
-                          const route = getDefaultRoute(role);
-                          router.replace(route);
-                        } else {
-                          setError(result.error || 'بيانات الاعتماد غير صحيحة.');
-                          setSubmitting(false);
-                        }
-                      } catch (err: any) {
-                        setError(err?.message || 'حدث خطأ');
+                    } catch (err: any) {
+                      setError(err?.message || 'حدث خطأ');
+                      setSubmitting(false);
+                    }
+                  }}
+                  disabled={submitting}
+                  className='btn btn-sm bg-blue-500 hover:bg-blue-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                  title='Doctor (Agent Role)'
+                >
+                  🩺 Doctor
+                </button>
+                <buttontype='button'
+                  onClick={async () aria-label="Button" {
+                    setEmail('patient@test.com');
+                    setPassword('Patient123!');
+                    setError(null);
+                    setSubmitting(true);
+                    try {
+                      const result = await login(
+                        'patient@test.com',
+                        'Patient123!'
+                      );
+                      if (result.success) {
+                        const userStr = localStorage.getItem('user');
+                        const role = userStr
+                          ? JSON.parse(userStr).role
+                          : 'agent';
+                        const route = getDefaultRoute(role);
+                        router.replace(route);
+                      } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); async () aria-label="Button" {
+                    setEmail('patient@test.com');
+                    setPassword('Patient123!');
+                    setError(null);
+                    setSubmitting(true);
+                    try {
+                      const result = await login(
+                        'patient@test.com',
+                        'Patient123!'
+                      );
+                      if (result.success) {
+                        const userStr = localStorage.getItem('user');
+                        const role = userStr
+                          ? JSON.parse(userStr).role
+                          : 'agent';
+                        const route = getDefaultRoute(role);
+                        router.replace(route);
+                       } }} else {
+                        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                         setSubmitting(false);
                       }
-                    }}
-                    disabled={submitting}
-                    className='btn btn-sm bg-green-500 hover:bg-green-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
-                    title='Patient (Agent Role)'
-                  >
-                    👤 Patient
-                  </button>
-                  <button
-                    type='button'
-                    onClick={async () => {
-                      setEmail('staff@test.com');
-                      setPassword('Staff123!');
-                      setError(null);
-                      setSubmitting(true);
-                      try {
-                        const result = await login('staff@test.com', 'Staff123!');
-                        if (result.success) {
-                          const userStr = localStorage.getItem('user');
-                          const role = userStr ? JSON.parse(userStr).role : 'agent';
-                          const route = getDefaultRoute(role);
-                          router.replace(route);
-                        } else {
-                          setError(result.error || 'بيانات الاعتماد غير صحيحة.');
-                          setSubmitting(false);
-                        }
-                      } catch (err: any) {
-                        setError(err?.message || 'حدث خطأ');
+                    } catch (err: any) {
+                      setError(err?.message || 'حدث خطأ');
+                      setSubmitting(false);
+                    }
+                  }}
+                  disabled={submitting}
+                  className='btn btn-sm bg-green-500 hover:bg-green-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                  title='Patient (Agent Role)'
+                >
+                  👤 Patient
+                </button>
+                <buttontype='button'
+                  onClick={async () aria-label="Button" {
+                    setEmail('staff@test.com');
+                    setPassword('Staff123!');
+                    setError(null);
+                    setSubmitting(true);
+                    try {
+                      const result = await login('staff@test.com', 'Staff123!');
+                      if (result.success) {
+                        const userStr = localStorage.getItem('user');
+                        const role = userStr
+                          ? JSON.parse(userStr).role
+                          : 'agent';
+                        const route = getDefaultRoute(role);
+                        router.replace(route);
+                      } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); async () aria-label="Button" {
+                    setEmail('staff@test.com');
+                    setPassword('Staff123!');
+                    setError(null);
+                    setSubmitting(true);
+                    try {
+                      const result = await login('staff@test.com', 'Staff123!');
+                      if (result.success) {
+                        const userStr = localStorage.getItem('user');
+                        const role = userStr
+                          ? JSON.parse(userStr).role
+                          : 'agent';
+                        const route = getDefaultRoute(role);
+                        router.replace(route);
+                       } }} else {
+                        setError(result.error || 'بيانات الاعتماد غير صحيحة.');
                         setSubmitting(false);
                       }
-                    }}
-                    disabled={submitting}
-                    className='btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
-                    title='Staff (Agent Role)'
-                  >
-                    🏥 Staff
-                  </button>
-                </div>
+                    } catch (err: any) {
+                      setError(err?.message || 'حدث خطأ');
+                      setSubmitting(false);
+                    }
+                  }}
+                  disabled={submitting}
+                  className='btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                  title='Staff (Agent Role)'
+                >
+                  🏥 Staff
+                </button>
+              </div>
               <div className='mt-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg'>
-                <p className='mb-2 text-xs font-medium text-gray-700 dark:text-gray-300'>Test Credentials:</p>
+                <p className='mb-2 text-xs font-medium text-gray-700 dark:text-gray-300'>
+                  Test Credentials:
+                </p>
                 <div className='space-y-1 text-xs text-gray-600 dark:text-gray-400'>
                   <div className='flex justify-between'>
                     <span>Admin:</span>
-                    <code className='font-mono'>admin@test.com / Admin123!</code>
+                    <code className='font-mono'>
+                      admin@test.com / Admin123!
+                    </code>
                   </div>
                   <div className='flex justify-between'>
                     <span>Doctor:</span>
-                    <code className='font-mono'>doctor@test.com / Doctor123!</code>
+                    <code className='font-mono'>
+                      doctor@test.com / Doctor123!
+                    </code>
                   </div>
                   <div className='flex justify-between'>
                     <span>Patient:</span>
-                    <code className='font-mono'>patient@test.com / Patient123!</code>
+                    <code className='font-mono'>
+                      patient@test.com / Patient123!
+                    </code>
                   </div>
                   <div className='flex justify-between'>
                     <span>Staff:</span>
-                    <code className='font-mono'>staff@test.com / Staff123!</code>
+                    <code className='font-mono'>
+                      staff@test.com / Staff123!
+                    </code>
                   </div>
                 </div>
               </div>

@@ -6,10 +6,12 @@
 import { requireAuth } from '@/lib/auth/authorize';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const revalidate = 60;
+
 export async function GET(_request: NextRequest) {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(_request);
+    const authResult = await requireAuth(['admin'])(_request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

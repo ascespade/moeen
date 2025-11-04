@@ -1,11 +1,11 @@
 /**
  * 🔐 Custom Authentication Hub - Optimized & Clean (SERVER-ONLY)
  * نظام المصادقة المخصص - محسّن ونظيف (SERVER-ONLY)
- * 
+ *
  * ⚠️ This file uses server-only functions (next/headers)
  * ⚠️ DO NOT import this in client components
  * ✅ Use API routes instead for client-side access
- * 
+ *
  * ✅ No console logs in production
  * ✅ Optimized database queries
  * ✅ Better error handling
@@ -42,10 +42,13 @@ const log = (message: string, ...args: any[]) => {
 
 class CustomAuthHub {
   private static instance: CustomAuthHub;
-  private permissionsCache = new Map<string, {
-    permissions: UserPermissions;
-    timestamp: number;
-  }>();
+  private permissionsCache = new Map<
+    string,
+    {
+      permissions: UserPermissions;
+      timestamp: number;
+    }
+  >();
   private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
   private constructor() {}
@@ -81,31 +84,35 @@ class CustomAuthHub {
 
       // Business Logic: Check user status FIRST (before password check)
       if (userData.status !== 'active') {
-        return { 
-          user: null, 
-          token: null, 
-          error: userData.status === 'suspended' 
-            ? 'Account suspended. Please contact administrator.'
-            : 'Account is inactive' 
+        return {
+          user: null,
+          token: null,
+          error:
+            userData.status === 'suspended'
+              ? 'Account suspended. Please contact administrator.'
+              : 'Account is inactive',
         };
       }
 
       // Business Logic: Password must be set
       if (!userData.password_hash || userData.password_hash.trim() === '') {
-        return { 
-          user: null, 
-          token: null, 
-          error: 'Password not set. Please contact administrator.' 
+        return {
+          user: null,
+          token: null,
+          error: 'Password not set. Please contact administrator.',
         };
       }
 
       // Business Logic: Verify password using pgcrypto function
       let isValid = false;
       try {
-        const { data: verifyResult, error: verifyError } = await supabase.rpc('verify_password', {
-          password_input: password,
-          password_hash: userData.password_hash
-        });
+        const { data: verifyResult, error: verifyError } = await supabase.rpc(
+          'verify_password',
+          {
+            password_input: password,
+            password_hash: userData.password_hash,
+          }
+        );
 
         if (verifyError) {
           // Fallback only in development for testing
@@ -257,23 +264,30 @@ class CustomAuthHub {
       const supabase = await createClient();
 
       // Strategy 1: Try database function first (fastest)
-      const { data: permData, error: permError } = await supabase
-        .rpc('get_user_permissions', { user_id_param: userId });
+      const { data: permData, error: permError } = await supabase.rpc(
+        'get_user_permissions',
+        { user_id_param: userId }
+      );
 
       let permissionCodes: string[] = [];
       let userRole = 'agent'; // default
 
-      if (!permError && permData && Array.isArray(permData) && permData.length > 0) {
+      if (
+        !permError &&
+        permData &&
+        Array.isArray(permData) &&
+        permData.length > 0
+      ) {
         // Function worked - use its result
         permissionCodes = permData.map((p: any) => p.permission_code);
-        
+
         // Get role from user (single optimized query)
         const { data: userData } = await supabase
           .from('users')
           .select('role')
           .eq('id', userId)
           .maybeSingle();
-        
+
         userRole = userData?.role || 'agent';
       } else {
         // Strategy 2: Fallback - Manual query (slower but reliable)
@@ -283,7 +297,7 @@ class CustomAuthHub {
           .select('role')
           .eq('id', userId)
           .maybeSingle();
-        
+
         if (userData) {
           userRole = userData.role || 'agent';
         }
@@ -291,7 +305,8 @@ class CustomAuthHub {
         // Get permissions from user_roles -> role_permissions -> permissions
         const { data: userRolesData } = await supabase
           .from('user_roles')
-          .select(`
+          .select(
+            `
             role_id,
             roles:role_id (
               name,
@@ -301,20 +316,21 @@ class CustomAuthHub {
                 )
               )
             )
-          `)
+          `
+          )
           .eq('user_id', userId)
           .eq('is_active', true)
           .maybeSingle();
 
         if (userRolesData?.roles) {
           const role = userRolesData.roles as any;
-          
+
           // Extract permission codes
           if (role.role_permissions) {
-            const rolePerms = Array.isArray(role.role_permissions) 
-              ? role.role_permissions 
+            const rolePerms = Array.isArray(role.role_permissions)
+              ? role.role_permissions
               : [role.role_permissions];
-            
+
             rolePerms.forEach((rp: any) => {
               if (rp?.permissions?.code) {
                 permissionCodes.push(rp.permissions.code);
@@ -344,7 +360,7 @@ class CustomAuthHub {
 
       // Convert to permissions structure
       const permissionsMap = new Map<string, string[]>();
-      permissionCodes.forEach((code) => {
+      permissionCodes.forEach(code => {
         if (code === '*') {
           permissionsMap.set('*', ['*']);
         } else {
@@ -360,10 +376,12 @@ class CustomAuthHub {
 
       const permissions: UserPermissions = {
         role: userRole,
-        permissions: Array.from(permissionsMap.entries()).map(([resource, actions]) => ({
-          resource,
-          actions,
-        })),
+        permissions: Array.from(permissionsMap.entries()).map(
+          ([resource, actions]) => ({
+            resource,
+            actions,
+          })
+        ),
         permissionCodes,
       };
 
@@ -393,9 +411,11 @@ class CustomAuthHub {
       if (!permissions) return false;
 
       // Business Logic: Admin has all permissions
-      if (permissions.role === 'admin' || 
-          permissions.permissionCodes.includes('*') || 
-          permissions.permissionCodes.includes('admin.access')) {
+      if (
+        permissions.role === 'admin' ||
+        permissions.permissionCodes.includes('*') ||
+        permissions.permissionCodes.includes('admin.access')
+      ) {
         return true;
       }
 

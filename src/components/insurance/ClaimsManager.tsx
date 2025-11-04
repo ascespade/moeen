@@ -7,7 +7,8 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
-import { Select } from '@/components/ui/Select';import { I18N_KEYS } from '@/constants/i18n-keys';
+import { Select } from '@/components/ui/Select';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 
 import {
   FileText,
@@ -362,7 +363,8 @@ export default function ClaimsManager({
                   </p>
                   {claim.referenceNumber && (
                     <p className='text-xs text-gray-500 dark:text-gray-500'>
-                      {t(I18N_KEYS.INSURANCE.REFERENCE)}: {claim.referenceNumber}
+                      {t(I18N_KEYS.INSURANCE.REFERENCE)}:{' '}
+                      {claim.referenceNumber}
                     </p>
                   )}
                 </div>

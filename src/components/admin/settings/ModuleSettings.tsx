@@ -7,18 +7,18 @@ import { Label } from '@/components/ui/Label';
 import { Switch } from '@/components/ui/Switch';
 import { cn } from '@/lib/utils';
 import {
-    Activity,
-    AlertTriangle,
-    CheckCircle,
-    DollarSign,
-    FileText,
-    Package,
-    RefreshCw,
-    Settings as SettingsIcon,
-    Shield,
-    User,
-    UserCheck,
-    Users
+  Activity,
+  AlertTriangle,
+  CheckCircle,
+  DollarSign,
+  FileText,
+  Package,
+  RefreshCw,
+  Settings as SettingsIcon,
+  Shield,
+  User,
+  UserCheck,
+  Users,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -46,30 +46,44 @@ interface ModuleSettingsProps {
 const defaultModules: ModulesState = {
   reception: {
     enabled: true,
-    features: ['Patient check-in', 'Appointment scheduling', 'Visitor tracking'],
+    features: [
+      'Patient check-in',
+      'Appointment scheduling',
+      'Visitor tracking',
+    ],
     settings: {
       autoCheckIn: true,
       queueManagement: true,
-      smsNotifications: true
-    }
+      smsNotifications: true,
+    },
   },
   doctor: {
     enabled: true,
-    features: ['View patient list', 'Manage schedule', 'Prescribe treatments', 'Add notes'],
+    features: [
+      'View patient list',
+      'Manage schedule',
+      'Prescribe treatments',
+      'Add notes',
+    ],
     settings: {
       appointmentReminders: true,
       patientHistory: true,
-      prescriptionTemplates: true
-    }
+      prescriptionTemplates: true,
+    },
   },
   patient: {
     enabled: true,
-    features: ['Profile management', 'Appointment requests', 'Medical history view', 'Receive reminders'],
+    features: [
+      'Profile management',
+      'Appointment requests',
+      'Medical history view',
+      'Receive reminders',
+    ],
     settings: {
       selfBooking: true,
       historyAccess: true,
-      reminderPreferences: true
-    }
+      reminderPreferences: true,
+    },
   },
   therapy: {
     enabled: true,
@@ -77,17 +91,22 @@ const defaultModules: ModulesState = {
     settings: {
       progressReports: true,
       exerciseLibrary: true,
-      outcomeTracking: true
-    }
+      outcomeTracking: true,
+    },
   },
   emr: {
     enabled: true,
-    features: ['Medical records', 'Lab results', 'Imaging reports', 'Document storage'],
+    features: [
+      'Medical records',
+      'Lab results',
+      'Imaging reports',
+      'Document storage',
+    ],
     settings: {
       autoBackup: true,
       encryptionLevel: 'high',
-      retentionPeriod: '7 years'
-    }
+      retentionPeriod: '7 years',
+    },
   },
   finance: {
     enabled: true,
@@ -95,8 +114,8 @@ const defaultModules: ModulesState = {
     settings: {
       autoInvoicing: true,
       paymentReminders: true,
-      insuranceIntegration: true
-    }
+      insuranceIntegration: true,
+    },
   },
   admin: {
     enabled: true,
@@ -104,18 +123,23 @@ const defaultModules: ModulesState = {
     settings: {
       auditLevel: 'detailed',
       reportScheduling: true,
-      systemAlerts: true
-    }
+      systemAlerts: true,
+    },
   },
   settings: {
     enabled: true,
-    features: ['Theme switcher', 'Language switcher', 'RTL/LTR toggle', 'System cleaning'],
+    features: [
+      'Theme switcher',
+      'Language switcher',
+      'RTL/LTR toggle',
+      'System cleaning',
+    ],
     settings: {
       themeCustomization: true,
       multiLanguage: true,
-      systemMaintenance: true
-    }
-  }
+      systemMaintenance: true,
+    },
+  },
 };
 
 const moduleConfigs = [
@@ -125,7 +149,7 @@ const moduleConfigs = [
     description: 'إدارة استقبال المرضى وتسجيل الدخول',
     icon: Users,
     color: '#3b82f6',
-    category: 'core'
+    category: 'core',
   },
   {
     key: 'doctor' as keyof ModulesState,
@@ -133,7 +157,7 @@ const moduleConfigs = [
     description: 'نظام إدارة الأطباء والمواعيد',
     icon: UserCheck,
     color: '#10b981',
-    category: 'healthcare'
+    category: 'healthcare',
   },
   {
     key: 'patient' as keyof ModulesState,
@@ -141,7 +165,7 @@ const moduleConfigs = [
     description: 'إدارة ملفات المرضى والحجوزات',
     icon: User,
     color: '#8b5cf6',
-    category: 'healthcare'
+    category: 'healthcare',
   },
   {
     key: 'therapy' as keyof ModulesState,
@@ -149,7 +173,7 @@ const moduleConfigs = [
     description: 'خطط العلاج وتتبع التقدم',
     icon: Activity,
     color: '#f59e0b',
-    category: 'healthcare'
+    category: 'healthcare',
   },
   {
     key: 'emr' as keyof ModulesState,
@@ -157,7 +181,7 @@ const moduleConfigs = [
     description: 'نظام السجلات الطبية الإلكترونية',
     icon: FileText,
     color: '#06b6d4',
-    category: 'healthcare'
+    category: 'healthcare',
   },
   {
     key: 'finance' as keyof ModulesState,
@@ -165,7 +189,7 @@ const moduleConfigs = [
     description: 'المدفوعات والفوترة والتأمين',
     icon: DollarSign,
     color: '#ef4444',
-    category: 'business'
+    category: 'business',
   },
   {
     key: 'admin' as keyof ModulesState,
@@ -173,7 +197,7 @@ const moduleConfigs = [
     description: 'إدارة النظام والمستخدمين',
     icon: Shield,
     color: '#dc2626',
-    category: 'system'
+    category: 'system',
   },
   {
     key: 'settings' as keyof ModulesState,
@@ -181,15 +205,15 @@ const moduleConfigs = [
     description: 'إعدادات النظام والتخصيص',
     icon: SettingsIcon,
     color: '#64748b',
-    category: 'system'
-  }
+    category: 'system',
+  },
 ];
 
 const categories = {
   core: { name: 'الأساسية', description: 'المودولات الأساسية للنظام' },
   healthcare: { name: 'الرعاية الصحية', description: 'مودولات الخدمات الطبية' },
   business: { name: 'الأعمال', description: 'مودولات إدارة الأعمال' },
-  system: { name: 'النظام', description: 'مودولات النظام والتحكم' }
+  system: { name: 'النظام', description: 'مودولات النظام والتحكم' },
 };
 
 export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
@@ -201,7 +225,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
       try {
         const response = await fetch('/api/admin/settings/modules');
         const result = await response.json();
-        
+
         if (result.success && result.data) {
           setModules(prev => ({ ...prev, ...result.data }));
         }
@@ -220,19 +244,22 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
       ...prev,
       [moduleKey]: {
         ...prev[moduleKey],
-        enabled: !prev[moduleKey].enabled
-      }
+        enabled: !prev[moduleKey].enabled,
+      },
     }));
     onChange();
   };
 
-  const updateModuleSettings = (moduleKey: keyof ModulesState, settings: Record<string, any>) => {
+  const updateModuleSettings = (
+    moduleKey: keyof ModulesState,
+    settings: Record<string, any>
+  ) => {
     setModules(prev => ({
       ...prev,
       [moduleKey]: {
         ...prev[moduleKey],
-        settings: { ...prev[moduleKey].settings, ...settings }
-      }
+        settings: { ...prev[moduleKey].settings, ...settings },
+      },
     }));
     onChange();
   };
@@ -249,7 +276,10 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
     return (
       <div className='space-y-6'>
         {[1, 2, 3].map(i => (
-          <div key={i} className='h-32 bg-[var(--brand-surface)] rounded-lg animate-pulse' />
+          <div
+            key={i}
+            className='h-32 bg-[var(--brand-surface)] rounded-lg animate-pulse'
+          />
         ))}
       </div>
     );
@@ -273,12 +303,18 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
               </p>
             </div>
           </div>
-          
+
           <div className='flex gap-2'>
-            <Badge variant='outline' className='bg-green-50 text-green-700 border-green-200'>
+            <Badge
+              variant='outline'
+              className='bg-green-50 text-green-700 border-green-200'
+            >
               {getEnabledModulesCount()} نشط
             </Badge>
-            <Badge variant='outline' className='bg-gray-50 text-gray-700 border-gray-200'>
+            <Badge
+              variant='outline'
+              className='bg-gray-50 text-gray-700 border-gray-200'
+            >
               {moduleConfigs.length - getEnabledModulesCount()} متوقف
             </Badge>
           </div>
@@ -293,16 +329,20 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
               <Package className='w-4 h-4 text-[var(--brand-primary)]' />
             </div>
             <div>
-              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>{category.name}</h3>
-              <p className='text-sm text-[var(--text-secondary)]'>{category.description}</p>
+              <h3 className='text-lg font-semibold text-[var(--text-primary)]'>
+                {category.name}
+              </h3>
+              <p className='text-sm text-[var(--text-secondary)]'>
+                {category.description}
+              </p>
             </div>
           </div>
 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-            {getCategoryModules(categoryKey).map((moduleConfig) => {
+            {getCategoryModules(categoryKey).map(moduleConfig => {
               const moduleConfigInstance = modules[moduleConfig.key];
               const Icon = moduleConfig.icon;
-              
+
               return (
                 <div
                   key={moduleConfig.key}
@@ -319,17 +359,24 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
                         className='w-10 h-10 rounded-xl flex items-center justify-center'
                         style={{
                           backgroundColor: `${moduleConfig.color}15`,
-                          border: `1px solid ${moduleConfig.color}30`
+                          border: `1px solid ${moduleConfig.color}30`,
                         }}
                       >
-                        <Icon className='w-5 h-5' style={{ color: moduleConfig.color }} />
+                        <Icon
+                          className='w-5 h-5'
+                          style={{ color: moduleConfig.color }}
+                        />
                       </div>
                       <div>
-                        <h4 className='font-semibold text-[var(--text-primary)]'>{moduleConfig.name}</h4>
-                        <p className='text-sm text-[var(--text-secondary)]'>{moduleConfig.description}</p>
+                        <h4 className='font-semibold text-[var(--text-primary)]'>
+                          {moduleConfig.name}
+                        </h4>
+                        <p className='text-sm text-[var(--text-secondary)]'>
+                          {moduleConfig.description}
+                        </p>
                       </div>
                     </div>
-                    
+
                     <Switch
                       checked={moduleConfigInstance.enabled}
                       onCheckedChange={() => toggleModule(moduleConfig.key)}
@@ -338,15 +385,17 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
 
                   {/* Features List */}
                   <div className='space-y-2'>
-                    <Label className='text-sm font-medium text-[var(--text-secondary)]'>الميزات المتاحة:</Label>
+                    <Label className='text-sm font-medium text-[var(--text-secondary)]'>
+                      الميزات المتاحة:
+                    </Label>
                     <div className='space-y-1'>
                       {moduleConfigInstance.features.map((feature, index) => (
-                        <div 
-                          key={index} 
+                        <div
+                          key={index}
                           className={cn(
                             'flex items-center gap-2 text-sm p-2 rounded-lg transition-colors',
-                            moduleConfigInstance.enabled 
-                              ? 'text-green-700 bg-green-50' 
+                            moduleConfigInstance.enabled
+                              ? 'text-green-700 bg-green-50'
                               : 'text-gray-500 bg-gray-50'
                           )}
                         >
@@ -363,9 +412,15 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
 
                   {/* Module Status */}
                   <div className='mt-4 pt-4 border-t border-[var(--brand-border)]/50'>
-                    <Badge 
-                      variant={moduleConfigInstance.enabled ? 'default' : 'outline'}
-                      className={moduleConfigInstance.enabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}
+                    <Badge
+                      variant={
+                        moduleConfigInstance.enabled ? 'default' : 'outline'
+                      }
+                      className={
+                        moduleConfigInstance.enabled
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-gray-100 text-gray-600'
+                      }
                     >
                       {moduleConfigInstance.enabled ? 'نشط' : 'متوقف'}
                     </Badge>
@@ -382,7 +437,9 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
         <div className='flex items-start gap-3'>
           <AlertTriangle className='w-6 h-6 text-yellow-600 flex-shrink-0 mt-1' />
           <div>
-            <h4 className='font-semibold text-yellow-800 mb-2'>تنبيه المودولات</h4>
+            <h4 className='font-semibold text-yellow-800 mb-2'>
+              تنبيه المودولات
+            </h4>
             <div className='text-sm text-yellow-700 space-y-1'>
               <p>• إيقاف مودول المرضى سيؤثر على مودولات الأطباء والعلاج</p>
               <p>• إيقاف مودول المالية سيؤثر على التقارير المالية</p>
@@ -398,7 +455,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
           <SettingsIcon className='w-5 h-5' />
           إجراءات سريعة
         </h4>
-        
+
         <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
           <Button
             variant='outline'
@@ -406,7 +463,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
               Object.keys(modules).forEach(key => {
                 setModules(prev => ({
                   ...prev,
-                  [key]: { ...prev[key as keyof ModulesState], enabled: true }
+                  [key]: { ...prev[key as keyof ModulesState], enabled: true },
                 }));
               });
               onChange();
@@ -423,7 +480,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
               ['finance', 'admin', 'settings'].forEach(key => {
                 setModules(prev => ({
                   ...prev,
-                  [key]: { ...prev[key as keyof ModulesState], enabled: false }
+                  [key]: { ...prev[key as keyof ModulesState], enabled: false },
                 }));
               });
               onChange();
@@ -446,9 +503,12 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
           <Button
             variant='outline'
             onClick={async () => {
-              const response = await fetch('/api/admin/settings/modules/backup', {
-                method: 'POST'
-              });
+              const response = await fetch(
+                '/api/admin/settings/modules/backup',
+                {
+                  method: 'POST',
+                }
+              );
               // TODO: Handle backup creation
             }}
             className='h-20 flex-col border-purple-200 hover:bg-purple-50'
@@ -461,4 +521,3 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
     </div>
   );
 }
-

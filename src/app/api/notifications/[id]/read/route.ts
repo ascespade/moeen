@@ -24,17 +24,22 @@ export async function POST(
       .from('notifications')
       .update({
         is_read: true,
-        read_at: new Date().toISOString()
+        read_at: new Date().toISOString(),
       })
       .eq('id', id)
       // Ensure user can only mark their own notifications as read
-      .or(`user_id.eq.${authResult.user.id},recipientId.eq.${authResult.user.id},recipient_id.eq.${authResult.user.id}`)
+      .or(
+        `user_id.eq.${authResult.user.id},recipientId.eq.${authResult.user.id},recipient_id.eq.${authResult.user.id}`
+      )
       .select()
       .single();
 
     if (error) {
       return NextResponse.json(
-        { error: 'Failed to mark notification as read', details: error.message },
+        {
+          error: 'Failed to mark notification as read',
+          details: error.message,
+        },
         { status: 500 }
       );
     }
@@ -66,4 +71,3 @@ export async function PATCH(
 ) {
   return POST(request, { params });
 }
-

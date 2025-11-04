@@ -32,7 +32,10 @@ interface UseUnifiedAuthReturn {
   permissions: string[];
 
   // Actions
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  login: (
+    email: string,
+    password: string
+  ) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   refresh: () => Promise<void>;
 
@@ -69,19 +72,21 @@ export function useUnifiedAuth(): UseUnifiedAuthReturn {
 
       // Then verify with API (this will update user if session exists)
       // Don't wait for this - user can proceed with stored data
-      initializeAuth().then((apiUser) => {
-        if (mounted && apiUser) {
-          setUser(apiUser);
-        } else if (mounted && !storedUser) {
-          // No stored user and no API user = not logged in (this is fine)
-          setUser(null);
-        }
-      }).catch(() => {
-        // Silently ignore errors - user is simply not logged in
-        if (mounted && !storedUser) {
-          setUser(null);
-        }
-      });
+      initializeAuth()
+        .then(apiUser => {
+          if (mounted && apiUser) {
+            setUser(apiUser);
+          } else if (mounted && !storedUser) {
+            // No stored user and no API user = not logged in (this is fine)
+            setUser(null);
+          }
+        })
+        .catch(() => {
+          // Silently ignore errors - user is simply not logged in
+          if (mounted && !storedUser) {
+            setUser(null);
+          }
+        });
     };
 
     init();
@@ -104,7 +109,7 @@ export function useUnifiedAuth(): UseUnifiedAuthReturn {
     } catch (error) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Login failed'
+        error: error instanceof Error ? error.message : 'Login failed',
       };
     } finally {
       setIsLoading(false);
@@ -134,20 +139,29 @@ export function useUnifiedAuth(): UseUnifiedAuthReturn {
   }, []);
 
   // Permission checks
-  const checkPermission = useCallback((permission: string) => {
-    if (!user) return false;
-    return hasPermission(user.permissions, permission);
-  }, [user]);
+  const checkPermission = useCallback(
+    (permission: string) => {
+      if (!user) return false;
+      return hasPermission(user.permissions, permission);
+    },
+    [user]
+  );
 
-  const checkAnyPermission = useCallback((permissions: string[]) => {
-    if (!user) return false;
-    return hasAnyPermission(user.permissions, permissions);
-  }, [user]);
+  const checkAnyPermission = useCallback(
+    (permissions: string[]) => {
+      if (!user) return false;
+      return hasAnyPermission(user.permissions, permissions);
+    },
+    [user]
+  );
 
-  const checkAccess = useCallback((resource: string, action: string) => {
-    if (!user) return false;
-    return canAccess(user.permissions, resource, action);
-  }, [user]);
+  const checkAccess = useCallback(
+    (resource: string, action: string) => {
+      if (!user) return false;
+      return canAccess(user.permissions, resource, action);
+    },
+    [user]
+  );
 
   // Navigation
   const navigateToDefault = useCallback(() => {

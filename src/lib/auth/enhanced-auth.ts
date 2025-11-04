@@ -1,14 +1,18 @@
 /**
  * Enhanced Authentication System
  * نظام المصادقة المحسّن
- * 
+ *
  * Simplified, clean, and efficient authentication
- * 
+ *
  * ✅ Client-safe (no server-only imports)
  */
 
 import type { CustomAuthUser, UserPermissions } from './types';
-import { getDefaultRoute, canAccessRoute, getNavigationRoutes } from './RouteManager';
+import {
+  getDefaultRoute,
+  canAccessRoute,
+  getNavigationRoutes,
+} from './RouteManager';
 
 // Re-export types for convenience
 export type { CustomAuthUser, UserPermissions };
@@ -51,10 +55,7 @@ export function getNavMenuItems(
   permissions: UserPermissions | null
 ) {
   if (!user) return [];
-  return getNavigationRoutes(
-    user.role,
-    permissions?.permissionCodes || []
-  );
+  return getNavigationRoutes(user.role, permissions?.permissionCodes || []);
 }
 
 /**
@@ -68,7 +69,10 @@ export function hasUserPermission(
   if (!permissions) return false;
 
   // Admin has all
-  if (permissions.role === 'admin' || permissions.permissionCodes.includes('*')) {
+  if (
+    permissions.role === 'admin' ||
+    permissions.permissionCodes.includes('*')
+  ) {
     return true;
   }
 

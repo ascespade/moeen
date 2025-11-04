@@ -6,18 +6,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { useAuth } from '@/hooks/useAuth';
 import {
-    Activity,
-    Brain,
-    Calendar,
-    Clock,
-    Edit,
-    Eye,
-    Heart,
-    MoreVertical,
-    Plus,
-    Target,
-    TrendingUp,
-    Zap
+  Activity,
+  Brain,
+  Calendar,
+  Clock,
+  Edit,
+  Eye,
+  Heart,
+  MoreVertical,
+  Plus,
+  Target,
+  TrendingUp,
+  Zap,
 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -88,18 +88,20 @@ const TherapyPage: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const { createClient } = await import('@/lib/supabase/client');
       const supabase = createClient();
-      
+
       // Load therapy sessions with patient and user data
       const { data: sessionsData, error: sessionsError } = await supabase
         .from('therapy_sessions')
-        .select('*, patients(first_name, last_name, date_of_birth, medical_history), users(name)')
+        .select(
+          '*, patients(first_name, last_name, date_of_birth, medical_history), users(name)'
+        )
         .order('session_date', { ascending: false });
-      
+
       if (sessionsError) throw sessionsError;
-      
+
       const transformedSessions = (sessionsData || []).map((session: any) => ({
         id: session.id,
         patient_id: session.patient_id,
@@ -112,24 +114,35 @@ const TherapyPage: React.FC = () => {
         goals: Array.isArray(session.goals) ? session.goals : [],
         activities: Array.isArray(session.activities) ? session.activities : [],
         progress_notes: session.progress_notes || '',
-        next_session_goals: Array.isArray(session.next_session_goals) ? session.next_session_goals : [],
+        next_session_goals: Array.isArray(session.next_session_goals)
+          ? session.next_session_goals
+          : [],
         created_at: session.created_at,
         updated_at: session.updated_at || session.created_at,
         public_id: session.public_id || session.id,
-        patients: session.patients ? {
-          first_name: session.patients.first_name,
-          last_name: session.patients.last_name,
-          age: session.patients.date_of_birth ? 
-            Math.floor((new Date().getTime() - new Date(session.patients.date_of_birth).getTime()) / (1000 * 60 * 60 * 24 * 365)) : 0,
-          condition: session.patients.medical_history || '',
-          avatar: '/logo.png',
-        } : undefined,
-        therapists: session.users ? {
-          first_name: session.users.name || '',
-          last_name: '',
-          specialty: 'معالج',
-          avatar: '/logo.png',
-        } : undefined,
+        patients: session.patients
+          ? {
+              first_name: session.patients.first_name,
+              last_name: session.patients.last_name,
+              age: session.patients.date_of_birth
+                ? Math.floor(
+                    (new Date().getTime() -
+                      new Date(session.patients.date_of_birth).getTime()) /
+                      (1000 * 60 * 60 * 24 * 365)
+                  )
+                : 0,
+              condition: session.patients.medical_history || '',
+              avatar: '/logo.png',
+            }
+          : undefined,
+        therapists: session.users
+          ? {
+              first_name: session.users.name || '',
+              last_name: '',
+              specialty: 'معالج',
+              avatar: '/logo.png',
+            }
+          : undefined,
       }));
 
       // Load therapy goals
@@ -137,9 +150,9 @@ const TherapyPage: React.FC = () => {
         .from('therapy_goals')
         .select('*, therapy_sessions(patient_id)')
         .order('created_at', { ascending: false });
-      
+
       if (goalsError) throw goalsError;
-      
+
       const transformedGoals = (goalsData || []).map((goal: any) => ({
         id: goal.id,
         patient_id: goal.therapy_sessions?.patient_id || '',

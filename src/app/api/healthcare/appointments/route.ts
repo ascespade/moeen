@@ -7,6 +7,8 @@ const supabase = createClient(
 );
 
 // GET /api/healthcare/appointments - جلب المواعيد
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);

@@ -7,7 +7,8 @@ import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { LoadingSpinner } from '@/components/ui';import { I18N_KEYS } from '@/constants/i18n-keys';
+import { LoadingSpinner } from '@/components/ui';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 
 import {
   Users,

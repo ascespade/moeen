@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authorize } from '@/lib/auth/authorize';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // First: Try JWT from cookie (fastest path)
-    const token = request.cookies.get('auth_token')?.value ||
-                 request.cookies.get('auth-token')?.value;
+    const token =
+      request.cookies.get('auth_token')?.value ||
+      request.cookies.get('auth-token')?.value;
 
     if (token) {
       try {
@@ -17,7 +20,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           if (decoded.userId && decoded.email && decoded.role) {
             // Get permissions from PermissionManager (fast, no DB query)
             const { PermissionManager } = await import('@/lib/permissions');
-            const permissions = PermissionManager.getRolePermissions(decoded.role);
+            const permissions = PermissionManager.getRolePermissions(
+              decoded.role
+            );
 
             return NextResponse.json({
               success: true,
@@ -57,7 +62,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           // Get permissions using PermissionManager (faster than DB queries)
           try {
             const { PermissionManager } = await import('@/lib/permissions');
-            const permissions = PermissionManager.getRolePermissions(userData.role);
+            const permissions = PermissionManager.getRolePermissions(
+              userData.role
+            );
 
             return NextResponse.json({
               success: true,
@@ -76,7 +83,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                 id: userData.id,
                 email: userData.email,
                 role: userData.role,
-                permissions: userData.role === 'admin' ? ['*', 'dashboard:view'] : ['dashboard:view'],
+                permissions:
+                  userData.role === 'admin'
+                    ? ['*', 'dashboard:view']
+                    : ['dashboard:view'],
               },
             });
           }
@@ -144,7 +154,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             .from('user_permissions')
             .select('permission_id')
             .eq('user_id', userData.id);
-            const uids = (userPermRows || [])
+          const uids = (userPermRows || [])
             .map((up: { permission_id: string }) => up.permission_id)
             .filter(Boolean);
           if (uids.length) {
@@ -152,9 +162,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               .from('permissions')
               .select('code')
               .in('id', uids as string[]);
-              permCodes.push(
-                ...((permRows || []).map((p: { code?: string }) => p.code).filter(Boolean) as string[])
-              );
+            permCodes.push(
+              ...((permRows || [])
+                .map((p: { code?: string }) => p.code)
+                .filter(Boolean) as string[])
+            );
           }
 
           return NextResponse.json({

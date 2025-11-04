@@ -34,7 +34,7 @@ export default function InsuranceClaimsPage() {
       setLoading(true);
       setError(null);
       const supabase = createClient();
-      
+
       let query = supabase
         .from('insurance_claims')
         .select('*, patients(first_name, last_name)')
@@ -51,8 +51,11 @@ export default function InsuranceClaimsPage() {
       // Transform data to match interface
       const transformedClaims = (data || []).map((claim: any) => ({
         id: claim.id,
-        patient_name: claim.patient_name || 
-          (claim.patients ? `${claim.patients.first_name} ${claim.patients.last_name}` : 'Unknown'),
+        patient_name:
+          claim.patient_name ||
+          (claim.patients
+            ? `${claim.patients.first_name} ${claim.patients.last_name}`
+            : 'Unknown'),
         patient_id: claim.patient_id,
         claim_number: claim.claim_number,
         amount: claim.amount,
@@ -116,7 +119,9 @@ export default function InsuranceClaimsPage() {
     const matchesSearch =
       claim.patient_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       claim.claim_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      claim.insurance_provider?.toLowerCase().includes(searchTerm.toLowerCase());
+      claim.insurance_provider
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
     const matchesStatus =
       selectedStatus === 'all' || claim.status === selectedStatus;
     return matchesSearch && matchesStatus;
@@ -131,7 +136,9 @@ export default function InsuranceClaimsPage() {
       <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
         <div className='text-center'>
           <div className='mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]' />
-          <p className='text-gray-600 dark:text-gray-400'>جاري تحميل البيانات...</p>
+          <p className='text-gray-600 dark:text-gray-400'>
+            جاري تحميل البيانات...
+          </p>
         </div>
       </div>
     );
@@ -142,8 +149,7 @@ export default function InsuranceClaimsPage() {
       <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
         <div className='text-center'>
           <p className='mb-4 text-lg font-semibold text-red-600'>{error}</p>
-          <button
-            onClick={() => loadClaims()}
+          <buttononClick={() = aria-label="Button"> { loadClaims()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { loadClaims() } }}
             className='rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
           >
             إعادة المحاولة
@@ -177,8 +183,7 @@ export default function InsuranceClaimsPage() {
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <button
-                onClick={() => setShowCreateModal(true)}
+              <buttononClick={() = aria-label="Button"> { setShowCreateModal(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة مطالبة
@@ -253,7 +258,7 @@ export default function InsuranceClaimsPage() {
             </div>
 
             <div className='flex items-end'>
-              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+              <buttonclassName='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
                 تطبيق الفلاتر
               </button>
             </div>
@@ -332,17 +337,16 @@ export default function InsuranceClaimsPage() {
                     </td>
                     <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                       <div className='flex gap-2'>
-                        <button
-                          onClick={() => setShowDetailsModal(claim.id)}
+                        <buttononClick={() = aria-label="Button"> { setShowDetailsModal(claim.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(claim.id) } }}
                           className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
                         >
                           عرض
                         </button>
-                        <button className='text-gray-600 hover:text-gray-900'>
+                        <buttonclassName='text-gray-600 hover:text-gray-900' aria-label="تعديل">
                           تعديل
                         </button>
                         {claim.status === 'pending' && (
-                          <button className='text-default-success hover:text-green-700'>
+                          <buttonclassName='text-default-success hover:text-green-700' aria-label="موافقة">
                             موافقة
                           </button>
                         )}
@@ -377,8 +381,7 @@ export default function InsuranceClaimsPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة مطالبة تأمينية</h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
+              <buttononClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -460,17 +463,14 @@ export default function InsuranceClaimsPage() {
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button
-                  type='button'
-                  onClick={() => setShowCreateModal(false)}
+                <buttontype='button'
+                  onClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <button
-                  type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
-                >
+                <buttontype='submit'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة المطالبة">
                   إضافة المطالبة
                 </button>
               </div>
@@ -485,8 +485,7 @@ export default function InsuranceClaimsPage() {
           <div className='w-full max-w-4xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>تفاصيل المطالبة</h3>
-              <button
-                onClick={() => setShowDetailsModal(null)}
+              <buttononClick={() = aria-label="Button"> { setShowDetailsModal(null)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(null) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -592,23 +591,24 @@ export default function InsuranceClaimsPage() {
               </p>
             </div>
 
-            {selectedClaim.attachments && selectedClaim.attachments.length > 0 && (
-              <div className='mt-6'>
-                <h4 className='mb-4 font-semibold'>المرفقات</h4>
-                <div className='grid grid-cols-2 gap-4 md:grid-cols-3'>
-                  {selectedClaim.attachments.map((attachment, index) => (
-                    <div
-                      key={index}
-                      className='rounded-lg border border-gray-200 p-3 text-center dark:border-gray-700'
-                    >
-                      <span className='text-sm text-gray-600 dark:text-gray-300'>
-                        {attachment}
-                      </span>
-                    </div>
-                  ))}
+            {selectedClaim.attachments &&
+              selectedClaim.attachments.length > 0 && (
+                <div className='mt-6'>
+                  <h4 className='mb-4 font-semibold'>المرفقات</h4>
+                  <div className='grid grid-cols-2 gap-4 md:grid-cols-3'>
+                    {selectedClaim.attachments.map((attachment, index) => (
+                      <div
+                        key={index}
+                        className='rounded-lg border border-gray-200 p-3 text-center dark:border-gray-700'
+                      >
+                        <span className='text-sm text-gray-600 dark:text-gray-300'>
+                          {attachment}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {selectedClaim.notes && (
               <div className='mt-6'>
@@ -620,14 +620,13 @@ export default function InsuranceClaimsPage() {
             )}
 
             <div className='flex gap-3 pt-6'>
-              <button
-                onClick={() => setShowDetailsModal(null)}
+              <buttononClick={() = aria-label="Button"> { setShowDetailsModal(null)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(null) } }}
                 className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 إغلاق
               </button>
               {selectedClaim.status === 'pending' && (
-                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+                <buttonclassName='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="مراجعة المطالبة">
                   مراجعة المطالبة
                 </button>
               )}

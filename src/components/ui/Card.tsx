@@ -2,7 +2,13 @@ import { cn } from '@/lib/utils';
 import React from 'react';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'elevated' | 'outlined' | 'glass' | 'gradient' | 'interactive';
+  variant?:
+    | 'default'
+    | 'elevated'
+    | 'outlined'
+    | 'glass'
+    | 'gradient'
+    | 'interactive';
   padding?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   shadow?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   borderRadius?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';

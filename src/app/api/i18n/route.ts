@@ -74,6 +74,8 @@ function getFallbackMessages(locale: string, ns: string) {
   });
 }
 
+export const revalidate = 60;
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const locale = searchParams.get('locale') || 'ar';

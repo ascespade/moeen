@@ -20,7 +20,7 @@ vi.mock('@/components/providers/I18nProvider', () => ({
     isRTL: false,
     isLTR: true,
   }),
-  I18nProvider: ({ children }: { children: React.ReactNode }) => children
+  I18nProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 vi.mock('next/navigation', () => ({
@@ -38,16 +38,16 @@ vi.mock('next/navigation', () => ({
 vi.mock('@/components/common/ThemeSwitcher', () => {
   return {
     default: function MockThemeSwitcher() {
-      return <div data-testid="theme-switcher">Theme Switcher</div>;
-    }
+      return <div data-testid='theme-switcher'>Theme Switcher</div>;
+    },
   };
 });
 
 vi.mock('@/components/common/LanguageSwitcher', () => {
   return {
     default: function MockLanguageSwitcher() {
-      return <div data-testid="language-switcher">Language Switcher</div>;
-    }
+      return <div data-testid='language-switcher'>Language Switcher</div>;
+    },
   };
 });
 
@@ -61,7 +61,7 @@ describe('Header Component', () => {
       emr: { enabled: true, features: ['Medical records'] },
       finance: { enabled: true, features: ['Payments'] },
       admin: { enabled: true, features: ['User management'] },
-      settings: { enabled: true, features: ['Theme switcher'] }
+      settings: { enabled: true, features: ['Theme switcher'] },
     },
     ai_features: {
       chatbot: {
@@ -70,58 +70,58 @@ describe('Header Component', () => {
         capabilities: ['Create appointments'],
         dynamic_flows: true,
         learns_from_interactions: true,
-        purpose: 'AI-powered patient assistance'
+        purpose: 'AI-powered patient assistance',
       },
       ai_agent: {
         enabled: false,
         per_user_role: true,
         scope_restriction: 'Center operations only',
         capabilities: ['Assist patients'],
-        purpose: 'Intelligent assistant'
+        purpose: 'Intelligent assistant',
       },
       flow_studio: {
         enabled: true,
         purpose: 'Create/modify chatbot flows',
         access: 'Admin panel',
         features: ['Visual editor'],
-        capabilities: ['Visual flow design']
+        capabilities: ['Visual flow design'],
       },
       voice_bot: {
         enabled: false,
         purpose: 'Voice interaction',
         integrations: ['WhatsApp voice'],
         features: ['Speech-to-text'],
-        capabilities: ['Voice recognition']
+        capabilities: ['Voice recognition'],
       },
       emotion_analytics: {
         enabled: true,
         purpose: 'Monitor emotional signals',
         dashboard_access: ['doctor'],
         metrics: ['Emotional stability'],
-        capabilities: ['Sentiment analysis']
+        capabilities: ['Sentiment analysis'],
       },
       early_diagnosis: {
         enabled: false,
         purpose: 'Early detection',
-        capabilities: ['Symptom analysis']
-      }
+        capabilities: ['Symptom analysis'],
+      },
     },
     security: {
       encryption: true,
       audit_logs: true,
-      role_based_access: true
+      role_based_access: true,
     },
     automation: {
-      cron_jobs: ['Reminders', 'Data sync']
+      cron_jobs: ['Reminders', 'Data sync'],
     },
     translation: {
       enabled: true,
       dynamic_update: true,
-      no_hardcoded_text: true
+      no_hardcoded_text: true,
     },
     reports: {
-      weekly_learning_report_to_admin: true
-    }
+      weekly_learning_report_to_admin: true,
+    },
   };
 
   beforeEach(() => {
@@ -129,7 +129,7 @@ describe('Header Component', () => {
       config: mockConfig,
       updateConfig: vi.fn(),
       toggleModule: vi.fn(),
-      toggleAIFeature: vi.fn()
+      toggleAIFeature: vi.fn(),
     });
   });
 
@@ -139,9 +139,11 @@ describe('Header Component', () => {
 
   it('renders the header with all basic elements', () => {
     render(<Header />);
-    
+
     expect(screen.getByText('common.systemName')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('common.searchPlaceholder')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('common.searchPlaceholder')
+    ).toBeInTheDocument();
     expect(screen.getByTestId('theme-switcher')).toBeInTheDocument();
     expect(screen.getByText('🤖')).toBeInTheDocument();
     expect(screen.getByText('🔔')).toBeInTheDocument();
@@ -149,7 +151,7 @@ describe('Header Component', () => {
 
   it('shows AI features indicator when AI features are enabled', () => {
     render(<Header />);
-    
+
     expect(screen.getByText('🤖')).toBeInTheDocument();
   });
 
@@ -161,31 +163,39 @@ describe('Header Component', () => {
         ai_agent: { ...mockConfig.ai_features.ai_agent, enabled: false },
         flow_studio: { ...mockConfig.ai_features.flow_studio, enabled: false },
         voice_bot: { ...mockConfig.ai_features.voice_bot, enabled: false },
-        emotion_analytics: { ...mockConfig.ai_features.emotion_analytics, enabled: false },
-        early_diagnosis: { ...mockConfig.ai_features.early_diagnosis, enabled: false }
-      }
+        emotion_analytics: {
+          ...mockConfig.ai_features.emotion_analytics,
+          enabled: false,
+        },
+        early_diagnosis: {
+          ...mockConfig.ai_features.early_diagnosis,
+          enabled: false,
+        },
+      },
     };
 
     mockUseSystemConfig.mockReturnValue({
       config: configWithNoAI,
       updateConfig: vi.fn(),
       toggleModule: vi.fn(),
-      toggleAIFeature: vi.fn()
+      toggleAIFeature: vi.fn(),
     });
 
     render(<Header />);
-    
+
     expect(screen.queryByText('🤖')).not.toBeInTheDocument();
   });
 
   it('shows AI features dropdown when clicked', () => {
     render(<Header />);
-    
+
     // Find the AI button by looking for the button containing the 🤖 emoji
     const aiButtons = screen.getAllByRole('button');
-    const aiButton = aiButtons.find(button => button.textContent?.includes('🤖'));
+    const aiButton = aiButtons.find(button =>
+      button.textContent?.includes('🤖')
+    );
     expect(aiButton).toBeDefined();
-    
+
     // For now, just test that the button exists and can be clicked
     // The dropdown functionality can be tested in integration tests
     expect(aiButton).toBeInTheDocument();
@@ -193,12 +203,14 @@ describe('Header Component', () => {
 
   it('displays enabled AI features in the dropdown', () => {
     render(<Header />);
-    
+
     // Find the AI button by looking for the button containing the 🤖 emoji
     const aiButtons = screen.getAllByRole('button');
-    const aiButton = aiButtons.find(button => button.textContent?.includes('🤖'));
+    const aiButton = aiButtons.find(button =>
+      button.textContent?.includes('🤖')
+    );
     expect(aiButton).toBeDefined();
-    
+
     // For now, just test that the button exists
     // The dropdown content can be tested in integration tests
     expect(aiButton).toBeInTheDocument();
@@ -206,10 +218,10 @@ describe('Header Component', () => {
 
   it('does not display disabled AI features in the dropdown', () => {
     render(<Header />);
-    
+
     const aiButton = screen.getByText('🤖');
     fireEvent.click(aiButton);
-    
+
     expect(screen.queryByText('header.aiAgent')).not.toBeInTheDocument();
     expect(screen.queryByText('header.voiceBot')).not.toBeInTheDocument();
     expect(screen.queryByText('header.earlyDiagnosis')).not.toBeInTheDocument();
@@ -217,7 +229,7 @@ describe('Header Component', () => {
 
   it('renders search input with proper placeholder', () => {
     render(<Header />);
-    
+
     const searchInput = screen.getByPlaceholderText('common.searchPlaceholder');
     expect(searchInput).toBeInTheDocument();
     expect(searchInput).toHaveAttribute('type', 'search');
@@ -225,16 +237,16 @@ describe('Header Component', () => {
 
   it('renders notifications with proper count', () => {
     render(<Header />);
-    
+
     expect(screen.getByText('3')).toBeInTheDocument();
   });
 
   it('allows marking notifications as read', () => {
     render(<Header />);
-    
+
     const markAsReadButton = screen.getByText('header.markAsRead');
     fireEvent.click(markAsReadButton);
-    
+
     expect(screen.getByText('header.noNotifications')).toBeInTheDocument();
   });
 });

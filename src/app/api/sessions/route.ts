@@ -1,23 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
-import { requireAuth }
-    
-    // Check permissions using PermissionManager
-    const canRead = PermissionManager.hasPermission(
-      user.role as any,
-      'route',
-      'read',
-      { userId: user.id }
-    );
-
-    if (!canRead) {
-      return NextResponse.json(
-        { error: 'Forbidden - Insufficient permissions' },
-        { status: 403 }
-      );
-    }
- from '@/lib/auth/authorize';
+import { requireAuth } from '@/lib/auth/authorize';
 import { PermissionManager } from '@/lib/permissions';
 
 const sessionSchema = z.object({
@@ -33,10 +17,12 @@ const sessionSchema = z.object({
   insurance_claim_number: z.string().optional(),
 });
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication
-    const authResult = await requireAuth(["admin"])(request);
+    const authResult = await requireAuth(['admin'])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

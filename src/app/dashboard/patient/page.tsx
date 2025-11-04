@@ -18,8 +18,8 @@ import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { useTheme } from '@/components/providers/ThemeProvider';import { I18N_KEYS } from '@/constants/i18n-keys';
-
+import { useTheme } from '@/components/providers/ThemeProvider';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 
 interface PatientData {
   id: string;
@@ -151,9 +151,7 @@ export default function PatientDashboard() {
                 asChild
               >
                 {patientData?.activated ? (
-                  <Link href='/patient/health'>
-                    {t(I18N_KEYS.COMMON.OPEN)}
-                  </Link>
+                  <Link href='/patient/health'>{t(I18N_KEYS.COMMON.OPEN)}</Link>
                 ) : (
                   <span>{t(I18N_KEYS.COMMON.ERROR)}</span>
                 )}

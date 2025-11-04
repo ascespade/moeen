@@ -13,7 +13,7 @@ export default function FlowBuilderPage() {
                 'تحويل لبشري',
                 'شرط IF/ELSE',
               ].map(n => (
-                <button key={n} className='btn btn-outline btn-sm text-start'>
+                <button key={n} className='btn btn-outline btn-sm text-start' aria-label="{n}">
                   {n}
                 </button>
               ))}
@@ -22,7 +22,7 @@ export default function FlowBuilderPage() {
           <section className='card min-h-[60dvh] p-4'>
             <div className='text-[var(--foreground)]/60'>
               لوحة عمل: اسحب العقد ووصلها (تصميم بصري)
-            </div>
+            </section>
           </section>
           <aside className='card p-4'>
             <div className='font-medium mb-2 text-[var(--foreground)]'>

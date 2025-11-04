@@ -14,7 +14,7 @@ import {
   Activity,
   MessageSquare,
   CreditCard,
-  User
+  User,
 } from 'lucide-react';
 
 const patientNavigation = [
@@ -69,34 +69,35 @@ const patientNavigation = [
 ];
 
 export default function PatientDashboardPage() {
-  return (    <UnifiedProtectedRoute allowedRoles={['patient']}>
-<DashboardLayout
-      header={{
-        title: "أحمد محمد علي",
-        subtitle: "مريض - رقم الملف: 12345",
-        user: {
-          name: "أحمد محمد علي",
-          role: "مريض",
-          avatar: undefined
-        },
-        onSearch: (query) => console.log('Search:', query),
-        showNotifications: true,
-        notificationCount: 2,
-        onNotificationsClick: () => console.log('Show notifications')
-      }}
-      sidebar={{
-        navigation: patientNavigation,
-        activeItem: "dashboard",
-        collapsed: false
-      }}
-      content={{
-        children: (
-          <div>
-            <PatientDashboard patientId="patient-123" />
-          </div>
-        )
-      }}
-    />
+  return (
+    <UnifiedProtectedRoute allowedRoles={['patient']}>
+      <DashboardLayout
+        header={{
+          title: 'أحمد محمد علي',
+          subtitle: 'مريض - رقم الملف: 12345',
+          user: {
+            name: 'أحمد محمد علي',
+            role: 'مريض',
+            avatar: undefined,
+          },
+          onSearch: query => console.log('Search:', query),
+          showNotifications: true,
+          notificationCount: 2,
+          onNotificationsClick: () => console.log('Show notifications'),
+        }}
+        sidebar={{
+          navigation: patientNavigation,
+          activeItem: 'dashboard',
+          collapsed: false,
+        }}
+        content={{
+          children: (
+            <div>
+              <PatientDashboard patientId='patient-123' />
+            </div>
+          ),
+        }}
+      />
     </UnifiedProtectedRoute>
   );
 }

@@ -13,7 +13,7 @@ function rgbToHex(r: number, g: number, b: number): string {
   return (
     '#' +
     [r, g, b]
-      .map((x) => {
+      .map(x => {
         const hex = x.toString(16);
         return hex.length === 1 ? '0' + hex : hex;
       })
@@ -26,7 +26,7 @@ function rgbToHex(r: number, g: number, b: number): string {
  */
 function normalizeColor(color: string): string {
   if (!color || color === 'transparent') return '#000000';
-  
+
   // Already hex format
   if (/^#([a-f\d]{6}|[a-f\d]{3})$/i.test(color)) {
     // Expand short hex (#fff -> #ffffff)
@@ -47,11 +47,11 @@ function normalizeColor(color: string): string {
 
   // Named colors - basic fallback
   const namedColors: Record<string, string> = {
-    'white': '#ffffff',
-    'black': '#000000',
-    'red': '#ff0000',
-    'green': '#008000',
-    'blue': '#0000ff',
+    white: '#ffffff',
+    black: '#000000',
+    red: '#ff0000',
+    green: '#008000',
+    blue: '#0000ff',
   };
   if (namedColors[color.toLowerCase()]) {
     return namedColors[color.toLowerCase()];
@@ -79,7 +79,7 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
  * Calculate relative luminance (WCAG standard)
  */
 function getLuminance(r: number, g: number, b: number): number {
-  const [rs, gs, bs] = [r, g, b].map((val) => {
+  const [rs, gs, bs] = [r, g, b].map(val => {
     val = val / 255;
     return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
   });
@@ -138,7 +138,7 @@ export function adjustColorForContrast(
   // Adjust brightness based on mode
   const adjustment = mode === 'light' ? -20 : 20;
   const step = adjustment > 0 ? 10 : -10;
-  let adjusted = { ...rgb };
+  const adjusted = { ...rgb };
 
   // Try adjusting until we meet contrast
   for (let i = 0; i < 20; i++) {
@@ -156,7 +156,6 @@ export function adjustColorForContrast(
   return mode === 'light' ? '#000000' : '#ffffff';
 }
 
-
 /**
  * Check if color should be avoided (based on theme settings)
  */
@@ -165,7 +164,9 @@ export function shouldAvoidColor(
   avoidColors: string[] = []
 ): boolean {
   const normalized = color.toLowerCase().trim();
-  return avoidColors.some((avoidColor) => avoidColor.toLowerCase() === normalized);
+  return avoidColors.some(
+    avoidColor => avoidColor.toLowerCase() === normalized
+  );
 }
 
 /**
@@ -187,7 +188,10 @@ export function getReplacementColor(
   // Replace with appropriate color from modern palette
   if (mode === 'dark') {
     // Avoid dark navy/blues - use modern alternatives
-    if (originalColor.toLowerCase() === '#000080' || originalColor.toLowerCase() === '#00008b') {
+    if (
+      originalColor.toLowerCase() === '#000080' ||
+      originalColor.toLowerCase() === '#00008b'
+    ) {
       return themeColors.primaryColor; // Use primary color instead
     }
     if (originalColor.toLowerCase() === '#222222') {
@@ -227,7 +231,10 @@ export function getAdaptiveAccentColor(
 /**
  * Optimize shadow color based on theme mode
  */
-export function getOptimizedShadow(mode: 'light' | 'dark', opacity: number = 0.1): string {
+export function getOptimizedShadow(
+  mode: 'light' | 'dark',
+  opacity: number = 0.1
+): string {
   if (mode === 'dark') {
     return `0 4px 6px -1px rgba(0, 0, 0, ${opacity * 3}), 0 2px 4px -2px rgba(0, 0, 0, ${opacity * 2})`;
   }
@@ -272,26 +279,42 @@ export function analyzeComponentStyles(
 ): ComponentStyleAnalysis {
   const computedStyle = window.getComputedStyle(element);
   const rawColor = computedStyle.color;
-  const rawBackgroundColor = computedStyle.backgroundColor || computedStyle.getPropertyValue('--background') || settings.themeManagement.themes[mode].backgroundColor;
+  const rawBackgroundColor =
+    computedStyle.backgroundColor ||
+    computedStyle.getPropertyValue('--background') ||
+    settings.themeManagement.themes[mode].backgroundColor;
   const rawBorderColor = computedStyle.borderColor;
 
   // Normalize colors to hex format (handle rgb/rgba/hex)
   const color = normalizeColor(rawColor);
   const backgroundColor = normalizeColor(rawBackgroundColor);
-  const borderColor = rawBorderColor ? normalizeColor(rawBorderColor) : undefined;
+  const borderColor = rawBorderColor
+    ? normalizeColor(rawBorderColor)
+    : undefined;
 
   const adjustments: string[] = [];
   let adjustedColor = color;
-  let adjustedBg = backgroundColor;
+  const adjustedBg = backgroundColor;
 
   // Check contrast
   const contrastRatio = getContrastRatio(color, backgroundColor);
-  const meetsStandard = contrastRatio >= settings.themeManagement.themes[mode].contrastMinRatio;
+  const meetsStandard =
+    contrastRatio >= settings.themeManagement.themes[mode].contrastMinRatio;
 
-  if (!meetsStandard && settings.themeManagement.colorIntelligence.autoContrast) {
-    adjustedColor = adjustColorForContrast(color, backgroundColor, settings.themeManagement.themes[mode].contrastMinRatio, mode);
+  if (
+    !meetsStandard &&
+    settings.themeManagement.colorIntelligence.autoContrast
+  ) {
+    adjustedColor = adjustColorForContrast(
+      color,
+      backgroundColor,
+      settings.themeManagement.themes[mode].contrastMinRatio,
+      mode
+    );
     if (adjustedColor !== color) {
-      adjustments.push(`تم تعديل اللون من ${rawColor} إلى ${adjustedColor} لتحسين التباين`);
+      adjustments.push(
+        `تم تعديل اللون من ${rawColor} إلى ${adjustedColor} لتحسين التباين`
+      );
     }
   }
 
@@ -300,21 +323,33 @@ export function analyzeComponentStyles(
     const avoidColors = settings.themeManagement.themes[mode].avoidColors || [];
     if (shouldAvoidColor(adjustedColor, avoidColors)) {
       adjustedColor = getReplacementColor(adjustedColor, mode, settings);
-      adjustments.push(`تم استبدال اللون ${rawColor} بلون حديث: ${adjustedColor}`);
+      adjustments.push(
+        `تم استبدال اللون ${rawColor} بلون حديث: ${adjustedColor}`
+      );
     }
   }
 
   // Generate optimized shadow
   let shadow: string | undefined;
-  if (settings.themeManagement.colorIntelligence.shadowOptimization && settings.themeManagement.themes[mode].dynamicShadows) {
+  if (
+    settings.themeManagement.colorIntelligence.shadowOptimization &&
+    settings.themeManagement.themes[mode].dynamicShadows
+  ) {
     shadow = getOptimizedShadow(mode, 0.1);
   }
 
   // Generate optimized gradient if needed
   let gradient: string | undefined;
-  if (settings.themeManagement.colorIntelligence.gradientOptimization && settings.themeManagement.themes[mode].gradientSupport) {
+  if (
+    settings.themeManagement.colorIntelligence.gradientOptimization &&
+    settings.themeManagement.themes[mode].gradientSupport
+  ) {
     const themeColors = settings.themeManagement.themes[mode];
-    gradient = getOptimizedGradient(themeColors.primaryColor, themeColors.accentColors[0], mode);
+    gradient = getOptimizedGradient(
+      themeColors.primaryColor,
+      themeColors.accentColors[0],
+      mode
+    );
   }
 
   return {
@@ -328,4 +363,3 @@ export function analyzeComponentStyles(
     adjustments,
   };
 }
-

@@ -8,6 +8,8 @@ import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 import { ErrorHandler } from '@/core/errors';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin or supervisor
@@ -48,7 +50,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
     const recentUsers =
-      users?.filter((u: unknown) => new Date(u.createdAt) >= thirtyDaysAgo).length || 0;
+      users?.filter((u: unknown) => new Date(u.createdAt) >= thirtyDaysAgo)
+        .length || 0;
 
     // Get appointments stats (if table exists)
     let appointmentStats = {
@@ -75,10 +78,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
         appointmentStats = {
           total: appointments.length,
-          today: appointments.filter((a: unknown) => new Date(a.scheduledAt) >= today)
-            .length,
-          thisWeek: appointments.filter((a: unknown) => new Date(a.scheduledAt) >= weekAgo)
-            .length,
+          today: appointments.filter(
+            (a: unknown) => new Date(a.scheduledAt) >= today
+          ).length,
+          thisWeek: appointments.filter(
+            (a: unknown) => new Date(a.scheduledAt) >= weekAgo
+          ).length,
           thisMonth: appointments.filter(
             (a: unknown) => new Date(a.scheduledAt) >= monthAgo
           ).length,

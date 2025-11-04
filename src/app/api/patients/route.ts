@@ -22,10 +22,17 @@ const patientSchema = z.object({
   insurance_number: z.string().optional(),
 });
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication and proper permissions
-    const authResult = await requireAuth(['admin', 'doctor', 'staff', 'supervisor'])(request);
+    const authResult = await requireAuth([
+      'admin',
+      'doctor',
+      'staff',
+      'supervisor',
+    ])(request);
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },

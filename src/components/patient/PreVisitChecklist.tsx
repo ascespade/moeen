@@ -5,7 +5,8 @@ import { useT } from '@/hooks/useT';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Checkbox } from '@/components/ui/Checkbox';
-import { Badge } from '@/components/ui/Badge';import { I18N_KEYS } from '@/constants/i18n-keys';
+import { Badge } from '@/components/ui/Badge';
+import { I18N_KEYS } from '@/constants/i18n-keys';
 
 import {
   CheckCircle,
@@ -281,7 +282,9 @@ export default function PreVisitChecklist({
             disabled={!allRequiredCompleted || isSaving}
             className='px-8'
           >
-            {isSaving ? t(I18N_KEYS.COMMON.SUBMITTING) : t(I18N_KEYS.PATIENTS.CHECKLIST.SUBMIT)}
+            {isSaving
+              ? t(I18N_KEYS.COMMON.SUBMITTING)
+              : t(I18N_KEYS.PATIENTS.CHECKLIST.SUBMIT)}
           </Button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 /**
  * Verify JWT Token API - Optimized
  * API ?????? ?? Token - ?????
- * 
+ *
  * ? Fast verification
  * ? Cached permissions
  * ? Clean response
@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     if (process.env.NODE_ENV === 'development') {
       console.error('[VERIFY] Error:', error);
     }
-    
+
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

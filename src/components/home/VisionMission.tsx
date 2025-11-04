@@ -9,10 +9,13 @@ const VisionMission = memo(function VisionMission() {
     <section className='py-20 relative overflow-hidden'>
       {/* Background Pattern */}
       <div className='absolute inset-0 opacity-5'>
-        <div className='absolute inset-0' style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
-      </div>
+        <div
+          className='absolute inset-0'
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }}
+        />
+      </section>
 
       <div className='container-app relative z-10'>
         <div className='text-center mb-16'>
@@ -36,9 +39,10 @@ const VisionMission = memo(function VisionMission() {
                   رؤيتنا
                 </h3>
                 <p className='text-lg text-[var(--text-secondary)] leading-relaxed'>
-                  أن نكون الرائدين في جدة ومنطقة مكة المكرمة في توفير خدمات تأهيلية
-                  متكاملة وشاملة لذوي الاحتياجات الخاصة، وأن نساهم في بناء مجتمع
-                  شامل يعزز من قدراتهم ويدعم استقلاليتهم ويحسن جودة حياتهم.
+                  أن نكون الرائدين في جدة ومنطقة مكة المكرمة في توفير خدمات
+                  تأهيلية متكاملة وشاملة لذوي الاحتياجات الخاصة، وأن نساهم في
+                  بناء مجتمع شامل يعزز من قدراتهم ويدعم استقلاليتهم ويحسن جودة
+                  حياتهم.
                 </p>
               </div>
             </div>
@@ -96,7 +100,9 @@ const VisionMission = memo(function VisionMission() {
               key={index}
               className='p-6 text-center hover:shadow-lg transition-all transform hover:-translate-y-1'
             >
-              <div className={`w-16 h-16 bg-gradient-to-br ${value.color} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}>
+              <div
+                className={`w-16 h-16 bg-gradient-to-br ${value.color} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
+              >
                 <value.icon className='w-8 h-8 text-white' />
               </div>
               <h4 className='text-lg font-bold text-[var(--text-primary)] mb-2'>
@@ -115,4 +121,3 @@ const VisionMission = memo(function VisionMission() {
 
 VisionMission.displayName = 'VisionMission';
 export default VisionMission;
-

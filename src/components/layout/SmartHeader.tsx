@@ -82,11 +82,9 @@ function ThemeLanguageSwitches() {
   return (
     <>
       {/* Theme Toggle Button */}
-      <button
-        className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
-        onClick={toggleTheme}
-        disabled={isLoading}
-      >
+      <buttonclassName='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
+        onClick={toggleTheme} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme } }}
+        disabled={isLoading} aria-label="Button">
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600'></div>
         ) : theme === 'light' ? (
@@ -94,15 +92,15 @@ function ThemeLanguageSwitches() {
         ) : (
           <Moon className='h-4 w-4' />
         )}
-        <span className='hidden sm:inline'>{t(I18N_KEYS.THEME.LABEL, 'الثيم')}</span>
+        <span className='hidden sm:inline'>
+          {t(I18N_KEYS.THEME.LABEL, 'الثيم')}
+        </span>
       </button>
 
       {/* Language Toggle Button */}
-      <button
-        className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
-        onClick={toggleLanguage}
-        disabled={isLoading}
-      >
+      <buttonclassName='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
+        onClick={toggleLanguage} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleLanguage } }}
+        disabled={isLoading} aria-label="Button">
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600'></div>
         ) : (
@@ -154,12 +152,18 @@ export default function SmartHeader() {
       // Authenticated user navigation
       return [
         { href: '/', label: t(I18N_KEYS.NAV.DASHBOARD, 'لوحة التحكم') },
-        { href: ROUTES.HEALTH.PATIENTS, label: t(I18N_KEYS.NAV.PATIENTS, 'المرضى') },
+        {
+          href: ROUTES.HEALTH.PATIENTS,
+          label: t(I18N_KEYS.NAV.PATIENTS, 'المرضى'),
+        },
         {
           href: ROUTES.HEALTH.APPOINTMENTS,
           label: t(I18N_KEYS.NAV.APPOINTMENTS, 'المواعيد'),
         },
-        { href: ROUTES.HEALTH.SESSIONS, label: t(I18N_KEYS.NAV.SESSIONS, 'الجلسات') },
+        {
+          href: ROUTES.HEALTH.SESSIONS,
+          label: t(I18N_KEYS.NAV.SESSIONS, 'الجلسات'),
+        },
       ];
     } else {
       // Public navigation
@@ -217,9 +221,8 @@ export default function SmartHeader() {
             )}
 
             {/* Mobile Menu Button */}
-            <button
-              className='md:hidden p-2'
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            <buttonclassName='md:hidden p-2'
+              onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsMobileMenuOpen(!isMobileMenuOpen) } }}
             >
               {isMobileMenuOpen ? (
                 <X className='h-6 w-6' />

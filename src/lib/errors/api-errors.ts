@@ -141,7 +141,10 @@ export function logError(error: unknown, context?: Record<string, unknown>) {
 }
 
 // Error handler middleware
-export function handleAPIError(error: unknown, context?: Record<string, unknown>) {
+export function handleAPIError(
+  error: unknown,
+  context?: Record<string, unknown>
+) {
   logError(error, context);
   return formatErrorResponse(error);
 }

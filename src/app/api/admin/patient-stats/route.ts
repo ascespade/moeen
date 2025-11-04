@@ -7,10 +7,17 @@ import { requireAuth } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize admin, manager, supervisor, or doctor
-    const authResult = await requireAuth(['admin', 'manager', 'supervisor', 'doctor'])(request);
+    const authResult = await requireAuth([
+      'admin',
+      'manager',
+      'supervisor',
+      'doctor',
+    ])(request);
     if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -31,7 +38,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       newPatientsResult,
       appointmentsResult,
       sessionsResult,
-      paymentsResult
+      paymentsResult,
     ] = await Promise.all([
       // Total patients
       supabase
@@ -42,14 +49,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // Active patients (with recent appointments)
       supabase
         .from('patients')
-        .select(`
+        .select(
+          `
           id,
           appointments!inner (
             id,
             appointment_date,
             status
           )
-        `)
+        `
+        )
         .eq('activated', true)
         .gte('appointments.appointment_date', dates.startDate)
         .lte('appointments.appointment_date', dates.endDate),
@@ -80,7 +89,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .from('payments')
         .select('id, amount, status, created_at')
         .gte('created_at', dates.startDate)
-        .lte('created_at', dates.endDate)
+        .lte('created_at', dates.endDate),
     ]);
 
     // Process results
@@ -93,13 +102,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Calculate demographics
     const demographics = calculateDemographics(newPatients);
-    
+
     // Calculate appointment statistics
     const appointmentStats = calculateAppointmentStats(appointments);
-    
-    // Calculate session statistics  
+
+    // Calculate session statistics
     const sessionStats = calculateSessionStats(sessions);
-    
+
     // Calculate financial statistics
     const financialStats = calculateFinancialStats(payments);
 
@@ -121,46 +130,51 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: {
         // Basic counts
         totalPatients: totalPatients.length,
-        activePatients: [...new Set(activePatients.map((p: unknown) => p.id))].length,
+        activePatients: [...new Set(activePatients.map((p: unknown) => p.id))]
+          .length,
         newPatients: newPatients.length,
-        blockedPatients: totalPatients.filter((p: unknown) => p.status === 'blocked').length,
-        
+        blockedPatients: totalPatients.filter(
+          (p: unknown) => p.status === 'blocked'
+        ).length,
+
         // Demographics
         demographics,
-        
+
         // Appointments
         appointments: appointmentStats,
-        
+
         // Sessions
         sessions: sessionStats,
-        
+
         // Financial
         financial: financialStats,
-        
+
         // Trends
         trends: {
           patientGrowth,
           period,
-          comparedToPrevious: previousDates.label
+          comparedToPrevious: previousDates.label,
         },
-        
+
         // Metadata
         meta: {
           period,
           startDate: dates.startDate,
           endDate: dates.endDate,
           department,
-          lastUpdated: new Date().toISOString()
-        }
-      }
+          lastUpdated: new Date().toISOString(),
+        },
+      },
     });
-
   } catch (error) {
     console.error('Error in patient stats API:', error);
-    return NextResponse.json({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -174,36 +188,38 @@ function getDateRanges(period: string) {
       return {
         startDate: today.toISOString(),
         endDate: new Date(today.getTime() + 24 * 60 * 60 * 1000).toISOString(),
-        label: 'اليوم'
+        label: 'اليوم',
       };
-    
+
     case 'week':
       const weekStart = new Date(today);
       weekStart.setDate(today.getDate() - today.getDay() + 1);
       return {
         startDate: weekStart.toISOString(),
-        endDate: new Date(weekStart.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-        label: 'هذا الأسبوع'
+        endDate: new Date(
+          weekStart.getTime() + 7 * 24 * 60 * 60 * 1000
+        ).toISOString(),
+        label: 'هذا الأسبوع',
       };
-    
+
     case 'month':
       const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
       const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
       return {
         startDate: monthStart.toISOString(),
         endDate: monthEnd.toISOString(),
-        label: 'هذا الشهر'
+        label: 'هذا الشهر',
       };
-    
+
     case 'year':
       const yearStart = new Date(today.getFullYear(), 0, 1);
       const yearEnd = new Date(today.getFullYear(), 11, 31);
       return {
         startDate: yearStart.toISOString(),
         endDate: yearEnd.toISOString(),
-        label: 'هذا العام'
+        label: 'هذا العام',
       };
-    
+
     default:
       return getDateRanges('month');
   }
@@ -218,67 +234,90 @@ function getPreviousDateRanges(period: string) {
   return {
     startDate: new Date(currentStart.getTime() - duration).toISOString(),
     endDate: new Date(currentEnd.getTime() - duration).toISOString(),
-    label: `الفترة السابقة`
+    label: `الفترة السابقة`,
   };
 }
 
 function calculateDemographics(patients: any[]) {
   const maleCount = patients.filter((p: unknown) => p.gender === 'male').length;
-  const femaleCount = patients.filter((p: unknown) => p.gender === 'female').length;
-  
+  const femaleCount = patients.filter(
+    (p: unknown) => p.gender === 'female'
+  ).length;
+
   const ageGroups = {
     children: patients.filter((p: unknown) => p.age < 18).length,
     adults: patients.filter((p: unknown) => p.age >= 18 && p.age < 60).length,
-    seniors: patients.filter((p: unknown) => p.age >= 60).length
+    seniors: patients.filter((p: unknown) => p.age >= 60).length,
   };
 
   return {
     gender: {
       male: maleCount,
       female: femaleCount,
-      malePercentage: patients.length > 0 ? maleCount / patients.length * 100 : 0,
-      femalePercentage: patients.length > 0 ? femaleCount / patients.length * 100 : 0
+      malePercentage:
+        patients.length > 0 ? (maleCount / patients.length) * 100 : 0,
+      femalePercentage:
+        patients.length > 0 ? (femaleCount / patients.length) * 100 : 0,
     },
     ageGroups,
-    total: patients.length
+    total: patients.length,
   };
 }
 
 function calculateAppointmentStats(appointments: any[]) {
-  const completed = appointments.filter((a: unknown) => a.status === 'completed').length;
-  const pending = appointments.filter((a: unknown) => a.status === 'scheduled').length;
-  const cancelled = appointments.filter((a: unknown) => a.status === 'cancelled').length;
+  const completed = appointments.filter(
+    (a: unknown) => a.status === 'completed'
+  ).length;
+  const pending = appointments.filter(
+    (a: unknown) => a.status === 'scheduled'
+  ).length;
+  const cancelled = appointments.filter(
+    (a: unknown) => a.status === 'cancelled'
+  ).length;
 
   return {
     total: appointments.length,
     completed,
     pending,
     cancelled,
-    completionRate: appointments.length > 0 ? completed / appointments.length * 100 : 0,
-    cancellationRate: appointments.length > 0 ? cancelled / appointments.length * 100 : 0
+    completionRate:
+      appointments.length > 0 ? (completed / appointments.length) * 100 : 0,
+    cancellationRate:
+      appointments.length > 0 ? (cancelled / appointments.length) * 100 : 0,
   };
 }
 
 function calculateSessionStats(sessions: any[]) {
-  const completed = sessions.filter((s: unknown) => s.status === 'completed').length;
-  const upcoming = sessions.filter((s: unknown) => s.status === 'scheduled').length;
-  
-  const sessionTypes = sessions.reduce((acc: Record<string, number>, session: unknown) => {
-    acc[session.session_type] = (acc[session.session_type] || 0) + 1;
-    return acc;
-  }, {});
+  const completed = sessions.filter(
+    (s: unknown) => s.status === 'completed'
+  ).length;
+  const upcoming = sessions.filter(
+    (s: unknown) => s.status === 'scheduled'
+  ).length;
+
+  const sessionTypes = sessions.reduce(
+    (acc: Record<string, number>, session: unknown) => {
+      acc[session.session_type] = (acc[session.session_type] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
 
   return {
     total: sessions.length,
     completed,
     upcoming,
-    completionRate: sessions.length > 0 ? completed / sessions.length * 100 : 0,
-    sessionTypes
+    completionRate:
+      sessions.length > 0 ? (completed / sessions.length) * 100 : 0,
+    sessionTypes,
   };
 }
 
 function calculateFinancialStats(payments: any[]) {
-  const totalAmount = payments.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0);
+  const totalAmount = payments.reduce(
+    (sum: number, p: unknown) => sum + (p.amount || 0),
+    0
+  );
   const paidAmount = payments
     .filter((p: unknown) => p.status === 'paid')
     .reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0);
@@ -291,7 +330,7 @@ function calculateFinancialStats(payments: any[]) {
     paidRevenue: paidAmount,
     pendingRevenue: pendingAmount,
     averagePerPatient: payments.length > 0 ? totalAmount / payments.length : 0,
-    collectionRate: totalAmount > 0 ? paidAmount / totalAmount * 100 : 0
+    collectionRate: totalAmount > 0 ? (paidAmount / totalAmount) * 100 : 0,
   };
 }
 

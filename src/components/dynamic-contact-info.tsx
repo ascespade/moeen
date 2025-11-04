@@ -47,7 +47,8 @@ const defaultContactInfo: ContactInfo[] = [
 ];
 
 const DynamicContactInfo = memo(function DynamicContactInfo() {
-  const [contactInfo, setContactInfo] = useState<ContactInfo[]>(defaultContactInfo);
+  const [contactInfo, setContactInfo] =
+    useState<ContactInfo[]>(defaultContactInfo);
   const [loading, setLoading] = useState(true);
   const [hasFetched, setHasFetched] = useState(false);
 

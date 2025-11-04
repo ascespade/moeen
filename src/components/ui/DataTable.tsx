@@ -45,8 +45,7 @@ export function DataTable<T extends Record<string, unknown>>({
           <tr>
             {columns.map(c => (
               <th key={String(c.key)} className='px-4 py-3 text-start'>
-                <button
-                  onClick={() => toggleSort(c.key)}
+                <buttononClick={() = aria-label="Button"> { toggleSort(c.key)}
                   className='flex items-center gap-1 hover:text-default-default'
                 >
                   {c.header}
@@ -77,15 +76,13 @@ export function DataTable<T extends Record<string, unknown>>({
           {sorted.length}
         </span>
         <div className='flex gap-1'>
-          <button
-            onClick={() => setPage(1)}
+          <buttononClick={() = aria-label="Button"> { setPage(1)}
             disabled={page === 1}
             className='px-2 py-1 text-sm border rounded disabled:opacity-50'
           >
             «
           </button>
-          <button
-            onClick={() => setPage(p => Math.max(1, p - 1))}
+          <buttononClick={() = aria-label="Button"> { setPage(p => Math.max(1, p - 1))}
             disabled={page === 1}
             className='px-2 py-1 text-sm border rounded disabled:opacity-50'
           >
@@ -94,15 +91,13 @@ export function DataTable<T extends Record<string, unknown>>({
           <span className='px-2 py-1 text-sm'>
             {page} / {pages}
           </span>
-          <button
-            onClick={() => setPage(p => Math.min(pages, p + 1))}
+          <buttononClick={() = aria-label="Button"> { setPage(p => Math.min(pages, p + 1))}
             disabled={page === pages}
             className='px-2 py-1 text-sm border rounded disabled:opacity-50'
           >
             ›
           </button>
-          <button
-            onClick={() => setPage(pages)}
+          <buttononClick={() = aria-label="Button"> { setPage(pages)}
             disabled={page === pages}
             className='px-2 py-1 text-sm border rounded disabled:opacity-50'
           >

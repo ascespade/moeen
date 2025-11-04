@@ -3,10 +3,14 @@ import { realDB } from '@/lib/supabase-real';
 import { requireAuth } from '@/lib/auth/authorize';
 import { PermissionManager } from '@/lib/permissions';
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Security: Require authentication and proper permissions for CRM data
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+      request
+    );
     if (!authResult.authorized || !authResult.user) {
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
@@ -47,7 +51,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch crm' }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } });
+    return NextResponse.json(
+      { error: 'Failed to fetch crm' },
+      {
+        status: 500,
+        headers: {
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        },
+      }
+    );
   }
 }
 

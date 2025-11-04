@@ -183,6 +183,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     // Authorize staff, supervisor, or admin
@@ -335,7 +337,8 @@ async function submitToInsuranceProvider(claim: unknown, provider: string) {
       other: null,
     };
 
-    const endpoint = providerEndpoints[provider as keyof typeof providerEndpoints];
+    const endpoint =
+      providerEndpoints[provider as keyof typeof providerEndpoints];
 
     if (!endpoint) {
       return {

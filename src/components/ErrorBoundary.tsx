@@ -46,11 +46,12 @@ export class ErrorBoundary extends Component<Props, State> {
               حدث خطأ ما
             </h1>
             <p className='mb-6 text-gray-600'>
-              نعتذر، حدث خطأ غير متوقع. يرجى إعادة تحميل الصفحة أو المحاولة لاحقاً.
+              نعتذر، حدث خطأ غير متوقع. يرجى إعادة تحميل الصفحة أو المحاولة
+              لاحقاً.
             </p>
-            <button
-              onClick={() = aria-label="Button"> window.location.reload()}
+            <buttononClick={() = aria-label="Button"> { window.location.reload()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" window.location.reload() } }}
               className='w-full rounded-md bg-[var(--brand-default)] px-4 py-2 text-white hover:bg-[var(--brand-default)]/90'
+              aria-label='إعادة تحميل الصفحة'
             >
               إعادة تحميل الصفحة
             </button>
@@ -62,4 +63,3 @@ export class ErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
-

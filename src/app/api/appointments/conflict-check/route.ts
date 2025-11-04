@@ -65,7 +65,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Filter for actual overlaps in JavaScript
     const conflicts = (allAppointments || []).filter((appt: unknown) => {
       const apptStart = new Date(appt.scheduled_at);
-      const apptEnd = new Date(apptStart.getTime() + (appt.duration || 30) * 60000);
+      const apptEnd = new Date(
+        apptStart.getTime() + (appt.duration || 30) * 60000
+      );
       // Check overlap: appt_start < requested_end AND appt_end > requested_start
       return apptStart < endTime && apptEnd > startTime;
     });

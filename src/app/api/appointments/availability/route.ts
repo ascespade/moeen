@@ -16,6 +16,8 @@ const availabilitySchema = z.object({
   duration: z.number().min(15).max(240).default(30),
 });
 
+export const revalidate = 60;
+
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const startTime = Date.now();
   const { ipAddress, userAgent } = getClientInfo(request);

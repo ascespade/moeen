@@ -1,4 +1,3 @@
-
 /**
  * Common Utility Functions
  * Centralized utilities to avoid duplication
@@ -29,7 +28,7 @@ export async function retry<T>(
   delay: number = 1000
 ): Promise<T> {
   let lastError: Error;
-  
+
   for (let i = 0; i < maxRetries; i++) {
     try {
       return await fn();
@@ -40,6 +39,6 @@ export async function retry<T>(
       }
     }
   }
-  
+
   throw lastError!;
 }

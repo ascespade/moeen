@@ -181,10 +181,16 @@ export default function ApprovalsPage() {
   const [approvals, setApprovals] = useState<Approval[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedApproval, setSelectedApproval] = useState<Approval | null>(null);
+  const [selectedApproval, setSelectedApproval] = useState<Approval | null>(
+    null
+  );
   const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState<'all' | 'pending' | 'approved' | 'rejected'>('all');
-  const [typeFilter, setTypeFilter] = useState<'all' | Approval['requestType']>('all');
+  const [filter, setFilter] = useState<
+    'all' | 'pending' | 'approved' | 'rejected'
+  >('all');
+  const [typeFilter, setTypeFilter] = useState<'all' | Approval['requestType']>(
+    'all'
+  );
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const loadApprovals = useCallback(async () => {
@@ -192,7 +198,7 @@ export default function ApprovalsPage() {
       setLoading(true);
       setError(null);
       const supabase = createClient();
-      
+
       let query = supabase
         .from('approvals')
         .select('*, patients(first_name, last_name, public_id)')
@@ -209,8 +215,9 @@ export default function ApprovalsPage() {
       // Transform data to match interface - using snake_case to camelCase
       const transformedApprovals = (data || []).map((approval: any) => ({
         id: approval.id,
-        patientName: approval.patients ? 
-          `${approval.patients.first_name} ${approval.patients.last_name}` : 'Unknown',
+        patientName: approval.patients
+          ? `${approval.patients.first_name} ${approval.patients.last_name}`
+          : 'Unknown',
         patientId: approval.patient_id,
         requestType: approval.request_type,
         requestTitle: approval.request_title,
@@ -229,7 +236,9 @@ export default function ApprovalsPage() {
         blockReason: approval.block_reason,
         hasOutstandingBalance: approval.has_outstanding_balance || false,
         outstandingAmount: parseFloat(approval.outstanding_amount || 0),
-        attachments: Array.isArray(approval.attachments) ? approval.attachments : [],
+        attachments: Array.isArray(approval.attachments)
+          ? approval.attachments
+          : [],
         notes: approval.notes,
       }));
 
@@ -262,10 +271,10 @@ export default function ApprovalsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-lg text-gray-600">جاري تحميل الموافقات...</p>
+      <div className='flex items-center justify-center min-h-screen'>
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto'></div>
+          <p className='mt-4 text-lg text-gray-600'>جاري تحميل الموافقات...</p>
         </div>
       </div>
     );
@@ -273,12 +282,14 @@ export default function ApprovalsPage() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">خطأ في التحميل</h2>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <Button onClick={loadApprovals} variant="primary">
+      <div className='flex items-center justify-center min-h-screen'>
+        <div className='text-center'>
+          <div className='text-red-500 text-6xl mb-4'>⚠️</div>
+          <h2 className='text-2xl font-bold text-gray-800 mb-2'>
+            خطأ في التحميل
+          </h2>
+          <p className='text-gray-600 mb-4'>{error}</p>
+          <Button onClick={loadApprovals} variant='primary'>
             إعادة المحاولة
           </Button>
         </div>
@@ -288,25 +299,30 @@ export default function ApprovalsPage() {
 
   if (filteredApprovals.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="text-gray-400 text-6xl mb-4">📋</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">لا توجد موافقات</h2>
-          <p className="text-gray-600 mb-4">
+      <div className='flex items-center justify-center min-h-screen'>
+        <div className='text-center'>
+          <div className='text-gray-400 text-6xl mb-4'>📋</div>
+          <h2 className='text-2xl font-bold text-gray-800 mb-2'>
+            لا توجد موافقات
+          </h2>
+          <p className='text-gray-600 mb-4'>
             {searchTerm || filter !== 'all' || typeFilter !== 'all'
               ? 'لم يتم العثور على موافقات تطابق معايير البحث'
               : 'لم يتم إنشاء أي موافقات بعد'}
           </p>
           {searchTerm || filter !== 'all' || typeFilter !== 'all' ? (
-            <Button onClick={() => {
-              setSearchTerm('');
-              setFilter('all');
-              setTypeFilter('all');
-            }} variant="secondary">
+            <Button
+              onClick={() => {
+                setSearchTerm('');
+                setFilter('all');
+                setTypeFilter('all');
+              }}
+              variant='secondary'
+            >
               مسح الفلاتر
             </Button>
           ) : (
-            <Button onClick={() => setShowCreateModal(true)} variant="primary">
+            <Button onClick={() => setShowCreateModal(true)} variant='primary'>
               إنشاء موافقة جديدة
             </Button>
           )}

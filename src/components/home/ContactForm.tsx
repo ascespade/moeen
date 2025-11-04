@@ -19,7 +19,7 @@ const ContactForm = memo(function ContactForm() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    
+
     if (name === 'phone') {
       const formatted = value.replace(/[^\d\s+]/g, '');
       setFormData({

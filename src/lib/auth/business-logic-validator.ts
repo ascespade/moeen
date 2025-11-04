@@ -1,9 +1,9 @@
 /**
  * Business Logic Validator
  * مدقق منطق العمل
- * 
+ *
  * Validates business rules and ensures correctness
- * 
+ *
  * ✅ Client-safe (no server-only imports)
  */
 
@@ -24,14 +24,21 @@ export function validateLoginRules(user: CustomAuthUser | null): {
   if (user.status !== 'active') {
     return {
       valid: false,
-      error: user.status === 'suspended' 
-        ? 'Account suspended'
-        : 'Account inactive'
+      error:
+        user.status === 'suspended' ? 'Account suspended' : 'Account inactive',
     };
   }
 
   // Business Rule 2: User must have valid role
-  const validRoles = ['admin', 'manager', 'supervisor', 'agent', 'doctor', 'patient', 'staff'];
+  const validRoles = [
+    'admin',
+    'manager',
+    'supervisor',
+    'agent',
+    'doctor',
+    'patient',
+    'staff',
+  ];
   if (!validRoles.includes(user.role)) {
     return { valid: false, error: 'Invalid user role' };
   }
@@ -58,7 +65,11 @@ export function validateRouteAccess(
 
   // Supervisor routes
   if (routePath.startsWith('/dashboard/supervisor')) {
-    if (userRole !== 'supervisor' && userRole !== 'admin' && userRole !== 'manager') {
+    if (
+      userRole !== 'supervisor' &&
+      userRole !== 'admin' &&
+      userRole !== 'manager'
+    ) {
       return { allowed: false, redirect: '/dashboard' };
     }
   }
@@ -80,9 +91,11 @@ export function validatePermissionRules(
   }
 
   // Check specific permission
-  if (userPermissions.includes(requiredPermission) || 
-      userPermissions.includes('*') ||
-      userPermissions.includes('admin.access')) {
+  if (
+    userPermissions.includes(requiredPermission) ||
+    userPermissions.includes('*') ||
+    userPermissions.includes('admin.access')
+  ) {
     return true;
   }
 

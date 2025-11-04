@@ -41,9 +41,8 @@ export default function SettingsPage() {
                 { id: 'notifications', label: 'الإشعارات', icon: '🔔' },
                 { id: 'templates', label: 'القوالب', icon: '📝' },
               ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
+                <buttonkey={tab.id}
+                  onClick={() = aria-label="Button"> { setActiveTab(tab.id as any)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab(tab.id as any) } }}
                   className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-right transition-colors ${
                     activeTab === tab.id
                       ? 'bg-[var(--default-default)] text-white'
@@ -54,8 +53,8 @@ export default function SettingsPage() {
                   <span className='font-medium'>{tab.label}</span>
                 </button>
               ))}
-            </nav>
-          </div>
+            </div>
+          </nav>
 
           <div className='lg:col-span-3'>
             <div className='card p-6'>
@@ -142,7 +141,7 @@ export default function SettingsPage() {
                           defaultValue='AIzaSyB...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         />
-                        <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'>
+                        <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
                       </div>
@@ -157,7 +156,7 @@ export default function SettingsPage() {
                           defaultValue='sk-...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         />
-                        <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'>
+                        <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
                       </div>
@@ -172,7 +171,7 @@ export default function SettingsPage() {
                           defaultValue='EAA...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         />
-                        <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'>
+                        <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
                       </div>
@@ -233,7 +232,7 @@ export default function SettingsPage() {
                                 ? 'غير متصل'
                                 : 'خطأ'}
                           </span>
-                          <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface'>
+                          <buttonclassName='rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface' aria-label="Button">
                             {integration.status === 'connected'
                               ? 'إعدادات'
                               : 'اتصال'}
@@ -349,7 +348,7 @@ export default function SettingsPage() {
               )}
 
               <div className='mt-8 flex justify-end border-t border-gray-200 pt-6 dark:border-gray-700'>
-                <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'>
+                <buttonclassName='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ التغييرات">
                   حفظ التغييرات
                 </button>
               </div>

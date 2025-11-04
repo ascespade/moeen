@@ -267,10 +267,8 @@ export default function DynamicDoctorsList({
                   {doctor.phone && (
                     <div className='flex items-center gap-2'>
                       <Phone className='h-4 w-4 text-muted-foreground' />
-                      <a
-                        href={`tel:${doctor.phone}`}
-                        className='text-sm text-default hover:underline'
-                      >
+                      <ahref={`tel:${doctor.phone}`}
+                        className='text-sm text-default hover:underline' aria-label="{doctor.phone}">
                         {doctor.phone}
                       </a>
                     </div>
@@ -279,10 +277,8 @@ export default function DynamicDoctorsList({
                   {doctor.email && (
                     <div className='flex items-center gap-2'>
                       <Mail className='h-4 w-4 text-muted-foreground' />
-                      <a
-                        href={`mailto:${doctor.email}`}
-                        className='text-sm text-default hover:underline'
-                      >
+                      <ahref={`mailto:${doctor.email}`}
+                        className='text-sm text-default hover:underline' aria-label="{doctor.email}">
                         {doctor.email}
                       </a>
                     </div>

@@ -7,6 +7,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { customAuthHub } from '@/lib/auth/CustomAuthHub';
 import jwt from 'jsonwebtoken';
 
+export const revalidate = 60;
+
 export async function GET(req: NextRequest) {
   try {
     // Security: Require authentication
@@ -18,8 +20,9 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const token = req.cookies.get('auth_token')?.value || 
-                 req.headers.get('authorization')?.replace('Bearer ', '');
+    const token =
+      req.cookies.get('auth_token')?.value ||
+      req.headers.get('authorization')?.replace('Bearer ', '');
 
     if (!token) {
       return NextResponse.json(

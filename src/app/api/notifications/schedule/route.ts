@@ -139,10 +139,15 @@ export async function POST(_request: NextRequest) {
   }
 }
 
+export const revalidate = 60;
+
 export async function GET(_request: NextRequest) {
   try {
     // Optional: authorize user (but don't block if not authenticated for GET)
-    const { user } = await authorize(_request).catch(() => ({ user: null, error: null }));
+    const { user } = await authorize(_request).catch(() => ({
+      user: null,
+      error: null,
+    }));
 
     const supabase = await createClient();
     const { searchParams } = new URL(_request.url);
@@ -211,13 +216,19 @@ export async function GET(_request: NextRequest) {
             const userMap = new Map(users.map((u: unknown) => [u.id, u]));
             enrichedNotifications = notifications.map((n: unknown) => ({
               ...n,
-              createdByUser: n.createdBy || n.created_by ? userMap.get(n.createdBy || n.created_by) : null,
+              createdByUser:
+                n.createdBy || n.created_by
+                  ? userMap.get(n.createdBy || n.created_by)
+                  : null,
             }));
           }
         }
       } catch (enrichError) {
         // Ignore enrichment errors - just return basic notifications
-        console.warn('Failed to enrich notifications with user data:', enrichError);
+        console.warn(
+          'Failed to enrich notifications with user data:',
+          enrichError
+        );
       }
     }
 

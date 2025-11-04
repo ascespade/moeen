@@ -73,11 +73,13 @@ export default function ForgotPasswordPage() {
             >
               العودة لتسجيل الدخول
             </Link>
-            <button
-              onClick={() => {
+            <buttononClick={() = aria-label="Button"> { {
                 setIsSuccess(false);
                 setEmail('');
-              }}
+              } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
+                setIsSuccess(false);
+                setEmail('');
+               } }}}
               className='w-full rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-surface'
             >
               إرسال رابط آخر
@@ -144,11 +146,9 @@ export default function ForgotPasswordPage() {
             </div>
 
             {/* Submit Button */}
-            <button
-              type='submit'
+            <buttontype='submit'
               disabled={isLoading}
-              className='btn btn-default btn-lg w-full'
-            >
+              className='btn btn-default btn-lg w-full' aria-label="Button">
               {isLoading ? (
                 <>
                   <div className='loading-spinner'></div>
@@ -178,11 +178,13 @@ export default function ForgotPasswordPage() {
         <div className='mt-6 text-center'>
           <p className='text-sm text-gray-500'>
             إذا لم تستلم البريد الإلكتروني، تحقق من مجلد الرسائل المزعجة أو{' '}
-            <button
-              onClick={() => {
+            <buttononClick={() = aria-label="Button"> { {
                 setEmail('');
                 setError('');
-              }}
+              } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
+                setEmail('');
+                setError('');
+               } }}}
               className='text-[var(--default-default)] hover:underline'
             >
               حاول مرة أخرى
