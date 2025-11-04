@@ -103,56 +103,34 @@ export default function ChatbotAnalyticsPage() {
   };
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-
-
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='min-h-screen bg-[var(--default-surface)]'>
-      {/* Header */}
-      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
-        <div className='container-app py-6'>
-          <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-4'>
-              <Image
-                src='/logo.png'
-                alt='مُعين'
-                width={50}
-                height={50}
-                className='rounded-lg'
-              />
-              <div>
-                <h1 className='text-default text-2xl font-bold'>
-                  تحليلات الشات بوت
-                </h1>
-                <p className='text-gray-600 dark:text-gray-300'>
-                  إحصائيات وأداء المحادثات الذكية
-                </p>
-              </div>
-            </div>
-            <div className='flex items-center gap-3'>
-              <select
-                value={selectedPeriod}
-                onChange={e => setSelectedPeriod(e.target.value as any)}
-                className='rounded-lg border border-gray-300 px-3 py-2 text-sm'
-              >
-                <option value='day'>اليوم</option>
-                <option value='week'>هذا الأسبوع</option>
-                <option value='month'>هذا الشهر</option>
-                <option value='year'>هذا العام</option>
-              </select>
-              <button className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تصدير التقرير">
-                تصدير التقرير
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className='container mx-auto px-4 py-8' role='application'>
+      <div className='mb-8'>
+        <h1 className='text-default text-2xl font-bold'>
+          تحليلات الشات بوت
+        </h1>
+        <p className='text-gray-600 dark:text-gray-300'>
+          إحصائيات وأداء المحادثات الذكية
+        </p>
+      </div>
+      <div className='flex items-center gap-3 mb-6'>
+        <select
+          value={selectedPeriod}
+          onChange={e => setSelectedPeriod(e.target.value as any)}
+          className='rounded-lg border border-gray-300 px-3 py-2 text-sm'
+          aria-label='اختر الفترة الزمنية'
+        >
+          <option value='day'>اليوم</option>
+          <option value='week'>هذا الأسبوع</option>
+          <option value='month'>هذا الشهر</option>
+          <option value='year'>هذا العام</option>
+        </select>
+        <button
+          className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+          aria-label='تصدير التقرير'
+        >
+          تصدير التقرير
+        </button>
+      </div>
 
       <main className='container-app py-8' id="main-content">
         {/* Key Metrics */}
@@ -210,7 +188,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-lg font-semibold'>الرسائل حسب الساعة</h3>
               <div className='flex gap-2'>
-                <button onClick={() => { setSelectedMetric('messages') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedMetric('messages'"> { setSelectedMetric('messages') } }}
+                <button
+                  onClick={() => setSelectedMetric('messages')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setSelectedMetric('messages');
+                    }
+                  }}
+                  aria-label='عرض الرسائل'
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'messages'
                       ? 'bg-[var(--default-default)] text-white'
@@ -219,7 +205,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 >
                   الرسائل
                 </button>
-                <button onClick={() => { setSelectedMetric('users') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedMetric('users') }"> { setSelectedMetric('users') } }}
+                <button
+                  onClick={() => setSelectedMetric('users')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setSelectedMetric('users');
+                    }
+                  }}
+                  aria-label='عرض المستخدمين'
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'users'
                       ? 'bg-[var(--default-default)] text-white'

@@ -48,11 +48,7 @@ export default function AdminHomepageEditor() {
     setServices(prev => [...prev, { title: '', description: '', image: '' }]);
   };
 
-  const updateService = (index: number, patch: Partial<div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-ServiceItem>) => {
+  const updateService = (index: number, patch: Partial<ServiceItem>) => {
     setServices(prev =>
       prev.map((s, i) => (i === index ? { ...s, ...patch } : s))
     );
@@ -139,22 +135,24 @@ ServiceItem>) => {
                   <label className='block text-sm font-medium mb-1'>
                     العنوان
                   </label>
-                  <inputclassName='form-input w-full'
+                  <input
+                    type='text'
+                    className='form-input w-full'
                     value={s.title}
-                    onChange={e = aria-invalid="true">
-                      updateService(idx, { title: e.target.value })
-                    }
+                    onChange={(e) => updateService(idx, { title: e.target.value })}
+                    aria-label='عنوان الخدمة'
                   />
                 </div>
                 <div className='md:col-span-3'>
                   <label className='block text-sm font-medium mb-1'>
                     الوصف
                   </label>
-                  <inputclassName='form-input w-full'
-                    value={s.description}
-                    onChange={e = aria-invalid="true">
-                      updateService(idx, { description: e.target.value })
-                    }
+                  <input
+                    type='text'
+                    className='form-input w-full'
+                    value={s.description || ''}
+                    onChange={(e) => updateService(idx, { description: e.target.value })}
+                    aria-label='وصف الخدمة'
                   />
                 </div>
 
@@ -162,18 +160,23 @@ ServiceItem>) => {
                   <label className='block text-sm font-medium mb-1'>
                     رابط (اختياري)
                   </label>
-                  <inputclassName='form-input w-full'
+                  <input
+                    type='url'
+                    className='form-input w-full'
                     value={s.link || ''}
-                    onChange={e = aria-invalid="true"> updateService(idx, { link: e.target.value })}
+                    onChange={(e) => updateService(idx, { link: e.target.value })}
+                    aria-label='رابط الخدمة'
                   />
                 </div>
 
                 <div className='md:col-span-2'>
                   <label className='block text-sm font-medium mb-1'>صورة</label>
                   <div className='flex items-center gap-2'>
-                    <input type='file'
+                    <input
+                      type='file'
                       accept='image/*'
-                      onChange={(e) => handleFileChange(e, idx)} aria-label="file" aria-invalid="true"
+                      onChange={(e) => handleFileChange(e, idx)}
+                      aria-label='رفع صورة للخدمة'
                     />
                     {s.image && s.image !== 'uploading' && (
                       // eslint-disable-next-line @next/next/no-img-element

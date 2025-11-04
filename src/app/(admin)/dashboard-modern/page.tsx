@@ -237,35 +237,7 @@ export default function ModernAdminDashboard() {
   );
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-
-
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='flex h-screen flex-col bg-neutral-50 dark:bg-neutral-950'>
-      <AdminHeader title='لوحة التحكم الإدارية المحدثة'>
-        <div className='flex gap-2'>
-          <Button
-            variant='outline'
-            onClick={() => setIsGridEditable(!isGridEditable)}
-          >
-            <Settings className='w-4 h-4 mr-2' />
-            {isGridEditable ? 'إنهاء التخصيص' : 'تخصيص الداشبورد'}
-          </Button>
-          <Button variant='outline'>
-            <Download className='w-4 h-4 mr-2' />
-            تصدير البيانات
-          </Button>
-          <Button variant='primary' onClick={refetch}>
-            <RefreshCw className='w-4 h-4 mr-2' />
-            تحديث
-          </Button>
-        </div>
+    <div>
       </AdminHeader>
 
       <main className='flex-1 overflow-auto' id="main-content">

@@ -91,48 +91,55 @@ export default function TemplateEditorPage({
   };
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-
-
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='min-h-screen bg-[var(--default-surface)]'>
-      {/* Header */}
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
-        <div className='container-app py-6'>
+        <div className='container-app py-4'>
           <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-4'>
-              <Link
-                href={ROUTES.CHATBOT.TEMPLATES}
-                className='text-gray-400 hover:text-gray-600'
-              >
-                ← العودة
-              </Link>
-              <div>
-                <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>
-                  {template.name}
-                </h1>
-                <p className='text-gray-600 dark:text-gray-300'>محرر القوالب</p>
-              </div>
+            <div>
+              <h1 className='text-2xl font-bold text-gray-900 dark:text-white'>
+                {template.name}
+              </h1>
+              <p className='text-gray-600 dark:text-gray-300'>محرر القوالب</p>
             </div>
             <div className='flex items-center gap-3'>
-              <button onClick={handleTest} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
-                className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="اختبار">
+              <button
+                onClick={handleTest}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTest();
+                  }
+                }}
+                className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
+                aria-label='اختبار القالب'
+              >
                 اختبار
               </button>
-              <button onClick={() => { setIsEditing(!isEditing) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setIsEditing(!isEditing) } }"> { setIsEditing(!isEditing) } }}
+              <button
+                onClick={() => setIsEditing(!isEditing)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setIsEditing(!isEditing);
+                  }
+                }}
                 className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
+                aria-label={isEditing ? 'إيقاف التعديل' : 'تعديل القالب'}
               >
                 {isEditing ? 'عرض' : 'تعديل'}
               </button>
               {isEditing && (
-                <button onClick={handleSave} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
-                  className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ">
+                <button
+                  onClick={handleSave}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleSave();
+                    }
+                  }}
+                  className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='حفظ القالب'
+                >
                   حفظ
                 </button>
               )}
@@ -202,7 +209,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                   >
                     <span className='text-sm font-medium'>{variable}</span>
                     {isEditing && (
-                      <button onClick={() => { handleVariableRemove(variable) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ handleVariableRemove(variabl"> { handleVariableRemove(variable) } }}
+                      <button
+                        onClick={() => handleVariableRemove(variable)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleVariableRemove(variable);
+                          }
+                        }}
+                        aria-label={`حذف المتغير ${variable}`}
                         className='text-sm text-default-error hover:text-red-700'
                       >
                         حذف
@@ -213,32 +228,41 @@ div className='min-h-screen bg-[var(--default-surface)]'>
 
                 {isEditing && (
                   <div className='flex gap-2'>
-                    <input type='text'
+                    <input
+                      type='text'
                       placeholder='إضافة متغير جديد'
                       className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      onKeyPress={e = aria-label="إضافة متغير جديد" aria-invalid="true"> {
+                      onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                           handleVariableAdd(e.currentTarget.value);
                           e.currentTarget.value = '';
                         }
                       }}
+                      aria-label='إضافة متغير جديد'
                     />
-                    <button onClick={() => { {
-                        const input = document.querySelector(
-                          'input[placeholder="إضافة متغير جديد"]'
-                        ) as HTMLInputElement;
-                        if (input?.value) {
-                          handleVariableAdd(input.value);
-                          input.value = ''; }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ {
-                        co"> { {
+                    <button
+                      onClick={() => {
                         const input = document.querySelector(
                           'input[placeholder="إضافة متغير جديد"]'
                         ) as HTMLInputElement;
                         if (input?.value) {
                           handleVariableAdd(input.value);
                           input.value = '';
-                         } }}
+                        }
                       }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          const input = document.querySelector(
+                            'input[placeholder="إضافة متغير جديد"]'
+                          ) as HTMLInputElement;
+                          if (input?.value) {
+                            handleVariableAdd(input.value);
+                            input.value = '';
+                          }
+                        }
+                      }}
+                      aria-label='إضافة متغير'
                       className='rounded-lg bg-[var(--default-default)] px-3 py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'
                     >
                       إضافة
@@ -270,13 +294,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                     <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                       اسم القالب
                     </label>
-                    <input type='text'
+                    <input
+                      type='text'
                       value={template.name}
                       onChange={(e) => setTemplate(prev => ({
-                          ...prev,
-                          name: e.target.value,} aria-label="text" aria-invalid="true"))
-                      }
+                        ...prev,
+                        name: e.target.value,
+                      }))}
                       className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
+                      aria-label='اسم القالب'
                     />
                   </div>
 
@@ -335,8 +361,17 @@ div className='min-h-screen bg-[var(--default-surface)]'>
 
               {/* Action Buttons */}
               <div className='flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700'>
-                <button onClick={handleTest} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
-                  className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="اختبار القالب">
+                <button
+                  onClick={handleTest}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleTest();
+                    }
+                  }}
+                  className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
+                  aria-label='اختبار القالب'
+                >
                   اختبار القالب
                 </button>
                 <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="نسخ القالب">
@@ -346,8 +381,17 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                   تصدير
                 </button>
                 {isEditing && (
-                  <button onClick={handleSave} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
-                    className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ التغييرات">
+                  <button
+                    onClick={handleSave}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleSave();
+                      }
+                    }}
+                    className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                    aria-label='حفظ التغييرات'
+                  >
                     حفظ التغييرات
                   </button>
                 )}
@@ -363,7 +407,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>اختبار القالب</h3>
-              <button onClick={() => { setShowTestModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowTestModal(false) } }}"> { setShowTestModal(false) } }}
+              <button
+                onClick={() => setShowTestModal(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowTestModal(false);
+                  }
+                }}
+                aria-label='إغلاق نافذة الاختبار'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -386,14 +438,16 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                       <label className='mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         {variable}:
                       </label>
-                      <input type='text'
+                      <input
+                        type='text'
                         value={testVariables[variable] || ''}
                         onChange={(e) => setTestVariables(prev => ({
-                            ...prev,
-                            [variable]: e.target.value,} aria-label="text" aria-invalid="true"))
-                        }
+                          ...prev,
+                          [variable]: e.target.value,
+                        }))}
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         placeholder={`أدخل قيمة ${variable}`}
+                        aria-label={`قيمة المتغير ${variable}`}
                       />
                     </div>
                   ))}
@@ -401,7 +455,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button onClick={() => { setShowTestModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowTestModal(false) } }}"> { setShowTestModal(false) } }}
+                <button
+                  onClick={() => setShowTestModal(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowTestModal(false);
+                    }
+                  }}
+                  aria-label='إغلاق نافذة الاختبار'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إغلاق

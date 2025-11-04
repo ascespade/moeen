@@ -23,7 +23,7 @@ export default function KeywordEditor({
   return (
     <div className='grid gap-3'>
       <div className='grid grid-cols-[1fr_auto] gap-2'>
-        <inputclassName='h-10 rounded-md border px-3'
+        <input className='h-10 rounded-md border px-3'
           placeholder='أدخل كلمة طوارئ'
           value={value}
           onChange={(e) => setValue(e.target.value)} aria-label="أدخل كلمة طوارئ"

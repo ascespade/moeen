@@ -51,14 +51,18 @@ export default function HeaderSimple() {
           <div className='flex items-center gap-2'>
             {/* Theme Toggle */}
             <div className='relative'>
-              <button className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
-                onClick={(e) aria-label="??" {
+              <button
+                className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800'
+                onClick={(e) => {
                   e.stopPropagation();
                   setShowThemeDropdown(!showThemeDropdown);
-                } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); (e) aria-label="??" {
-                  e.stopPropagation();
-                  setShowThemeDropdown(!showThemeDropdown);
-                 } }}}
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowThemeDropdown(!showThemeDropdown);
+                  }
+                }}
                 aria-label='تبديل الثيم'
               >
                 {theme === 'light' ? (
@@ -73,13 +77,20 @@ export default function HeaderSimple() {
                   className='absolute top-full right-0 z-50 min-w-36 rounded-lg border border-gray-200 bg-white p-1 shadow-md dark:border-gray-700 dark:bg-gray-900'
                   tabIndex={0} onClick={e => e.stopPropagation()}
                 >
-                  <button className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
-                    onClick={() => { {
-                      setTheme('light');
-                      setShowThemeDropdown(false); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" {
+                  <button
+                    className='w-full rounded-md px-3 py-2 text-start hover:bg-surface dark:hover:bg-gray-800'
+                    onClick={() => {
                       setTheme('light');
                       setShowThemeDropdown(false);
-                     } }}}
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setTheme('light');
+                        setShowThemeDropdown(false);
+                      }
+                    }}
+                    aria-label='الوضع النهاري'
                   >
                     وضع نهاري
                   </button>

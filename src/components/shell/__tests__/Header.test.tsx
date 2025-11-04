@@ -137,7 +137,7 @@ describe('Header Component', () => {
     vi.clearAllMocks();
   });
 
-  it('renders the header with all basic elements', () => {
+  it('renders the <headerwith all basic elements', () => {
     render(<Header />);
 
     expect(screen.getByText('common.systemName')).toBeInTheDocument();

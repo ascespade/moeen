@@ -30,7 +30,7 @@ main className='min-h-screen bg-[var(--default-surface)]'>
             <h1 className='text-2xl font-semibold text-[var(--foreground)]'>
               مركز المراجعة
             </h1>
-            <inputclassName='form-input w-full md:w-64'
+            <input className='form-input w-full md:w-64'
               placeholder='بحث'
               value={q}
               onChange={(e) => setQ(e.target.value)} aria-label="بحث"

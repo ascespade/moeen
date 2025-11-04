@@ -31,7 +31,7 @@ export default function DashboardRedirect() {
     ) {
       router.replace(targetRoute);
     } else if (targetRoute === '/dashboard') {
-      // If agent role, show main dashboard instead of redirecting
+      // If agent role, show <maindashboard instead of redirecting
       // This allows them to see the dashboard
     }
   }, [router]);

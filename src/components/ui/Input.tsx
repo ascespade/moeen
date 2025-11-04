@@ -101,7 +101,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
 
-          <inputid={inputId} className={inputClasses} ref={ref} {...props} / aria-invalid="true">
+          <input
+            id={inputId}
+            className={inputClasses}
+            ref={ref}
+            {...props}
+          />
 
           {rightIcon && (
             <div className='absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-neutral-400'>

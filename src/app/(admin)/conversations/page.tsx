@@ -407,11 +407,7 @@ export default function ConversationsPage() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
+      <Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -771,16 +767,19 @@ Badge variant={config.variant} className={config.className}>
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input type='checkbox'
+                    <input
+                      type='checkbox'
                       className='rounded border-gray-300'
                       onChange={(e) => {
                         if (e.target.checked) {
                           setSelectedConversations(
                             filteredConversations.map(c => c.id)
-                          );} aria-label="checkbox" aria-invalid="true" else {
+                          );
+                        } else {
                           setSelectedConversations([]);
                         }
                       }}
+                      aria-label='تحديد جميع المحادثات'
                     />
                   </TableHead>
                   <TableHead>المشارك</TableHead>
@@ -810,7 +809,8 @@ Badge variant={config.variant} className={config.className}>
                             setSelectedConversations([
                               ...selectedConversations,
                               conversation.id,
-                            ]);} aria-label="checkbox" aria-invalid="true" else {
+                            ]);
+                          } else {
                             setSelectedConversations(
                               selectedConversations.filter(
                                 id => id !== conversation.id
@@ -818,6 +818,7 @@ Badge variant={config.variant} className={config.className}>
                             );
                           }
                         }}
+                        aria-label={`تحديد محادثة ${conversation.id}`}
                       />
                     </TableCell>
                     <TableCell>

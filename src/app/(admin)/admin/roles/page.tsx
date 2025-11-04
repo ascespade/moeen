@@ -723,11 +723,7 @@ function RolesPageContent() {
   const getStatusBadge = (isActive: boolean) => {
     if (isActive) {
       return (
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge
+        <Badge
           variant='primary'
           className='bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]'
         >
@@ -976,10 +972,14 @@ Badge
                   <TableHead className='w-12'>
                     <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => setSelectedRoles(filteredRoles.map(r => r.id)} aria-label="checkbox" else {
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedRoles(filteredRoles.map(r => r.id));
+                        } else {
                           setSelectedRoles([]);
                         }
                       }}
+                      aria-label='تحديد جميع الأدوار'
                     />
                   </TableHead>
                   <TableHead>الدور</TableHead>
@@ -997,15 +997,18 @@ Badge
                   <React.Fragment key={role.id}>
                     <TableRow>
                       <TableCell>
-                        <input type='checkbox'
+                        <input
+                          type='checkbox'
                           className='rounded border-gray-300'
                           checked={selectedRoles.includes(role.id)}
-                          onChange={(e) => setSelectedRoles([...selectedRoles, role.id])} aria-label="checkbox" else {
-                              setSelectedRoles(
-                                selectedRoles.filter(id => id !== role.id)
-                              );
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedRoles([...selectedRoles, role.id]);
+                            } else {
+                              setSelectedRoles(selectedRoles.filter(id => id !== role.id));
                             }
                           }}
+                          aria-label={`تحديد دور ${role.displayName}`}
                         />
                       </TableCell>
                       <TableCell>

@@ -40,83 +40,82 @@ export default function LogsAdminPage() {
     return () => clearTimeout(t);
   }, []);
   const [q, setQ] = useState('');
-  const [filter, setFilter] = useState<div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
+  const [filter, setFilter] = useState<string>('all');
 
-
-
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-string>('all');
-  const [rows] = useState<LogEvent[]>(seed);
-
-  const filtered = useMemo(
-    () =>
-      rows.filter(
-        r =>
-          (filter === 'all' || r.type === filter) &&
-          r.message.toLowerCase().includes(q.toLowerCase())
-      ),
-    [rows, filter, q]
-  );
+  const filtered = useMemo(() => {
+    let result = seed;
+    if (filter !== 'all') {
+      result = result.filter(r => r.type === filter);
+    }
+    if (q.trim()) {
+      result = result.filter(r => r.message.toLowerCase().includes(q.toLowerCase()));
+    }
+    return result;
+  }, [filter, q]);
 
   return (
-    <main className='p-6 grid gap-4' id="main-content">
-      <div className='grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-3 items-center'>
-        <h1 className='text-2xl font-semibold'>السجلات</h1>
-        <select
-          className='h-10 rounded-md border px-2'
-          value={filter}
-          onChange={e => setFilter(e.target.value)}
-        >
-          <option value='all'>الكل</option>
-          <option value='webhook'>Webhook</option>
-          <option value='ai'>AI</option>
-          <option value='error'>Errors</option>
-        </select>
-        <inputclassName='h-10 rounded-md border px-3 w-full md:w-64'
-          placeholder='بحث'
-          value={q}
-          onChange={(e) => setQ(e.target.value)} aria-label="بحث" aria-invalid="true"
-        />
-      </div>
+    <main id="main-content" className='min-h-screen bg-[var(--background)]' role='main'>
+      <div className='container-app py-6'>
+        <h1 className='text-2xl font-bold mb-6'>سجلات النظام</h1>
+        <div className='card p-4'>
+          <div className='grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-3 items-center'>
+            <h1 className='text-2xl font-semibold'>السجلات</h1>
+            <select
+              className='h-10 rounded-md border px-2'
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              aria-label='تصفية السجلات'
+            >
+              <option value='all'>الكل</option>
+              <option value='webhook'>Webhook</option>
+              <option value='ai'>AI</option>
+              <option value='error'>Errors</option>
+            </select>
+            <input
+              type='text'
+              className='h-10 rounded-md border px-3 w-full md:w-64'
+              placeholder='بحث'
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              aria-label='بحث في السجلات'
+            />
+          </div>
+        </div>
 
-      {loading ? (
-        <div className='grid gap-2'>
-          {Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} className='h-12' />
-          ))}
-        </div>
-      ) : filtered.length === 0 ? (
-        <EmptyState
-          title='لا توجد سجلات'
-          description='جرّب تغيير المرشحات أو التوقيت.'
-        />
-      ) : (
-        <div className='overflow-x-auto rounded-xl border'>
-          <table className='w-full text-sm'>
-            <thead className='bg-surface dark:bg-white/5'>
-              <tr>
-                <th className='text-start p-3'>النوع</th>
-                <th className='text-start p-3'>الوقت</th>
-                <th className='text-start p-3'>الوصف</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map(r => (
-                <tr key={r.id} className='border-t'>
-                  <td className='p-3'>{r.type}</td>
-                  <td className='p-3'>{new Date(r.ts).toLocaleString()}</td>
-                  <td className='p-3'>{r.message}</td>
+        {loading ? (
+          <div className='grid gap-2'>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className='h-12' />
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
+          <EmptyState
+            title='لا توجد سجلات'
+            description='جرّب تغيير المرشحات أو التوقيت.'
+          />
+        ) : (
+          <div className='overflow-x-auto rounded-xl border'>
+            <table className='w-full text-sm'>
+              <thead className='bg-surface dark:bg-white/5'>
+                <tr>
+                  <th className='text-start p-3'>النوع</th>
+                  <th className='text-start p-3'>الوقت</th>
+                  <th className='text-start p-3'>الوصف</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+              </thead>
+              <tbody>
+                {filtered.map(r => (
+                  <tr key={r.id} className='border-t'>
+                    <td className='p-3'>{r.type}</td>
+                    <td className='p-3'>{new Date(r.ts).toLocaleString()}</td>
+                    <td className='p-3'>{r.message}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </main>
   );
 }

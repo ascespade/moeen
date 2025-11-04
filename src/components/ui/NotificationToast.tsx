@@ -18,7 +18,7 @@ export function NotificationToast() {
     <div
       className="fixed top-4 right-4 z-50 space-y-2"
       role="region"
-      aria-label="?????????"
+      aria-label="????"
       aria-live="polite"
     >
       {notifications.map(notification => (

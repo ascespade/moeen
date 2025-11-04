@@ -106,48 +106,30 @@ export default function ChatbotFlowsPage() {
   });
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-
-
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='min-h-screen bg-[var(--default-surface)]'>
-      {/* Header */}
-      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
-        <div className='container-app py-6'>
-          <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-4'>
-              <Image
-                src='/logo.png'
-                alt='مُعين'
-                width={50}
-                height={50}
-                className='rounded-lg'
-              />
-              <div>
-                <h1 className='text-default text-2xl font-bold'>
-                  تدفقات الشات بوت
-                </h1>
-                <p className='text-gray-600 dark:text-gray-300'>
-                  إدارة تدفقات المحادثة الذكية
-                </p>
-              </div>
-            </div>
-            <div className='flex items-center gap-3'>
-              <button onClick={() => { setShowCreateModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(true) } }"> { setShowCreateModal(true) } }}
-                className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
-              >
-                إنشاء تدفق
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className='container mx-auto px-4 py-8' role='application'>
+      <div className='mb-8'>
+        <h1 className='text-default text-2xl font-bold'>
+          تدفقات الشات بوت
+        </h1>
+        <p className='text-gray-600 dark:text-gray-300'>
+          إدارة تدفقات المحادثة الذكية
+        </p>
+      </div>
+      <div className='flex items-center gap-3 mb-6'>
+        <button
+          onClick={() => setShowCreateModal(true)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setShowCreateModal(true);
+            }
+          }}
+          aria-label='إنشاء تدفق جديد'
+          className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+        >
+          إنشاء تدفق
+        </button>
+      </div>
 
       <main className='container-app py-8' id="main-content">
         {/* Stats Cards */}
@@ -332,7 +314,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-md rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إنشاء تدفق جديد</h3>
-              <button onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+              <button
+                onClick={() => setShowCreateModal(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowCreateModal(false);
+                  }
+                }}
+                aria-label='إغلاق النافذة'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -344,10 +334,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                   اسم التدفق
                 </label>
-                <input type='text'
+                <input
+                  type='text'
                   className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='مثال: استقبال المرضى'
-                / aria-label="مثال: استقبال المرضى">
+                  aria-label='اسم التدفق'
+                />
               </div>
 
               <div>
@@ -365,10 +357,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                   الأوسمة
                 </label>
-                <input type='text'
+                <input
+                  type='text'
                   className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='ترحيب، استقبال (مفصولة بفواصل)'
-                / aria-label="ترحيب، استقبال (مفصولة بفواصل)">
+                  aria-label='أوسمة التدفق'
+                />
               </div>
 
               <div>
@@ -384,8 +378,16 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button type='button'
-                  onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+                <button
+                  type='button'
+                  onClick={() => setShowCreateModal(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowCreateModal(false);
+                    }
+                  }}
+                  aria-label='إلغاء إنشاء التدفق'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء

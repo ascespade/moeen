@@ -205,18 +205,18 @@ export default function EnhancedSidebar() {
 
       {/* Logout */}
       <div className='p-4 border-t border-[var(--border)]'>
-        <button onClick={handleLogout}
-          onKeyDown={(e) = aria-label="{
-            if (e.key === 'E"> {
+        <button
+          onClick={handleLogout}
+          onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               handleLogout();
             }
           }}
+          aria-label={!collapsed ? 'تسجيل الخروج' : 'خروج'}
           className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors ${
             collapsed ? 'justify-center' : ''
           }`}
-          aria-label={!collapsed ? 'تسجيل الخروج' : 'خروج'}
         >
           <span>🚪</span>
           {!collapsed && <span>تسجيل الخروج</span>}

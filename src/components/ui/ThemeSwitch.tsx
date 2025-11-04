@@ -146,13 +146,20 @@ export function ThemeSwitch({
                 const isSelected = theme === themeOption.value;
 
                 return (
-                  <button key={themeOption.value}
-                    onClick={() => { {
-                      setTheme(themeOption.value);
-                      setIsOpen(false); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="??" {
+                  <button
+                    key={themeOption.value}
+                    onClick={() => {
                       setTheme(themeOption.value);
                       setIsOpen(false);
-                     } }}}
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setTheme(themeOption.value);
+                        setIsOpen(false);
+                      }
+                    }}
+                    aria-label={themeOption.label}
                     className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors hover:bg-[var(--surface-hover)] ${
                       isSelected
                         ? 'bg-[var(--brand-primary)]/10 text-[var(--brand-primary)]'

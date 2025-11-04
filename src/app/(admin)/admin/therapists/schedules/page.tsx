@@ -165,11 +165,7 @@ export default function TherapistSchedulesPage() {
   });
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container-app py-8'>
+    <div className='container-app py-8'>
       <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-2'>
         جداول الأخصائيين
       </h1>
@@ -210,8 +206,15 @@ div className='container-app py-8'>
                 <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
                   {dayName}
                 </h3>
-                <button onClick={() => { addSchedule(dayIndex) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ addSchedule(dayIndex) } }}
- "> { addSchedule(dayIndex) } }}
+                <button
+                  onClick={() => addSchedule(dayIndex)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      addSchedule(dayIndex);
+                    }
+                  }}
+                  aria-label={`إضافة وقت لـ ${dayName}`}
                   disabled={saving}
                   className='btn btn-outline text-sm'
                 >
@@ -264,7 +267,8 @@ div className='container-app py-8'>
                               schedule.id,
                               'is_available',
                               e.target.checked
-                            )} aria-label="checkbox" aria-invalid="true"
+                            )}
+                          aria-label='تحديد حالة الجدول'
                           className='w-5 h-5 rounded border-gray-300 dark:border-gray-600'
                         />
                         <span className='text-sm text-gray-700 dark:text-gray-300'>
@@ -272,7 +276,15 @@ div className='container-app py-8'>
                         </span>
                       </label>
 
-                      <button onClick={() => { deleteSchedule(schedule.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ deleteSchedule(schedule.id) "> { deleteSchedule(schedule.id) } }}
+                      <button
+                        onClick={() => deleteSchedule(schedule.id)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            deleteSchedule(schedule.id);
+                          }
+                        }}
+                        aria-label='حذف الجدول'
                         className='mr-auto text-red-600 hover:text-red-700 text-sm'
                       >
                         حذف

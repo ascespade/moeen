@@ -45,7 +45,7 @@ main className='min-h-screen bg-[var(--default-surface)]'>
               Inputs
             </section>
             <div className='grid sm:grid-cols-2 gap-2'>
-              <inputclassName='form-input' placeholder='Text field' / aria-label="Text field" aria-invalid="true">
+              <input className='form-input' placeholder='Text field' / aria-label="Text field" aria-invalid="true">
               <select className='form-input'>
                 <option>Option</option>
               </select>

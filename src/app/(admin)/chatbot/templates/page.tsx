@@ -141,40 +141,28 @@ export default function ChatbotTemplatesPage() {
   });
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-
-
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='min-h-screen bg-[var(--default-surface)]'>
-      {/* Header */}
+    <div className='min-h-screen bg-[var(--default-surface)]'>
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
-        <div className='container-app py-6'>
+        <div className='container-app py-4'>
           <div className='flex items-center justify-between'>
-            <div className='flex items-center gap-4'>
-              <Image
-                src='/logo.png'
-                alt='مُعين'
-                width={50}
-                height={50}
-                className='rounded-lg'
-              />
-              <div>
-                <h1 className='text-default text-2xl font-bold'>
-                  قوالب الشات بوت
-                </h1>
-                <p className='text-gray-600 dark:text-gray-300'>
-                  إدارة قوالب الرسائل الذكية
-                </p>
-              </div>
+            <div>
+              <h1 className='text-default text-2xl font-bold'>
+                قوالب الشات بوت
+              </h1>
+              <p className='text-gray-600 dark:text-gray-300'>
+                إدارة قوالب الرسائل الذكية
+              </p>
             </div>
             <div className='flex items-center gap-3'>
-              <button onClick={() => { setShowCreateModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(true) } }"> { setShowCreateModal(true) } }}
+              <button
+                onClick={() => setShowCreateModal(true)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowCreateModal(true);
+                  }
+                }}
+                aria-label='إنشاء قالب جديد'
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إنشاء قالب
@@ -369,7 +357,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                     </td>
                     <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                       <div className='flex gap-2'>
-                        <button onClick={() => { setShowPreviewModal(template) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPreviewModal(template"> { setShowPreviewModal(template) } }}
+                        <button
+                          onClick={() => setShowPreviewModal(template)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              setShowPreviewModal(template);
+                            }
+                          }}
+                          aria-label={`معاينة القالب ${template.name}`}
                           className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
                         >
                           معاينة
@@ -414,7 +410,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إنشاء قالب جديد</h3>
-              <button onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+              <button
+                onClick={() => setShowCreateModal(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowCreateModal(false);
+                  }
+                }}
+                aria-label='إغلاق نافذة الإنشاء'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -427,10 +431,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     اسم القالب
                   </label>
-                  <input type='text'
+                  <input
+                    type='text'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='مثال: ترحيب المرضى'
-                  / aria-label="مثال: ترحيب المرضى">
+                    aria-label='اسم القالب'
+                  />
                 </div>
                 <div>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
@@ -471,10 +477,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     المتغيرات
                   </label>
-                  <input type='text'
+                  <input
+                    type='text'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='اسم المريض، اسم المركز (مفصولة بفواصل)'
-                  / aria-label="اسم المريض، اسم المركز (مفصولة بفواصل)">
+                    aria-label='متغيرات القالب'
+                  />
                 </div>
               </div>
 
@@ -490,8 +498,16 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button type='button'
-                  onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+                <button
+                  type='button'
+                  onClick={() => setShowCreateModal(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowCreateModal(false);
+                    }
+                  }}
+                  aria-label='إلغاء إنشاء القالب'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
@@ -512,7 +528,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>معاينة القالب</h3>
-              <button onClick={() => { setShowPreviewModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPreviewModal(null) } "> { setShowPreviewModal(null) } }}
+              <button
+                onClick={() => setShowPreviewModal(null)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowPreviewModal(null);
+                  }
+                }}
+                aria-label='إغلاق المعاينة'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -549,7 +573,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button onClick={() => { setShowPreviewModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPreviewModal(null) } "> { setShowPreviewModal(null) } }}
+                <button
+                  onClick={() => setShowPreviewModal(null)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowPreviewModal(null);
+                    }
+                  }}
+                  aria-label='إغلاق المعاينة'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إغلاق

@@ -54,11 +54,7 @@ export default function InvoicesPage() {
 
   if (loading) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container-app py-8'>
+      <div className='container-app py-8'>
         <div className='card p-12 text-center'>
           <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
           <p className='mt-4'>جاري التحميل...</p>
@@ -184,7 +180,15 @@ div className='container-app py-8'>
                       : '-'}
                   </td>
                   <td className='px-6 py-4'>
-                    <button onClick={() => { generateInvoicePDF(payment) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ generateInvoicePDF(payment) "> { generateInvoicePDF(payment) } }}
+                    <button
+                      onClick={() => generateInvoicePDF(payment)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          generateInvoicePDF(payment);
+                        }
+                      }}
+                      aria-label='إنشاء فاتورة PDF'
                       className='text-sm text-[var(--default-default)] hover:underline'
                     >
                       📄 فاتورة

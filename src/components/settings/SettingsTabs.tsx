@@ -172,13 +172,13 @@ export default function SettingsTabs() {
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <div className='grid gap-2'>
               <label className='text-sm'>Temperature</label>
-              <inputclassName='h-10 rounded-md border px-3'
+              <input className='h-10 rounded-md border px-3'
                 placeholder='0.7'
               / aria-label="0.7">
             </div>
             <div className='grid gap-2'>
               <label className='text-sm'>حد السياق</label>
-              <inputclassName='h-10 rounded-md border px-3'
+              <input className='h-10 rounded-md border px-3'
                 placeholder='4096'
               / aria-label="4096">
             </div>
@@ -285,14 +285,14 @@ export default function SettingsTabs() {
           </div>
           <div className='grid gap-2'>
             <label className='text-sm'>Phone Number ID</label>
-            <inputclassName='h-10 rounded-md border px-3'
+            <input className='h-10 rounded-md border px-3'
               value={getApiConfig().whatsapp.phoneNumberId || ''}
               placeholder='e.g. 123456789012345'
             / aria-label="e.g. 123456789012345">
           </div>
           <div className='grid gap-2'>
             <label className='text-sm'>Webhook URL</label>
-            <inputclassName='h-10 rounded-md border px-3'
+            <input className='h-10 rounded-md border px-3'
               value={getApiConfig().whatsapp.webhookUrl || ''}
               placeholder='https://your-domain.com/api/webhooks/whatsapp'
             / aria-label="https://your-domain.com/api/webhooks/whatsapp">
@@ -409,7 +409,7 @@ export default function SettingsTabs() {
         <section className='rounded-xl border p-4 grid gap-4'>
           <div className='grid gap-2'>
             <label className='text-sm'>أيام الاحتفاظ بالبيانات</label>
-            <inputclassName='h-10 rounded-md border px-3'
+            <input className='h-10 rounded-md border px-3'
               type='number'
               value={settings?.security?.dataRetentionDays ?? 30}
               onChange={(e) => setSettings({
@@ -583,7 +583,7 @@ export default function SettingsTabs() {
         <section className='rounded-xl border p-4 grid gap-4'>
           <div className='grid gap-2'>
             <label className='text-sm'>الميزانية اليومية (USD)</label>
-            <inputclassName='h-10 rounded-md border px-3'
+            <input className='h-10 rounded-md border px-3'
               type='number'
               value={settings?.billing?.dailyAiBudgetUsd ?? 20}
               onChange={(e) => setSettings({

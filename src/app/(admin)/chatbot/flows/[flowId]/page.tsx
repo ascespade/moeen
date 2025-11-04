@@ -144,11 +144,7 @@ export default function FlowBuilderPage({
   };
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='min-h-screen bg-[var(--default-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]' role='application'>
       {/* Header */}
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-4'>
@@ -170,13 +166,28 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <button onClick={() => { setShowTestModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowTestModal(true) } }}
-"> { setShowTestModal(true) } }}
+              <button
+                onClick={() => setShowTestModal(true)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowTestModal(true);
+                  }
+                }}
+                aria-label='اختبار التدفق'
                 className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 اختبار
               </button>
-              <button onClick={() => { setShowPublishModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPublishModal(true) } "> { setShowPublishModal(true) } }}
+              <button
+                onClick={() => setShowPublishModal(true)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowPublishModal(true);
+                  }
+                }}
+                aria-label='نشر التدفق'
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 نشر التدفق
@@ -349,10 +360,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                   التسمية
                 </label>
-                <input type='text'
+                <input
+                  type='text'
                   value={selectedNode.data.label}
                   className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                / aria-label="text" aria-invalid="true">
+                  aria-label='تسمية العقدة'
+                />
               </div>
 
               {selectedNode.type === 'message' && (
@@ -374,11 +387,13 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     الشرط
                   </label>
-                  <input type='text'
+                  <input
+                    type='text'
                     value={selectedNode.data.condition || ''}
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder="user_input == '1'"
-                  / aria-label="user_input == " aria-invalid="true">
+                    aria-label='شرط العقدة'
+                  />
                 </div>
               )}
 
@@ -416,7 +431,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-md rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>نشر التدفق</h3>
-              <button onClick={() => { setShowPublishModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPublishModal(false) }"> { setShowPublishModal(false) } }}
+              <button
+                onClick={() => setShowPublishModal(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowPublishModal(false);
+                  }
+                }}
+                aria-label='إغلاق نافذة النشر'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -435,12 +458,28 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button onClick={() => { setShowPublishModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPublishModal(false) }"> { setShowPublishModal(false) } }}
+                <button
+                  onClick={() => setShowPublishModal(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowPublishModal(false);
+                    }
+                  }}
+                  aria-label='إلغاء النشر'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <button onClick={() => { setShowPublishModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowPublishModal(false) }"> { setShowPublishModal(false) } }}
+                <button
+                  onClick={() => setShowPublishModal(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowPublishModal(false);
+                    }
+                  }}
+                  aria-label='نشر التدفق'
                   className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   نشر التدفق
@@ -457,7 +496,15 @@ div className='min-h-screen bg-[var(--default-surface)]'>
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>اختبار التدفق</h3>
-              <button onClick={() => { setShowTestModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowTestModal(false) } }}"> { setShowTestModal(false) } }}
+              <button
+                onClick={() => setShowTestModal(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowTestModal(false);
+                  }
+                }}
+                aria-label='إغلاق نافذة الاختبار'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -498,17 +545,30 @@ div className='min-h-screen bg-[var(--default-surface)]'>
               </div>
 
               <div className='flex gap-2'>
-                <input type='text'
+                <input
+                  type='text'
                   placeholder='اكتب رسالة للاختبار...'
                   className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                / aria-label="اكتب رسالة للاختبار..." aria-invalid="true">
-                <button className='btn-default rounded-lg px-4 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إرسال">
+                  aria-label='اكتب رسالة للاختبار'
+                />
+                <button
+                  className='btn-default rounded-lg px-4 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='إرسال الرسالة'
+                >
                   إرسال
                 </button>
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <button onClick={() => { setShowTestModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowTestModal(false) } }}"> { setShowTestModal(false) } }}
+                <button
+                  onClick={() => setShowTestModal(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowTestModal(false);
+                    }
+                  }}
+                  aria-label='إغلاق نافذة الاختبار'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إغلاق

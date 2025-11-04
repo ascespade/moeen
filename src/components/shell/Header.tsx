@@ -437,7 +437,7 @@ export default function Header() {
                   }
                 }}
                 className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
-                aria-label='?????????'
+                aria-label="????"
                 aria-haspopup='menu'
                 aria-expanded={showNotifDropdown}
               >
@@ -475,17 +475,12 @@ export default function Header() {
                                 notifications
                                   .filter((n: unknown) => !n.is_read)
                                   .map((n: unknown) =>
-                                    fetch(`/api/notifications/${n.id }} aria-label="??" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); async () aria-label="??" {
-                            try {
-                              // Mark all as read
-                              await Promise.all() => !n.is_read)
-                                  .map((n: unknown) =>
-                                    fetch(`/api/notifications/${n.id } }}/read`, {
+                                    fetch(`/api/notifications/${n.id}/read`, {
                                       method: 'POST',
                                       credentials: 'include',
                                     }).catch(() => {})
                                   )
-                              );
+                                );
                               // Refresh notifications
                               const response = await fetch(
                                 `/api/notifications/schedule?recipientId=${user?.id}&limit=5`,

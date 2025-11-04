@@ -429,11 +429,7 @@ export default function ChatbotPage() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
+      <Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -916,13 +912,17 @@ Badge variant={config.variant} className={config.className}>
                   <TableHeader>
                     <TableRow>
                       <TableHead className='w-12'>
-                        <input type='checkbox'
+                        <input
+                          type='checkbox'
                           className='rounded border-gray-300'
-                          onChange={(e) => setSelectedItems(
-                                filteredData.map((item: any)} aria-label="checkbox" else {
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedItems(filteredData.map((item: any) => item.id));
+                            } else {
                               setSelectedItems([]);
                             }
                           }}
+                          aria-label='تحديد جميع العناصر'
                         />
                       </TableHead>
                       <TableHead>الاسم</TableHead>
@@ -937,15 +937,20 @@ Badge variant={config.variant} className={config.className}>
                     {filteredData.map((item: any) => (
                       <TableRow key={item.id}>
                         <TableCell>
-                          <input type='checkbox'
+                          <input
+                            type='checkbox'
                             className='rounded border-gray-300'
                             checked={selectedItems.includes(item.id)}
-                            onChange={(e) => setSelectedItems([...selectedItems, item.id])} aria-label="checkbox" else {
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSelectedItems([...selectedItems, item.id]);
+                              } else {
                                 setSelectedItems(
                                   selectedItems.filter(id => id !== item.id)
                                 );
                               }
                             }}
+                            aria-label={`تحديد ${item.name || 'عنصر'}`}
                           />
                         </TableCell>
                         <TableCell>

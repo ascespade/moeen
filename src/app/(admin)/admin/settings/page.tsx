@@ -130,6 +130,14 @@ function AdminSettingsPageContent() {
     }
   };
 
+  const handleReset = () => {
+    if (confirm('هل أنت متأكد من إعادة تعيين جميع الإعدادات؟')) {
+      setHasChanges(false);
+      setActiveTab('general');
+      // TODO: Reset settings to default values
+    }
+  };
+
   const handleTabChange = (tab: SettingsTab) => {
     if (hasChanges) {
       const confirmLeave = confirm(
@@ -165,25 +173,13 @@ function AdminSettingsPageContent() {
   };
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-
-
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='min-h-screen bg-[var(--background)]'>
-      {/* Header with Save Actions */}
+    <div className='min-h-screen bg-[var(--background)]'>
       <AdminHeader
-        title='إعدادات النظام'
-        description='إدارة وتخصيص إعدادات مركز الهمم'
+        title='الإعدادات'
+        description='إدارة إعدادات النظام والصلاحيات'
       >
         {lastSaved && (
-          <div className='text-sm text-[var(--text-secondary)] flex items-center gap-2'>
-            <div className='w-2 h-2 bg-green-500 rounded-full'></div>
+          <div className='text-sm text-[var(--text-secondary)]'>
             آخر حفظ: {lastSaved.toLocaleTimeString('ar-SA')}
           </div>
         )}
@@ -192,6 +188,14 @@ div className='min-h-screen bg-[var(--background)]'>
           variant='outline'
           className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
           disabled={isSaving}
+          onClick={handleReset}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleReset();
+            }
+          }}
+          aria-label='إعادة تعيين الإعدادات'
         >
           <RefreshCw className='w-4 h-4 ml-2' />
           إعادة تعيين
@@ -200,6 +204,15 @@ div className='min-h-screen bg-[var(--background)]'>
         <Button
           onClick={handleSave}
           disabled={!hasChanges || isSaving}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              if (!isSaving && hasChanges) {
+                handleSave();
+              }
+            }
+          }}
+          aria-label={isSaving ? 'جاري الحفظ...' : 'حفظ التغييرات'}
           className={cn(
             'transition-all duration-300',
             hasChanges
@@ -239,8 +252,16 @@ div className='min-h-screen bg-[var(--background)]'>
 
               <nav className='p-2'>
                 {visibleTabs.map(tab => (
-                  <button key={tab.id}
-                    onClick={() => { handleTabChange(tab.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ handleTabChange(tab.id) } }}"> { handleTabChange(tab.id) } }}
+                  <button
+                    key={tab.id}
+                    onClick={() => handleTabChange(tab.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleTabChange(tab.id);
+                      }
+                    }}
+                    aria-label={`تبديل إلى ${tab.label}`}
                     className={cn(
                       'w-full text-right p-4 rounded-xl mb-2 transition-all duration-200 group',
                       'hover:bg-[var(--brand-primary)]/5 hover:border-[var(--brand-primary)]/20',

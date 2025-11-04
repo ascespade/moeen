@@ -283,128 +283,9 @@ function UsersPageContent() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-
-
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-Badge variant={config.variant} className={config.className}>
+      <Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
-    );
-  };
-
-  const getRoleBadge = (role: string) => {
-    const roleConfig = {
-      admin: {
-        label: 'مدير النظام',
-        icon: <Crown className='h-3 w-3' />,
-        className:
-          'bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] text-[var(--brand-error)] border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]',
-      },
-      manager: {
-        label: 'مدير',
-        icon: <TrendingUp className='h-3 w-3' />,
-        className:
-          'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]',
-      },
-      supervisor: {
-        label: 'مشرف',
-        icon: <Award className='h-3 w-3' />,
-        className:
-          'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]',
-      },
-      doctor: {
-        label: 'طبيب',
-        icon: <User className='h-3 w-3' />,
-        className:
-          'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]',
-      },
-      nurse: {
-        label: 'ممرض',
-        icon: <User className='h-3 w-3' />,
-        className:
-          'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]',
-      },
-      staff: {
-        label: 'موظف',
-        icon: <User className='h-3 w-3' />,
-        className:
-          'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]',
-      },
-      agent: {
-        label: 'وكيل',
-        icon: <PhoneCall className='h-3 w-3' />,
-        className:
-          'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]',
-      },
-      patient: {
-        label: 'مريض',
-        icon: <User className='h-3 w-3' />,
-        className:
-          'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]',
-      },
-      demo: {
-        label: 'تجريبي',
-        icon: <Eye className='h-3 w-3' />,
-        className:
-          'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]',
-      },
-    };
-
-    const config = roleConfig[role as keyof typeof roleConfig] || {
-      label: role,
-      icon: null,
-      className: '',
-    };
-    return (
-      <Badge variant='outline' className={config.className}>
-        <span className='flex items-center gap-1'>
-          {config.icon}
-          {config.label}
-        </span>
-      </Badge>
-    );
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ar-SA', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
-
-  const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('ar-SA', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
-
-  const handleViewUser = (user: User) => {
-    setSelectedUser(user);
-    setIsUserDialogOpen(true);
-  };
-
-  const handleEditUser = (user: User) => {
-    setSelectedUser(user);
-    setIsEditDialogOpen(true);
-  };
-
-  if (loading) {
-    return (
-      <div className='flex items-center justify-center min-h-screen'>
-        <div className='text-center'>
-          <RefreshCw className='h-8 w-8 animate-spin mx-auto mb-4' />
-          <p>جاري تحميل المستخدمين...</p>
-        </div>
-      </div>
     );
   }
 
@@ -555,10 +436,12 @@ Badge variant={config.variant} className={config.className}>
                           className='rounded border-gray-300'
                           onChange={(e) => {
                             if (e.target.checked) {
-                              setSelectedUsers(filteredUsers.map(u => u.id));} aria-label="checkbox" aria-invalid="true" else {
+                              setSelectedUsers(filteredUsers.map(u => u.id));
+                            } else {
                               setSelectedUsers([]);
                             }
                           }}
+                          aria-label='تحديد جميع المستخدمين'
                         />
                       </TableHead>
                       <TableHead>المستخدم</TableHead>
@@ -579,12 +462,14 @@ Badge variant={config.variant} className={config.className}>
                             checked={selectedUsers.includes(user.id)}
                             onChange={(e) => {
                               if (e.target.checked) {
-                                setSelectedUsers([...selectedUsers, user.id]);} aria-label="checkbox" aria-invalid="true" else {
+                                setSelectedUsers([...selectedUsers, user.id]);
+                              } else {
                                 setSelectedUsers(
                                   selectedUsers.filter(id => id !== user.id)
                                 );
                               }
                             }}
+                            aria-label={`تحديد مستخدم ${user.displayName}`}
                           />
                         </TableCell>
                         <TableCell>

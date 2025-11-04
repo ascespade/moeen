@@ -189,11 +189,7 @@ function AppointmentsPageContent() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
+      <Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -588,10 +584,12 @@ Badge variant={config.variant} className={config.className}>
                       className='rounded border-[var(--brand-border)]'
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedAppointments(appointments.map(a => a.id));} aria-label="checkbox" aria-invalid="true" else {
+                          setSelectedAppointments(appointments.map(a => a.id));
+                        } else {
                           setSelectedAppointments([]);
                         }
                       }}
+                      aria-label='تحديد جميع المواعيد'
                     />
                   </TableHead>
                   <TableHead>المريض</TableHead>
@@ -615,7 +613,8 @@ Badge variant={config.variant} className={config.className}>
                             setSelectedAppointments([
                               ...selectedAppointments,
                               appointment.id,
-                            ]);} aria-label="checkbox" aria-invalid="true" else {
+                            ]);
+                          } else {
                             setSelectedAppointments(
                               selectedAppointments.filter(
                                 id => id !== appointment.id
@@ -623,6 +622,7 @@ Badge variant={config.variant} className={config.className}>
                             );
                           }
                         }}
+                        aria-label={`تحديد موعد ${appointment.patientName}`}
                       />
                     </TableCell>
                     <TableCell>

@@ -190,11 +190,7 @@ function PatientsPageContent() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
+      <Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -512,14 +508,17 @@ Badge variant={config.variant} className={config.className}>
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input type='checkbox'
+                    <input
+                      type='checkbox'
                       className='rounded border-[var(--brand-border)]'
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedPatients(patients.map(p => p.id));} aria-label="checkbox" aria-invalid="true" else {
+                          setSelectedPatients(patients.map(p => p.id));
+                        } else {
                           setSelectedPatients([]);
                         }
                       }}
+                      aria-label='تحديد جميع المرضى'
                     />
                   </TableHead>
                   <TableHead>المريض</TableHead>
@@ -543,7 +542,8 @@ Badge variant={config.variant} className={config.className}>
                             setSelectedPatients([
                               ...selectedPatients,
                               patient.id,
-                            ]);} aria-label="checkbox" aria-invalid="true" else {
+                            ]);
+                          } else {
                             setSelectedPatients(
                               selectedPatients.filter(id => id !== patient.id)
                             );

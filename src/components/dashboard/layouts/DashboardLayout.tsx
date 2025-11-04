@@ -250,9 +250,21 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
           <nav className='flex-1 space-y-1 p-4' role="navigation" aria-label="القائمة">
             {navigation.map(item => (
               <div key={item.id}>
-                <button onClick={() => { if (item.href) {
-                      // Handle navigation }} aria-label="??"
+                <button
+                  onClick={() => {
+                    if (item.href) {
+                      // Handle navigation
+                    }
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      if (item.href) {
+                        // Handle navigation
+                      }
+                    }
+                  }}
+                  aria-label={item.label || item.name}
                   className={cn(
                     'w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors',
                     activeItem === item.id
@@ -277,8 +289,22 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                 {item.children && !collapsed && (
                   <div className='mt-1 ml-8 space-y-1'>
                     {item.children.map(child => (
-                      <button key={child.id}
-                        onClick={() => { // Handle navigation }} aria-label="??"}
+                      <button
+                        key={child.id}
+                        onClick={() => {
+                          if (child.href) {
+                            // Handle navigation
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            if (child.href) {
+                              // Handle navigation
+                            }
+                          }
+                        }}
+                        aria-label={child.label}
                         className={cn(
                           'w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-colors',
                           activeItem === child.id

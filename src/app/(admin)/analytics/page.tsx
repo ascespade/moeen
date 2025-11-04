@@ -232,11 +232,7 @@ const AnalyticsPage: React.FC = () => {
   }
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container mx-auto px-4 py-8' dir='rtl'>
+    <div className='container mx-auto px-4 py-8' dir='rtl' role='application'>
       {/* Header */}
       <div className='mb-8'>
         <div className='flex items-center justify-between mb-4'>
@@ -272,7 +268,15 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
 
         {/* View Tabs */}
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
-          <button onClick={() => { setSelectedView('overview') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedView('overview') "> { setSelectedView('overview') } }}
+          <button
+            onClick={() => setSelectedView('overview')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedView('overview');
+              }
+            }}
+            aria-label='عرض النظرة العامة'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'overview'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -281,7 +285,15 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             نظرة عامة
           </button>
-          <button onClick={() => { setSelectedView('patients') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedView('patients') "> { setSelectedView('patients') } }}
+          <button
+            onClick={() => setSelectedView('patients')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedView('patients');
+              }
+            }}
+            aria-label='عرض تحليلات المرضى'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'patients'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -290,7 +302,15 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             تحليل المرضى
           </button>
-          <button onClick={() => { setSelectedView('therapy') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedView('therapy') }"> { setSelectedView('therapy') } }}
+          <button
+            onClick={() => setSelectedView('therapy')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedView('therapy');
+              }
+            }}
+            aria-label='عرض تحليلات العلاج'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'therapy'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -299,7 +319,15 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             تحليل العلاج
           </button>
-          <button onClick={() => { setSelectedView('appointments') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedView('appointment"> { setSelectedView('appointments') } }}
+          <button
+            onClick={() => setSelectedView('appointments')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedView('appointments');
+              }
+            }}
+            aria-label='عرض تحليلات المواعيد'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedView === 'appointments'
                 ? 'bg-white text-gray-900 shadow-sm'

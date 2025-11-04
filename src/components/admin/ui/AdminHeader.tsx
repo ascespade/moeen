@@ -39,7 +39,7 @@ export default function AdminHeader({
               backgroundSize: '40px 40px',
             }}
           />
-        </section>
+        </div>
       )}
 
       <div className='container-app relative z-10'>

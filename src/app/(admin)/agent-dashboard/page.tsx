@@ -106,11 +106,7 @@ export default function AgentDashboard() {
 
   if (isLoading) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center' role='status' aria-live='polite'>
         <div className='text-center'>
           <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto'></div>
           <p className='mt-4 text-gray-600'>Loading agent status...</p>
@@ -250,8 +246,17 @@ div className='min-h-screen bg-[var(--default-surface)] flex items-center justif
 
         {/* Refresh Button */}
         <div className='mt-6 text-center'>
-          <button onClick={fetchStatus} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fetchStatus } }}
-            className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-default-default hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-default-default' aria-label="🔄 Refresh Status">
+          <button
+            onClick={fetchStatus}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                fetchStatus();
+              }
+            }}
+            className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-default-default hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-default-default'
+            aria-label='تحديث حالة الوكيل'
+          >
             🔄 Refresh Status
           </button>
         </div>

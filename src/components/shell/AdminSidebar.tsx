@@ -204,7 +204,7 @@ export default function AdminSidebar() {
   };
 
   const filteredSections = sidebarSections
-    .map(section => ({
+    .map((section) => ({
       ...section,
       items: section.items.filter(item => {
         if (!item.permissions || item.permissions.length === 0) {
@@ -213,7 +213,7 @@ export default function AdminSidebar() {
         return item.permissions.some(permission => hasPermission(permission));
       }),
     }))
-    .filter(section => section.items.length > 0);
+    .filter((section) => section.items.length > 0);
 
   return (
     <div className='flex h-full w-64 flex-col border-r border-[var(--brand-border)] bg-[var(--panel)]'>
@@ -232,7 +232,7 @@ export default function AdminSidebar() {
       </div>
 
       <nav className='flex-1 overflow-y-auto px-4 py-6 space-y-6'>
-        {filteredSections.map(section => (
+        {filteredSections.map((section) => (
           <div key={section.id} className='space-y-2'>
             <h3 className='px-3 text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]'>
               {section.title}

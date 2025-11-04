@@ -101,17 +101,7 @@ function AdminDashboardContent() {
       activityTypeConfig[type as keyof typeof activityTypeConfig] ||
       activityTypeConfig.appointment;
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-
-
-<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div
+      <div
         className={cn(
           'h-8 w-8 rounded-full flex items-center justify-center text-sm border',
           config.bgStyle,
@@ -297,7 +287,7 @@ div
             icon={UserCheck}
             iconColor='var(--brand-warning)'
           />
-        </main>
+        </div>
 
         {/* Secondary Stats */}
         <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>

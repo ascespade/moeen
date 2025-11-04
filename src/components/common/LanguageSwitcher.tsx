@@ -143,12 +143,23 @@ export default function LanguageSwitcher({
   }
 
   return (
-    <button className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${className}`}
-      onClick={toggleLanguage} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleLanguage } }}
-      disabled={isLoading}
+    <button
+      className={`${sizeClasses} rounded-full border border-[var(--brand-border)] flex items-center justify-center text-foreground hover:bg-[var(--brand-surface)] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 ${className}`}
+      onClick={toggleLanguage}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleLanguage();
+        }
+      }}
       aria-label={
-        language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'
+        isLoading
+          ? 'جاري التبديل...'
+          : language === 'ar'
+            ? 'Switch to English'
+            : 'التبديل إلى العربية'
       }
+      disabled={isLoading}
     >
       {isLoading ? (
         <div
