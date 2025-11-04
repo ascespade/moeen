@@ -8,7 +8,7 @@ echo "════════════════════════�
 echo ""
 
 # Tailscale API Key
-TAILSCALE_API_KEY="tskey-auth-krGK3xvj3v11CNTRL-MRcHuLN5JWEiGSMsLvxGVE14RCQw66uCX"
+TAILSCALE_API_KEY="tskey-auth-kFuUJFx7bG11CNTRL-ybDF8REWMNiicmkBXKCANijy4fW1FQ74"
 
 # Check if Tailscale is installed
 if ! command -v tailscale &> /dev/null; then
@@ -35,14 +35,54 @@ if ! command -v tailscale &> /dev/null; then
     esac
 fi
 
-# Authenticate Tailscale with API key
+# Authenticate Tailscale with web link
 echo "🔑 Authenticating Tailscale..."
 if ! tailscale status &>/dev/null; then
-    echo "$TAILSCALE_API_KEY" | tailscale up --authkey - || {
-        echo "❌ Failed to authenticate Tailscale"
-        exit 1
-    }
-    echo "✅ Tailscale authenticated"
+    echo "📋 Generating authentication link..."
+    echo ""
+    echo "═══════════════════════════════════════════════════════════"
+    echo "🔗 Please visit this link to authenticate:"
+    echo "═══════════════════════════════════════════════════════════"
+    echo ""
+    
+    # Start tailscale up in background and capture the URL
+    AUTH_OUTPUT=$(timeout 10 sudo tailscale up 2>&1 || true)
+    
+    # Try to extract URL from output
+    AUTH_URL=$(echo "$AUTH_OUTPUT" | grep -oE 'https://[^[:space:]]+' | head -1)
+    
+    if [ -n "$AUTH_URL" ]; then
+        echo "$AUTH_URL"
+        echo ""
+        echo "═══════════════════════════════════════════════════════════"
+        echo "📱 Or scan this QR code:"
+        echo "═══════════════════════════════════════════════════════════"
+        sudo tailscale up --qr 2>&1 | grep -v "^$" || true
+        echo ""
+        echo "⏳ Waiting for authentication..."
+        echo "   (This may take a few moments after you click the link)"
+        
+        # Wait up to 60 seconds for authentication
+        for i in {1..12}; do
+            sleep 5
+            if tailscale status &>/dev/null; then
+                echo "✅ Tailscale authenticated successfully!"
+                break
+            fi
+            echo "   Still waiting... ($i/12)"
+        done
+        
+        if ! tailscale status &>/dev/null; then
+            echo "⚠️  Authentication timeout - please complete authentication manually"
+            echo "   Run: sudo tailscale up"
+        fi
+    else
+        # Fallback: just show the command output
+        echo "$AUTH_OUTPUT"
+        echo ""
+        echo "⚠️  Could not extract auth URL automatically"
+        echo "   Please run manually: sudo tailscale up"
+    fi
 else
     echo "✅ Tailscale already authenticated"
 fi

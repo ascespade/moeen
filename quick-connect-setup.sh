@@ -4,7 +4,7 @@
 
 set -e
 
-TAILSCALE_API_KEY="tskey-auth-krGK3xvj3v11CNTRL-MRcHuLN5JWEiGSMsLvxGVE14RCQw66uCX"
+TAILSCALE_API_KEY="tskey-auth-kFuUJFx7bG11CNTRL-ybDF8REWMNiicmkBXKCANijy4fW1FQ74"
 REMOTE_HOST="ubuntu@100.121.114.88"
 
 echo "╔══════════════════════════════════════════════════════════╗"

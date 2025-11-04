@@ -3,7 +3,7 @@
 # Monitors Tailscale connection quality and metrics
 
 LOG_FILE="/workspace/tailscale-monitor.log"
-TAILSCALE_API_KEY="tskey-auth-krGK3xvj3v11CNTRL-MRcHuLN5JWEiGSMsLvxGVE14RCQw66uCX"
+TAILSCALE_API_KEY="tskey-auth-kFuUJFx7bG11CNTRL-ybDF8REWMNiicmkBXKCANijy4fW1FQ74"
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [Monitor] $1" >> "$LOG_FILE"
