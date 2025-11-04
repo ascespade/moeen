@@ -216,7 +216,7 @@ export default function AdminSidebar() {
     .filter((section) => section.items.length > 0);
 
   return (
-    <div className='flex h-full w-64 flex-col border-r border-[var(--brand-border)] bg-[var(--panel)]'>
+    <div className='flex h-screen w-64 flex-col border-r border-[var(--brand-border)] bg-[var(--panel)]'>
       <div className='flex h-16 items-center justify-between border-b border-[var(--brand-border)] px-6'>
         <div className='flex items-center gap-3'>
           <div className='flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--brand-primary)]/10'>
