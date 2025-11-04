@@ -5,15 +5,33 @@ import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
 
 type Item = { id: string; user: string; suggestion: string; createdAt: string };
-const seed: Item[] = Array.from({ length: 6 }).map((_, i) => ({
-  id: String(i + 1),
-  user: 'مرحبا كيف أبدأ؟',
-  suggestion: 'يمكنك البدء عبر النقر على زر البدء.',
-  createdAt: new Date().toISOString(),
-}));
 
 function ReviewCenterPageContent() {
-  const [rows] = useState<Item[]>(seed);
+  const [rows, setRows] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadReviewItems = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/admin/review');
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+          setRows(result.data);
+        } else {
+          setRows([]);
+        }
+      } catch (error) {
+        console.error('Error loading review items:', error);
+        setRows([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadReviewItems();
+  }, []);
   const [q, setQ] = useState('');
 
   const filtered = rows.filter(
