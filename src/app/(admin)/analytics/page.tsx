@@ -86,12 +86,7 @@ function AnalyticsPageContent() {
   const [selectedPeriod, setSelectedPeriod] = useState<string>('month');
   const [selectedView, setSelectedView] = useState<string>('overview');
 
-  useEffect(() => {
-    loadAnalyticsData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedPeriod]);
-
-  const loadAnalyticsData = async () => {
+  const loadAnalyticsData = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -114,6 +109,10 @@ function AnalyticsPageContent() {
       setLoading(false);
     }
   }, [selectedPeriod]);
+
+  useEffect(() => {
+    loadAnalyticsData();
+  }, [loadAnalyticsData]);
 
   useEffect(() => {
     loadAnalyticsData();
