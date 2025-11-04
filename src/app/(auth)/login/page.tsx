@@ -77,11 +77,12 @@ export default function LoginPage() {
           انتقل للمحتوى الرئيسي
         </a>
         <div className='flex items-center justify-center min-h-screen' role='status' aria-live='polite'>
-        <div className='text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4' aria-hidden='true'></div>
-          <p>جاري التحميل...</p>
+          <div className='text-center'>
+            <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4' aria-hidden='true'></div>
+            <p>جاري التحميل...</p>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 

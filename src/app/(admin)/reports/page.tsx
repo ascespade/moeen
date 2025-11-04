@@ -695,7 +695,8 @@ export default function ReportsPage() {
                         }
                       }}
                       aria-label="تحديد الكل"
-                      aria-invalid="true"
+                    />
+                  </TableHead>
                   <TableHead>النوع</TableHead>
                   <TableHead>الفئة</TableHead>
                   <TableHead>الحالة</TableHead>
@@ -714,7 +715,8 @@ export default function ReportsPage() {
                         checked={selectedReports.includes(report.id)}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setSelectedReports([...selectedReports, report.id]);} aria-label="checkbox" aria-invalid="true" else {
+                            setSelectedReports([...selectedReports, report.id]);
+                          } else {
                             setSelectedReports(
                               selectedReports.filter(id => id !== report.id)
                             );

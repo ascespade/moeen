@@ -54,13 +54,13 @@ export default function ForgotPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
-        <div className='card w-full max-w-md p-8 text-center'>
-          <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
+      <>
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          <span id="live-region"></span>
+        </div>
+        <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
+          <div className='card w-full max-w-md p-8 text-center'>
+            <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
           </div>
           <h1 className='mb-4 text-2xl font-bold text-gray-900 dark:text-white'>
@@ -182,11 +182,10 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
             إذا لم تستلم البريد الإلكتروني، تحقق من مجلد الرسائل المزعجة أو{' '}
             <button onClick={() => { {
                 setEmail('');
-                setError(''); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ {
-                setEmail('"> { {
-                setEmail('');
                 setError('');
-               } }}}
+              }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setEmail(''); setError(''); } }}
+              aria-label="حاول مرة أخرى"
               className='text-[var(--default-default)] hover:underline'
             >
               حاول مرة أخرى
@@ -194,6 +193,6 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
           </p>
         </div>
       </div>
-    </div>
-  );
-}
+      </>
+    );
+  }

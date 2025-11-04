@@ -17,7 +17,7 @@ export default function SettingsPage() {
         <span id="live-region"></span>
       </div>
       <div className='min-h-screen bg-[var(--default-surface)]' id="main-content">
-      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+        <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center gap-4'>
             <Image
@@ -35,9 +35,9 @@ export default function SettingsPage() {
             </div>
           </div>
         </div>
-      </header>
+        </header>
 
-      <main className='container-app py-8' id="main-content">
+        <main className='container-app py-8' id="main-content">
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-4'>
           <div className='lg:col-span-1'>
             <nav className='space-y-1'>
@@ -49,7 +49,9 @@ export default function SettingsPage() {
                 { id: 'templates', label: 'القوالب', icon: '📝' },
               ].map(tab => (
                 <button key={tab.id}
-                  onClick={() => { setActiveTab(tab.id as any) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab(tab.id as any) "> { setActiveTab(tab.id as any) } }}
+                  onClick={() => { setActiveTab(tab.id as any) }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab(tab.id as any); } }}
+                  aria-label={tab.label}
                   className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-right transition-colors ${
                     activeTab === tab.id
                       ? 'bg-[var(--default-default)] text-white'
@@ -60,8 +62,8 @@ export default function SettingsPage() {
                   <span className='font-medium'>{tab.label}</span>
                 </button>
               ))}
-            </div>
-          </nav>
+            </nav>
+          </div>
 
           <div className='lg:col-span-3'>
             <div className='card p-6'>
@@ -78,7 +80,8 @@ export default function SettingsPage() {
                       <input type='text'
                         defaultValue='مركز الهمم للرعاية الصحية المتخصصة'
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      / aria-label="text" aria-invalid="true">
+                        aria-label="اسم المركز"
+                      />
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
@@ -87,7 +90,8 @@ export default function SettingsPage() {
                       <input type='email'
                         defaultValue='info@moeen.com'
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      / aria-label="email" aria-invalid="true">
+                        aria-label="البريد الإلكتروني"
+                      />
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
@@ -96,7 +100,8 @@ export default function SettingsPage() {
                       <input type='tel'
                         defaultValue='+966501234567'
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      / aria-label="tel" aria-invalid="true">
+                        aria-label="الهاتف"
+                      />
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
@@ -143,7 +148,8 @@ export default function SettingsPage() {
                         <input type='password'
                           defaultValue='AIzaSyB...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                        / aria-label="password" aria-invalid="true">
+                          aria-label="Gemini API Key"
+                        />
                         <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
@@ -157,7 +163,8 @@ export default function SettingsPage() {
                         <input type='password'
                           defaultValue='sk-...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                        / aria-label="password" aria-invalid="true">
+                          aria-label="OpenAI API Key"
+                        />
                         <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
@@ -171,7 +178,8 @@ export default function SettingsPage() {
                         <input type='password'
                           defaultValue='EAA...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                        / aria-label="password" aria-invalid="true">
+                          aria-label="WhatsApp Business API"
+                        />
                         <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
@@ -233,7 +241,7 @@ export default function SettingsPage() {
                                 ? 'غير متصل'
                                 : 'خطأ'}
                           </span>
-                          <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface' aria-label="{integration.status === 'conne">
+                          <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm transition-colors hover:bg-surface' aria-label={integration.status === 'connected' ? 'إعدادات' : 'اتصال'}>
                             {integration.status === 'connected'
                               ? 'إعدادات'
                               : 'اتصال'}
@@ -263,7 +271,8 @@ export default function SettingsPage() {
                       <input type='checkbox'
                         defaultChecked
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      / aria-label="checkbox" aria-invalid="true">
+                        aria-label="إشعارات البريد الإلكتروني"
+                      />
                     </div>
                     <div className='flex items-center justify-between'>
                       <div>
@@ -275,7 +284,8 @@ export default function SettingsPage() {
                       <input type='checkbox'
                         defaultChecked
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      / aria-label="checkbox" aria-invalid="true">
+                        aria-label="إشعارات البريد الإلكتروني"
+                      />
                     </div>
                     <div className='flex items-center justify-between'>
                       <div>
@@ -287,7 +297,8 @@ export default function SettingsPage() {
                       <input type='checkbox'
                         defaultChecked
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      / aria-label="checkbox" aria-invalid="true">
+                        aria-label="إشعارات البريد الإلكتروني"
+                      />
                     </div>
                     <div className='flex items-center justify-between'>
                       <div>
@@ -298,7 +309,8 @@ export default function SettingsPage() {
                       </div>
                       <input type='checkbox'
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      / aria-label="checkbox" aria-invalid="true">
+                        aria-label="إشعارات النظام"
+                      />
                     </div>
                   </div>
                 </div>
@@ -353,6 +365,7 @@ export default function SettingsPage() {
           </div>
         </div>
       </main>
-    </div>
+      </div>
+    </>
   );
 }
