@@ -11,15 +11,15 @@ export default function AdminLayout({
 }) {
   return (
     <UnifiedProtectedRoute allowedRoles={['admin', 'manager', 'supervisor']}>
-      <div className='grid min-h-dvh bg-background text-foreground lg:grid-cols-[16rem_1fr]' role="application">
-        <nav role="navigation" aria-label="القائمة الجانبية">
+      <div className='flex min-h-dvh bg-background text-foreground' role="application">
+        <nav className='sticky top-0 h-screen overflow-y-auto' role="navigation" aria-label="القائمة الجانبية">
           <Sidebar />
         </nav>
-        <div className='grid grid-rows-[auto_1fr]'>
-          <header role="banner" aria-label="رأس الصفحة">
+        <div className='flex-1 flex flex-col min-w-0'>
+          <header className='sticky top-0 z-10 bg-background' role="banner" aria-label="رأس الصفحة">
             <Header />
           </header>
-          <main className='p-4 md:p-6 lg:p-8' role="main" aria-label="المحتوى الرئيسي">{children}</main>
+          <main className='flex-1 p-4 md:p-6 lg:p-8 overflow-auto' role="main" aria-label="المحتوى الرئيسي">{children}</main>
         </div>
       </div>
     </UnifiedProtectedRoute>
