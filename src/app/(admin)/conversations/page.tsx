@@ -375,7 +375,6 @@ export default function ConversationsPage() {
     ];
 
     // Legacy mock data removed - using real API
-    */
   }, [currentPage]);
 
   const filteredConversations = conversations.filter(conversation => {

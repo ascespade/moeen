@@ -380,7 +380,6 @@ export default function PerformancePage() {
     // Alerts will be fetched from API if available
     setAlerts([]);
     // Legacy mock data removed - using real API
-    */
   }, []);
 
   const filteredMetrics = metrics.filter(metric => {

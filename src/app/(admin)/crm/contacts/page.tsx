@@ -184,7 +184,6 @@ const ContactsPage: React.FC = () => {
       ];
 
     // Legacy mock data removed - using real API
-    */
   };
 
   const getStatusBadge = (status: string) => {

@@ -372,7 +372,6 @@ export default function CRMPage() {
     ];
 
     // Legacy mock data removed - using real API
-    */
   }, []);
 
   const getCurrentData = () => {

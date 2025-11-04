@@ -297,7 +297,6 @@ const SecurityPage: React.FC = () => {
       ];
 
     // Legacy mock data removed - using real API
-    */
   };
 
   const getEventIcon = (type: string) => {
