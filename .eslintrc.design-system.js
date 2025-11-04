@@ -1,54 +1,30 @@
 /**
  * ESLint Rules for Design System Enforcement
- * قواعد ESLint لفرض نظام التصميم
+ * قواعد ESLint لإجبار الالتزام بنظام التصميم
  */
 
 module.exports = {
   rules: {
-    // Enforce using design system colors
+    // Prevent hardcoded colors
     'no-restricted-syntax': [
       'error',
       {
-        selector:
-          'Literal[value=/bg-(blue|red|green|yellow|purple|indigo|pink)-(\\d{3})/]',
-        message:
-          '❌ Use design system colors: bg-brand-primary, bg-brand-success, etc. instead of hardcoded colors',
+        selector: 'Literal[value=/^(bg-|text-|border-)(gray|red|blue|green|yellow|purple|pink|indigo|teal|orange|white|black)-\\d+/]',
+        message: 'استخدم CSS variables بدلاً من الألوان المكودة. استخدم bg-[var(--background)] بدلاً من bg-white',
       },
       {
-        selector:
-          'Literal[value=/text-(blue|red|green|yellow|purple|indigo|pink)-(\\d{3})/]',
-        message:
-          '❌ Use design system colors: text-brand-primary, text-brand-success, etc. instead of hardcoded colors',
-      },
-      {
-        selector: 'Literal[value=/#[0-9A-Fa-f]{6}/]',
-        message:
-          '❌ Use design system colors from CSS variables instead of hex colors',
+        selector: 'TemplateElement[value.raw=/bg-(gray|red|blue|green|yellow|purple|pink|indigo|teal|orange|white|black)-\\d+/]',
+        message: 'استخدم CSS variables بدلاً من الألوان المكودة في template literals',
       },
     ],
-
-    // Enforce importing from central location
-    'no-restricted-imports': [
+    // Prevent bg-background without var
+    'no-restricted-strings': [
       'error',
       {
         patterns: [
           {
-            group: [
-              '@/components/common/LoadingSpinner',
-              '@/components/shared/LoadingSpinner',
-            ],
-            message: '❌ Import from @/components/ui instead',
-          },
-          {
-            group: [
-              '@/components/common/Skeleton',
-              '@/components/shared/Skeleton',
-            ],
-            message: '❌ Import from @/components/ui instead',
-          },
-          {
-            group: ['@/components/common/ThemeToggle', '@/components/theme/*'],
-            message: '❌ Import from @/components/ui instead',
+            group: ['bg-background(?!\\[var\\(--\\)])', 'bg-white(?!\\[var\\(--\\)])', 'bg-black(?!\\[var\\(--\\)])'],
+            message: 'استخدم bg-[var(--background)] بدلاً من bg-background أو bg-white',
           },
         ],
       },

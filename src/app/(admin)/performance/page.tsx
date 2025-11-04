@@ -622,9 +622,8 @@ function PerformancePageContent() {
   }
 
   return (
-    <>
-      <div className='min-h-[400px] bg-background'>
-        <div className='container-app py-6'>
+    <div className='min-h-[400px] bg-background'>
+      <div className='container-app py-6'>
         {/* Header */}
         <div className='flex justify-between items-center mb-8'>
           <div>
@@ -1098,7 +1097,7 @@ function PerformancePageContent() {
         </Dialog>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -894,9 +894,9 @@ function SecurityPageContent() {
                 ))
               )}
             </div>
-            )}
-          </>
-        )}
+          )}
+        </>
+      )}
       </div>
     </>
   );

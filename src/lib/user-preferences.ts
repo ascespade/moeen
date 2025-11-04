@@ -82,9 +82,17 @@ export async function loadPreferences(): Promise<UserPreferences> {
     // Always start with localStorage as default
     let preferences = getLocalPreferences();
 
-    // Try to load from API if authenticated
+    // Try to load from API if authenticated (with timeout)
     try {
-      const response = await fetch('/api/user/preferences');
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 second timeout
+
+      const response = await fetch('/api/user/preferences', {
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
       if (response.ok) {
         const data = await response.json();
         preferences = {
@@ -98,7 +106,7 @@ export async function loadPreferences(): Promise<UserPreferences> {
         preferences = getLocalPreferences();
       }
     } catch (error) {
-      // API not available - use localStorage
+      // API not available or timeout - use localStorage
       preferences = getLocalPreferences();
     }
 

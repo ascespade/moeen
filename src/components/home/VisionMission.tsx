@@ -68,51 +68,54 @@ const VisionMission = memo(function VisionMission() {
           </Card>
         </div>
 
-        {/* Values */}
+        {/* Values - Using CSS Variables for Colors */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
           {[
             {
-              icon: Heart,
-              title: 'الرعاية المتخصصة',
-              description: 'فريق طبي متخصص ومؤهل',
-              color: 'from-red-500 to-pink-500',
-            },
-            {
-              icon: Trophy,
-              title: 'الجودة والتميز',
-              description: 'أعلى معايير الجودة الطبية',
-              color: 'from-yellow-500 to-orange-500',
+              icon: Lightbulb,
+              title: 'الابتكار',
+              description: 'أحدث التقنيات والأساليب',
+              bgColor: 'bg-[var(--feature-innovation)]',
             },
             {
               icon: Target,
               title: 'الشمولية',
               description: 'رعاية متكاملة لجميع الجوانب',
-              color: 'from-blue-500 to-cyan-500',
+              bgColor: 'bg-[var(--feature-inclusivity)]',
             },
             {
-              icon: Lightbulb,
-              title: 'الابتكار',
-              description: 'أحدث التقنيات والأساليب',
-              color: 'from-green-500 to-emerald-500',
+              icon: Trophy,
+              title: 'الجودة والتميز',
+              description: 'أعلى معايير الجودة الطبية',
+              bgColor: 'bg-gradient-to-br from-[var(--feature-quality-start)] to-[var(--feature-quality-end)]',
             },
-          ].map((value, index) => (
-            <Card
-              key={index}
-              className='p-6 text-center hover:shadow-lg transition-all transform hover:-translate-y-1'
-            >
-              <div
-                className={`w-16 h-16 bg-gradient-to-br ${value.color} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
+            {
+              icon: Heart,
+              title: 'الرعاية المتخصصة',
+              description: 'فريق طبي متخصص ومؤهل',
+              bgColor: 'bg-gradient-to-br from-[var(--feature-care-start)] to-[var(--feature-care-end)]',
+            },
+          ].map((value, index) => {
+            const Icon = value.icon;
+            return (
+              <Card
+                key={index}
+                className='p-6 text-center hover:shadow-lg transition-all transform hover:-translate-y-1'
               >
-                <value.icon className='w-8 h-8 text-white' />
-              </div>
-              <h4 className='text-lg font-bold text-[var(--text-primary)] mb-2'>
-                {value.title}
-              </h4>
-              <p className='text-sm text-[var(--text-secondary)]'>
-                {value.description}
-              </p>
-            </Card>
-          ))}
+                <div
+                  className={`w-16 h-16 ${value.bgColor} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
+                >
+                  <Icon className='w-8 h-8 text-white' />
+                </div>
+                <h4 className='text-lg font-bold text-[var(--text-primary)] mb-2'>
+                  {value.title}
+                </h4>
+                <p className='text-sm text-[var(--text-secondary)]'>
+                  {value.description}
+                </p>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

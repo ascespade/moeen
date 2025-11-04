@@ -4,9 +4,12 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import { DesignSystemProvider } from '@/components/providers/DesignSystemProvider';
 import PrelineInit from '@/components/preline/PrelineInit';
 import '@/styles/centralized.css';
+import '@/styles/design-system-enforcer.css';
+// Runtime design system monitor - loaded via component
 import type { Metadata } from 'next';
 import ScrollRestoration from './scroll-restoration';
 import { NotificationToast } from '@/components/ui/NotificationToast';
+import { DesignSystemMonitor } from '@/components/providers/DesignSystemMonitor';
 
 // Force dynamic rendering for all pages
 export const dynamic = 'force-dynamic';
@@ -70,7 +73,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className='antialiased bg-background text-foreground font-sans'
+        className='antialiased bg-[var(--background)] text-[var(--foreground)] font-sans'
         suppressHydrationWarning
         role="application"
       >
@@ -80,6 +83,7 @@ export default function RootLayout({
               <ScrollRestoration />
               <PrelineInit />
               <NotificationToast />
+              <DesignSystemMonitor />
               {children}
             </I18nProvider>
           </DesignSystemProvider>

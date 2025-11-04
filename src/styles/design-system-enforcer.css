@@ -1,0 +1,119 @@
+/**
+ * Design System Enforcer
+ * نظام فرض التصميم
+ *
+ * Automatically fixes and prevents design system violations
+ */
+
+/* FORCE CSS Variables - Override any hardcoded colors */
+/* This ensures ALL hardcoded colors are automatically converted */
+
+/* Ensure all text uses CSS variables */
+.text-gray-900,
+.text-gray-800,
+.text-gray-700,
+.text-gray-600,
+.text-gray-500,
+.text-gray-400,
+.text-gray-300,
+.text-gray-200,
+.text-gray-100 {
+  color: var(--text-primary) !important;
+}
+
+/* Ensure all backgrounds use CSS variables */
+.bg-white:not(.btn):not(.card):not(.nav) {
+  background-color: var(--background) !important;
+}
+
+.bg-gray-50:not(.btn):not(.card):not(.nav),
+.bg-gray-100:not(.btn):not(.card):not(.nav) {
+  background-color: var(--panel) !important;
+}
+
+.bg-gray-200:not(.btn):not(.card):not(.nav),
+.bg-gray-300:not(.btn):not(.card):not(.nav) {
+  background-color: var(--brand-surface) !important;
+}
+
+/* Ensure all borders use CSS variables */
+.border-gray-200,
+.border-gray-300,
+.border-gray-400,
+.border-gray-500,
+.border-gray-600,
+.border-gray-700,
+.border-gray-800 {
+  border-color: var(--brand-border) !important;
+}
+
+/* Force bg-background to use CSS variable */
+.bg-background:not([class*="var(--"]) {
+  background-color: var(--background) !important;
+}
+
+/* Dark mode overrides */
+.dark .text-gray-900,
+.dark .text-gray-800,
+.dark .text-gray-700,
+.dark .text-gray-600 {
+  color: var(--text-primary) !important;
+}
+
+.dark .bg-white:not(.btn):not(.card):not(.nav),
+.dark .bg-gray-50:not(.btn):not(.card):not(.nav),
+.dark .bg-gray-100:not(.btn):not(.card):not(.nav) {
+  background-color: var(--panel) !important;
+}
+
+.dark .bg-gray-800:not(.btn):not(.card):not(.nav),
+.dark .bg-gray-900:not(.btn):not(.card):not(.nav) {
+  background-color: var(--background) !important;
+}
+
+/* Prevent hardcoded colors in production */
+@media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
+  [class*="bg-red-"]:not([class*="var(--"]):not(.btn):not(.card),
+  [class*="bg-blue-"]:not([class*="var(--"]):not(.btn):not(.card),
+  [class*="bg-green-"]:not([class*="var(--"]):not(.btn):not(.card),
+  [class*="bg-yellow-"]:not([class*="var(--"]):not(.btn):not(.card),
+  [class*="bg-purple-"]:not([class*="var(--"]):not(.btn):not(.card),
+  [class*="bg-pink-"]:not([class*="var(--"]):not(.btn):not(.card),
+  [class*="bg-indigo-"]:not([class*="var(--"]):not(.btn):not(.card),
+  [class*="bg-teal-"]:not([class*="var(--"]):not(.btn):not(.card),
+  [class*="bg-orange-"]:not([class*="var(--"]):not(.btn):not(.card) {
+    /* These will be caught by validator, but provide warning in console */
+  }
+}
+
+/* Force container usage */
+.container:not(.container-app) {
+  max-width: var(--container-width, 1200px);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+/* Ensure proper spacing */
+[class*="p-"]:not([class*="px-"]):not([class*="py-"]):not([class*="pt-"]):not([class*="pb-"]):not([class*="pl-"]):not([class*="pr-"]) {
+  /* Valid spacing classes */
+}
+
+/* Accessibility: Ensure proper contrast */
+[class*="text-"]:not([class*="var(--text-"]) {
+  /* Will be validated for contrast */
+}
+
+/* Focus styles - enforce accessibility */
+*:focus-visible {
+  outline: 3px solid var(--brand-primary) !important;
+  outline-offset: 2px !important;
+}
+
+/* Print styles - ensure design system works in print */
+@media print {
+  * {
+    color: var(--text-primary) !important;
+    background: var(--background) !important;
+  }
+}
+

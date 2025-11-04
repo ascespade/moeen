@@ -606,8 +606,7 @@ function ConversationsPageContent() {
   }
 
   return (
-    <>
-      <div className='min-h-[400px] bg-background'>
+    <div className='min-h-[400px] bg-[var(--background)]'>
         <div className='container-app py-6'>
           {/* Header */}
           <div className='flex justify-between items-center mb-8'>
@@ -1085,7 +1084,7 @@ function ConversationsPageContent() {
         </Dialog>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

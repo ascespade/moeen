@@ -7,7 +7,8 @@
 
 import React from 'react';
 import GlobalHeader from '@/components/layout/GlobalHeader';
-import ModernHero from '@/components/home/ModernHero';
+import OriginalHero from '@/components/home/OriginalHero';
+import OriginalFeatures from '@/components/home/OriginalFeatures';
 import ServicesWithImages from '@/components/home/ServicesWithImages';
 import SuccessStories from '@/components/home/SuccessStories';
 import InteractiveGallery from '@/components/home/InteractiveGallery';
@@ -30,7 +31,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className='min-h-screen bg-background' role="application">
+    <div className='min-h-screen bg-[var(--background)]' role="application">
       {/* Skip Link */}
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--brand-primary)] focus:text-white focus:rounded" aria-label="التخطي للمحتوى الرئيسي">
         التخطي للمحتوى الرئيسي
@@ -41,11 +42,14 @@ export default function HomePage() {
 
       {/* Main Content */}
       <main id="main-content" role="main">
-        {/* Hero Section */}
-        <ModernHero
+        {/* Hero Section - Original Design */}
+        <OriginalHero
           onAppointmentClick={handleAppointmentClick}
           onLearnMoreClick={handleLearnMoreClick}
         />
+
+        {/* Features Section - Original 4 Cards */}
+        <OriginalFeatures />
 
         {/* Business Stats Section */}
         <section id="stats" className='py-16 bg-[var(--panel)]'>

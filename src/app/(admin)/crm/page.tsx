@@ -596,9 +596,8 @@ function CRMPageContent() {
   }
 
   return (
-    <>
-      <div className='min-h-[400px] bg-background'>
-        <div className='container-app py-6'>
+    <div className='min-h-[400px] bg-background'>
+      <div className='container-app py-6'>
           {/* Header */}
           <div className='flex justify-between items-center mb-8'>
             <div>
@@ -992,7 +991,7 @@ function CRMPageContent() {
         </Card>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

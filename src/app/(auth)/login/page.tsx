@@ -208,7 +208,7 @@ export default function LoginPage() {
               <h2 id='quick-login-heading' className='mb-4 text-center text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400'>
                 🔧 تسجيل دخول سريع (للتجربة)
               </h2>
-              <div className='grid grid-cols-2 gap-2' role='group' aria-label='أزرار تسجيل الدخول السريع'>
+              <div className='grid grid-cols-2 md:grid-cols-3 gap-2' role='group' aria-label='أزرار تسجيل الدخول السريع'>
                 <button type='button'
                   onClick={() => handleQuickLogin('admin@test.com', 'Admin123!', 'admin')}
                   onKeyDown={(e) => {
@@ -235,7 +235,7 @@ export default function LoginPage() {
                   disabled={submitting}
                   className='btn btn-sm bg-blue-500 hover:bg-blue-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
                   aria-label='تسجيل دخول كطبيب'
-                  title='Doctor (Agent Role)'
+                  title='Doctor Dashboard'
                 >
                   🩺 Doctor
                 </button>
@@ -250,7 +250,7 @@ export default function LoginPage() {
                   disabled={submitting}
                   className='btn btn-sm bg-green-500 hover:bg-green-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
                   aria-label='تسجيل دخول كمريض'
-                  title='Patient (Agent Role)'
+                  title='Patient Dashboard'
                 >
                   👤 Patient
                 </button>
@@ -265,31 +265,126 @@ export default function LoginPage() {
                   disabled={submitting}
                   className='btn btn-sm bg-yellow-500 hover:bg-yellow-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
                   aria-label='تسجيل دخول كموظف'
-                  title='Staff (Agent Role)'
+                  title='Staff Dashboard'
                 >
                   🏥 Staff
                 </button>
+                <button type='button'
+                  onClick={() => handleQuickLogin('supervisor@test.com', 'Supervisor123!', 'supervisor')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleQuickLogin('supervisor@test.com', 'Supervisor123!', 'supervisor');
+                    }
+                  }}
+                  disabled={submitting}
+                  className='btn btn-sm bg-purple-500 hover:bg-purple-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                  aria-label='تسجيل دخول كمشرف'
+                  title='Supervisor Dashboard'
+                >
+                  👨‍💼 Supervisor
+                </button>
+                <button type='button'
+                  onClick={() => handleQuickLogin('manager@test.com', 'Manager123!', 'manager')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleQuickLogin('manager@test.com', 'Manager123!', 'manager');
+                    }
+                  }}
+                  disabled={submitting}
+                  className='btn btn-sm bg-indigo-500 hover:bg-indigo-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                  aria-label='تسجيل دخول كمدير'
+                  title='Manager Dashboard'
+                >
+                  💼 Manager
+                </button>
+                <button type='button'
+                  onClick={() => handleQuickLogin('therapist@test.com', 'Therapist123!', 'therapist')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleQuickLogin('therapist@test.com', 'Therapist123!', 'therapist');
+                    }
+                  }}
+                  disabled={submitting}
+                  className='btn btn-sm bg-teal-500 hover:bg-teal-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                  aria-label='تسجيل دخول كمعالج'
+                  title='Therapist Dashboard'
+                >
+                  🧘 Therapist
+                </button>
+                <button type='button'
+                  onClick={() => handleQuickLogin('nurse@test.com', 'Nurse123!', 'nurse')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleQuickLogin('nurse@test.com', 'Nurse123!', 'nurse');
+                    }
+                  }}
+                  disabled={submitting}
+                  className='btn btn-sm bg-pink-500 hover:bg-pink-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                  aria-label='تسجيل دخول كممرض'
+                  title='Nurse Dashboard'
+                >
+                  🏥 Nurse
+                </button>
+                <button type='button'
+                  onClick={() => handleQuickLogin('agent@test.com', 'Agent123!', 'agent')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleQuickLogin('agent@test.com', 'Agent123!', 'agent');
+                    }
+                  }}
+                  disabled={submitting}
+                  className='btn btn-sm bg-orange-500 hover:bg-orange-600 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed'
+                  aria-label='تسجيل دخول كعميل'
+                  title='Agent/CRM Dashboard'
+                >
+                  📞 Agent
+                </button>
               </div>
-              <div className='mt-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg' role='region' aria-label='بيانات الاختبار'>
-                <p className='mb-2 text-xs font-medium text-gray-700 dark:text-gray-300'>
-                  Test Credentials:
+              <div className='mt-3 p-3 bg-[var(--panel)] rounded-lg border border-[var(--brand-border)]' role='region' aria-label='بيانات الاختبار'>
+                <p className='mb-2 text-xs font-medium text-[var(--text-primary)]'>
+                  بيانات الاختبار (Test Credentials):
                 </p>
-                <div className='space-y-1 text-xs text-gray-600 dark:text-gray-400'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-[var(--text-secondary)]'>
                   <div className='flex justify-between'>
                     <span>Admin:</span>
-                    <code className='font-mono'>admin@test.com / Admin123!</code>
+                    <code className='font-mono text-[var(--text-muted)]'>admin@test.com / Admin123!</code>
                   </div>
                   <div className='flex justify-between'>
                     <span>Doctor:</span>
-                    <code className='font-mono'>doctor@test.com / Doctor123!</code>
+                    <code className='font-mono text-[var(--text-muted)]'>doctor@test.com / Doctor123!</code>
                   </div>
                   <div className='flex justify-between'>
                     <span>Patient:</span>
-                    <code className='font-mono'>patient@test.com / Patient123!</code>
+                    <code className='font-mono text-[var(--text-muted)]'>patient@test.com / Patient123!</code>
                   </div>
                   <div className='flex justify-between'>
                     <span>Staff:</span>
-                    <code className='font-mono'>staff@test.com / Staff123!</code>
+                    <code className='font-mono text-[var(--text-muted)]'>staff@test.com / Staff123!</code>
+                  </div>
+                  <div className='flex justify-between'>
+                    <span>Supervisor:</span>
+                    <code className='font-mono text-[var(--text-muted)]'>supervisor@test.com / Supervisor123!</code>
+                  </div>
+                  <div className='flex justify-between'>
+                    <span>Manager:</span>
+                    <code className='font-mono text-[var(--text-muted)]'>manager@test.com / Manager123!</code>
+                  </div>
+                  <div className='flex justify-between'>
+                    <span>Therapist:</span>
+                    <code className='font-mono text-[var(--text-muted)]'>therapist@test.com / Therapist123!</code>
+                  </div>
+                  <div className='flex justify-between'>
+                    <span>Nurse:</span>
+                    <code className='font-mono text-[var(--text-muted)]'>nurse@test.com / Nurse123!</code>
+                  </div>
+                  <div className='flex justify-between md:col-span-2'>
+                    <span>Agent:</span>
+                    <code className='font-mono text-[var(--text-muted)]'>agent@test.com / Agent123!</code>
                   </div>
                 </div>
               </div>

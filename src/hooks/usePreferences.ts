@@ -15,30 +15,42 @@ import { useEffect, useState } from 'react';
  * Works for both authenticated and unauthenticated users
  */
 export function usePreferences() {
-  const [preferences, setPreferences] = useState<UserPreferences>({
-    theme: 'light',
-    language: 'ar',
-  });
-  const [isLoading, setIsLoading] = useState(true);
+  // Initialize from localStorage immediately (synchronous)
+  const getInitialPreferences = (): UserPreferences => {
+    if (typeof window === 'undefined') {
+      return { theme: 'light', language: 'ar' };
+    }
+    try {
+      const stored = localStorage.getItem('moeen_user_preferences');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return {
+          theme: (parsed.theme || 'light') as ThemeMode,
+          language: (parsed.language || 'ar') as Language,
+        };
+      }
+    } catch (error) {
+      // Ignore errors
+    }
+    return { theme: 'light', language: 'ar' };
+  };
 
-  // Load preferences on mount
+  const [preferences, setPreferences] = useState<UserPreferences>(getInitialPreferences());
+  const [isLoading, setIsLoading] = useState(false); // Start as false - we already have localStorage
+
+  // Apply initial preferences immediately
   useEffect(() => {
+    applyPreferences(preferences);
+    // Then try to load from API (non-blocking)
     loadPreferences()
       .then(prefs => {
-        setPreferences(prefs);
-        applyPreferences(prefs);
+        if (prefs.theme !== preferences.theme || prefs.language !== preferences.language) {
+          setPreferences(prefs);
+          applyPreferences(prefs);
+        }
       })
       .catch(() => {
-        // Use default preferences on error
-        const defaults = {
-          theme: 'light' as ThemeMode,
-          language: 'ar' as Language,
-        };
-        setPreferences(defaults);
-        applyPreferences(defaults);
-      })
-      .finally(() => {
-        setIsLoading(false);
+        // Silently fail - we already have localStorage preferences
       });
   }, []);
 
