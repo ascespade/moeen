@@ -88,6 +88,7 @@ export default function ReviewCenterPage() {
           </div>
         </div>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

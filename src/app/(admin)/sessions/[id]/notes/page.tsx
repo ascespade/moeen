@@ -177,7 +177,8 @@ export default function SessionNotesPage() {
             جاري التحميل...
           </p>
         </div>
-      </div>
+        </div>
+      </>
     );
   }
 

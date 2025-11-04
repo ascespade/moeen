@@ -337,13 +337,14 @@ export default function ReportsPage() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
-        {config.label}
-      </Badge>
+      <>
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          <span id="live-region"></span>
+        </div>
+        <Badge variant={config.variant} className={config.className}>
+          {config.label}
+        </Badge>
+      </>
     );
   };
 
@@ -688,13 +689,13 @@ Badge variant={config.variant} className={config.className}>
                       className='rounded border-gray-300'
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedReports(filteredReports.map(r => r.id));} aria-label="checkbox" aria-invalid="true" else {
+                          setSelectedReports(filteredReports.map(r => r.id));
+                        } else {
                           setSelectedReports([]);
                         }
                       }}
-                    />
-                  </TableHead>
-                  <TableHead>العنوان</TableHead>
+                      aria-label="تحديد الكل"
+                      aria-invalid="true"
                   <TableHead>النوع</TableHead>
                   <TableHead>الفئة</TableHead>
                   <TableHead>الحالة</TableHead>
