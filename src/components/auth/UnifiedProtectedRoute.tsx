@@ -122,6 +122,12 @@ export default function UnifiedProtectedRoute({
             </p>
             <button
               onClick={() => router.push(user ? getDefaultRoute(user.role) : '/login')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  router.push(user ? getDefaultRoute(user.role) : '/login');
+                }
+              }}
               className='px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700'
               aria-label='العودة للوحة التحكم'
             >

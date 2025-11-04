@@ -106,7 +106,11 @@ export default function AgentDashboard() {
 
   if (isLoading) {
     return (
-      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto'></div>
           <p className='mt-4 text-gray-600'>Loading agent status...</p>
@@ -246,7 +250,7 @@ export default function AgentDashboard() {
 
         {/* Refresh Button */}
         <div className='mt-6 text-center'>
-          <button onClick={fetchStatus} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fetchStatus } }}
+          <buttononClick={fetchStatus} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fetchStatus } }}
             className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-default-default hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-default-default' aria-label="🔄 Refresh Status">
             🔄 Refresh Status
           </button>

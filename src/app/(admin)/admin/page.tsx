@@ -240,7 +240,11 @@ export default function AdminPage() {
       demo: 'bg-surface text-gray-800',
     };
     return (
-      <Badge className={colors[role as keyof typeof colors] || colors.demo}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Badge className={colors[role as keyof typeof colors] || colors.demo}>
         {role}
       </Badge>
     );

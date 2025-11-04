@@ -152,7 +152,17 @@ export default function PatientDetailsPage({
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto mb-4'></div>
           <p className='text-gray-600'>جاري تحميل بيانات المريض...</p>
@@ -169,7 +179,7 @@ export default function PatientDetailsPage({
           <p className='text-red-600 text-lg mb-4'>
             {error || 'لم يتم العثور على المريض'}
           </p>
-          <buttononClick={() = aria-label="Button"> { window.location.reload()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
+          <buttononClick={() => { window.location.reload()} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
             className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
@@ -203,7 +213,7 @@ export default function PatientDetailsPage({
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <buttononClick={() = aria-label="Button"> { setShowEditModal(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(true) } }}
+              <buttononClick={() => { setShowEditModal(true)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(true) } }}
                 className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 تعديل البيانات
@@ -216,7 +226,7 @@ export default function PatientDetailsPage({
         </div>
       </header>
 
-      <main className='container-app py-8'>
+      <main className='container-app py-8' id="main-content">
         {/* Patient Summary */}
         <div className='card mb-8 p-6'>
           <div className='grid grid-cols-1 gap-6 md:grid-cols-4'>
@@ -261,7 +271,7 @@ export default function PatientDetailsPage({
                 { id: 'claims', label: 'المطالبات' },
               ].map(tab => (
                 <buttonkey={tab.id}
-                  onClick={() = aria-label="Button"> { setActiveTab(tab.id as any)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab(tab.id as any) } }}
+                  onClick={() => { setActiveTab(tab.id as any)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab(tab.id as any) } }}
                   className={`border-b-2 px-1 py-4 text-sm font-medium ${
                     activeTab === tab.id
                       ? 'border-[var(--default-default)] text-[var(--default-default)]'
@@ -574,7 +584,7 @@ export default function PatientDetailsPage({
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>تعديل بيانات المريض</h3>
-              <buttononClick={() = aria-label="Button"> { setShowEditModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(false) } }}
+              <buttononClick={() => { setShowEditModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -587,21 +597,19 @@ export default function PatientDetailsPage({
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     الاسم الكامل
                   </label>
-                  <input
-                    type='text'
+                  <input type='text'
                     defaultValue={patient.name}
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                  />
+                  / aria-label="text" aria-invalid="true">
                 </div>
                 <div>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     الهاتف
                   </label>
-                  <input
-                    type='tel'
+                  <input type='tel'
                     defaultValue={patient.phone}
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                  />
+                  / aria-label="tel" aria-invalid="true">
                 </div>
               </div>
 
@@ -610,21 +618,19 @@ export default function PatientDetailsPage({
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     البريد الإلكتروني
                   </label>
-                  <input
-                    type='email'
+                  <input type='email'
                     defaultValue={patient.email}
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                  />
+                  / aria-label="email" aria-invalid="true">
                 </div>
                 <div>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     العمر
                   </label>
-                  <input
-                    type='number'
+                  <input type='number'
                     defaultValue={patient.age}
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                  />
+                  / aria-label="number" aria-invalid="true">
                 </div>
               </div>
 
@@ -668,13 +674,13 @@ export default function PatientDetailsPage({
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <buttontype='button'
-                  onClick={() = aria-label="Button"> { setShowEditModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(false) } }}
+                <button type='button'
+                  onClick={() => { setShowEditModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowEditModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <buttontype='submit'
+                <button type='submit'
                   className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ التغييرات">
                   حفظ التغييرات
                 </button>

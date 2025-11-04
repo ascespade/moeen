@@ -429,7 +429,11 @@ export default function ChatbotPage() {
       className: '',
     };
     return (
-      <Badge variant={config.variant} className={config.className}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -912,15 +916,10 @@ export default function ChatbotPage() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className='w-12'>
-                        <input
-                          type='checkbox'
+                        <input type='checkbox'
                           className='rounded border-gray-300'
-                          onChange={e => {
-                            if (e.target.checked) {
-                              setSelectedItems(
-                                filteredData.map((item: any) => item.id)
-                              );
-                            } else {
+                          onChange={(e) => setSelectedItems(
+                                filteredData.map((item: any)} aria-label="checkbox" else {
                               setSelectedItems([]);
                             }
                           }}
@@ -938,14 +937,10 @@ export default function ChatbotPage() {
                     {filteredData.map((item: any) => (
                       <TableRow key={item.id}>
                         <TableCell>
-                          <input
-                            type='checkbox'
+                          <input type='checkbox'
                             className='rounded border-gray-300'
                             checked={selectedItems.includes(item.id)}
-                            onChange={e => {
-                              if (e.target.checked) {
-                                setSelectedItems([...selectedItems, item.id]);
-                              } else {
+                            onChange={(e) => setSelectedItems([...selectedItems, item.id])} aria-label="checkbox" else {
                                 setSelectedItems(
                                   selectedItems.filter(id => id !== item.id)
                                 );

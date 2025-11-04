@@ -190,7 +190,11 @@ function PatientsPageContent() {
       className: '',
     };
     return (
-      <Badge variant={config.variant} className={config.className}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -508,10 +512,9 @@ function PatientsPageContent() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input
-                      type='checkbox'
+                    <input type='checkbox'
                       className='rounded border-[var(--brand-border)]'
-                      onChange={e => {
+                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
                         if (e.target.checked) {
                           setSelectedPatients(patients.map(p => p.id));
                         } else {
@@ -533,11 +536,10 @@ function PatientsPageContent() {
                 {patients.map(patient => (
                   <TableRow key={patient.id}>
                     <TableCell>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         className='rounded border-[var(--brand-border)]'
                         checked={selectedPatients.includes(patient.id)}
-                        onChange={e => {
+                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
                           if (e.target.checked) {
                             setSelectedPatients([
                               ...selectedPatients,

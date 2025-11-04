@@ -103,7 +103,17 @@ export default function ChatbotAnalyticsPage() {
   };
 
   return (
-    <div className='min-h-screen bg-[var(--default-surface)]'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
@@ -144,7 +154,7 @@ export default function ChatbotAnalyticsPage() {
         </div>
       </header>
 
-      <main className='container-app py-8'>
+      <main className='container-app py-8' id="main-content">
         {/* Key Metrics */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
@@ -200,7 +210,7 @@ export default function ChatbotAnalyticsPage() {
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-lg font-semibold'>الرسائل حسب الساعة</h3>
               <div className='flex gap-2'>
-                <buttononClick={() = aria-label="Button"> { setSelectedMetric('messages')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedMetric('messages') } }}
+                <buttononClick={() => { setSelectedMetric('messages')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedMetric('messages') } }}
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'messages'
                       ? 'bg-[var(--default-default)] text-white'
@@ -209,7 +219,7 @@ export default function ChatbotAnalyticsPage() {
                 >
                   الرسائل
                 </button>
-                <buttononClick={() = aria-label="Button"> { setSelectedMetric('users')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedMetric('users') } }}
+                <buttononClick={() => { setSelectedMetric('users')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedMetric('users') } }}
                   className={`rounded-lg px-3 py-1 text-sm ${
                     selectedMetric === 'users'
                       ? 'bg-[var(--default-default)] text-white'

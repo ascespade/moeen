@@ -1,6 +1,10 @@
 export default function FlowBuilderPage() {
   return (
-    <main className='min-h-screen bg-[var(--default-surface)]'>
+    <ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+main className='min-h-screen bg-[var(--default-surface)]'>
       <div className='container-app py-6'>
         <div className='grid gap-4 lg:grid-cols-[280px_1fr_320px]'>
           <aside className='card p-4 grid gap-3'>

@@ -41,7 +41,7 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
           <h2 className='text-2xl font-bold text-[var(--text-primary)]'>
             شروط الاستخدام
           </h2>
-          <button onClick={onClose} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
+          <buttononClick={onClose} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClose } }}
             className='rounded-full p-2 transition-colors'
             style={{
               backgroundColor: 'transparent',

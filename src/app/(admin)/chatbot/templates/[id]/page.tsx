@@ -91,7 +91,17 @@ export default function TemplateEditorPage({
   };
 
   return (
-    <div className='min-h-screen bg-[var(--default-surface)]'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
@@ -111,17 +121,17 @@ export default function TemplateEditorPage({
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <button onClick={handleTest} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
+              <buttononClick={handleTest} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
                 className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="اختبار">
                 اختبار
               </button>
-              <buttononClick={() = aria-label="Button"> { setIsEditing(!isEditing)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setIsEditing(!isEditing) } }}
+              <buttononClick={() => { setIsEditing(!isEditing)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setIsEditing(!isEditing) } }}
                 className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 {isEditing ? 'عرض' : 'تعديل'}
               </button>
               {isEditing && (
-                <button onClick={handleSave} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
+                <buttononClick={handleSave} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
                   className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ">
                   حفظ
                 </button>
@@ -131,7 +141,7 @@ export default function TemplateEditorPage({
         </div>
       </header>
 
-      <main className='container-app py-8'>
+      <main className='container-app py-8' id="main-content">
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
           {/* Template Info */}
           <div className='lg:col-span-1'>
@@ -192,7 +202,7 @@ export default function TemplateEditorPage({
                   >
                     <span className='text-sm font-medium'>{variable}</span>
                     {isEditing && (
-                      <buttononClick={() = aria-label="Button"> { handleVariableRemove(variable)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleVariableRemove(variable) } }}
+                      <buttononClick={() => { handleVariableRemove(variable)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleVariableRemove(variable) } }}
                         className='text-sm text-default-error hover:text-red-700'
                       >
                         حذف
@@ -203,25 +213,24 @@ export default function TemplateEditorPage({
 
                 {isEditing && (
                   <div className='flex gap-2'>
-                    <input
-                      type='text'
+                    <input type='text'
                       placeholder='إضافة متغير جديد'
                       className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      onKeyPress={e => {
+                      onKeyPress={e = aria-label="إضافة متغير جديد" aria-invalid="true"> {
                         if (e.key === 'Enter') {
                           handleVariableAdd(e.currentTarget.value);
                           e.currentTarget.value = '';
                         }
                       }}
                     />
-                    <buttononClick={() = aria-label="Button"> { {
+                    <buttononClick={() => { {
                         const input = document.querySelector(
                           'input[placeholder="إضافة متغير جديد"]'
                         ) as HTMLInputElement;
                         if (input?.value) {
                           handleVariableAdd(input.value);
                           input.value = '';
-                        } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
+                        } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
                         const input = document.querySelector(
                           'input[placeholder="إضافة متغير جديد"]'
                         ) as HTMLInputElement;
@@ -261,10 +270,9 @@ export default function TemplateEditorPage({
                     <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                       اسم القالب
                     </label>
-                    <input
-                      type='text'
+                    <input type='text'
                       value={template.name}
-                      onChange={e =>
+                      onChange={e = aria-label="text" aria-invalid="true">
                         setTemplate(prev => ({
                           ...prev,
                           name: e.target.value,
@@ -329,7 +337,7 @@ export default function TemplateEditorPage({
 
               {/* Action Buttons */}
               <div className='flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700'>
-                <button onClick={handleTest} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
+                <buttononClick={handleTest} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleTest } }}
                   className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="اختبار القالب">
                   اختبار القالب
                 </button>
@@ -340,7 +348,7 @@ export default function TemplateEditorPage({
                   تصدير
                 </button>
                 {isEditing && (
-                  <button onClick={handleSave} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
+                  <buttononClick={handleSave} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSave } }}
                     className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ التغييرات">
                     حفظ التغييرات
                   </button>
@@ -357,7 +365,7 @@ export default function TemplateEditorPage({
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>اختبار القالب</h3>
-              <buttononClick={() = aria-label="Button"> { setShowTestModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowTestModal(false) } }}
+              <buttononClick={() => { setShowTestModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowTestModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -380,10 +388,9 @@ export default function TemplateEditorPage({
                       <label className='mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         {variable}:
                       </label>
-                      <input
-                        type='text'
+                      <input type='text'
                         value={testVariables[variable] || ''}
-                        onChange={e =>
+                        onChange={e = aria-label="text" aria-invalid="true">
                           setTestVariables(prev => ({
                             ...prev,
                             [variable]: e.target.value,
@@ -398,7 +405,7 @@ export default function TemplateEditorPage({
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <buttononClick={() = aria-label="Button"> { setShowTestModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowTestModal(false) } }}
+                <buttononClick={() => { setShowTestModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowTestModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إغلاق

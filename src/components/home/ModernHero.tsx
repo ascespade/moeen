@@ -264,8 +264,8 @@ const ModernHero = memo(function ModernHero({
         {/* Enhanced Image Slider Indicators */}
         <div className='flex justify-center gap-3 mt-12'>
           {heroImages.map((_, index) => (
-            <button key={index}
-              onClick={() => { setCurrentImageIndex(index)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setCurrentImageIndex(index) } }}
+            <buttonkey={index}
+              onClick={() => { setCurrentImageIndex(index)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setCurrentImageIndex(index) } }}
               className={`group relative h-3 rounded-full transition-all duration-500 ease-out ${
                 index === currentImageIndex
                   ? 'w-12 bg-primary-400 shadow-lg'

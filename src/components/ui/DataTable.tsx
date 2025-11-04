@@ -45,7 +45,15 @@ export function DataTable<T extends Record<string, unknown>>({
           <tr>
             {columns.map(c => (
               <th key={String(c.key)} className='px-4 py-3 text-start'>
-                <buttononClick={() = aria-label="Button"> { toggleSort(c.key)}
+                <button
+                  onClick={() => { toggleSort(c.key); }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleSort(c.key);
+                    }
+                  }}
+                  aria-label={`ترتيب حسب ${String(c.key)}`}
                   className='flex items-center gap-1 hover:text-default-default'
                 >
                   {c.header}
@@ -76,14 +84,30 @@ export function DataTable<T extends Record<string, unknown>>({
           {sorted.length}
         </span>
         <div className='flex gap-1'>
-          <buttononClick={() = aria-label="Button"> { setPage(1)}
+          <button
+            onClick={() => { setPage(1); }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setPage(1);
+              }
+            }}
             disabled={page === 1}
+            aria-label='الصفحة الأولى'
             className='px-2 py-1 text-sm border rounded disabled:opacity-50'
           >
             «
           </button>
-          <buttononClick={() = aria-label="Button"> { setPage(p => Math.max(1, p - 1))}
+          <button
+            onClick={() => { setPage(p => Math.max(1, p - 1)); }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setPage(p => Math.max(1, p - 1));
+              }
+            }}
             disabled={page === 1}
+            aria-label='الصفحة السابقة'
             className='px-2 py-1 text-sm border rounded disabled:opacity-50'
           >
             ‹
@@ -91,14 +115,30 @@ export function DataTable<T extends Record<string, unknown>>({
           <span className='px-2 py-1 text-sm'>
             {page} / {pages}
           </span>
-          <buttononClick={() = aria-label="Button"> { setPage(p => Math.min(pages, p + 1))}
+          <button
+            onClick={() => { setPage(p => Math.min(pages, p + 1)); }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setPage(p => Math.min(pages, p + 1));
+              }
+            }}
             disabled={page === pages}
+            aria-label='الصفحة التالية'
             className='px-2 py-1 text-sm border rounded disabled:opacity-50'
           >
             ›
           </button>
-          <buttononClick={() = aria-label="Button"> { setPage(pages)}
+          <button
+            onClick={() => { setPage(pages); }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setPage(pages);
+              }
+            }}
             disabled={page === pages}
+            aria-label='الصفحة الأخيرة'
             className='px-2 py-1 text-sm border rounded disabled:opacity-50'
           >
             »

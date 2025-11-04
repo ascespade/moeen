@@ -145,7 +145,7 @@ export default function FAQPage() {
           <div className='max-w-4xl mx-auto space-y-6'>
             {filteredFAQs.map(faq => (
               <Card key={faq.id} className='p-6'>
-                <buttononClick={() = aria-label="Button"> { toggleFAQ(faq.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { toggleFAQ(faq.id) } }}
+                <buttononClick={() => { toggleFAQ(faq.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { toggleFAQ(faq.id) } }}
                   className='w-full text-left flex items-center justify-between'
                 >
                   <h3 className='text-lg font-semibold text-foreground pr-4'>

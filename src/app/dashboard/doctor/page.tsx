@@ -83,7 +83,11 @@ export default function DoctorDashboard() {
 
   if (isLoading) {
     return (
-      <div className='flex items-center justify-center min-h-screen'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='flex items-center justify-center min-h-screen'>
         <LoadingSpinner />
       </div>
     );

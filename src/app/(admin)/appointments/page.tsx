@@ -189,7 +189,11 @@ function AppointmentsPageContent() {
       className: '',
     };
     return (
-      <Badge variant={config.variant} className={config.className}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -580,10 +584,9 @@ function AppointmentsPageContent() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input
-                      type='checkbox'
+                    <input type='checkbox'
                       className='rounded border-[var(--brand-border)]'
-                      onChange={e => {
+                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
                         if (e.target.checked) {
                           setSelectedAppointments(appointments.map(a => a.id));
                         } else {
@@ -605,11 +608,10 @@ function AppointmentsPageContent() {
                 {appointments.map(appointment => (
                   <TableRow key={appointment.id}>
                     <TableCell>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         className='rounded border-[var(--brand-border)]'
                         checked={selectedAppointments.includes(appointment.id)}
-                        onChange={e => {
+                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
                           if (e.target.checked) {
                             setSelectedAppointments([
                               ...selectedAppointments,

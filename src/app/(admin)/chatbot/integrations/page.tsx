@@ -112,7 +112,17 @@ export default function ChatbotIntegrationsPage() {
   };
 
   return (
-    <div className='min-h-screen bg-[var(--default-surface)]'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='min-h-screen bg-[var(--default-surface)]'>
       {/* Header */}
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
@@ -143,7 +153,7 @@ export default function ChatbotIntegrationsPage() {
         </div>
       </header>
 
-      <main className='container-app py-8'>
+      <main className='container-app py-8' id="main-content">
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
@@ -233,7 +243,7 @@ export default function ChatbotIntegrationsPage() {
               <div className='flex gap-2'>
                 {integration.status === 'connected' ? (
                   <>
-                    <buttononClick={() = aria-label="Button"> { handleTestWebhook(integration.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleTestWebhook(integration.id) } }}
+                    <buttononClick={() => { handleTestWebhook(integration.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleTestWebhook(integration.id) } }}
                       className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-surface'
                       disabled={webhookTest[integration.id]}
                     >
@@ -241,14 +251,14 @@ export default function ChatbotIntegrationsPage() {
                         ? 'جاري الاختبار...'
                         : 'اختبار Webhook'}
                     </button>
-                    <buttononClick={() = aria-label="Button"> { handleDisconnect(integration.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleDisconnect(integration.id) } }}
+                    <buttononClick={() => { handleDisconnect(integration.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleDisconnect(integration.id) } }}
                       className='rounded-lg border border-red-300 px-3 py-2 text-sm text-default-error transition-colors hover:bg-surface'
                     >
                       قطع الاتصال
                     </button>
                   </>
                 ) : (
-                  <buttononClick={() = aria-label="Button"> { handleConnect(integration.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleConnect(integration.id) } }}
+                  <buttononClick={() => { handleConnect(integration.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleConnect(integration.id) } }}
                     className='btn-default flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'
                   >
                     {integration.status === 'error' ? 'إعادة الاتصال' : 'اتصال'}
@@ -313,7 +323,7 @@ export default function ChatbotIntegrationsPage() {
           <div className='w-full max-w-md rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إعداد التكامل</h3>
-              <buttononClick={() = aria-label="Button"> { setShowConnectModal(null)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowConnectModal(null) } }}
+              <buttononClick={() => { setShowConnectModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowConnectModal(null) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -325,23 +335,21 @@ export default function ChatbotIntegrationsPage() {
                 <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                   API Key
                 </label>
-                <input
-                  type='text'
+                <input type='text'
                   className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل API Key'
-                />
+                / aria-label="أدخل API Key" aria-invalid="true">
               </div>
 
               <div>
                 <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                   Webhook URL
                 </label>
-                <input
-                  type='text'
+                <input type='text'
                   className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='https://api.moeen.com/webhook/...'
                   readOnly
-                />
+                / aria-label="https://api.moeen.com/webhook/..." aria-invalid="true">
               </div>
 
               <div className='rounded-lg border border-blue-200 bg-surface p-4'>
@@ -352,12 +360,12 @@ export default function ChatbotIntegrationsPage() {
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <buttononClick={() = aria-label="Button"> { setShowConnectModal(null)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowConnectModal(null) } }}
+                <buttononClick={() => { setShowConnectModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowConnectModal(null) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <buttononClick={() = aria-label="Button"> { setShowConnectModal(null)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowConnectModal(null) } }}
+                <buttononClick={() => { setShowConnectModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowConnectModal(null) } }}
                   className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
                 >
                   حفظ الإعدادات

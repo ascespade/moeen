@@ -40,7 +40,17 @@ export default function LogsAdminPage() {
     return () => clearTimeout(t);
   }, []);
   const [q, setQ] = useState('');
-  const [filter, setFilter] = useState<string>('all');
+  const [filter, setFilter] = useState<div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+string>('all');
   const [rows] = useState<LogEvent[]>(seed);
 
   const filtered = useMemo(
@@ -54,7 +64,7 @@ export default function LogsAdminPage() {
   );
 
   return (
-    <main className='p-6 grid gap-4'>
+    <main className='p-6 grid gap-4' id="main-content">
       <div className='grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-3 items-center'>
         <h1 className='text-2xl font-semibold'>السجلات</h1>
         <select
@@ -67,11 +77,10 @@ export default function LogsAdminPage() {
           <option value='ai'>AI</option>
           <option value='error'>Errors</option>
         </select>
-        <input
-          className='h-10 rounded-md border px-3 w-full md:w-64'
+        <inputclassName='h-10 rounded-md border px-3 w-full md:w-64'
           placeholder='بحث'
           value={q}
-          onChange={e => setQ(e.target.value)}
+          onChange={e = aria-label="بحث" aria-invalid="true"> setQ(e.target.value)}
         />
       </div>
 

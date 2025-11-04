@@ -133,7 +133,23 @@ export default function InsuranceClaimsPage() {
 
   if (loading) {
     return (
-      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+
+
+<ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
         <div className='text-center'>
           <div className='mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]' />
           <p className='text-gray-600 dark:text-gray-400'>
@@ -149,7 +165,7 @@ export default function InsuranceClaimsPage() {
       <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
         <div className='text-center'>
           <p className='mb-4 text-lg font-semibold text-red-600'>{error}</p>
-          <buttononClick={() = aria-label="Button"> { loadClaims()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { loadClaims() } }}
+          <buttononClick={() => { loadClaims()} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { loadClaims() } }}
             className='rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
           >
             إعادة المحاولة
@@ -183,7 +199,7 @@ export default function InsuranceClaimsPage() {
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <buttononClick={() = aria-label="Button"> { setShowCreateModal(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
+              <buttononClick={() => { setShowCreateModal(true)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة مطالبة
@@ -193,7 +209,7 @@ export default function InsuranceClaimsPage() {
         </div>
       </header>
 
-      <main className='container-app py-8'>
+      <main className='container-app py-8' id="main-content">
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
@@ -231,10 +247,9 @@ export default function InsuranceClaimsPage() {
               <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 البحث
               </label>
-              <input
-                type='text'
+              <input type='text'
                 value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
+                onChange={e = aria-label="text" aria-invalid="true"> setSearchTerm(e.target.value)}
                 placeholder='ابحث بالاسم أو رقم المطالبة...'
                 className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
@@ -337,7 +352,7 @@ export default function InsuranceClaimsPage() {
                     </td>
                     <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                       <div className='flex gap-2'>
-                        <buttononClick={() = aria-label="Button"> { setShowDetailsModal(claim.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(claim.id) } }}
+                        <buttononClick={() => { setShowDetailsModal(claim.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(claim.id) } }}
                           className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
                         >
                           عرض
@@ -381,7 +396,7 @@ export default function InsuranceClaimsPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة مطالبة تأمينية</h3>
-              <buttononClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+              <buttononClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -432,11 +447,10 @@ export default function InsuranceClaimsPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     المبلغ
                   </label>
-                  <input
-                    type='number'
+                  <input type='number'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0'
-                  />
+                  / aria-label="0" aria-invalid="true">
                 </div>
               </div>
 
@@ -463,13 +477,13 @@ export default function InsuranceClaimsPage() {
               </div>
 
               <div className='flex gap-3 pt-4'>
-                <buttontype='button'
-                  onClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+                <button type='button'
+                  onClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <buttontype='submit'
+                <button type='submit'
                   className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة المطالبة">
                   إضافة المطالبة
                 </button>
@@ -485,7 +499,7 @@ export default function InsuranceClaimsPage() {
           <div className='w-full max-w-4xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>تفاصيل المطالبة</h3>
-              <buttononClick={() = aria-label="Button"> { setShowDetailsModal(null)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(null) } }}
+              <buttononClick={() => { setShowDetailsModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(null) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -620,7 +634,7 @@ export default function InsuranceClaimsPage() {
             )}
 
             <div className='flex gap-3 pt-6'>
-              <buttononClick={() = aria-label="Button"> { setShowDetailsModal(null)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(null) } }}
+              <buttononClick={() => { setShowDetailsModal(null)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowDetailsModal(null) } }}
                 className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 إغلاق

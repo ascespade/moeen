@@ -54,7 +54,11 @@ export default function ForgotPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
         <div className='card w-full max-w-md p-8 text-center'>
           <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -73,10 +77,10 @@ export default function ForgotPasswordPage() {
             >
               العودة لتسجيل الدخول
             </Link>
-            <buttononClick={() = aria-label="Button"> { {
+            <buttononClick={() => { {
                 setIsSuccess(false);
                 setEmail('');
-              } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
+              } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
                 setIsSuccess(false);
                 setEmail('');
                } }}}
@@ -130,11 +134,10 @@ export default function ForgotPasswordPage() {
               <label htmlFor='email' className='form-label'>
                 البريد الإلكتروني
               </label>
-              <input
-                type='email'
+              <input type='email'
                 id='email'
                 value={email}
-                onChange={e => {
+                onChange={e = aria-label="email" aria-invalid="true"> {
                   setEmail(e.target.value);
                   if (error) setError('');
                 }}
@@ -146,7 +149,7 @@ export default function ForgotPasswordPage() {
             </div>
 
             {/* Submit Button */}
-            <buttontype='submit'
+            <button type='submit'
               disabled={isLoading}
               className='btn btn-default btn-lg w-full' aria-label="Button">
               {isLoading ? (
@@ -178,10 +181,10 @@ export default function ForgotPasswordPage() {
         <div className='mt-6 text-center'>
           <p className='text-sm text-gray-500'>
             إذا لم تستلم البريد الإلكتروني، تحقق من مجلد الرسائل المزعجة أو{' '}
-            <buttononClick={() = aria-label="Button"> { {
+            <buttononClick={() => { {
                 setEmail('');
                 setError('');
-              } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
+              } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { {
                 setEmail('');
                 setError('');
                } }}}

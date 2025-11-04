@@ -23,11 +23,10 @@ export default function KeywordEditor({
   return (
     <div className='grid gap-3'>
       <div className='grid grid-cols-[1fr_auto] gap-2'>
-        <input
-          className='h-10 rounded-md border px-3'
+        <inputclassName='h-10 rounded-md border px-3'
           placeholder='أدخل كلمة طوارئ'
           value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)} aria-label="أدخل كلمة طوارئ"
           onKeyDown={e => e.key === 'Enter' && add()}
         />
         <buttonclassName='h-10 rounded-md border px-3'
@@ -45,7 +44,7 @@ export default function KeywordEditor({
           >
             {k}
             <buttonclassName='text-amber-900'
-              onClick={() = aria-label="Button"> { remove(k)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" remove(k) } }}
+              onClick={() => { remove(k)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" remove(k) } }}
               aria-label='حذف الكلمة'
             >
               ×

@@ -134,12 +134,10 @@ export default function ContactFormWithMap() {
               borderTop: '1px solid var(--brand-border)',
             }}
           >
-            <a
-              href={googleMapsLink}
+            <ahref={googleMapsLink}
               target='_blank'
               rel='noopener noreferrer'
-              className='flex items-center justify-center gap-2 text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)] hover:underline transition-colors font-medium'
-            >
+              className='flex items-center justify-center gap-2 text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)] hover:underline transition-colors font-medium' aria-label="فتح في خرائط جوجل">
               <MapPin className='h-5 w-5' />
               فتح في خرائط جوجل
             </a>
@@ -180,16 +178,15 @@ export default function ContactFormWithMap() {
                   >
                     الاسم الكامل
                   </label>
-                  <input
-                    type='text'
+                  <input type='text'
                     id='home-name'
                     name='name'
                     value={formData.name}
                     onChange={handleChange}
                     placeholder='اسمك الكامل'
                     className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-4 py-3 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)] transition-all'
-                    required
-                  />
+                    
+                  / aria-label="اسمك الكامل" aria-required="true" aria-invalid="true">
                 </div>
                 <div>
                   <label
@@ -198,16 +195,15 @@ export default function ContactFormWithMap() {
                   >
                     البريد الإلكتروني
                   </label>
-                  <input
-                    type='email'
+                  <input type='email'
                     id='home-email'
                     name='email'
                     value={formData.email}
                     onChange={handleChange}
                     placeholder='name@example.com'
                     className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-4 py-3 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)] transition-all'
-                    required
-                  />
+                    
+                  / aria-label="name@example.com" aria-required="true" aria-invalid="true">
                 </div>
               </div>
 
@@ -218,16 +214,15 @@ export default function ContactFormWithMap() {
                 >
                   الموضوع
                 </label>
-                <input
-                  type='text'
+                <input type='text'
                   id='home-subject'
                   name='subject'
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder='موضوع الرسالة'
                   className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-4 py-3 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)] transition-all'
-                  required
-                />
+                  
+                / aria-label="موضوع الرسالة" aria-required="true" aria-invalid="true">
               </div>
 
               <div>
@@ -249,7 +244,7 @@ export default function ContactFormWithMap() {
                 />
               </div>
 
-              <buttontype='submit'
+              <button type='submit'
                 disabled={isSending}
                 className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50 shadow-lg hover:shadow-xl hover:scale-105' aria-label="Button">
                 {isSending ? (
@@ -274,8 +269,7 @@ export default function ContactFormWithMap() {
           </h3>
           <div className='space-y-4'>
             {contactInfo.map((info, index) => (
-              <a
-                key={index}
+              <akey={index}
                 href={info.link}
                 target={info.link.startsWith('http') ? '_blank' : '_self'}
                 rel={
@@ -283,8 +277,10 @@ export default function ContactFormWithMap() {
                     ? 'noopener noreferrer'
                     : undefined
                 }
-                className='group flex items-start gap-4 rounded-lg p-4 transition-all hover:bg-[var(--brand-primary)]/10 hover:shadow-md'
-              >
+                className='group flex items-start gap-4 rounded-lg p-4 transition-all hover:bg-[var(--brand-primary)]/10 hover:shadow-md' aria-label="{info.icon}
+                
+                
+    ">
                 <div className='mt-1 text-[var(--brand-primary)] transition-transform group-hover:scale-110'>
                   {info.icon}
                 </div>

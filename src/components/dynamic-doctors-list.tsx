@@ -155,7 +155,11 @@ export default function DynamicDoctorsList({
 
   if (loading) {
     return (
-      <div className={`flex items-center justify-center p-8 ${className}`}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className={`flex items-center justify-center p-8 ${className}`}>
         <RefreshCw className='h-8 w-8 animate-spin' />
         <span className='ml-2'>جاري تحميل قائمة الأطباء...</span>
       </div>

@@ -71,7 +71,11 @@ export default function ChatbotSettingsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-gray-600">???? ???????...</p>
@@ -92,10 +96,9 @@ export default function ChatbotSettingsPage() {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-2">?????</label>
-              <input
-                type="text"
+              <input type="text"
                 value={config?.name || '????'}
-                onChange={(e) => setConfig({ ...config, name: e.target.value })}
+                onChange={(e) = aria-label="text" aria-invalid="true"> setConfig({ ...config, name: e.target.value })}
                 className="w-full px-4 py-2 border rounded-lg"
                 aria-label="??? ????? ???"
               />
@@ -145,13 +148,12 @@ export default function ChatbotSettingsPage() {
               <label className="block text-sm font-medium mb-2">
                 Temperature: {config?.temperature || 0.7}
               </label>
-              <input
-                type="range"
+              <input type="range"
                 min="0"
                 max="1"
                 step="0.1"
                 value={config?.temperature || 0.7}
-                onChange={(e) => setConfig({ ...config, temperature: parseFloat(e.target.value) })}
+                onChange={(e) = aria-label="range" aria-invalid="true"> setConfig({ ...config, temperature: parseFloat(e.target.value) })}
                 className="w-full"
                 aria-label="Temperature"
               />

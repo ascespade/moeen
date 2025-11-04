@@ -88,7 +88,11 @@ const DynamicContactInfo = memo(function DynamicContactInfo() {
 
   if (loading) {
     return (
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         {[1, 2, 3].map(i => (
           <div
             key={i}

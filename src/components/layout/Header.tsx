@@ -85,7 +85,7 @@ export default function Header() {
 
           {/* Mobile menu button */}
           <buttonclassName='md:hidden p-2 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors'
-            onClick={() => { setIsMenuOpen(!isMenuOpen)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsMenuOpen(!isMenuOpen) } }}
+            onClick={() => { setIsMenuOpen(!isMenuOpen)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsMenuOpen(!isMenuOpen) } }}
           >
             <svg
               className='w-6 h-6'

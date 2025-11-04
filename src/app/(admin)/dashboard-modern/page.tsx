@@ -237,7 +237,17 @@ export default function ModernAdminDashboard() {
   );
 
   return (
-    <div className='flex h-screen flex-col bg-neutral-50 dark:bg-neutral-950'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='flex h-screen flex-col bg-neutral-50 dark:bg-neutral-950'>
       <AdminHeader title='لوحة التحكم الإدارية المحدثة'>
         <div className='flex gap-2'>
           <Button
@@ -258,7 +268,7 @@ export default function ModernAdminDashboard() {
         </div>
       </AdminHeader>
 
-      <main className='flex-1 overflow-auto'>
+      <main className='flex-1 overflow-auto' id="main-content">
         {/* Period Selector */}
         <div className='p-6 pb-0'>
           <div className='flex items-center justify-between mb-6'>

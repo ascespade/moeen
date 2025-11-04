@@ -36,7 +36,7 @@ export function Tabs({ tabs, defaultTab, onChange, className }: TabsProps) {
         <nav className='flex space-x-4' aria-label='Tabs'>
           {tabs.map(tab => (
             <buttonkey={tab.id}
-              onClick={() = aria-label="Button"> { handleTabChange(tab.id)}
+              onClick={() => { handleTabChange(tab.id)} aria-label="Button"
               className={cn(
                 'flex items-center gap-2 px-4 py-2 text-sm font-medium border-b-2 transition-colors',
                 activeTab === tab.id

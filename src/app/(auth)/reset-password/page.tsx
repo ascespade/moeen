@@ -72,7 +72,11 @@ export default function ResetPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
         <div className='card w-full max-w-md p-8 text-center'>
           <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -135,8 +139,7 @@ export default function ResetPasswordPage() {
               >
                 كلمة المرور الجديدة
               </label>
-              <input
-                type='password'
+              <input type='password'
                 id='password'
                 name='password'
                 value={formData.password}
@@ -146,7 +149,7 @@ export default function ResetPasswordPage() {
                 }`}
                 placeholder='أدخل كلمة المرور الجديدة'
                 disabled={isLoading}
-              />
+              / aria-label="أدخل كلمة المرور الجديدة" aria-invalid="true">
               {errors.password && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.password}
@@ -165,8 +168,7 @@ export default function ResetPasswordPage() {
               >
                 تأكيد كلمة المرور
               </label>
-              <input
-                type='password'
+              <input type='password'
                 id='confirmPassword'
                 name='confirmPassword'
                 value={formData.confirmPassword}
@@ -176,7 +178,7 @@ export default function ResetPasswordPage() {
                 }`}
                 placeholder='أعد إدخال كلمة المرور الجديدة'
                 disabled={isLoading}
-              />
+              / aria-label="أعد إدخال كلمة المرور الجديدة" aria-invalid="true">
               {errors.confirmPassword && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.confirmPassword}
@@ -197,7 +199,7 @@ export default function ResetPasswordPage() {
             </div>
 
             {/* Submit Button */}
-            <buttontype='submit'
+            <button type='submit'
               disabled={isLoading}
               className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50' aria-label="Button">
               {isLoading ? (

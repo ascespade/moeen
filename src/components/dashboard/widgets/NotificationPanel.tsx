@@ -284,11 +284,10 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
           {showSearch && (
             <div className='relative mb-4'>
               <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-400' />
-              <input
-                type='text'
+              <input type='text'
                 placeholder='البحث في الإشعارات...'
                 value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
+                onChange={e = aria-label="البحث في الإشعارات..." aria-invalid="true"> setSearchQuery(e.target.value)}
                 className='w-full pl-10 pr-4 py-2 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm'
               />
             </div>
@@ -407,7 +406,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
                     ),
                     !notification.isRead && 'bg-opacity-50 dark:bg-opacity-30'
                   )}
-                  onClick={() =>
+                  tabIndex={0} onClick={() =>
                     !notification.isRead && handleMarkAsRead(notification.id)
                   }
                 >

@@ -354,7 +354,11 @@ export default function NotificationsPage() {
       className: '',
     };
     return (
-      <Badge variant={config.variant} className={config.className}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -756,10 +760,9 @@ export default function NotificationsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input
-                      type='checkbox'
+                    <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e => {
+                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
                         if (e.target.checked) {
                           setSelectedNotifications(
                             filteredNotifications.map(n => n.id)
@@ -784,13 +787,12 @@ export default function NotificationsPage() {
                 {filteredNotifications.map(notification => (
                   <TableRow key={notification.id}>
                     <TableCell>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedNotifications.includes(
                           notification.id
                         )}
-                        onChange={e => {
+                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
                           if (e.target.checked) {
                             setSelectedNotifications([
                               ...selectedNotifications,

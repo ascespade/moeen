@@ -34,12 +34,10 @@ export default function PlaceholderSquare({
             </ol>
           )}
           {docsLink && (
-            <a
-              className='mt-3 inline-block text-sm text-[var(--default-default)] hover:underline'
+            <aclassName='mt-3 inline-block text-sm text-[var(--default-default)] hover:underline'
               href={docsLink}
               target='_blank'
-              rel='noreferrer'
-            >
+              rel='noreferrer' aria-label="Documentation">
               Documentation
             </a>
           )}

@@ -9,7 +9,23 @@ export default function SettingsPage() {
   >('general');
 
   return (
-    <div className='min-h-screen bg-[var(--default-surface)]'>
+    <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+
+
+<div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='min-h-screen bg-[var(--default-surface)]'>
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center gap-4'>
@@ -30,7 +46,7 @@ export default function SettingsPage() {
         </div>
       </header>
 
-      <main className='container-app py-8'>
+      <main className='container-app py-8' id="main-content">
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-4'>
           <div className='lg:col-span-1'>
             <nav className='space-y-1'>
@@ -42,7 +58,7 @@ export default function SettingsPage() {
                 { id: 'templates', label: 'القوالب', icon: '📝' },
               ].map(tab => (
                 <buttonkey={tab.id}
-                  onClick={() = aria-label="Button"> { setActiveTab(tab.id as any)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab(tab.id as any) } }}
+                  onClick={() => { setActiveTab(tab.id as any)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab(tab.id as any) } }}
                   className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-right transition-colors ${
                     activeTab === tab.id
                       ? 'bg-[var(--default-default)] text-white'
@@ -68,31 +84,28 @@ export default function SettingsPage() {
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         اسم المركز
                       </label>
-                      <input
-                        type='text'
+                      <input type='text'
                         defaultValue='مركز الهمم للرعاية الصحية المتخصصة'
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      />
+                      / aria-label="text" aria-invalid="true">
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         البريد الإلكتروني
                       </label>
-                      <input
-                        type='email'
+                      <input type='email'
                         defaultValue='info@moeen.com'
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      />
+                      / aria-label="email" aria-invalid="true">
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         الهاتف
                       </label>
-                      <input
-                        type='tel'
+                      <input type='tel'
                         defaultValue='+966501234567'
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      />
+                      / aria-label="tel" aria-invalid="true">
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
@@ -136,11 +149,10 @@ export default function SettingsPage() {
                         Gemini API Key
                       </label>
                       <div className='flex gap-2'>
-                        <input
-                          type='password'
+                        <input type='password'
                           defaultValue='AIzaSyB...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                        />
+                        / aria-label="password" aria-invalid="true">
                         <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
@@ -151,11 +163,10 @@ export default function SettingsPage() {
                         OpenAI API Key
                       </label>
                       <div className='flex gap-2'>
-                        <input
-                          type='password'
+                        <input type='password'
                           defaultValue='sk-...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                        />
+                        / aria-label="password" aria-invalid="true">
                         <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
@@ -166,11 +177,10 @@ export default function SettingsPage() {
                         WhatsApp Business API
                       </label>
                       <div className='flex gap-2'>
-                        <input
-                          type='password'
+                        <input type='password'
                           defaultValue='EAA...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                        />
+                        / aria-label="password" aria-invalid="true">
                         <buttonclassName='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
@@ -259,11 +269,10 @@ export default function SettingsPage() {
                           تلقي إشعارات عبر البريد الإلكتروني
                         </p>
                       </div>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         defaultChecked
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      />
+                      / aria-label="checkbox" aria-invalid="true">
                     </div>
                     <div className='flex items-center justify-between'>
                       <div>
@@ -272,11 +281,10 @@ export default function SettingsPage() {
                           تلقي إشعارات عبر واتساب
                         </p>
                       </div>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         defaultChecked
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      />
+                      / aria-label="checkbox" aria-invalid="true">
                     </div>
                     <div className='flex items-center justify-between'>
                       <div>
@@ -285,11 +293,10 @@ export default function SettingsPage() {
                           إشعارات تذكير المواعيد
                         </p>
                       </div>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         defaultChecked
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      />
+                      / aria-label="checkbox" aria-invalid="true">
                     </div>
                     <div className='flex items-center justify-between'>
                       <div>
@@ -298,10 +305,9 @@ export default function SettingsPage() {
                           إشعارات تحديثات النظام
                         </p>
                       </div>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      />
+                      / aria-label="checkbox" aria-invalid="true">
                     </div>
                   </div>
                 </div>

@@ -138,7 +138,11 @@ export default function BookSessionPage() {
   const maxDateStr = maxDate.toISOString().split('T')[0];
 
   return (
-    <div className='container-app py-8'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='container-app py-8'>
       {/* Progress Steps */}
       <div className='card p-6 mb-8'>
         <div className='flex items-center justify-between'>
@@ -201,7 +205,7 @@ export default function BookSessionPage() {
       {/* Step 2: Select Date */}
       {step === 2 && selectedSessionType && (
         <div>
-          <buttononClick={() = aria-label="Button"> { setStep(1)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(1) } }} className='btn btn-outline mb-6'>
+          <buttononClick={() => { setStep(1)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(1) } }} className='btn btn-outline mb-6'>
             ← العودة
           </button>
 
@@ -230,10 +234,9 @@ export default function BookSessionPage() {
           </h2>
 
           <div className='card p-8'>
-            <input
-              type='date'
+            <input type='date'
               value={selectedDate}
-              onChange={e => {
+              onChange={e = aria-label="date" aria-invalid="true"> {
                 setSelectedDate(e.target.value);
                 if (e.target.value) {
                   setStep(3);
@@ -253,7 +256,7 @@ export default function BookSessionPage() {
       {/* Step 3: Select Time Slot */}
       {step === 3 && selectedSessionType && selectedDate && (
         <div>
-          <buttononClick={() = aria-label="Button"> { setStep(2)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(2) } }} className='btn btn-outline mb-6'>
+          <buttononClick={() => { setStep(2)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(2) } }} className='btn btn-outline mb-6'>
             ← العودة
           </button>
 
@@ -273,7 +276,7 @@ export default function BookSessionPage() {
       {/* Step 4: Confirmation */}
       {step === 4 && selectedSessionType && selectedSlot && (
         <div>
-          <buttononClick={() = aria-label="Button"> { setStep(3)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(3) } }} className='btn btn-outline mb-6'>
+          <buttononClick={() => { setStep(3)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setStep(3) } }} className='btn btn-outline mb-6'>
             ← العودة
           </button>
 
@@ -366,10 +369,9 @@ export default function BookSessionPage() {
                   <label className='block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2'>
                     اسم الطفل *
                   </label>
-                  <input
-                    type='text'
+                  <input type='text'
                     value={patientName}
-                    onChange={e => setPatientName(e.target.value)}
+                    onChange={e = aria-label="text" aria-invalid="true"> setPatientName(e.target.value)}
                     className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='أدخل اسم الطفل'
                     required
@@ -395,8 +397,8 @@ export default function BookSessionPage() {
                   </div>
                 )}
 
-                <buttontype='button'
-                  onClick={handleBookSession} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBookSession } }}
+                <button type='button'
+                  onClick={handleBookSession} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBookSession } }}
                   disabled={loading || !patientName.trim()}
                   className='btn btn-default w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed' aria-label="Button">
                   {loading ? (

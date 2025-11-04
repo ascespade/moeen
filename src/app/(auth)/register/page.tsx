@@ -128,7 +128,11 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
         <div className='card w-full max-w-md p-8 text-center'>
           <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -190,8 +194,7 @@ export default function RegisterPage() {
               >
                 الاسم الكامل
               </label>
-              <input
-                type='text'
+              <input type='text'
                 id='name'
                 name='name'
                 value={formData.name}
@@ -201,7 +204,7 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أدخل اسمك الكامل'
                 disabled={isLoading}
-              />
+              / aria-label="أدخل اسمك الكامل" aria-invalid="true">
               {errors.name && (
                 <p className='mt-1 text-sm text-default-error'>{errors.name}</p>
               )}
@@ -215,8 +218,7 @@ export default function RegisterPage() {
               >
                 البريد الإلكتروني
               </label>
-              <input
-                type='email'
+              <input type='email'
                 id='email'
                 name='email'
                 value={formData.email}
@@ -226,7 +228,7 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أدخل بريدك الإلكتروني'
                 disabled={isLoading}
-              />
+              / aria-label="أدخل بريدك الإلكتروني" aria-invalid="true">
               {errors.email && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.email}
@@ -242,8 +244,7 @@ export default function RegisterPage() {
               >
                 كلمة المرور
               </label>
-              <input
-                type='password'
+              <input type='password'
                 id='password'
                 name='password'
                 value={formData.password}
@@ -253,7 +254,7 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أدخل كلمة المرور'
                 disabled={isLoading}
-              />
+              / aria-label="أدخل كلمة المرور" aria-invalid="true">
               {errors.password && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.password}
@@ -269,8 +270,7 @@ export default function RegisterPage() {
               >
                 تأكيد كلمة المرور
               </label>
-              <input
-                type='password'
+              <input type='password'
                 id='confirmPassword'
                 name='confirmPassword'
                 value={formData.confirmPassword}
@@ -280,7 +280,7 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أعد إدخال كلمة المرور'
                 disabled={isLoading}
-              />
+              / aria-label="أعد إدخال كلمة المرور" aria-invalid="true">
               {errors.confirmPassword && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.confirmPassword}
@@ -291,14 +291,13 @@ export default function RegisterPage() {
             {/* Terms Agreement */}
             <div>
               <label className='flex items-start gap-3'>
-                <input
-                  type='checkbox'
+                <input type='checkbox'
                   name='agreeToTerms'
                   checked={formData.agreeToTerms}
                   onChange={handleInputChange}
                   className='mt-1 h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                   disabled={isLoading}
-                />
+                / aria-label="agreeToTerms" aria-invalid="true">
                 <span className='text-sm text-gray-700 dark:text-gray-300'>
                   أوافق على{' '}
                   <Link
@@ -324,7 +323,7 @@ export default function RegisterPage() {
             </div>
 
             {/* Submit Button */}
-            <buttontype='submit'
+            <button type='submit'
               disabled={isLoading}
               className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50' aria-label="Button">
               {isLoading ? (

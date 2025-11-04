@@ -19,18 +19,21 @@ export default function ReviewCenterPage() {
   );
 
   return (
-    <main className='min-h-screen bg-[var(--default-surface)]'>
+    <ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+main className='min-h-screen bg-[var(--default-surface)]'>
       <div className='container-app py-6'>
         <div className='grid gap-4'>
           <div className='grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 items-center'>
             <h1 className='text-2xl font-semibold text-[var(--foreground)]'>
               مركز المراجعة
             </h1>
-            <input
-              className='form-input w-full md:w-64'
+            <inputclassName='form-input w-full md:w-64'
               placeholder='بحث'
               value={q}
-              onChange={e => setQ(e.target.value)}
+              onChange={(e) => setQ(e.target.value)} aria-label="بحث"
             />
           </div>
 

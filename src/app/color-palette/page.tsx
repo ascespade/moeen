@@ -78,7 +78,11 @@ export default function ColorPalettePage() {
   }, []);
 
   return (
-    <div className='min-h-screen bg-background text-foreground'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='min-h-screen bg-background text-foreground'>
       {/* Header */}
       <div className='bg-gradient-to-r from-[var(--default-default)] to-[var(--default-info)] py-20'>
         <div className='container-app text-center'>

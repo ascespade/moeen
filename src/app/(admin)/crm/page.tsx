@@ -481,7 +481,11 @@ export default function CRMPage() {
       className: '',
     };
     return (
-      <Badge variant={config.variant} className={config.className}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -780,10 +784,9 @@ export default function CRMPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input
-                      type='checkbox'
+                    <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e => {
+                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
                         if (e.target.checked) {
                           setSelectedItems(
                             filteredData.map((item: any) => item.id)
@@ -808,11 +811,10 @@ export default function CRMPage() {
                 {filteredData.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedItems.includes(item.id)}
-                        onChange={e => {
+                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
                           if (e.target.checked) {
                             setSelectedItems([...selectedItems, item.id]);
                           } else {

@@ -166,7 +166,11 @@ export default function SessionNotesPage() {
 
   if (loading) {
     return (
-      <div className='container-app py-8'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='container-app py-8'>
         <div className='card p-12 text-center'>
           <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
           <p className='mt-4 text-gray-600 dark:text-gray-400'>
@@ -260,10 +264,9 @@ export default function SessionNotesPage() {
                     className='border border-gray-200 dark:border-gray-700 rounded-lg p-4'
                   >
                     <label className='flex items-start gap-3 cursor-pointer'>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         checked={selectedGoals.includes(goal.id)}
-                        onChange={e => {
+                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
                           if (e.target.checked) {
                             setSelectedGoals([...selectedGoals, goal.id]);
                             setGoalProgress({
@@ -294,14 +297,13 @@ export default function SessionNotesPage() {
                             <label className='block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2'>
                               التقدم في هذه الجلسة (%)
                             </label>
-                            <input
-                              type='range'
+                            <input type='range'
                               min='0'
                               max='100'
                               value={
                                 goalProgress[goal.id] || goal.current_progress
                               }
-                              onChange={e =>
+                              onChange={e = aria-label="range" aria-invalid="true">
                                 setGoalProgress({
                                   ...goalProgress,
                                   [goal.id]: parseInt(e.target.value),
@@ -366,7 +368,7 @@ export default function SessionNotesPage() {
             <div className='flex items-center gap-2 mb-4'>
               {[1, 2, 3, 4, 5].map(star => (
                 <buttonkey={star}
-                  onClick={() = aria-label="Button"> { setSessionRating(star)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSessionRating(star) } }}
+                  onClick={() => { setSessionRating(star)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSessionRating(star) } }}
                   className={`text-3xl transition-all ${
                     star <= sessionRating
                       ? 'text-yellow-400 hover:scale-110'
@@ -404,7 +406,7 @@ export default function SessionNotesPage() {
 
           {/* Actions */}
           <div className='space-y-3'>
-            <button onClick={handleSaveNotes} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSaveNotes } }}
+            <buttononClick={handleSaveNotes} onKeyDown={(e) = aria-label="Button"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSaveNotes } }}
               disabled={saving || !notes.trim()}
               className='btn btn-default w-full py-4 text-lg disabled:opacity-50' aria-label="Button">
               {saving ? (
@@ -417,7 +419,7 @@ export default function SessionNotesPage() {
               )}
             </button>
 
-            <buttononClick={() = aria-label="Button"> { router.back()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { router.back() } }}
+            <buttononClick={() => { router.back()} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { router.back() } }}
               className='btn btn-outline w-full'
             >
               إلغاء

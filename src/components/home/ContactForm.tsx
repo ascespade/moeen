@@ -86,16 +86,15 @@ const ContactForm = memo(function ContactForm() {
             الاسم الكامل
           </label>
           <div className='relative'>
-            <input
-              type='text'
+            <input type='text'
               id='name'
               name='name'
               value={formData.name}
               onChange={handleChange}
-              required
+              
               className='peer py-3 px-4 pe-11 block w-full border border-[var(--brand-border)] rounded-lg text-sm focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] disabled:opacity-50 disabled:pointer-events-none bg-[var(--background)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)]'
               placeholder='الاسم الكامل'
-            />
+            / aria-label="الاسم الكامل" aria-required="true" aria-invalid="true">
             <div className='absolute inset-y-0 end-0 flex items-center pointer-events-none pe-4'>
               <svg
                 className='flex-shrink-0 size-4 text-[var(--text-muted)]'
@@ -121,16 +120,15 @@ const ContactForm = memo(function ContactForm() {
             البريد الإلكتروني
           </label>
           <div className='relative'>
-            <input
-              type='email'
+            <input type='email'
               id='email'
               name='email'
               value={formData.email}
               onChange={handleChange}
-              required
+              
               className='peer py-3 px-4 pe-11 block w-full border border-[var(--brand-border)] rounded-lg text-sm focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] disabled:opacity-50 disabled:pointer-events-none bg-[var(--background)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)]'
               placeholder='البريد الإلكتروني'
-            />
+            / aria-label="البريد الإلكتروني" aria-required="true" aria-invalid="true">
             <div className='absolute inset-y-0 end-0 flex items-center pointer-events-none pe-4'>
               <svg
                 className='flex-shrink-0 size-4 text-[var(--text-muted)]'
@@ -157,8 +155,7 @@ const ContactForm = memo(function ContactForm() {
           رقم الهاتف
         </label>
         <div className='relative'>
-          <input
-            type='tel'
+          <input type='tel'
             id='phone'
             name='phone'
             value={formData.phone}
@@ -166,7 +163,7 @@ const ContactForm = memo(function ContactForm() {
             className='peer py-3 px-4 pe-11 block w-full border border-[var(--brand-border)] rounded-lg text-sm focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] disabled:opacity-50 disabled:pointer-events-none bg-[var(--background)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)]'
             placeholder='رقم الهاتف'
             dir='ltr'
-          />
+          / aria-label="رقم الهاتف" aria-invalid="true">
           <div className='absolute inset-y-0 end-0 flex items-center pointer-events-none pe-4'>
             <Phone className='flex-shrink-0 size-4 text-[var(--text-muted)]' />
           </div>

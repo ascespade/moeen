@@ -109,7 +109,7 @@ export default function EnhancedSidebar() {
             لوحة التحكم
           </h2>
         )}
-        <buttononClick={() = aria-label="Button"> setCollapsed(!collapsed)}
+        <buttononClick={() => setCollapsed(!collapsed)} aria-label="Button"
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();

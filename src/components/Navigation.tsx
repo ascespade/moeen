@@ -41,10 +41,14 @@ export default function Navigation() {
   };
 
   return (
-    <>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+>
       {/* Mobile menu button */}
       <div className='lg:hidden fixed top-4 left-4 z-50'>
-        <buttononClick={() = aria-label="Button"> { setIsMobileMenuOpen(!isMobileMenuOpen)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsMobileMenuOpen(!isMobileMenuOpen) } }}
+        <buttononClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setIsMobileMenuOpen(!isMobileMenuOpen) } }}
           className='p-2 bg-white/10 backdrop-blur-md rounded-xl text-white hover:bg-white/20 transition-colors'
           aria-label='??? ???????'
         >
@@ -116,7 +120,7 @@ export default function Navigation() {
                 const Sun = action.icon;
                 return (
                   <buttonkey={action.name}
-                    onClick={() = aria-label="Button"> { handleQuickAction(action.action)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" handleQuickAction(action.action) } }}
+                    onClick={() => { handleQuickAction(action.action)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" handleQuickAction(action.action) } }}
                     className='w-full flex items-center space-x-3 px-4 py-2 text-white/70 hover:text-white hover:bg-white/10 rounded-xl transition-colors'
                   >
                     <Sun className='w-4 h-4' />

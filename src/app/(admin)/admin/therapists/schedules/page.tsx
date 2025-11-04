@@ -165,7 +165,11 @@ export default function TherapistSchedulesPage() {
   });
 
   return (
-    <div className='container-app py-8'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='container-app py-8'>
       <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-2'>
         جداول الأخصائيين
       </h1>
@@ -206,7 +210,7 @@ export default function TherapistSchedulesPage() {
                 <h3 className='text-lg font-bold text-gray-900 dark:text-white'>
                   {dayName}
                 </h3>
-                <buttononClick={() = aria-label="Button"> { addSchedule(dayIndex)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { addSchedule(dayIndex) } }}
+                <buttononClick={() => { addSchedule(dayIndex)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { addSchedule(dayIndex) } }}
                   disabled={saving}
                   className='btn btn-outline text-sm'
                 >
@@ -226,10 +230,9 @@ export default function TherapistSchedulesPage() {
                         <label className='text-sm text-gray-600 dark:text-gray-400'>
                           من
                         </label>
-                        <input
-                          type='time'
+                        <input type='time'
                           value={schedule.start_time}
-                          onChange={e =>
+                          onChange={e = aria-label="time" aria-invalid="true">
                             updateSchedule(
                               schedule.id,
                               'start_time',
@@ -244,10 +247,9 @@ export default function TherapistSchedulesPage() {
                         <label className='text-sm text-gray-600 dark:text-gray-400'>
                           إلى
                         </label>
-                        <input
-                          type='time'
+                        <input type='time'
                           value={schedule.end_time}
-                          onChange={e =>
+                          onChange={e = aria-label="time" aria-invalid="true">
                             updateSchedule(
                               schedule.id,
                               'end_time',
@@ -259,10 +261,9 @@ export default function TherapistSchedulesPage() {
                       </div>
 
                       <label className='flex items-center gap-2 cursor-pointer'>
-                        <input
-                          type='checkbox'
+                        <input type='checkbox'
                           checked={schedule.is_available}
-                          onChange={e =>
+                          onChange={e = aria-label="checkbox" aria-invalid="true">
                             updateSchedule(
                               schedule.id,
                               'is_available',
@@ -276,7 +277,7 @@ export default function TherapistSchedulesPage() {
                         </span>
                       </label>
 
-                      <buttononClick={() = aria-label="Button"> { deleteSchedule(schedule.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { deleteSchedule(schedule.id) } }}
+                      <buttononClick={() => { deleteSchedule(schedule.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { deleteSchedule(schedule.id) } }}
                         className='mr-auto text-red-600 hover:text-red-700 text-sm'
                       >
                         حذف

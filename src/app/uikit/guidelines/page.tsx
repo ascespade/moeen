@@ -1,6 +1,10 @@
 export default function GuidelinesPage() {
   return (
-    <main className='p-6 grid gap-6'>
+    <ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+main className='p-6 grid gap-6'>
       <h1 className='text-2xl font-semibold'>UI Guidelines</h1>
 
       <section className='grid gap-3'>

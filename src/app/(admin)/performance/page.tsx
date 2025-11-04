@@ -432,7 +432,11 @@ export default function PerformancePage() {
       className: '',
     };
     return (
-      <Badge variant={config.variant} className={config.className}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -829,10 +833,9 @@ export default function PerformancePage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input
-                      type='checkbox'
+                    <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e => {
+                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
                         if (e.target.checked) {
                           setSelectedMetrics(filteredMetrics.map(m => m.id));
                         } else {
@@ -855,11 +858,10 @@ export default function PerformancePage() {
                 {filteredMetrics.map(metric => (
                   <TableRow key={metric.id}>
                     <TableCell>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedMetrics.includes(metric.id)}
-                        onChange={e => {
+                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
                           if (e.target.checked) {
                             setSelectedMetrics([...selectedMetrics, metric.id]);
                           } else {

@@ -204,7 +204,11 @@ const ProgressTrackingPage: React.FC = () => {
   }
 
   return (
-    <div className='container mx-auto px-4 py-8' dir='rtl'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='container mx-auto px-4 py-8' dir='rtl'>
       {/* Header */}
       <div className='mb-8'>
         <div className='flex items-center justify-between mb-4'>
@@ -327,7 +331,7 @@ const ProgressTrackingPage: React.FC = () => {
       {/* Tabs */}
       <div className='mb-6'>
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
-          <buttononClick={() = aria-label="Button"> { setActiveTab('goals')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('goals') } }}
+          <buttononClick={() => { setActiveTab('goals')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('goals') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'goals'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -336,7 +340,7 @@ const ProgressTrackingPage: React.FC = () => {
           >
             الأهداف والمراحل
           </button>
-          <buttononClick={() = aria-label="Button"> { setActiveTab('assessments')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('assessments') } }}
+          <buttononClick={() => { setActiveTab('assessments')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('assessments') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'assessments'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -345,7 +349,7 @@ const ProgressTrackingPage: React.FC = () => {
           >
             التقييمات
           </button>
-          <buttononClick={() = aria-label="Button"> { setActiveTab('reports')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('reports') } }}
+          <buttononClick={() => { setActiveTab('reports')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('reports') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'reports'
                 ? 'bg-white text-gray-900 shadow-sm'

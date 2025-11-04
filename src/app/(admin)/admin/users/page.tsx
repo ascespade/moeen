@@ -283,7 +283,17 @@ function UsersPageContent() {
       className: '',
     };
     return (
-      <Badge variant={config.variant} className={config.className}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -433,7 +443,7 @@ function UsersPageContent() {
         </Button>
       </AdminHeader>
 
-      <main className='container-app py-8 space-y-8'>
+      <main className='container-app py-8 space-y-8' id="main-content">
         {/* Stats Cards - Modern Design */}
         <div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
           <AdminStatsCard
@@ -541,10 +551,9 @@ function UsersPageContent() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className='w-12'>
-                        <input
-                          type='checkbox'
+                        <input type='checkbox'
                           className='rounded border-gray-300'
-                          onChange={e => {
+                          onChange={e = aria-label="checkbox" aria-invalid="true"> {
                             if (e.target.checked) {
                               setSelectedUsers(filteredUsers.map(u => u.id));
                             } else {
@@ -566,11 +575,10 @@ function UsersPageContent() {
                     {filteredUsers.map(user => (
                       <TableRow key={user.id}>
                         <TableCell>
-                          <input
-                            type='checkbox'
+                          <input type='checkbox'
                             className='rounded border-gray-300'
                             checked={selectedUsers.includes(user.id)}
-                            onChange={e => {
+                            onChange={e = aria-label="checkbox" aria-invalid="true"> {
                               if (e.target.checked) {
                                 setSelectedUsers([...selectedUsers, user.id]);
                               } else {

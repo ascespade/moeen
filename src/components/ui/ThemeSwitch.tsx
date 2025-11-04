@@ -86,11 +86,11 @@ export function ThemeSwitch({
         <Sun
           className={`${iconSizes[size]} ${isLight ? 'text-[var(--brand-primary)]' : 'text-[var(--text-tertiary)]'}`}
         />
-        <buttononClick={() = aria-label="Button"> { {
+        <buttononClick={() => { {
             if (theme === 'light') setTheme('dark');
             else if (theme === 'dark') setTheme('system');
             else setTheme('light');
-          } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
+          } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
             if (theme === 'light') setTheme('dark');
             else if (theme === 'dark') setTheme('system');
             else setTheme('light');
@@ -141,10 +141,10 @@ export function ThemeSwitch({
 
                 return (
                   <buttonkey={themeOption.value}
-                    onClick={() = aria-label="Button"> { {
+                    onClick={() => { {
                       setTheme(themeOption.value);
                       setIsOpen(false);
-                    } onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
+                    } aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" {
                       setTheme(themeOption.value);
                       setIsOpen(false);
                      } }}}

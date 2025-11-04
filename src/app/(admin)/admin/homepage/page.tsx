@@ -48,7 +48,11 @@ export default function AdminHomepageEditor() {
     setServices(prev => [...prev, { title: '', description: '', image: '' }]);
   };
 
-  const updateService = (index: number, patch: Partial<ServiceItem>) => {
+  const updateService = (index: number, patch: Partial<div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+ServiceItem>) => {
     setServices(prev =>
       prev.map((s, i) => (i === index ? { ...s, ...patch } : s))
     );
@@ -135,10 +139,9 @@ export default function AdminHomepageEditor() {
                   <label className='block text-sm font-medium mb-1'>
                     العنوان
                   </label>
-                  <input
-                    className='form-input w-full'
+                  <inputclassName='form-input w-full'
                     value={s.title}
-                    onChange={e =>
+                    onChange={e = aria-invalid="true">
                       updateService(idx, { title: e.target.value })
                     }
                   />
@@ -147,10 +150,9 @@ export default function AdminHomepageEditor() {
                   <label className='block text-sm font-medium mb-1'>
                     الوصف
                   </label>
-                  <input
-                    className='form-input w-full'
+                  <inputclassName='form-input w-full'
                     value={s.description}
-                    onChange={e =>
+                    onChange={e = aria-invalid="true">
                       updateService(idx, { description: e.target.value })
                     }
                   />
@@ -160,20 +162,18 @@ export default function AdminHomepageEditor() {
                   <label className='block text-sm font-medium mb-1'>
                     رابط (اختياري)
                   </label>
-                  <input
-                    className='form-input w-full'
+                  <inputclassName='form-input w-full'
                     value={s.link || ''}
-                    onChange={e => updateService(idx, { link: e.target.value })}
+                    onChange={e = aria-invalid="true"> updateService(idx, { link: e.target.value })}
                   />
                 </div>
 
                 <div className='md:col-span-2'>
                   <label className='block text-sm font-medium mb-1'>صورة</label>
                   <div className='flex items-center gap-2'>
-                    <input
-                      type='file'
+                    <input type='file'
                       accept='image/*'
-                      onChange={e => handleFileChange(e, idx)}
+                      onChange={e = aria-label="file" aria-invalid="true"> handleFileChange(e, idx)}
                     />
                     {s.image && s.image !== 'uploading' && (
                       // eslint-disable-next-line @next/next/no-img-element

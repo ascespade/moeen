@@ -167,7 +167,17 @@ export default function CRMActivitiesPage() {
   });
 
   return (
-    <div className='min-h-screen bg-[var(--default-surface)]'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='min-h-screen bg-[var(--default-surface)]'>
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center justify-between'>
@@ -190,18 +200,18 @@ export default function CRMActivitiesPage() {
             </div>
             <div className='flex items-center gap-3'>
               <div className='flex rounded-lg border border-gray-300'>
-                <buttononClick={() = aria-label="Button"> { setViewMode('list')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('list') } }}
+                <buttononClick={() => { setViewMode('list')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('list') } }}
                   className={`px-3 py-2 text-sm ${viewMode === 'list' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   قائمة
                 </button>
-                <buttononClick={() = aria-label="Button"> { setViewMode('calendar')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('calendar') } }}
+                <buttononClick={() => { setViewMode('calendar')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('calendar') } }}
                   className={`px-3 py-2 text-sm ${viewMode === 'calendar' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   تقويم
                 </button>
               </div>
-              <buttononClick={() = aria-label="Button"> { setShowCreateModal(true)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
+              <buttononClick={() => { setShowCreateModal(true)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(true) } }}
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة نشاط
@@ -211,7 +221,7 @@ export default function CRMActivitiesPage() {
         </div>
       </header>
 
-      <main className='container-app py-8'>
+      <main className='container-app py-8' id="main-content">
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-default'>
@@ -247,10 +257,9 @@ export default function CRMActivitiesPage() {
               <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 البحث
               </label>
-              <input
-                type='text'
+              <input type='text'
                 value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
+                onChange={e = aria-label="text" aria-invalid="true"> setSearchTerm(e.target.value)}
                 placeholder='ابحث في الأنشطة...'
                 className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
@@ -380,7 +389,7 @@ export default function CRMActivitiesPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة نشاط جديد</h3>
-              <buttononClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+              <buttononClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -391,21 +400,18 @@ export default function CRMActivitiesPage() {
                 <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                   عنوان النشاط
                 </label>
-                <input
-                  type='text'
+                <input type='text'
                   className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل عنوان النشاط'
-                />
+                / aria-label="أدخل عنوان النشاط" aria-invalid="true">
               </div>
               <div>
                 <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                   الوصف
                 </label>
-                <textarea
-                  rows={3}
+                <textarearows={3}
                   className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                  placeholder='أدخل وصف النشاط'
-                ></textarea>
+                  placeholder='أدخل وصف النشاط' aria-label="أدخل وصف النشاط"></textarea>
               </div>
               <div className='grid grid-cols-2 gap-4'>
                 <div>
@@ -447,20 +453,19 @@ export default function CRMActivitiesPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     تاريخ الاستحقاق
                   </label>
-                  <input
-                    type='date'
+                  <input type='date'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                  />
+                  / aria-label="date" aria-invalid="true">
                 </div>
               </div>
               <div className='flex gap-3 pt-4'>
-                <buttontype='button'
-                  onClick={() = aria-label="Button"> { setShowCreateModal(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
+                <button type='button'
+                  onClick={() => { setShowCreateModal(false)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setShowCreateModal(false) } }}
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <buttontype='submit'
+                <button type='submit'
                   className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة النشاط">
                   إضافة النشاط
                 </button>

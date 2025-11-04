@@ -407,7 +407,11 @@ export default function ConversationsPage() {
       className: '',
     };
     return (
-      <Badge variant={config.variant} className={config.className}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -767,10 +771,9 @@ export default function ConversationsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input
-                      type='checkbox'
+                    <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e => {
+                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
                         if (e.target.checked) {
                           setSelectedConversations(
                             filteredConversations.map(c => c.id)
@@ -798,13 +801,12 @@ export default function ConversationsPage() {
                     className={!conversation.isRead ? 'bg-blue-50' : ''}
                   >
                     <TableCell>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedConversations.includes(
                           conversation.id
                         )}
-                        onChange={e => {
+                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
                           if (e.target.checked) {
                             setSelectedConversations([
                               ...selectedConversations,

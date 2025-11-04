@@ -30,7 +30,11 @@ export default function ProgressPage() {
   }
 
   return (
-    <div className='p-8'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='p-8'>
       <div className='mb-6 flex items-center justify-between'>
         <h1 className='text-3xl font-bold'>Progress Tracking</h1>
         <Button>Add Goal</Button>

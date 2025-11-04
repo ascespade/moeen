@@ -136,8 +136,8 @@ export default function AvailableSlotsPicker({
 
           <div className='grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2'>
             {data.slots.map((slot: Slot, index: number) => (
-              <button key={index}
-                onClick={() => { onSelect(slot)}
+              <buttonkey={index}
+                onClick={() => { onSelect(slot)} aria-label="Button"
                 className={`p-3 rounded-lg border-2 transition-all text-center ${
                   selectedSlot?.startTime === slot.startTime &&
                   selectedSlot?.therapistId === slot.therapistId

@@ -103,7 +103,11 @@ const DynamicServices = memo(function DynamicServices() {
 
   if (loading) {
     return (
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
         {[1, 2, 3, 4, 5, 6].map(i => (
           <div
             key={i}

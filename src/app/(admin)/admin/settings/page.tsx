@@ -165,7 +165,17 @@ function AdminSettingsPageContent() {
   };
 
   return (
-    <div className='min-h-screen bg-[var(--background)]'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='min-h-screen bg-[var(--background)]'>
       {/* Header with Save Actions */}
       <AdminHeader
         title='إعدادات النظام'
@@ -206,7 +216,7 @@ function AdminSettingsPageContent() {
         </Button>
       </AdminHeader>
 
-      <main className='container-app py-8'>
+      <main className='container-app py-8' id="main-content">
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-8'>
           {/* Settings Navigation */}
           <div className='lg:col-span-1'>
@@ -230,7 +240,7 @@ function AdminSettingsPageContent() {
               <nav className='p-2'>
                 {visibleTabs.map(tab => (
                   <buttonkey={tab.id}
-                    onClick={() = aria-label="Button"> { handleTabChange(tab.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleTabChange(tab.id) } }}
+                    onClick={() => { handleTabChange(tab.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { handleTabChange(tab.id) } }}
                     className={cn(
                       'w-full text-right p-4 rounded-xl mb-2 transition-all duration-200 group',
                       'hover:bg-[var(--brand-primary)]/5 hover:border-[var(--brand-primary)]/20',

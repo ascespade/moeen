@@ -54,7 +54,11 @@ export default function InvoicesPage() {
 
   if (loading) {
     return (
-      <div className='container-app py-8'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='container-app py-8'>
         <div className='card p-12 text-center'>
           <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
           <p className='mt-4'>جاري التحميل...</p>
@@ -180,7 +184,7 @@ export default function InvoicesPage() {
                       : '-'}
                   </td>
                   <td className='px-6 py-4'>
-                    <buttononClick={() = aria-label="Button"> { generateInvoicePDF(payment)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { generateInvoicePDF(payment) } }}
+                    <buttononClick={() => { generateInvoicePDF(payment)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { generateInvoicePDF(payment) } }}
                       className='text-sm text-[var(--default-default)] hover:underline'
                     >
                       📄 فاتورة

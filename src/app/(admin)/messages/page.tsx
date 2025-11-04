@@ -392,7 +392,11 @@ export default function MessagesPage() {
     const typeConfig = {
       email: {
         label: 'بريد إلكتروني',
-        icon: <Mail className='h-3 w-3' />,
+        icon: <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Mail className='h-3 w-3' />,
         className: 'bg-blue-100 text-blue-800',
       },
       sms: {
@@ -673,7 +677,7 @@ export default function MessagesPage() {
                 <div className='space-y-1'>
                   {folders.map(folder => (
                     <buttonkey={folder.id}
-                      onClick={() = aria-label="Button"> { setSelectedFolder(folder.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedFolder(folder.id) } }}
+                      onClick={() => { setSelectedFolder(folder.id)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setSelectedFolder(folder.id) } }}
                       className={`w-full flex items-center justify-between p-3 text-right hover:bg-muted transition-colors ${
                         selectedFolder === folder.id ? 'bg-muted' : ''
                       }`}
@@ -845,10 +849,9 @@ export default function MessagesPage() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className='w-12'>
-                        <input
-                          type='checkbox'
+                        <input type='checkbox'
                           className='rounded border-gray-300'
-                          onChange={e => {
+                          onChange={e = aria-label="checkbox" aria-invalid="true"> {
                             if (e.target.checked) {
                               setSelectedMessages(
                                 filteredMessages.map(m => m.id)
@@ -876,11 +879,10 @@ export default function MessagesPage() {
                         className={!message.isRead ? 'bg-blue-50' : ''}
                       >
                         <TableCell>
-                          <input
-                            type='checkbox'
+                          <input type='checkbox'
                             className='rounded border-gray-300'
                             checked={selectedMessages.includes(message.id)}
-                            onChange={e => {
+                            onChange={e = aria-label="checkbox" aria-invalid="true"> {
                               if (e.target.checked) {
                                 setSelectedMessages([
                                   ...selectedMessages,

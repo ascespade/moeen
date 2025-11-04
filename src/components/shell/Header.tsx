@@ -323,10 +323,9 @@ export default function Header() {
             <div className='hidden md:flex flex-1 max-w-xl ml-4'>
               <div className='relative w-full'>
                 <Search className='absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
-                <input
-                  type='search'
+                <input type='search'
                   value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
+                  onChange={e = aria-label="search" aria-invalid="true"> setSearchQuery(e.target.value)}
                   className='w-full h-10 pr-10 pl-4 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-all'
                   placeholder={
                     t(I18N_KEYS.COMMON.SEARCH_PLACEHOLDER) || '????...'
@@ -371,7 +370,7 @@ export default function Header() {
             {/* AI Features Indicator */}
             {aiFeaturesEnabled && (
               <div className='relative' data-dropdown>
-                <buttononClick={() = aria-label="Button"> { setShowAIFeatures(!showAIFeatures)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowAIFeatures(!showAIFeatures) } }}
+                <buttononClick={() => { setShowAIFeatures(!showAIFeatures)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowAIFeatures(!showAIFeatures) } }}
                   className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
                   aria-haspopup='menu'
                   aria-expanded={showAIFeatures}
@@ -421,7 +420,7 @@ export default function Header() {
 
             {/* Notifications */}
             <div className='relative' data-dropdown>
-              <buttononClick={() = aria-label="Button"> { setShowNotifDropdown(!showNotifDropdown)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowNotifDropdown(!showNotifDropdown) } }}
+              <buttononClick={() => { setShowNotifDropdown(!showNotifDropdown)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowNotifDropdown(!showNotifDropdown) } }}
                 className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
                 aria-haspopup='menu'
                 aria-expanded={showNotifDropdown}
@@ -634,7 +633,7 @@ export default function Header() {
 
             {/* User Menu */}
             <div className='relative' data-dropdown>
-              <buttononClick={() = aria-label="Button"> { setShowUserDropdown(!showUserDropdown)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowUserDropdown(!showUserDropdown) } }}
+              <buttononClick={() => { setShowUserDropdown(!showUserDropdown)} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="Button" setShowUserDropdown(!showUserDropdown) } }}
                 className='flex items-center gap-2 h-10 px-2 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
                 aria-haspopup='menu'
                 aria-expanded={showUserDropdown}

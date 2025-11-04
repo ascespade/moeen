@@ -109,7 +109,23 @@ export default function SessionsPage() {
 
   if (loading) {
     return (
-      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+
+
+<ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto mb-4'></div>
           <p className='text-gray-600'>جاري تحميل الجلسات...</p>
@@ -124,7 +140,7 @@ export default function SessionsPage() {
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
-          <buttononClick={() = aria-label="Button"> { window.location.reload()} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
+          <buttononClick={() => { window.location.reload()} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { window.location.reload() } }}
             className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
@@ -136,7 +152,7 @@ export default function SessionsPage() {
 
   return (
     <div className='min-h-screen bg-[var(--default-surface)]'>
-      <main className='container-app py-8'>
+      <main className='container-app py-8' id="main-content">
         {/* Page Header */}
         <div className='mb-8 flex items-center justify-between'>
           <div>
@@ -158,12 +174,12 @@ export default function SessionsPage() {
               <option value='cancelled'>ملغية</option>
             </select>
             <div className='flex rounded-lg border border-gray-300'>
-              <buttononClick={() = aria-label="Button"> { setViewMode('cards')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('cards') } }}
+              <buttononClick={() => { setViewMode('cards')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('cards') } }}
                 className={`px-3 py-2 text-sm ${viewMode === 'cards' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 بطاقات
               </button>
-              <buttononClick={() = aria-label="Button"> { setViewMode('table')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('table') } }}
+              <buttononClick={() => { setViewMode('table')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setViewMode('table') } }}
                 className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 جدول

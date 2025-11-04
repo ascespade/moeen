@@ -101,7 +101,17 @@ function AdminDashboardContent() {
       activityTypeConfig[type as keyof typeof activityTypeConfig] ||
       activityTypeConfig.appointment;
     return (
-      <div
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+
+
+<a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
+  ?????? ??????? ???????
+</a>
+
+div
         className={cn(
           'h-8 w-8 rounded-full flex items-center justify-center text-sm border',
           config.bgStyle,
@@ -167,7 +177,7 @@ function AdminDashboardContent() {
           </Button>
         </AdminHeader>
 
-        <main className='container-app py-8'>
+        <main className='container-app py-8' id="main-content">
           <div className='text-center py-16'>
             <AlertTriangle
               className='w-16 h-16 mx-auto mb-4'
@@ -246,7 +256,7 @@ function AdminDashboardContent() {
         </Button>
       </AdminHeader>
 
-      <main className='container-app py-8 space-y-8'>
+      <main className='container-app py-8 space-y-8' id="main-content">
         {/* Main Stats Grid */}
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
           <AdminStatsCard

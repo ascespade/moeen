@@ -337,7 +337,11 @@ export default function ReportsPage() {
       className: '',
     };
     return (
-      <Badge variant={config.variant} className={config.className}>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -680,10 +684,9 @@ export default function ReportsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input
-                      type='checkbox'
+                    <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={e => {
+                      onChange={e = aria-label="checkbox" aria-invalid="true"> {
                         if (e.target.checked) {
                           setSelectedReports(filteredReports.map(r => r.id));
                         } else {
@@ -706,11 +709,10 @@ export default function ReportsPage() {
                 {filteredReports.map(report => (
                   <TableRow key={report.id}>
                     <TableCell>
-                      <input
-                        type='checkbox'
+                      <input type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedReports.includes(report.id)}
-                        onChange={e => {
+                        onChange={e = aria-label="checkbox" aria-invalid="true"> {
                           if (e.target.checked) {
                             setSelectedReports([...selectedReports, report.id]);
                           } else {

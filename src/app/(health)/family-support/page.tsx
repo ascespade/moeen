@@ -323,7 +323,11 @@ const FamilySupportPage: React.FC = () => {
   }
 
   return (
-    <div className='container mx-auto px-4 py-8' dir='rtl'>
+    <div aria-live="polite" aria-atomic="true" className="sr-only">
+  <span id="live-region"></span>
+</div>
+
+div className='container mx-auto px-4 py-8' dir='rtl'>
       {/* Header */}
       <div className='mb-8'>
         <div className='flex items-center justify-between mb-4'>
@@ -411,7 +415,7 @@ const FamilySupportPage: React.FC = () => {
       {/* Tabs */}
       <div className='mb-6'>
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
-          <buttononClick={() = aria-label="Button"> { setActiveTab('members')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('members') } }}
+          <buttononClick={() => { setActiveTab('members')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('members') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'members'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -420,7 +424,7 @@ const FamilySupportPage: React.FC = () => {
           >
             أعضاء الأسر
           </button>
-          <buttononClick={() = aria-label="Button"> { setActiveTab('sessions')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('sessions') } }}
+          <buttononClick={() => { setActiveTab('sessions')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('sessions') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'sessions'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -429,7 +433,7 @@ const FamilySupportPage: React.FC = () => {
           >
             جلسات الدعم
           </button>
-          <buttononClick={() = aria-label="Button"> { setActiveTab('resources')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('resources') } }}
+          <buttononClick={() => { setActiveTab('resources')} aria-label="Button" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="Button"> { setActiveTab('resources') } }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'resources'
                 ? 'bg-white text-gray-900 shadow-sm'
