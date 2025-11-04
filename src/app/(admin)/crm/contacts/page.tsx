@@ -252,18 +252,18 @@ function ContactsPageContent() {
         {/* Header */}
         <div className='mb-8'>
           <div className='flex items-center justify-between mb-4'>
-          <div>
-            <h1 className='text-3xl font-bold text-gray-900'>
-              إدارة جهات الاتصال
-            </h1>
-            <p className='text-gray-600 mt-2'>
-              إدارة العملاء المحتملين والعملاء الحاليين
-            </p>
-          </div>
-          <Button
-            onClick={() => router.push('/crm/contacts/new')}
-            className='bg-[var(--default-default)] hover:brightness-95'
-          >
+            <div>
+              <h1 className='text-3xl font-bold text-gray-900'>
+                إدارة جهات الاتصال
+              </h1>
+              <p className='text-gray-600 mt-2'>
+                إدارة العملاء المحتملين والعملاء الحاليين
+              </p>
+            </div>
+            <Button
+              onClick={() => router.push('/crm/contacts/new')}
+              className='bg-[var(--default-default)] hover:brightness-95'
+            >
             <Plus className='w-4 h-4 mr-2' />
             إضافة جهة اتصال
           </Button>
@@ -303,12 +303,12 @@ function ContactsPageContent() {
               <option value='معرض'>معرض</option>
             </select>
           </div>
-        </div>
+          </div>
         </div>
 
         {/* Stats Cards */}
-      <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
-        <Card>
+        <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
+          <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
             <CardTitle className='text-sm font-medium'>
               إجمالي جهات الاتصال
