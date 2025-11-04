@@ -610,13 +610,13 @@ function ConversationsPageContent() {
       <div className='container-app py-6'>
         {/* Header */}
         <div className='flex justify-between items-center mb-8'>
-            <div>
-              <h1 className='text-3xl font-bold'>إدارة المحادثات</h1>
-              <p className='text-muted-foreground'>
-                إدارة ومتابعة جميع المحادثات مع العملاء والمرضى
-              </p>
-            </div>
-            <div className='flex items-center gap-4'>
+          <div>
+            <h1 className='text-3xl font-bold'>إدارة المحادثات</h1>
+            <p className='text-muted-foreground'>
+              إدارة ومتابعة جميع المحادثات مع العملاء والمرضى
+            </p>
+          </div>
+          <div className='flex items-center gap-4'>
               <Button variant='outline'>
                 <Download className='h-4 w-4 mr-2' />
                 تصدير

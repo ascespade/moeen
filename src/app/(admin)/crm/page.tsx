@@ -601,13 +601,13 @@ function CRMPageContent() {
         {/* Header */}
         <div className='flex justify-between items-center mb-8'>
           <div>
-              <h1 className='text-3xl font-bold'>إدارة العملاء (CRM)</h1>
-              <p className='text-muted-foreground'>
-                إدارة العملاء المحتملين والجهات والصفقات
-              </p>
-            </div>
-            <div className='flex items-center gap-4'>
-              <Button variant='outline'>
+            <h1 className='text-3xl font-bold'>إدارة العملاء (CRM)</h1>
+            <p className='text-muted-foreground'>
+              إدارة العملاء المحتملين والجهات والصفقات
+            </p>
+          </div>
+          <div className='flex items-center gap-4'>
+            <Button variant='outline'>
                 <Download className='h-4 w-4 mr-2' />
                 تصدير
               </Button>
