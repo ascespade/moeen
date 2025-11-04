@@ -1,7 +1,7 @@
 /**
  * Runtime Design System Monitor
  * مراقب نظام التصميم في الوقت الفعلي
- * 
+ *
  * يفحص التصميم في المتصفح ويحذّر من المخالفات
  */
 
@@ -31,7 +31,7 @@ if (typeof window !== 'undefined') {
             element,
             '\n💡 Use CSS variables instead: bg-[var(--background)]'
           );
-          
+
           // Highlight in development
           if (process.env.NODE_ENV === 'development') {
             (element as HTMLElement).style.outline = '2px solid red';

@@ -438,6 +438,7 @@ function SecurityPageContent() {
               </Button>
             </div>
           </div>
+        </div>
 
         {/* Security Overview */}
         <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
@@ -593,7 +594,6 @@ function SecurityPageContent() {
               <option value='critical'>حرج</option>
             </select>
           </div>
-        </div>
         </div>
 
         {loading ? (
@@ -897,7 +897,7 @@ function SecurityPageContent() {
           )}
         </>
       )}
-      </div>
+    </div>
     </>
   );
 }
