@@ -110,6 +110,10 @@ if [ -n "$PUBLIC_KEY" ]; then
     echo ""
     echo "📋 Your SSH Public Key:"
     echo "   $PUBLIC_KEY"
+    
+    # Save to reference file
+    echo "$PUBLIC_KEY" > /workspace/MY_SSH_PUBLIC_KEY.txt
+    echo "💾 Saved to: /workspace/MY_SSH_PUBLIC_KEY.txt"
 fi
 
 echo ""
