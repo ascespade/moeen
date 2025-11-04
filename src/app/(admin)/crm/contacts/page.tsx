@@ -269,9 +269,9 @@ function ContactsPageContent() {
             </Button>
           </div>
 
-        {/* Search and Filters */}
-        <div className='flex flex-col md:flex-row gap-4 mb-6'>
-          <div className='flex-1'>
+          {/* Search and Filters */}
+          <div className='flex flex-col md:flex-row gap-4 mb-6'>
+            <div className='flex-1'>
             <Input
               placeholder='البحث في جهات الاتصال...'
               value={searchTerm}

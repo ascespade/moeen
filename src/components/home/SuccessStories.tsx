@@ -50,7 +50,7 @@ const stories: Story[] = [
 
 const SuccessStories = memo(function SuccessStories() {
   return (
-    <section className='py-20 bg-gradient-to-b from-[var(--brand-surface)] to-white'>
+    <section className='py-20 bg-gradient-to-b from-[var(--brand-surface)] to-[var(--background)]'>
       <div className='container-app'>
         <div className='text-center mb-16'>
           <h2 className='text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4'>
@@ -65,7 +65,7 @@ const SuccessStories = memo(function SuccessStories() {
           {stories.map(story => (
             <Card
               key={story.id}
-              className='overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0'
+              className='overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-[var(--panel)] border border-[var(--brand-border)]'
             >
               {/* Image */}
               <div className='relative h-64'>

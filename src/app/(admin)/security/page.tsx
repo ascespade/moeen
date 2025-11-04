@@ -421,12 +421,12 @@ function SecurityPageContent() {
         {/* Header */}
         <div className='mb-8'>
           <div className='flex items-center justify-between mb-4'>
-          <div>
-            <h1 className='text-3xl font-bold text-gray-900'>
-              مركز الأمان والحماية
-            </h1>
-            <p className='text-gray-600 mt-2'>مراقبة الأمان وحماية البيانات</p>
-          </div>
+            <div>
+              <h1 className='text-3xl font-bold text-gray-900'>
+                مركز الأمان والحماية
+              </h1>
+              <p className='text-gray-600 mt-2'>مراقبة الأمان وحماية البيانات</p>
+            </div>
           <div className='flex gap-2'>
             <Button onClick={loadSecurityData} variant='outline' size='sm'>
               <RefreshCw className='w-4 h-4 mr-2' />

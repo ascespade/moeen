@@ -39,7 +39,7 @@ const InteractiveGallery = memo(function InteractiveGallery() {
   return (
     <section
       id='gallery'
-      className='py-20 bg-gradient-to-b from-white to-[var(--brand-surface)]'
+      className='py-20 bg-gradient-to-b from-[var(--background)] to-[var(--brand-surface)]'
     >
       <div className='container-app'>
         <div className='text-center mb-16'>

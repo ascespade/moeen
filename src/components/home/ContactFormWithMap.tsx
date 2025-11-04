@@ -1,9 +1,9 @@
 'use client';
 
+import React, { useState } from 'react';
 import { CONTACT_INFO } from '@/lib/constants/ui';
 import { toArabicNumbers } from '@/lib/utils/numbers';
 import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react';
-import { useState } from 'react';
 
 export default function ContactFormWithMap() {
   const [isSending, setIsSending] = useState(false);
@@ -58,42 +58,42 @@ export default function ContactFormWithMap() {
 
   const contactInfo = [
     {
-      icon: <MapPin className='h-6 w-6' />,
+      icon: MapPin,
       title: 'العنوان',
       value: CONTACT_INFO.ADDRESS,
       link: googleMapsLink,
       description: 'انقر للفتح في خرائط جوجل',
     },
     {
-      icon: <Mail className='h-6 w-6' />,
+      icon: Mail,
       title: 'البريد الإلكتروني',
       value: CONTACT_INFO.EMAIL,
       link: `mailto:${CONTACT_INFO.EMAIL}`,
       description: 'انقر لإرسال بريد إلكتروني',
     },
     {
-      icon: <Phone className='h-6 w-6' />,
+      icon: Phone,
       title: 'الهاتف',
       value: toArabicNumbers(CONTACT_INFO.PHONE),
       link: `tel:+966126173693`,
       description: 'انقر للاتصال',
     },
     {
-      icon: <Phone className='h-6 w-6' />,
+      icon: Phone,
       title: 'الجوال',
       value: toArabicNumbers(CONTACT_INFO.MOBILE),
       link: `tel:+966555381558`,
       description: 'انقر للاتصال',
     },
     {
-      icon: <MessageCircle className='h-6 w-6' />,
+      icon: MessageCircle,
       title: 'واتساب',
       value: toArabicNumbers(CONTACT_INFO.MOBILE),
       link: whatsappLink,
       description: 'انقر للتواصل عبر واتساب',
     },
     {
-      icon: <Clock className='h-6 w-6' />,
+      icon: Clock,
       title: 'ساعات العمل',
       value: `الأحد - الخميس: ${toArabicNumbers('8:00')} - ${toArabicNumbers('17:00')}`,
       link: '#',
@@ -134,10 +134,13 @@ export default function ContactFormWithMap() {
               borderTop: '1px solid var(--brand-border)',
             }}
           >
-            <ahref={googleMapsLink}
+            <a
+              href={googleMapsLink}
               target='_blank'
               rel='noopener noreferrer'
-              className='flex items-center justify-center gap-2 text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)] hover:underline transition-colors font-medium' aria-label="فتح في خرائط جوجل">
+              className='flex items-center justify-center gap-2 text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)] hover:underline transition-colors font-medium'
+              aria-label="فتح في خرائط جوجل"
+            >
               <MapPin className='h-5 w-5' />
               فتح في خرائط جوجل
             </a>
@@ -185,8 +188,10 @@ export default function ContactFormWithMap() {
                     onChange={handleChange}
                     placeholder='اسمك الكامل'
                     className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-4 py-3 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)] transition-all'
-                    
-                  / aria-label="اسمك الكامل" aria-required="true" aria-invalid="true">
+                    aria-label="اسمك الكامل"
+                    aria-required="true"
+                    aria-invalid="true"
+                  />
                 </div>
                 <div>
                   <label
@@ -202,8 +207,10 @@ export default function ContactFormWithMap() {
                     onChange={handleChange}
                     placeholder='name@example.com'
                     className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-4 py-3 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)] transition-all'
-                    
-                  / aria-label="name@example.com" aria-required="true" aria-invalid="true">
+                    aria-label="name@example.com"
+                    aria-required="true"
+                    aria-invalid="true"
+                  />
                 </div>
               </div>
 
@@ -221,8 +228,10 @@ export default function ContactFormWithMap() {
                   onChange={handleChange}
                   placeholder='موضوع الرسالة'
                   className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-4 py-3 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)] transition-all'
-                  
-                / aria-label="موضوع الرسالة" aria-required="true" aria-invalid="true">
+                  aria-label="موضوع الرسالة"
+                  aria-required="true"
+                  aria-invalid="true"
+                />
               </div>
 
               <div>
@@ -244,9 +253,12 @@ export default function ContactFormWithMap() {
                 />
               </div>
 
-              <button type='submit'
+              <button
+                type='submit'
                 disabled={isSending}
-                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50 shadow-lg hover:shadow-xl hover:scale-105' aria-label="{isSending ? (">
+                className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--brand-primary)] px-6 py-3 text-white transition-all hover:bg-[var(--brand-primary-hover)] disabled:cursor-not-allowed disabled:opacity-50 shadow-lg hover:shadow-xl hover:scale-105'
+                aria-label={isSending ? 'جارٍ الإرسال...' : 'إرسال الرسالة'}
+              >
                 {isSending ? (
                   <>
                     <div className='h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent'></div>
@@ -268,22 +280,24 @@ export default function ContactFormWithMap() {
             معلومات التواصل
           </h3>
           <div className='space-y-4'>
-            {contactInfo.map((info, index) => (
-              <akey={index}
-                href={info.link}
-                target={info.link.startsWith('http') ? '_blank' : '_self'}
-                rel={
-                  info.link.startsWith('http')
-                    ? 'noopener noreferrer'
-                    : undefined
-                }
-                className='group flex items-start gap-4 rounded-lg p-4 transition-all hover:bg-[var(--brand-primary)]/10 hover:shadow-md' aria-label="{info.icon}
-                
-                
-    ">
-                <div className='mt-1 text-[var(--brand-primary)] transition-transform group-hover:scale-110'>
-                  {info.icon}
-                </div>
+            {contactInfo.map((info, index) => {
+              const Icon = info.icon;
+              return (
+                <a
+                  key={index}
+                  href={info.link}
+                  target={info.link.startsWith('http') ? '_blank' : '_self'}
+                  rel={
+                    info.link.startsWith('http')
+                      ? 'noopener noreferrer'
+                      : undefined
+                  }
+                  className='group flex items-start gap-4 rounded-lg p-4 transition-all hover:bg-[var(--brand-primary)]/10 hover:shadow-md'
+                  aria-label={info.title}
+                >
+                  <div className='mt-1 text-[var(--brand-primary)] transition-transform group-hover:scale-110'>
+                    <Icon className='h-6 w-6' />
+                  </div>
                 <div className='flex-1'>
                   <h4 className='mb-1 font-semibold text-[var(--text-primary)] transition-colors group-hover:text-[var(--brand-primary)]'>
                     {info.title}
@@ -297,8 +311,9 @@ export default function ContactFormWithMap() {
                     </p>
                   )}
                 </div>
-              </a>
-            ))}
+                </a>
+              );
+            })}
           </div>
 
           <div className='mt-8 rounded-lg bg-[var(--brand-primary)]/10 p-6 border border-[var(--brand-primary)]/20'>
