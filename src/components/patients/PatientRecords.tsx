@@ -8,12 +8,7 @@ import {
   Calendar,
   FileText,
   Plus,
-  Edit,
-  Trash2,
   Search,
-  Filter,
-  Download,
-  Eye,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
