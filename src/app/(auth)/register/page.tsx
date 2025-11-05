@@ -128,13 +128,12 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <>
+      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           <span id="live-region"></span>
         </div>
-        <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
-          <div className='card w-full max-w-md p-8 text-center'>
-            <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
+        <div className='card w-full max-w-md p-8 text-center'>
+          <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
           </div>
           <h1 className='mb-4 text-2xl font-bold text-gray-900 dark:text-white'>
@@ -204,7 +203,9 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أدخل اسمك الكامل'
                 disabled={isLoading}
-              / aria-label="أدخل اسمك الكامل" aria-invalid="true">
+                aria-label="أدخل اسمك الكامل"
+                aria-invalid={errors.name ? 'true' : 'false'}
+              />
               {errors.name && (
                 <p className='mt-1 text-sm text-default-error'>{errors.name}</p>
               )}
@@ -228,7 +229,9 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أدخل بريدك الإلكتروني'
                 disabled={isLoading}
-              / aria-label="أدخل بريدك الإلكتروني" aria-invalid="true">
+                aria-label="أدخل بريدك الإلكتروني"
+                aria-invalid={errors.email ? 'true' : 'false'}
+              />
               {errors.email && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.email}
@@ -254,7 +257,9 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أدخل كلمة المرور'
                 disabled={isLoading}
-              / aria-label="أدخل كلمة المرور" aria-invalid="true">
+                aria-label="أدخل كلمة المرور"
+                aria-invalid={errors.password ? 'true' : 'false'}
+              />
               {errors.password && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.password}
@@ -280,7 +285,9 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أعد إدخال كلمة المرور'
                 disabled={isLoading}
-              / aria-label="أعد إدخال كلمة المرور" aria-invalid="true">
+                aria-label="أعد إدخال كلمة المرور"
+                aria-invalid={errors.confirmPassword ? 'true' : 'false'}
+              />
               {errors.confirmPassword && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.confirmPassword}
@@ -297,7 +304,8 @@ export default function RegisterPage() {
                   onChange={handleInputChange}
                   className='mt-1 h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                   disabled={isLoading}
-                / aria-label="agreeToTerms" aria-invalid="true">
+                  aria-label="agreeToTerms"
+                />
                 <span className='text-sm text-gray-700 dark:text-gray-300'>
                   أوافق على{' '}
                   <Link
@@ -323,9 +331,12 @@ export default function RegisterPage() {
             </div>
 
             {/* Submit Button */}
-            <button type='submit'
+            <button
+              type='submit'
               disabled={isLoading}
-              className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50' aria-label="{isLoading ? (">
+              className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50'
+              aria-label={isLoading ? 'جاري إنشاء الحساب...' : 'إنشاء الحساب'}
+            >
               {isLoading ? (
                 <div className='flex items-center justify-center gap-2'>
                   <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent'></div>
@@ -351,6 +362,6 @@ export default function RegisterPage() {
           </div>
         </div>
       </div>
-      </>
     );
   }
+}

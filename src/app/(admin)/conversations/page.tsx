@@ -374,7 +374,7 @@ function ConversationsPageContent() {
         source: 'النظام الداخلي',
         category: 'support',
       },
-    ];
+    ];*/
 
     // Legacy mock data removed - using real API
   }, [currentPage]);
@@ -617,21 +617,21 @@ function ConversationsPageContent() {
             </p>
           </div>
           <div className='flex items-center gap-4'>
-              <Button variant='outline'>
-                <Download className='h-4 w-4 mr-2' />
-                تصدير
-              </Button>
-              <Button variant='outline'>
-                <Upload className='h-4 w-4 mr-2' />
-                استيراد
-              </Button>
-            </div>
+            <Button variant='outline'>
+              <Download className='h-4 w-4 mr-2' />
+              تصدير
+            </Button>
+            <Button variant='outline'>
+              <Upload className='h-4 w-4 mr-2' />
+              استيراد
+            </Button>
           </div>
+        </div>
 
-          {/* Stats Cards */}
-          <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
-            <Card>
-              <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+        {/* Stats Cards */}
+        <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
+          <Card>
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <CardTitle className='text-sm font-medium'>
                 إجمالي المحادثات
               </CardTitle>
@@ -1082,7 +1082,6 @@ function ConversationsPageContent() {
             )}
           </DialogContent>
         </Dialog>
-        </div>
       </div>
     </div>
   );

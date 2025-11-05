@@ -295,7 +295,7 @@ function SecurityPageContent() {
           created_at: '2024-01-15T08:30:00Z',
           assigned_to: 'مدير النظام',
         },
-      ];
+      ];*/
 
     // Legacy mock data removed - using real API
   };
@@ -896,7 +896,7 @@ function SecurityPageContent() {
             </div>
           )}
         </>
-        )}
+      )}
       </div>
     </>
   );

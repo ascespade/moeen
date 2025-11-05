@@ -389,11 +389,12 @@ export default function CRUDTestPage() {
         return <XCircle className='w-5 h-5 text-[var(--brand-error)]' />;
       case 'running':
         return (
-          <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-RefreshCw className='w-5 h-5 text-[var(--brand-primary)] animate-spin' />
+          <>
+            <div aria-live="polite" aria-atomic="true" className="sr-only">
+              <span id="live-region"></span>
+            </div>
+            <RefreshCw className='w-5 h-5 text-[var(--brand-primary)] animate-spin' />
+          </>
         );
       default:
         return <AlertCircle className='w-5 h-5 text-[var(--text-muted)]' />;
@@ -682,14 +683,3 @@ RefreshCw className='w-5 h-5 text-[var(--brand-primary)] animate-spin' />
   );
 }
 
-export default function DynamicDataPage() {
-  const pageConfig = ADMIN_PAGES.dynamicData;
-  return (
-    <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
-    >
-      <DynamicDataPageContent />
-    </AdminPageWrapper>
-  );
-}
