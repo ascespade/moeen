@@ -47,7 +47,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import {
-  Building2,
   Plus,
   Search,
   Filter,

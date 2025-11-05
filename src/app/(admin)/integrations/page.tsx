@@ -11,7 +11,6 @@ import {
   XCircle,
   AlertCircle,
   RefreshCw,
-  ExternalLink,
   Key,
   Globe,
   MessageSquare,

@@ -9,23 +9,17 @@ import {
   GraduationCap,
   Calendar,
   Clock,
-  User,
   Target,
   TrendingUp,
-  FileText,
-  Video,
   Plus,
   Search,
-  Filter,
   MoreVertical,
   Edit,
   Eye,
   CheckCircle,
-  AlertCircle,
   Award,
   BookOpen,
   Users,
-  Star,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';

@@ -59,7 +59,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Calendar,
-  Clock,
   User,
   Users,
   Settings,
