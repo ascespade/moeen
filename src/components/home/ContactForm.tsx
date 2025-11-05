@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
+import { logger } from '@/lib/monitoring/logger';
 import { toArabicNumbers } from '@/lib/utils/numbers';
 import { Phone, Send } from 'lucide-react';
 import { memo, useState } from 'react';
@@ -56,7 +57,7 @@ const ContactForm = memo(function ContactForm() {
         setTimeout(() => setIsSubmitted(false), 5000);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      logger.error('Error submitting form:', error);
     } finally {
       setIsSubmitting(false);
     }

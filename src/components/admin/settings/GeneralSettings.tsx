@@ -1,6 +1,7 @@
 'use client';
 
 import { AdminCard } from '@/components/admin/ui';
+import { logger } from '@/lib/monitoring/logger';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import {
@@ -106,7 +107,7 @@ export default function GeneralSettings({ onChange, onSave }: GeneralSettingsPro
           setConfig(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading general settings:', error);
+        logger.error('Error loading general settings:', error);
       } finally {
         setLoading(false);
       }
@@ -146,7 +147,7 @@ export default function GeneralSettings({ onChange, onSave }: GeneralSettingsPro
           throw new Error('Failed to save settings');
         }
       } catch (error) {
-        console.error('Error saving general settings:', error);
+        logger.error('Error saving general settings:', error);
         throw error;
       }
     }

@@ -3,6 +3,8 @@
  * Single entry point for all configuration files
  */
 
+import { logger } from '@/lib/monitoring/logger';
+
 // Re-export all configuration modules
 export * from './app';
 export * from './env';
@@ -62,12 +64,12 @@ export const validateConfig = () => {
   const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
 
   if (missingVars.length > 0) {
-    console.warn(
+    logger.warn(
       `Missing required environment variables: ${missingVars.join(', ')}`
     );
   }
 
-  console.log('Configuration loaded successfully');
+  logger.debug('Configuration loaded successfully');
   return missingVars.length === 0;
 };
 

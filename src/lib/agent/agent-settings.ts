@@ -3,6 +3,8 @@
  * Real-time agent rules and design guidelines enforcement
  */
 
+import { logger } from '@/lib/monitoring/logger';
+
 export interface DesignGuideline {
   description: string;
   rules: string[];
@@ -175,7 +177,7 @@ export function loadAgentSettings(): AgentSettings {
       return { ...defaultAgentSettings, ...parsed };
     }
   } catch (error) {
-    console.warn('Failed to load agent settings:', error);
+    logger.warn('Failed to load agent settings:', error);
   }
 
   return defaultAgentSettings;
@@ -192,7 +194,7 @@ export function saveAgentSettings(settings: AgentSettings): void {
   try {
     localStorage.setItem('agent_settings', JSON.stringify(settings));
   } catch (error) {
-    console.warn('Failed to save agent settings:', error);
+    logger.warn('Failed to save agent settings:', error);
   }
 }
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/Button';
+import { logger } from '@/lib/monitoring/logger';
 import { AlertTriangle, Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -129,7 +130,7 @@ export default function RouteGuard({
                 }
               } catch {}
 
-              console.warn('API auth failed, using localStorage fallback');
+              logger.warn('API auth failed, using localStorage fallback');
               if (!isMounted) return;
               const fallbackUser = {
                 id: userFromStorage.id,
@@ -225,7 +226,7 @@ export default function RouteGuard({
         } catch (fetchError: any) {
           clearTimeout(timeoutId);
           if (fetchError.name === 'AbortError') {
-            console.error('Auth check timeout after 10 seconds');
+            logger.error('Auth check timeout after 10 seconds');
             if (isMounted && userFromStorage) {
               // Use localStorage fallback immediately on timeout
               const fallbackUser = {
@@ -265,7 +266,7 @@ export default function RouteGuard({
               );
             }
           } else {
-            console.error('Auth fetch error:', fetchError);
+            logger.error('Auth fetch error:', fetchError);
             if (isMounted) {
               setErrorMessage(
                 'فشل في التحقق من الصلاحيات. يرجى التأكد من اتصالك بالإنترنت.'
@@ -275,7 +276,7 @@ export default function RouteGuard({
 
           // Use localStorage fallback if available
           if (userFromStorage && !redirectingRef.current) {
-            console.warn('Using localStorage fallback for auth');
+            logger.warn('Using localStorage fallback for auth');
             if (!isMounted) return;
             const fallbackUser = {
               role: userFromStorage.role || 'admin',
@@ -326,7 +327,7 @@ export default function RouteGuard({
           return;
         }
       } catch (error) {
-        console.error('Error checking authorization:', error);
+        logger.error('Error checking authorization:', error);
         if (isMounted && !redirectingRef.current) {
           redirectingRef.current = true;
           setIsAuthorized(false);

@@ -1,6 +1,7 @@
 // src/components/Navigation.tsx
 'use client';
 
+import { logger } from '@/lib/monitoring/logger';
 import {
   Activity,
   BarChart3,
@@ -35,7 +36,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleQuickAction = (action: string) => {
-    console.log(`Quick action: ${action}`);
+    logger.debug(`Quick action: ${action}`);
     // Handle quick actions here
   };
 

@@ -15,6 +15,7 @@
 import { createClient } from '@/lib/supabase/server';
 import jwt from 'jsonwebtoken';
 import type { CustomAuthUser, UserPermissions, AuthResult } from './types';
+import { logger } from '@/lib/monitoring/logger';
 
 // Re-export types for convenience
 export type { CustomAuthUser, UserPermissions, AuthResult };
@@ -36,7 +37,7 @@ function getJWTExpiresIn(): string {
 const isDev = process.env.NODE_ENV === 'development';
 const log = (message: string, ...args: any[]) => {
   if (isDev) {
-    console.log(`[AUTH-HUB] ${message}`, ...args);
+    logger.debug(`[AUTH-HUB] ${message}`, ...args);
   }
 };
 

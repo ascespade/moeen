@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { logger } from '@/lib/monitoring/logger';
 import { createClient } from '@/lib/supabase/client';
 
 interface SessionType {
@@ -40,7 +41,7 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
       if (error) throw error;
       setSessionTypes(data || []);
     } catch (error) {
-      console.error('Error loading session types:', error);
+      logger.error('Error loading session types:', error);
     } finally {
       setLoading(false);
     }

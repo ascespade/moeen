@@ -1,6 +1,7 @@
 'use client';
 
 import { AdminCard } from '@/components/admin/ui';
+import { logger } from '@/lib/monitoring/logger';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
 import { Switch } from '@/components/ui/Switch';
@@ -73,7 +74,7 @@ export default function SecuritySettings({ onChange }: SecuritySettingsProps) {
           setConfig(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading security settings:', error);
+        logger.error('Error loading security settings:', error);
       } finally {
         setLoading(false);
       }

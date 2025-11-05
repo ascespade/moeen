@@ -12,6 +12,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { _cookies } from 'next/headers';
 import { headers } from 'next/headers';
+import { logger } from '@/lib/monitoring/logger';
 
 export enum AuditAction {
   // Authentication
@@ -116,11 +117,11 @@ export class AuditLogger {
       const { error } = await supabase.from('audit_logs').insert(auditData);
 
       if (error) {
-        console.error('Audit log error:', error);
+        logger.error('Audit log error:', error);
         // Don't throw - audit logging failures shouldn't break the application
       }
     } catch (error) {
-      console.error('Failed to create audit log:', error);
+      logger.error('Failed to create audit log:', error);
       // Silently fail - audit logging should not break the application
     }
   }

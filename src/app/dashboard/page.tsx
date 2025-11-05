@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { logger } from '@/lib/monitoring/logger';
 import { useRouter } from 'next/navigation';
 import { getDefaultRoute } from '@/lib/auth/RouteManager';
 
@@ -17,7 +18,7 @@ export default function DashboardRedirect() {
         const user = JSON.parse(userStr);
         role = user.role || 'agent';
       } catch (e) {
-        console.error('Error parsing user:', e);
+        logger.error('Error parsing user:', e);
       }
     }
 

@@ -329,7 +329,7 @@ export async function logout(): Promise<void> {
       credentials: 'include',
     });
   } catch (error) {
-    console.error('[UnifiedAuth] Logout error:', error);
+    logger.error('[UnifiedAuth] Logout error:', error);
   } finally {
     clearAuth();
   }

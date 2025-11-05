@@ -1,5 +1,6 @@
 'use client';
 import { Badge } from '@/components/ui/Badge';
+import { logger } from '@/lib/monitoring/logger';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -127,7 +128,7 @@ export default function DynamicDoctorsList({
       }
     } catch (err) {
       setError('فشل في تحميل قائمة الأطباء');
-      console.error('Error fetching doctors:', err);
+      logger.error('Error fetching doctors:', err);
     } finally {
       setLoading(false);
     }

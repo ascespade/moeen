@@ -8,6 +8,7 @@ import { useSystemConfig } from '@/lib/config/system-config';
 import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 import { useEffect, useState } from 'react';
+import { logger } from '@/lib/monitoring/logger';
 import {
   Bell,
   Search,
@@ -65,7 +66,7 @@ export default function Header() {
     const fetchNotifications = async () => {
       // Prevent too many retries
       if (retryCount >= MAX_RETRIES) {
-        console.warn('Max retries reached for notifications, stopping fetch');
+        logger.warn('Max retries reached for notifications, stopping fetch');
         setNotificationsLoading(false);
         setNotifications([]);
         return;
@@ -84,7 +85,7 @@ export default function Header() {
 
         // If response is not ok, treat as empty and stop retrying after max retries
         if (!response.ok) {
-          console.warn(
+          logger.warn(
             `Notifications API returned ${response.status}, using empty array`
           );
           if (isMounted) {
@@ -94,7 +95,7 @@ export default function Header() {
           retryCount++;
           // Stop retrying if we've exceeded max retries
           if (retryCount >= MAX_RETRIES) {
-            console.warn(
+            logger.warn(
               'Max retries reached for notifications, stopping fetch'
             );
             return;
@@ -140,7 +141,7 @@ export default function Header() {
           retryCount++;
         }
       } catch (error) {
-        console.error('Error fetching notifications:', error);
+        logger.error('Error fetching notifications:', error);
         if (isMounted) {
           setNotifications([]);
           retryCount++;
@@ -496,7 +497,7 @@ export default function Header() {
                                 }
                               }
                             } catch (error) {
-                              console.error(
+                              logger.error(
                                 'Error marking notifications as read:',
                                 error
                               );
@@ -585,7 +586,7 @@ export default function Header() {
                                         );
                                       }
                                     } catch (error) {
-                                      console.error(
+                                      logger.error(
                                         'Error marking notification as read:',
                                         error
                                       );

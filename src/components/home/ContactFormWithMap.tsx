@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { logger } from '@/lib/monitoring/logger';
 import { CONTACT_INFO } from '@/lib/constants/ui';
 import { toArabicNumbers } from '@/lib/utils/numbers';
 import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react';
@@ -46,7 +47,7 @@ export default function ContactFormWithMap() {
         setTimeout(() => setIsSubmitted(false), 5000);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      logger.error('Error submitting form:', error);
     } finally {
       setIsSending(false);
     }

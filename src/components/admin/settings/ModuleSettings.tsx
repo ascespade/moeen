@@ -1,6 +1,7 @@
 'use client';
 
 import { AdminCard } from '@/components/admin/ui';
+import { logger } from '@/lib/monitoring/logger';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Label } from '@/components/ui/Label';
@@ -230,7 +231,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
           setModules(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading module settings:', error);
+        logger.error('Error loading module settings:', error);
       } finally {
         setLoading(false);
       }

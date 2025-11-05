@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { logger } from '@/lib/monitoring/logger';
 
 interface DashboardStats {
   totalPatients: number;
@@ -123,7 +124,7 @@ export function useAdminDashboard(
         setError('فشل في تحميل الإحصائيات');
       }
     } catch (err) {
-      console.error('Error fetching dashboard stats:', err);
+      logger.error('Error fetching dashboard stats:', err);
       setError('حدث خطأ أثناء تحميل الإحصائيات');
     }
   }, [period]);
@@ -136,10 +137,10 @@ export function useAdminDashboard(
       if (result.success) {
         setActivities(result.data || []);
       } else {
-        console.error('Failed to fetch activities:', result.error);
+        logger.error('Failed to fetch activities:', result.error);
       }
     } catch (err) {
-      console.error('Error fetching activities:', err);
+      logger.error('Error fetching activities:', err);
     }
   }, []);
 
@@ -151,10 +152,10 @@ export function useAdminDashboard(
       if (result.success) {
         setStaffWorkHours(result.data || []);
       } else {
-        console.error('Failed to fetch staff hours:', result.error);
+        logger.error('Failed to fetch staff hours:', result.error);
       }
     } catch (err) {
-      console.error('Error fetching staff hours:', err);
+      logger.error('Error fetching staff hours:', err);
     }
   }, []);
 

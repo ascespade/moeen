@@ -58,7 +58,7 @@ export function TranslationProvider({
         setTranslations(translationsMap);
       }
     } catch (error) {
-      console.error('Error loading translations:', error);
+      logger.error('Error loading translations:', error);
     } finally {
       setIsLoading(false);
     }

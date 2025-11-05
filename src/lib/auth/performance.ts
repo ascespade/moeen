@@ -5,6 +5,8 @@
  * Performance optimizations and monitoring
  */
 
+import { logger } from '@/lib/monitoring/logger';
+
 /**
  * Debounce function for rate limiting
  */
@@ -57,13 +59,13 @@ export async function measureTime<T>(
     const result = await fn();
     const duration = Date.now() - start;
     if (process.env.NODE_ENV === 'development') {
-      console.log(`[PERF] ${label}: ${duration}ms`);
+      logger.debug(`[PERF] ${label}: ${duration}ms`);
     }
     return result;
   } catch (error) {
     const duration = Date.now() - start;
     if (process.env.NODE_ENV === 'development') {
-      console.log(`[PERF] ${label}: ${duration}ms (failed)`);
+      logger.debug(`[PERF] ${label}: ${duration}ms (failed)`);
     }
     throw error;
   }

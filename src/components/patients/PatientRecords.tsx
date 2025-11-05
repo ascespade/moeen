@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { logger } from '@/lib/monitoring/logger';
 import {
   User,
   _Phone,
@@ -191,7 +192,7 @@ const PatientRecords: React.FC = () => {
       setMedicalRecords(records);
       return;
     } catch (error) {
-      console.error('Error loading medical records:', error);
+      logger.error('Error loading medical records:', error);
     }
 
     // Fallback: Empty array (no mock data)

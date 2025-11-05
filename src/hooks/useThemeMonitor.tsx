@@ -11,6 +11,7 @@ import {
   type AdvancedThemeSettings,
 } from '@/lib/theme-settings';
 import { useCallback, useEffect, useRef } from 'react';
+import { logger } from '@/lib/monitoring/logger';
 
 export interface ThemeMonitorOptions {
   enabled?: boolean;
@@ -160,7 +161,7 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
           lastAdjustedRef.current.set(element, now);
         }
       } catch (error) {
-        console.warn('Failed to apply theme adjustments:', error);
+        logger.warn('Failed to apply theme adjustments:', error);
       }
     },
     [enabled, mode, onAdjustment, onReport]

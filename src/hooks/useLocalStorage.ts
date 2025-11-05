@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { storage } from '@/utils/storage';
+import { logger } from '@/lib/monitoring/logger';
 // Local storage hooks
 
 export const useLocalStorage = <T>(
@@ -25,7 +26,9 @@ export const useLocalStorage = <T>(
           value instanceof Function ? value(storedValue) : value;
         setStoredValue(valueToStore);
         storage.set(key, valueToStore);
-      } catch (error) { console.error(error); }
+      } catch (error) {
+        logger.error('LocalStorage set error:', error);
+      }
     },
     [key, storedValue]
   );
@@ -63,7 +66,9 @@ export const useSessionStorage = <T>(
           value instanceof Function ? value(storedValue) : value;
         setStoredValue(valueToStore);
         storage.setSession(key, valueToStore);
-      } catch (error) { console.error(error); }
+      } catch (error) {
+        logger.error('LocalStorage set error:', error);
+      }
     },
     [key, storedValue]
   );

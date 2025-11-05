@@ -1,6 +1,7 @@
 'use client';
 
 import { CONTACT_INFO } from '@/lib/constants/ui';
+import { logger } from '@/lib/monitoring/logger';
 import { toArabicNumbers } from '@/lib/utils/numbers';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
@@ -77,7 +78,7 @@ const DynamicContactInfo = memo(function DynamicContactInfo() {
           );
         }
       } catch (error) {
-        console.error('Error fetching contact info:', error);
+        logger.error('Error fetching contact info:', error);
       } finally {
         setLoading(false);
       }

@@ -8,6 +8,7 @@
 
 'use client';
 
+import { logger } from '@/lib/monitoring/logger';
 import {
   createContext,
   ReactNode,

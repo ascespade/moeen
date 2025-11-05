@@ -1,6 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { logger } from '@/lib/monitoring/logger';
 import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -47,7 +48,7 @@ const ServicesWithImages = memo(function ServicesWithImages() {
         setServices(items);
       } catch (err) {
         // keep empty list if fetch fails
-        console.warn('Failed to load services:', err);
+        logger.warn('Failed to load services:', err);
       } finally {
         if (!cancelled) setLoading(false);
       }
