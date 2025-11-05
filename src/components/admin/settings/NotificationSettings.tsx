@@ -59,7 +59,7 @@ export default function NotificationSettings({
   const [config, setConfig] = useState<NotificationConfig>(defaultConfig);
   const [loading, _setLoading] = useState(true);
 
-  const updateConfig = (section: keyof NotificationConfig, updates: any) => {
+  const updateConfig = (section: keyof NotificationConfig, updates: Partial<NotificationConfig[keyof NotificationConfig]>) => {
     setConfig(prev => ({
       ...prev,
       [section]: { ...prev[section], ...updates },
