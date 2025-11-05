@@ -9,6 +9,7 @@ import { getClientInfo } from '@/lib/utils/request-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
+import { logger } from '@/lib/utils/logger';
 const bookingSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
   doctorId: z.string().uuid('Invalid doctor ID'),
