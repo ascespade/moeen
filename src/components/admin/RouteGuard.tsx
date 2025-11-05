@@ -222,9 +222,9 @@ export default function RouteGuard({
               },
             }),
           }).catch(() => {}); // Ignore errors
-        } catch (fetchError: any) {
+        } catch (fetchError: unknown) {
           clearTimeout(timeoutId);
-          if (fetchError.name === 'AbortError') {
+          if (fetchError instanceof Error && fetchError.name === 'AbortError') {
             console.error('Auth check timeout after 10 seconds');
             if (isMounted && userFromStorage) {
               // Use localStorage fallback immediately on timeout

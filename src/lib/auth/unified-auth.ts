@@ -218,13 +218,13 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
     };
 
     return user;
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Ignore abort errors (timeout) and network errors silently
-    if (error?.name === 'AbortError') {
+    if (error instanceof Error && error.name === 'AbortError') {
       return null;
     }
     // Only log unexpected errors
-    if (error?.message && !error.message.includes('401')) {
+    if (error instanceof Error && error.message && !error.message.includes('401')) {
       console.warn('[UnifiedAuth] Error fetching user:', error.message);
     }
     return null;

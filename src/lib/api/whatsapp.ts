@@ -31,8 +31,8 @@ export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
       return { success: false, error: err };
     }
     return { success: true };
-  } catch (e: any) {
-    return { success: false, error: e?.message || 'Unknown error' };
+  } catch (e: unknown) {
+    return { success: false, error: e instanceof Error ? e.message : 'Unknown error' };
   }
 };
 

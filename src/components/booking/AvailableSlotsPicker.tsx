@@ -64,9 +64,9 @@ export default function AvailableSlotsPicker({
       if (data.slots.length === 0) {
         setError('لا توجد مواعيد متاحة في هذا التاريخ');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error('Error loading available slots', err);
-      setError(err.message || 'حدث خطأ في تحميل المواعيد المتاحة');
+      setError(err instanceof Error ? err.message : 'حدث خطأ في تحميل المواعيد المتاحة');
     } finally {
       setLoading(false);
     }
