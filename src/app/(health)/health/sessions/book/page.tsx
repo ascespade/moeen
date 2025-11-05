@@ -423,5 +423,6 @@ export default function BookSessionPage() {
         </div>
       )}
     </div>
+    </div>
   );
 }

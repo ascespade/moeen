@@ -154,8 +154,10 @@ export default function InsuranceClaimsPage() {
       <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)]'>
         <div className='text-center'>
           <p className='mb-4 text-lg font-semibold text-red-600'>{error}</p>
-          <button onClick={() => { loadClaims() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ loadClaims() } }}
-          "> { loadClaims() } }}
+          <button
+            onClick={() => { loadClaims() }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); loadClaims(); } }}
+            aria-label="إعادة تحميل المطالبات"
             className='rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
           >
             إعادة المحاولة
@@ -189,7 +191,10 @@ export default function InsuranceClaimsPage() {
               </div>
             </div>
             <div className='flex items-center gap-3'>
-              <button onClick={() => { setShowCreateModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(true) } }"> { setShowCreateModal(true) } }}
+              <button
+                onClick={() => { setShowCreateModal(true) }}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowCreateModal(true); } }}
+                aria-label="إنشاء مطالبة جديدة"
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة مطالبة
@@ -342,7 +347,10 @@ export default function InsuranceClaimsPage() {
                     </td>
                     <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                       <div className='flex gap-2'>
-                        <button onClick={() => { setShowDetailsModal(claim.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowDetailsModal(claim.id"> { setShowDetailsModal(claim.id) } }}
+                        <button
+                          onClick={() => { setShowDetailsModal(claim.id) }}
+                          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowDetailsModal(claim.id); } }}
+                          aria-label={`عرض تفاصيل المطالبة ${claim.claim_number}`}
                           className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
                         >
                           عرض
@@ -386,7 +394,10 @@ export default function InsuranceClaimsPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة مطالبة تأمينية</h3>
-              <button onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+              <button
+                onClick={() => { setShowCreateModal(false) }}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowCreateModal(false); } }}
+                aria-label="إغلاق النافذة"
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -468,7 +479,9 @@ export default function InsuranceClaimsPage() {
 
               <div className='flex gap-3 pt-4'>
                 <button type='button'
-                  onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+                  onClick={() => { setShowCreateModal(false) }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowCreateModal(false); } }}
+                  aria-label="إغلاق النافذة"
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
@@ -489,7 +502,10 @@ export default function InsuranceClaimsPage() {
           <div className='w-full max-w-4xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>تفاصيل المطالبة</h3>
-              <button onClick={() => { setShowDetailsModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowDetailsModal(null) } "> { setShowDetailsModal(null) } }}
+              <button
+                onClick={() => { setShowDetailsModal(null) }}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowDetailsModal(null); } }}
+                aria-label="إغلاق النافذة"
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -624,7 +640,10 @@ export default function InsuranceClaimsPage() {
             )}
 
             <div className='flex gap-3 pt-6'>
-              <button onClick={() => { setShowDetailsModal(null) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowDetailsModal(null) } "> { setShowDetailsModal(null) } }}
+              <button
+                onClick={() => { setShowDetailsModal(null) }}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setShowDetailsModal(null); } }}
+                aria-label="إغلاق النافذة"
                 className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
               >
                 إغلاق
@@ -638,6 +657,7 @@ export default function InsuranceClaimsPage() {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }

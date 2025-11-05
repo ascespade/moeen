@@ -340,7 +340,7 @@ export default function RegisterPage() {
               {isLoading ? (
                 <div className='flex items-center justify-center gap-2'>
                   <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent'></div>
-                  جاري إنشاء الحساب...
+                  <span>جاري إنشاء الحساب...</span>
                 </div>
               ) : (
                 'إنشاء الحساب'
@@ -362,7 +362,6 @@ export default function RegisterPage() {
           </div>
         </div>
       </div>
-    </div>
     );
   }
 }
