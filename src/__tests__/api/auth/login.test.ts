@@ -52,7 +52,7 @@ describe('/api/auth/login', () => {
 
   it('handles test credentials successfully', async () => {
     const { getServiceSupabase } = await import('@/lib/supabaseClient');
-    const mockSupabase = getServiceSupabase();
+    const mockSupabase = await getServiceSupabase();
 
     mockSupabase
       .from()
