@@ -2,6 +2,7 @@
 
 import { AdminCard } from '@/components/admin/ui';
 import { Badge } from '@/components/ui/Badge';
+import { logger } from '@/lib/utils/logger';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
@@ -157,7 +158,7 @@ export default function AISettings({ onChange }: AISettingsProps) {
           setConfig(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading AI settings:', error);
+        logger.error('Error loading AI settings', { error: error instanceof Error ? error.message : String(error) });
       } finally {
         setLoading(false);
       }
@@ -194,7 +195,7 @@ export default function AISettings({ onChange }: AISettingsProps) {
         alert('فشل اختبار الشات بوت: ' + result.error);
       }
     } catch (error) {
-      console.error('Error testing chatbot:', error);
+      logger.error('Error testing chatbot', { error: error instanceof Error ? error.message : String(error) });
       alert('حدث خطأ أثناء اختبار الشات بوت');
     } finally {
       setTestingChatbot(false);

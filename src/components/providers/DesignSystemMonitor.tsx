@@ -6,6 +6,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 export function DesignSystemMonitor() {
   useEffect(() => {
@@ -25,10 +26,9 @@ export function DesignSystemMonitor() {
           const className = element.getAttribute('class') || '';
           // Skip if already using CSS variables
           if (!className.includes('var(--')) {
-            console.warn(
-              `⚠️ Design System Violation: Found "${pattern}" in element:`,
-              element,
-              '\n💡 Use CSS variables instead'
+            logger.warn(
+              `⚠️ Design System Violation: Found "${pattern}" in element`,
+              { element: element.tagName, className }
             );
           }
         });

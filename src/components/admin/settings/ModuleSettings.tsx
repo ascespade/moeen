@@ -2,6 +2,7 @@
 
 import { AdminCard } from '@/components/admin/ui';
 import { Badge } from '@/components/ui/Badge';
+import { logger } from '@/lib/utils/logger';
 import { Button } from '@/components/ui/Button';
 import { Label } from '@/components/ui/Label';
 import { Switch } from '@/components/ui/Switch';
@@ -230,7 +231,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
           setModules(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading module settings:', error);
+        logger.error('Error loading module settings', { error: error instanceof Error ? error.message : String(error) });
       } finally {
         setLoading(false);
       }

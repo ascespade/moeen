@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 interface I18nContextType {
   t: (key: string, fallback?: string) => string;
@@ -66,7 +67,7 @@ export default function I18nProvider({ children }: I18nProviderProps) {
           setTranslations(data);
         }
       } catch (error) {
-        console.error('Failed to fetch translations:', error);
+        logger.error('Failed to fetch translations', { error: error instanceof Error ? error.message : String(error) });
       } finally {
         setTranslationsLoading(false);
       }

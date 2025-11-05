@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { logger } from '@/lib/utils/logger';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -157,7 +158,7 @@ export default function DynamicDataDashboard({ className }: DynamicDataProps) {
         setEmergencyContacts(data.emergency_contacts);
       if (data.center_info) setCenterInfo(data.center_info);
     } catch (error) {
-      console.error('Error fetching dynamic data:', error);
+      logger.error('Error fetching dynamic data', { error: error instanceof Error ? error.message : String(error) });
     } finally {
       setLoading(false);
     }

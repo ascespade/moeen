@@ -16,6 +16,7 @@ import {
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
@@ -35,7 +36,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleQuickAction = (action: string) => {
-    console.log(`Quick action: ${action}`);
+    logger.info(`Quick action: ${action}`);
     // Handle quick actions here
   };
 

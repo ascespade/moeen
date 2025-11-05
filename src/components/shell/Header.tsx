@@ -8,6 +8,7 @@ import { useSystemConfig } from '@/lib/config/system-config';
 import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
 import { useEffect, useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 import {
   Bell,
   Search,
@@ -38,7 +39,7 @@ export default function Header() {
   const logout = customAuth.logout || unifiedAuth.logout;
   const router = useRouter();
   const _pathname = usePathname();
-  const [notifications, setNotifications] = useState<any[]>([]);
+  const [notifications, setNotifications] = useState<Array<{ id: string; is_read?: boolean; read?: boolean; created_at?: string; createdAt?: string; title?: string; message?: string }>>([]);
   const [notificationsLoading, setNotificationsLoading] = useState(true);
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
@@ -65,7 +66,7 @@ export default function Header() {
     const fetchNotifications = async () => {
       // Prevent too many retries
       if (retryCount >= MAX_RETRIES) {
-        console.warn('Max retries reached for notifications, stopping fetch');
+        logger.warn('Max retries reached for notifications, stopping fetch');
         setNotificationsLoading(false);
         setNotifications([]);
         return;
@@ -84,7 +85,7 @@ export default function Header() {
 
         // If response is not ok, treat as empty and stop retrying after max retries
         if (!response.ok) {
-          console.warn(
+          logger.warn(
             `Notifications API returned ${response.status}, using empty array`
           );
           if (isMounted) {
@@ -94,7 +95,7 @@ export default function Header() {
           retryCount++;
           // Stop retrying if we've exceeded max retries
           if (retryCount >= MAX_RETRIES) {
-            console.warn(
+            logger.warn(
               'Max retries reached for notifications, stopping fetch'
             );
             return;
@@ -108,7 +109,7 @@ export default function Header() {
 
         if (data.success && Array.isArray(data.data)) {
           // Filter notifications for this user and get real data
-          const userNotifications = data.data.filter((n: any) => {
+          const userNotifications = data.data.filter((n: { recipientId?: string; user_id?: string; recipient_id?: string; userId?: string }) => {
             // Match by recipientId or user_id
             return (
               n.recipientId === user.id ||
@@ -140,7 +141,7 @@ export default function Header() {
           retryCount++;
         }
       } catch (error) {
-        console.error('Error fetching notifications:', error);
+        logger.error('Error fetching notifications', { error: error instanceof Error ? error.message : String(error) });
         if (isMounted) {
           setNotifications([]);
           retryCount++;
@@ -170,7 +171,7 @@ export default function Header() {
   }, [isAuthenticated, user?.id]);
 
   const unreadCount = notifications.filter(
-    (n: any) => !n.is_read && !n.read
+    (n) => !n.is_read && !n.read
   ).length;
 
   // Set initial time and mounted flag on client-side only
@@ -496,9 +497,9 @@ export default function Header() {
                                 }
                               }
                             } catch (error) {
-                              console.error(
-                                'Error marking notifications as read:',
-                                error
+                              logger.error(
+                                'Error marking notifications as read',
+                                { error: error instanceof Error ? error.message : String(error) }
                               );
                             }
                           }}
@@ -529,7 +530,7 @@ export default function Header() {
                       <div className='p-2'>
                         {notifications
                           .slice(0, 5)
-                          .map((notification: any) => {
+                          .map((notification) => {
                             const isUnread =
                               !notification.is_read && !notification.read;
                             const createdDate =
@@ -573,7 +574,7 @@ export default function Header() {
                                       // Update local state if successful
                                       if (markResponse.ok) {
                                         setNotifications(
-                                          notifications.map((n: any) =>
+                                          notifications.map((n) =>
                                             n.id === notification.id
                                               ? {
                                                   ...n,
@@ -585,9 +586,9 @@ export default function Header() {
                                         );
                                       }
                                     } catch (error) {
-                                      console.error(
-                                        'Error marking notification as read:',
-                                        error
+                                      logger.error(
+                                        'Error marking notification as read',
+                                        { error: error instanceof Error ? error.message : String(error) }
                                       );
                                     }
                                   }

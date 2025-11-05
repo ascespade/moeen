@@ -2,6 +2,7 @@
 
 import { AdminCard } from '@/components/admin/ui';
 import { Input } from '@/components/ui/Input';
+import { logger } from '@/lib/utils/logger';
 import { Label } from '@/components/ui/Label';
 import {
   Select,
@@ -106,7 +107,7 @@ export default function GeneralSettings({ onChange, onSave }: GeneralSettingsPro
           setConfig(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading general settings:', error);
+        logger.error('Error loading general settings', { error: error instanceof Error ? error.message : String(error) });
       } finally {
         setLoading(false);
       }
@@ -146,7 +147,7 @@ export default function GeneralSettings({ onChange, onSave }: GeneralSettingsPro
           throw new Error('Failed to save settings');
         }
       } catch (error) {
-        console.error('Error saving general settings:', error);
+        logger.error('Error saving general settings', { error: error instanceof Error ? error.message : String(error) });
         throw error;
       }
     }

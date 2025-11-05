@@ -18,6 +18,7 @@ interface Service {
 // Services are loaded dynamically from database via /api/dynamic-data?type=services
 // Component will fetch services on mount and display them
 import { useEffect, useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 const ServicesWithImages = memo(function ServicesWithImages() {
   const [services, setServices] = useState<Service[]>([]);
@@ -33,7 +34,7 @@ const ServicesWithImages = memo(function ServicesWithImages() {
         if (cancelled) return;
         // Expect array of services; normalize to Service[] shape
         const items: Service[] = (data.services || data || []).map(
-          (s: any, idx: number) => ({
+          (s: { id?: number; title?: string; name?: string; description?: string; subtitle?: string; image?: string; src?: string; gradient?: string; link?: string }, idx: number) => ({
             id: s.id ?? idx + 1,
             title: s.title ?? s.name ?? `خدمة ${idx + 1}`,
             description: s.description ?? s.subtitle ?? '',
@@ -47,7 +48,7 @@ const ServicesWithImages = memo(function ServicesWithImages() {
         setServices(items);
       } catch (err) {
         // keep empty list if fetch fails
-        console.warn('Failed to load services:', err);
+        logger.warn('Failed to load services', { error: err instanceof Error ? err.message : String(err) });
       } finally {
         if (!cancelled) setLoading(false);
       }
