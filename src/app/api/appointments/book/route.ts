@@ -284,6 +284,6 @@ async function checkAppointmentConflicts(
 
 async function sendAppointmentConfirmation(appointmentId: string) {
   // This will be implemented in the notification system
-  const logger = (await import('@/lib/monitoring/logger')).default;
+  const { logger } = await import('@/lib/utils/logger');
   logger.info('Sending appointment confirmation', { appointmentId });
 }

@@ -4,7 +4,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server';
-import { logger } from '../monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 interface ConnectionPoolConfig {
   maxConnections: number;
