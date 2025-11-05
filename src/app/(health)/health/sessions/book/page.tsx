@@ -138,11 +138,10 @@ export default function BookSessionPage() {
   const maxDateStr = maxDate.toISOString().split('T')[0];
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container-app py-8'>
+    <div className='container-app py-8'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        <span id="live-region"></span>
+      </div>
       {/* Progress Steps */}
       <div className='card p-6 mb-8'>
         <div className='flex items-center justify-between'>
@@ -205,7 +204,12 @@ div className='container-app py-8'>
       {/* Step 2: Select Date */}
       {step === 2 && selectedSessionType && (
         <div>
-          <button onClick={() => { setStep(1) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setStep(1) } }} className='b"> { setStep(1) } }} className='btn btn-outline mb-6'>
+          <button
+            onClick={() => { setStep(1) }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStep(1); } }}
+            aria-label="العودة إلى الخطوة السابقة"
+            className='btn btn-outline mb-6'
+          >
             ← العودة
           </button>
 
