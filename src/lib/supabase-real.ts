@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { logger } from '@/lib/utils/logger';
 // Real Supabase Integration for Hemam Center
 // import type { Database } from '@/types/supabase';
 
@@ -831,7 +832,7 @@ export class RealSupabaseManager {
     );
 
     if (arError) {
-      console.warn(
+      logger.warn(
         `Failed to upsert AR translation for ${translationData.key}:`,
         arError
       );
@@ -849,7 +850,7 @@ export class RealSupabaseManager {
     );
 
     if (enError) {
-      console.warn(
+      logger.warn(
         `Failed to upsert EN translation for ${translationData.key}:`,
         enError
       );

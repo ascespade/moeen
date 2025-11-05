@@ -1,3 +1,5 @@
+import { logger } from '@/lib/utils/logger';
+
 /**
  * Comprehensive Permissions System
  * نظام الصلاحيات الشامل
@@ -382,7 +384,9 @@ export async function getRolePermissions(role: UserRole): Promise<RolePermission
         }));
       }
     } catch (e) {
-      console.error('Failed to fetch permissions from API:', e);
+      logger.error('Failed to fetch permissions from API', {
+        error: e instanceof Error ? e.message : String(e),
+      });
     }
     return [];
   }

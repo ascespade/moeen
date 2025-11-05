@@ -31,7 +31,7 @@ export class SMSNotificationService {
 
       // In development, just log the SMS
       if (process.env.NODE_ENV === 'development') {
-        console.log('SMS would be sent:', {
+        logger.info('SMS would be sent', {
           to: data.to,
           message: data.message,
           language: data.language,

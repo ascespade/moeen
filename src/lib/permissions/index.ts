@@ -26,6 +26,8 @@ export interface UserPermissions {
   restrictions?: string[];
 }
 
+import { logger } from '@/lib/utils/logger';
+
 // Re-export PERMISSIONS from constants (client-safe)
 export { PERMISSIONS } from './constants';
 
@@ -702,7 +704,7 @@ export class PermissionManager {
         .eq('is_active', true);
 
       if (permError) {
-        console.error(
+        logger.error(
           `[PermissionManager] Error fetching permissions:`,
           permError
         );
