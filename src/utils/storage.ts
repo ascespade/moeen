@@ -1,4 +1,6 @@
 // Storage utilities
+import { logger } from '@/lib/monitoring/logger';
+
 export const storage = {
   // Local Storage
   get: <T = any>(key: string, defaultValue?: T): T | null => {
@@ -17,7 +19,9 @@ export const storage = {
 
     try {
       localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage set error:', error);
+    }
   },
 
   remove: (key: string): void => {
@@ -25,7 +29,9 @@ export const storage = {
 
     try {
       localStorage.removeItem(key);
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage remove error:', error);
+    }
   },
 
   clear: (): void => {
@@ -33,7 +39,9 @@ export const storage = {
 
     try {
       localStorage.clear();
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage clear error:', error);
+    }
   },
 
   // Session Storage
@@ -53,7 +61,9 @@ export const storage = {
 
     try {
       sessionStorage.setItem(key, JSON.stringify(value));
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage clear error:', error);
+    }
   },
 
   removeSession: (key: string): void => {
@@ -61,7 +71,9 @@ export const storage = {
 
     try {
       sessionStorage.removeItem(key);
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage clear error:', error);
+    }
   },
 
   clearSession: (): void => {
@@ -69,7 +81,9 @@ export const storage = {
 
     try {
       sessionStorage.clear();
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage clear error:', error);
+    }
   },
 };
 

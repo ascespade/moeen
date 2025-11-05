@@ -5,6 +5,8 @@
  * Defines permissions for all user roles and provides permission checking utilities
  */
 
+import { logger } from '@/lib/monitoring/logger';
+
 export type UserRole =
   | 'admin'
   | 'doctor'
@@ -382,7 +384,7 @@ export async function getRolePermissions(role: UserRole): Promise<RolePermission
         }));
       }
     } catch (e) {
-      console.error('Failed to fetch permissions from API:', e);
+      logger.error('Failed to fetch permissions from API:', e);
     }
     return [];
   }

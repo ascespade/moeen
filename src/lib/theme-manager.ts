@@ -1,5 +1,7 @@
 'use client';
 
+import { logger } from '@/lib/monitoring/logger';
+
 export type ThemeMode = 'light' | 'dark' | 'system';
 
 export interface ThemeSettings {
@@ -39,7 +41,7 @@ export class ThemeManager {
         return { ...defaultThemeConfig, ...parsed };
       }
     } catch (error) {
-      console.warn('Failed to load theme config:', error);
+      logger.warn('Failed to load theme config:', error);
     }
 
     return defaultThemeConfig;
@@ -58,7 +60,7 @@ export class ThemeManager {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(config));
       this.applyTheme(config);
     } catch (error) {
-      console.warn('Failed to save theme config:', error);
+      logger.warn('Failed to save theme config:', error);
     }
   }
 

@@ -1,4 +1,4 @@
-import _logger from '@/lib/monitoring/_logger';
+import { logger } from '@/lib/monitoring/logger';
 // Conversation Flow Management System
 
 // Intent Analysis
@@ -478,7 +478,7 @@ export class FlowManager {
       });
 
       if (!response.ok) {
-        console.error('Failed to send message:', await response.text());
+        logger.error('Failed to send message:', await response.text());
       }
     } catch (error) {}
   }

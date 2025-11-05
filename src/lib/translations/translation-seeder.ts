@@ -4,6 +4,7 @@
  */
 
 import { realDB } from '@/lib/supabase-real';
+import { logger } from '@/lib/monitoring/logger';
 
 interface TranslationData {
   key: string;
@@ -1018,7 +1019,7 @@ class TranslationSeeder {
   }
 
   async seedTranslations() {
-    console.log('🌱 Seeding translations...');
+    logger.debug('🌱 Seeding translations...');
 
     let successCount = 0;
     let errorCount = 0;
@@ -1028,19 +1029,19 @@ class TranslationSeeder {
         await realDB.createTranslation(translation);
         successCount++;
       } catch (error) {
-        console.error(`Failed to seed translation: ${translation.key}`, error);
+        logger.error(`Failed to seed translation: ${translation.key}`, error);
         errorCount++;
       }
     }
 
-    console.log(`✅ Seeded ${successCount} translations successfully`);
+    logger.debug(`✅ Seeded ${successCount} translations successfully`);
     if (errorCount > 0) {
-      console.log(`❌ Failed to seed ${errorCount} translations`);
+      logger.debug(`❌ Failed to seed ${errorCount} translations`);
     }
   }
 
   async validateTranslations() {
-    console.log('🔍 Validating translations...');
+    logger.debug('🔍 Validating translations...');
 
     const missingKeys: string[] = [];
     const duplicateKeys: string[] = [];
@@ -1075,17 +1076,17 @@ class TranslationSeeder {
       }
     }
 
-    console.log(`📊 Translation Validation Results:`);
-    console.log(`   Total translations: ${this.translations.length}`);
-    console.log(`   Duplicate keys: ${duplicateKeys.length}`);
-    console.log(`   Missing required keys: ${missingKeys.length}`);
+    logger.debug(`📊 Translation Validation Results:`);
+    logger.debug(`   Total translations: ${this.translations.length}`);
+    logger.debug(`   Duplicate keys: ${duplicateKeys.length}`);
+    logger.debug(`   Missing required keys: ${missingKeys.length}`);
 
     if (duplicateKeys.length > 0) {
-      console.log(`   Duplicate keys: ${duplicateKeys.join(', ')}`);
+      logger.debug(`   Duplicate keys: ${duplicateKeys.join(', ')}`);
     }
 
     if (missingKeys.length > 0) {
-      console.log(`   Missing keys: ${missingKeys.join(', ')}`);
+      logger.debug(`   Missing keys: ${missingKeys.join(', ')}`);
     }
 
     return {
@@ -1109,10 +1110,10 @@ if (require.main === module) {
       if (validation.isValid) {
         await seeder.seedTranslations();
       } else {
-        console.log(
+        logger.debug(
           '❌ Translation validation failed. Please fix issues before seeding.'
         );
       }
     })
-    .catch(console.error);
+    .catch((error) => logger.error('Translation seeder error:', error));
 }

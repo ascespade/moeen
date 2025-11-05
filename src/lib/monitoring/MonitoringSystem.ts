@@ -4,6 +4,7 @@
  */
 
 import { TaskStatus, MonitoringReport } from './types';
+import { logger } from '@/lib/monitoring/logger';
 
 export class MonitoringSystem {
   private tasks: Map<string, TaskStatus> = new Map();
@@ -104,7 +105,7 @@ export class MonitoringSystem {
       try {
         listener(report);
       } catch (error) {
-        console.error('Error in monitoring listener:', error);
+        logger.error('Error in monitoring listener:', error);
       }
     });
   }

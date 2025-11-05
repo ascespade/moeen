@@ -6,6 +6,7 @@
  */
 
 import { env } from '../config/env';
+import { logger } from '@/lib/monitoring/logger';
 
 /**
  * Email Service Class
@@ -25,7 +26,7 @@ export class EmailService {
     // Options: Nodemailer, SendGrid, AWS SES, etc.
 
     if (!env.SMTP_HOST || !env.SMTP_USER || !env.SMTP_PASSWORD) {
-      console.warn('SMTP not configured. Email would be sent to:', options.to);
+      logger.warn('SMTP not configured. Email would be sent to:', options.to);
       return;
     }
 
@@ -48,7 +49,7 @@ export class EmailService {
     //   text: options.text,
     // });
 
-    console.log('Email service not fully implemented');
+    logger.debug('Email service not fully implemented');
   }
 
   /**

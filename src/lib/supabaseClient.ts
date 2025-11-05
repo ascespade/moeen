@@ -46,6 +46,7 @@ export async function getServerSupabase() {
 }
 
 export function getServiceSupabase() {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { createClient } = require('@supabase/supabase-js');
   const url =
     process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';

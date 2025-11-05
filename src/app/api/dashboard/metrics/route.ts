@@ -26,7 +26,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${error.message || error}`;
     // Log to file if possible
     try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const fs = require('fs');
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const path = require('path');
       const logFile = path.join(
         process.cwd(),

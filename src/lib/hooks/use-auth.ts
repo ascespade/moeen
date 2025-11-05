@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '../supabase/client';
 import type { _User } from '@supabase/supabase-js';
 import type { User as DbUser } from '@/types/database.types';
+import { logger } from '@/lib/monitoring/logger';
 
 export function useAuth() {
   const [user, setUser] = useState<DbUser | null>(null);
@@ -50,7 +51,7 @@ export function useAuth() {
           setUser(userData);
         }
       } catch (err) {
-        console.error('Auth error:', err);
+        logger.error('Auth error:', err);
         setUser(null);
         setAuthUser(null);
       } finally {

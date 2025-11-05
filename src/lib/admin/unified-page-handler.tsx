@@ -28,7 +28,10 @@ export function UnifiedPageHandler({
 
   // Get page config automatically from pathname if pageKey not provided
   const pageConfig = pageKey
-    ? Object.values(require('./page-config').ADMIN_PAGES).find(p => p.path === pageKey)
+    ? Object.values(
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        require('./page-config').ADMIN_PAGES
+      ).find((p) => p.path === pageKey)
     : getPageConfig(pathname);
 
   const requiredPermissions = customPermissions || pageConfig?.requiredPermissions || [];

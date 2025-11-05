@@ -397,11 +397,3 @@ export class WorkflowManager {
     return workflow.steps[currentIndex + 1];
   }
 }
-
-// Export workflows
-export {
-  PATIENT_WORKFLOW,
-  DOCTOR_WORKFLOW,
-  RECEPTION_STAFF_WORKFLOW,
-  INSURANCE_WORKFLOW,
-};

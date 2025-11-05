@@ -6,38 +6,40 @@
 import { createClient } from '@supabase/supabase-js';
 import * as fs from 'fs';
 import * as path from 'path';
+import { config } from 'dotenv';
+import { logger } from '@/lib/monitoring/logger';
 
 // Load environment variables
-require('dotenv').config({ path: '.env.local' });
+config({ path: '.env.local' });
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  console.error('❌ Missing Supabase credentials in .env.local');
-  console.error('Required: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY');
+  logger.error('❌ Missing Supabase credentials in .env.local');
+  logger.error('Required: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY');
   process.exit(1);
 }
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 async function applyDatabaseFix() {
-  console.log('🔧 Applying database fixes...\n');
+  logger.debug('🔧 Applying database fixes...\n');
 
   try {
     // Step 1: Enable pgcrypto extension
-    console.log('1. Enabling pgcrypto extension...');
+    logger.debug('1. Enabling pgcrypto extension...');
     const { error: extError } = await supabase.rpc('exec_sql', {
       sql: 'CREATE EXTENSION IF NOT EXISTS pgcrypto;'
     });
     if (extError) {
-      console.warn('   ⚠️  Extension may already exist:', extError.message);
+      logger.warn('   ⚠️  Extension may already exist:', extError.message);
     } else {
-      console.log('   ✅ Extension enabled');
+      logger.debug('   ✅ Extension enabled');
     }
 
     // Step 2: Create verify_password function
-    console.log('\n2. Creating verify_password function...');
+    logger.debug('\n2. Creating verify_password function...');
     const verifyPasswordSQL = `
       CREATE OR REPLACE FUNCTION verify_password(
         password_input TEXT,
@@ -54,7 +56,7 @@ async function applyDatabaseFix() {
           RETURN FALSE;
       END;
       $$;
-      
+
       GRANT EXECUTE ON FUNCTION verify_password(TEXT, TEXT) TO authenticated;
       GRANT EXECUTE ON FUNCTION verify_password(TEXT, TEXT) TO anon;
       GRANT EXECUTE ON FUNCTION verify_password(TEXT, TEXT) TO service_role;
@@ -67,13 +69,13 @@ async function applyDatabaseFix() {
       .limit(1);
 
     if (verifyError) {
-      console.log('   ℹ️  Using direct SQL execution...');
+      logger.debug('   ℹ️  Using direct SQL execution...');
     }
 
-    console.log('   ✅ Function created (or already exists)');
+    logger.debug('   ✅ Function created (or already exists)');
 
     // Step 3: Create hash_password function
-    console.log('\n3. Creating hash_password function...');
+    logger.debug('\n3. Creating hash_password function...');
     const hashPasswordSQL = `
       CREATE OR REPLACE FUNCTION hash_password(
         password_input TEXT
@@ -89,16 +91,16 @@ async function applyDatabaseFix() {
           RETURN NULL;
       END;
       $$;
-      
+
       GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO authenticated;
       GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO anon;
       GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO service_role;
     `;
 
-    console.log('   ✅ Function created (or already exists)');
+    logger.debug('   ✅ Function created (or already exists)');
 
     // Step 4: Ensure roles exist
-    console.log('\n4. Ensuring roles exist...');
+    logger.debug('\n4. Ensuring roles exist...');
     const roles = [
       { role: 'admin', description: 'System administrator with full access' },
       { role: 'doctor', description: 'Medical professional with patient access' },
@@ -114,15 +116,15 @@ async function applyDatabaseFix() {
         .upsert(roleData, { onConflict: 'role', ignoreDuplicates: false });
 
       if (roleError) {
-        console.warn(`   ⚠️  Role ${roleData.role}:`, roleError.message);
+        logger.warn(`   ⚠️  Role ${roleData.role}:`, roleError.message);
       } else {
-        console.log(`   ✅ Role ${roleData.role} ensured`);
+        logger.debug(`   ✅ Role ${roleData.role} ensured`);
       }
     }
 
     // Step 5: Fix test users passwords
-    console.log('\n5. Fixing test users passwords...');
-    
+    logger.debug('\n5. Fixing test users passwords...');
+
     const testUsers = [
       { email: 'admin@test.com', password: 'Admin123!', name: 'Test Admin', role: 'admin' },
       { email: 'doctor@test.com', password: 'Doctor123!', name: 'Test Doctor', role: 'doctor' },
@@ -140,7 +142,7 @@ async function applyDatabaseFix() {
 
       if (hashError || !passwordHash) {
         // Fallback: Use SQL to hash
-        console.warn(`   ⚠️  hash_password function not available, using SQL for ${userData.email}`);
+        logger.warn(`   ⚠️  hash_password function not available, using SQL for ${userData.email}`);
         // We'll update directly using SQL
         passwordHash = null; // Will be set via SQL update
       }
@@ -168,7 +170,7 @@ async function applyDatabaseFix() {
             // Use SQL to set password
             const { error: updateError } = await supabase
               .from('users')
-              .update({ 
+              .update({
                 // We'll need to use SQL function for this
                 password_hash: null // Will be handled by SQL
               })
@@ -177,12 +179,12 @@ async function applyDatabaseFix() {
             if (!updateError) {
               // Execute SQL to hash password
               const sqlUpdate = `
-                UPDATE users 
+                UPDATE users
                 SET password_hash = crypt('${userData.password}', gen_salt('bf'))
                 WHERE id = ${existingUser.id}
               `;
               // Note: This requires direct SQL execution
-              console.log(`   ✅ User ${userData.email} will be updated with SQL`);
+              logger.debug(`   ✅ User ${userData.email} will be updated with SQL`);
             }
           }
         }
@@ -194,9 +196,9 @@ async function applyDatabaseFix() {
             .eq('id', existingUser.id);
 
           if (updateError) {
-            console.warn(`   ⚠️  Update error for ${userData.email}:`, updateError.message);
+            logger.warn(`   ⚠️  Update error for ${userData.email}:`, updateError.message);
           } else {
-            console.log(`   ✅ User ${userData.email} updated`);
+            logger.debug(`   ✅ User ${userData.email} updated`);
           }
         }
       } else {
@@ -213,45 +215,45 @@ async function applyDatabaseFix() {
             });
 
           if (insertError) {
-            console.warn(`   ⚠️  Insert error for ${userData.email}:`, insertError.message);
+            logger.warn(`   ⚠️  Insert error for ${userData.email}:`, insertError.message);
           } else {
-            console.log(`   ✅ User ${userData.email} created`);
+            logger.debug(`   ✅ User ${userData.email} created`);
           }
         } else {
-          console.warn(`   ⚠️  Cannot create ${userData.email} - hash_password function needed`);
+          logger.warn(`   ⚠️  Cannot create ${userData.email} - hash_password function needed`);
         }
       }
     }
 
     // Step 6: Verify
-    console.log('\n6. Verifying setup...');
+    logger.debug('\n6. Verifying setup...');
     const { data: users, error: verifyError } = await supabase
       .from('users')
       .select('email, name, role, password_hash')
       .in('email', testUsers.map(u => u.email));
 
     if (verifyError) {
-      console.error('   ❌ Verification error:', verifyError.message);
+      logger.error('   ❌ Verification error:', verifyError.message);
     } else {
-      console.log(`   ✅ Found ${users?.length || 0} test users`);
+      logger.debug(`   ✅ Found ${users?.length || 0} test users`);
       users?.forEach((user: unknown) => {
         const hasPassword = user.password_hash && user.password_hash !== '';
-        console.log(`   ${hasPassword ? '✅' : '❌'} ${user.email} (${user.role}) - ${hasPassword ? 'Has password' : 'No password'}`);
+        logger.debug(`   ${hasPassword ? '✅' : '❌'} ${user.email} (${user.role}) - ${hasPassword ? 'Has password' : 'No password'}`);
       });
     }
 
-    console.log('\n✅ Database fix completed!');
-    console.log('\n📋 Next steps:');
-    console.log('   1. Test login at http://localhost:3001/login');
-    console.log('   2. Use test users:');
+    logger.debug('\n✅ Database fix completed!');
+    logger.debug('\n📋 Next steps:');
+    logger.debug('   1. Test login at http://localhost:3001/login');
+    logger.debug('   2. Use test users:');
     testUsers.forEach(u => {
-      console.log(`      - ${u.email} / ${u.password}`);
+      logger.debug(`      - ${u.email} / ${u.password}`);
     });
 
   } catch (error: unknown) {
-    console.error('❌ Error applying database fix:', error.message);
-    console.error('\n💡 Alternative: Run SQL script manually in Supabase SQL Editor:');
-    console.error('   File: supabase/fix_existing_users_passwords.sql');
+    logger.error('❌ Error applying database fix:', error.message);
+    logger.error('\n💡 Alternative: Run SQL script manually in Supabase SQL Editor:');
+    logger.error('   File: supabase/fix_existing_users_passwords.sql');
     process.exit(1);
   }
 }

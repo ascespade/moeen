@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { logger } from '@/lib/monitoring/logger';
 
 // System configuration types and utilities
 export interface SystemConfig {
@@ -242,7 +243,7 @@ export class SystemConfigManager {
         return this.mergeWithDefaults(parsed);
       }
     } catch (error) {
-      console.error('Failed to load system config:', error);
+      logger.error('Failed to load system config:', error);
     }
 
     return defaultSystemConfig;
@@ -256,7 +257,7 @@ export class SystemConfigManager {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(config));
     } catch (error) {
-      console.error('Failed to save system config:', error);
+      logger.error('Failed to save system config:', error);
     }
   }
 

@@ -8,6 +8,8 @@ const getCrypto = () => {
     return globalThis.crypto;
   }
   // Fallback for Node.js
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  // @ts-expect-error - Node.js crypto module
   const crypto = require('crypto');
   return crypto;
 };

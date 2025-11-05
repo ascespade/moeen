@@ -5,6 +5,8 @@
  * يفحص التصميم في المتصفح ويحذّر من المخالفات
  */
 
+import { logger } from '@/lib/monitoring/logger';
+
 if (typeof window !== 'undefined') {
   // Monitor for hardcoded colors
   const observer = new MutationObserver(() => {
@@ -26,7 +28,7 @@ if (typeof window !== 'undefined') {
         const className = element.getAttribute('class') || '';
         // Skip if already using CSS variables
         if (!className.includes('var(--')) {
-          console.warn(
+          logger.warn(
             `⚠️ Design System Violation: Found "${pattern}" in element:`,
             element,
             '\n💡 Use CSS variables instead: bg-[var(--background)]'

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { AdminCard } from '@/components/admin/ui';
+import { logger } from '@/lib/monitoring/logger';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
@@ -24,7 +25,7 @@ import {
   RefreshCw,
   TestTube,
 } from 'lucide-react';
-import { _cn } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 interface IntegrationConfig {
   whatsapp: {
@@ -123,7 +124,7 @@ export default function IntegrationSettings({
           setConfig(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading integration settings:', error);
+        logger.error('Error loading integration settings:', error);
       } finally {
         setLoading(false);
       }
@@ -157,7 +158,7 @@ export default function IntegrationSettings({
         alert(`فشل اختبار اتصال ${service}: ${result.error}`);
       }
     } catch (error) {
-      console.error(`Error testing ${service}:`, error);
+      logger.error(`Error testing ${service}:`, error);
       alert(`حدث خطأ أثناء اختبار اتصال ${service}`);
     } finally {
       setTestingConnections(prev => ({ ...prev, [service]: false }));

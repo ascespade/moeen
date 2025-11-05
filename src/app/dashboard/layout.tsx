@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, _useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Sidebar from '@/components/shell/Sidebar';
 import Header from '@/components/shell/Header';

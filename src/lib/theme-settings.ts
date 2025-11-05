@@ -3,6 +3,8 @@
  * Real-time theme management with intelligent color adjustments
  */
 
+import { logger } from '@/lib/monitoring/logger';
+
 export interface ThemeColorConfig {
   primaryColor: string;
   secondaryColor: string;
@@ -216,7 +218,7 @@ export function loadThemeSettings(): AdvancedThemeSettings {
       return { ...defaultThemeSettings, ...parsed };
     }
   } catch (error) {
-    console.warn('Failed to load theme settings:', error);
+    logger.warn('Failed to load theme settings:', error);
   }
 
   return defaultThemeSettings;
@@ -233,7 +235,7 @@ export function saveThemeSettings(settings: AdvancedThemeSettings): void {
   try {
     localStorage.setItem('advanced_theme_settings', JSON.stringify(settings));
   } catch (error) {
-    console.warn('Failed to save theme settings:', error);
+    logger.warn('Failed to save theme settings:', error);
   }
 }
 

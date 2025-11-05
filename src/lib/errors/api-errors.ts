@@ -1,3 +1,5 @@
+import { logger } from '@/lib/monitoring/logger';
+
 export class APIError extends Error {
   public statusCode: number;
   public code: string;
@@ -131,10 +133,8 @@ export function logError(error: unknown, context?: Record<string, unknown>) {
     context,
   };
 
-  // Log to console in development (use logger in production)
-  if (process.env.NODE_ENV === 'development') {
-    console.error('API Error:', errorInfo);
-  }
+  // Log to logger
+  logger.error('API Error:', errorInfo);
 
   // External logging service integration implemented for production
   // await sendToLoggingService(errorInfo);

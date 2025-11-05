@@ -1,5 +1,5 @@
 'use client';
-import _logger from '@/lib/monitoring/_logger';
+import { logger } from '@/lib/monitoring/logger';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useT } from '@/hooks/useT';
@@ -70,7 +70,7 @@ export default function ClaimsManager({
         setClaims(data.claims || []);
       }
     } catch (error) {
-      console.error('Error fetching claims:', error);
+      logger.error('Error fetching claims:', error);
     } finally {
       setIsLoading(false);
     }
@@ -111,7 +111,7 @@ export default function ClaimsManager({
         onClaimUpdate?.();
       }
     } catch (error) {
-      console.error('Error creating claim:', error);
+      logger.error('Error creating claim:', error);
     } finally {
       setIsCreating(false);
     }
@@ -128,7 +128,7 @@ export default function ClaimsManager({
         onClaimUpdate?.();
       }
     } catch (error) {
-      console.error('Error submitting claim:', error);
+      logger.error('Error submitting claim:', error);
     }
   };
 

@@ -4,12 +4,12 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { CSRFProtection } from '@/lib/security';
+import { CSRFProtection } from '../../../src/lib/security';
 
 describe('CSRFProtection', () => {
   it('should generate a valid CSRF token', () => {
     const token = CSRFProtection.generateToken();
-    
+
     expect(token).toBeTruthy();
     expect(token.length).toBeGreaterThan(30); // Should be 64 hex characters (32 bytes)
   });
@@ -17,14 +17,14 @@ describe('CSRFProtection', () => {
   it('should generate unique tokens', () => {
     const token1 = CSRFProtection.generateToken();
     const token2 = CSRFProtection.generateToken();
-    
+
     expect(token1).not.toBe(token2);
   });
 
   it('should validate matching tokens', () => {
     // Create mock request with matching tokens
     const token = CSRFProtection.generateToken();
-    
+
     // Mock NextRequest
     const mockRequest = {
       headers: {
@@ -40,7 +40,7 @@ describe('CSRFProtection', () => {
         },
       },
     } as any;
-    
+
     const isValid = CSRFProtection.validateToken(mockRequest);
     expect(isValid).toBe(true);
   });
@@ -48,7 +48,7 @@ describe('CSRFProtection', () => {
   it('should reject non-matching tokens', () => {
     const token1 = CSRFProtection.generateToken();
     const token2 = CSRFProtection.generateToken();
-    
+
     const mockRequest = {
       headers: {
         get: (name: string) => {
@@ -63,7 +63,7 @@ describe('CSRFProtection', () => {
         },
       },
     } as any;
-    
+
     const isValid = CSRFProtection.validateToken(mockRequest);
     expect(isValid).toBe(false);
   });
@@ -77,7 +77,7 @@ describe('CSRFProtection', () => {
         get: () => undefined,
       },
     } as any;
-    
+
     const isValid = CSRFProtection.validateToken(mockRequest);
     expect(isValid).toBe(false);
   });

@@ -13,6 +13,7 @@ import {
   hasAnyPermission as checkAnyPermission,
   canAccess as checkCanAccess,
 } from '@/lib/permissions/utils';
+import { logger } from '@/lib/monitoring/logger';
 
 export interface AuthUser {
   id: string;
@@ -182,7 +183,7 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
     if (!response.ok) {
       // Only log non-401 errors
       if (response.status !== 401) {
-        console.warn(
+        logger.warn(
           '[UnifiedAuth] Error fetching user:',
           response.status,
           response.statusText
@@ -225,7 +226,7 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
     }
     // Only log unexpected errors
     if (error?.message && !error.message.includes('401')) {
-      console.warn('[UnifiedAuth] Error fetching user:', error.message);
+      logger.warn('[UnifiedAuth] Error fetching user:', error.message);
     }
     return null;
   }

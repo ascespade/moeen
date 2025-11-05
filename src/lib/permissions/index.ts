@@ -1,6 +1,8 @@
 // Comprehensive Permission System
 // Role-based access control with granular permissions
 
+import { logger } from '@/lib/monitoring/logger';
+
 export interface Permission {
   id: string;
   name: string;
@@ -702,7 +704,7 @@ export class PermissionManager {
         .eq('is_active', true);
 
       if (permError) {
-        console.error(
+        logger.error(
           `[PermissionManager] Error fetching permissions:`,
           permError
         );
@@ -722,7 +724,7 @@ export class PermissionManager {
 
       return permissions;
     } catch (error) {
-      console.error(
+      logger.error(
         `[PermissionManager] Error fetching permissions for role ${roleId}:`,
         error
       );

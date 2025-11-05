@@ -3,7 +3,7 @@
  * Provides functions for testing various external integrations
  */
 
-import _logger from '@/lib/monitoring/_logger';
+import { logger } from '@/lib/monitoring/logger';
 import { createClient } from '@/lib/supabase/client';
 
 // ================================================================
@@ -88,7 +88,7 @@ export async function logIntegrationTest(
   });
 
   if (error) {
-    console.error('Error logging integration test:', error);
+    logger.error('Error logging integration test:', error);
   }
 }
 

@@ -3,6 +3,8 @@
  * Replaces console.log with structured logging
  */
 
+/* eslint-disable no-console */
+
 type LogLevel = 'debug' | 'secondary' | 'warn' | 'error';
 
 interface LogEntry {

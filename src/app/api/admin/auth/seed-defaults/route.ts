@@ -1,5 +1,6 @@
-import { _NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase/admin';
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 
 const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
@@ -43,6 +44,7 @@ export async function POST(req: any) {
   }
 
   const supabase = await createClient();
+  const supabaseAdmin = createAdminClient();
   const created: Array<{ email: string; role: string }> = [];
 
   for (const u of USERS) {
