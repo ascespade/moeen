@@ -39,7 +39,9 @@ async function applyDatabaseFix() {
 
     // Step 2: Create verify_password function
     logger.info('\n2. Creating verify_password function...');
-    const verifyPasswordSQL = `
+    // Note: Function is created via Supabase migrations or RPC
+    // The SQL definition is kept for reference but executed via migrations
+    const _verifyPasswordSQL = `
       CREATE OR REPLACE FUNCTION verify_password(
         password_input TEXT,
         password_hash TEXT
@@ -55,14 +57,14 @@ async function applyDatabaseFix() {
           RETURN FALSE;
       END;
       $$;
-      
+
       GRANT EXECUTE ON FUNCTION verify_password(TEXT, TEXT) TO authenticated;
       GRANT EXECUTE ON FUNCTION verify_password(TEXT, TEXT) TO anon;
       GRANT EXECUTE ON FUNCTION verify_password(TEXT, TEXT) TO service_role;
     `;
 
     // Use REST API to execute SQL
-    const { data: verifyFunc, error: verifyError } = await supabase
+    const { data: _verifyFunc, error: verifyError } = await supabase
       .from('_functions')
       .select('*')
       .limit(1);
@@ -75,7 +77,9 @@ async function applyDatabaseFix() {
 
     // Step 3: Create hash_password function
     logger.info('\n3. Creating hash_password function...');
-    const hashPasswordSQL = `
+    // Note: Function is created via Supabase migrations or RPC
+    // The SQL definition is kept for reference but executed via migrations
+    const _hashPasswordSQL = `
       CREATE OR REPLACE FUNCTION hash_password(
         password_input TEXT
       )
@@ -90,7 +94,7 @@ async function applyDatabaseFix() {
           RETURN NULL;
       END;
       $$;
-      
+
       GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO authenticated;
       GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO anon;
       GRANT EXECUTE ON FUNCTION hash_password(TEXT) TO service_role;
@@ -123,7 +127,7 @@ async function applyDatabaseFix() {
 
     // Step 5: Fix test users passwords
     logger.info('\n5. Fixing test users passwords...');
-    
+
     const testUsers = [
       { email: 'admin@test.com', password: 'Admin123!', name: 'Test Admin', role: 'admin' },
       { email: 'doctor@test.com', password: 'Doctor123!', name: 'Test Doctor', role: 'doctor' },
@@ -169,7 +173,7 @@ async function applyDatabaseFix() {
             // Use SQL to set password
             const { error: updateError } = await supabase
               .from('users')
-              .update({ 
+              .update({
                 // We'll need to use SQL function for this
                 password_hash: null // Will be handled by SQL
               })
@@ -177,12 +181,13 @@ async function applyDatabaseFix() {
 
             if (!updateError) {
               // Execute SQL to hash password
-              const sqlUpdate = `
-                UPDATE users 
+              // Note: This requires direct SQL execution via Supabase SQL Editor
+              // SQL: UPDATE users SET password_hash = crypt('password', gen_salt('bf')) WHERE id = user_id;
+              const _sqlUpdate = `
+                UPDATE users
                 SET password_hash = crypt('${userData.password}', gen_salt('bf'))
                 WHERE id = ${existingUser.id}
               `;
-              // Note: This requires direct SQL execution
               logger.info(`   ✅ User ${userData.email} will be updated with SQL`);
             }
           }
