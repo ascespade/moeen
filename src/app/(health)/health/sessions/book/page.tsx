@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
@@ -29,9 +28,8 @@ interface Slot {
 
 export default function BookSessionPage() {
   const router = useRouter();
-  const [step, setStep] = useState(1); // 1: Session Type, 2: Date, 3: Time, 4: Confirm
-  const [selectedSessionType, setSelectedSessionType] =
-    useState<SessionType | null>(null);
+  const [step, setStep] = useState(1);
+  const [selectedSessionType, setSelectedSessionType] = useState<SessionType | null>(null);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [patientName, setPatientName] = useState('');
@@ -46,7 +44,7 @@ export default function BookSessionPage() {
 
   const handleSelectSlot = (slot: Slot) => {
     setSelectedSlot(slot);
-    setStep(4); // Go to confirmation
+    setStep(4);
   };
 
   const handleBookSession = async () => {
@@ -60,16 +58,9 @@ export default function BookSessionPage() {
 
     try {
       const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('يجب تسجيل الدخول أولاً');
 
-      // Get current user
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        throw new Error('يجب تسجيل الدخول أولاً');
-      }
-
-      // Get or create patient
       let patientId;
       const { data: existingPatients } = await supabase
         .from('patients')
@@ -80,22 +71,15 @@ export default function BookSessionPage() {
       if (existingPatients && existingPatients.length > 0) {
         patientId = existingPatients[0].id;
       } else {
-        // Create new patient
         const { data: newPatient, error: patientError } = await supabase
           .from('patients')
-          .insert({
-            first_name: patientName,
-            last_name: '',
-            date_of_birth: null,
-          })
+          .insert({ first_name: patientName, last_name: '', date_of_birth: null })
           .select()
           .single();
-
         if (patientError) throw patientError;
         patientId = newPatient.id;
       }
 
-      // Create appointment
       const { error: appointmentError } = await supabase
         .from('appointments')
         .insert({
@@ -118,7 +102,6 @@ export default function BookSessionPage() {
         time: selectedSlot.startTime,
       });
 
-      // Success!
       alert('تم حجز الجلسة بنجاح! ✅\n\nسنرسل لك تذكيراً قبل موعد الجلسة.');
       router.push('/health/appointments');
     } catch (err: any) {
@@ -129,10 +112,7 @@ export default function BookSessionPage() {
     }
   };
 
-  // Get minimum date (today)
   const today = new Date().toISOString().split('T')[0];
-
-  // Get maximum date (3 months from now)
   const maxDate = new Date();
   maxDate.setMonth(maxDate.getMonth() + 3);
   const maxDateStr = maxDate.toISOString().split('T')[0];
@@ -142,40 +122,33 @@ export default function BookSessionPage() {
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         <span id="live-region"></span>
       </div>
-      {/* Progress Steps */}
+
       <div className='card p-6 mb-8'>
         <div className='flex items-center justify-between'>
-          {[
-            { num: 1, label: 'نوع الجلسة' },
-            { num: 2, label: 'التاريخ' },
-            { num: 3, label: 'الوقت' },
-            { num: 4, label: 'التأكيد' },
-          ].map((s, i) => (
-            <div key={s.num} className='flex items-center flex-1'>
+          {[1, 2, 3, 4].map((num) => (
+            <div key={num} className='flex items-center flex-1'>
               <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full font-bold ${
-                  step >= s.num
+                  step >= num
                     ? 'bg-[var(--default-default)] text-white'
                     : 'bg-gray-200 dark:bg-gray-700 text-gray-500'
                 }`}
               >
-                {s.num}
+                {num}
               </div>
               <span
                 className={`mr-2 text-sm ${
-                  step >= s.num
+                  step >= num
                     ? 'text-gray-900 dark:text-white font-semibold'
                     : 'text-gray-500'
                 }`}
               >
-                {s.label}
+                {num === 1 ? 'نوع الجلسة' : num === 2 ? 'التاريخ' : num === 3 ? 'الوقت' : 'التأكيد'}
               </span>
-              {i < 3 && (
+              {num < 4 && (
                 <div
                   className={`flex-1 h-1 mx-4 rounded ${
-                    step > s.num
-                      ? 'bg-[var(--default-default)]'
-                      : 'bg-gray-200 dark:bg-gray-700'
+                    step > num ? 'bg-[var(--default-default)]' : 'bg-gray-200 dark:bg-gray-700'
                   }`}
                 />
               )}
@@ -184,7 +157,6 @@ export default function BookSessionPage() {
         </div>
       </div>
 
-      {/* Step 1: Select Session Type */}
       {step === 1 && (
         <div>
           <h1 className='text-3xl font-bold text-gray-900 dark:text-white mb-2'>
@@ -193,7 +165,6 @@ export default function BookSessionPage() {
           <p className='text-gray-600 dark:text-gray-400 mb-8'>
             اختر نوع الجلسة التي تريد حجزها
           </p>
-
           <SessionTypeSelector
             onSelect={handleSelectSessionType}
             selectedId={selectedSessionType?.id}
@@ -201,18 +172,16 @@ export default function BookSessionPage() {
         </div>
       )}
 
-      {/* Step 2: Select Date */}
       {step === 2 && selectedSessionType && (
         <div>
           <button
-            onClick={() => { setStep(1) }}
+            onClick={() => setStep(1)}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStep(1); } }}
             aria-label="العودة إلى الخطوة السابقة"
             className='btn btn-outline mb-6'
           >
             ← العودة
           </button>
-
           <div className='card p-8 mb-6'>
             <div className='flex items-center gap-4 mb-4'>
               <div
@@ -226,28 +195,26 @@ export default function BookSessionPage() {
                   {selectedSessionType.name_ar}
                 </h2>
                 <p className='text-gray-600 dark:text-gray-400'>
-                  {selectedSessionType.duration} دقيقة •{' '}
-                  {selectedSessionType.price} ريال
+                  {selectedSessionType.duration} دقيقة • {selectedSessionType.price} ريال
                 </p>
               </div>
             </div>
           </div>
-
           <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-6'>
             اختر التاريخ
           </h2>
-
           <div className='card p-8'>
-            <input type='date'
+            <input
+              type='date'
               value={selectedDate}
               onChange={(e) => {
                 setSelectedDate(e.target.value);
-                if (e.target.value) {
-                  setStep(3);} aria-label="date" aria-invalid="true"
+                if (e.target.value) setStep(3);
               }}
               min={today}
               max={maxDateStr}
               className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)] text-lg'
+              aria-label="اختر التاريخ"
             />
             <p className='text-sm text-gray-500 dark:text-gray-400 mt-4'>
               ساعات العمل: الأحد - الخميس، 7 صباحاً - 7 مساءً
@@ -256,17 +223,19 @@ export default function BookSessionPage() {
         </div>
       )}
 
-      {/* Step 3: Select Time Slot */}
       {step === 3 && selectedSessionType && selectedDate && (
         <div>
-          <button onClick={() => { setStep(2) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setStep(2) } }} className='b"> { setStep(2) } }} className='btn btn-outline mb-6'>
+          <button
+            onClick={() => setStep(2)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStep(2); } }}
+            aria-label="العودة إلى الخطوة السابقة"
+            className='btn btn-outline mb-6'
+          >
             ← العودة
           </button>
-
           <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-6'>
             اختر الوقت المناسب
           </h2>
-
           <AvailableSlotsPicker
             sessionTypeId={selectedSessionType.id}
             selectedDate={selectedDate}
@@ -276,24 +245,24 @@ export default function BookSessionPage() {
         </div>
       )}
 
-      {/* Step 4: Confirmation */}
       {step === 4 && selectedSessionType && selectedSlot && (
         <div>
-          <button onClick={() => { setStep(3) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setStep(3) } }} className='b"> { setStep(3) } }} className='btn btn-outline mb-6'>
+          <button
+            onClick={() => setStep(3)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStep(3); } }}
+            aria-label="العودة إلى الخطوة السابقة"
+            className='btn btn-outline mb-6'
+          >
             ← العودة
           </button>
-
           <h2 className='text-2xl font-bold text-gray-900 dark:text-white mb-6'>
             تأكيد الحجز
           </h2>
-
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-            {/* Summary */}
             <div className='card p-6'>
               <h3 className='text-lg font-bold text-gray-900 dark:text-white mb-4'>
                 ملخص الحجز
               </h3>
-
               <div className='space-y-4'>
                 <div className='flex items-start gap-3'>
                   <span className='text-2xl'>{selectedSessionType.icon}</span>
@@ -306,19 +275,15 @@ export default function BookSessionPage() {
                     </p>
                   </div>
                 </div>
-
                 <div className='flex items-start gap-3'>
                   <span className='text-2xl'>👨‍⚕️</span>
                   <div>
                     <p className='font-semibold text-gray-900 dark:text-white'>
                       {selectedSlot.therapistName}
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>
-                      الأخصائي
-                    </p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>الأخصائي</p>
                   </div>
                 </div>
-
                 <div className='flex items-start gap-3'>
                   <span className='text-2xl'>📅</span>
                   <div>
@@ -330,29 +295,21 @@ export default function BookSessionPage() {
                         day: 'numeric',
                       })}
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>
-                      التاريخ
-                    </p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>التاريخ</p>
                   </div>
                 </div>
-
                 <div className='flex items-start gap-3'>
                   <span className='text-2xl'>🕐</span>
                   <div>
                     <p className='font-semibold text-gray-900 dark:text-white'>
                       {selectedSlot.startTime}
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>
-                      الوقت
-                    </p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>الوقت</p>
                   </div>
                 </div>
-
                 <div className='border-t dark:border-gray-700 pt-4'>
                   <div className='flex items-center justify-between'>
-                    <span className='text-gray-600 dark:text-gray-400'>
-                      التكلفة
-                    </span>
+                    <span className='text-gray-600 dark:text-gray-400'>التكلفة</span>
                     <span className='text-2xl font-bold text-[var(--default-default)]'>
                       {selectedSessionType.price} ريال
                     </span>
@@ -361,26 +318,25 @@ export default function BookSessionPage() {
               </div>
             </div>
 
-            {/* Form */}
             <div className='card p-6'>
               <h3 className='text-lg font-bold text-gray-900 dark:text-white mb-4'>
                 معلومات الحجز
               </h3>
-
               <form className='space-y-4'>
                 <div>
                   <label className='block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2'>
                     اسم الطفل *
                   </label>
-                  <input type='text'
+                  <input
+                    type='text'
                     value={patientName}
-                    onChange={(e) => setPatientName(e.target.value)} aria-label="text" aria-invalid="true"
+                    onChange={(e) => setPatientName(e.target.value)}
                     className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='أدخل اسم الطفل'
                     required
+                    aria-label="اسم الطفل"
                   />
                 </div>
-
                 <div>
                   <label className='block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2'>
                     ملاحظات (اختياري)
@@ -391,19 +347,22 @@ export default function BookSessionPage() {
                     rows={3}
                     className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='أي ملاحظات إضافية...'
+                    aria-label="ملاحظات"
                   />
                 </div>
-
                 {error && (
                   <div className='p-4 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400'>
                     {error}
                   </div>
                 )}
-
-                <button type='button'
-                  onClick={handleBookSession} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBookSession } }}
+                <button
+                  type='button'
+                  onClick={handleBookSession}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBookSession(); } }}
                   disabled={loading || !patientName.trim()}
-                  className='btn btn-default w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed' aria-label="{loading ? (">
+                  className='btn btn-default w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed'
+                  aria-label={loading ? 'جاري الحجز...' : 'تأكيد الحجز'}
+                >
                   {loading ? (
                     <span className='flex items-center justify-center gap-2'>
                       <span className='animate-spin'>⏳</span>
@@ -413,7 +372,6 @@ export default function BookSessionPage() {
                     'تأكيد الحجز'
                   )}
                 </button>
-
                 <p className='text-xs text-gray-500 dark:text-gray-400 text-center'>
                   سنرسل لك تذكيراً عبر الواتساب قبل موعد الجلسة بـ 24 ساعة
                 </p>
@@ -422,7 +380,6 @@ export default function BookSessionPage() {
           </div>
         </div>
       )}
-    </div>
     </div>
   );
 }

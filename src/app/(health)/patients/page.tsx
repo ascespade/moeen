@@ -250,11 +250,7 @@ export default function PatientsPage() {
 
   if (loading) {
     return (
-      <>
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="انتقل للمحتوى الرئيسي">
-          انتقل للمحتوى الرئيسي
-        </a>
-        <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
+      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'>
         <div className='text-center'>
           <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto'></div>
           <p className='mt-4 text-gray-600'>جاري تحميل بيانات المرضى...</p>
@@ -269,7 +265,10 @@ export default function PatientsPage() {
         <div className='text-center'>
           <div className='text-default-error text-xl mb-4'>⚠️</div>
           <p className='text-gray-600'>{error}</p>
-          <button onClick={() => { window.location.reload() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ window.location.reload() } }"> { window.location.reload() } }}
+          <button
+            onClick={() => { window.location.reload() }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.reload(); } }}
+            aria-label="إعادة تحميل الصفحة"
             className='mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
           >
             إعادة المحاولة

@@ -1,10 +1,7 @@
 'use client';
 import { useState } from 'react';
-
 import { ROUTES } from '@/constants/routes';
-
 import Link from 'next/link';
-
 import Image from 'next/image';
 
 export default function RegisterPage() {
@@ -25,63 +22,43 @@ export default function RegisterPage() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
-
-    // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: '',
-      }));
+      setErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = 'الاسم مطلوب';
-    }
-
+    if (!formData.name.trim()) newErrors.name = 'الاسم مطلوب';
     if (!formData.email.trim()) {
       newErrors.email = 'البريد الإلكتروني مطلوب';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'البريد الإلكتروني غير صحيح';
     }
-
     if (!formData.password) {
       newErrors.password = 'كلمة المرور مطلوبة';
     } else if (formData.password.length < 6) {
       newErrors.password = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
     }
-
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'كلمة المرور غير متطابقة';
     }
-
     if (!formData.agreeToTerms) {
       newErrors.agreeToTerms = 'يجب الموافقة على الشروط والأحكام';
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
+    if (!validateForm()) return;
 
     setIsLoading(true);
-
     try {
-      // Call registration API
       const response = await fetch('/api/auth/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
@@ -91,9 +68,7 @@ export default function RegisterPage() {
       });
 
       const data = await response.json();
-
       if (!response.ok || !data.success) {
-        // Handle validation errors
         if (data.issues && Array.isArray(data.issues)) {
           const newErrors: Record<string, string> = {};
           data.issues.forEach((error: { field: string; message: string }) => {
@@ -101,23 +76,13 @@ export default function RegisterPage() {
           });
           setErrors(newErrors);
         } else {
-          setErrors({
-            general:
-              data.message || 'حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى.',
-          });
+          setErrors({ general: data.message || 'حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى.' });
         }
         return;
       }
 
-      // Success - show success message
       setSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        agreeToTerms: false,
-      });
+      setFormData({ name: '', email: '', password: '', confirmPassword: '', agreeToTerms: false });
     } catch (error) {
       console.error('Registration error:', error);
       setErrors({ general: 'حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى.' });
@@ -129,9 +94,6 @@ export default function RegisterPage() {
   if (success) {
     return (
       <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
-        </div>
         <div className='card w-full max-w-md p-8 text-center'>
           <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -156,16 +118,9 @@ export default function RegisterPage() {
   return (
     <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
       <div className='w-full max-w-md'>
-        {/* Logo */}
         <div className='mb-8 text-center'>
           <div className='mb-4 flex items-center justify-center gap-3'>
-            <Image
-              src='/logo.png'
-              alt='مُعين'
-              width={50}
-              height={50}
-              className='rounded-lg'
-            />
+            <Image src='/logo.png' alt='مُعين' width={50} height={50} className='rounded-lg' />
             <h1 className='text-default text-3xl font-bold'>مُعين</h1>
           </div>
           <h2 className='mb-2 text-2xl font-semibold text-gray-900 dark:text-white'>
@@ -176,7 +131,6 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        {/* Form */}
         <div className='card p-8'>
           {errors.general && (
             <div className='mb-6 rounded-lg border border-[var(--default-error)]/20 bg-surface p-4 text-[var(--default-error)]'>
@@ -185,15 +139,12 @@ export default function RegisterPage() {
           )}
 
           <form onSubmit={handleSubmit} className='space-y-6'>
-            {/* Name */}
             <div>
-              <label
-                htmlFor='name'
-                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
-              >
+              <label htmlFor='name' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 الاسم الكامل
               </label>
-              <input type='text'
+              <input
+                type='text'
                 id='name'
                 name='name'
                 value={formData.name}
@@ -206,20 +157,15 @@ export default function RegisterPage() {
                 aria-label="أدخل اسمك الكامل"
                 aria-invalid={errors.name ? 'true' : 'false'}
               />
-              {errors.name && (
-                <p className='mt-1 text-sm text-default-error'>{errors.name}</p>
-              )}
+              {errors.name && <p className='mt-1 text-sm text-default-error'>{errors.name}</p>}
             </div>
 
-            {/* Email */}
             <div>
-              <label
-                htmlFor='email'
-                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
-              >
+              <label htmlFor='email' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 البريد الإلكتروني
               </label>
-              <input type='email'
+              <input
+                type='email'
                 id='email'
                 name='email'
                 value={formData.email}
@@ -232,22 +178,15 @@ export default function RegisterPage() {
                 aria-label="أدخل بريدك الإلكتروني"
                 aria-invalid={errors.email ? 'true' : 'false'}
               />
-              {errors.email && (
-                <p className='mt-1 text-sm text-default-error'>
-                  {errors.email}
-                </p>
-              )}
+              {errors.email && <p className='mt-1 text-sm text-default-error'>{errors.email}</p>}
             </div>
 
-            {/* Password */}
             <div>
-              <label
-                htmlFor='password'
-                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
-              >
+              <label htmlFor='password' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 كلمة المرور
               </label>
-              <input type='password'
+              <input
+                type='password'
                 id='password'
                 name='password'
                 value={formData.password}
@@ -260,22 +199,15 @@ export default function RegisterPage() {
                 aria-label="أدخل كلمة المرور"
                 aria-invalid={errors.password ? 'true' : 'false'}
               />
-              {errors.password && (
-                <p className='mt-1 text-sm text-default-error'>
-                  {errors.password}
-                </p>
-              )}
+              {errors.password && <p className='mt-1 text-sm text-default-error'>{errors.password}</p>}
             </div>
 
-            {/* Confirm Password */}
             <div>
-              <label
-                htmlFor='confirmPassword'
-                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
-              >
+              <label htmlFor='confirmPassword' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 تأكيد كلمة المرور
               </label>
-              <input type='password'
+              <input
+                type='password'
                 id='confirmPassword'
                 name='confirmPassword'
                 value={formData.confirmPassword}
@@ -288,17 +220,13 @@ export default function RegisterPage() {
                 aria-label="أعد إدخال كلمة المرور"
                 aria-invalid={errors.confirmPassword ? 'true' : 'false'}
               />
-              {errors.confirmPassword && (
-                <p className='mt-1 text-sm text-default-error'>
-                  {errors.confirmPassword}
-                </p>
-              )}
+              {errors.confirmPassword && <p className='mt-1 text-sm text-default-error'>{errors.confirmPassword}</p>}
             </div>
 
-            {/* Terms Agreement */}
             <div>
               <label className='flex items-start gap-3'>
-                <input type='checkbox'
+                <input
+                  type='checkbox'
                   name='agreeToTerms'
                   checked={formData.agreeToTerms}
                   onChange={handleInputChange}
@@ -308,29 +236,18 @@ export default function RegisterPage() {
                 />
                 <span className='text-sm text-gray-700 dark:text-gray-300'>
                   أوافق على{' '}
-                  <Link
-                    href='/terms'
-                    className='text-[var(--default-default)] hover:underline'
-                  >
+                  <Link href='/terms' className='text-[var(--default-default)] hover:underline'>
                     الشروط والأحكام
                   </Link>{' '}
                   و{' '}
-                  <Link
-                    href='/privacy'
-                    className='text-[var(--default-default)] hover:underline'
-                  >
+                  <Link href='/privacy' className='text-[var(--default-default)] hover:underline'>
                     سياسة الخصوصية
                   </Link>
                 </span>
               </label>
-              {errors.agreeToTerms && (
-                <p className='mt-1 text-sm text-default-error'>
-                  {errors.agreeToTerms}
-                </p>
-              )}
+              {errors.agreeToTerms && <p className='mt-1 text-sm text-default-error'>{errors.agreeToTerms}</p>}
             </div>
 
-            {/* Submit Button */}
             <button
               type='submit'
               disabled={isLoading}
@@ -348,20 +265,16 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          {/* Login Link */}
           <div className='mt-6 text-center'>
             <p className='text-gray-600 dark:text-gray-300'>
               لديك حساب بالفعل؟{' '}
-              <Link
-                href={ROUTES.LOGIN}
-                className='font-semibold text-[var(--default-default)] hover:underline'
-              >
+              <Link href={ROUTES.LOGIN} className='font-semibold text-[var(--default-default)] hover:underline'>
                 تسجيل الدخول
               </Link>
             </p>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }

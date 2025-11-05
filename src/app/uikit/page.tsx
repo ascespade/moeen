@@ -37,7 +37,7 @@ export default function UIKitPage() {
                aria-label="Destructive">
                 Destructive
               </button>
-            </section>
+            </div>
           </section>
 
           <section className='card p-6'>
@@ -80,5 +80,6 @@ export default function UIKitPage() {
         </div>
       </div>
     </main>
+    </>
   );
 }
