@@ -461,9 +461,10 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (e: unknown) {
-    console.error('Login error:', e);
+    const { logger } = await import('@/lib/utils/logger');
+    logger.error('Login error', { error: e instanceof Error ? e.message : String(e) });
     return NextResponse.json(
-      { success: false, error: e?.message || 'Internal server error' },
+      { success: false, error: e instanceof Error ? e.message : 'Internal server error' },
       { status: 500 }
     );
   }

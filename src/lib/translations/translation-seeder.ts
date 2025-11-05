@@ -1113,7 +1113,7 @@ if (require.main === module) {
       if (validation.isValid) {
         await seeder.seedTranslations();
       } else {
-        console.log(
+        logger.warn(
           '❌ Translation validation failed. Please fix issues before seeding.'
         );
       }

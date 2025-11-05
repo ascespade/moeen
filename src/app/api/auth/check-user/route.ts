@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     }
   } catch (e: unknown) {
     return NextResponse.json(
-      { success: false, error: e?.message || 'Internal error' },
+      { success: false, error: e instanceof Error ? e.message : 'Internal error' },
       { status: 500 }
     );
   }

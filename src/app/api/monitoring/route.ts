@@ -18,7 +18,7 @@ export async function GET() {
     });
   } catch (error: unknown) {
     return NextResponse.json(
-      { error: error.message || 'Failed to get monitoring data' },
+      { error: error instanceof Error ? error.message : 'Failed to get monitoring data' },
       { status: 500 }
     );
   }
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     );
   } catch (error: unknown) {
     return NextResponse.json(
-      { error: error.message || 'Failed to update monitoring' },
+      { error: error instanceof Error ? error.message : 'Failed to update monitoring' },
       { status: 500 }
     );
   }

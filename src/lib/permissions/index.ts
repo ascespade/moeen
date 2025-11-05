@@ -723,10 +723,11 @@ export class PermissionManager {
       });
 
       return permissions;
-    } catch (error) {
-      console.error(
-        `[PermissionManager] Error fetching permissions for role ${roleId}:`,
-        error
+    } catch (error: unknown) {
+      const { logger } = await import('@/lib/utils/logger');
+      logger.error(
+        `[PermissionManager] Error fetching permissions for role ${roleId}`,
+        { error: error instanceof Error ? error.message : String(error) }
       );
       // Fallback: return empty array on error
       return [];
