@@ -1,7 +1,7 @@
 /**
  * useAuth Hook - Custom Hook for Authentication
  * خطاف useAuth - خطاف مخصص للمصادقة
- * 
+ *
  * React hook for authentication state and actions
  */
 
