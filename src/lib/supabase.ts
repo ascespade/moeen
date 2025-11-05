@@ -122,7 +122,7 @@ export class SupabaseDatabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to create patient: ${error.message}`);
+    if (error) throw new Error(`Failed to create patient: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -133,7 +133,7 @@ export class SupabaseDatabaseManager {
       .eq('id', patientId)
       .single();
 
-    if (error) throw new Error(`Failed to get patient: ${error.message}`);
+    if (error) throw new Error(`Failed to get patient: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -145,7 +145,7 @@ export class SupabaseDatabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to get patient by national ID: ${error.message}`);
+      throw new Error(`Failed to get patient by national ID: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -157,7 +157,7 @@ export class SupabaseDatabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to update patient: ${error.message}`);
+    if (error) throw new Error(`Failed to update patient: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -170,7 +170,7 @@ export class SupabaseDatabaseManager {
       )
       .order('created_at', { ascending: false });
 
-    if (error) throw new Error(`Failed to search patients: ${error.message}`);
+    if (error) throw new Error(`Failed to search patients: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -182,7 +182,7 @@ export class SupabaseDatabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to create doctor: ${error.message}`);
+    if (error) throw new Error(`Failed to create doctor: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -193,7 +193,7 @@ export class SupabaseDatabaseManager {
       .eq('id', doctorId)
       .single();
 
-    if (error) throw new Error(`Failed to get doctor: ${error.message}`);
+    if (error) throw new Error(`Failed to get doctor: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -205,7 +205,7 @@ export class SupabaseDatabaseManager {
       .eq('status', 'active');
 
     if (error)
-      throw new Error(`Failed to get doctors by specialty: ${error.message}`);
+      throw new Error(`Failed to get doctors by specialty: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -220,7 +220,7 @@ export class SupabaseDatabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to create appointment: ${error.message}`);
+      throw new Error(`Failed to create appointment: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -247,7 +247,7 @@ export class SupabaseDatabaseManager {
       ascending: true,
     });
 
-    if (error) throw new Error(`Failed to get appointments: ${error.message}`);
+    if (error) throw new Error(`Failed to get appointments: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -263,7 +263,7 @@ export class SupabaseDatabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to update appointment: ${error.message}`);
+      throw new Error(`Failed to update appointment: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -275,7 +275,7 @@ export class SupabaseDatabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to create session: ${error.message}`);
+    if (error) throw new Error(`Failed to create session: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -291,7 +291,7 @@ export class SupabaseDatabaseManager {
       .eq('patient_id', patientId)
       .order('session_date', { ascending: false });
 
-    if (error) throw new Error(`Failed to get sessions: ${error.message}`);
+    if (error) throw new Error(`Failed to get sessions: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -311,7 +311,7 @@ export class SupabaseDatabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to create insurance claim: ${error.message}`);
+      throw new Error(`Failed to create insurance claim: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -323,7 +323,7 @@ export class SupabaseDatabaseManager {
       .order('submitted_at', { ascending: false });
 
     if (error)
-      throw new Error(`Failed to get insurance claims: ${error.message}`);
+      throw new Error(`Failed to get insurance claims: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -339,7 +339,7 @@ export class SupabaseDatabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to update insurance claim: ${error.message}`);
+      throw new Error(`Failed to update insurance claim: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -349,7 +349,7 @@ export class SupabaseDatabaseManager {
       .from('patients')
       .select('id, created_at, status');
 
-    if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
+    if (error) throw new Error(`Failed to get patient stats: ${(error instanceof Error ? error.message : String(error))}`);
 
     const total = data.length;
     const active = data.filter(p => p.status === 'active').length;
@@ -369,7 +369,7 @@ export class SupabaseDatabaseManager {
       .select('status, appointment_date, created_at');
 
     if (error)
-      throw new Error(`Failed to get appointment stats: ${error.message}`);
+      throw new Error(`Failed to get appointment stats: ${(error instanceof Error ? error.message : String(error))}`);
 
     const total = data.length;
     const completed = data.filter(a => a.status === 'completed').length;

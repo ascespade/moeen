@@ -106,7 +106,7 @@ export async function logoutAction() {
     const { error } = await supabase.auth.signOut();
 
     if (error) {
-      throw AppError.internal(`فشل تسجيل الخروج: ${error.message}`);
+      throw AppError.internal(`فشل تسجيل الخروج: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath(ROUTES.HOME);
@@ -129,7 +129,7 @@ export async function forgotPasswordAction(input: { email: string }) {
     });
 
     if (error) {
-      throw AppError.internal(`فشل إرسال رابط إعادة تعيين كلمة المرور: ${error.message}`);
+      throw AppError.internal(`فشل إرسال رابط إعادة تعيين كلمة المرور: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     return { success: true };
@@ -151,7 +151,7 @@ export async function resetPasswordAction(input: { password: string; confirmPass
     });
 
     if (error) {
-      throw AppError.internal(`فشل إعادة تعيين كلمة المرور: ${error.message}`);
+      throw AppError.internal(`فشل إعادة تعيين كلمة المرور: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath(ROUTES.AUTH.LOGIN);
@@ -173,7 +173,7 @@ export async function verifyEmailAction(token: string) {
     });
 
     if (error) {
-      throw AppError.badRequest(`فشل التحقق من البريد الإلكتروني: ${error.message}`);
+      throw AppError.badRequest(`فشل التحقق من البريد الإلكتروني: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath(ROUTES.AUTH.LOGIN);

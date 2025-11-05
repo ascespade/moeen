@@ -96,7 +96,7 @@ class DynamicContentManager {
         ]);
 
       if (error) {
-        throw new Error(`Failed to load homepage content: ${error.message}`);
+        throw new Error(`Failed to load homepage content: ${(error instanceof Error ? error.message : String(error))}`);
       }
 
       // Parse settings into structured content
@@ -152,7 +152,7 @@ class DynamicContentManager {
         .eq('namespace', namespace);
 
       if (error) {
-        throw new Error(`Failed to load translations: ${error.message}`);
+        throw new Error(`Failed to load translations: ${(error instanceof Error ? error.message : String(error))}`);
       }
 
       const translations: Record<string, string> = {};
@@ -193,7 +193,7 @@ class DynamicContentManager {
         .in('key', keys);
 
       if (error) {
-        throw new Error(`Failed to load settings: ${error.message}`);
+        throw new Error(`Failed to load settings: ${(error instanceof Error ? error.message : String(error))}`);
       }
 
       const settings: Record<string, any> = {};

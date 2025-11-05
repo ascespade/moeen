@@ -44,7 +44,7 @@ export async function addTranslation(
     .single();
 
   if (error) {
-    throw new Error(`Failed to add translation: ${error.message}`);
+    throw new Error(`Failed to add translation: ${(error instanceof Error ? error.message : String(error))}`);
   }
 
   return data;
@@ -72,7 +72,7 @@ export async function addMultipleTranslations(
     .select();
 
   if (error) {
-    throw new Error(`Failed to add translations: ${error.message}`);
+    throw new Error(`Failed to add translations: ${(error instanceof Error ? error.message : String(error))}`);
   }
 
   return data;
@@ -94,7 +94,7 @@ export async function getTranslations(
     .eq('namespace', namespace);
 
   if (error) {
-    throw new Error(`Failed to get translations: ${error.message}`);
+    throw new Error(`Failed to get translations: ${(error instanceof Error ? error.message : String(error))}`);
   }
 
   const result: Record<string, string> = {};
@@ -122,7 +122,7 @@ export async function updateTranslation(
     .single();
 
   if (error) {
-    throw new Error(`Failed to update translation: ${error.message}`);
+    throw new Error(`Failed to update translation: ${(error instanceof Error ? error.message : String(error))}`);
   }
 
   return data;
@@ -137,7 +137,7 @@ export async function deleteTranslation(id: string): Promise<void> {
   const { error } = await supabase.from('translations').delete().eq('id', id);
 
   if (error) {
-    throw new Error(`Failed to delete translation: ${error.message}`);
+    throw new Error(`Failed to delete translation: ${(error instanceof Error ? error.message : String(error))}`);
   }
 }
 
@@ -162,7 +162,7 @@ export async function bulkInsertTranslations(
     .upsert(translationsWithIds, { onConflict: 'locale,namespace,key' });
 
   if (error) {
-    throw new Error(`Failed to bulk insert translations: ${error.message}`);
+    throw new Error(`Failed to bulk insert translations: ${(error instanceof Error ? error.message : String(error))}`);
   }
 }
 
@@ -182,7 +182,7 @@ export async function getAllTranslationsForLocale(
     .order('key', { ascending: true });
 
   if (error) {
-    throw new Error(`Failed to get translations: ${error.message}`);
+    throw new Error(`Failed to get translations: ${(error instanceof Error ? error.message : String(error))}`);
   }
 
   return data || [];
@@ -209,7 +209,7 @@ export async function searchTranslations(
   const { data, error } = await queryBuilder;
 
   if (error) {
-    throw new Error(`Failed to search translations: ${error.message}`);
+    throw new Error(`Failed to search translations: ${(error instanceof Error ? error.message : String(error))}`);
   }
 
   return data || [];

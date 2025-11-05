@@ -34,7 +34,7 @@ export const createCommentAction = withAction(
       .single();
 
     if (error) {
-      throw AppError.internal(`فشل إنشاء التعليق: ${error.message}`);
+      throw AppError.internal(`فشل إنشاء التعليق: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath(`/posts/${validated.postId}`);
@@ -76,7 +76,7 @@ export const updateCommentAction = withAction(
       .single();
 
     if (error) {
-      throw AppError.internal(`فشل تحديث التعليق: ${error.message}`);
+      throw AppError.internal(`فشل تحديث التعليق: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath(`/posts/${existingComment.post_id}`);
@@ -115,7 +115,7 @@ export const deleteCommentAction = withAction(
       .eq('id', commentId);
 
     if (error) {
-      throw AppError.internal(`فشل حذف التعليق: ${error.message}`);
+      throw AppError.internal(`فشل حذف التعليق: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath(`/posts/${existingComment.post_id}`);

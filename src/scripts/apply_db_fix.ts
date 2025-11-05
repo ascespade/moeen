@@ -255,7 +255,9 @@ async function applyDatabaseFix() {
     });
 
   } catch (error: unknown) {
-    logger.error('❌ Error applying database fix:', error.message, {});
+    logger.error('❌ Error applying database fix', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     logger.error('\n💡 Alternative: Run SQL script manually in Supabase SQL Editor:', {});
     logger.error('   File: supabase/fix_existing_users_passwords.sql', {});
     process.exit(1);
