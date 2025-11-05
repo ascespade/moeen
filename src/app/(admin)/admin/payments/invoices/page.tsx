@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { createClient } from '@/lib/supabase/client';
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 
 function InvoicesPageContent() {

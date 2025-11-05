@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import SessionTypeSelector from '@/components/booking/SessionTypeSelector';
 import AvailableSlotsPicker from '@/components/booking/AvailableSlotsPicker';
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 interface SessionType {
   id: string;

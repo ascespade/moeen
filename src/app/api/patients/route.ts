@@ -3,7 +3,7 @@ import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/authorize';
 import { PermissionManager } from '@/lib/permissions';
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 import { AuditLogger, AuditAction } from '@/lib/audit-logger';
 
 const patientSchema = z.object({

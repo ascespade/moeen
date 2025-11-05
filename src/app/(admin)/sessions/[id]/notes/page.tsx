@@ -1,6 +1,6 @@
 'use client';
 
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 import { createClient } from '@/lib/supabase/client';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
