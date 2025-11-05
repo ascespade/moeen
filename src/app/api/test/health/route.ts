@@ -15,7 +15,7 @@ export async function GET(_request: NextRequest) {
     const healthChecks: {
       timestamp: string;
       status: string;
-      services: Record<string, any>;
+      services: Record<string, unknown>;
       errors: string[];
     } = {
       timestamp: new Date().toISOString(),

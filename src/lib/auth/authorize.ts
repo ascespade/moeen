@@ -14,7 +14,7 @@ export interface User {
     | 'manager'
     | 'agent'
     | 'demo';
-  meta?: Record<string, any>;
+  meta?: Record<string, unknown>;
 }
 
 export interface AuthResult {

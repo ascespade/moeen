@@ -10,7 +10,7 @@ interface TestUser {
   id: string;
   email: string;
   role: string;
-  profile: Record<string, any>;
+  profile: Record<string, unknown>;
 }
 
 interface TestData {

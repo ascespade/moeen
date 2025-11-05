@@ -74,7 +74,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           'messages',
         ];
 
-        const tableResults: Record<string, any> = {};
+        const tableResults: Record<string, unknown> = {};
 
         for (const table of tables) {
           try {
@@ -248,7 +248,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
       case 'relations':
         // Test foreign key relations
-        const relationResults: Record<string, any> = {};
+        const relationResults: Record<string, unknown> = {};
 
         // Test appointments -> patients relationship
         try {

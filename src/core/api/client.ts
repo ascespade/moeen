@@ -12,7 +12,7 @@ export interface ApiRequestConfig {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   headers?: Record<string, string>;
   body?: unknown;
-  params?: Record<string, any>;
+  params?: Record<string, unknown>;
   timeout?: number;
   retries?: number;
 }
@@ -87,7 +87,7 @@ class ApiClient {
     }
   }
 
-  private buildURL(endpoint: string, params?: Record<string, any>): string {
+  private buildURL(endpoint: string, params?: Record<string, unknown>): string {
     // Ensure we always construct an absolute URL. If baseURL is a relative path
     // (e.g. '/api'), resolve it against the current origin on the client or the
     // configured public app URL on the server.
@@ -148,7 +148,7 @@ class ApiClient {
   // HTTP Methods
   async get<T>(
     endpoint: string,
-    params?: Record<string, any>
+    params?: Record<string, unknown>
   ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { method: 'GET', params });
   }

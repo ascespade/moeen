@@ -68,12 +68,12 @@ export interface AuditLogEntry {
   action: AuditAction;
   table_name: string;
   record_id?: number | string;
-  old_values?: Record<string, any>;
-  new_values?: Record<string, any>;
+  old_values?: Record<string, unknown>;
+  new_values?: Record<string, unknown>;
   user_id?: number | string;
   ip_address?: string;
   user_agent?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export class AuditLogger {
@@ -130,7 +130,7 @@ export class AuditLogger {
   static async logAuth(
     action: AuditAction.LOGIN | AuditAction.LOGOUT | AuditAction.LOGIN_FAILED,
     userId?: string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): Promise<void> {
     await this.log({
       action,
@@ -151,7 +151,7 @@ export class AuditLogger {
     action: AuditAction,
     tableName: 'patients' | 'medical_records' | 'appointments',
     recordId: number | string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): Promise<void> {
     await this.log({
       action,
@@ -172,7 +172,7 @@ export class AuditLogger {
     tableName: string,
     recordId: number | string,
     action: 'read' | 'export' | 'delete',
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): Promise<void> {
     const auditAction =
       action === 'read'
@@ -201,7 +201,7 @@ export class AuditLogger {
       | AuditAction.UNAUTHORIZED_ACCESS
       | AuditAction.RATE_LIMIT_EXCEEDED
       | AuditAction.SUSPICIOUS_ACTIVITY,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): Promise<void> {
     await this.log({
       action,
@@ -226,7 +226,7 @@ export class AuditLogger {
     targetUserId: number | string,
     oldValue: any,
     newValue: any,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): Promise<void> {
     await this.log({
       action,
@@ -251,9 +251,9 @@ export async function auditLog(
   tableName: string,
   options?: {
     recordId?: number | string;
-    oldValues?: Record<string, any>;
-    newValues?: Record<string, any>;
-    metadata?: Record<string, any>;
+    oldValues?: Record<string, unknown>;
+    newValues?: Record<string, unknown>;
+    metadata?: Record<string, unknown>;
   }
 ): Promise<void> {
   await AuditLogger.log({

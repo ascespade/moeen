@@ -87,7 +87,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // Log error internally without exposing to client
     }
 
-    const settingsMap: Record<string, any> = {};
+    const settingsMap: Record<string, unknown> = {};
     (settingsData || []).forEach((item: unknown) => {
       try {
         settingsMap[item.key] =
@@ -126,7 +126,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const gallery = settingsMap['homepage_gallery'] || [];
 
     // Basic stats: attempt to query analytics/dashboard stats table if exists
-    let stats: Record<string, any> = {};
+    let stats: Record<string, unknown> = {};
     try {
       const { data: statsData } = await supabase
         .from('dashboard_stats')
@@ -138,7 +138,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // ignore if table doesn't exist
     }
 
-    const dynamicData: Record<string, any> = {
+    const dynamicData: Record<string, unknown> = {
       center_info: centerData || null,
       services,
       heroSlides,

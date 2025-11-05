@@ -13,7 +13,7 @@ export interface TaskStatus {
   endTime?: Date;
   errors: string[];
   results: unknown;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface MonitoringReport {

@@ -8,7 +8,7 @@ interface EmailTemplate {
 interface EmailData {
   to: string;
   template: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   language?: 'ar' | 'en';
 }
 

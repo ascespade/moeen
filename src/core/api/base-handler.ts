@@ -106,7 +106,7 @@ export class BaseApiHandler {
             const searchParams = new URLSearchParams(
               req.url.split('?')[1] || ''
             );
-            const queryParams: Record<string, any> = {};
+            const queryParams: Record<string, unknown> = {};
 
             for (const [key, value] of searchParams.entries()) {
               // Try to parse as number

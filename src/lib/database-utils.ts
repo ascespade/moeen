@@ -44,7 +44,7 @@ export class DatabaseUtils {
   /**
    * Create database insert data with auto-generated public_id
    */
-  static createInsertData<T extends Record<string, any>>(
+  static createInsertData<T extends Record<string, unknown>>(
     entityType: keyof typeof cuidEntity,
     data: Omit<T, 'id' | 'public_id'>
   ): T {
@@ -57,7 +57,7 @@ export class DatabaseUtils {
   /**
    * Create multiple insert records with auto-generated public_ids
    */
-  static createMultipleInsertData<T extends Record<string, any>>(
+  static createMultipleInsertData<T extends Record<string, unknown>>(
     entityType: keyof typeof cuidEntity,
     dataArray: Array<Omit<T, 'id' | 'public_id'>>
   ): T[] {
@@ -186,7 +186,7 @@ export class DatabaseValidation {
   /**
    * Validate required fields for entity creation
    */
-  static validateRequiredFields<T extends Record<string, any>>(
+  static validateRequiredFields<T extends Record<string, unknown>>(
     data: T,
     requiredFields: (keyof T)[]
   ): { isValid: boolean; errors: string[] } {

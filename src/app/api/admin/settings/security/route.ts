@@ -35,7 +35,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const securitySettings = (configs || []).reduce(
-      (acc: Record<string, any>, config: unknown) => {
+      (acc: Record<string, unknown>, config: unknown) => {
         try {
           acc[config.key] =
             typeof config.value === 'string'

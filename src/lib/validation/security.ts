@@ -191,7 +191,7 @@ export function validateRateLimit(
 }
 
 // Input sanitization
-export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
+export function sanitizeObject<T extends Record<string, unknown>>(obj: T): T {
   const sanitized = {} as T;
 
   for (const [key, value] of Object.entries(obj)) {

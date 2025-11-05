@@ -123,7 +123,7 @@ export const addResponseInterceptor = (
 };
 
 // Utility functions
-export const buildQueryString = (params: Record<string, any>): string => {
+export const buildQueryString = (params: Record<string, unknown>): string => {
   const searchParams = new URLSearchParams();
 
   Object.entries(params).forEach(([key, value]) => {
@@ -141,7 +141,7 @@ export const buildQueryString = (params: Record<string, any>): string => {
 
 export const buildUrl = (
   endpoint: string,
-  params?: Record<string, any>
+  params?: Record<string, unknown>
 ): string => {
   if (!params || Object.keys(params).length === 0) {
     return endpoint;

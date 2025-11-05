@@ -175,7 +175,7 @@ class DynamicContentManager {
   /**
    * Get system settings
    */
-  async getSettings(keys: string[]): Promise<Record<string, any>> {
+  async getSettings(keys: string[]): Promise<Record<string, unknown>> {
     const cacheKey = `settings_${keys.join('_')}`;
 
     // Check cache first
@@ -196,7 +196,7 @@ class DynamicContentManager {
         throw new Error(`Failed to load settings: ${(error instanceof Error ? error.message : String(error))}`);
       }
 
-      const settings: Record<string, any> = {};
+      const settings: Record<string, unknown> = {};
       data?.forEach(item => {
         settings[item.key] = item.value;
       });

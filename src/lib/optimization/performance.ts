@@ -11,7 +11,7 @@ interface PerformanceMetrics {
   endTime?: number;
   duration?: number;
   memoryUsage?: NodeJS.MemoryUsage;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 class PerformanceMonitor {
@@ -25,7 +25,7 @@ class PerformanceMonitor {
   startOperation(
     operationId: string,
     operation: string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): void {
     const startTime = performance.now();
     const memoryUsage = process.memoryUsage();
@@ -214,7 +214,7 @@ export class BundleOptimizer {
     return 0;
   }
 
-  static analyzeBundle(): Record<string, any> {
+  static analyzeBundle(): Record<string, unknown> {
     // This would analyze the bundle and return optimization suggestions
     return {
       totalSize: this.getBundleSize(),
