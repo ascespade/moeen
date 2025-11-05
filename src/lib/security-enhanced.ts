@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { randomBytes } from 'crypto';
-import { _realDB } from './supabase-real';
 // Enhanced Security System for Hemam Center
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';

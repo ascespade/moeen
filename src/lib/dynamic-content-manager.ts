@@ -1,5 +1,4 @@
 import { getBrowserSupabase } from './supabaseClient';
-import { _I18N_KEYS } from '@/constants/i18n-keys';
 
 export interface DynamicContent {
   id: string;

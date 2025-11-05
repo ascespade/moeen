@@ -1,4 +1,3 @@
-import { type UserRole } from '@/constants/roles';
 import DOMPurify from 'isomorphic-dompurify';
 import { z } from 'zod';
 
