@@ -98,10 +98,10 @@ export class WorkerPool {
         endTime: new Date(),
         results: result,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       monitoringSystem.updateTask(task.id, {
         status: 'error',
-        errors: [error.message || String(error)],
+        errors: [error instanceof Error ? error.message : String(error)],
         endTime: new Date(),
       });
     }

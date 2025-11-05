@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
             .from('users')
             .update(updateData)
             .eq('id', finalUser.id);
-        } catch (e: any) {
+        } catch (e: unknown) {
           // Error updating role - continue
         }
       }
@@ -188,7 +188,7 @@ export async function POST(req: NextRequest) {
       }
 
       created.push({ email: u.email, role: u.role });
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Continue with next user
     }
   }
