@@ -6,8 +6,8 @@ import {
   CreditCard,
   FileText,
   Clock,
-  _CheckCircle,
-  _AlertCircle,
+  CheckCircle,
+  AlertCircle,
   Upload,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';

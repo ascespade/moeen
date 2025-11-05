@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 const insuranceClaimSchema = z.object({
   patient_id: z.string().uuid('Invalid patient ID'),
@@ -36,7 +37,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // Check permissions using PermissionManager
     const { PermissionManager } = await import('@/lib/permissions');
     const canRead = PermissionManager.hasPermission(
-      authResult.user.role as any,
+      authResult.user.role as 'admin' | 'staff' | 'doctor' | 'supervisor' | 'patient',
       'insurance-claims',
       'read',
       {
@@ -67,7 +68,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Filter by status if provided
     if (status) {
-      claims = claims.filter((claim: any) => claim.status === status);
+      claims = claims.filter((claim: { status: string }) => claim.status === status);
     }
 
     // Apply pagination
@@ -84,7 +85,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    console.error('Error fetching insurance claims:', error);
+    logger.error('Error fetching insurance claims', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     return NextResponse.json(
       { error: 'Failed to fetch insurance claims' },
       { status: 500 }
@@ -108,7 +111,7 @@ export async function POST(request: NextRequest) {
     // Check permissions using PermissionManager
     const { PermissionManager } = await import('@/lib/permissions');
     const canCreate = PermissionManager.hasPermission(
-      authResult.user.role as any,
+      authResult.user.role as 'admin' | 'staff' | 'doctor' | 'supervisor' | 'patient',
       'insurance-claims',
       'create',
       {
@@ -140,7 +143,9 @@ export async function POST(request: NextRequest) {
       message: 'Insurance claim created successfully',
     });
   } catch (error) {
-    console.error('Error creating insurance claim:', error);
+    logger.error('Error creating insurance claim', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     return NextResponse.json(
       { error: 'Failed to create insurance claim' },
       { status: 500 }

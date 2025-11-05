@@ -1,4 +1,4 @@
-import _logger from '@/lib/monitoring/_logger';
+import { logger } from '@/lib/utils/logger';
 /**
  * Redis Cache Manager - مدير التخزين المؤقت
  * Redis-based caching system for improved performance
@@ -27,7 +27,9 @@ class RedisCache {
       const cached = this.getFromMemory(key);
       return cached ? JSON.parse(cached) : null;
     } catch (error) {
-      console.error('Cache get error:', error);
+      logger.error('Cache get error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return null;
     }
   }
@@ -41,7 +43,9 @@ class RedisCache {
       this.setInMemory(key, serialized, actualTtl);
       return true;
     } catch (error) {
-      console.error('Cache set error:', error);
+      logger.error('Cache set error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }
@@ -51,7 +55,9 @@ class RedisCache {
       this.deleteFromMemory(key);
       return true;
     } catch (error) {
-      console.error('Cache delete error:', error);
+      logger.error('Cache delete error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }
@@ -65,7 +71,9 @@ class RedisCache {
       this.flushMemory();
       return true;
     } catch (error) {
-      console.error('Cache flush error:', error);
+      logger.error('Cache flush error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return false;
     }
   }

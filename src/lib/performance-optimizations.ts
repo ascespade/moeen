@@ -1,4 +1,4 @@
-import { logger } from '@/lib/logger';
+import { logger } from '@/lib/utils/logger';
 
 // Performance optimizations for the application
 

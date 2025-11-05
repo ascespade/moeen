@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { logger } from '@/lib/logger';
+import { logger } from '@/lib/utils/logger';
 // import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(

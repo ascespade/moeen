@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { moeenChatbot, type MoeenContext } from '@/lib/chatbot/moeen-core';
 import { z } from 'zod';
+import { logger } from '@/lib/utils/logger';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -43,7 +44,9 @@ export async function POST(request: NextRequest) {
         .single();
 
       if (convError) {
-        console.error('Error creating conversation:', convError);
+        logger.error('Error creating conversation', {
+          error: convError instanceof Error ? convError.message : String(convError),
+        });
         return NextResponse.json(
           { error: 'Failed to create conversation' },
           { status: 500 }
@@ -71,9 +74,9 @@ export async function POST(request: NextRequest) {
       .limit(10);
 
     if (history) {
-      context.history = history.map((msg: any) => ({
-        role: msg.role as 'user' | 'assistant' | 'system',
-        content: msg.content,
+      context.history = history.map((msg: { role: string; content: string; created_at: string }) => ({
+        role: (msg.role as 'user' | 'assistant' | 'system') || 'user',
+        content: msg.content || '',
         timestamp: new Date(msg.created_at),
       }));
     }
@@ -114,11 +117,13 @@ export async function POST(request: NextRequest) {
       messageId: assistantMessage?.id,
     });
   } catch (error) {
-    console.error('Chatbot API error:', error);
-    
+    logger.error('Chatbot API error', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Invalid request data', details: error.errors },
+        { error: 'Invalid request data', details: error.issues },
         { status: 400 }
       );
     }
