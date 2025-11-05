@@ -1,4 +1,4 @@
-// import { _NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getServerSupabase } from '@/lib/supabaseClient';
 // import { _requireAuth } from '@/lib/auth/authorize';
 

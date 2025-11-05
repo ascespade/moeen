@@ -93,7 +93,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .eq('status', 'paid');
 
     const totalRevenue =
-      payments?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) ||
+      payments?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) ||
       0;
 
     const monthlyPayments =

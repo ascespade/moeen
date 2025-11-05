@@ -77,7 +77,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .eq('status', 'paid')
       .gte('created_at', startDate.toISOString());
 
-    const revenue = payments?.reduce((sum, p) => sum + (p.amount || 0), 0) || 0;
+    const revenue = payments?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0;
 
     // Get patient analytics by age (if age field exists)
     const { data: patients } = await supabase
@@ -339,13 +339,13 @@ function calculateAppointmentDayGroups(appointments: any[]): Array<{ day: string
 
 function calculateAverageProgress(sessions: any[]): number {
   if (sessions.length === 0) return 0;
-  const total = sessions.reduce((sum, s) => sum + (s.progress || 0), 0);
+  const total = sessions.reduce((sum: number, s: any) => sum + (s.progress || 0), 0);
   return total / sessions.length;
 }
 
 function calculateAverageSessionDuration(sessions: any[]): number {
   if (sessions.length === 0) return 0;
-  const total = sessions.reduce((sum, s) => sum + (s.duration || 0), 0);
+  const total = sessions.reduce((sum: number, s: any) => sum + (s.duration || 0), 0);
   return total / sessions.length;
 }
 

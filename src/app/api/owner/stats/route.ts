@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
       .eq('status', 'completed');
 
     const totalRevenue =
-      revenue?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) ||
+      revenue?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) ||
       0;
 
     return NextResponse.json({

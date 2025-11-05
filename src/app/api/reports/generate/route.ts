@@ -211,7 +211,7 @@ async function __generateDashboardMetrics(
   ).length;
   const totalRevenue = payments
     .filter((p: any) => p.status === 'paid')
-    .reduce((sum: unknown, p: unknown) => sum + (p.amount || 0), 0);
+    .reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
 
   // Daily breakdown
   const dailyStats = __generateDailyBreakdown(
@@ -413,7 +413,7 @@ async function __generateInsuranceClaimsReport(
     total: claims.length,
     byProvider: __groupByField(claims, 'provider'),
     byStatus: __groupByField(claims, 'claimStatus'),
-    totalAmount: claims.reduce((sum, c) => sum + (c.amount || 0), 0),
+    totalAmount: claims.reduce((sum: number, c: any) => sum + (c.amount || 0), 0),
     approvalRate:
       claims.length > 0
         ? (claims.filter(c => c.claimStatus === 'approved').length /
@@ -467,7 +467,7 @@ function __generateDailyBreakdown(
       appointments: dayAppointments.length,
       revenue: (dayPayments as any)
         .filter((p: any) => p.status === 'paid')
-        .reduce((sum: unknown, p: unknown) => sum + (p.amount || 0), 0),
+        .reduce((sum: number, p: any) => sum + (p.amount || 0), 0),
     });
 
     current.setDate(current.getDate() + 1);

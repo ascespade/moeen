@@ -7,19 +7,12 @@ import {
   Clock,
   Users,
   Phone,
-  MapPin,
   Search,
-  Filter,
-  MoreVertical,
-  Edit,
   CheckCircle,
   XCircle,
-  Eye,
   UserPlus,
-  TrendingUp,
   Activity,
 } from 'lucide-react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 
@@ -141,7 +134,7 @@ function CRMDashboardContent() {
     }
   };
 
-  const getStatusBadge = (_status: string) => {
+  const getStatusBadge = (status: string) => {
     const statusConfig = {
       scheduled: {
         label: 'مجدول',

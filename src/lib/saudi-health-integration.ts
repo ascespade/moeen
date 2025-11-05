@@ -64,7 +64,7 @@ export interface InsuranceClaim {
 }
 
 export class SaudiHealthSystemIntegration {
-  private _sehaApiEndpoint: string;
+  private sehaApiEndpoint: string;
   private insuranceProviders: Map<string, InsuranceProvider> = new Map();
 
   constructor() {
@@ -164,37 +164,38 @@ export class SaudiHealthSystemIntegration {
   }
 
   private mapSehaToHealthRecord(sehaData: unknown): SaudiHealthRecord {
+    const data = sehaData as any;
     return {
-      nationalId: sehaData.nationalId,
-      fullName: sehaData.fullName,
-      fullNameEn: sehaData.fullNameEn,
-      dateOfBirth: sehaData.dateOfBirth,
-      gender: sehaData.gender,
-      nationality: sehaData.nationality,
-      phone: sehaData.phone,
-      email: sehaData.email,
+      nationalId: data.nationalId,
+      fullName: data.fullName,
+      fullNameEn: data.fullNameEn,
+      dateOfBirth: data.dateOfBirth,
+      gender: data.gender,
+      nationality: data.nationality,
+      phone: data.phone,
+      email: data.email,
       address: {
-        city: sehaData.address.city,
-        district: sehaData.address.district,
-        street: sehaData.address.street,
-        postalCode: sehaData.address.postalCode,
+        city: data.address.city,
+        district: data.address.district,
+        street: data.address.street,
+        postalCode: data.address.postalCode,
       },
       insurance: {
-        provider: sehaData.insurance.provider,
-        policyNumber: sehaData.insurance.policyNumber,
-        expiryDate: sehaData.insurance.expiryDate,
-        coverageType: sehaData.insurance.coverageType,
+        provider: data.insurance.provider,
+        policyNumber: data.insurance.policyNumber,
+        expiryDate: data.insurance.expiryDate,
+        coverageType: data.insurance.coverageType,
       },
       medicalHistory: {
-        chronicConditions: sehaData.medicalHistory.chronicConditions || [],
-        allergies: sehaData.medicalHistory.allergies || [],
-        medications: sehaData.medicalHistory.medications || [],
-        previousSurgeries: sehaData.medicalHistory.previousSurgeries || [],
+        chronicConditions: data.medicalHistory.chronicConditions || [],
+        allergies: data.medicalHistory.allergies || [],
+        medications: data.medicalHistory.medications || [],
+        previousSurgeries: data.medicalHistory.previousSurgeries || [],
       },
       emergencyContact: {
-        name: sehaData.emergencyContact.name,
-        relationship: sehaData.emergencyContact.relationship,
-        phone: sehaData.emergencyContact.phone,
+        name: data.emergencyContact.name,
+        relationship: data.emergencyContact.relationship,
+        phone: data.emergencyContact.phone,
       },
     };
   }

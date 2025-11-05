@@ -318,7 +318,7 @@ async function getSystemMetrics() {
     if (metricsError) throw metricsError;
 
     // Aggregate metrics by service
-    const aggregated = metricsData.reduce((acc: unknown, metric: unknown) => {
+    const aggregated = metricsData.reduce((acc: any, metric: any) => {
       const service = metric.service_name;
       if (!acc[service]) {
         acc[service] = {
@@ -486,11 +486,11 @@ function countActiveServices(systemHealth: any[]) {
 function calculateErrorRate(systemMetrics: any[]) {
   if (systemMetrics.length === 0) return 0;
 
-  const totalErrors = systemMetrics.reduce((acc, metric) => {
+  const totalErrors = systemMetrics.reduce((acc: number, metric: any) => {
     return acc + (metric.metrics?.issues || 0);
   }, 0);
 
-  const totalOperations = systemMetrics.reduce((acc, metric) => {
+  const totalOperations = systemMetrics.reduce((acc: number, metric: any) => {
     return acc + (metric.metrics?.totalOperations || 1);
   }, 0);
 
@@ -548,7 +548,7 @@ async function getHealthcareMetrics() {
     ).length;
 
     // Group doctors by specialty
-    const specialties = doctors.reduce((acc: unknown, doctor: unknown) => {
+    const specialties = doctors.reduce((acc: any, doctor: any) => {
       const specialty = doctor.specialty || 'غير محدد';
       acc[specialty] = (acc[specialty] || 0) + 1;
       return acc;

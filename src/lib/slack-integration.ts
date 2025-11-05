@@ -62,10 +62,10 @@ export interface SlackNotification {
 
 export class SlackIntegration {
   private botToken: string;
-  private _appToken: string;
+  private appToken: string;
   private channels: Map<string, SlackChannel> = new Map();
   private users: Map<string, SlackUser> = new Map();
-  private _appointments: Map<string, SlackAppointment> = new Map();
+  private appointments: Map<string, SlackAppointment> = new Map();
 
   constructor() {
     this.botToken = process.env.SLACK_BOT_TOKEN || '';
