@@ -61,7 +61,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json(
         {
           error: 'Validation failed',
-          details: validation.error.issues.map((err: unknown) => ({
+          details: validation.error.issues.map((err: any) => ({
             path: err.path.join('.'),
             message: err.message,
           })),
@@ -218,7 +218,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 async function checkDoctorAvailability(
   doctorId: string,
   scheduledAt: string,
-  duration: number
+  _duration: number
 ) {
   const supabase = await createClient();
 
@@ -271,7 +271,7 @@ async function checkAppointmentConflicts(
     .lt('scheduled_at', endTime.toISOString()); // Start before our end time
 
   // Filter for actual overlaps
-  const conflicts = (allAppointments || []).filter((appt: unknown) => {
+  const conflicts = (allAppointments || []).filter((appt: any) => {
     const apptStart = new Date(appt.scheduled_at);
     const apptDuration = appt.duration || 30;
     const apptEnd = new Date(apptStart.getTime() + apptDuration * 60000);

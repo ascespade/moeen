@@ -1,7 +1,6 @@
-import { NextResponse } from 'next/server';
+import { _NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
-import { requireAuth } from '@/lib/auth/authorize';
 
 const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
 const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
@@ -20,7 +19,7 @@ const USERS = [
   { email: 'agent@test.local', name: 'Agent User', role: 'agent' },
 ];
 
-export async function POST(req: unknown) {
+export async function POST(req: any) {
   const isDev = process.env.NODE_ENV !== 'production';
   const referer = req.headers.get('referer') || '';
   const origin = req.headers.get('origin') || '';
@@ -168,7 +167,7 @@ export async function POST(req: unknown) {
             .from('users')
             .update(updateData)
             .eq('id', finalUser.id);
-        } catch (e: unknown) {
+        } catch (e: any) {
           // Error updating role - continue
         }
       }
@@ -180,7 +179,7 @@ export async function POST(req: unknown) {
         .eq('name', u.role)
         .maybeSingle();
       if (roleRow?.id && finalUser) {
-        const { error: roleErr } = await supabase
+        await supabase
           .from('user_roles')
           .upsert(
             { user_id: finalUser.id, role_id: roleRow.id, is_active: true },
@@ -189,7 +188,7 @@ export async function POST(req: unknown) {
       }
 
       created.push({ email: u.email, role: u.role });
-    } catch (error: unknown) {
+    } catch (error: any) {
       // Continue with next user
     }
   }

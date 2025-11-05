@@ -83,7 +83,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Generate available time slots for each doctor
     const availableSlots =
-      doctors?.map((doctor: unknown) => {
+      doctors?.map((doctor: any) => {
         const schedule = doctor.schedule || {};
         const workingHours = schedule.workingHours || {
           start: '09:00',
@@ -131,7 +131,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
           // Check if slot is already booked
           const isBooked = appointments?.some(
-            (apt: unknown) =>
+            (apt: any) =>
               apt.doctor_id === doctor.id &&
               new Date(apt.scheduled_at).getTime() === time.getTime()
           );

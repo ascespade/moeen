@@ -471,7 +471,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
                             <Button
                               variant='ghost'
                               size='sm'
-                              onClick={e => handleMarkAsRead(notification.id)}
+                              onClick={_e => handleMarkAsRead(notification.id)}
                               icon={Eye}
                               className='w-6 h-6 p-0'
                               title='تحديد كمقروء'

@@ -188,8 +188,8 @@ export default function MoeenChatbot({
   return (
     <>
       {/* Floating Button */}
-      <button onClick={() => setIsOpen(!isOpen)} aria-label="{
-          if (e.key === 'Ent"
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -260,7 +260,7 @@ export default function MoeenChatbot({
                 <span className='text-xs'>متصل</span>
               </div>
             </div>
-          </div>
+          </header>
 
           {/* Messages */}
           <main className='flex-1 overflow-y-auto p-3 space-y-3 bg-[var(--background)]' role="main" aria-label="الرسائل">
@@ -314,7 +314,7 @@ export default function MoeenChatbot({
             )}
 
             <div ref={messagesEndRef} />
-          </div>
+          </main>
 
           {/* Quick Actions */}
           {messages.length === 1 && (
@@ -324,9 +324,9 @@ export default function MoeenChatbot({
               </p>
               <div className='grid grid-cols-2 gap-2'>
                 {quickActions.map(action => (
-                  <button key={action.id}
-                    onClick={() => handleQuickAction(action.action)} aria-label="{
-                      if (e."
+                  <button 
+                    key={action.id}
+                    onClick={() => handleQuickAction(action.action)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -335,7 +335,6 @@ export default function MoeenChatbot({
                     }}
                     aria-label={action.text}
                     className='rounded-md bg-[var(--brand-surface)] px-2 py-1.5 text-xs text-[var(--text-primary)] transition-all hover:bg-[var(--brand-primary)] hover:text-white border border-[var(--brand-border)]'
-                aria-label={action.text}
                   >
                     {action.text}
                   </button>
@@ -358,8 +357,8 @@ export default function MoeenChatbot({
                 aria-label="حقل إدخال الرسالة"
                 aria-describedby="chatbot-input-help"
               />
-              <button onClick={() => handleSendMessage()} aria-label="{
-                  if (e.key "
+              <button 
+                onClick={() => handleSendMessage()}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();

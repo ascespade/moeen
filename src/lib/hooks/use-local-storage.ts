@@ -7,7 +7,7 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, _useEffect } from 'react';
 
 /**
  * Hook to manage localStorage

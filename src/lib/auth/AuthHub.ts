@@ -6,8 +6,8 @@
  * that handles all auth operations with proper caching and error handling.
  */
 
-import { createBrowserClient, SupabaseClient } from '@supabase/ssr';
-import { User, Session, AuthError } from '@supabase/supabase-js';
+// import { createBrowserClient, SupabaseClient } from '@supabase/ssr';
+// import { User, Session, AuthError } from '@supabase/supabase-js';
 import { getBrowserSupabase } from '@/lib/supabaseClient';
 import { createClient } from '@/lib/supabase/server';
 

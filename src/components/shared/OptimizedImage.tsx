@@ -41,7 +41,7 @@ export function OptimizedImage({
         style={{ width, height, ...style }}
       >
         <div className='text-center text-gray-500'>
-          <ImageIcon className='w-8 h-8 mx-auto mb-2' / alt="Image">
+          <ImageIcon className='w-8 h-8 mx-auto mb-2' />
           <span className='text-sm'>Image failed to load</span>
         </div>
       </div>

@@ -18,14 +18,14 @@ import {
   Clock,
   Calendar,
   Menu,
-  X,
+  _X,
   Bot,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 
 export default function Header() {
-  const { theme } = useTheme();
+  const { _theme } = useTheme();
   const { language, direction } = useLanguage();
   // Use custom auth hook (preferred) or fallback to unified auth
   const customAuth = useCustomAuth();
@@ -37,7 +37,7 @@ export default function Header() {
     customAuth.isAuthenticated || unifiedAuth.isAuthenticated;
   const logout = customAuth.logout || unifiedAuth.logout;
   const router = useRouter();
-  const pathname = usePathname();
+  const _pathname = usePathname();
   const [notifications, setNotifications] = useState<any[]>([]);
   const [notificationsLoading, setNotificationsLoading] = useState(true);
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
@@ -108,7 +108,7 @@ export default function Header() {
 
         if (data.success && Array.isArray(data.data)) {
           // Filter notifications for this user and get real data
-          const userNotifications = data.data.filter((n: unknown) => {
+          const userNotifications = data.data.filter((n: any) => {
             // Match by recipientId or user_id
             return (
               n.recipientId === user.id ||
@@ -170,7 +170,7 @@ export default function Header() {
   }, [isAuthenticated, user?.id]);
 
   const unreadCount = notifications.filter(
-    (n: unknown) => !n.is_read && !n.read
+    (n: any) => !n.is_read && !n.read
   ).length;
 
   // Set initial time and mounted flag on client-side only
@@ -230,7 +230,7 @@ export default function Header() {
   }, []);
 
   // Get enabled modules for quick access
-  const enabledModules = Object.entries(systemConfig.modules)
+  const _enabledModules = Object.entries(systemConfig.modules)
     .filter(([_, config]) => config.enabled)
     .map(([name, config]) => ({ name, ...config }));
 
@@ -473,8 +473,8 @@ export default function Header() {
                               // Mark all as read
                               await Promise.all(
                                 notifications
-                                  .filter((n: unknown) => !n.is_read)
-                                  .map((n: unknown) =>
+                                  .filter((n: any) => !n.is_read)
+                                  .map((n: any) =>
                                     fetch(`/api/notifications/${n.id}/read`, {
                                       method: 'POST',
                                       credentials: 'include',
@@ -529,7 +529,7 @@ export default function Header() {
                       <div className='p-2'>
                         {notifications
                           .slice(0, 5)
-                          .map((notification: unknown) => {
+                          .map((notification: any) => {
                             const isUnread =
                               !notification.is_read && !notification.read;
                             const createdDate =
@@ -573,7 +573,7 @@ export default function Header() {
                                       // Update local state if successful
                                       if (markResponse.ok) {
                                         setNotifications(
-                                          notifications.map((n: unknown) =>
+                                          notifications.map((n: any) =>
                                             n.id === notification.id
                                               ? {
                                                   ...n,

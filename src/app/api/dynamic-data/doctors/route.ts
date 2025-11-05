@@ -25,7 +25,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const specialization = searchParams.get('specialization');
     const includeUsers = searchParams.get('include_users') === 'true';
 
-    let query;
+    let _query;
 
     if (includeUsers) {
       // استخدام الدالة الذكية التي تجلب الأطباء مع معلومات المستخدمين
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // فلترة حسب التخصص إذا طُلب ذلك
       let filteredData = data;
       if (specialization) {
-        filteredData = data?.filter((doctor: unknown) =>
+        filteredData = data?.filter((doctor: any) =>
           doctor.specialization
             ?.toLowerCase()
             .includes(specialization.toLowerCase())
@@ -57,7 +57,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // فلترة حسب التخصص إذا طُلب ذلك
       let filteredData = data;
       if (specialization) {
-        filteredData = data?.filter((doctor: unknown) =>
+        filteredData = data?.filter((doctor: any) =>
           doctor.specialization
             ?.toLowerCase()
             .includes(specialization.toLowerCase())

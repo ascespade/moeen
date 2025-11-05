@@ -35,6 +35,8 @@ interface TestResult {
   details?: any;
 }
 
+type PartialTestResult = Partial<TestResult> & Pick<TestResult, 'id' | 'name' | 'category'>;
+
 const ALL_TESTS: Omit<
   TestResult,
   'status' | 'message' | 'duration' | 'details'
@@ -341,11 +343,16 @@ export default function CRUDTestPage() {
     const updatedTests = [...tests];
 
     for (let i = 0; i < updatedTests.length; i++) {
-      updatedTests[i] = { ...updatedTests[i], status: 'running' };
+      updatedTests[i] = { ...updatedTests[i], status: 'running' as const } as TestResult;
       setTests([...updatedTests]);
 
-      const result = await runTest(updatedTests[i].id);
-      updatedTests[i] = result;
+      const testId = updatedTests[i]?.id;
+      if (testId) {
+        const result = await runTest(testId);
+        if (result) {
+          updatedTests[i] = result;
+        }
+      }
       setTests([...updatedTests]);
 
       // Small delay between tests
@@ -364,7 +371,7 @@ export default function CRUDTestPage() {
       const index = updatedTests.findIndex(t => t.id === categoryTest.id);
       if (index === -1) continue;
 
-      updatedTests[index] = { ...updatedTests[index], status: 'running' };
+      updatedTests[index] = { ...updatedTests[index], status: 'running' as const } as TestResult;
       setTests([...updatedTests]);
 
       const result = await runTest(categoryTest.id);

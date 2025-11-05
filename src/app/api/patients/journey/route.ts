@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { requireAuth } from '@/lib/auth/authorize';
 
 const activationSchema = z.object({
@@ -42,7 +42,6 @@ const fileAccessSchema = z.object({
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const supabase = await createClient();
     const body = await request.json();
     const { action } = body;
 
@@ -57,11 +56,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
     }
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
-async function activatePatient(request: NextRequest, body: unknown) {
+async function activatePatient(request: NextRequest, body: any) {
   try {
     // Authorize staff, supervisor, or admin
     const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(
@@ -149,7 +148,7 @@ async function activatePatient(request: NextRequest, body: unknown) {
       message: 'Patient activated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -200,7 +199,7 @@ async function updateChecklist(request: NextRequest, body: unknown) {
         patientId,
         appointmentId,
         checklistItems,
-        completedAt: checklistItems.every((item: unknown) => item.completed)
+        completedAt: checklistItems.every((item: any) => item.completed)
           ? new Date().toISOString()
           : null,
         updatedBy: authResult.user!.id,
@@ -224,7 +223,7 @@ async function updateChecklist(request: NextRequest, body: unknown) {
       metadata: {
         patientId,
         appointmentId,
-        completedItems: checklistItems.filter((item: unknown) => item.completed)
+        completedItems: checklistItems.filter((item: any) => item.completed)
           .length,
         totalItems: checklistItems.length,
       },
@@ -236,11 +235,11 @@ async function updateChecklist(request: NextRequest, body: unknown) {
       message: 'Checklist updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
-async function requestFileAccess(request: NextRequest, body: unknown) {
+async function requestFileAccess(request: NextRequest, body: any) {
   try {
     // Authorize patient, staff, or admin
     const authResult = await requireAuth(['patient', 'staff', 'admin'])(
@@ -351,7 +350,7 @@ async function requestFileAccess(request: NextRequest, body: unknown) {
       message: 'File access granted',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 

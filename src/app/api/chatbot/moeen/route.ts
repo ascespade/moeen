@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { moeenChatbot } from '@/lib/chatbot/moeen-core';
+import { moeenChatbot, type MoeenContext } from '@/lib/chatbot/moeen-core';
 import { z } from 'zod';
 
 const supabase = createClient(
@@ -54,8 +54,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Build context
-    const context = {
-      conversationId: convId,
+    const context: MoeenContext = {
+      conversationId: convId || '',
       userId: userId || undefined,
       userType: userType || undefined,
       sessionId: sessionId || `session_${Date.now()}`,
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
       .limit(10);
 
     if (history) {
-      context.history = history.map((msg) => ({
+      context.history = history.map((msg: any) => ({
         role: msg.role as 'user' | 'assistant' | 'system',
         content: msg.content,
         timestamp: new Date(msg.created_at),

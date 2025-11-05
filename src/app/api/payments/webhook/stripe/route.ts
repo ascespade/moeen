@@ -3,12 +3,12 @@
  * Handle Stripe webhook events for payment status updates
  */
 
-import logger from '@/lib/monitoring/logger';
+// import { logger } from '@/lib/utils/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import Stripe from 'stripe';
 import { headers } from 'next/headers';
-import { requireAuth } from '@/lib/auth/authorize';
+// import { requireAuth } from '@/lib/auth/authorize';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2023-10-16',

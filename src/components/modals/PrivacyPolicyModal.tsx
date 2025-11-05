@@ -18,7 +18,6 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
     <div
       className='fixed inset-0 z-[1100] flex items-center justify-center p-4 backdrop-blur-sm transition-colors'
       style={{
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backgroundColor: 'var(--modal-backdrop, rgba(0, 0, 0, 0.5))',
       }}
       tabIndex={0} onClick={onClose}
@@ -210,11 +209,11 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
                   آخر تحديث: {new Date().toLocaleDateString('ar-SA')}
                 </p>
               </section>
-            </section>
-          </section>
-        </section>
-      </section>
-    </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 });
 

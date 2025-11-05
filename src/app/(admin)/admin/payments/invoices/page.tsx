@@ -6,14 +6,6 @@ import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { createClient } from '@/lib/supabase/client';
 import logger from '@/lib/monitoring/logger';
 
-interface Invoice {
-  id: string;
-  patient_name: string;
-  session_type: string;
-  amount: number;
-  status: string;
-  created_at: string;
-}
 
 function InvoicesPageContent() {
   const [payments, setPayments] = useState<any[]>([]);
@@ -49,7 +41,7 @@ function InvoicesPageContent() {
     }
   };
 
-  const generateInvoicePDF = (payment: any) => {
+  const generateInvoicePDF = (_payment: any) => {
     // TODO: Implement PDF generation
     alert('سيتم تنفيذ توليد PDF قريباً');
   };
@@ -210,8 +202,8 @@ export default function InvoicesPage() {
   const pageConfig = ADMIN_PAGES.payments;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'الفواتير'}
     >
       <InvoicesPageContent />
     </AdminPageWrapper>

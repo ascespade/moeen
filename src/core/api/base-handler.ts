@@ -3,7 +3,7 @@
  * Unified API request handler with error handling and validation
  */
 
-import logger from '@/lib/monitoring/logger';
+import _logger from '@/lib/monitoring/_logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { ErrorHandler, ErrorFactory } from '../errors';
 import { ValidationHelper } from '../validation';
@@ -180,10 +180,10 @@ export class BaseApiHandler {
   }
 
   public async checkResourceAccess(
-    resourceType: string,
-    resourceId: string,
-    user: any,
-    supabase: any
+    _resourceType: string,
+    _resourceId: string,
+    _user: any,
+    _supabase: any
   ) {
     // Implement resource access checking logic
     // This would check if the user has access to the specific resource

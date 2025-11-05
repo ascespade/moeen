@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
-import { ADMIN_PAGES } from '@/lib/admin/page-config';
+// import { ADMIN_PAGES } from '@/lib/admin/page-config'; // Unused
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -14,15 +14,15 @@ import {
   MapPin,
   Calendar,
   Plus,
-  Search,
-  Filter,
+  // Search, // Unused
+  // Filter, // Unused
   MoreVertical,
   Edit,
-  Eye,
-  Trash2,
+  // Eye, // Unused
+  // Trash2, // Unused
   UserPlus,
   MessageCircle,
-  Star,
+  // Star, // Unused
   Clock,
   Activity,
 } from 'lucide-react';
@@ -71,12 +71,12 @@ interface ContactActivity {
 }
 
 function ContactsPageContent() {
-  const { user, isAuthenticated } = useAuth();
+  const { user: _user, isAuthenticated } = useAuth();
   const router = useRouter();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [activities, setActivities] = useState<ContactActivity[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [_error, _setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterSource, setFilterSource] = useState<string>('all');

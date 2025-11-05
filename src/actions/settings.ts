@@ -16,9 +16,8 @@ import {
   notificationSettingsSchema,
   securitySettingsSchema,
 } from '@/lib/validations';
-import { handleServerActionError } from '@/lib/errors';
 import { AppError } from '@/lib/errors';
-import type { Setting, SettingInsert, SettingUpdate } from '@/types/database.types';
+import type { SettingInsert } from '@/types/database.types';
 import type { Json } from '@/types/database.types';
 
 /**

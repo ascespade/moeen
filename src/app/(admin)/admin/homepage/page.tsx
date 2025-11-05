@@ -61,7 +61,7 @@ export default function AdminHomepageEditor() {
   const uploadImage = async (file: File) => {
     const supabase = getBrowserSupabase();
     const path = `homepage/${Date.now()}_${file.name}`;
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('public')
       .upload(path, file, { upsert: true });
     if (error) throw error;

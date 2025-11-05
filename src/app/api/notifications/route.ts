@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/authorize';
+import { PermissionManager } from '@/lib/permissions';
 import { realDB } from '@/lib/supabase-real';
 
 export const revalidate = 60;
@@ -44,13 +46,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getUserPermissions(
-      authResult.user.role,
-      authResult.user.meta?.permissions || []
+    const userPermissions = await PermissionManager.getRolePermissions(
+      authResult.user.role || 'user'
     );
 
     if (
-      !PermissionManager.canAccess(userPermissions, 'notifications', 'manage')
+      !PermissionManager.hasPermission(userPermissions, 'notifications:manage')
     ) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },

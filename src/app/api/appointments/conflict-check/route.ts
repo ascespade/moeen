@@ -3,7 +3,7 @@
  * Check for appointment conflicts and availability
  */
 
-import { ErrorHandler } from '@/core/errors';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { ValidationHelper } from '@/core/validation';
 import { createClient } from '@/lib/supabase/server';
 import { getClientInfo } from '@/lib/utils/request-helpers';
@@ -18,7 +18,7 @@ const conflictCheckSchema = z.object({
 });
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-  const startTime = Date.now();
+  const _startTime = Date.now();
   const { ipAddress, userAgent } = getClientInfo(request);
 
   try {
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const { data: allAppointments, error } = await query;
 
     // Filter for actual overlaps in JavaScript
-    const conflicts = (allAppointments || []).filter((appt: unknown) => {
+    const conflicts = (allAppointments || []).filter((appt: any) => {
       const apptStart = new Date(appt.scheduled_at);
       const apptEnd = new Date(
         apptStart.getTime() + (appt.duration || 30) * 60000
@@ -116,6 +116,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: hasConflicts ? 'Conflicts found' : 'No conflicts found',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }

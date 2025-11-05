@@ -1019,8 +1019,8 @@ export default function NotificationsPage() {
   const pageConfig = ADMIN_PAGES.notifications;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'Untitled'}
     >
       <NotificationsPageContent />
     </AdminPageWrapper>

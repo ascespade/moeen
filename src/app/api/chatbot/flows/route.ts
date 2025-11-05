@@ -9,7 +9,7 @@ const supabase = createClient(
 // GET /api/chatbot/flows - جلب جميع التدفقات
 export const revalidate = 60;
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
+export async function GET(_request: NextRequest): Promise<NextResponse> {
   try {
     const { data: flows, error } = await supabase
       .from('chatbot_flows')

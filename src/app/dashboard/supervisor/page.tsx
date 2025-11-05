@@ -4,11 +4,11 @@ import {
   Users,
   TrendingUp,
   AlertTriangle,
-  CheckCircle,
+  _CheckCircle,
   Clock,
   FileText,
   BarChart3,
-  Settings,
+  _Settings,
 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 
@@ -57,7 +57,7 @@ interface SupervisorData {
 export default function SupervisorDashboard() {
   const { t } = useT();
   const { settings } = useTheme();
-  const theme = settings.mode;
+  const _theme = settings.mode;
   const [supervisorData, setSupervisorData] = useState<SupervisorData | null>(
     null
   );

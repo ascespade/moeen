@@ -34,7 +34,7 @@ export interface MoeenContext {
 }
 
 export class MoeenChatbot {
-  private personality: MoeenPersonality;
+  private _personality: MoeenPersonality;
 
   constructor() {
     this.personality = {
@@ -127,7 +127,7 @@ export class MoeenChatbot {
    * Detect intent from user message
    * اكتشاف القصد من رسالة المستخدم
    */
-  async detectIntent(message: string, context: MoeenContext): Promise<string> {
+  async detectIntent(message: string, _context: MoeenContext): Promise<string> {
     const lowerMessage = message.toLowerCase();
 
     // Appointment booking intents
@@ -245,7 +245,7 @@ export class MoeenChatbot {
     }
   }
 
-  private handleGreeting(context: MoeenContext): string {
+  private handleGreeting(_context: MoeenContext): string {
     const greetings = [
       'مرحباً! أنا معين المساعد الذكي. كيف يمكنني مساعدتك اليوم؟',
       'أهلاً وسهلاً! أنا معين جاهز لمساعدتك. ما الذي تحتاج إليه؟',
@@ -257,7 +257,7 @@ export class MoeenChatbot {
 
   private handleBookAppointment(
     entities: Record<string, any>,
-    context: MoeenContext
+    _context: MoeenContext
   ): string {
     if (!entities.date || !entities.time) {
       return 'حسناً، سأساعدك في حجز الموعد. يرجى إخباري بالتاريخ والوقت المفضلين لديك حتى أتمكن من حجز الموعد المناسب.';
@@ -267,26 +267,26 @@ export class MoeenChatbot {
   }
 
   private handleRescheduleAppointment(
-    entities: Record<string, any>,
-    context: MoeenContext
+    _entities: Record<string, any>,
+    _context: MoeenContext
   ): string {
     return 'حسناً، سأساعدك في إعادة الجدولة. يرجى إخباري برقم الموعد الحالي والتاريخ والوقت الجديدين المفضلين لديك.';
   }
 
-  private handleCancelAppointment(context: MoeenContext): string {
+  private handleCancelAppointment(_context: MoeenContext): string {
     return 'حسناً، سأساعدك في إلغاء الموعد. يرجى إخباري برقم الموعد المراد إلغاؤه وسأقوم بإلغائه فوراً.';
   }
 
   private handleInformationRequest(
-    message: string,
-    context: MoeenContext
+    _message: string,
+    _context: MoeenContext
   ): string {
     return 'سأسعد بمساعدتك. يرجى إخباري بالموضوع الذي تريد معلومات عنه وسأقدم لك المعلومات المتاحة.';
   }
 
   private handleGeneralChat(
-    message: string,
-    context: MoeenContext
+    _message: string,
+    _context: MoeenContext
   ): string {
     return 'أفهم. أنا هنا لمساعدتك. يمكنني مساعدتك في حجز المواعيد أو الإجابة على استفساراتك أو أي شيء آخر تحتاج إليه.';
   }

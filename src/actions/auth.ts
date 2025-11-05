@@ -10,12 +10,10 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { withAction } from '@/lib/auth/with-action';
 import { loginSchema, registerSchema, resetPasswordSchema, forgotPasswordSchema } from '@/lib/validations';
 import { handleServerActionError } from '@/lib/errors';
 import { AppError } from '@/lib/errors';
 import { ROUTES } from '@/lib/constants';
-import type { User } from '@/types/database.types';
 
 /**
  * Login action

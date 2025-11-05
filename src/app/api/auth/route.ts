@@ -1,5 +1,6 @@
 import { realDB } from '@/lib/supabase-real';
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/authorize';
 import { z } from 'zod';
 
 const loginSchema = z.object({
@@ -47,7 +48,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function handleLogin(request: NextRequest, body: unknown) {
+async function handleLogin(_request: NextRequest, body: unknown) {
   const validation = loginSchema.safeParse(body);
   if (!validation.success) {
     return NextResponse.json(
@@ -56,7 +57,7 @@ async function handleLogin(request: NextRequest, body: unknown) {
     );
   }
 
-  const { email, password } = validation.data;
+  const { email, _password } = validation.data;
 
   // In a real implementation, you would verify the password
   // For now, we'll just check if the user exists
@@ -81,7 +82,7 @@ async function handleLogin(request: NextRequest, body: unknown) {
   }
 }
 
-async function handleRegister(request: NextRequest, body: unknown) {
+async function handleRegister(_request: NextRequest, body: unknown) {
   const validation = registerSchema.safeParse(body);
   if (!validation.success) {
     return NextResponse.json(
@@ -115,7 +116,7 @@ async function handleRegister(request: NextRequest, body: unknown) {
   }
 }
 
-async function handleLogout(request: NextRequest) {
+async function handleLogout(_request: NextRequest) {
   return NextResponse.json({
     success: true,
     message: 'Logout successful',

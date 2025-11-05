@@ -97,7 +97,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       0;
 
     const monthlyPayments =
-      payments?.filter((p: unknown) => {
+      payments?.filter((p: any) => {
         const paymentDate = new Date(p.created_at);
         return paymentDate >= startDate;
       }) || [];

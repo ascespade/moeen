@@ -700,8 +700,8 @@ export default function AdminDashboard() {
   const pageConfig = ADMIN_PAGES.dashboard;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'لوحة التحكم'}
     >
       <AdminDashboardPage />
     </AdminPageWrapper>

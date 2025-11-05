@@ -4,9 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
-import { ErrorHandler } from '@/core/errors';
 
 export const revalidate = 60;
 
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '50');
     const action = searchParams.get('action');
-    const success = searchParams.get('success');
+    const _success = searchParams.get('success');
 
     let query = supabase
       .from('audit_logs')
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       query = query.eq('action', action);
     }
 
-    const { data: events, error, count } = await query;
+    const { data: events, error, _count } = await query;
 
     if (error) {
       console.error('Error fetching security events:', error);
@@ -111,6 +111,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: 'Security event created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }

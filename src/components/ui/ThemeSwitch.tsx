@@ -19,7 +19,7 @@ export function ThemeSwitch({
   showLabel = true,
   className = '',
 }: ThemeSwitchProps) {
-  const { theme, setTheme, isDark, isLight, isSystem } = useTheme();
+  const { theme, setTheme, isDark, isLight, _isSystem } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   const themes = [
@@ -46,7 +46,7 @@ export function ThemeSwitch({
   const currentTheme = themes.find(t => t.value === theme) ?? themes[0];
   const CurrentIcon = currentTheme?.icon ?? Sun;
 
-  const sizeClasses = {
+  const _sizeClasses = {
     sm: 'h-8 w-8 text-sm',
     md: 'h-10 w-10 text-base',
     lg: 'h-12 w-12 text-lg',

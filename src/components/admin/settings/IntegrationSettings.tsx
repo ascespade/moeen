@@ -24,7 +24,7 @@ import {
   RefreshCw,
   TestTube,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { _cn } from '@/lib/utils';
 
 interface IntegrationConfig {
   whatsapp: {
@@ -204,7 +204,7 @@ export default function IntegrationSettings({
           <div className='space-y-2'>
             <Label>معرف الحساب التجاري</Label>
             <Input
-              ừvalue={config.whatsapp.businessAccountId}
+              value={config.whatsapp.businessAccountId}
               onChange={e =>
                 updateConfig('whatsapp', { businessAccountId: e.target.value })
               }

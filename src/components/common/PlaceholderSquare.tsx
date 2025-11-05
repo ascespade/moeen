@@ -1,4 +1,3 @@
-import React from 'react';
 
 type PlaceholderSquareProps = {
   title: string;
@@ -34,10 +33,13 @@ export default function PlaceholderSquare({
             </ol>
           )}
           {docsLink && (
-            <aclassName='mt-3 inline-block text-sm text-[var(--default-default)] hover:underline'
+            <a 
+              className='mt-3 inline-block text-sm text-[var(--default-default)] hover:underline'
               href={docsLink}
               target='_blank'
-              rel='noreferrer' aria-label="Documentation">
+              rel='noreferrer' 
+              aria-label="Documentation"
+            >
               Documentation
             </a>
           )}

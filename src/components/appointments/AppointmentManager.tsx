@@ -6,13 +6,13 @@ import {
   Clock,
   User,
   Phone,
-  Mail,
-  MapPin,
+  _Mail,
+  _MapPin,
   Plus,
   Edit,
   Trash2,
-  CheckCircle,
-  XCircle,
+  _CheckCircle,
+  _XCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -60,7 +60,7 @@ const AppointmentManager: React.FC = () => {
     return parts[0] || '';
   });
   const [showAddForm, setShowAddForm] = useState(false);
-  const [editingAppointment, setEditingAppointment] =
+  const [_editingAppointment, setEditingAppointment] =
     useState<Appointment | null>(null);
   const [filter, setFilter] = useState<
     'all' | 'scheduled' | 'confirmed' | 'completed' | 'cancelled'
@@ -195,7 +195,7 @@ const AppointmentManager: React.FC = () => {
     setShowAddForm(false);
   };
 
-  const handleUpdateAppointment = async (
+  const _handleUpdateAppointment = async (
     id: string,
     updates: Partial<Appointment>
   ) => {

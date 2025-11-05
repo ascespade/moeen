@@ -13,7 +13,7 @@ export interface ValidationResult {
 }
 
 // Allowed CSS classes from centralized system
-const ALLOWED_CLASSES = {
+const _ALLOWED_CLASSES = {
   // Layout
   container: ['container-app'],
   layout: ['flex', 'grid', 'inline-flex', 'block', 'inline-block'],
@@ -87,7 +87,7 @@ export function validateCSSClasses(classes: string, context?: string): Validatio
     };
   }
 
-  const classList = classes.split(/\s+/).filter(Boolean);
+  const _classList = classes.split(/\s+/).filter(Boolean);
 
   // Check for forbidden patterns
   for (const pattern of FORBIDDEN_PATTERNS) {
@@ -205,7 +205,7 @@ export function autoFixCSSClasses(classes: string): string {
 /**
  * Validate entire file
  */
-export async function validateFile(filePath: string): Promise<ValidationResult> {
+export async function validateFile(_filePath: string): Promise<ValidationResult> {
   // This would read the file and validate it
   // For now, return a placeholder
   return {

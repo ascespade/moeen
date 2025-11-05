@@ -3,7 +3,7 @@
  * Get doctor availability for specific date range
  */
 
-import { ErrorHandler } from '@/core/errors';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { ValidationHelper } from '@/core/validation';
 import { createClient } from '@/lib/supabase/server';
 import { getClientInfo } from '@/lib/utils/request-helpers';
@@ -82,11 +82,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .in('status', ['pending', 'confirmed', 'in_progress']);
 
     // Filter out occupied slots
-    const availableSlots = slots.filter((slot: unknown) => {
+    const availableSlots = slots.filter((slot: any) => {
       const slotStart = new Date(`${date}T${slot.time}`);
       const slotEnd = new Date(slotStart.getTime() + duration! * 60000);
 
-      return !existingAppointments?.some((apt: unknown) => {
+      return !existingAppointments?.some((apt: any) => {
         const aptStart = new Date(apt.scheduled_at);
         const aptDuration = apt.duration || 30;
         const aptEnd = new Date(aptStart.getTime() + aptDuration * 60000);
@@ -124,7 +124,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       duration,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 

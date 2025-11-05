@@ -1,4 +1,4 @@
-import logger from '@/lib/monitoring/logger';
+import _logger from '@/lib/monitoring/_logger';
 // Conversation Flow Management System
 
 // Intent Analysis
@@ -485,8 +485,8 @@ export class FlowManager {
 
   // Execute WhatsApp send
   private async executeWhatsAppSend(
-    step: FlowStep,
-    context: any
+    _step: FlowStep,
+    _context: any
   ): Promise<void> {
     try {
       // This would integrate with the existing WhatsApp system

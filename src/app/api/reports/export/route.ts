@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { requireAuth } from '@/lib/auth/authorize';
 
 const exportSchema = z.object({
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -113,7 +113,7 @@ async function generateCSV(data: unknown, customFields?: string[]) {
   const headers = customFields || Object.keys(data);
   const csvContent = [
     headers.join(','),
-    ...Object.values(data).map((row: unknown) =>
+    ...Object.values(data).map((row: any) =>
       headers.map((header) => `"${row[header] || ''}"`).join(',')
     ),
   ].join('\n');
@@ -121,7 +121,7 @@ async function generateCSV(data: unknown, customFields?: string[]) {
   return csvContent;
 }
 
-async function generatePDF(data: unknown, includeCharts: boolean) {
+async function generatePDF(data: unknown, _includeCharts: boolean) {
   // PDF generation would use a library like puppeteer or jsPDF
   // For now, return a simple text representation
   const pdfContent = `Report Data:\n${JSON.stringify(data, null, 2)}`;

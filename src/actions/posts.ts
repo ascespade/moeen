@@ -11,9 +11,8 @@ import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { withAction } from '@/lib/auth/with-action';
 import { createPostSchema, updatePostSchema } from '@/lib/validations';
-import { handleServerActionError } from '@/lib/errors';
 import { AppError } from '@/lib/errors';
-import type { Post, PostInsert, PostUpdate } from '@/types/database.types';
+import type { PostInsert, PostUpdate } from '@/types/database.types';
 
 /**
  * Create post action

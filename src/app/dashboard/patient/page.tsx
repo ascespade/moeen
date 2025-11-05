@@ -6,7 +6,7 @@ import {
   CreditCard,
   Shield,
   Clock,
-  CheckCircle,
+  _CheckCircle,
   AlertCircle,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -51,7 +51,7 @@ interface PatientData {
 export default function PatientDashboard() {
   const { t } = useT();
   const { settings } = useTheme();
-  const theme = settings.mode;
+  const _theme = settings.mode;
   const [patientData, setPatientData] = useState<PatientData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

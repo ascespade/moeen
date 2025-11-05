@@ -1154,8 +1154,8 @@ export default function MessagesPage() {
   const pageConfig = ADMIN_PAGES.messages;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'Untitled'}
     >
       <MessagesPageContent />
     </AdminPageWrapper>

@@ -3,12 +3,12 @@
  * Centralized custom hooks for common functionality
  */
 
-import logger from '@/lib/monitoring/logger';
+import _logger from '@/lib/monitoring/_logger';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuthStore, useUIStore, useDataStore } from '../store';
 import { apiClient } from '../api/client';
-import { storageUtils, debounce } from '../utils/index';
-import { ApiResponse } from '../types';
+import { storageUtils, _debounce } from '../utils/index';
+import { _ApiResponse } from '../types';
 
 // Auth Hooks
 export const useAuth = () => {

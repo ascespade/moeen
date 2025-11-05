@@ -11,7 +11,7 @@ const LOG_DIR =
 
 export const revalidate = 60;
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
+export async function GET(_request: NextRequest): Promise<NextResponse> {
   try {
     const statusFile = path.join(LOG_DIR, 'agent-status.json');
 

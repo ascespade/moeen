@@ -1,8 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { ROUTES } from '@/constants/routes';
-import Image from 'next/image';
-import Link from 'next/link';
 
 interface Template {
   id: string;
@@ -34,7 +31,7 @@ const mockTemplate: Template = {
 };
 
 export default function TemplateEditorPage({
-  params,
+  params: { id: _id },
 }: {
   params: { id: string };
 }) {

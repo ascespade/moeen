@@ -1,6 +1,6 @@
 'use client';
-import { memo, useEffect, useState } from 'react';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
+import { memo, useEffect, useState } from 'react';
 
 interface DynamicStats {
   id: number;
@@ -105,11 +105,11 @@ const DynamicStats = memo(function DynamicStats() {
 
   if (loading) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
+      <>
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          <span id="live-region"></span>
+        </div>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
         {[1, 2, 3, 4].map(i => (
           <div key={i} className='text-center animate-pulse'>
             <div className='h-12 w-12 bg-gray-200 rounded-full mx-auto mb-2'></div>
@@ -117,7 +117,8 @@ div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
             <div className='h-4 bg-gray-200 rounded'></div>
           </div>
         ))}
-      </div>
+        </div>
+      </>
     );
   }
 

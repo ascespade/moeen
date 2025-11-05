@@ -548,8 +548,8 @@ export default function CRMDashboard() {
   const pageConfig = ADMIN_PAGES.crmDashboard;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'Untitled'}
     >
       <CRMDashboardContent />
     </AdminPageWrapper>

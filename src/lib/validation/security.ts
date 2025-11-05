@@ -181,8 +181,8 @@ export const securitySchemas = {
 
 // Rate limiting validation
 export function validateRateLimit(
-  ip: string,
-  endpoint: string,
+  _ip: string,
+  _endpoint: string,
   requests: number,
   limit: number
 ): boolean {

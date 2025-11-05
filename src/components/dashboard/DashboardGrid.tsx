@@ -58,7 +58,7 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
   containerPadding = [20, 20],
   isEditable = false,
   showGridLines = false,
-  onItemChange,
+  _onItemChange,
   onItemAdd,
   onItemRemove,
   onItemResize,
@@ -69,8 +69,8 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
 }) => {
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
   const [resizedItem, setResizedItem] = useState<string | null>(null);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
+  const [_dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [_isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
 
   const visibleItems = useMemo(
@@ -141,7 +141,7 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
 
       e.preventDefault();
 
-      const rect = e.currentTarget.getBoundingClientRect();
+      const _rect = e.currentTarget.getBoundingClientRect();
       const gridRect = e.currentTarget.parentElement?.getBoundingClientRect();
 
       if (!gridRect) return;

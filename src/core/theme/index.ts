@@ -1,7 +1,7 @@
 // Theme stub - full implementation
 export const useTheme = () => ({
   theme: 'light' as 'light' | 'dark' | 'system',
-  setTheme: (theme: 'light' | 'dark' | 'system') => {},
+  setTheme: (_theme: 'light' | 'dark' | 'system') => {},
   toggleTheme: () => {},
   isDark: false,
   isLight: true,

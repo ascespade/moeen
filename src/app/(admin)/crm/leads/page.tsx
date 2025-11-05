@@ -172,8 +172,8 @@ export default function CRMLeadsPage() {
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-purple-600'>
-              {mockLeads
-                .reduce((sum, l) => sum + l.estimatedValue, 0)
+              {leads
+                .reduce((sum: number, l: Lead) => sum + l.estimatedValue, 0)
                 .toLocaleString()}{' '}
               ريال
             </div>

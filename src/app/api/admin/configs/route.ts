@@ -4,9 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
-import { ErrorHandler } from '@/core/errors';
 import { z } from 'zod';
 
 const configSchema = z.object({
@@ -104,7 +104,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: configs || [],
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -182,7 +182,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: 'Configuration created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -255,7 +255,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       message: 'Configuration updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -305,6 +305,6 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       message: 'Configuration deleted successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }

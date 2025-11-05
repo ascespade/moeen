@@ -39,7 +39,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .from('insurance_claims')
       .select('*', { count: 'exact', head: true });
 
-    const { count: totalPayments } = await supabase
+    await supabase
       .from('payments')
       .select('*', { count: 'exact', head: true });
 
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     const totalRevenue =
       paymentsData?.reduce(
-        (sum: number, p: unknown) => sum + (p.amount || 0),
+        (sum: number, p: any) => sum + (p.amount || 0),
         0
       ) || 0;
 
@@ -93,7 +93,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-function getActivityTitle(action: string, entityType: string): string {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _getActivityTitle(action: string, entityType: string): string {
   const titles: Record<string, Record<string, string>> = {
     create: {
       appointment: 'موعد جديد',
@@ -121,7 +122,8 @@ function getActivityTitle(action: string, entityType: string): string {
   return titles[action]?.[entityType] || 'نشاط جديد';
 }
 
-function getActivityStatus(action: string): string {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _getActivityStatus(action: string): string {
   const statusMap: Record<string, string> = {
     create: 'success',
     update: 'secondary',
@@ -133,7 +135,8 @@ function getActivityStatus(action: string): string {
   return statusMap[action] || 'secondary';
 }
 
-function formatTimestamp(timestamp: string): string {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _formatTimestamp(timestamp: string): string {
   const now = new Date();
   const activityTime = new Date(timestamp);
   const diffInMinutes = Math.floor(

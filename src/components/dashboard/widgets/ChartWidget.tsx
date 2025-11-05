@@ -56,7 +56,7 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
   height = 300,
   showLegend = true,
   showGrid = true,
-  animate = true,
+  _animate = true,
   isLoading = false,
   error,
   onRefresh,
@@ -66,7 +66,7 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
   className,
   trend,
 }) => {
-  const chartId = useMemo(
+  const _chartId = useMemo(
     () => `chart-${Math.random().toString(36).substr(2, 9)}`,
     []
   );

@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+// import { _NextRequest, NextResponse } from 'next/server';
 import { getServerSupabase } from '@/lib/supabaseClient';
-import { requireAuth } from '@/lib/auth/authorize';
+// import { _requireAuth } from '@/lib/auth/authorize';
 
 // Fallback messages when database is not available
 function getFallbackMessages(locale: string, ns: string) {

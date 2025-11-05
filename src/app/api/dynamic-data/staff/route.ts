@@ -36,14 +36,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     let filteredData = data;
     if (role) {
       filteredData = data?.filter(
-        (staff: unknown) => staff.role?.toLowerCase() === role.toLowerCase()
+        (staff: any) => staff.role?.toLowerCase() === role.toLowerCase()
       );
     }
 
     // فلترة حسب الحالة إذا طُلب ذلك
     if (status) {
       filteredData = filteredData?.filter(
-        (staff: unknown) => staff.status?.toLowerCase() === status.toLowerCase()
+        (staff: any) => staff.status?.toLowerCase() === status.toLowerCase()
       );
     }
 

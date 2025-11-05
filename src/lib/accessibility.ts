@@ -300,7 +300,7 @@ export class AccessibilityManager {
   }
 
   // Color contrast utilities
-  static getContrastRatio(color1: string, color2: string): number {
+  static getContrastRatio(_color1: string, _color2: string): number {
     // This would calculate the contrast ratio between two colors
     // For now, return a placeholder value
     return 4.5;

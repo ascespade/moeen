@@ -427,11 +427,11 @@ export class SaudiMinistryHealthIntegration {
     return saudiPhoneRegex.test(phone);
   }
 
-  private isValidSaudiAddress(address: unknown): boolean {
+  private isValidSaudiAddress(address: any): boolean {
     return !!(address.city && address.district && address.street);
   }
 
-  private isValidInsuranceData(insurance: unknown): boolean {
+  private isValidInsuranceData(insurance: any): boolean {
     return !!(
       insurance.provider &&
       insurance.policyNumber &&
@@ -449,8 +449,8 @@ export class SaudiMinistryHealthIntegration {
 
   // API Call Methods
   private async callSehaAPI(
-    method: string,
-    endpoint: string,
+    _method: string,
+    _endpoint: string,
     data?: any
   ): Promise<any> {
     // Mock response for development
@@ -494,8 +494,8 @@ export class SaudiMinistryHealthIntegration {
   }
 
   private async callShoonAPI(
-    method: string,
-    endpoint: string,
+    _method: string,
+    _endpoint: string,
     data?: any
   ): Promise<any> {
     // Mock response for development
@@ -515,8 +515,8 @@ export class SaudiMinistryHealthIntegration {
   }
 
   private async callTatmanAPI(
-    method: string,
-    endpoint: string,
+    _method: string,
+    _endpoint: string,
     data?: any
   ): Promise<any> {
     // Mock response for development

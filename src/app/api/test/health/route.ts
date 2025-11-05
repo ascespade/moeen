@@ -26,7 +26,7 @@ export async function GET(_request: NextRequest) {
 
     // Test database connection
     try {
-      const { data, error } = await supabase
+      const { _data, error } = await supabase
         .from('users')
         .select('count')
         .limit(1);
@@ -61,7 +61,7 @@ export async function GET(_request: NextRequest) {
 
     // Test storage
     try {
-      const { data, error } = await supabase.storage
+      const { _data, error } = await supabase.storage
         .from('medical-files')
         .list('', { limit: 1 });
 

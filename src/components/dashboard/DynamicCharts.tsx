@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { _useState, _useEffect } from 'react';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 
 // Dynamic Chart Components using SVG and CSS

@@ -1,4 +1,4 @@
-import logger from '@/lib/monitoring/logger';
+import _logger from '@/lib/monitoring/_logger';
 /**
  * Redis Cache Manager - مدير التخزين المؤقت
  * Redis-based caching system for improved performance
@@ -10,7 +10,7 @@ interface CacheConfig {
 }
 
 class RedisCache {
-  private client: any;
+  private _client: any;
   private config: CacheConfig;
 
   constructor() {
@@ -112,7 +112,7 @@ export function cached(
   keyGenerator?: (...args: any[]) => string
 ) {
   return function (
-    target: any,
+    _target: any,
     propertyName: string,
     descriptor: PropertyDescriptor
   ) {

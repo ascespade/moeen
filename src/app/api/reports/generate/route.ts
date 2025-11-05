@@ -4,9 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { z } from 'zod';
 
-import { ErrorHandler } from '@/core/errors';
 import { ValidationHelper } from '@/core/validation';
 import { authorize, requireRole } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
@@ -165,14 +165,14 @@ export async function POST(_request: NextRequest) {
       message: 'Report generated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
 async function __generateDashboardMetrics(
   supabase: unknown,
   dateRange: unknown,
-  filters: unknown
+  _filters: unknown
 ) {
   const { startDate, endDate } = dateRange as any;
 
@@ -203,14 +203,14 @@ async function __generateDashboardMetrics(
   // Calculate metrics
   const totalPatients = patients.length;
   const activatedPatients = patients.filter(
-    (p: unknown) => p.isActivated
+    (p: any) => p.isActivated
   ).length;
   const totalAppointments = appointments.length;
   const completedAppointments = appointments.filter(
-    (a: unknown) => a.status === 'completed'
+    (a: any) => a.status === 'completed'
   ).length;
   const totalRevenue = payments
-    .filter((p: unknown) => p.status === 'paid')
+    .filter((p: any) => p.status === 'paid')
     .reduce((sum: unknown, p: unknown) => sum + (p.amount || 0), 0);
 
   // Daily breakdown
@@ -247,7 +247,7 @@ async function __generateDashboardMetrics(
 async function __generatePatientStatistics(
   supabase: unknown,
   dateRange: unknown,
-  filters: unknown,
+  _filters: unknown,
   groupBy: string
 ) {
   const { startDate, endDate } = dateRange as any;
@@ -275,14 +275,14 @@ async function __generatePatientStatistics(
   // Calculate statistics
   const stats = {
     total: patients.length,
-    activated: patients.filter((p: unknown) => p.isActivated).length,
-    pending: patients.filter((p: unknown) => !p.isActivated).length,
+    activated: patients.filter((p: any) => p.isActivated).length,
+    pending: patients.filter((p: any) => !p.isActivated).length,
     byInsurance: __groupByField(patients, 'insuranceProvider'),
     byAgeGroup: __calculateAgeGroups(patients),
     activationTrend: grouped.map(group => ({
       period: group.period,
       total: group.data.length,
-      activated: group.data.filter((p: unknown) => p.isActivated).length,
+      activated: group.data.filter((p: any) => p.isActivated).length,
     })),
   };
 
@@ -292,7 +292,7 @@ async function __generatePatientStatistics(
 async function __generateAppointmentAnalytics(
   supabase: unknown,
   dateRange: unknown,
-  filters: unknown,
+  _filters: unknown,
   groupBy: string
 ) {
   const { startDate, endDate } = dateRange as any;
@@ -333,7 +333,7 @@ async function __generateAppointmentAnalytics(
     trends: grouped.map(group => ({
       period: group.period,
       total: group.data.length,
-      completed: group.data.filter((a: unknown) => a.status === 'completed')
+      completed: group.data.filter((a: any) => a.status === 'completed')
         .length,
     })),
   };
@@ -342,7 +342,7 @@ async function __generateAppointmentAnalytics(
 async function __generateRevenueReport(
   supabase: unknown,
   dateRange: unknown,
-  filters: unknown,
+  _filters: unknown,
   groupBy: string
 ) {
   const { startDate, endDate } = dateRange as any;
@@ -388,7 +388,7 @@ async function __generateRevenueReport(
 async function __generateInsuranceClaimsReport(
   supabase: unknown,
   dateRange: unknown,
-  filters: unknown
+  _filters: unknown
 ) {
   const { startDate, endDate } = dateRange as any;
 
@@ -424,18 +424,18 @@ async function __generateInsuranceClaimsReport(
 }
 
 async function __generateStaffPerformanceReport(
-  supabase: unknown,
-  dateRange: unknown,
-  filters: unknown
+  _supabase: unknown,
+  _dateRange: unknown,
+  _filters: unknown
 ) {
   // Implementation for staff performance metrics
   return { message: 'Staff performance report implementation pending' };
 }
 
 async function __generateDoctorWorkloadReport(
-  supabase: unknown,
-  dateRange: unknown,
-  filters: unknown
+  _supabase: unknown,
+  _dateRange: unknown,
+  _filters: unknown
 ) {
   // Implementation for doctor workload metrics
   return { message: 'Doctor workload report implementation pending' };
@@ -455,10 +455,10 @@ function __generateDailyBreakdown(
 
   while (current <= end) {
     const dateStr = current.toISOString().split('T')[0] || '';
-    const dayAppointments = appointments.filter((a: unknown) =>
+    const dayAppointments = appointments.filter((a: any) =>
       a.scheduledAt?.startsWith(dateStr)
     );
-    const dayPayments = payments.filter((p: unknown) =>
+    const dayPayments = payments.filter((p: any) =>
       p.createdAt?.startsWith(dateStr)
     );
 
@@ -466,7 +466,7 @@ function __generateDailyBreakdown(
       date: dateStr,
       appointments: dayAppointments.length,
       revenue: (dayPayments as any)
-        .filter((p: unknown) => p.status === 'paid')
+        .filter((p: any) => p.status === 'paid')
         .reduce((sum: unknown, p: unknown) => sum + (p.amount || 0), 0),
     });
 
@@ -551,7 +551,7 @@ function __calculateAgeGroups(patients: any[]) {
     '65+': 0,
   };
 
-  patients.forEach(patient => {
+  patients.forEach(_patient => {
     // This would need actual birth date calculation
     // For now, return empty groups
   });

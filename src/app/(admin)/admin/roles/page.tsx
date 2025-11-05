@@ -2,7 +2,6 @@
 
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
-import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import {
@@ -43,7 +42,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table';
-import { usePermissions } from '@/hooks/usePermissions';
 import {
   CheckCircle,
   ChevronLeft,
@@ -97,8 +95,6 @@ interface Permission {
 }
 
 function RolesPageContent() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [roles, setRoles] = useState<Role[]>([]);
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
@@ -109,8 +105,8 @@ function RolesPageContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isRoleDialogOpen, setIsRoleDialogOpen] = useState(false);
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [_isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [_isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set());
 
   // Mock data
@@ -1294,8 +1290,8 @@ export default function RolesPage() {
   const pageConfig = ADMIN_PAGES.roles;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'الأدوار'}
     >
       <RolesPageContent />
     </AdminPageWrapper>

@@ -23,7 +23,7 @@ export function AdminPageWrapper({
   children,
   requiredPermissions = [],
   requiredRoles = [],
-  pageTitle,
+  _pageTitle,
 }: AdminPageWrapperProps) {
   const { user, isAuthenticated, isLoading: authLoading } = useAuth();
   const router = useRouter();

@@ -118,7 +118,7 @@ export const LineChart: React.FC<LineChartProps> = ({
               }}
             />
           )}
-          {defaultLines.map((line, index) => (
+          {defaultLines.map((line, _index) => (
             <Line
               key={line.dataKey}
               type={smooth ? 'monotone' : 'linear'}

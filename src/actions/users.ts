@@ -11,16 +11,15 @@ import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { withAction } from '@/lib/auth/with-action';
 import { createUserSchema, updateUserSchema, userProfileSchema } from '@/lib/validations';
-import { handleServerActionError } from '@/lib/errors';
 import { AppError } from '@/lib/errors';
 import { PERMISSIONS } from '@/lib/constants';
-import type { User, UserInsert, UserUpdate } from '@/types/database.types';
+import type { UserInsert, UserUpdate } from '@/types/database.types';
 
 /**
  * Create user action
  */
 export const createUserAction = withAction(
-  async (user, input: unknown) => {
+  async (_user, input: unknown) => {
     const validated = createUserSchema.parse(input);
     const adminClient = createAdminClient();
 
@@ -53,7 +52,7 @@ export const createUserAction = withAction(
  * Update user action
  */
 export const updateUserAction = withAction(
-  async (user, input: { id: string; data: unknown }) => {
+  async (_user, input: { id: string; data: unknown }) => {
     const validated = updateUserSchema.parse(input.data);
     const adminClient = createAdminClient();
 
@@ -82,7 +81,7 @@ export const updateUserAction = withAction(
  * Delete user action
  */
 export const deleteUserAction = withAction(
-  async (user, userId: string) => {
+  async (_user, userId: string) => {
     const adminClient = createAdminClient();
 
     const { error } = await adminClient

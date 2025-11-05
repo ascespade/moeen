@@ -1,4 +1,4 @@
-import logger from '@/lib/monitoring/logger';
+import _logger from '@/lib/monitoring/_logger';
 interface SMSData {
   to: string;
   message: string;
@@ -13,7 +13,7 @@ interface SMSResult {
 
 export class SMSNotificationService {
   private apiKey: string;
-  private apiUrl: string;
+  private _apiUrl: string;
 
   constructor() {
     this.apiKey = process.env.SMS_API_KEY || '';

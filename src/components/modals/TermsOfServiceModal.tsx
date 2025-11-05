@@ -61,7 +61,6 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
             onMouseLeave={e => {
               e.currentTarget.style.backgroundColor = 'transparent';
             }}
-            aria-label='إغلاق'
           >
             <X className='h-6 w-6 text-[var(--text-primary)]' />
           </button>
@@ -259,11 +258,11 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   آخر تحديث: {new Date().toLocaleDateString('ar-SA')}
                 </p>
               </section>
-            </section>
-          </section>
-        </section>
-      </section>
-    </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 });
 

@@ -36,7 +36,7 @@ export function usePreferences() {
   };
 
   const [preferences, setPreferences] = useState<UserPreferences>(getInitialPreferences());
-  const [isLoading, setIsLoading] = useState(false); // Start as false - we already have localStorage
+  const [isLoading, _setIsLoading] = useState(false); // Start as false - we already have localStorage
 
   // Apply initial preferences immediately
   useEffect(() => {

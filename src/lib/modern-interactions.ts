@@ -241,7 +241,7 @@ export class Tooltip {
     this.tooltip.style.opacity = '0';
   }
 
-  private updatePosition(e: MouseEvent) {
+  private updatePosition(_e: MouseEvent) {
     const rect = this.target.getBoundingClientRect();
     const tooltipRect = this.tooltip.getBoundingClientRect();
 

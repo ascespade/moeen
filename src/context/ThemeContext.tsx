@@ -71,7 +71,7 @@ export function ThemeProvider({
   defaultTheme = 'light' as any,
   defaultLanguage = 'ar',
   enableSystemTheme = true,
-  enableLanguageSwitching = true,
+  _enableLanguageSwitching = true,
   enableThemeTransition = true,
 }: ThemeProviderProps) {
   // State management - إدارة الحالة
@@ -143,11 +143,11 @@ export function ThemeProvider({
 
         // Apply initial theme - تطبيق الثيم الأولي
         const initialTheme = storedTheme || defaultTheme;
-        const resolvedInitialTheme = initialTheme;
+        const _resolvedInitialTheme = initialTheme;
         // applyThemeToDocument(resolvedInitialTheme);
 
         // Apply initial language - تطبيق اللغة الأولية
-        const initialLanguage = storedLanguage || defaultLanguage;
+        const _initialLanguage = storedLanguage || defaultLanguage;
         // applyLanguageToDocument(initialLanguage);
 
         setIsInitialized(true);

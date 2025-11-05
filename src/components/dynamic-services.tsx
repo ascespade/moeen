@@ -1,14 +1,13 @@
 'use client';
-import { memo, useEffect, useState } from 'react';
 import {
+  BarChart3,
   Calendar,
-  User,
   Clipboard,
   MessageCircle,
+  User,
   Users,
-  BarChart3,
 } from 'lucide-react';
-import React from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 interface DynamicService {
   id: number;
@@ -103,11 +102,11 @@ const DynamicServices = memo(function DynamicServices() {
 
   if (loading) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+      <>
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          <span id="live-region"></span>
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
         {[1, 2, 3, 4, 5, 6].map(i => (
           <div
             key={i}
@@ -118,7 +117,8 @@ div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
             <div className='h-4 bg-gray-200 rounded'></div>
           </div>
         ))}
-      </div>
+        </div>
+      </>
     );
   }
 

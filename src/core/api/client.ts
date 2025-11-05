@@ -3,7 +3,7 @@
  * Centralized API client with error handling and interceptors
  */
 
-import { API_ENDPOINTS, ERROR_CODES } from '../constants';
+import { API_ENDPOINTS, _ERROR_CODES } from '../constants';
 import { ErrorHandler, ExternalServiceError } from '../errors';
 import { storageUtils } from '../utils/index';
 import { ApiResponse } from '../types';

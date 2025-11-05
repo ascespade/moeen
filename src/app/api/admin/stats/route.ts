@@ -4,9 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
-import { ErrorHandler } from '@/core/errors';
 
 export const revalidate = 60;
 
@@ -32,13 +32,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Calculate user stats
     const totalUsers = users?.length || 0;
-    const activeUsers = users?.filter((u: unknown) => u.isActive).length || 0;
+    const activeUsers = users?.filter((u: any) => u.isActive).length || 0;
     const inactiveUsers = totalUsers - activeUsers;
 
     // Count by role
     const roleCounts =
       users?.reduce(
-        (acc: Record<string, number>, user: unknown) => {
+        (acc: Record<string, number>, user: any) => {
           acc[user.role] = (acc[user.role] || 0) + 1;
           return acc;
         },
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
     const recentUsers =
-      users?.filter((u: unknown) => new Date(u.createdAt) >= thirtyDaysAgo)
+      users?.filter((u: any) => new Date(u.createdAt) >= thirtyDaysAgo)
         .length || 0;
 
     // Get appointments stats (if table exists)
@@ -79,13 +79,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         appointmentStats = {
           total: appointments.length,
           today: appointments.filter(
-            (a: unknown) => new Date(a.scheduledAt) >= today
+            (a: any) => new Date(a.scheduledAt) >= today
           ).length,
           thisWeek: appointments.filter(
-            (a: unknown) => new Date(a.scheduledAt) >= weekAgo
+            (a: any) => new Date(a.scheduledAt) >= weekAgo
           ).length,
           thisMonth: appointments.filter(
-            (a: unknown) => new Date(a.scheduledAt) >= monthAgo
+            (a: any) => new Date(a.scheduledAt) >= monthAgo
           ).length,
         };
       }
@@ -114,7 +114,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         ]);
 
       if (config) {
-        config.forEach((item: unknown) => {
+        config.forEach((item: any) => {
           switch (item.key) {
             case 'maintenance_mode':
               systemConfig.maintenanceMode = item.value === 'true';
@@ -154,6 +154,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: stats,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }

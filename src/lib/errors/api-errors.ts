@@ -82,7 +82,7 @@ export class InsuranceError extends APIError {
 }
 
 // Error response formatter
-export function formatErrorResponse(error: unknown): {
+export function formatErrorResponse(error: any): {
   success: false;
   error: string;
   code?: string;

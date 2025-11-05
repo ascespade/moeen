@@ -92,7 +92,7 @@ const currencies = [
   { value: 'USD', label: 'دولار أمريكي (USD)', symbol: '$' },
 ];
 
-export default function GeneralSettings({ onChange }: GeneralSettingsProps) {
+export default function GeneralSettings({ onChange, onSave }: GeneralSettingsProps) {
   const [config, setConfig] = useState<GeneralConfig>(defaultConfig);
   const [loading, setLoading] = useState(true);
 
@@ -130,7 +130,7 @@ export default function GeneralSettings({ onChange }: GeneralSettingsProps) {
     onChange();
   };
 
-  const saveSettings = async () => {
+  const _saveSettings = async () => {
     if (onSave) {
       await onSave(config);
     } else {

@@ -99,44 +99,44 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // Calculate metrics
     const totalPatients = patients?.length || 0;
     const activatedPatients =
-      patients?.filter((p: unknown) => p.activated).length || 0;
+      patients?.filter((p: any) => p.activated).length || 0;
     const newPatients = patients?.length || 0;
 
     const totalAppointments = appointments?.length || 0;
     const completedAppointments =
-      appointments?.filter((a: unknown) => a.status === 'completed').length ||
+      appointments?.filter((a: any) => a.status === 'completed').length ||
       0;
     const cancelledAppointments =
-      appointments?.filter((a: unknown) => a.status === 'cancelled').length ||
+      appointments?.filter((a: any) => a.status === 'cancelled').length ||
       0;
     const upcomingAppointments =
       appointments?.filter(
-        (a: unknown) => a.status === 'pending' || a.status === 'confirmed'
+        (a: any) => a.status === 'pending' || a.status === 'confirmed'
       ).length || 0;
 
     const totalRevenue =
       payments
-        ?.filter((p: unknown) => p.status === 'completed')
+        ?.filter((p: any) => p.status === 'completed')
         .reduce(
           (sum: number, p: unknown) => sum + parseFloat(p.amount.toString()),
           0
         ) || 0;
 
     const pendingPayments =
-      payments?.filter((p: unknown) => p.status === 'pending').length || 0;
+      payments?.filter((p: any) => p.status === 'pending').length || 0;
     const completedPayments =
-      payments?.filter((p: unknown) => p.status === 'completed').length || 0;
+      payments?.filter((p: any) => p.status === 'completed').length || 0;
 
     const totalClaims = claims?.length || 0;
     const approvedClaims =
-      claims?.filter((c: unknown) => c.claim_status === 'approved').length || 0;
+      claims?.filter((c: any) => c.claim_status === 'approved').length || 0;
     const pendingClaims =
       claims?.filter(
-        (c: unknown) =>
+        (c: any) =>
           c.claim_status === 'pending' || c.claim_status === 'submitted'
       ).length || 0;
     const rejectedClaims =
-      claims?.filter((c: unknown) => c.claim_status === 'rejected').length || 0;
+      claims?.filter((c: any) => c.claim_status === 'rejected').length || 0;
 
     // Calculate conversion rates
     const activationRate =
@@ -173,20 +173,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       dayEnd.setHours(23, 59, 59, 999);
 
       const dayPatients =
-        patients?.filter((p: unknown) => {
+        patients?.filter((p: any) => {
           const created = new Date(p.created_at);
           return created >= dayStart && created <= dayEnd;
         }).length || 0;
 
       const dayAppointments =
-        appointments?.filter((a: unknown) => {
+        appointments?.filter((a: any) => {
           const scheduled = new Date(a.scheduled_at);
           return scheduled >= dayStart && scheduled <= dayEnd;
         }).length || 0;
 
       const dayRevenue =
         payments
-          ?.filter((p: unknown) => {
+          ?.filter((p: any) => {
             const created = new Date(p.created_at);
             return (
               created >= dayStart &&

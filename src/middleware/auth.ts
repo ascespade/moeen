@@ -183,7 +183,7 @@ export async function authMiddleware(request: NextRequest) {
 }
 
 // Helper-Middleware to verify session is still valid
-export async function verifySession(request: NextRequest): Promise<{
+export async function verifySession(_request: NextRequest): Promise<{
   valid: boolean;
   user?: { id: string; email: string; role: string };
   error?: string;
@@ -223,7 +223,7 @@ export async function verifySession(request: NextRequest): Promise<{
 }
 
 // Legacy function for backward compatibility (uses localStorage token)
-function verifyToken(
+function _verifyToken(
   token: string
 ): { id: string; email: string; role: string } | null {
   try {

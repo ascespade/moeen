@@ -34,7 +34,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const integrations = (configs || []).reduce(
-      (acc: Record<string, any>, config: unknown) => {
+      (acc: Record<string, any>, config: any) => {
         try {
           // Mask sensitive data when reading
           const value =

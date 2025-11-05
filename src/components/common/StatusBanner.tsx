@@ -16,9 +16,14 @@ export default function StatusBanner() {
         </div>
         <button
           className='h-8 px-3 rounded-md border border-amber-200 dark:border-amber-800'
-          onClick={() = aria-label="setVisible(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="setVisible(false) } }}
-        >
-          إخفاء"> setVisible(false)}
+          onClick={() => setVisible(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setVisible(false);
+            }
+          }}
+          aria-label="إخفاء"
         >
           إخفاء
         </button>

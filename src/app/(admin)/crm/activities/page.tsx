@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { ROUTES } from '@/constants/routes';
-import Image from 'next/image';
+// import { ROUTES } from '@/constants/routes'; // Unused
+// import Image from 'next/image'; // Unused
 
 interface Activity {
   id: string;

@@ -531,8 +531,8 @@ export class RealSupabaseManager {
     if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
 
     const total = (data as any[]).length;
-    const active = (data as any[]).filter((p: unknown) => p.created_at).length;
-    const newLast30Days = (data as any[]).filter((p: unknown) => {
+    const active = (data as any[]).filter((p: any) => p.created_at).length;
+    const newLast30Days = (data as any[]).filter((p: any) => {
       const createdAt = new Date(p.created_at as string);
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -552,12 +552,12 @@ export class RealSupabaseManager {
 
     const total = (data as any[]).length;
     const completed = (data as any[]).filter(
-      (a: unknown) => a.status === 'completed'
+      (a: any) => a.status === 'completed'
     ).length;
     const cancelled = (data as any[]).filter(
-      (a: unknown) => a.status === 'cancelled'
+      (a: any) => a.status === 'cancelled'
     ).length;
-    const upcoming = (data as any[]).filter((a: unknown) => {
+    const upcoming = (data as any[]).filter((a: any) => {
       const appointmentDate = new Date(a.appointment_date as string);
       return appointmentDate >= new Date() && a.status === 'scheduled';
     }).length;
@@ -575,9 +575,9 @@ export class RealSupabaseManager {
 
     const total = (data as any[]).length;
     const crisis = (data as any[]).filter(
-      (c: unknown) => c.crisis_level === 'crisis'
+      (c: any) => c.crisis_level === 'crisis'
     ).length;
-    const recent = (data as any[]).filter((c: unknown) => {
+    const recent = (data as any[]).filter((c: any) => {
       const createdAt = new Date(c.created_at as string);
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);

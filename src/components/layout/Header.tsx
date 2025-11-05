@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,7 +63,7 @@ export default function Header() {
             >
               Contact
             </Link>
-          </div>
+          </nav>
 
           {/* CTA Buttons */}
           <div className='hidden md:flex items-center space-x-4'>
@@ -81,7 +81,7 @@ export default function Header() {
             >
               Get Started
             </Link>
-          </nav>
+          </div>
 
           {/* Mobile menu button */}
           <button
@@ -176,7 +176,7 @@ export default function Header() {
                 >
                   Get Started
                 </Link>
-              </nav>
+              </div>
             </nav>
           </div>
         )}

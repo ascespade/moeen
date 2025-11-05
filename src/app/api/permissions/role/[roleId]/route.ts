@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PermissionManager } from '@/lib/permissions';
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { roleId: string } }
 ) {
   try {

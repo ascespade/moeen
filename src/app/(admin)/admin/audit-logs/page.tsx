@@ -390,8 +390,8 @@ export default function AuditLogsPage() {
   const pageConfig = ADMIN_PAGES.auditLogs;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'سجلات التدقيق'}
     >
       <AuditLogsPageContent />
     </AdminPageWrapper>

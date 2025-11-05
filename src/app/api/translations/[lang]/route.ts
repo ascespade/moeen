@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/authorize';
 import { getServiceSupabase } from '@/lib/supabaseClient';
 
 const supabase = getServiceSupabase();
@@ -30,7 +31,7 @@ export async function GET(
     headers.set('Content-Type', 'application/json');
 
     // Check if translations table exists
-    const { data: tableCheck, error: tableError } = await supabase
+    const { data: _tableCheck, error: tableError } = await supabase
       .from('translations')
       .select('id')
       .limit(1);

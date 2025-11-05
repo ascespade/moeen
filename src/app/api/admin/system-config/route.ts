@@ -4,10 +4,10 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
 import { requireAuth } from '@/lib/auth/authorize';
 
 const configSchema = z.object({
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: 'Configuration saved successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -110,6 +110,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       count: configs?.length || 0,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }

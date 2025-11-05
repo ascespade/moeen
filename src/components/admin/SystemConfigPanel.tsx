@@ -1,7 +1,7 @@
 'use client';
-import { useSystemConfig } from '@/lib/config/system-config';
 import { useT } from '@/components/providers/I18nProvider';
 import { I18N_KEYS } from '@/constants/i18n-keys';
+import { useSystemConfig } from '@/lib/config/system-config';
 import { useState } from 'react';
 
 export default function SystemConfigPanel() {
@@ -45,8 +45,8 @@ export default function SystemConfigPanel() {
               {tab.label}
             </button>
           ))}
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       {/* Modules Tab */}
       {activeTab === 'modules' && (

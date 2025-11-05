@@ -4,12 +4,13 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/authorize';
 import { customAuthHub } from '@/lib/auth/CustomAuthHub';
-import jwt from 'jsonwebtoken';
+import _jwt from 'jsonwebtoken';
 
 export const revalidate = 60;
 
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);
@@ -21,8 +22,8 @@ export async function GET(req: NextRequest) {
     }
 
     const token =
-      req.cookies.get('auth_token')?.value ||
-      req.headers.get('authorization')?.replace('Bearer ', '');
+      request.cookies.get('auth_token')?.value ||
+      request.headers.get('authorization')?.replace('Bearer ', '');
 
     if (!token) {
       return NextResponse.json(

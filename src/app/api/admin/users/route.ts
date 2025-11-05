@@ -4,10 +4,10 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
 import { requireAuth } from '@/lib/auth/authorize';
 
 const createUserSchema = z.object({
@@ -146,7 +146,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: 'User created successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -211,7 +211,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -281,7 +281,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       message: 'User updated successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -340,11 +340,11 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       message: 'User deleted successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
-async function createPatientProfile(userId: string, profile: unknown) {
+async function createPatientProfile(userId: string, profile: any) {
   const supabase = await createClient();
 
   const { error } = await supabase.from('patients').insert({
@@ -360,7 +360,7 @@ async function createPatientProfile(userId: string, profile: unknown) {
   return error;
 }
 
-async function createDoctorProfile(userId: string, profile: unknown) {
+async function createDoctorProfile(userId: string, profile: any) {
   const supabase = await createClient();
 
   const { error } = await supabase.from('doctors').insert({

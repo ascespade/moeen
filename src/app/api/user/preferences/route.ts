@@ -3,7 +3,7 @@ import { getServerSupabase } from '@/lib/supabaseClient';
 
 export const revalidate = 60;
 
-export async function GET(request?: NextRequest) {
+export async function GET(_request?: NextRequest) {
   try {
     const supabase = await getServerSupabase();
 

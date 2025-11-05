@@ -1,5 +1,5 @@
 'use client';
-import logger from '@/lib/monitoring/logger';
+import _logger from '@/lib/monitoring/_logger';
 
 import React, {
   createContext,

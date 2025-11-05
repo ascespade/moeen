@@ -1,9 +1,10 @@
 import { createClient } from '@/lib/supabase/server';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth } from '@/lib/auth/authorize';
 
 export const revalidate = 60;
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     // Security: Require authentication
     const authResult = await requireAuth(['admin'])(request);

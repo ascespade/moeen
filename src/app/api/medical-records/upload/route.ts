@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
-import { ErrorHandler } from '@/core/errors';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { requireAuth } from '@/lib/auth/authorize';
 
 const uploadSchema = z.object({
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const filePath = `medical-records/${metadata.patientId}/${fileName}`;
 
     // Upload file to Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { data: _uploadData, error: uploadError } = await supabase.storage
       .from('medical-files')
       .upload(filePath, file, {
         contentType: file.type,
@@ -176,7 +176,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: 'File uploaded successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -226,6 +226,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       count: records?.length || 0,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }

@@ -35,8 +35,8 @@ export function createSuccessResponse(
 }
 
 export function validateRequest(
-  request: NextRequest,
-  requiredFields: string[]
+  _request: NextRequest,
+  _requiredFields: string[]
 ): { valid: boolean; missing: string[] } {
   // Implementation for request validation
   return { valid: true, missing: [] };

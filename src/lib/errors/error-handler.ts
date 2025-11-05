@@ -5,6 +5,7 @@
  * Centralized error handling and logging
  */
 
+import { NextResponse } from 'next/server';
 import { AppError } from './app-error';
 import { ERROR_CODES } from './error-codes';
 import { logger } from '../utils/logger';
@@ -19,7 +20,7 @@ export interface ErrorResponse {
 /**
  * Handle error and return standardized response
  */
-export function handleError(error: unknown): ErrorResponse {
+export function handleError(error: any): ErrorResponse {
   // If it's already an AppError, return it
   if (error instanceof AppError) {
     logger.error('Application Error', {
@@ -84,10 +85,10 @@ export function handleError(error: unknown): ErrorResponse {
 /**
  * Handle API route error
  */
-export function handleApiError(error: unknown): Response {
+export function handleApiError(error: any): NextResponse {
   const errorResponse = handleError(error);
   
-  return Response.json(
+  return NextResponse.json(
     {
       success: false,
       error: errorResponse,
@@ -99,7 +100,7 @@ export function handleApiError(error: unknown): Response {
 /**
  * Handle server action error
  */
-export function handleServerActionError(error: unknown): {
+export function handleServerActionError(error: any): {
   success: false;
   error: ErrorResponse;
 } {

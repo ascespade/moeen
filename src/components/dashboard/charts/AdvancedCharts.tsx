@@ -77,13 +77,13 @@ export const AdvancedLineChart: React.FC<
   Omit<AdvancedChartProps, 'type'> & { data: TimeSeriesData[] }
 > = ({
   data,
-  title,
-  subtitle,
+  _title,
+  _subtitle,
   width = 600,
   height = 300,
-  showLegend = true,
+  _showLegend = true,
   showGrid = true,
-  showTooltip = true,
+  _showTooltip = true,
   animate = true,
   interactive = true,
   colorScheme = ['#f97316', '#3b82f6', '#10b981', '#f59e0b'],
@@ -270,11 +270,11 @@ export const AdvancedBarChart: React.FC<
   Omit<AdvancedChartProps, 'type'> & { data: ChartDataPoint[] }
 > = ({
   data,
-  title,
-  subtitle,
+  _title,
+  _subtitle,
   width = 600,
   height = 300,
-  showLegend = true,
+  _showLegend = true,
   showGrid = true,
   animate = true,
   interactive = true,
@@ -368,11 +368,11 @@ export const AdvancedPieChart: React.FC<
   Omit<AdvancedChartProps, 'type'> & { data: ChartDataPoint[] }
 > = ({
   data,
-  title,
-  subtitle,
+  _title,
+  _subtitle,
   width = 400,
   height = 400,
-  showLegend = true,
+  _showLegend = true,
   animate = true,
   interactive = true,
   colorScheme = [
@@ -546,7 +546,7 @@ export const AdvancedCharts: React.FC<AdvancedChartProps> = ({
   height = 300,
   showLegend = true,
   showGrid = true,
-  showTooltip = true,
+  _showTooltip = true,
   animate = true,
   interactive = true,
   colorScheme,

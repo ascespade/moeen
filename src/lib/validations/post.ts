@@ -6,7 +6,7 @@
  */
 
 import { z } from 'zod';
-import { MESSAGES } from '../constants/messages';
+import { _MESSAGES } from '../constants/messages';
 
 // Create Post Schema
 export const createPostSchema = z.object({

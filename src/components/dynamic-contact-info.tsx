@@ -63,7 +63,7 @@ const DynamicContactInfo = memo(function DynamicContactInfo() {
 
         if (data.contact_info && Array.isArray(data.contact_info)) {
           setContactInfo(
-            data.contact_info.map((item: unknown) => ({
+            data.contact_info.map((item: any) => ({
               ...item,
               icon:
                 item.type === 'phone' ? (
@@ -88,11 +88,11 @@ const DynamicContactInfo = memo(function DynamicContactInfo() {
 
   if (loading) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
+      <>
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          <span id="live-region"></span>
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
         {[1, 2, 3].map(i => (
           <div
             key={i}
@@ -103,7 +103,8 @@ div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
             <div className='h-4 bg-[var(--brand-surface)] rounded mb-4'></div>
           </div>
         ))}
-      </div>
+        </div>
+      </>
     );
   }
 

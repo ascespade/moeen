@@ -91,7 +91,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const appointmentDate = new Date().toISOString().split('T')[0];
 
     // التحقق من توفر الموعد
-    const { data: existingAppointment, error: checkError } = await supabase
+    const { data: existingAppointment, error: _checkError } = await supabase
       .from('appointments')
       .select('id')
       .eq('doctor_id', doctorId)
@@ -264,11 +264,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function sendWhatsAppConfirmation(phone: string, appointment: unknown) {
+async function sendWhatsAppConfirmation(_phone: string, appointment: any) {
   // هذا مثال لإرسال رسالة WhatsApp
   // في التطبيق الحقيقي، ستحتاج إلى تكامل مع WhatsApp Business API
 
-  const message = `تم حجز موعدك بنجاح!
+  const _message = `تم حجز موعدك بنجاح!
 
 التفاصيل:
 👨‍⚕️ الطبيب: ${appointment.doctors.first_name} ${appointment.doctors.last_name}

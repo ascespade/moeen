@@ -188,7 +188,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         console.warn('Error fetching claims data:', claimsError);
       } else {
         revenue =
-          claimsData?.reduce((sum, claim) => sum + (claim.amount || 0), 0) || 0;
+          claimsData?.reduce((sum: number, claim: any) => sum + (claim.amount || 0), 0) || 0;
       }
 
       // Claims processed (approved + rejected)

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const revalidate = 60;
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
+export async function GET(_request: NextRequest): Promise<NextResponse> {
   try {
     return NextResponse.json(
       {

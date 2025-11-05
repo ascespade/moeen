@@ -120,7 +120,7 @@ export const BarChart: React.FC<BarChartProps> = ({
               }}
             />
           )}
-          {defaultBars.map((bar, index) => (
+          {defaultBars.map((bar, _index) => (
             <Bar
               key={bar.dataKey}
               dataKey={bar.dataKey}

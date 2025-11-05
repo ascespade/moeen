@@ -64,7 +64,7 @@ export interface InsuranceClaim {
 }
 
 export class SaudiHealthSystemIntegration {
-  private sehaApiEndpoint: string;
+  private _sehaApiEndpoint: string;
   private insuranceProviders: Map<string, InsuranceProvider> = new Map();
 
   constructor() {
@@ -427,8 +427,8 @@ export class SaudiHealthSystemIntegration {
 
   // API Call Methods
   private async callSehaAPI(
-    method: string,
-    endpoint: string,
+    _method: string,
+    _endpoint: string,
     data?: any
   ): Promise<any> {
     // In real implementation, this would make actual API calls
@@ -473,10 +473,10 @@ export class SaudiHealthSystemIntegration {
   }
 
   private async callInsuranceAPI(
-    provider: InsuranceProvider,
-    method: string,
-    endpoint: string,
-    data?: any
+    _provider: InsuranceProvider,
+    _method: string,
+    _endpoint: string,
+    _data?: any
   ): Promise<any> {
     // In real implementation, this would make actual API calls to insurance providers
     // Mock response for development

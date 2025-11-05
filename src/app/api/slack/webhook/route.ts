@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SlackIntegration } from '@/lib/slack-integration';
-import { createClient } from '@/lib/supabase/server';
-import { requireAuth } from '@/lib/auth/authorize';
+// import { _createClient } from '@/lib/supabase/server';
+// import { _requireAuth } from '@/lib/auth/authorize';
 
 const slack = new SlackIntegration();
 
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function handleSlackEvent(event: unknown) {
+async function handleSlackEvent(event: any) {
   try {
     await slack.handleSlackEvent(event);
   } catch (error) {
@@ -41,7 +41,7 @@ async function handleSlackEvent(event: unknown) {
 
 export const revalidate = 60;
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
+export async function GET(_request: NextRequest): Promise<NextResponse> {
   return NextResponse.json(
     { error: 'Method not allowed' },
     {

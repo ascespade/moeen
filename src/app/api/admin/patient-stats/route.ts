@@ -130,11 +130,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: {
         // Basic counts
         totalPatients: totalPatients.length,
-        activePatients: [...new Set(activePatients.map((p: unknown) => p.id))]
+        activePatients: [...new Set(activePatients.map((p: any) => p.id))]
           .length,
         newPatients: newPatients.length,
         blockedPatients: totalPatients.filter(
-          (p: unknown) => p.status === 'blocked'
+          (p: any) => p.status === 'blocked'
         ).length,
 
         // Demographics
@@ -239,15 +239,15 @@ function getPreviousDateRanges(period: string) {
 }
 
 function calculateDemographics(patients: any[]) {
-  const maleCount = patients.filter((p: unknown) => p.gender === 'male').length;
+  const maleCount = patients.filter((p: any) => p.gender === 'male').length;
   const femaleCount = patients.filter(
-    (p: unknown) => p.gender === 'female'
+    (p: any) => p.gender === 'female'
   ).length;
 
   const ageGroups = {
-    children: patients.filter((p: unknown) => p.age < 18).length,
-    adults: patients.filter((p: unknown) => p.age >= 18 && p.age < 60).length,
-    seniors: patients.filter((p: unknown) => p.age >= 60).length,
+    children: patients.filter((p: any) => p.age < 18).length,
+    adults: patients.filter((p: any) => p.age >= 18 && p.age < 60).length,
+    seniors: patients.filter((p: any) => p.age >= 60).length,
   };
 
   return {
@@ -266,13 +266,13 @@ function calculateDemographics(patients: any[]) {
 
 function calculateAppointmentStats(appointments: any[]) {
   const completed = appointments.filter(
-    (a: unknown) => a.status === 'completed'
+    (a: any) => a.status === 'completed'
   ).length;
   const pending = appointments.filter(
-    (a: unknown) => a.status === 'scheduled'
+    (a: any) => a.status === 'scheduled'
   ).length;
   const cancelled = appointments.filter(
-    (a: unknown) => a.status === 'cancelled'
+    (a: any) => a.status === 'cancelled'
   ).length;
 
   return {
@@ -289,14 +289,14 @@ function calculateAppointmentStats(appointments: any[]) {
 
 function calculateSessionStats(sessions: any[]) {
   const completed = sessions.filter(
-    (s: unknown) => s.status === 'completed'
+    (s: any) => s.status === 'completed'
   ).length;
   const upcoming = sessions.filter(
-    (s: unknown) => s.status === 'scheduled'
+    (s: any) => s.status === 'scheduled'
   ).length;
 
   const sessionTypes = sessions.reduce(
-    (acc: Record<string, number>, session: unknown) => {
+    (acc: Record<string, number>, session: any) => {
       acc[session.session_type] = (acc[session.session_type] || 0) + 1;
       return acc;
     },
@@ -315,15 +315,15 @@ function calculateSessionStats(sessions: any[]) {
 
 function calculateFinancialStats(payments: any[]) {
   const totalAmount = payments.reduce(
-    (sum: number, p: unknown) => sum + (p.amount || 0),
+    (sum: number, p: any) => sum + (p.amount || 0),
     0
   );
   const paidAmount = payments
-    .filter((p: unknown) => p.status === 'paid')
-    .reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0);
+    .filter((p: any) => p.status === 'paid')
+    .reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
   const pendingAmount = payments
-    .filter((p: unknown) => p.status === 'pending')
-    .reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0);
+    .filter((p: any) => p.status === 'pending')
+    .reduce((sum: number, p: any) => sum + (p.amount || 0), 0);
 
   return {
     totalRevenue: totalAmount,

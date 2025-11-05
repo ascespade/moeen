@@ -26,7 +26,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const gender = searchParams.get('gender');
     const ageRange = searchParams.get('age_range'); // e.g., "0-18", "18-65", "65+"
 
-    let query;
+    let _query;
 
     if (includeUsers) {
       // استخدام الدالة الذكية التي تجلب المرضى مع معلومات المستخدمين
@@ -40,7 +40,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       let filteredData = data;
       if (gender) {
         filteredData = data?.filter(
-          (patient: unknown) =>
+          (patient: any) =>
             patient.gender?.toLowerCase() === gender.toLowerCase()
         );
       }
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // فلترة حسب العمر إذا طُلب ذلك
       if (ageRange && filteredData) {
         const now = new Date();
-        filteredData = filteredData.filter((patient: unknown) => {
+        filteredData = filteredData.filter((patient: any) => {
           if (!patient.date_of_birth) return false;
 
           const birthDate = new Date(patient.date_of_birth);
@@ -80,7 +80,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       let filteredData = data;
       if (gender) {
         filteredData = data?.filter(
-          (patient: unknown) =>
+          (patient: any) =>
             patient.gender?.toLowerCase() === gender.toLowerCase()
         );
       }
@@ -88,7 +88,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // فلترة حسب العمر إذا طُلب ذلك
       if (ageRange && filteredData) {
         const now = new Date();
-        filteredData = filteredData.filter((patient: unknown) => {
+        filteredData = filteredData.filter((patient: any) => {
           if (!patient.date_of_birth) return false;
 
           const birthDate = new Date(patient.date_of_birth);

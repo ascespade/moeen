@@ -367,8 +367,8 @@ export default function AdminSettingsPage() {
   const pageConfig = ADMIN_PAGES.settings;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'الإعدادات'}
     >
       <AdminSettingsPageContent />
     </AdminPageWrapper>

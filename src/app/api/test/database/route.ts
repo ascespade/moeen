@@ -46,7 +46,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     switch (testType) {
       case 'connection':
         // Test basic connection
-        const { data: connectionData, error: connectionError } = await supabase
+        const { data: _connectionData, error: connectionError } = await supabase
           .from('patients')
           .select('count')
           .limit(1);
@@ -86,7 +86,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               accessible: !error,
               error: error?.message || null,
             };
-          } catch (err: unknown) {
+          } catch (err: any) {
             tableResults[table] = {
               accessible: false,
               error: err.message,
@@ -262,7 +262,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             // Try to join with patients
             if (appointmentsData && appointmentsData.length > 0) {
               const appointment = appointmentsData[0];
-              const { data: patientData, error: patientError } = await supabase
+              const { data: _patientData, error: patientError } = await supabase
                 .from('patients')
                 .select('id, first_name, last_name')
                 .eq('id', appointment.patient_id)
@@ -288,7 +288,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               error: appointmentsError.message,
             };
           }
-        } catch (err: unknown) {
+        } catch (err: any) {
           relationResults['appointments -> patients'] = {
             working: false,
             error: err.message,
@@ -297,7 +297,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
         // Test if foreign key column exists
         try {
-          const { data: fkCheck, error: fkError } = await supabase
+          const { data: _fkCheck, error: fkError } = await supabase
             .from('appointments')
             .select('patient_id')
             .limit(1);
@@ -309,7 +309,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               ? 'patient_id column accessible'
               : 'Column check failed',
           };
-        } catch (err: unknown) {
+        } catch (err: any) {
           relationResults['foreign key column exists'] = {
             working: false,
             error: err.message,
@@ -351,7 +351,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               duration: idxDuration,
               error: error?.message || null,
             };
-          } catch (err: unknown) {
+          } catch (err: any) {
             indexResults[`${idx.table}.${idx.column}`] = {
               performance: 'error',
               error: err.message,
@@ -384,7 +384,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           { status: 400 }
         );
     }
-  } catch (error: unknown) {
+  } catch (error: any) {
     return NextResponse.json(
       {
         success: false,

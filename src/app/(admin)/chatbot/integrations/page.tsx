@@ -1,7 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { ROUTES } from '@/constants/routes';
-import Image from 'next/image';
 
 interface Integration {
   id: string;
@@ -99,7 +97,7 @@ export default function ChatbotIntegrationsPage() {
     setShowConnectModal(integrationId);
   };
 
-  const handleDisconnect = (integrationId: string) => {
+  const handleDisconnect = (_integrationId: string) => {
     // Simulate disconnect
   };
 

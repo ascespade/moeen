@@ -1,12 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { Sun, Moon, Languages, Menu, X } from 'lucide-react';
+import { I18N_KEYS } from '@/constants/i18n-keys';
+import { ROUTES } from '@/constants/routes';
+import { useI18n } from '@/hooks/useI18n';
+import { Languages, Menu, Moon, Sun, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ROUTES } from '@/constants/routes';
-import { I18N_KEYS } from '@/constants/i18n-keys';
-import { useI18n } from '@/hooks/useI18n';
+import { useEffect, useState } from 'react';
 
 // Theme and Language Switches Component
 function ThemeLanguageSwitches() {
@@ -82,9 +82,18 @@ function ThemeLanguageSwitches() {
   return (
     <>
       {/* Theme Toggle Button */}
-      <button className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
-        onClick={toggleTheme} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme } }}
-        disabled={isLoading} aria-label="{isLoading ? (">
+      <button 
+        className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
+        onClick={toggleTheme}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleTheme();
+          }
+        }}
+        disabled={isLoading}
+        aria-label={isLoading ? 'جارٍ التحميل...' : 'تبديل الثيم'}
+      >
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600'></div>
         ) : theme === 'light' ? (
@@ -98,9 +107,18 @@ function ThemeLanguageSwitches() {
       </button>
 
       {/* Language Toggle Button */}
-      <button className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
-        onClick={toggleLanguage} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleLanguage } }}
-        disabled={isLoading} aria-label="{isLoading ? (">
+      <button 
+        className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
+        onClick={toggleLanguage}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleLanguage();
+          }
+        }}
+        disabled={isLoading}
+        aria-label={isLoading ? 'جارٍ التحميل...' : 'تبديل اللغة'}
+      >
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600'></div>
         ) : (
@@ -221,8 +239,16 @@ export default function SmartHeader() {
             )}
 
             {/* Mobile Menu Button */}
-            <button className='md:hidden p-2'
-              onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () aria-label="{isMobileMenuOpen ? (" setIsMobileMenuOpen(!isMobileMenuOpen) } }}
+            <button 
+              className='md:hidden p-2'
+              onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen) }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setIsMobileMenuOpen(!isMobileMenuOpen);
+                }
+              }}
+              aria-label={isMobileMenuOpen ? 'إغلاق القائمة' : 'فتح القائمة'}
             >
               {isMobileMenuOpen ? (
                 <X className='h-6 w-6' />

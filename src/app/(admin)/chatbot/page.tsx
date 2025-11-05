@@ -5,7 +5,7 @@ import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Bot, Settings, MessageSquare, BarChart3 } from 'lucide-react';
+import { Settings, MessageSquare, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 
 function ChatbotPageContent() {
@@ -79,8 +79,8 @@ export default function ChatbotPage() {
   const pageConfig = ADMIN_PAGES.chatbot;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'المساعد الذكي'}
     >
       <ChatbotPageContent />
     </AdminPageWrapper>

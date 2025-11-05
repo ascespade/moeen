@@ -108,7 +108,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Transform data
-    const transformedLogs = (auditLogs || []).map((log: unknown) => ({
+    const transformedLogs = (auditLogs || []).map((log: any) => ({
       id: log.id,
       user: log.users?.full_name || log.users?.email || 'مستخدم غير معروف',
       userRole: log.users?.role || '',
@@ -166,7 +166,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 }
 
 // Helper functions
-function getDateRanges(period: string) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _getDateRanges(period: string) {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
@@ -204,7 +205,7 @@ function getDateRanges(period: string) {
       };
 
     default:
-      return getDateRanges('month');
+      return _getDateRanges('month');
   }
 }
 
@@ -236,13 +237,13 @@ function getResourceDisplayName(resource: string): string {
   return resourceNames[resource] || resource;
 }
 
-function extractDetails(details: unknown): string {
+function extractDetails(details: any): string {
   try {
     if (typeof details === 'string') {
       const parsed = JSON.parse(details);
       return parsed.description || parsed.message || details;
     }
-    return details?.description || details?.message || 'لا توجد تفاصيل';
+    return (details as any)?.description || (details as any)?.message || 'لا توجد تفاصيل';
   } catch {
     return details?.toString() || 'لا توجد تفاصيل';
   }
@@ -271,7 +272,7 @@ function formatTimestamp(timestamp: string): string {
   });
 }
 
-async function getAuditStats(supabase: unknown, filters: unknown) {
+async function getAuditStats(supabase: any, filters: any) {
   // Get total counts by status
   const { data: statusCounts } = await supabase
     .from('audit_logs')
@@ -285,13 +286,13 @@ async function getAuditStats(supabase: unknown, filters: unknown) {
   const stats = {
     total: statusCounts?.length || 0,
     success:
-      statusCounts?.filter((log: unknown) => log.status === 'success').length ||
+      statusCounts?.filter((log: any) => log.status === 'success').length ||
       0,
     failed:
-      statusCounts?.filter((log: unknown) => log.status === 'failed').length ||
+      statusCounts?.filter((log: any) => log.status === 'failed').length ||
       0,
     warning:
-      statusCounts?.filter((log: unknown) => log.status === 'warning').length ||
+      statusCounts?.filter((log: any) => log.status === 'warning').length ||
       0,
   };
 

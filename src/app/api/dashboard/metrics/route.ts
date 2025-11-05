@@ -41,7 +41,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
   try {
     // Check if database is accessible first
-    const { data: healthCheck, error: healthError } = await supabase
+    const { data: _healthCheck, error: healthError } = await supabase
       .from('system_health')
       .select('id')
       .limit(1);
@@ -263,7 +263,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 async function getSystemHealth() {
   try {
     // Check if table exists first
-    const { data, error } = await supabase
+    const { _data, error } = await supabase
       .from('system_health')
       .select('id')
       .limit(1);
@@ -283,7 +283,7 @@ async function getSystemHealth() {
 
     if (healthError) throw healthError;
 
-    return healthData.map((service: unknown) => ({
+    return healthData.map((service: any) => ({
       service: service.service_name,
       status: service.is_healthy ? 'healthy' : 'unhealthy',
       lastCheck: service.last_check,
@@ -297,7 +297,7 @@ async function getSystemHealth() {
 async function getSystemMetrics() {
   try {
     // Check if table exists first
-    const { data, error } = await supabase
+    const { _data, error } = await supabase
       .from('system_metrics')
       .select('id')
       .limit(1);
@@ -357,7 +357,7 @@ async function getSocialMediaMetrics() {
       },
     };
 
-    data.forEach((metric: unknown) => {
+    data.forEach((metric: any) => {
       const platform = metric.platform;
       if (!summary.platforms[platform]) {
         summary.platforms[platform] = {
@@ -408,14 +408,14 @@ async function getWorkflowMetrics() {
 
     const summary: any = {
       totalWorkflows: data.length,
-      validWorkflows: data.filter((w: unknown) => w.is_valid).length,
-      invalidWorkflows: data.filter((w: unknown) => !w.is_valid).length,
+      validWorkflows: data.filter((w: any) => w.is_valid).length,
+      invalidWorkflows: data.filter((w: any) => !w.is_valid).length,
       commonIssues: {} as any,
     };
 
     // Count common issues
-    data.forEach((workflow: unknown) => {
-      workflow.issues.forEach((issue: unknown) => {
+    data.forEach((workflow: any) => {
+      workflow.issues.forEach((issue: any) => {
         summary.commonIssues[issue] = (summary.commonIssues[issue] || 0) + 1;
       });
     });
@@ -447,8 +447,8 @@ async function getChatbotMetrics() {
         0
       ),
       totalTemplates: 0, // Would need separate query
-      languages: [...new Set(data.map((flow: unknown) => flow.language))],
-      categories: [...new Set(data.map((flow: unknown) => flow.category))],
+      languages: [...new Set(data.map((flow: any) => flow.language))],
+      categories: [...new Set(data.map((flow: any) => flow.category))],
     };
 
     return summary;
@@ -527,24 +527,24 @@ async function getHealthcareMetrics() {
     const thisWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
 
     const patientsThisMonth = patients.filter(
-      (p: unknown) => new Date(p.created_at) >= thisMonth
+      (p: any) => new Date(p.created_at) >= thisMonth
     ).length;
 
     const appointmentsToday = appointments.filter(
-      (a: unknown) =>
+      (a: any) =>
         new Date(a.appointment_date).toDateString() === today.toDateString()
     ).length;
 
     const appointmentsThisWeek = appointments.filter(
-      (a: unknown) => new Date(a.appointment_date) >= thisWeek
+      (a: any) => new Date(a.appointment_date) >= thisWeek
     ).length;
 
     const completedAppointments = appointments.filter(
-      (a: unknown) => a.status === 'completed'
+      (a: any) => a.status === 'completed'
     ).length;
 
     const cancelledAppointments = appointments.filter(
-      (a: unknown) => a.status === 'cancelled'
+      (a: any) => a.status === 'cancelled'
     ).length;
 
     // Group doctors by specialty
@@ -564,7 +564,7 @@ async function getHealthcareMetrics() {
     return {
       patients: {
         total: patients.length,
-        active: patients.filter((p: unknown) => p.status === 'active').length,
+        active: patients.filter((p: any) => p.status === 'active').length,
         newThisMonth: patientsThisMonth,
         growthRate:
           patients.length > 0
@@ -580,7 +580,7 @@ async function getHealthcareMetrics() {
       },
       doctors: {
         total: doctors.length,
-        active: doctors.filter((d: unknown) => d.status === 'active').length,
+        active: doctors.filter((d: any) => d.status === 'active').length,
         specialties: specialtiesArray,
       },
       revenue: {
@@ -638,34 +638,34 @@ async function getCrmMetrics() {
     const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
 
     const newLeads = leads.filter(
-      (l: unknown) => new Date(l.created_at) >= thisMonth
+      (l: any) => new Date(l.created_at) >= thisMonth
     ).length;
 
     const qualifiedLeads = leads.filter(
-      (l: unknown) => l.status === 'qualified'
+      (l: any) => l.status === 'qualified'
     ).length;
 
     const convertedLeads = leads.filter(
-      (l: unknown) => l.status === 'converted'
+      (l: any) => l.status === 'converted'
     ).length;
 
-    const wonDeals = deals.filter((d: unknown) => d.status === 'won').length;
+    const wonDeals = deals.filter((d: any) => d.status === 'won').length;
 
-    const lostDeals = deals.filter((d: unknown) => d.status === 'lost').length;
+    const lostDeals = deals.filter((d: any) => d.status === 'lost').length;
 
-    const pipelineDeals = deals.filter((d: unknown) =>
+    const pipelineDeals = deals.filter((d: any) =>
       ['prospecting', 'qualification', 'proposal', 'negotiation'].includes(
         d.status
       )
     ).length;
 
-    const calls = activities.filter((a: unknown) => a.type === 'call').length;
+    const calls = activities.filter((a: any) => a.type === 'call').length;
 
     const meetings = activities.filter(
-      (a: unknown) => a.type === 'meeting'
+      (a: any) => a.type === 'meeting'
     ).length;
 
-    const tasks = activities.filter((a: unknown) => a.type === 'task').length;
+    const tasks = activities.filter((a: any) => a.type === 'task').length;
 
     return {
       leads: {

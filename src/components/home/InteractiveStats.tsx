@@ -1,8 +1,8 @@
 'use client';
 
-import { memo, useEffect, useRef, useState } from 'react';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
-import { Users, Calendar, Star, Clock } from 'lucide-react';
+import { Calendar, Clock, Star, Users } from 'lucide-react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 interface Stat {
   id: number;
@@ -113,7 +113,7 @@ const InteractiveStats = memo(function InteractiveStats() {
           className='absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse'
           style={{ animationDelay: '1s' }}
         />
-      </section>
+      </div>
 
       <div className='container-app relative z-10'>
         <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>

@@ -120,7 +120,7 @@ export class ErrorHandler {
     } catch (error) {}
   }
 
-  private async logToAuditLogs(errorReport: ErrorReport): Promise<void> {
+  private async logToAuditLogs(_errorReport: ErrorReport): Promise<void> {
     try {
       // This would integrate with your Supabase client
       // const { createClient } = await import('@/lib/supabase/client');

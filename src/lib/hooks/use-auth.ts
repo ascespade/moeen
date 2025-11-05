@@ -10,7 +10,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '../supabase/client';
-import type { User } from '@supabase/supabase-js';
+import type { _User } from '@supabase/supabase-js';
 import type { User as DbUser } from '@/types/database.types';
 
 export function useAuth() {

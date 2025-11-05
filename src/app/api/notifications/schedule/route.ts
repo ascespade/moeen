@@ -4,9 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { z } from 'zod';
 
-import { ErrorHandler } from '@/core/errors';
 import { ValidationHelper } from '@/core/validation';
 import { authorize, requireRole } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
@@ -135,7 +135,7 @@ export async function POST(_request: NextRequest) {
       message: 'Notification scheduled successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -144,7 +144,7 @@ export const revalidate = 60;
 export async function GET(_request: NextRequest) {
   try {
     // Optional: authorize user (but don't block if not authenticated for GET)
-    const { user } = await authorize(_request).catch(() => ({
+    const { _user } = await authorize(_request).catch(() => ({
       user: null,
       error: null,
     }));
@@ -203,8 +203,8 @@ export async function GET(_request: NextRequest) {
       try {
         // Try to get createdBy user info for notifications that have createdBy field
         const createdByIds = notifications
-          .map((n: unknown) => n.createdBy || n.created_by)
-          .filter((id: unknown) => id && typeof id === 'string');
+          .map((n: any) => n.createdBy || n.created_by)
+          .filter((id: any) => id && typeof id === 'string');
 
         if (createdByIds.length > 0) {
           const { data: users } = await supabase
@@ -213,8 +213,8 @@ export async function GET(_request: NextRequest) {
             .in('id', createdByIds);
 
           if (users) {
-            const userMap = new Map(users.map((u: unknown) => [u.id, u]));
-            enrichedNotifications = notifications.map((n: unknown) => ({
+            const userMap = new Map(users.map((u: any) => [u.id, u]));
+            enrichedNotifications = notifications.map((n: any) => ({
               ...n,
               createdByUser:
                 n.createdBy || n.created_by
@@ -288,7 +288,7 @@ async function __generateNotificationContent(
   type: string,
   templateData: unknown,
   customMessage: string,
-  recipient: unknown
+  _recipient: unknown
 ) {
   const templates = {
     appointment_confirmation: {

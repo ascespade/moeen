@@ -7,7 +7,6 @@ import {
   AdminHeader,
   AdminStatsCard,
 } from '@/components/admin/ui';
-import { useT } from '@/components/providers/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import {
@@ -40,25 +39,19 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table';
-import { usePermissions } from '@/hooks/usePermissions';
+// import { usePermissions } from '@/hooks/usePermissions'; // Unused
 import {
-  Activity,
-  Award,
   ChevronLeft,
   ChevronRight,
   Copy,
-  Crown,
   Download,
   Edit,
   Eye,
   Key,
   MoreHorizontal,
-  PhoneCall,
   Plus,
-  RefreshCw,
   Shield,
   Trash2,
-  TrendingUp,
   User,
   UserCheck,
   UserCog,
@@ -66,6 +59,7 @@ import {
   UserX,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import { formatDate, formatTime } from '@/utils/common';
 
 interface User {
   id: string;
@@ -124,11 +118,10 @@ interface ApiUserResponse {
 }
 
 function UsersPageContent() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -136,8 +129,9 @@ function UsersPageContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isUserDialogOpen, setIsUserDialogOpen] = useState(false);
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [_isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Load users data from API
@@ -251,6 +245,61 @@ function UsersPageContent() {
     );
   });
 
+  const getRoleBadge = (role: string) => {
+    const roleConfig = {
+      admin: {
+        label: 'مدير النظام',
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-error)_10%,transparent)] text-[var(--brand-error)] border-[color-mix(in_srgb,var(--brand-error)_20%,transparent)]',
+      },
+      manager: {
+        label: 'مدير',
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-primary)_10%,transparent)] text-[var(--brand-primary)] border-[color-mix(in_srgb,var(--brand-primary)_20%,transparent)]',
+      },
+      supervisor: {
+        label: 'مشرف',
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-info)_10%,transparent)] text-[var(--brand-info)] border-[color-mix(in_srgb,var(--brand-info)_20%,transparent)]',
+      },
+      doctor: {
+        label: 'طبيب',
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-success)_10%,transparent)] text-[var(--brand-success)] border-[color-mix(in_srgb,var(--brand-success)_20%,transparent)]',
+      },
+      nurse: {
+        label: 'ممرض',
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-accent)_10%,transparent)] text-[var(--brand-accent)] border-[color-mix(in_srgb,var(--brand-accent)_20%,transparent)]',
+      },
+      staff: {
+        label: 'موظف',
+        className:
+          'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]',
+      },
+      agent: {
+        label: 'وكيل',
+        className:
+          'bg-[color-mix(in_srgb,var(--brand-warning)_10%,transparent)] text-[var(--brand-warning)] border-[color-mix(in_srgb,var(--brand-warning)_20%,transparent)]',
+      },
+      patient: {
+        label: 'مريض',
+        className:
+          'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]',
+      },
+    };
+    const config = roleConfig[role as keyof typeof roleConfig] || {
+      label: role,
+      className:
+        'bg-[color-mix(in_srgb,var(--text-muted)_10%,transparent)] text-[var(--text-muted)] border-[color-mix(in_srgb,var(--text-muted)_20%,transparent)]',
+    };
+    return (
+      <Badge variant='outline' className={config.className}>
+        {config.label}
+      </Badge>
+    );
+  };
+
   const getStatusBadge = (status: string) => {
     const statusConfig = {
       active: {
@@ -289,7 +338,17 @@ function UsersPageContent() {
         {config.label}
       </Badge>
     );
-  }
+  };
+
+  const handleViewUser = (user: User) => {
+    setSelectedUser(user);
+    setIsUserDialogOpen(true);
+  };
+
+  const handleEditUser = (user: User) => {
+    setSelectedUser(user);
+    setIsEditDialogOpen(true);
+  };
 
   if (error) {
     return (
@@ -372,7 +431,7 @@ function UsersPageContent() {
               ).length
             }
             subtitle='نشط خلال 24 ساعة'
-            icon={Activity}
+            icon={Users}
             iconColor='#f59e0b'
           />
         </div>
@@ -754,8 +813,8 @@ export default function UsersPage() {
   const pageConfig = ADMIN_PAGES.users;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'المستخدمون'}
     >
       <UsersPageContent />
     </AdminPageWrapper>

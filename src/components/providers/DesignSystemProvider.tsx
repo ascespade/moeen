@@ -104,8 +104,8 @@ export function DesignSystemProvider({
     ...initialConfig,
   });
 
-  const [themeLoading, setThemeLoading] = useState(false);
-  const [languageLoading, setLanguageLoading] = useState(false);
+  const [themeLoading, _setThemeLoading] = useState(false);
+  const [languageLoading, _setLanguageLoading] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Initialize design system

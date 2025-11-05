@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useT } from '@/components/providers/I18nProvider';
-import { usePermissions } from '@/hooks/usePermissions';
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import {
@@ -29,7 +27,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -48,24 +45,18 @@ import {
 } from '@/components/ui/DropdownMenu';
 import {
   MessageSquare,
-  Plus,
   Search,
   Filter,
   MoreHorizontal,
-  Edit,
   Trash2,
   Eye,
   Phone,
   Mail,
-  Calendar,
   Clock,
   User,
   Bot,
   CheckCircle,
-  XCircle,
-  AlertTriangle,
   Download,
-  Upload,
   RefreshCw,
   ChevronLeft,
   ChevronRight,
@@ -76,36 +67,14 @@ import {
   Archive,
   Flag,
   Star,
-  ThumbsUp,
-  ThumbsDown,
-  Volume2,
-  VolumeX,
-  Mic,
   Video,
-  PhoneCall,
   Smartphone,
   Monitor,
   Tablet,
   Globe,
-  MapPin,
-  FileText,
-  Image,
-  Paperclip,
-  Smile,
-  Frown,
-  Meh,
-  Heart,
-  Zap,
-  Target,
-  TrendingUp,
-  BarChart3,
-  PieChart,
   Activity,
   Users,
-  Settings,
-  Copy,
-  Share,
-  ExternalLink,
+  Upload,
 } from 'lucide-react';
 
 interface Conversation {
@@ -174,12 +143,10 @@ interface Message {
 }
 
 function ConversationsPageContent() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [_messages, _setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -190,7 +157,7 @@ function ConversationsPageContent() {
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [isMessageDialogOpen, setIsMessageDialogOpen] = useState(false);
+  const [_isMessageDialogOpen, _setIsMessageDialogOpen] = useState(false);
   const [isConversationDialogOpen, setIsConversationDialogOpen] =
     useState(false);
 
@@ -561,7 +528,7 @@ function ConversationsPageContent() {
     );
   };
 
-  const formatDate = (dateString: string) => {
+  const _formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
       month: 'short',
@@ -1091,8 +1058,8 @@ export default function ConversationsPage() {
   const pageConfig = ADMIN_PAGES.messages;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'Untitled'}
     >
       <ConversationsPageContent />
     </AdminPageWrapper>

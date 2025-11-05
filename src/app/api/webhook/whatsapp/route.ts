@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { logger } from '@/lib/logger';
-import { requireAuth } from '@/lib/auth/authorize';
+// import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -200,27 +200,27 @@ async function processMessageWithAI(
 }
 
 async function handleAppointmentIntent(
-  conversationId: string,
-  messageText: string,
-  phoneNumber: string
+  _conversationId: string,
+  _messageText: string,
+  _phoneNumber: string
 ): Promise<string> {
   // منطق حجز المواعيد
   return 'أهلاً بك! سأساعدك في حجز موعد جديد. ما نوع الخدمة التي تحتاجها؟\n1️⃣ العلاج الطبيعي\n2️⃣ العلاج النفسي\n3️⃣ العلاج الوظيفي\n4️⃣ الاستشارات الأسرية';
 }
 
 async function handleCancelIntent(
-  conversationId: string,
-  messageText: string,
-  phoneNumber: string
+  _conversationId: string,
+  _messageText: string,
+  _phoneNumber: string
 ): Promise<string> {
   // منطق إلغاء المواعيد
   return 'أفهم أنك تريد إلغاء موعدك. يرجى إرسال رقم الموعد أو اسمك ورقم هاتفك لتتمكن من إلغاء الموعد.';
 }
 
 async function handleReminderIntent(
-  conversationId: string,
-  messageText: string,
-  phoneNumber: string
+  _conversationId: string,
+  _messageText: string,
+  _phoneNumber: string
 ): Promise<string> {
   // منطق تذكير المواعيد
   return 'سأتحقق من موعدك القادم. يرجى إرسال اسمك ورقم هاتفك للتحقق من موعدك.';

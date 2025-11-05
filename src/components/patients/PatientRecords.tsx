@@ -3,17 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import {
   User,
-  Phone,
-  Mail,
-  Calendar,
-  FileText,
+  _Phone,
+  _Mail,
+  _Calendar,
+  _FileText,
   Plus,
-  Edit,
-  Trash2,
+  _Edit,
+  _Trash2,
   Search,
-  Filter,
-  Download,
-  Eye,
+  _Filter,
+  _Download,
+  _Eye,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -77,7 +77,7 @@ const PatientRecords: React.FC = () => {
     'all' | 'active' | 'inactive' | 'archived'
   >('all');
   const [showAddPatient, setShowAddPatient] = useState(false);
-  const [showAddRecord, setShowAddRecord] = useState(false);
+  const [_showAddRecord, setShowAddRecord] = useState(false);
 
   // نموذج إضافة مريض جديد
   const [newPatient, setNewPatient] = useState({
@@ -239,7 +239,7 @@ const PatientRecords: React.FC = () => {
     setShowAddPatient(false);
   };
 
-  const handleAddRecord = async () => {
+  const _handleAddRecord = async () => {
     if (!selectedPatient || !newRecord.date || !newRecord.doctorName) {
       alert('يرجى ملء الحقول المطلوبة');
       return;

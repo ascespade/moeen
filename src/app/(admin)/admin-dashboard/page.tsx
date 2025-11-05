@@ -152,18 +152,6 @@ export default function DashboardPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const getHealthColor = (status: string) => {
-    switch (status) {
-      case 'healthy':
-        return 'text-green-600';
-      case 'unhealthy':
-        return 'text-red-600';
-      case 'degraded':
-        return 'text-yellow-600';
-      default:
-        return 'text-gray-600';
-    }
-  };
 
   const getHealthBadge = (status: string) => {
     switch (status) {

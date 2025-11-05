@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { Input } from '@/components/ui/Input';
 import {
   BarChart3,
   TrendingUp,
@@ -13,19 +12,11 @@ import {
   Calendar,
   Clock,
   Target,
-  Activity,
-  Heart,
-  Brain,
-  Zap,
   Star,
   Award,
-  FileText,
   Download,
-  Filter,
   RefreshCw,
-  Eye,
-  PieChart,
-  LineChart,
+  Activity,
 } from 'lucide-react';
 
 interface AnalyticsData {
@@ -82,7 +73,8 @@ function AnalyticsPageContent() {
     null
   );
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_error, setError] = useState<string | null>(null);
   const [selectedPeriod, setSelectedPeriod] = useState<string>('month');
   const [selectedView, setSelectedView] = useState<string>('overview');
 
@@ -679,8 +671,8 @@ export default function AnalyticsPage() {
   const pageConfig = ADMIN_PAGES.analytics;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'التحليلات'}
     >
       <AnalyticsPageContent />
     </AdminPageWrapper>

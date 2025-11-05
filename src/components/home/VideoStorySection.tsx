@@ -40,7 +40,7 @@ const VideoStorySection = memo(function VideoStorySection() {
                 >
                   <Play className='w-10 h-10 text-white mr-1' fill='white' />
                 </button>
-              </section>
+              </div>
 
               {/* Decorative Elements */}
               <div className='absolute -top-6 -right-6 w-32 h-32 bg-[var(--brand-primary)]/20 rounded-full blur-2xl -z-10' />

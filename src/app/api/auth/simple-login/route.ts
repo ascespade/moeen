@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { createClient } from '@/lib/supabase/server';
 import { PermissionManager } from '@/lib/permissions';
-import { requireAuth } from '@/lib/auth/authorize';
+// import { requireAuth } from '@/lib/auth/authorize';
 
 const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-  } catch (e: unknown) {
+  } catch (e: any) {
     return NextResponse.json(
       { success: false, error: e?.message || 'Internal error' },
       { status: 500 }

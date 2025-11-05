@@ -4,9 +4,9 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError } from '@/lib/errors/error-handler';
 import { z } from 'zod';
 
-import { ErrorHandler } from '@/core/errors';
 import { ValidationHelper } from '@/core/validation';
 import { authorize, requireRole } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
@@ -60,7 +60,7 @@ export async function POST(_request: NextRequest) {
       );
     }
 
-    const { action, parameters, context, userId, conversationId } =
+    const { action, parameters, context, _userId, conversationId } =
       validation.data;
 
     // Initialize chatbot components - temporarily disabled
@@ -97,7 +97,7 @@ export async function POST(_request: NextRequest) {
       data: result.data,
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -164,7 +164,7 @@ export async function GET(_request: NextRequest) {
       },
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
-import { requireAuth } from '@/lib/auth/authorize';
 
 // This endpoint requires an internal secret header to prevent abuse
 const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
@@ -39,7 +38,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 1) Create or get Auth user
-    const { data: existing, error: getErr } =
+    const { data: existing } =
       await supabaseAdmin.auth.admin.listUsers({
         page: 1,
         perPage: 1,
@@ -132,7 +131,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ success: true, user_id: upserted.id });
-  } catch (e: unknown) {
+  } catch (e: any) {
     return NextResponse.json(
       { success: false, error: e?.message || 'Internal error' },
       { status: 500 }

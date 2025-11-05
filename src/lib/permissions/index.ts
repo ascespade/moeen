@@ -789,8 +789,8 @@ export class PermissionManager {
     category: string
   ): string[] {
     return userPermissions.filter(permission => {
-      const permissionObj = Object.values(PERMISSIONS).find(
-        p => p.id === permission
+      const permissionObj = Object.values(PERMISSIONS as Record<string, any>).find(
+        (p: any) => p.id === permission
       );
       return permissionObj?.category === category;
     });

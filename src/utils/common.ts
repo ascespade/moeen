@@ -7,8 +7,11 @@ export function formatDate(date: string | Date): string {
   return new Date(date).toLocaleDateString('ar-SA');
 }
 
-export function formatTime(time: string): string {
-  return time;
+export function formatTime(date: string | Date): string {
+  return new Date(date).toLocaleTimeString('ar-SA', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
 }
 
 export function handleError(error: unknown, message?: string): Error {

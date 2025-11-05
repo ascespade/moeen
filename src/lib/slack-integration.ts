@@ -62,10 +62,10 @@ export interface SlackNotification {
 
 export class SlackIntegration {
   private botToken: string;
-  private appToken: string;
+  private _appToken: string;
   private channels: Map<string, SlackChannel> = new Map();
   private users: Map<string, SlackUser> = new Map();
-  private appointments: Map<string, SlackAppointment> = new Map();
+  private _appointments: Map<string, SlackAppointment> = new Map();
 
   constructor() {
     this.botToken = process.env.SLACK_BOT_TOKEN || '';
@@ -100,7 +100,7 @@ export class SlackIntegration {
       });
 
       if (response.ok && response.channels) {
-        response.channels.forEach((channel: unknown) => {
+        response.channels.forEach((channel: any) => {
           this.channels.set(channel.id, {
             id: channel.id,
             name: channel.name,
@@ -128,7 +128,7 @@ export class SlackIntegration {
       });
 
       if (response.ok && response.members) {
-        response.members.forEach((user: unknown) => {
+        response.members.forEach((user: any) => {
           this.users.set(user.id, {
             id: user.id,
             name: user.name,
@@ -179,7 +179,7 @@ export class SlackIntegration {
 
   // Send appointment notification
   async sendAppointmentNotification(
-    appointmentId: string,
+    _appointmentId: string,
     type: 'created' | 'confirmed' | 'cancelled' | 'reminder',
     appointment: unknown,
     doctor: unknown,
@@ -275,10 +275,10 @@ export class SlackIntegration {
 
   // Send doctor response to patient
   async sendDoctorResponse(
-    patientId: string,
-    doctorId: string,
-    response: string,
-    originalMessageId?: string
+    _patientId: string,
+    _doctorId: string,
+    _response: string,
+    _originalMessageId?: string
   ): Promise<void> {
     try {
       // This would integrate with WhatsApp or website chatbot
@@ -375,7 +375,7 @@ export class SlackIntegration {
   }
 
   // Get or create appointment channel for doctor
-  private getAppointmentChannel(doctorId: string): string | null {
+  private getAppointmentChannel(_doctorId: string): string | null {
     // In a real implementation, this would:
     // 1. Check if doctor has a dedicated channel
     // 2. Create one if it doesn't exist
@@ -388,7 +388,7 @@ export class SlackIntegration {
   // Create doctor channel
   async createDoctorChannel(
     doctorId: string,
-    doctorName: string
+    _doctorName: string
   ): Promise<string | null> {
     try {
       const channelName = `doctor-${doctorId}`;
@@ -408,7 +408,7 @@ export class SlackIntegration {
   }
 
   // Handle Slack events
-  async handleSlackEvent(event: unknown): Promise<void> {
+  async handleSlackEvent(event: any): Promise<void> {
     try {
       switch (event.type) {
         case 'message':
@@ -426,12 +426,12 @@ export class SlackIntegration {
   }
 
   // Handle incoming messages
-  private async handleMessage(event: unknown): Promise<void> {
+  private async handleMessage(event: any): Promise<void> {
     // Skip bot messages and messages without text
     if (event.bot_id || !event.text) return;
 
     // Check if this is a doctor responding to a patient
-    const threadTs = event.thread_ts || event.ts;
+    const _threadTs = event.thread_ts || event.ts;
     const isInThread = event.thread_ts;
 
     if (isInThread) {
@@ -441,12 +441,12 @@ export class SlackIntegration {
   }
 
   // Handle app mentions
-  private async handleAppMention(event: unknown): Promise<void> {
+  private async handleAppMention(_event: any): Promise<void> {
     // Handle when the bot is mentioned
   }
 
   // Handle interactive messages (button clicks, etc.)
-  private async handleInteractiveMessage(event: unknown): Promise<void> {
+  private async handleInteractiveMessage(event: any): Promise<void> {
     const action = event.actions[0];
 
     switch (action.action_id) {
@@ -460,18 +460,18 @@ export class SlackIntegration {
   }
 
   // Handle doctor response
-  private async handleDoctorResponse(event: unknown): Promise<void> {
+  private async handleDoctorResponse(_event: any): Promise<void> {
     // Extract appointment and patient info from thread context
     // Send response back to patient via appropriate channel
   }
 
   // Handle view appointment action
-  private async handleViewAppointment(appointmentId: string): Promise<void> {
+  private async handleViewAppointment(_appointmentId: string): Promise<void> {
     // Show detailed appointment information
   }
 
   // Handle reply to patient action
-  private async handleReplyToPatient(value: string): Promise<void> {
+  private async handleReplyToPatient(_value: string): Promise<void> {
     // Open a dialog or thread for doctor to respond
   }
 

@@ -1,8 +1,7 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import {
   Select,
@@ -12,16 +11,16 @@ import {
   SelectValue,
 } from '@/components/ui/Select';
 import {
-  Stethoscope,
-  Star,
-  Clock,
-  Phone,
-  Mail,
-  MapPin,
-  User,
-  RefreshCw,
   AlertTriangle,
+  Clock,
+  Mail,
+  Phone,
+  RefreshCw,
+  Star,
+  Stethoscope,
+  User
 } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface DynamicDoctorsListProps {
   className?: string;
@@ -155,14 +154,15 @@ export default function DynamicDoctorsList({
 
   if (loading) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className={`flex items-center justify-center p-8 ${className}`}>
-        <RefreshCw className='h-8 w-8 animate-spin' />
-        <span className='ml-2'>جاري تحميل قائمة الأطباء...</span>
-      </div>
+      <>
+        <div aria-live="polite" aria-atomic="true" className="sr-only">
+          <span id="live-region"></span>
+        </div>
+        <div className={`flex items-center justify-center p-8 ${className}`}>
+          <RefreshCw className='h-8 w-8 animate-spin' />
+          <span className='ml-2'>جاري تحميل قائمة الأطباء...</span>
+        </div>
+      </>
     );
   }
 
@@ -271,8 +271,11 @@ div className={`flex items-center justify-center p-8 ${className}`}>
                   {doctor.phone && (
                     <div className='flex items-center gap-2'>
                       <Phone className='h-4 w-4 text-muted-foreground' />
-                      <ahref={`tel:${doctor.phone}`}
-                        className='text-sm text-default hover:underline' aria-label="{doctor.phone}">
+                      <a 
+                        href={`tel:${doctor.phone}`}
+                        className='text-sm text-default hover:underline' 
+                        aria-label={doctor.phone}
+                      >
                         {doctor.phone}
                       </a>
                     </div>
@@ -281,8 +284,11 @@ div className={`flex items-center justify-center p-8 ${className}`}>
                   {doctor.email && (
                     <div className='flex items-center gap-2'>
                       <Mail className='h-4 w-4 text-muted-foreground' />
-                      <ahref={`mailto:${doctor.email}`}
-                        className='text-sm text-default hover:underline' aria-label="{doctor.email}">
+                      <a 
+                        href={`mailto:${doctor.email}`}
+                        className='text-sm text-default hover:underline' 
+                        aria-label={doctor.email}
+                      >
                         {doctor.email}
                       </a>
                     </div>

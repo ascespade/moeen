@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { _NextRequest } from 'next/server';
 
 interface RateLimitConfig {
   windowMs: number;
@@ -26,7 +26,7 @@ class RateLimiter {
 
   isAllowed(identifier: string): boolean {
     const now = Date.now();
-    const windowStart = now - this.config.windowMs;
+    const _windowStart = now - this.config.windowMs;
 
     const current = this.requests.get(identifier);
 

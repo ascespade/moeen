@@ -4,10 +4,10 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError } from '@/lib/errors/error-handler';
 import Stripe from 'stripe';
 import { z } from 'zod';
 
-import { ErrorHandler } from '@/core/errors';
 import { ValidationHelper } from '@/core/validation';
 import { authorize, requireRole } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
@@ -204,7 +204,7 @@ export async function POST(_request: NextRequest) {
       message: 'Payment processed successfully',
     });
   } catch (error) {
-    return ErrorHandler.getInstance().handle(error as Error);
+    return handleApiError(error);
   }
 }
 
@@ -297,7 +297,7 @@ async function __processMoyasarPayment(
 async function __processCashPayment(
   amount: number,
   currency: string,
-  appointment: unknown
+  _appointment: unknown
 ) {
   // Cash payments are immediately marked as paid
   return {
@@ -315,7 +315,7 @@ async function __processCashPayment(
 async function __processBankTransfer(
   amount: number,
   currency: string,
-  appointment: unknown
+  _appointment: unknown
 ) {
   // Bank transfers are marked as pending until confirmed
   return {
@@ -334,7 +334,7 @@ async function __processBankTransfer(
 
 async function __sendPaymentConfirmation(
   _paymentId: string,
-  appointment: unknown
+  _appointment: unknown
 ) {
   // This will be implemented in the notification system
   // // console.log(`Sending payment confirmation for payment ${paymentId}`);

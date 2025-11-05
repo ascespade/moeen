@@ -1,21 +1,20 @@
 // src/components/Navigation.tsx
 'use client';
 
+import {
+  Activity,
+  BarChart3,
+  Database,
+  Home,
+  Menu,
+  Play,
+  Settings,
+  Shield,
+  X,
+  Zap
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  Home,
-  BarChart3,
-  Settings,
-  Zap,
-  Database,
-  Play,
-  Activity,
-  Shield,
-  Bell,
-  Menu,
-  X,
-} from 'lucide-react';
 import { useState } from 'react';
 
 const navigation = [
@@ -41,11 +40,11 @@ export default function Navigation() {
   };
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
+    <>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        <span id="live-region"></span>
+      </div>
 
->
       {/* Mobile menu button */}
       <div className='lg:hidden fixed top-4 left-4 z-50'>
         <button
@@ -115,7 +114,7 @@ export default function Navigation() {
                 </Link>
               );
             })}
-          </div>
+          </nav>
 
           {/* Quick Actions */}
           <div className='p-6 border-t border-white/20'>
@@ -142,7 +141,7 @@ export default function Navigation() {
                   </button>
                 );
               })}
-            </nav>
+            </div>
           </div>
 
           {/* Status Indicator */}

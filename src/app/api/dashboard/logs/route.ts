@@ -77,7 +77,7 @@ async function getActivityLogs(filters: {
     if (error) throw error;
 
     return (
-      data?.map((log: unknown) => ({
+      data?.map((log: any) => ({
         id: log.id,
         timestamp: log.timestamp,
         service: log.service_name,

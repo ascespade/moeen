@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useAdminAppointments } from '@/hooks/useAdminAppointments';
 import {
@@ -57,13 +56,10 @@ import {
   Phone,
   Mail,
   Clock,
-  User,
-  Stethoscope,
   CheckCircle,
   XCircle,
   AlertTriangle,
   Download,
-  Upload,
   RefreshCw,
   ChevronLeft,
   ChevronRight,
@@ -75,7 +71,6 @@ import {
 } from 'lucide-react';
 
 function AppointmentsPageContent() {
-  const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
 
   const {
@@ -83,16 +78,10 @@ function AppointmentsPageContent() {
     filteredAppointments,
     loading,
     error: hookError,
-    filters: hookFilters,
     pagination: hookPagination,
     updateFilters,
     setPage,
     refetch,
-    deleteAppointment,
-    updateAppointment,
-    createAppointment,
-    cancelAppointment,
-    confirmAppointment,
   } = useAdminAppointments();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -115,7 +104,7 @@ function AppointmentsPageContent() {
   }, [searchTerm, statusFilter, typeFilter, dateFilter, updateFilters]);
 
   // Map hook data (snake_case) to page data (camelCase) for compatibility
-  const mappedAppointments = hookAppointments.map(appointment => {
+  const mappedAppointments = hookAppointments.map((appointment: any) => {
     const scheduledAt = new Date(appointment.scheduled_at);
     return {
       id: appointment.id,
@@ -453,7 +442,7 @@ function AppointmentsPageContent() {
             <CardContent>
               <div className='text-2xl font-bold'>
                 {
-                  appointments.filter(a => {
+                  appointments.filter((a: any) => {
                     if (!a.date) return false;
                     const appointmentDate = new Date(a.date);
                     const today = new Date();
@@ -474,11 +463,11 @@ function AppointmentsPageContent() {
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
-                {appointments.filter(a => a.status === 'completed').length}
+                {appointments.filter((a: any) => a.status === 'completed').length}
               </div>
               <p className='text-xs text-muted-foreground'>
                 {Math.round(
-                  (appointments.filter(a => a.status === 'completed').length /
+                  (appointments.filter((a: any) => a.status === 'completed').length /
                     appointments.length) *
                     100
                 )}
@@ -584,7 +573,7 @@ function AppointmentsPageContent() {
                       className='rounded border-[var(--brand-border)]'
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedAppointments(appointments.map(a => a.id));
+                          setSelectedAppointments(appointments.map((a: any) => a.id));
                         } else {
                           setSelectedAppointments([]);
                         }
@@ -602,7 +591,7 @@ function AppointmentsPageContent() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {appointments.map(appointment => (
+                {appointments.map((appointment: any) => (
                   <TableRow key={appointment.id}>
                     <TableCell>
                       <input type='checkbox'

@@ -329,7 +329,7 @@ export class PermissionManager {
    * Check if role can access a specific route
    */
   static canAccessRoute(role: UserRole, route: string): boolean {
-    const defaultRoute = DEFAULT_ROUTES[role];
+    const _defaultRoute = DEFAULT_ROUTES[role];
 
     // Admin can access all routes
     if (role === 'admin') return true;
@@ -357,8 +357,8 @@ export class PermissionManager {
  */
 export function hasPermission(
   role: UserRole,
-  resource: Resource,
-  action: Action
+  _resource: Resource,
+  _action: Action
 ): boolean {
   // Use basic permission check - admin has all permissions
   if (role === 'admin') return true;

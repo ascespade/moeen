@@ -19,7 +19,7 @@ export function useI18n(locale: 'ar' | 'en' = 'ar', ns: string = 'common') {
         if (!mounted) return;
         setMessages(translations);
       })
-      .catch(error => {
+      .catch(_error => {
         if (!mounted) return;
         setMessages({});
       })

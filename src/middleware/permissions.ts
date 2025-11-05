@@ -155,7 +155,7 @@ export function checkRoutePermission(
 }
 
 export function createPermissionMiddleware() {
-  return function permissionMiddleware(request: NextRequest) {
+  return function permissionMiddleware(_request: NextRequest) {
     // This would be called from the main middleware
     // Implementation depends on your auth system
     return NextResponse.next();

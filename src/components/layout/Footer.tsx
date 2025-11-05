@@ -190,20 +190,29 @@ const Footer = memo(function Footer() {
               <li className='flex items-start gap-3'>
                 <Phone className='w-5 h-5 text-[var(--brand-default)] mt-0.5 flex-shrink-0' />
                 <div className='flex flex-col gap-1'>
-                  <ahref={`tel:+966126173693`}
-                    className='text-sm hover:text-[var(--brand-default)] transition-colors' aria-label="{CONTACT_INFO.PHONE}">
+                  <a 
+                    href={`tel:+966126173693`}
+                    className='text-sm hover:text-[var(--brand-default)] transition-colors' 
+                    aria-label={CONTACT_INFO.PHONE}
+                  >
                     {CONTACT_INFO.PHONE}
                   </a>
-                  <ahref={`tel:+966555381558`}
-                    className='text-sm hover:text-[var(--brand-default)] transition-colors' aria-label="{CONTACT_INFO.MOBILE}">
+                  <a 
+                    href={`tel:+966555381558`}
+                    className='text-sm hover:text-[var(--brand-default)] transition-colors' 
+                    aria-label={CONTACT_INFO.MOBILE}
+                  >
                     {CONTACT_INFO.MOBILE}
                   </a>
                 </div>
               </li>
               <li className='flex items-center gap-3'>
                 <Mail className='w-5 h-5 text-[var(--brand-default)] flex-shrink-0' />
-                <ahref={`mailto:${CONTACT_INFO.EMAIL}`}
-                  className='text-sm hover:text-[var(--brand-default)] transition-colors' aria-label="{CONTACT_INFO.EMAIL}">
+                <a 
+                  href={`mailto:${CONTACT_INFO.EMAIL}`}
+                  className='text-sm hover:text-[var(--brand-default)] transition-colors' 
+                  aria-label={CONTACT_INFO.EMAIL}
+                >
                   {CONTACT_INFO.EMAIL}
                 </a>
               </li>

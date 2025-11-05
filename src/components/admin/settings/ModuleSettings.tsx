@@ -250,7 +250,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
     onChange();
   };
 
-  const updateModuleSettings = (
+  const _updateModuleSettings = (
     moduleKey: keyof ModulesState,
     settings: Record<string, any>
   ) => {
@@ -503,7 +503,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
           <Button
             variant='outline'
             onClick={async () => {
-              const response = await fetch(
+              const _response = await fetch(
                 '/api/admin/settings/modules/backup',
                 {
                   method: 'POST',

@@ -10,10 +10,10 @@ import { I18N_KEYS } from '@/constants/i18n-keys';
 
 import {
   CheckCircle,
-  AlertCircle,
+  _AlertCircle,
   Clock,
   FileText,
-  Shield,
+  _Shield,
   CreditCard,
   Stethoscope,
 } from 'lucide-react';
@@ -36,7 +36,7 @@ interface PreVisitChecklistProps {
 
 export default function PreVisitChecklist({
   appointmentId,
-  patientId,
+  _patientId,
   onChecklistComplete,
 }: PreVisitChecklistProps) {
   const { t } = useT();

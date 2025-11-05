@@ -460,7 +460,7 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-  } catch (e: unknown) {
+  } catch (e: any) {
     console.error('Login error:', e);
     return NextResponse.json(
       { success: false, error: e?.message || 'Internal server error' },

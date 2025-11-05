@@ -74,9 +74,9 @@ export class PrivateCenterIntegration {
   private centerId: string;
   private centerName: string;
   private licenseNumber: string;
-  private readonly mohApiEndpoint: string;
-  private readonly sfdApiEndpoint: string;
-  private readonly cchiApiEndpoint: string;
+  private readonly _mohApiEndpoint: string;
+  private readonly _sfdApiEndpoint: string;
+  private readonly _cchiApiEndpoint: string;
 
   constructor() {
     this.centerId = process.env.CENTER_ID || 'HEMAM001';
@@ -462,9 +462,9 @@ export class PrivateCenterIntegration {
 
   // API Call Methods
   private async callMOHAPI(
-    method: string,
-    endpoint: string,
-    data?: any
+    _method: string,
+    _endpoint: string,
+    _data?: any
   ): Promise<any> {
     // Mock response for development
     return {
@@ -474,9 +474,9 @@ export class PrivateCenterIntegration {
   }
 
   private async callSFDAPI(
-    method: string,
-    endpoint: string,
-    data?: any
+    _method: string,
+    _endpoint: string,
+    _data?: any
   ): Promise<any> {
     // Mock response for development
     return {
@@ -486,9 +486,9 @@ export class PrivateCenterIntegration {
   }
 
   private async callCCHIAPI(
-    method: string,
-    endpoint: string,
-    data?: any
+    _method: string,
+    _endpoint: string,
+    _data?: any
   ): Promise<any> {
     // Mock response for development
     return {

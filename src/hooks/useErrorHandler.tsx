@@ -1,5 +1,5 @@
 'use client';
-import logger from '@/lib/monitoring/logger';
+import _logger from '@/lib/monitoring/_logger';
 
 import { useCallback } from 'react';
 import { useT } from '@/hooks/useT';
@@ -20,7 +20,7 @@ export function useErrorHandler() {
   const handleError = useCallback(
     (error: unknown, options: ErrorHandlerOptions = {}) => {
       const {
-        showToast = true,
+        _showToast = true,
         logError = true,
         fallbackMessage = t(I18N_KEYS.ERRORS.SERVER_ERROR),
       } = options;

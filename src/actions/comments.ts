@@ -11,9 +11,8 @@ import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { withAction } from '@/lib/auth/with-action';
 import { createCommentSchema, updateCommentSchema } from '@/lib/validations';
-import { handleServerActionError } from '@/lib/errors';
 import { AppError } from '@/lib/errors';
-import type { Comment, CommentInsert, CommentUpdate } from '@/types/database.types';
+import type { CommentInsert, CommentUpdate } from '@/types/database.types';
 
 /**
  * Create comment action

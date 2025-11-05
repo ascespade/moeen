@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
-import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
 import { useAdminPatients } from '@/hooks/useAdminPatients';
-import { AdminHeader, AdminCard, AdminStatsCard } from '@/components/admin/ui';
 import {
   Card,
   CardContent,
@@ -61,63 +59,27 @@ import {
   Mail,
   Calendar,
   FileText,
-  Heart,
-  Activity,
   Download,
-  Upload,
   RefreshCw,
   ChevronLeft,
   ChevronRight,
   UserCheck,
-  UserX,
   Clock,
   AlertTriangle,
 } from 'lucide-react';
 
-interface Patient {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  nationalId: string;
-  dateOfBirth: string;
-  gender: 'male' | 'female';
-  status: 'active' | 'inactive' | 'pending';
-  lastVisit: string;
-  createdAt: string;
-  avatar?: string;
-  address?: string;
-  emergencyContact?: string;
-  medicalHistory?: string[];
-  allergies?: string[];
-  currentMedications?: string[];
-  insuranceProvider?: string;
-  insuranceNumber?: string;
-  bloodType?: string;
-  height?: number;
-  weight?: number;
-  bmi?: number;
-}
 
 function PatientsPageContent() {
-  const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   // Use the real hook for data fetching
   const {
-    patients: hookPatients,
     filteredPatients,
     loading,
     error: hookError,
-    filters: hookFilters,
     pagination: hookPagination,
     updateFilters,
     setPage,
     refetch,
-    deletePatient,
-    updatePatient,
-    createPatient,
-    activatePatient,
-    blockPatient,
   } = useAdminPatients();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -742,8 +704,8 @@ export default function PatientsPage() {
   const pageConfig = ADMIN_PAGES.patients;
   return (
     <AdminPageWrapper
-      requiredPermissions={pageConfig.requiredPermissions}
-      pageTitle={pageConfig.title}
+      requiredPermissions={pageConfig?.requiredPermissions}
+      pageTitle={pageConfig?.title || 'المرضى'}
     >
       <PatientsPageContent />
     </AdminPageWrapper>

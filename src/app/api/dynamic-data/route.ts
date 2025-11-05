@@ -1,4 +1,4 @@
-import { realDB } from '@/lib/supabase-real';
+// import { realDB } from '@/lib/supabase-real';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
 import { requireAuth } from '@/lib/auth/authorize';
@@ -88,7 +88,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const settingsMap: Record<string, any> = {};
-    (settingsData || []).forEach((item: unknown) => {
+    (settingsData || []).forEach((item: any) => {
       try {
         settingsMap[item.key] =
           typeof item.value === 'string' ? JSON.parse(item.value) : item.value;

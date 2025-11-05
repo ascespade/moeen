@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
-import { requireAuth } from '@/lib/auth/authorize';
+// import { requireAuth } from '@/lib/auth/authorize';
 
 export const revalidate = 60;
 

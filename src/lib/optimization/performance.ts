@@ -232,7 +232,7 @@ export class ResponseOptimizer {
   static compressResponse(data: any): any {
     // Remove null/undefined values
     const cleaned = JSON.parse(
-      JSON.stringify(data, (key, value) =>
+      JSON.stringify(data, (_key, value) =>
         value === null || value === undefined ? undefined : value
       )
     );

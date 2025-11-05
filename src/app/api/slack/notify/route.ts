@@ -108,8 +108,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 async function handleAppointmentCreated(
   appointmentId: string,
-  doctorId: string,
-  patientId: string,
+  _doctorId: string,
+  _patientId: string,
   supabase: any
 ) {
   try {
@@ -148,8 +148,8 @@ async function handleAppointmentCreated(
 
 async function handleAppointmentConfirmed(
   appointmentId: string,
-  doctorId: string,
-  patientId: string,
+  _doctorId: string,
+  _patientId: string,
   supabase: any
 ) {
   try {
@@ -187,8 +187,8 @@ async function handleAppointmentConfirmed(
 
 async function handleAppointmentCancelled(
   appointmentId: string,
-  doctorId: string,
-  patientId: string,
+  _doctorId: string,
+  _patientId: string,
   supabase: any
 ) {
   try {
@@ -226,8 +226,8 @@ async function handleAppointmentCancelled(
 
 async function handleAppointmentReminder(
   appointmentId: string,
-  doctorId: string,
-  patientId: string,
+  _doctorId: string,
+  _patientId: string,
   supabase: any
 ) {
   try {
@@ -312,7 +312,7 @@ async function handleDoctorResponse(
 async function handleEmergencyAlert(
   message: string,
   channel: string,
-  priority: string
+  _priority: string
 ) {
   try {
     await slack.sendEmergencyAlert(message, channel);

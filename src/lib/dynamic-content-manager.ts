@@ -1,5 +1,5 @@
 import { getBrowserSupabase } from './supabaseClient';
-import { I18N_KEYS } from '@/constants/i18n-keys';
+import { _I18N_KEYS } from '@/constants/i18n-keys';
 
 export interface DynamicContent {
   id: string;
@@ -304,7 +304,7 @@ class DynamicContentManager {
         .upsert(translations, { onConflict: 'locale,namespace,key' });
 
       // Clear translation cache
-      this.cache.forEach((value, key) => {
+      this.cache.forEach((_value, key) => {
         if (key.startsWith('translations_')) {
           this.cache.delete(key);
         }

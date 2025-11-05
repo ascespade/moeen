@@ -10,7 +10,7 @@
  */
 
 import { createClient } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
+import { _cookies } from 'next/headers';
 import { headers } from 'next/headers';
 
 export enum AuditAction {
