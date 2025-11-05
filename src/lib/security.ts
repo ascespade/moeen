@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import * as nodeCrypto from 'crypto';
+
 // Browser-compatible crypto functions
 const getCrypto = () => {
   if (typeof window !== 'undefined' && window.crypto) {
@@ -8,10 +10,7 @@ const getCrypto = () => {
     return globalThis.crypto;
   }
   // Fallback for Node.js
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  // @ts-expect-error - Node.js crypto module
-  const crypto = require('crypto');
-  return crypto;
+  return nodeCrypto;
 };
 
 // CSRF token generation and validation
@@ -19,8 +18,8 @@ export class CSRFProtection {
   private static readonly CSRF_TOKEN_HEADER = 'x-csrf-token';
   private static readonly CSRF_TOKEN_COOKIE = 'csrf-token';
 
-  static async generateToken(): Promise<string> {
-    const crypto = await getCrypto();
+  static generateToken(): string {
+    const crypto = getCrypto();
     if (crypto.randomBytes) {
       return crypto.randomBytes(32).toString('hex');
     }
