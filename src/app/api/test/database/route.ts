@@ -37,9 +37,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
-    const supabaseAdmin = supabaseServiceKey
-      ? createClient(supabaseUrl, supabaseServiceKey)
-      : null;
+    const { createAdminClient } = await import('@/lib/supabase/admin');
+    const supabaseAdmin = supabaseServiceKey ? createAdminClient() : null;
 
     const startTime = Date.now();
 

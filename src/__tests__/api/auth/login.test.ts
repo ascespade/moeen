@@ -51,8 +51,7 @@ describe('/api/auth/login', () => {
   });
 
   it('handles test credentials successfully', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { getServiceSupabase } = require('@/lib/supabaseClient');
+    const { getServiceSupabase } = await import('@/lib/supabaseClient');
     const mockSupabase = getServiceSupabase();
 
     mockSupabase
@@ -88,9 +87,8 @@ describe('/api/auth/login', () => {
   });
 
   it('handles Supabase auth for real users', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { getServiceSupabase } = require('@/lib/supabaseClient');
-    const mockSupabase = getServiceSupabase();
+    const { getServiceSupabase } = await import('@/lib/supabaseClient');
+    const mockSupabase = await getServiceSupabase();
 
     mockSupabase
       .from()
@@ -131,9 +129,8 @@ describe('/api/auth/login', () => {
   });
 
   it('handles Supabase auth error', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { getServiceSupabase } = require('@/lib/supabaseClient');
-    const mockSupabase = getServiceSupabase();
+    const { getServiceSupabase } = await import('@/lib/supabaseClient');
+    const mockSupabase = await getServiceSupabase();
 
     mockSupabase
       .from()

@@ -8,7 +8,7 @@
 
 import { ReactNode } from 'react';
 import { AdminPageWrapper } from './page-wrapper';
-import { getPageConfig } from './page-config';
+import { getPageConfig, ADMIN_PAGES } from './page-config';
 import { usePathname } from 'next/navigation';
 
 interface UnifiedPageHandlerProps {
@@ -28,10 +28,7 @@ export function UnifiedPageHandler({
 
   // Get page config automatically from pathname if pageKey not provided
   const pageConfig = pageKey
-    ? Object.values(
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
-        require('./page-config').ADMIN_PAGES
-      ).find((p) => p.path === pageKey)
+    ? Object.values(ADMIN_PAGES).find((p) => p.path === pageKey)
     : getPageConfig(pathname);
 
   const requiredPermissions = customPermissions || pageConfig?.requiredPermissions || [];
