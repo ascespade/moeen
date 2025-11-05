@@ -47,7 +47,7 @@ interface DashboardMetrics {
   automation: {
     socialMedia: {
       totalPosts: number;
-      platforms: Record<string, any>;
+      platforms: Record<string, unknown>;
       engagement: {
         totalViews: number;
         totalLikes: number;

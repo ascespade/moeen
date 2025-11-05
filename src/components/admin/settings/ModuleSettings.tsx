@@ -26,7 +26,7 @@ import { useEffect, useState } from 'react';
 interface ModuleConfig {
   enabled: boolean;
   features: string[];
-  settings?: Record<string, any>;
+  settings?: Record<string, unknown>;
 }
 
 interface ModulesState {
@@ -253,7 +253,7 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
 
   const _updateModuleSettings = (
     moduleKey: keyof ModulesState,
-    settings: Record<string, any>
+    settings: Record<string, unknown>
   ) => {
     setModules(prev => ({
       ...prev,

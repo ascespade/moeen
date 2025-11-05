@@ -33,7 +33,7 @@ export interface Notification {
   category?: string;
   actionUrl?: string;
   actionLabel?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface NotificationPanelProps {
