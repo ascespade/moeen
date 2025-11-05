@@ -3,7 +3,7 @@
  * Performance monitoring and optimization utilities
  */
 
-import { logger } from '../monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 interface PerformanceMetrics {
   operation: string;
