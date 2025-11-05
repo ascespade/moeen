@@ -134,7 +134,7 @@ export async function GET(_request: NextRequest) {
       {
         timestamp: new Date().toISOString(),
         status: 'error',
-        error: error.message,
+        error: (error instanceof Error ? error.message : String(error)),
       },
       { status: 500 }
     );

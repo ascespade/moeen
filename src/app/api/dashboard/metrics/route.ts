@@ -23,7 +23,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
   const logError = (error: unknown, context: string) => {
     const timestamp = new Date().toISOString();
-    const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${error.message || error}`;
+    const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${(error instanceof Error ? error.message : String(error)) || error}`;
     // Log to file if possible
     try {
       const fs = require('fs');
