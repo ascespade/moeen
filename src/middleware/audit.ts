@@ -41,7 +41,7 @@ export function __auditErrorMiddleware(error: Error, request: NextRequest) {
     error: {
       name: error.name,
       message: error.message,
-      stack: error.stack,
+      stack: (error instanceof Error ? error.stack : undefined),
     },
   });
 
