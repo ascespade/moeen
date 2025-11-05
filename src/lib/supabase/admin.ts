@@ -1,15 +1,38 @@
-import { createClient } from '@supabase/supabase-js';
+/**
+ * Supabase Admin Client
+ * عميل Supabase للمدير
+ * 
+ * Server-side admin client with service role key
+ * Use only in server-side code, never expose to client
+ */
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
-const SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY as string;
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@/types/database.types';
 
-if (!SUPABASE_URL || !SERVICE_ROLE_KEY) {
-  // Fail fast on server if keys missing
-  throw new Error(
-    'Supabase admin config missing: ensure NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set.'
-  );
+/**
+ * Create Supabase admin client with service role key
+ * Bypasses Row Level Security (RLS)
+ * 
+ * WARNING: Only use in server-side code (API routes, server actions)
+ * Never expose this to the client
+ * 
+ * @returns Supabase admin client instance
+ */
+export function createAdminClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+  if (!supabaseUrl || !supabaseServiceRoleKey) {
+    throw new Error(
+      'Missing Supabase environment variables. ' +
+        'Required: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY'
+    );
+  }
+
+  return createSupabaseClient<Database>(supabaseUrl, supabaseServiceRoleKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
 }
-
-export const supabaseAdmin = createClient(SUPABASE_URL, SERVICE_ROLE_KEY, {
-  auth: { autoRefreshToken: false, persistSession: false },
-});
