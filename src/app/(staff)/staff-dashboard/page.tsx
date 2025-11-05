@@ -14,8 +14,6 @@ import {
   CreditCard,
   FileText,
   Clock,
-  CheckCircle,
-  AlertCircle,
   Upload,
 } from 'lucide-react';
 

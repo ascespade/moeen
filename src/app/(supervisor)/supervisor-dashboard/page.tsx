@@ -14,11 +14,9 @@ import {
   Users,
   TrendingUp,
   AlertTriangle,
-  CheckCircle,
   Clock,
   FileText,
   BarChart3,
-  Settings,
 } from 'lucide-react';
 
 interface SupervisorData {

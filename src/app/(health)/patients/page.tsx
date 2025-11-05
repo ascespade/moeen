@@ -19,29 +19,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
 
 import {
-  Users,
-  Phone,
-  Mail,
-  MapPin,
-  Calendar,
-  Plus,
   Search,
   Filter,
-  MoreVertical,
-  Edit,
-  Eye,
-  Trash2,
-  UserPlus,
-  MessageCircle,
-  Star,
-  Clock,
-  Activity,
-  Heart,
-  AlertCircle,
-  CheckCircle,
-  TrendingUp,
-  Target,
-  FileText,
 } from 'lucide-react';
 
 interface Patient {

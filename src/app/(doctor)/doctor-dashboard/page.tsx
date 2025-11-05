@@ -15,11 +15,8 @@ import {
   FileText,
   Settings,
   BarChart3,
-  Clock,
   Stethoscope,
   Pill,
-  Heart,
-  Activity,
 } from 'lucide-react';
 
 const doctorNavigation = [

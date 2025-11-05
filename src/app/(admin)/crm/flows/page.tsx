@@ -16,8 +16,6 @@ import {
   Bot,
   Zap,
   ArrowRight,
-  CheckCircle,
-  AlertCircle,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';

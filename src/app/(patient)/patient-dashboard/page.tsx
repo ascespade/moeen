@@ -7,11 +7,9 @@ import PatientDashboard from '@/components/dashboard/widgets/PatientDashboard';
 import {
   Heart,
   Calendar,
-  FileText,
   Settings,
   BarChart3,
   Pill,
-  Activity,
   MessageSquare,
   CreditCard,
   User,

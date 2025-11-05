@@ -8,9 +8,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
 import {
   Shield,
-  Lock,
   Eye,
-  EyeOff,
   AlertTriangle,
   CheckCircle,
   XCircle,
@@ -22,16 +20,12 @@ import {
   Smartphone,
   Globe,
   Key,
-  Fingerprint,
   Database,
   FileText,
   Settings,
   RefreshCw,
   Download,
-  Upload,
-  Trash2,
   Edit,
-  Plus,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';

@@ -57,20 +57,12 @@ import {
   Mail,
   Calendar,
   Star,
-  Clock,
   Users,
-  Activity,
   Download,
-  Upload,
   RefreshCw,
   ChevronLeft,
   ChevronRight,
   UserCheck,
-  UserX,
-  Award,
-  GraduationCap,
-  MapPin,
-  Shield,
 } from 'lucide-react';
 
 interface Doctor {
