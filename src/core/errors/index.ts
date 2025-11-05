@@ -286,7 +286,7 @@ export class ErrorHandler {
 
   private constructor() {
     // Initialize logger - use centralized logger
-    this.logger = loggerUtil;
+    this.logger = loggerUtil || console;
   }
 
   public static getInstance(): ErrorHandler {
