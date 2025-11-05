@@ -19,8 +19,8 @@ export class CSRFProtection {
   private static readonly CSRF_TOKEN_HEADER = 'x-csrf-token';
   private static readonly CSRF_TOKEN_COOKIE = 'csrf-token';
 
-  static generateToken(): string {
-    const crypto = getCrypto();
+  static async generateToken(): Promise<string> {
+    const crypto = await getCrypto();
     if (crypto.randomBytes) {
       return crypto.randomBytes(32).toString('hex');
     }

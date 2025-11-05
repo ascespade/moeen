@@ -3,7 +3,7 @@
  * Creates new user accounts with proper validation
  */
 
-// import { logger } from '@/lib/utils/logger';
+import { logger } from '@/lib/monitoring/logger';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { z } from 'zod';
@@ -110,7 +110,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       });
 
     if (authError) {
-      console.error('Auth creation error:', authError);
+      logger.error('Auth creation error:', authError);
       return NextResponse.json(
         {
           success: false,
@@ -218,7 +218,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         duration_ms: Date.now() - startTime,
       });
     } catch (auditError) {
-      console.error('Audit log error (non-critical):', auditError);
+      logger.error('Audit log error (non-critical):', auditError);
     }
 
     return NextResponse.json(
@@ -234,7 +234,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       { status: 201 }
     );
   } catch (error) {
-    console.error('Registration error:', error);
+    logger.error('Registration error:', error);
     return NextResponse.json(
       {
         success: false,
