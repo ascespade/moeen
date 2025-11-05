@@ -128,31 +128,56 @@ export default function CRMLeadsPage() {
   });
 
   return (
-    <div>
-                <h1 className='text-default text-2xl font-bold'>
-                  إدارة العملاء المحتملين
-                </h1>
-                <p className='text-gray-600 dark:text-gray-300'>
-                  تتبع وتحويل العملاء المحتملين
-                </p>
-              </div>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+        <div className='container-app py-4'>
+          <div className='flex items-center justify-between'>
+            <div>
+              <h1 className='text-default text-2xl font-bold'>
+                إدارة العملاء المحتملين
+              </h1>
+              <p className='text-gray-600 dark:text-gray-300'>
+                تتبع وتحويل العملاء المحتملين
+              </p>
             </div>
             <div className='flex items-center gap-3'>
               <div className='flex rounded-lg border border-gray-300'>
-                <button onClick={() => { setViewMode('table') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setViewMode('table') } }}
-  "> { setViewMode('table') } }}
+                <button
+                  onClick={() => setViewMode('table')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setViewMode('table');
+                    }
+                  }}
+                  aria-label='عرض الجدول'
                   className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   جدول
                 </button>
-                <button onClick={() => { setViewMode('kanban') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setViewMode('kanban') } }}
- "> { setViewMode('kanban') } }}
+                <button
+                  onClick={() => setViewMode('kanban')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setViewMode('kanban');
+                    }
+                  }}
+                  aria-label='عرض كانبان'
                   className={`px-3 py-2 text-sm ${viewMode === 'kanban' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   كانبان
                 </button>
               </div>
-              <button onClick={() => { setShowCreateModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(true) } }"> { setShowCreateModal(true) } }}
+              <button
+                onClick={() => setShowCreateModal(true)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowCreateModal(true);
+                  }
+                }}
+                aria-label='إضافة عميل محتمل جديد'
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة عميل محتمل
@@ -430,7 +455,15 @@ export default function CRMLeadsPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة عميل محتمل جديد</h3>
-              <button onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+              <button
+                onClick={() => setShowCreateModal(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowCreateModal(false);
+                  }
+                }}
+                aria-label='إغلاق نافذة الإنشاء'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -442,19 +475,23 @@ export default function CRMLeadsPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     الاسم الكامل
                   </label>
-                  <input type='text'
+                  <input
+                    type='text'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='أدخل الاسم الكامل'
-                  / aria-label="أدخل الاسم الكامل">
+                    aria-label='الاسم الكامل'
+                  />
                 </div>
                 <div>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     البريد الإلكتروني
                   </label>
-                  <input type='email'
+                  <input
+                    type='email'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='example@company.com'
-                  / aria-label="example@company.com">
+                    aria-label='البريد الإلكتروني'
+                  />
                 </div>
               </div>
               <div className='grid grid-cols-2 gap-4'>
@@ -462,19 +499,23 @@ export default function CRMLeadsPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     الهاتف
                   </label>
-                  <input type='tel'
+                  <input
+                    type='tel'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0501234567'
-                  / aria-label="0501234567">
+                    aria-label='رقم الهاتف'
+                  />
                 </div>
                 <div>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     الشركة
                   </label>
-                  <input type='text'
+                  <input
+                    type='text'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='اسم الشركة'
-                  / aria-label="اسم الشركة">
+                    aria-label='اسم الشركة'
+                  />
                 </div>
               </div>
               <div className='grid grid-cols-3 gap-4'>
@@ -493,26 +534,38 @@ export default function CRMLeadsPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     النقاط
                   </label>
-                  <input type='number'
+                  <input
+                    type='number'
                     min='0'
                     max='100'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0-100'
-                  / aria-label="0-100">
+                    aria-label='نقاط العميل المحتمل'
+                  />
                 </div>
                 <div>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     القيمة المتوقعة
                   </label>
-                  <input type='number'
+                  <input
+                    type='number'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0'
-                  / aria-label="0">
+                    aria-label='القيمة المتوقعة'
+                  />
                 </div>
               </div>
               <div className='flex gap-3 pt-4'>
-                <button type='button'
-                  onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+                <button
+                  type='button'
+                  onClick={() => setShowCreateModal(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowCreateModal(false);
+                    }
+                  }}
+                  aria-label='إلغاء إنشاء العميل المحتمل'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء

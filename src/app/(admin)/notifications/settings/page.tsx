@@ -40,11 +40,7 @@ export default function NotificationsSettingsPage() {
 
   if (loading) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen" role="status" aria-live="polite">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="mt-4 text-gray-600">???? ???????...</p>

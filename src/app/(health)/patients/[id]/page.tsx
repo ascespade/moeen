@@ -153,8 +153,7 @@ export default function PatientDetailsPage({
   if (loading) {
     return (
       <div>
-          <p className='text-gray-600'>جاري تحميل بيانات المريض...</p>
-        </div>
+        <p className='text-gray-600'>جاري تحميل بيانات المريض...</p>
       </div>
     );
   }

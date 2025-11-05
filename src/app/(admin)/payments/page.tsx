@@ -31,11 +31,7 @@ export default function PaymentsPage() {
   }
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='p-8'>
+    <div className='p-8' role='application'>
       <div className='mb-6 flex items-center justify-between'>
         <h1 className='text-3xl font-bold'>Payments Management</h1>
         <Button>New Payment</Button>

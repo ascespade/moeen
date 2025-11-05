@@ -166,11 +166,7 @@ export default function SessionNotesPage() {
 
   if (loading) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container-app py-8'>
+      <div className='container-app py-8' role="status" aria-live="polite">
         <div className='card p-12 text-center'>
           <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
           <p className='mt-4 text-gray-600 dark:text-gray-400'>
@@ -271,7 +267,8 @@ div className='container-app py-8'>
                             setSelectedGoals([...selectedGoals, goal.id]);
                             setGoalProgress({
                               ...goalProgress,
-                              [goal.id]: goal.current_progress,} aria-label="checkbox" aria-invalid="true");
+                              [goal.id]: goal.current_progress,
+                            });
                           } else {
                             setSelectedGoals(
                               selectedGoals.filter(id => id !== goal.id)
@@ -281,6 +278,7 @@ div className='container-app py-8'>
                             setGoalProgress(newProgress);
                           }
                         }}
+                        aria-label={`تحديد هدف ${goal.id}`}
                         className='mt-1 w-5 h-5'
                       />
                       <div className='flex-1'>
@@ -303,9 +301,10 @@ div className='container-app py-8'>
                                 goalProgress[goal.id] || goal.current_progress
                               }
                               onChange={(e) => setGoalProgress({
-                                  ...goalProgress,
-                                  [goal.id]: parseInt(e.target.value),} aria-label="range" aria-invalid="true")
-                              }
+                                ...goalProgress,
+                                [goal.id]: parseInt(e.target.value),
+                              })}
+                              aria-label={`تقدم الهدف ${goal.id}`}
                               className='w-full'
                             />
                             <div className='flex justify-between text-sm text-gray-600 dark:text-gray-400'>
@@ -364,9 +363,16 @@ div className='container-app py-8'>
             </label>
             <div className='flex items-center gap-2 mb-4'>
               {[1, 2, 3, 4, 5].map(star => (
-                <button key={star}
-                  onClick={() => { setSessionRating(star) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSessionRating(star) } }}
-"> { setSessionRating(star) } }}
+                <button
+                  key={star}
+                  onClick={() => setSessionRating(star)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setSessionRating(star);
+                    }
+                  }}
+                  aria-label={`تقييم الجلسة ${star} من 5`}
                   className={`text-3xl transition-all ${
                     star <= sessionRating
                       ? 'text-yellow-400 hover:scale-110'
@@ -404,9 +410,18 @@ div className='container-app py-8'>
 
           {/* Actions */}
           <div className='space-y-3'>
-            <button onClick={handleSaveNotes} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSaveNotes } }}
+            <button
+              onClick={handleSaveNotes}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleSaveNotes();
+                }
+              }}
               disabled={saving || !notes.trim()}
-              className='btn btn-default w-full py-4 text-lg disabled:opacity-50' aria-label="{saving ? (">
+              className='btn btn-default w-full py-4 text-lg disabled:opacity-50'
+              aria-label={saving ? 'جاري الحفظ...' : 'حفظ وإنهاء الجلسة'}
+            >
               {saving ? (
                 <span className='flex items-center justify-center gap-2'>
                   <span className='animate-spin'>⏳</span>
@@ -417,8 +432,15 @@ div className='container-app py-8'>
               )}
             </button>
 
-            <button onClick={() => { router.back() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ router.back() } }}
-         "> { router.back() } }}
+            <button
+              onClick={() => router.back()}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  router.back();
+                }
+              }}
+              aria-label='إلغاء والعودة'
               className='btn btn-outline w-full'
             >
               إلغاء

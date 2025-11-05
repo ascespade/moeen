@@ -175,11 +175,7 @@ const CRMDashboard: React.FC = () => {
     };
 
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant as any} className={config.color}>
+      <Badge variant={config.variant as any} className={config.color}>
         {config.label}
       </Badge>
     );

@@ -392,11 +392,7 @@ const SecurityPage: React.FC = () => {
   }
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container mx-auto px-4 py-8' dir='rtl'>
+    <div className='container mx-auto px-4 py-8' dir='rtl' role='application'>
       {/* Header */}
       <div className='mb-8'>
         <div className='flex items-center justify-between mb-4'>
@@ -488,7 +484,15 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
 
         {/* Tabs */}
         <div className='flex space-x-1 bg-surface p-1 rounded-lg mb-6'>
-          <button onClick={() => { setSelectedTab('events') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedTab('events') } }"> { setSelectedTab('events') } }}
+          <button
+            onClick={() => setSelectedTab('events')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedTab('events');
+              }
+            }}
+            aria-label='عرض الأحداث الأمنية'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'events'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -497,7 +501,15 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             الأحداث الأمنية
           </button>
-          <button onClick={() => { setSelectedTab('sessions') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedTab('sessions') }"> { setSelectedTab('sessions') } }}
+          <button
+            onClick={() => setSelectedTab('sessions')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedTab('sessions');
+              }
+            }}
+            aria-label='عرض الجلسات'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'sessions'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -506,7 +518,15 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             الجلسات النشطة
           </button>
-          <button onClick={() => { setSelectedTab('alerts') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedTab('alerts') } }"> { setSelectedTab('alerts') } }}
+          <button
+            onClick={() => setSelectedTab('alerts')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedTab('alerts');
+              }
+            }}
+            aria-label='عرض التنبيهات'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'alerts'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -515,7 +535,15 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             التنبيهات
           </button>
-          <button onClick={() => { setSelectedTab('policies') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedTab('policies') }"> { setSelectedTab('policies') } }}
+          <button
+            onClick={() => setSelectedTab('policies')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedTab('policies');
+              }
+            }}
+            aria-label='عرض السياسات'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'policies'
                 ? 'bg-white text-gray-900 shadow-sm'

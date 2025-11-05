@@ -54,11 +54,7 @@ export default function ForgotPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
+      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4' role='application'>
         <div className='card w-full max-w-md p-8 text-center'>
           <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -77,13 +73,19 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
             >
               العودة لتسجيل الدخول
             </Link>
-            <button onClick={() => { {
-                setIsSuccess(false);
-                setEmail(''); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ {
-                setIsSucce"> { {
+            <button
+              onClick={() => {
                 setIsSuccess(false);
                 setEmail('');
-               } }}}
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setIsSuccess(false);
+                  setEmail('');
+                }
+              }}
+              aria-label='إرسال رابط آخر'
               className='w-full rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-surface'
             >
               إرسال رابط آخر
@@ -139,7 +141,9 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  if (error) setError('');} aria-label="email" aria-invalid="true"}
+                  if (error) setError('');
+                }}
+                aria-label='البريد الإلكتروني'
                 className='form-input'
                 placeholder='أدخل بريدك الإلكتروني'
                 disabled={isLoading}
@@ -148,9 +152,12 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
             </div>
 
             {/* Submit Button */}
-            <button type='submit'
+            <button
+              type='submit'
               disabled={isLoading}
-              className='btn btn-default btn-lg w-full' aria-label="{isLoading ? (">
+              className='btn btn-default btn-lg w-full'
+              aria-label={isLoading ? 'جاري الإرسال...' : 'إرسال رابط إعادة التعيين'}
+            >
               {isLoading ? (
                 <>
                   <div className='loading-spinner'></div>
@@ -180,13 +187,19 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
         <div className='mt-6 text-center'>
           <p className='text-sm text-gray-500'>
             إذا لم تستلم البريد الإلكتروني، تحقق من مجلد الرسائل المزعجة أو{' '}
-            <button onClick={() => { {
-                setEmail('');
-                setError(''); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ {
-                setEmail('"> { {
+            <button
+              onClick={() => {
                 setEmail('');
                 setError('');
-               } }}}
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setEmail('');
+                  setError('');
+                }
+              }}
+              aria-label='محاولة مرة أخرى'
               className='text-[var(--default-default)] hover:underline'
             >
               حاول مرة أخرى

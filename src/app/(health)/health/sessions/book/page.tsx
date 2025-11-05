@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import SessionTypeSelector from '@/components/booking/SessionTypeSelector';
@@ -138,11 +138,10 @@ export default function BookSessionPage() {
   const maxDateStr = maxDate.toISOString().split('T')[0];
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container-app py-8'>
+    <div className='container-app py-8'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        <span id="live-region"></span>
+      </div>
       {/* Progress Steps */}
       <div className='card p-6 mb-8'>
         <div className='flex items-center justify-between'>

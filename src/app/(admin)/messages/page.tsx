@@ -392,11 +392,7 @@ export default function MessagesPage() {
     const typeConfig = {
       email: {
         label: 'بريد إلكتروني',
-        icon: <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Mail className='h-3 w-3' />,
+        icon: <Mail className='h-3 w-3' />,
         className: 'bg-blue-100 text-blue-800',
       },
       sms: {
@@ -676,8 +672,16 @@ Mail className='h-3 w-3' />,
               <CardContent className='p-0'>
                 <div className='space-y-1'>
                   {folders.map(folder => (
-                    <button key={folder.id}
-                      onClick={() => { setSelectedFolder(folder.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setSelectedFolder(folder.id)"> { setSelectedFolder(folder.id) } }}
+                    <button
+                      key={folder.id}
+                      onClick={() => setSelectedFolder(folder.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setSelectedFolder(folder.id);
+                        }
+                      }}
+                      aria-label={`اختيار مجلد ${folder.label}`}
                       className={`w-full flex items-center justify-between p-3 text-right hover:bg-muted transition-colors ${
                         selectedFolder === folder.id ? 'bg-muted' : ''
                       }`}
@@ -855,10 +859,12 @@ Mail className='h-3 w-3' />,
                             if (e.target.checked) {
                               setSelectedMessages(
                                 filteredMessages.map(m => m.id)
-                              );} aria-label="checkbox" aria-invalid="true" else {
+                              );
+                            } else {
                               setSelectedMessages([]);
                             }
                           }}
+                          aria-label='تحديد جميع الرسائل'
                         />
                       </TableHead>
                       <TableHead>المرسل</TableHead>
@@ -886,7 +892,8 @@ Mail className='h-3 w-3' />,
                                 setSelectedMessages([
                                   ...selectedMessages,
                                   message.id,
-                                ]);} aria-label="checkbox" aria-invalid="true" else {
+                                ]);
+                              } else {
                                 setSelectedMessages(
                                   selectedMessages.filter(
                                     id => id !== message.id
@@ -894,6 +901,7 @@ Mail className='h-3 w-3' />,
                                 );
                               }
                             }}
+                            aria-label={`تحديد رسالة ${message.subject}`}
                           />
                         </TableCell>
                         <TableCell>

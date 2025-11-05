@@ -598,11 +598,7 @@ export default function DoctorsPage() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
+      <Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -908,12 +904,17 @@ Badge variant={config.variant} className={config.className}>
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input type='checkbox'
+                    <input
+                      type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => setSelectedDoctors(filteredDoctors.map(d => d.id)} aria-label="checkbox" else {
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedDoctors(filteredDoctors.map(d => d.id));
+                        } else {
                           setSelectedDoctors([]);
                         }
                       }}
+                      aria-label='تحديد جميع الأطباء'
                     />
                   </TableHead>
                   <TableHead>الطبيب</TableHead>
@@ -929,15 +930,20 @@ Badge variant={config.variant} className={config.className}>
                 {filteredDoctors.map(doctor => (
                   <TableRow key={doctor.id}>
                     <TableCell>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedDoctors.includes(doctor.id)}
-                        onChange={(e) => setSelectedDoctors([...selectedDoctors, doctor.id])} aria-label="checkbox" else {
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedDoctors([...selectedDoctors, doctor.id]);
+                          } else {
                             setSelectedDoctors(
                               selectedDoctors.filter(id => id !== doctor.id)
                             );
                           }
                         }}
+                        aria-label={`تحديد طبيب ${doctor.name}`}
                       />
                     </TableCell>
                     <TableCell>

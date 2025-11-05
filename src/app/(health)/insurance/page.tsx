@@ -105,11 +105,7 @@ export default function InsurancePage() {
   const getStatusBadge = (status: InsuranceClaim['status']) => {
     const config = statusConfig[status];
     return (
-      <main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-Badge variant={config.color} className='text-sm'>
+      <Badge variant={config.color} className='text-sm'>
         {config.label}
       </Badge>
     );
@@ -168,10 +164,18 @@ Badge variant={config.color} className='text-sm'>
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
-          <button onClick={() => { window.location.reload() }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ window.location.reload() } }"> { window.location.reload() } }}
-            className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
+          <button
+            onClick={() => { window.location.reload(); }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.location.reload();
+              }
+            }}
+            className='rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
+            aria-label="إعادة تحميل الصفحة"
           >
-            إعادة المحاولة
+            إعادة تحميل الصفحة
           </button>
         </div>
       </div>

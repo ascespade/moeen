@@ -72,11 +72,7 @@ export default function LoginPage() {
 
   if (isLoading) {
     return (
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='flex items-center justify-center min-h-screen' role='status' aria-live='polite'>
+      <div className='flex items-center justify-center min-h-screen' role='status' aria-live='polite'>
         <div className='text-center'>
           <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4' aria-hidden='true'></div>
           <p>جاري التحميل...</p>
@@ -126,7 +122,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                     id='email'
                     name='email'
                     value={email}
-                    onChange={(e) = aria-label="email" aria-invalid="true"> setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                     className='form-input pr-10'
                     placeholder='you@example.com'
@@ -147,7 +143,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                     id='password'
                     name='password'
                     value={password}
-                    onChange={(e) = aria-label="password" aria-invalid="true"> setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                     className='form-input pr-10'
                     placeholder='••••••••'
@@ -167,7 +163,7 @@ div className='flex items-center justify-center min-h-screen' role='status' aria
                     id='rememberMe'
                     name='rememberMe'
                     checked={rememberMe}
-                    onChange={(e) = aria-label="rememberMe" aria-invalid="true"> setRememberMe(e.target.checked)}
+                    onChange={(e) => setRememberMe(e.target.checked)}
                     className='text-default focus:ring-default h-4 w-4 rounded border-gray-300 focus:ring-2'
                     aria-label='تذكرني'
                     data-testid='remember-me-checkbox'

@@ -72,11 +72,7 @@ export default function ResetPasswordPage() {
 
   if (isSuccess) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
+      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4' role='application'>
         <div className='card w-full max-w-md p-8 text-center'>
           <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -139,7 +135,8 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
               >
                 كلمة المرور الجديدة
               </label>
-              <input type='password'
+              <input
+                type='password'
                 id='password'
                 name='password'
                 value={formData.password}
@@ -149,7 +146,9 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
                 }`}
                 placeholder='أدخل كلمة المرور الجديدة'
                 disabled={isLoading}
-              / aria-label="أدخل كلمة المرور الجديدة" aria-invalid="true">
+                aria-label="أدخل كلمة المرور الجديدة"
+                aria-invalid={errors.password ? "true" : "false"}
+              />
               {errors.password && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.password}
@@ -168,7 +167,8 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
               >
                 تأكيد كلمة المرور
               </label>
-              <input type='password'
+              <input
+                type='password'
                 id='confirmPassword'
                 name='confirmPassword'
                 value={formData.confirmPassword}
@@ -178,7 +178,9 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
                 }`}
                 placeholder='أعد إدخال كلمة المرور الجديدة'
                 disabled={isLoading}
-              / aria-label="أعد إدخال كلمة المرور الجديدة" aria-invalid="true">
+                aria-label="أعد إدخال كلمة المرور الجديدة"
+                aria-invalid={errors.confirmPassword ? "true" : "false"}
+              />
               {errors.confirmPassword && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.confirmPassword}
@@ -199,9 +201,12 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
             </div>
 
             {/* Submit Button */}
-            <button type='submit'
+            <button
+              type='submit'
               disabled={isLoading}
-              className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50' aria-label="{isLoading ? (">
+              className='btn-default w-full rounded-lg py-3 font-semibold text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50'
+              aria-label={isLoading ? "جاري الحفظ..." : "تغيير كلمة المرور"}
+            >
               {isLoading ? (
                 <div className='flex items-center justify-center gap-2'>
                   <div className='h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent'></div>

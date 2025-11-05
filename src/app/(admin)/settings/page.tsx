@@ -9,23 +9,7 @@ export default function SettingsPage() {
   >('general');
 
   return (
-    <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-
-
-<div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-
-
-<ahref="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="?????? ??????? ???????">
-  ?????? ??????? ???????
-</a>
-
-div className='min-h-screen bg-[var(--default-surface)]'>
+    <div className='min-h-screen bg-[var(--default-surface)]' role='application'>
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='flex items-center gap-4'>
@@ -57,8 +41,16 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                 { id: 'notifications', label: 'الإشعارات', icon: '🔔' },
                 { id: 'templates', label: 'القوالب', icon: '📝' },
               ].map(tab => (
-                <button key={tab.id}
-                  onClick={() => { setActiveTab(tab.id as any) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab(tab.id as any) "> { setActiveTab(tab.id as any) } }}
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveTab(tab.id as any);
+                    }
+                  }}
+                  aria-label={`اختيار تبويب ${tab.label}`}
                   className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-right transition-colors ${
                     activeTab === tab.id
                       ? 'bg-[var(--default-default)] text-white'
@@ -69,8 +61,8 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                   <span className='font-medium'>{tab.label}</span>
                 </button>
               ))}
-            </div>
-          </nav>
+            </nav>
+          </div>
 
           <div className='lg:col-span-3'>
             <div className='card p-6'>
@@ -84,28 +76,34 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         اسم المركز
                       </label>
-                      <input type='text'
+                      <input
+                        type='text'
                         defaultValue='مركز الهمم للرعاية الصحية المتخصصة'
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      / aria-label="text" aria-invalid="true">
+                        aria-label='اسم المركز'
+                      />
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         البريد الإلكتروني
                       </label>
-                      <input type='email'
+                      <input
+                        type='email'
                         defaultValue='info@moeen.com'
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      / aria-label="email" aria-invalid="true">
+                        aria-label='البريد الإلكتروني'
+                      />
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                         الهاتف
                       </label>
-                      <input type='tel'
+                      <input
+                        type='tel'
                         defaultValue='+966501234567'
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      / aria-label="tel" aria-invalid="true">
+                        aria-label='رقم الهاتف'
+                      />
                     </div>
                     <div>
                       <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
@@ -149,10 +147,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                         Gemini API Key
                       </label>
                       <div className='flex gap-2'>
-                        <input type='password'
+                        <input
+                          type='password'
                           defaultValue='AIzaSyB...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                        / aria-label="password" aria-invalid="true">
+                          aria-label='مفتاح Google Maps API'
+                        />
                         <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
@@ -163,10 +163,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                         OpenAI API Key
                       </label>
                       <div className='flex gap-2'>
-                        <input type='password'
+                        <input
+                          type='password'
                           defaultValue='sk-...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                        / aria-label="password" aria-invalid="true">
+                          aria-label='مفتاح OpenAI API'
+                        />
                         <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
@@ -177,10 +179,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                         WhatsApp Business API
                       </label>
                       <div className='flex gap-2'>
-                        <input type='password'
+                        <input
+                          type='password'
                           defaultValue='EAA...'
                           className='flex-1 rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                        / aria-label="password" aria-invalid="true">
+                          aria-label='مفتاح WhatsApp Business API'
+                        />
                         <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تحديث">
                           تحديث
                         </button>
@@ -269,10 +273,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                           تلقي إشعارات عبر البريد الإلكتروني
                         </p>
                       </div>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         defaultChecked
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      / aria-label="checkbox" aria-invalid="true">
+                        aria-label='تفعيل إشعارات البريد الإلكتروني'
+                      />
                     </div>
                     <div className='flex items-center justify-between'>
                       <div>
@@ -281,10 +287,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                           تلقي إشعارات عبر واتساب
                         </p>
                       </div>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         defaultChecked
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      / aria-label="checkbox" aria-invalid="true">
+                        aria-label='تفعيل إشعارات البريد الإلكتروني'
+                      />
                     </div>
                     <div className='flex items-center justify-between'>
                       <div>
@@ -293,10 +301,12 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                           إشعارات تذكير المواعيد
                         </p>
                       </div>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         defaultChecked
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      / aria-label="checkbox" aria-invalid="true">
+                        aria-label='تفعيل إشعارات البريد الإلكتروني'
+                      />
                     </div>
                     <div className='flex items-center justify-between'>
                       <div>
@@ -305,9 +315,11 @@ div className='min-h-screen bg-[var(--default-surface)]'>
                           إشعارات تحديثات النظام
                         </p>
                       </div>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         className='h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
-                      / aria-label="checkbox" aria-invalid="true">
+                        aria-label='تفعيل إشعارات النظام'
+                      />
                     </div>
                   </div>
                 </div>

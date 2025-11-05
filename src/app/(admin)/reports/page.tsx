@@ -337,11 +337,7 @@ export default function ReportsPage() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
+      <Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -688,10 +684,12 @@ Badge variant={config.variant} className={config.className}>
                       className='rounded border-gray-300'
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedReports(filteredReports.map(r => r.id));} aria-label="checkbox" aria-invalid="true" else {
+                          setSelectedReports(filteredReports.map(r => r.id));
+                        } else {
                           setSelectedReports([]);
                         }
                       }}
+                      aria-label='تحديد جميع التقارير'
                     />
                   </TableHead>
                   <TableHead>العنوان</TableHead>
@@ -713,12 +711,14 @@ Badge variant={config.variant} className={config.className}>
                         checked={selectedReports.includes(report.id)}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setSelectedReports([...selectedReports, report.id]);} aria-label="checkbox" aria-invalid="true" else {
+                            setSelectedReports([...selectedReports, report.id]);
+                          } else {
                             setSelectedReports(
                               selectedReports.filter(id => id !== report.id)
                             );
                           }
                         }}
+                        aria-label={`تحديد تقرير ${report.id}`}
                       />
                     </TableCell>
                     <TableCell>

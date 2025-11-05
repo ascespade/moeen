@@ -354,11 +354,7 @@ export default function NotificationsPage() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
+      <Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -762,14 +758,16 @@ Badge variant={config.variant} className={config.className}>
                   <TableHead className='w-12'>
                     <input type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectedNotifications(
-                            filteredNotifications.map(n => n.id)
-                          );} aria-label="checkbox" aria-invalid="true" else {
-                          setSelectedNotifications([]);
-                        }
-                      }}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setSelectedNotifications(
+                              filteredNotifications.map(n => n.id)
+                            );
+                          } else {
+                            setSelectedNotifications([]);
+                          }
+                        }}
+                        aria-label='تحديد جميع الإشعارات'
                     />
                   </TableHead>
                   <TableHead>العنوان</TableHead>
@@ -796,7 +794,8 @@ Badge variant={config.variant} className={config.className}>
                             setSelectedNotifications([
                               ...selectedNotifications,
                               notification.id,
-                            ]);} aria-label="checkbox" aria-invalid="true" else {
+                            ]);
+                          } else {
                             setSelectedNotifications(
                               selectedNotifications.filter(
                                 id => id !== notification.id
@@ -804,6 +803,7 @@ Badge variant={config.variant} className={config.className}>
                             );
                           }
                         }}
+                        aria-label={`تحديد إشعار ${notification.id}`}
                       />
                     </TableCell>
                     <TableCell>

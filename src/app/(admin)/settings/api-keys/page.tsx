@@ -330,11 +330,7 @@ const APIKeysSettingsPage: React.FC = () => {
   );
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container mx-auto px-4 py-8 max-w-6xl' dir='rtl'>
+    <div className='container mx-auto px-4 py-8 max-w-6xl' dir='rtl' role='application'>
       <div className='mb-8'>
         <div className='flex items-center justify-between'>
           <div>
@@ -447,8 +443,16 @@ div className='container mx-auto px-4 py-8 max-w-6xl' dir='rtl'>
                             className='pr-24 font-mono text-sm'
                           />
                           <div className='absolute left-2 top-1/2 -translate-y-1/2 flex gap-1'>
-                            <button type='button'
-                              onClick={() => { toggleVisibility(keyConfig.id) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ toggleVisibility(keyConfig.i"> { toggleVisibility(keyConfig.id) } }}
+                            <button
+                              type='button'
+                              onClick={() => toggleVisibility(keyConfig.id)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                  e.preventDefault();
+                                  toggleVisibility(keyConfig.id);
+                                }
+                              }}
+                              aria-label={isVisible ? 'إخفاء المفتاح' : 'إظهار المفتاح'}
                               className='p-1 hover:bg-gray-100 rounded'
                             >
                               {isVisible ? (
@@ -458,11 +462,16 @@ div className='container mx-auto px-4 py-8 max-w-6xl' dir='rtl'>
                               )}
                             </button>
                             {keyConfig.key_value && (
-                              <button type='button'
-                                onClick={() => { copyToClipboard(keyConfig.key_value) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{
-                            "> {
-                                  copyToClipboard(keyConfig.key_value)
-                                 } }}
+                              <button
+                                type='button'
+                                onClick={() => copyToClipboard(keyConfig.key_value)}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    copyToClipboard(keyConfig.key_value);
+                                  }
+                                }}
+                                aria-label='نسخ المفتاح'
                                 className='p-1 hover:bg-gray-100 rounded'
                               >
                                 <Copy className='w-4 h-4' />

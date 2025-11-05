@@ -124,31 +124,56 @@ export default function CRMDealsPage() {
   ];
 
   return (
-    <div>
-                <h1 className='text-default text-2xl font-bold'>
-                  إدارة الصفقات
-                </h1>
-                <p className='text-gray-600 dark:text-gray-300'>
-                  تتبع وإدارة صفقات المبيعات
-                </p>
-              </div>
+    <div className='min-h-screen bg-[var(--default-surface)]'>
+      <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
+        <div className='container-app py-4'>
+          <div className='flex items-center justify-between'>
+            <div>
+              <h1 className='text-default text-2xl font-bold'>
+                إدارة الصفقات
+              </h1>
+              <p className='text-gray-600 dark:text-gray-300'>
+                تتبع وإدارة صفقات المبيعات
+              </p>
             </div>
             <div className='flex items-center gap-3'>
               <div className='flex rounded-lg border border-gray-300'>
-                <button onClick={() => { setViewMode('table') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setViewMode('table') } }}
-  "> { setViewMode('table') } }}
+                <button
+                  onClick={() => setViewMode('table')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setViewMode('table');
+                    }
+                  }}
+                  aria-label='عرض الجدول'
                   className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   جدول
                 </button>
-                <button onClick={() => { setViewMode('kanban') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setViewMode('kanban') } }}
- "> { setViewMode('kanban') } }}
+                <button
+                  onClick={() => setViewMode('kanban')}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setViewMode('kanban');
+                    }
+                  }}
+                  aria-label='عرض كانبان'
                   className={`px-3 py-2 text-sm ${viewMode === 'kanban' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
                 >
                   كانبان
                 </button>
               </div>
-              <button onClick={() => { setShowCreateModal(true) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(true) } }"> { setShowCreateModal(true) } }}
+              <button
+                onClick={() => setShowCreateModal(true)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowCreateModal(true);
+                  }
+                }}
+                aria-label='إضافة صفقة جديدة'
                 className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
               >
                 إضافة صفقة
@@ -411,7 +436,15 @@ export default function CRMDealsPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة صفقة جديدة</h3>
-              <button onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+              <button
+                onClick={() => setShowCreateModal(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowCreateModal(false);
+                  }
+                }}
+                aria-label='إغلاق نافذة الإنشاء'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -422,31 +455,37 @@ export default function CRMDealsPage() {
                 <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                   عنوان الصفقة
                 </label>
-                <input type='text'
+                <input
+                  type='text'
                   className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل عنوان الصفقة'
-                / aria-label="أدخل عنوان الصفقة">
+                  aria-label='عنوان الصفقة'
+                />
               </div>
               <div className='grid grid-cols-2 gap-4'>
                 <div>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     القيمة
                   </label>
-                  <input type='number'
+                  <input
+                    type='number'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0'
-                  / aria-label="0">
+                    aria-label='قيمة الصفقة'
+                  />
                 </div>
                 <div>
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     الاحتمالية
                   </label>
-                  <input type='number'
+                  <input
+                    type='number'
                     min='0'
                     max='100'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0-100'
-                  / aria-label="0-100">
+                    aria-label='احتمالية الصفقة'
+                  />
                 </div>
               </div>
               <div className='grid grid-cols-2 gap-4'>
@@ -465,14 +504,24 @@ export default function CRMDealsPage() {
                   <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                     تاريخ الإغلاق المتوقع
                   </label>
-                  <input type='date'
+                  <input
+                    type='date'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                  / aria-label="date">
+                    aria-label='تاريخ الإغلاق المتوقع'
+                  />
                 </div>
               </div>
               <div className='flex gap-3 pt-4'>
-                <button type='button'
-                  onClick={() => { setShowCreateModal(false) }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setShowCreateModal(false) } "> { setShowCreateModal(false) } }}
+                <button
+                  type='button'
+                  onClick={() => setShowCreateModal(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setShowCreateModal(false);
+                    }
+                  }}
+                  aria-label='إلغاء إنشاء الصفقة'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء

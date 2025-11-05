@@ -128,11 +128,7 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
+      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4' role='application'>
         <div className='card w-full max-w-md p-8 text-center'>
           <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -204,7 +200,9 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
                 }`}
                 placeholder='أدخل اسمك الكامل'
                 disabled={isLoading}
-              / aria-label="أدخل اسمك الكامل" aria-invalid="true">
+                aria-label='الاسم الكامل'
+                aria-invalid={errors.name ? 'true' : 'false'}
+              />
               {errors.name && (
                 <p className='mt-1 text-sm text-default-error'>{errors.name}</p>
               )}
@@ -228,7 +226,9 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
                 }`}
                 placeholder='أدخل بريدك الإلكتروني'
                 disabled={isLoading}
-              / aria-label="أدخل بريدك الإلكتروني" aria-invalid="true">
+                aria-label='البريد الإلكتروني'
+                aria-invalid={errors.email ? 'true' : 'false'}
+              />
               {errors.email && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.email}
@@ -254,7 +254,9 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
                 }`}
                 placeholder='أدخل كلمة المرور'
                 disabled={isLoading}
-              / aria-label="أدخل كلمة المرور" aria-invalid="true">
+                aria-label='كلمة المرور'
+                aria-invalid={errors.password ? 'true' : 'false'}
+              />
               {errors.password && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.password}
@@ -280,7 +282,9 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
                 }`}
                 placeholder='أعد إدخال كلمة المرور'
                 disabled={isLoading}
-              / aria-label="أعد إدخال كلمة المرور" aria-invalid="true">
+                aria-label='أعد إدخال كلمة المرور'
+                aria-invalid={errors.confirmPassword ? 'true' : 'false'}
+              />
               {errors.confirmPassword && (
                 <p className='mt-1 text-sm text-default-error'>
                   {errors.confirmPassword}
@@ -297,7 +301,9 @@ div className='flex min-h-screen items-center justify-center bg-[var(--default-s
                   onChange={handleInputChange}
                   className='mt-1 h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                   disabled={isLoading}
-                / aria-label="agreeToTerms" aria-invalid="true">
+                aria-label='الموافقة على الشروط والأحكام'
+                aria-required='true'
+              />
                 <span className='text-sm text-gray-700 dark:text-gray-300'>
                   أوافق على{' '}
                   <Link

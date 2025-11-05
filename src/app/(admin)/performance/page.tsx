@@ -432,11 +432,7 @@ export default function PerformancePage() {
       className: '',
     };
     return (
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-Badge variant={config.variant} className={config.className}>
+      <Badge variant={config.variant} className={config.className}>
         {config.label}
       </Badge>
     );
@@ -837,10 +833,12 @@ Badge variant={config.variant} className={config.className}>
                       className='rounded border-gray-300'
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedMetrics(filteredMetrics.map(m => m.id));} aria-label="checkbox" aria-invalid="true" else {
+                          setSelectedMetrics(filteredMetrics.map(m => m.id));
+                        } else {
                           setSelectedMetrics([]);
                         }
                       }}
+                      aria-label='تحديد جميع المؤشرات'
                     />
                   </TableHead>
                   <TableHead>المؤشر</TableHead>
@@ -862,12 +860,14 @@ Badge variant={config.variant} className={config.className}>
                         checked={selectedMetrics.includes(metric.id)}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setSelectedMetrics([...selectedMetrics, metric.id]);} aria-label="checkbox" aria-invalid="true" else {
+                            setSelectedMetrics([...selectedMetrics, metric.id]);
+                          } else {
                             setSelectedMetrics(
                               selectedMetrics.filter(id => id !== metric.id)
                             );
                           }
                         }}
+                        aria-label={`تحديد مؤشر ${metric.id}`}
                       />
                     </TableCell>
                     <TableCell>
