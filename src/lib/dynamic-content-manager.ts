@@ -4,7 +4,7 @@ import { _I18N_KEYS } from '@/constants/i18n-keys';
 export interface DynamicContent {
   id: string;
   key: string;
-  value: any;
+  value: unknown;
   category: string;
   is_public: boolean;
   created_at: string;
@@ -223,7 +223,7 @@ class DynamicContentManager {
     try {
       const updates: Array<{
         key: string;
-        value: any;
+        value: unknown;
         category: string;
         is_public: boolean;
       }> = [];
@@ -324,7 +324,7 @@ class DynamicContentManager {
   /**
    * Parse setting value from database result
    */
-  private parseSetting(settings: any[], key: string, defaultValue: unknown): any {
+  private parseSetting(settings: unknown[], key: string, defaultValue: unknown): unknown {
     const setting = settings.find(s => s.key === key);
     return setting ? setting.value : defaultValue;
   }

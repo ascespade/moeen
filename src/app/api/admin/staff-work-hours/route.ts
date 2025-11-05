@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -65,7 +66,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: staff, error: staffError } = await staffQuery;
 
     if (staffError) {
-      console.error('Error fetching staff:', staffError);
+      logger.error('Error fetching staff:', staffError, {});
       return NextResponse.json(
         {
           error: 'Failed to fetch staff data',
@@ -120,22 +121,22 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .lte('date', today);
 
     // Transform data
-    const staffWorkHours = (staff || []).map((member: any) => {
+    const staffWorkHours = (staff || []).map((member: unknown) => {
       const todayRecord = todayAttendance?.find(
-        (a: any) => a.user_id === member.id
+        (a: unknown) => a.user_id === member.id
       );
       const weeklyHours =
         weeklyAttendance
-          ?.filter((a: any) => a.user_id === member.id)
+          ?.filter((a: unknown) => a.user_id === member.id)
           ?.reduce(
-            (sum: number, record: any) => sum + (record.total_hours || 0),
+            (sum: number, record: unknown) => sum + (record.total_hours || 0),
             0
           ) || 0;
       const monthlyHours =
         monthlyAttendance
-          ?.filter((a: any) => a.user_id === member.id)
+          ?.filter((a: unknown) => a.user_id === member.id)
           ?.reduce(
-            (sum: number, record: any) => sum + (record.total_hours || 0),
+            (sum: number, record: unknown) => sum + (record.total_hours || 0),
             0
           ) || 0;
 
@@ -176,39 +177,39 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // Filter by on-duty status if requested
     const filteredStaff =
       status === 'on_duty'
-        ? staffWorkHours.filter((s: any) => s.isOnDuty)
+        ? staffWorkHours.filter((s: unknown) => s.isOnDuty)
         : status === 'off_duty'
-          ? staffWorkHours.filter((s: any) => !s.isOnDuty)
+          ? staffWorkHours.filter((s: unknown) => !s.isOnDuty)
           : staffWorkHours;
 
     // Calculate summary statistics
     const summary = {
       totalStaff: staffWorkHours.length,
-      onDutyStaff: staffWorkHours.filter((s: any) => s.isOnDuty).length,
-      offDutyStaff: staffWorkHours.filter((s: any) => !s.isOnDuty).length,
+      onDutyStaff: staffWorkHours.filter((s: unknown) => s.isOnDuty).length,
+      offDutyStaff: staffWorkHours.filter((s: unknown) => !s.isOnDuty).length,
       avgHoursToday:
         staffWorkHours.length > 0
           ? staffWorkHours.reduce(
-              (sum: number, s: any) => sum + s.todayHours,
+              (sum: number, s: unknown) => sum + s.todayHours,
               0
             ) / staffWorkHours.length
           : 0,
       avgHoursWeek:
         staffWorkHours.length > 0
           ? staffWorkHours.reduce(
-              (sum: number, s: any) => sum + s.thisWeekHours,
+              (sum: number, s: unknown) => sum + s.thisWeekHours,
               0
             ) / staffWorkHours.length
           : 0,
       avgHoursMonth:
         staffWorkHours.length > 0
           ? staffWorkHours.reduce(
-              (sum: number, s: any) => sum + s.thisMonthHours,
+              (sum: number, s: unknown) => sum + s.thisMonthHours,
               0
             ) / staffWorkHours.length
           : 0,
       departments: [
-        ...new Set(staffWorkHours.map((s: any) => s.department)),
+        ...new Set(staffWorkHours.map((s: unknown) => s.department)),
       ],
     };
 
@@ -223,7 +224,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    console.error('Error in staff work hours API:', error);
+    logger.error('Error in staff work hours API:', error, {});
     return NextResponse.json(
       {
         error: 'Internal server error',

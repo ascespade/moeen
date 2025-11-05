@@ -148,7 +148,7 @@ export class MoyasarPaymentService {
     }
   }
 
-  async handleWebhook(payload: any): Promise<MoyasarPaymentResult> {
+  async handleWebhook(payload: unknown): Promise<MoyasarPaymentResult> {
     try {
       // Moyasar webhook validation would go here
       const event = payload;

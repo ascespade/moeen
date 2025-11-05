@@ -39,7 +39,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Check role permissions using PermissionManager
     const { PermissionManager } = await import('@/lib/permissions');
     const canCreate = PermissionManager.hasPermission(
-      user.role as any,
+      user.role as unknown,
       'appointments',
       'create',
       {

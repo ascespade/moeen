@@ -169,7 +169,7 @@ export class WhatsAppBusinessAPI {
     parameters: string[] = []
   ): Promise<{ success: boolean; messageId?: string; error?: string }> {
     try {
-      const messageData: any = {
+      const messageData: unknown = {
         messaging_product: 'whatsapp',
         to,
         type: 'template',
@@ -431,8 +431,8 @@ export class WhatsAppBusinessAPI {
       recipientId: string;
     }>;
   } {
-    const messages: any[] = [];
-    const statuses: any[] = [];
+    const messages: unknown[] = [];
+    const statuses: unknown[] = [];
 
     event.entry.forEach(entry => {
       entry.changes.forEach(change => {

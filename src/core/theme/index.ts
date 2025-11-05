@@ -17,7 +17,7 @@ export const useThemeAware = () => ({
 });
 export const useDesignTokens = () => ({ colors: {} });
 export const useThemeColors = () => ({});
-export const ThemeProvider = ({ children }: any) => children;
+export const ThemeProvider = ({ children }: unknown) => children;
 
 export type ThemeMode = 'light' | 'dark' | 'system';
 export type ResolvedTheme = 'light' | 'dark';

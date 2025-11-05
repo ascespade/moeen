@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 interface Patient {
   id: string;
@@ -64,7 +65,7 @@ interface UseAdminPatientsReturn {
     patientIds: string[],
     action: 'activate' | 'block' | 'delete'
   ) => Promise<boolean>;
-  getPatientStats: () => Promise<any>;
+  getPatientStats: () => Promise<unknown>;
 }
 
 export function useAdminPatients(): UseAdminPatientsReturn {
@@ -103,7 +104,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
         setError(result.error || 'فشل في تحميل المرضى');
       }
     } catch (err) {
-      console.error('Error fetching patients:', err);
+      logger.error('Error fetching patients:', err, {});
       setError('حدث خطأ أثناء تحميل المرضى');
     } finally {
       setLoading(false);
@@ -176,7 +177,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
           return false;
         }
       } catch (err) {
-        console.error('Error creating patient:', err);
+        logger.error('Error creating patient:', err, {});
         setError('حدث خطأ أثناء إنشاء المريض');
         return false;
       }
@@ -203,7 +204,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
           return false;
         }
       } catch (err) {
-        console.error('Error updating patient:', err);
+        logger.error('Error updating patient:', err, {});
         setError('حدث خطأ أثناء تحديث المريض');
         return false;
       }
@@ -228,7 +229,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
           return false;
         }
       } catch (err) {
-        console.error('Error deleting patient:', err);
+        logger.error('Error deleting patient:', err, {});
         setError('حدث خطأ أثناء حذف المريض');
         return false;
       }
@@ -272,7 +273,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
           return false;
         }
       } catch (err) {
-        console.error('Error in bulk action:', err);
+        logger.error('Error in bulk action:', err, {});
         setError('حدث خطأ أثناء تنفيذ العملية');
         return false;
       }
@@ -286,7 +287,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
       const result = await response.json();
       return result.success ? result.data : null;
     } catch (err) {
-      console.error('Error fetching patient stats:', err);
+      logger.error('Error fetching patient stats:', err, {});
       return null;
     }
   }, []);

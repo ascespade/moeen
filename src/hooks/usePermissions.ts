@@ -42,7 +42,7 @@ export function usePermissions({
             if (typeof permissions[0] === 'object' && permissions[0].resource) {
               // Convert from {resource: '*', actions: [...]} format to ['*'] or ['resource:action', ...]
               const permissionStrings: string[] = [];
-              permissions.forEach((perm: any) => {
+              permissions.forEach((perm: unknown) => {
                 if (perm.resource === '*') {
                   permissionStrings.push('*');
                 } else if (perm.resource && perm.actions) {
@@ -113,7 +113,7 @@ export function usePermissions({
     return import('@/lib/permissions/client').then(({ PERMISSIONS }) => {
       return permissions.filter(permission => {
         const permissionObj = Object.values(PERMISSIONS).find(
-          (p: any) => p.id === permission
+          (p: unknown) => p.id === permission
         );
         return permissionObj?.category === category;
       });

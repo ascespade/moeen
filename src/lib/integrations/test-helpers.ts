@@ -68,8 +68,8 @@ export async function logIntegrationTest(
   integrationType: string,
   testType: string,
   status: 'success' | 'failed' | 'timeout',
-  requestData: any = null,
-  responseData: any = null,
+  requestData: unknown = null,
+  responseData: unknown = null,
   errorMessage: string | null = null,
   durationMs: number | null = null,
   testedBy: string | null = null

@@ -34,7 +34,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
         const jwtSecret = process.env.JWT_SECRET;
         if (jwtSecret) {
           try {
-            const decoded = jwt.verify(token, jwtSecret) as any;
+            const decoded = jwt.verify(token, jwtSecret) as unknown;
             // decoded should contain userId, email, role, perms
             const perms = decoded?.perms || decoded?.permissions || [];
             return {
@@ -98,7 +98,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
         new Promise((_, reject) =>
           setTimeout(() => reject(new Error('timeout')), 3000)
         ),
-      ])) as any;
+      ])) as unknown;
 
       rolePerms = rolePermsResult?.data;
 
@@ -113,7 +113,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
             new Promise((_, reject) =>
               setTimeout(() => reject(new Error('timeout')), 2000)
             ),
-          ])) as any;
+          ])) as unknown;
 
           rolePerms = { role_permissions: permResult?.data || [] };
         } catch (e) {
@@ -134,7 +134,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
         new Promise((_, reject) =>
           setTimeout(() => reject(new Error('timeout')), 2000)
         ),
-      ])) as any;
+      ])) as unknown;
 
       userPerms = userPermsResult?.data || [];
     } catch (e) {
@@ -149,12 +149,12 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
         const rolePermsArray = Array.isArray(rolePerms)
           ? rolePerms
           : [rolePerms];
-        rolePermsArray.forEach((rp: any) => {
+        rolePermsArray.forEach((rp: unknown) => {
           if (rp?.role_permissions) {
             const permArray = Array.isArray(rp.role_permissions)
               ? rp.role_permissions
               : [rp.role_permissions];
-            permArray.forEach((x: any) => {
+            permArray.forEach((x: unknown) => {
               if (x?.permissions?.code) codes.add(x.permissions.code);
             });
           }
@@ -167,7 +167,7 @@ export async function authorize(request: NextRequest): Promise<AuthResult> {
         : userPerms
           ? [userPerms]
           : [];
-      userPermsArray.forEach((up: any) => {
+      userPermsArray.forEach((up: unknown) => {
         if (up?.permissions?.code) codes.add(up.permissions.code);
       });
     } catch (error) {

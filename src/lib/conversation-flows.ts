@@ -37,7 +37,7 @@ export class IntentAnalyzer {
 
 // Action Executor
 export class ActionExecutor {
-  static async executeAction(action: string, data: unknown): Promise<any> {
+  static async executeAction(action: string, data: unknown): Promise<unknown> {
     switch (action) {
       case 'create_appointment':
         // Implement appointment creation

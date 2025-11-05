@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -34,7 +35,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const securitySettings = (configs || []).reduce(
-      (acc: Record<string, any>, config: any) => {
+      (acc: Record<string, any>, config: unknown) => {
         try {
           acc[config.key] =
             typeof config.value === 'string'
@@ -53,7 +54,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: securitySettings,
     });
   } catch (error) {
-    console.error('Error in security settings API:', error);
+    logger.error('Error in security settings API:', error, {});
     return NextResponse.json(
       {
         error: 'Internal server error',
@@ -119,7 +120,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       data: { message: 'Security settings saved successfully', updates },
     });
   } catch (error) {
-    console.error('Error saving security settings:', error);
+    logger.error('Error saving security settings:', error, {});
     return NextResponse.json(
       {
         error: 'Internal server error',

@@ -73,7 +73,7 @@ export class PerformanceMonitor {
   // Memory usage monitoring
   checkMemoryUsage(): void {
     if (typeof window !== 'undefined' && 'memory' in performance) {
-      const memory = (performance as any).memory;
+      const memory = (performance as unknown).memory;
       const used = memory.usedJSHeapSize / 1024 / 1024; // MB
       const total = memory.totalJSHeapSize / 1024 / 1024; // MB
 

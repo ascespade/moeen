@@ -20,7 +20,7 @@ export const optimizeMemory = () => {
 };
 
 // Lazy load components
-export const lazyLoadComponent = (importFn: () => Promise<any>) => {
+export const lazyLoadComponent = (importFn: () => Promise<unknown>) => {
   return importFn().catch(_error => {
     return null;
   });

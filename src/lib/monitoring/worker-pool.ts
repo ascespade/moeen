@@ -110,7 +110,7 @@ export class WorkerPool {
   /**
    * Run actual task
    */
-  private async runTask(task: TaskConfig, cpu: number): Promise<any> {
+  private async runTask(task: TaskConfig, cpu: number): Promise<unknown> {
     // Update progress
     monitoringSystem.updateTask(task.id, { progress: 30 });
 
@@ -129,7 +129,7 @@ export class WorkerPool {
     }
   }
 
-  private async runCodeAnalysis(task: TaskConfig, _cpu: number): Promise<any> {
+  private async runCodeAnalysis(task: TaskConfig, _cpu: number): Promise<unknown> {
     // Simulate code analysis
     await new Promise((resolve) => setTimeout(resolve, 2000));
     monitoringSystem.updateTask(task.id, { progress: 60 });
@@ -144,7 +144,7 @@ export class WorkerPool {
     };
   }
 
-  private async runPerformanceCheck(task: TaskConfig, _cpu: number): Promise<any> {
+  private async runPerformanceCheck(task: TaskConfig, _cpu: number): Promise<unknown> {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     monitoringSystem.updateTask(task.id, { progress: 50 });
 
@@ -158,7 +158,7 @@ export class WorkerPool {
     };
   }
 
-  private async runSecurityCheck(task: TaskConfig, _cpu: number): Promise<any> {
+  private async runSecurityCheck(task: TaskConfig, _cpu: number): Promise<unknown> {
     await new Promise((resolve) => setTimeout(resolve, 1800));
     monitoringSystem.updateTask(task.id, { progress: 70 });
 
@@ -172,7 +172,7 @@ export class WorkerPool {
     };
   }
 
-  private async runBrowserTest(task: TaskConfig, _cpu: number): Promise<any> {
+  private async runBrowserTest(task: TaskConfig, _cpu: number): Promise<unknown> {
     await new Promise((resolve) => setTimeout(resolve, 2500));
     monitoringSystem.updateTask(task.id, { progress: 40 });
 

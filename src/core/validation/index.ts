@@ -423,7 +423,7 @@ export const validateRequest = <T>(
   schema: z.ZodSchema<T>,
   context?: Record<string, any>
 ) => {
-  return (req: any, res: any, next: any) => {
+  return (req: unknown, res: unknown, next: unknown) => {
     const validation = ValidationHelper.validateRequestBody(
       schema,
       req.body,
@@ -446,7 +446,7 @@ export const validateQuery = <T>(
   schema: z.ZodSchema<T>,
   context?: Record<string, any>
 ) => {
-  return (req: any, res: any, next: any) => {
+  return (req: unknown, res: unknown, next: unknown) => {
     const searchParams = new URLSearchParams(req.url.split('?')[1] || '');
     const validation = ValidationHelper.validateQueryParams(
       schema,

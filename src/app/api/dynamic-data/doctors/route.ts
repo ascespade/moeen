@@ -38,7 +38,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // فلترة حسب التخصص إذا طُلب ذلك
       let filteredData = data;
       if (specialization) {
-        filteredData = data?.filter((doctor: any) =>
+        filteredData = data?.filter((doctor: unknown) =>
           doctor.specialization
             ?.toLowerCase()
             .includes(specialization.toLowerCase())
@@ -57,7 +57,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // فلترة حسب التخصص إذا طُلب ذلك
       let filteredData = data;
       if (specialization) {
-        filteredData = data?.filter((doctor: any) =>
+        filteredData = data?.filter((doctor: unknown) =>
           doctor.specialization
             ?.toLowerCase()
             .includes(specialization.toLowerCase())

@@ -161,7 +161,7 @@ export class SaudiMinistryHealthIntegration {
     }
   }
 
-  async getShoonPatientData(nationalId: string): Promise<any> {
+  async getShoonPatientData(nationalId: string): Promise<unknown> {
     try {
       const response = await this.callShoonAPI(
         'GET',
@@ -275,7 +275,7 @@ export class SaudiMinistryHealthIntegration {
       sehaSubmission: false,
       shoonSubmission: false,
       tatmanSubmission: false,
-      submissionIds: {} as any,
+      submissionIds: {} as unknown,
     };
 
     try {
@@ -382,7 +382,7 @@ export class SaudiMinistryHealthIntegration {
 
   // Utility Functions
   private mapSehaToHealthRecord(sehaData: unknown): MinistryHealthRecord {
-    const data = sehaData as any;
+    const data = sehaData as unknown;
     return {
       nationalId: data.nationalId,
       fullName: data.fullName,
@@ -428,11 +428,11 @@ export class SaudiMinistryHealthIntegration {
     return saudiPhoneRegex.test(phone);
   }
 
-  private isValidSaudiAddress(address: any): boolean {
+  private isValidSaudiAddress(address: unknown): boolean {
     return !!(address.city && address.district && address.street);
   }
 
-  private isValidInsuranceData(insurance: any): boolean {
+  private isValidInsuranceData(insurance: unknown): boolean {
     return !!(
       insurance.provider &&
       insurance.policyNumber &&
@@ -441,7 +441,7 @@ export class SaudiMinistryHealthIntegration {
   }
 
   private isValidMedicalHistory(medicalHistory: unknown): boolean {
-    const history = medicalHistory as any;
+    const history = medicalHistory as unknown;
     return (
       Array.isArray(history.chronicConditions) &&
       Array.isArray(history.allergies) &&
@@ -453,8 +453,8 @@ export class SaudiMinistryHealthIntegration {
   private async callSehaAPI(
     _method: string,
     _endpoint: string,
-    data?: any
-  ): Promise<any> {
+    data?: unknown
+  ): Promise<unknown> {
     // Mock response for development
     return {
       success: true,
@@ -498,8 +498,8 @@ export class SaudiMinistryHealthIntegration {
   private async callShoonAPI(
     _method: string,
     _endpoint: string,
-    data?: any
-  ): Promise<any> {
+    data?: unknown
+  ): Promise<unknown> {
     // Mock response for development
     return {
       success: true,
@@ -519,8 +519,8 @@ export class SaudiMinistryHealthIntegration {
   private async callTatmanAPI(
     _method: string,
     _endpoint: string,
-    data?: any
-  ): Promise<any> {
+    data?: unknown
+  ): Promise<unknown> {
     // Mock response for development
     return {
       success: true,

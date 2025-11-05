@@ -228,7 +228,7 @@ export class DatabaseManager {
     let query =
       'SELECT a.*, p.name as patient_name, d.name as doctor_name FROM appointments a JOIN patients p ON a.patient_id = p.id JOIN doctors d ON a.doctor_id = d.id';
     const conditions: string[] = [];
-    const values: any[] = [];
+    const values: unknown[] = [];
     let paramCount = 1;
 
     if (patientId) {
@@ -267,7 +267,7 @@ export class DatabaseManager {
     sessionTime: string;
     type: string;
     notes?: string;
-    exercises?: any;
+    exercises?: unknown;
   }) {
     const query = `
       INSERT INTO sessions (patient_id, doctor_id, session_date, session_time, type, notes, exercises)

@@ -15,10 +15,10 @@ interface ConnectionPoolConfig {
 
 class DatabaseConnectionPool {
   private config: ConnectionPoolConfig;
-  private connections: any[] = [];
+  private connections: unknown[] = [];
   private activeConnections = 0;
   private waitingQueue: Array<{
-    resolve: (connection: any) => void;
+    resolve: (connection: unknown) => void;
     reject: (error: Error) => void;
     timestamp: number;
   }> = [];
@@ -48,7 +48,7 @@ class DatabaseConnectionPool {
     });
   }
 
-  private async createConnection(): Promise<any> {
+  private async createConnection(): Promise<unknown> {
     try {
       const connection = createClient();
       this.activeConnections++;
@@ -59,7 +59,7 @@ class DatabaseConnectionPool {
     }
   }
 
-  async getConnection(): Promise<any> {
+  async getConnection(): Promise<unknown> {
     return new Promise((resolve, reject) => {
       // Check if we have available connections
       if (this.connections.length > 0) {
@@ -94,7 +94,7 @@ class DatabaseConnectionPool {
     });
   }
 
-  releaseConnection(connection: any): void {
+  releaseConnection(connection: unknown): void {
     if (this.waitingQueue.length > 0) {
       // Give connection to waiting request
       const { resolve } = this.waitingQueue.shift()!;
@@ -105,7 +105,7 @@ class DatabaseConnectionPool {
     }
   }
 
-  async closeConnection(connection: any): Promise<void> {
+  async closeConnection(connection: unknown): Promise<void> {
     try {
       // Close the connection
       await connection.close?.();

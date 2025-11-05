@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
       }
 
       // Upsert application user
-      const userData: any = {
+      const userData: unknown = {
         id: authId,
         email: u.email,
         name: u.name,
@@ -152,7 +152,7 @@ export async function POST(req: NextRequest) {
       // Force update role in users table
       if (u.role && finalUser) {
         try {
-          const updateData: any = {
+          const updateData: unknown = {
             role: u.role,
             status: 'active',
             is_active: true,

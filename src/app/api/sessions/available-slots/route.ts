@@ -99,7 +99,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .eq('appointment_date', date)
         .in(
           'doctor_id',
-          schedules.map((s: any) => s.therapist_id)
+          schedules.map((s: unknown) => s.therapist_id)
         )
         .in('status', ['scheduled', 'confirmed', 'in_progress']);
 
@@ -108,7 +108,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // 5. Generate available slots
-    const slots: any[] = [];
+    const slots: unknown[] = [];
     const duration = sessionType.duration;
 
     for (const schedule of schedules) {
@@ -122,11 +122,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // Filter out booked slots
       const bookedForThisTherapist =
         bookedAppointments?.filter(
-          (apt: any) => apt.doctor_id === schedule.therapist_id
+          (apt: unknown) => apt.doctor_id === schedule.therapist_id
         ) || [];
 
       for (const slot of timeSlots) {
-        const isBooked = bookedForThisTherapist.some((apt: any) =>
+        const isBooked = bookedForThisTherapist.some((apt: unknown) =>
           timesOverlap(
             slot.start,
             slot.end,

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { authHub, UserPermissions } from '../AuthHub';
 import { useAuth } from './useAuth';
+import { logger } from '@/lib/utils/logger';
 
 export function usePermissions() {
   const { user, loading: authLoading } = useAuth();
@@ -25,7 +26,7 @@ export function usePermissions() {
         setLoading(false);
       })
       .catch(error => {
-        console.error('Failed to load permissions:', error);
+        logger.error('Failed to load permissions:', error, {});
         setLoading(false);
       });
   }, [user, authLoading]);

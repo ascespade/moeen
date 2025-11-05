@@ -1,3 +1,4 @@
+import { logger } from '@/lib/utils/logger';
 /**
  * Performance Utilities for Auth
  * أدوات الأداء للمصادقة
@@ -8,7 +9,7 @@
 /**
  * Debounce function for rate limiting
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => any>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -30,7 +31,7 @@ export function debounce<T extends (...args: any[]) => any>(
 /**
  * Throttle function for rate limiting
  */
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: unknown[]) => any>(
   func: T,
   limit: number
 ): (...args: Parameters<T>) => void {
@@ -57,13 +58,13 @@ export async function measureTime<T>(
     const result = await fn();
     const duration = Date.now() - start;
     if (process.env.NODE_ENV === 'development') {
-      console.log(`[PERF] ${label}: ${duration}ms`);
+      logger.info(`[PERF] ${label}: ${duration}ms`);
     }
     return result;
   } catch (error) {
     const duration = Date.now() - start;
     if (process.env.NODE_ENV === 'development') {
-      console.log(`[PERF] ${label}: ${duration}ms (failed)`);
+      logger.info(`[PERF] ${label}: ${duration}ms (failed)`);
     }
     throw error;
   }

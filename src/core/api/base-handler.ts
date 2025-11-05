@@ -33,10 +33,10 @@ export class BaseApiHandler {
   }
 
   public createHandler<T = any>(
-    handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
+    handler: (req: NextRequest, context: unknown) => Promise<NextResponse<T>>,
     config: ApiHandlerConfig
   ) {
-    return async (req: NextRequest, context: any) => {
+    return async (req: NextRequest, context: unknown) => {
       try {
         // Method validation
         if (req.method !== config.method) {
@@ -182,8 +182,8 @@ export class BaseApiHandler {
   public async checkResourceAccess(
     _resourceType: string,
     _resourceId: string,
-    _user: any,
-    _supabase: any
+    _user: unknown,
+    _supabase: unknown
   ) {
     // Implement resource access checking logic
     // This would check if the user has access to the specific resource
@@ -194,9 +194,9 @@ export class BaseApiHandler {
     action: string,
     resourceType: string,
     resourceId: string,
-    user: any,
-    metadata: any,
-    supabase: any
+    user: unknown,
+    metadata: unknown,
+    supabase: unknown
   ) {
     try {
       await supabase.from('audit_logs').insert({
@@ -265,7 +265,7 @@ export const baseApiHandler = new BaseApiHandler();
 
 // Helper function to create API handlers
 export const createApiHandler = <T = any>(
-  handler: (req: NextRequest, context: any) => Promise<NextResponse<T>>,
+  handler: (req: NextRequest, context: unknown) => Promise<NextResponse<T>>,
   config: ApiHandlerConfig
 ) => {
   return baseApiHandler.createHandler(handler, config);

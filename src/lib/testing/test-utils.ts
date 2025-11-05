@@ -15,14 +15,14 @@ interface TestUser {
 
 interface TestData {
   users: TestUser[];
-  patients: any[];
-  doctors: any[];
-  appointments: any[];
-  payments: any[];
+  patients: unknown[];
+  doctors: unknown[];
+  appointments: unknown[];
+  payments: unknown[];
 }
 
 class TestUtils {
-  private supabase: any;
+  private supabase: unknown;
   private testData: TestData = {
     users: [],
     patients: [],
@@ -70,7 +70,7 @@ class TestUtils {
   }
 
   // Create test patient
-  async createTestPatient(userId?: string): Promise<any> {
+  async createTestPatient(userId?: string): Promise<unknown> {
     const user = userId
       ? this.testData.users.find(u => u.id === userId)
       : await this.createTestUser('patient');
@@ -100,7 +100,7 @@ class TestUtils {
   }
 
   // Create test doctor
-  async createTestDoctor(userId?: string): Promise<any> {
+  async createTestDoctor(userId?: string): Promise<unknown> {
     const user = userId
       ? this.testData.users.find(u => u.id === userId)
       : await this.createTestUser('doctor');
@@ -140,7 +140,7 @@ class TestUtils {
   async createTestAppointment(
     patientId?: string,
     doctorId?: string
-  ): Promise<any> {
+  ): Promise<unknown> {
     const patient = patientId
       ? this.testData.patients.find(p => p.id === patientId)
       : await this.createTestPatient();
@@ -174,7 +174,7 @@ class TestUtils {
   }
 
   // Create test payment
-  async createTestPayment(appointmentId?: string): Promise<any> {
+  async createTestPayment(appointmentId?: string): Promise<unknown> {
     const appointment = appointmentId
       ? this.testData.appointments.find(a => a.id === appointmentId)
       : await this.createTestAppointment();
@@ -279,7 +279,7 @@ class TestUtils {
   mockRequest(
     method: string,
     url: string,
-    body?: any,
+    body?: unknown,
     headers?: Record<string, string>
   ): Request {
     return new Request(url, {
@@ -296,9 +296,9 @@ class TestUtils {
   mockNextRequest(
     method: string,
     url: string,
-    body?: any,
+    body?: unknown,
     headers?: Record<string, string>
-  ): any {
+  ): unknown {
     const request = this.mockRequest(method, url, body, headers);
     return {
       ...request,

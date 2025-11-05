@@ -8,6 +8,7 @@ import {
   clearAuth,
 } from '@/utils/storage';
 import { getBrowserSupabase } from '@/lib/supabaseClient';
+import { logger } from '@/lib/utils/logger';
 
 interface AuthState {
   user: User | null;
@@ -69,7 +70,7 @@ export const useAuth = (): AuthState & AuthActions => {
           clearTimeout(timeoutId);
 
           if (res.ok) {
-            const payload = await res.json().catch(() => ({}) as any);
+            const payload = await res.json().catch(() => ({}) as unknown);
             const foundUser = payload?.data?.user || payload?.user || null;
             const foundPermissions =
               payload?.data?.permissions || payload?.permissions || [];
@@ -143,7 +144,7 @@ export const useAuth = (): AuthState & AuthActions => {
   const loginWithCredentials = useCallback(
     async (email: string, password: string, rememberMe: boolean = false) => {
       try {
-        console.log('[useAuth] loginWithCredentials request', {
+        logger.info('[useAuth] loginWithCredentials request', {
           email,
           rememberMe,
         });
@@ -168,7 +169,7 @@ export const useAuth = (): AuthState & AuthActions => {
         });
 
         const data = await response.json().catch(() => ({}));
-        console.log(
+        logger.info(
           '[useAuth] /api/auth/login response status',
           response.status,
           'data:',
@@ -176,7 +177,7 @@ export const useAuth = (): AuthState & AuthActions => {
         );
 
         if (!response.ok) {
-          console.error('[useAuth] login failed', response.status, data);
+          logger.error('[useAuth] login failed', response.status, data, {});
           // Dev fallback: if server says invalid credentials and password matches TEST_USERS_PASSWORD, try demo-email /api/auth/me fallback
           try {
             const fallbackPassword =
@@ -187,7 +188,7 @@ export const useAuth = (): AuthState & AuthActions => {
               data?.error === 'Invalid login credentials' &&
               password === fallbackPassword
             ) {
-              console.log(
+              logger.info(
                 '[useAuth] attempting demo-email fallback via /api/auth/me'
               );
               const demoRes = await fetch('/api/auth/me', {
@@ -195,13 +196,13 @@ export const useAuth = (): AuthState & AuthActions => {
                 credentials: 'include',
                 headers: { 'x-demo-email': email },
               });
-              console.log(
+              logger.info(
                 '[useAuth] demo-email /api/auth/me status',
                 demoRes.status
               );
               if (demoRes.ok) {
                 const demoData = await demoRes.json().catch(() => ({}));
-                console.log('[useAuth] demo-email payload', demoData);
+                logger.info('[useAuth] demo-email payload', demoData);
                 if (
                   demoData.success &&
                   (demoData.user || demoData.data?.user)
@@ -218,7 +219,7 @@ export const useAuth = (): AuthState & AuthActions => {
               }
             }
           } catch (e) {
-            console.error('[useAuth] demo-email fallback error', e);
+            logger.error('[useAuth] demo-email fallback error', e, {});
           }
 
           throw new Error(data.error || 'Login failed');
@@ -226,7 +227,7 @@ export const useAuth = (): AuthState & AuthActions => {
 
         // Prefer to fetch /me to get canonical user object and permissions
         try {
-          console.log('[useAuth] fetching /api/auth/me after login');
+          logger.info('[useAuth] fetching /api/auth/me after login');
           const controller = new AbortController();
           const t = setTimeout(() => controller.abort(), 5000);
           const meRes = await fetch('/api/auth/me', {
@@ -236,13 +237,13 @@ export const useAuth = (): AuthState & AuthActions => {
             signal: controller.signal,
           });
           clearTimeout(t);
-          console.log(
+          logger.info(
             '[useAuth] /api/auth/me after login status',
             meRes.status
           );
           if (meRes.ok) {
-            const meData = await meRes.json().catch(() => ({}) as any);
-            console.log('[useAuth] /api/auth/me after login payload', meData);
+            const meData = await meRes.json().catch(() => ({}) as unknown);
+            logger.info('[useAuth] /api/auth/me after login payload', meData);
             const meUser = meData?.data?.user || meData?.user;
             const mePerms =
               meData?.data?.permissions || meData?.permissions || [];
@@ -251,13 +252,13 @@ export const useAuth = (): AuthState & AuthActions => {
               return { success: true };
             }
           } else {
-            console.log(
+            logger.info(
               '[useAuth] /api/auth/me after login not ok',
               meRes.status
             );
           }
         } catch (e) {
-          console.error('[useAuth] error fetching /api/auth/me after login', e);
+          logger.error('[useAuth] error fetching /api/auth/me after login', e, {});
           // fallback to using returned data
         }
 
@@ -270,13 +271,13 @@ export const useAuth = (): AuthState & AuthActions => {
           return { success: true };
         }
 
-        console.error(
+        logger.error(
           '[useAuth] loginWithCredentials final fallback failed',
           data
         );
         throw new Error(data.error || 'Login failed');
       } catch (error) {
-        console.error('[useAuth] loginWithCredentials error', error);
+        logger.error('[useAuth] loginWithCredentials error', error, {});
         throw error;
       }
     },

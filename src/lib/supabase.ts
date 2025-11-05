@@ -90,7 +90,7 @@ export interface Session {
   session_time: string;
   type: 'assessment' | 'treatment' | 'follow_up';
   notes: string;
-  exercises: any[];
+  exercises: unknown[];
   completed: boolean;
   insurance_claim_number?: string;
   created_at: string;

@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { handleApiError } from '@/lib/errors/error-handler';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 const claimSchema = z.object({
   appointmentId: z.string().uuid('Invalid appointment ID'),
@@ -153,7 +154,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       .eq('id', claim.id);
 
     if (updateError) {
-      console.error('Failed to update claim submission status:', updateError);
+      logger.error('Failed to update claim submission status:', updateError, {});
     }
 
     // Create audit log

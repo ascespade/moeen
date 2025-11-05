@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { handleApiError } from '@/lib/errors/error-handler';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 const activationSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
@@ -60,7 +61,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function activatePatient(request: NextRequest, body: any) {
+async function activatePatient(request: NextRequest, body: unknown) {
   try {
     // Authorize staff, supervisor, or admin
     const authResult = await requireAuth(['staff', 'supervisor', 'admin'])(
@@ -199,7 +200,7 @@ async function updateChecklist(request: NextRequest, body: unknown) {
         patientId,
         appointmentId,
         checklistItems,
-        completedAt: checklistItems.every((item: any) => item.completed)
+        completedAt: checklistItems.every((item: unknown) => item.completed)
           ? new Date().toISOString()
           : null,
         updatedBy: authResult.user!.id,
@@ -223,7 +224,7 @@ async function updateChecklist(request: NextRequest, body: unknown) {
       metadata: {
         patientId,
         appointmentId,
-        completedItems: checklistItems.filter((item: any) => item.completed)
+        completedItems: checklistItems.filter((item: unknown) => item.completed)
           .length,
         totalItems: checklistItems.length,
       },
@@ -239,7 +240,7 @@ async function updateChecklist(request: NextRequest, body: unknown) {
   }
 }
 
-async function requestFileAccess(request: NextRequest, body: any) {
+async function requestFileAccess(request: NextRequest, body: unknown) {
   try {
     // Authorize patient, staff, or admin
     const authResult = await requireAuth(['patient', 'staff', 'admin'])(
@@ -365,7 +366,7 @@ async function createPatientFile(patientId: string, supabase: unknown) {
   });
 
   if (error) {
-    console.error('Failed to create patient file:', error);
+    logger.error('Failed to create patient file:', error, {});
   }
 }
 

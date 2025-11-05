@@ -20,7 +20,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Check permissions using PermissionManager
     const canRead = PermissionManager.hasPermission(
-      authResult.user.role as any,
+      authResult.user.role as unknown,
       'crm',
       'read',
       { userId: authResult.user.id }

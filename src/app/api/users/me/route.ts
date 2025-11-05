@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/lib/auth/authorize';
 import { customAuthHub } from '@/lib/auth/CustomAuthHub';
 import _jwt from 'jsonwebtoken';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -57,7 +58,7 @@ export async function GET(request: NextRequest) {
       permissions: permissions || null,
     });
   } catch (error) {
-    console.error('Get user error:', error);
+    logger.error('Get user error:', error, {});
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

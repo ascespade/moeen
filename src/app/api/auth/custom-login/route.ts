@@ -5,6 +5,7 @@
 import { customAuthHub } from '@/lib/auth/CustomAuthHub';
 import jwt from 'jsonwebtoken';
 import { NextRequest, NextResponse } from 'next/server';
+import { logger } from '@/lib/utils/logger';
 
 export async function POST(req: NextRequest) {
   try {
@@ -82,7 +83,7 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (error) {
-    console.error('[LOGIN] Error:', error);
+    logger.error('[LOGIN] Error:', error, {});
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

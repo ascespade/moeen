@@ -33,7 +33,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     try {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
     } catch (err) {
-      console.error('Webhook signature verification failed:', err);
+      logger.error('Webhook signature verification failed:', err, {});
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
     }
 
@@ -60,12 +60,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         );
         break;
       default:
-        console.log(`Unhandled event type: ${event.type}`);
+        logger.info(`Unhandled event type: ${event.type}`);
     }
 
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error('Webhook error:', error);
+    logger.error('Webhook error:', error, {});
     return NextResponse.json(
       { error: 'Webhook processing failed' },
       { status: 500 }
@@ -75,12 +75,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 async function handlePaymentSucceeded(
   paymentIntent: Stripe.PaymentIntent,
-  supabase: any
+  supabase: unknown
 ) {
   const appointmentId = paymentIntent.metadata?.appointmentId;
 
   if (!appointmentId) {
-    console.error('No appointment ID in payment intent metadata');
+    logger.error('No appointment ID in payment intent metadata', {});
     return;
   }
 
@@ -97,7 +97,7 @@ async function handlePaymentSucceeded(
     .eq('transactionId', paymentIntent.id);
 
   if (paymentError) {
-    console.error('Failed to update payment status:', paymentError);
+    logger.error('Failed to update payment status:', paymentError, {});
     return;
   }
 
@@ -108,7 +108,7 @@ async function handlePaymentSucceeded(
     .eq('id', appointmentId);
 
   if (appointmentError) {
-    console.error(
+    logger.error(
       'Failed to update appointment payment status:',
       appointmentError
     );
@@ -128,17 +128,17 @@ async function handlePaymentSucceeded(
     },
   });
 
-  console.log(`Payment succeeded for appointment ${appointmentId}`);
+  logger.info(`Payment succeeded for appointment ${appointmentId}`);
 }
 
 async function handlePaymentFailed(
   paymentIntent: Stripe.PaymentIntent,
-  supabase: any
+  supabase: unknown
 ) {
   const appointmentId = paymentIntent.metadata?.appointmentId;
 
   if (!appointmentId) {
-    console.error('No appointment ID in payment intent metadata');
+    logger.error('No appointment ID in payment intent metadata', {});
     return;
   }
 
@@ -155,7 +155,7 @@ async function handlePaymentFailed(
     .eq('transactionId', paymentIntent.id);
 
   if (paymentError) {
-    console.error('Failed to update payment status:', paymentError);
+    logger.error('Failed to update payment status:', paymentError, {});
     return;
   }
 
@@ -173,17 +173,17 @@ async function handlePaymentFailed(
     },
   });
 
-  console.log(`Payment failed for appointment ${appointmentId}`);
+  logger.info(`Payment failed for appointment ${appointmentId}`);
 }
 
 async function handlePaymentCanceled(
   paymentIntent: Stripe.PaymentIntent,
-  supabase: any
+  supabase: unknown
 ) {
   const appointmentId = paymentIntent.metadata?.appointmentId;
 
   if (!appointmentId) {
-    console.error('No appointment ID in payment intent metadata');
+    logger.error('No appointment ID in payment intent metadata', {});
     return;
   }
 
@@ -200,7 +200,7 @@ async function handlePaymentCanceled(
     .eq('transactionId', paymentIntent.id);
 
   if (paymentError) {
-    console.error('Failed to update payment status:', paymentError);
+    logger.error('Failed to update payment status:', paymentError, {});
     return;
   }
 
@@ -217,5 +217,5 @@ async function handlePaymentCanceled(
     },
   });
 
-  console.log(`Payment canceled for appointment ${appointmentId}`);
+  logger.info(`Payment canceled for appointment ${appointmentId}`);
 }

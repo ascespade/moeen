@@ -36,7 +36,7 @@ export const sendWhatsAppMessage = async (payload: SendTextPayload) => {
   }
 };
 
-export const handleWhatsAppWebhook = async (_body: any) => {
+export const handleWhatsAppWebhook = async (_body: unknown) => {
   // Placeholder structure for webhook handling
   if (!isWhatsAppConfigured()) {
     return { success: true };

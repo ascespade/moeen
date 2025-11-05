@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function POST(req: NextRequest) {
   try {
-    const { email } = await req.json().catch(() => ({}) as any);
+    const { email } = await req.json().catch(() => ({}) as unknown);
     if (!email) {
       return NextResponse.json(
         { success: false, error: 'Missing email' },

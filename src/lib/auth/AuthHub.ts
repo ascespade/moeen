@@ -10,6 +10,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { User, Session, AuthError } from '@supabase/supabase-js';
 import { getBrowserSupabase } from '@/lib/supabaseClient';
 import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/utils/logger';
 
 export interface UserPermissions {
   role: string;
@@ -123,7 +124,7 @@ class AuthHub {
         window.location.href = '/login';
       }
     } catch (error) {
-      console.error('Logout error:', error);
+      logger.error('Logout error:', error, {});
       throw error;
     }
   }
@@ -136,7 +137,7 @@ class AuthHub {
       } = await supabase.auth.getSession();
       return session;
     } catch (error) {
-      console.error('Get session error:', error);
+      logger.error('Get session error:', error, {});
       return null;
     }
   }
@@ -149,7 +150,7 @@ class AuthHub {
       } = await supabase.auth.refreshSession();
       return session;
     } catch (error) {
-      console.error('Refresh session error:', error);
+      logger.error('Refresh session error:', error, {});
       return null;
     }
   }
@@ -162,7 +163,7 @@ class AuthHub {
       } = await supabase.auth.getUser();
       return user;
     } catch (error) {
-      console.error('Get user error:', error);
+      logger.error('Get user error:', error, {});
       return null;
     }
   }
@@ -191,7 +192,7 @@ class AuthHub {
         .maybeSingle();
 
       if (userError || !userData) {
-        console.error('Failed to fetch user role:', userError);
+        logger.error('Failed to fetch user role:', userError, {});
         return null;
       }
 
@@ -210,7 +211,7 @@ class AuthHub {
 
       return permissions;
     } catch (error) {
-      console.error('Get user permissions error:', error);
+      logger.error('Get user permissions error:', error, {});
       return null;
     }
   }
@@ -290,7 +291,7 @@ class AuthHub {
 
       return hasPermission;
     } catch (error) {
-      console.error('Permission check error:', error);
+      logger.error('Permission check error:', error, {});
       return false;
     }
   }
@@ -300,7 +301,7 @@ class AuthHub {
       const permissions = await this.getUserPermissions(userId);
       return permissions?.role || null;
     } catch (error) {
-      console.error('Get user role error:', error);
+      logger.error('Get user role error:', error, {});
       return null;
     }
   }
@@ -366,7 +367,7 @@ class AuthHub {
       if (error) throw error;
       return data;
     } catch (error) {
-      console.error('Get user profile error:', error);
+      logger.error('Get user profile error:', error, {});
       throw error;
     }
   }
@@ -379,7 +380,7 @@ class AuthHub {
     callback: (event: string, session: Session | null) => void
   ) {
     if (!this.supabase) {
-      console.warn('AuthHub: Cannot subscribe to auth changes without client');
+      logger.warn('AuthHub: Cannot subscribe to auth changes without client', {});
       return () => {};
     }
 

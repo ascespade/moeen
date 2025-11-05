@@ -62,7 +62,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     });
 
     if (updateError) {
-      console.error('Password update error:', updateError);
+      logger.error('Password update error:', updateError, {});
       return NextResponse.json(
         {
           success: false,
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         },
       });
     } catch (auditError) {
-      console.error('Audit log error (non-critical):', auditError);
+      logger.error('Audit log error (non-critical):', auditError, {});
     }
 
     return NextResponse.json({
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: 'تم تحديث كلمة المرور بنجاح',
     });
   } catch (error) {
-    console.error('Reset password error:', error);
+    logger.error('Reset password error:', error, {});
     return NextResponse.json(
       {
         success: false,

@@ -199,7 +199,7 @@ export class EnhancedAuthMiddleware {
       }
 
       // Get user from database
-      const user = (await realDB.getUser(decoded.userId)) as any;
+      const user = (await realDB.getUser(decoded.userId)) as unknown;
       if (!user || !user.is_active) {
         return { success: false, error: 'User not found or inactive' };
       }

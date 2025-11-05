@@ -24,7 +24,7 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
 });
 
 // Use a relaxed admin alias to mitigate strict generics during development
-const admin: any = supabaseAdmin as any;
+const admin: unknown = supabaseAdmin as unknown;
 
 // Real Database Manager with actual Supabase queries
 export class RealSupabaseManager {
@@ -531,9 +531,9 @@ export class RealSupabaseManager {
 
     if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
 
-    const total = (data as any[]).length;
-    const active = (data as any[]).filter((p: any) => p.created_at).length;
-    const newLast30Days = (data as any[]).filter((p: any) => {
+    const total = (data as unknown[]).length;
+    const active = (data as unknown[]).filter((p: unknown) => p.created_at).length;
+    const newLast30Days = (data as unknown[]).filter((p: unknown) => {
       const createdAt = new Date(p.created_at as string);
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -551,14 +551,14 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to get appointment stats: ${error.message}`);
 
-    const total = (data as any[]).length;
-    const completed = (data as any[]).filter(
-      (a: any) => a.status === 'completed'
+    const total = (data as unknown[]).length;
+    const completed = (data as unknown[]).filter(
+      (a: unknown) => a.status === 'completed'
     ).length;
-    const cancelled = (data as any[]).filter(
-      (a: any) => a.status === 'cancelled'
+    const cancelled = (data as unknown[]).filter(
+      (a: unknown) => a.status === 'cancelled'
     ).length;
-    const upcoming = (data as any[]).filter((a: any) => {
+    const upcoming = (data as unknown[]).filter((a: unknown) => {
       const appointmentDate = new Date(a.appointment_date as string);
       return appointmentDate >= new Date() && a.status === 'scheduled';
     }).length;
@@ -574,11 +574,11 @@ export class RealSupabaseManager {
     if (error)
       throw new Error(`Failed to get conversation stats: ${error.message}`);
 
-    const total = (data as any[]).length;
-    const crisis = (data as any[]).filter(
-      (c: any) => c.crisis_level === 'crisis'
+    const total = (data as unknown[]).length;
+    const crisis = (data as unknown[]).filter(
+      (c: unknown) => c.crisis_level === 'crisis'
     ).length;
-    const recent = (data as any[]).filter((c: any) => {
+    const recent = (data as unknown[]).filter((c: unknown) => {
       const createdAt = new Date(c.created_at as string);
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);

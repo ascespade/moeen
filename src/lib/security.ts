@@ -189,7 +189,7 @@ export class SessionSecurity {
     // Fallback for browser - use Web Crypto API
     const encoder = new TextEncoder();
     const data = encoder.encode(sessionId);
-    return (crypto as any).subtle
+    return (crypto as unknown).subtle
       .digest('SHA-256', data)
       .then((hashBuffer: ArrayBuffer) => {
         const hashArray = Array.from(new Uint8Array(hashBuffer));

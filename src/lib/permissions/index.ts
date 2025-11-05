@@ -713,7 +713,7 @@ export class PermissionManager {
 
       const permissions: string[] =
         permissionsData
-          ?.map((rp: any) => rp.permissions?.code)
+          ?.map((rp: unknown) => rp.permissions?.code)
           .filter((code: string) => code) || [];
 
       // Cache the result
@@ -793,7 +793,7 @@ export class PermissionManager {
   ): string[] {
     return userPermissions.filter(permission => {
       const permissionObj = Object.values(PERMISSIONS as Record<string, any>).find(
-        (p: any) => p.id === permission
+        (p: unknown) => p.id === permission
       );
       return permissionObj?.category === category;
     });

@@ -148,7 +148,7 @@ export interface Payment extends BaseEntity {
   method: PaymentMethod;
   status: PaymentStatus;
   transactionId?: string;
-  gatewayResponse?: any;
+  gatewayResponse?: unknown;
   refundAmount?: number;
   refundReason?: string;
 }
@@ -193,7 +193,7 @@ export interface Notification extends BaseEntity {
   readAt?: Date;
   priority: NotificationPriority;
   channels: NotificationChannel[];
-  metadata?: any;
+  metadata?: unknown;
 }
 
 export type NotificationType =
@@ -207,7 +207,7 @@ export type NotificationChannel = 'email' | 'sms' | 'push' | 'in_app';
 // System Types
 export interface SystemConfig extends BaseEntity {
   key: string;
-  value: any;
+  value: unknown;
   category: string;
   description?: string;
   isPublic: boolean;
@@ -218,7 +218,7 @@ export interface AuditLog extends BaseEntity {
   resourceType: string;
   resourceId: string;
   userId: string;
-  metadata: any;
+  metadata: unknown;
   ipAddress?: string;
   userAgent?: string;
 }
@@ -269,7 +269,7 @@ export interface SelectOption {
 
 export interface ValidationRule {
   type: 'required' | 'email' | 'min' | 'max' | 'pattern';
-  value?: any;
+  value?: unknown;
   message: string;
 }
 

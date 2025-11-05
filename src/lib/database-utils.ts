@@ -122,8 +122,8 @@ export class EntityOperations {
    * Patient operations
    */
   static patients = {
-    create: (data: any) => DatabaseUtils.createInsertData('patient', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('patient', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('patient', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -132,8 +132,8 @@ export class EntityOperations {
    * Appointment operations
    */
   static appointments = {
-    create: (data: any) => DatabaseUtils.createInsertData('appointment', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('appointment', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('appointment', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -142,8 +142,8 @@ export class EntityOperations {
    * Session operations
    */
   static sessions = {
-    create: (data: any) => DatabaseUtils.createInsertData('session', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('session', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('session', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -152,8 +152,8 @@ export class EntityOperations {
    * Chatbot flow operations
    */
   static chatbotFlows = {
-    create: (data: any) => DatabaseUtils.createInsertData('flow', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('flow', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('flow', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -162,8 +162,8 @@ export class EntityOperations {
    * CRM lead operations
    */
   static crmLeads = {
-    create: (data: any) => DatabaseUtils.createInsertData('lead', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('lead', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('lead', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -172,8 +172,8 @@ export class EntityOperations {
    * CRM deal operations
    */
   static crmDeals = {
-    create: (data: any) => DatabaseUtils.createInsertData('deal', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('deal', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('deal', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -254,7 +254,7 @@ export class MigrationHelpers {
   static createMigrationLog(
     migrationName: string,
     status: 'started' | 'completed' | 'failed',
-    details?: any
+    details?: unknown
   ) {
     return {
       migration: migrationName,

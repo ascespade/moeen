@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
         page: 1,
         perPage: 1,
         filter: { email },
-      } as any);
+      } as unknown);
 
     let authUserId: string | null = null;
     if (existing && (existing.users?.length || 0) > 0) {

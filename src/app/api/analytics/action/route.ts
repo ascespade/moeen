@@ -1,5 +1,6 @@
 import { getServiceSupabase } from '@/lib/supabaseClient';
 import { NextRequest, NextResponse } from 'next/server';
+import { logger } from '@/lib/utils/logger';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       });
 
       if (error) {
-        console.error('Analytics insert error:', error);
+        logger.error('Analytics insert error:', error, {});
       }
     }
 

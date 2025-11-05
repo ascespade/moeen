@@ -88,7 +88,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const settingsMap: Record<string, any> = {};
-    (settingsData || []).forEach((item: any) => {
+    (settingsData || []).forEach((item: unknown) => {
       try {
         settingsMap[item.key] =
           typeof item.value === 'string' ? JSON.parse(item.value) : item.value;
@@ -98,7 +98,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     });
 
     // Contact info stored in center_info or separate table
-    let contactInfo: any[] = [];
+    let contactInfo: unknown[] = [];
     if (centerData) {
       contactInfo = [
         {
