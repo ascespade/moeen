@@ -371,7 +371,7 @@ function CRMPageContent() {
         source: 'الإحالة',
         priority: 'medium',
       },
-    ];
+    ];*/
 
     // Legacy mock data removed - using real API
   }, []);
@@ -989,7 +989,6 @@ function CRMPageContent() {
             </div>
           </CardContent>
         </Card>
-        </div>
       </div>
     </div>
   );

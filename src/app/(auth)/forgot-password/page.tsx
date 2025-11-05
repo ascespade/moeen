@@ -54,11 +54,10 @@ export default function ForgotPasswordPage() {
 
   if (isSuccess) {
     return (
-      <>
+      <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           <span id="live-region"></span>
         </div>
-        <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
           <div className='card w-full max-w-md p-8 text-center'>
             <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
@@ -77,13 +76,19 @@ export default function ForgotPasswordPage() {
             >
               العودة لتسجيل الدخول
             </Link>
-            <button onClick={() => { {
-                setIsSuccess(false);
-                setEmail(''); }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ {
-                setIsSucce"> { {
+            <button
+              onClick={() => {
                 setIsSuccess(false);
                 setEmail('');
-               } }}}
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setIsSuccess(false);
+                  setEmail('');
+                }
+              }}
+              aria-label="إرسال رابط آخر"
               className='w-full rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-surface'
             >
               إرسال رابط آخر
@@ -134,12 +139,16 @@ export default function ForgotPasswordPage() {
               <label htmlFor='email' className='form-label'>
                 البريد الإلكتروني
               </label>
-              <input type='email'
+              <input
+                type='email'
                 id='email'
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  if (error) setError('');} aria-label="email" aria-invalid="true"}
+                  if (error) setError('');
+                }}
+                aria-label="email"
+                aria-invalid={error ? 'true' : 'false'}
                 className='form-input'
                 placeholder='أدخل بريدك الإلكتروني'
                 disabled={isLoading}
@@ -148,9 +157,12 @@ export default function ForgotPasswordPage() {
             </div>
 
             {/* Submit Button */}
-            <button type='submit'
+            <button
+              type='submit'
               disabled={isLoading}
-              className='btn btn-default btn-lg w-full' aria-label="{isLoading ? (">
+              className='btn btn-default btn-lg w-full'
+              aria-label={isLoading ? 'جاري الإرسال...' : 'إرسال رابط إعادة التعيين'}
+            >
               {isLoading ? (
                 <>
                   <div className='loading-spinner'></div>
@@ -180,11 +192,18 @@ export default function ForgotPasswordPage() {
         <div className='mt-6 text-center'>
           <p className='text-sm text-gray-500'>
             إذا لم تستلم البريد الإلكتروني، تحقق من مجلد الرسائل المزعجة أو{' '}
-            <button onClick={() => { {
+            <button
+              onClick={() => {
                 setEmail('');
                 setError('');
               }}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setEmail(''); setError(''); } }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setEmail('');
+                  setError('');
+                }
+              }}
               aria-label="حاول مرة أخرى"
               className='text-[var(--default-default)] hover:underline'
             >
@@ -193,6 +212,6 @@ export default function ForgotPasswordPage() {
           </p>
         </div>
       </div>
-      </>
-    );
-  }
+    </div>
+  );
+}
