@@ -30,7 +30,9 @@ export function ThemeToggle({
 
   if (variant === 'compact') {
     return (
-      <button onClick={toggleTheme} onKeyDown={(e) = aria-label="{ if (e.key === 'Enter' || e.k"> { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme } }}
+      <button
+        onClick={toggleTheme}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme(); } }}
         className={`p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${className}`}
         aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
       >

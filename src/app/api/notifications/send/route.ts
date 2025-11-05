@@ -24,9 +24,9 @@ const notificationSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const requestBody = await request.json();
     const { userId, templateId, type, title, body, data, scheduledFor } =
-      notificationSchema.parse(body);
+      notificationSchema.parse(requestBody);
 
     // Check user preferences
     const { data: preferences } = await supabase

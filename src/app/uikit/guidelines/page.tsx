@@ -43,7 +43,7 @@ export default function GuidelinesPage() {
       </section>
 
       <section className='grid gap-3'>
-        <div className='font-medium'>Typography (Cairo)</section>
+        <div className='font-medium'>Typography (Cairo)</div>
         <div className='grid gap-1'>
           <div className='text-2xl font-semibold'>عنوان كبير 24px</div>
           <div className='text-xl font-semibold'>عنوان 20px</div>
@@ -54,7 +54,7 @@ export default function GuidelinesPage() {
       </section>
 
       <section className='grid gap-3'>
-        <div className='font-medium'>Interaction States</section>
+        <div className='font-medium'>Interaction States</div>
         <div className='flex flex-wrap gap-2'>
           <button className='h-10 px-4 rounded-md btn-default' aria-label="Default">Default</button>
           <button className='h-10 px-4 rounded-md btn-default' disabled aria-label="Disabled">
@@ -66,5 +66,6 @@ export default function GuidelinesPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

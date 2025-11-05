@@ -183,7 +183,7 @@ function ContactsPageContent() {
           user_id: 'user-2',
           user_name: 'محمد العلي',
         },
-      ];
+      ];*/
 
     // Legacy mock data removed - using real API
   };
@@ -244,47 +244,46 @@ function ContactsPageContent() {
   }
 
   return (
-    <>
+    <div className='container mx-auto px-4 py-8' dir='rtl'>
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         <span id="live-region"></span>
       </div>
-      <div className='container mx-auto px-4 py-8' dir='rtl'>
-        {/* Header */}
-        <div className='mb-8'>
-          <div className='flex items-center justify-between mb-4'>
-            <div>
-              <h1 className='text-3xl font-bold text-gray-900'>
-                إدارة جهات الاتصال
-              </h1>
-              <p className='text-gray-600 mt-2'>
-                إدارة العملاء المحتملين والعملاء الحاليين
-              </p>
-            </div>
-            <Button
-              onClick={() => router.push('/crm/contacts/new')}
-              className='bg-[var(--default-default)] hover:brightness-95'
-            >
-              <Plus className='w-4 h-4 mr-2' />
-              إضافة جهة اتصال
-            </Button>
+      {/* Header */}
+      <div className='mb-8'>
+        <div className='flex items-center justify-between mb-4'>
+          <div>
+            <h1 className='text-3xl font-bold text-gray-900'>
+              إدارة جهات الاتصال
+            </h1>
+            <p className='text-gray-600 mt-2'>
+              إدارة العملاء المحتملين والعملاء الحاليين
+            </p>
           </div>
+          <Button
+            onClick={() => router.push('/crm/contacts/new')}
+            className='bg-[var(--default-default)] hover:brightness-95'
+          >
+            <Plus className='w-4 h-4 mr-2' />
+            إضافة جهة اتصال
+          </Button>
+        </div>
 
-          {/* Search and Filters */}
-          <div className='flex flex-col md:flex-row gap-4 mb-6'>
-            <div className='flex-1'>
-              <Input
-                placeholder='البحث في جهات الاتصال...'
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                className='pr-10'
-              />
-            </div>
-            <div className='flex gap-2'>
-              <select
-                value={filterStatus}
-                onChange={e => setFilterStatus(e.target.value)}
-                className='px-3 py-2 border border-gray-300 rounded-md text-sm'
-              >
+        {/* Search and Filters */}
+        <div className='flex flex-col md:flex-row gap-4 mb-6'>
+          <div className='flex-1'>
+            <Input
+              placeholder='البحث في جهات الاتصال...'
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+              className='pr-10'
+            />
+          </div>
+          <div className='flex gap-2'>
+            <select
+              value={filterStatus}
+              onChange={e => setFilterStatus(e.target.value)}
+              className='px-3 py-2 border border-gray-300 rounded-md text-sm'
+            >
               <option value='all'>جميع الحالات</option>
               <option value='lead'>عميل محتمل</option>
               <option value='prospect'>عميل واعد</option>
@@ -301,19 +300,18 @@ function ContactsPageContent() {
               <option value='إحالة'>إحالة</option>
               <option value='إعلان'>إعلان</option>
               <option value='معرض'>معرض</option>
-              </select>
-            </div>
+            </select>
           </div>
         </div>
-        </div>
+      </div>
 
-        {/* Stats Cards */}
-        <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
-          <Card>
-            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-              <CardTitle className='text-sm font-medium'>
-                إجمالي جهات الاتصال
-              </CardTitle>
+      {/* Stats Cards */}
+      <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
+        <Card>
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+            <CardTitle className='text-sm font-medium'>
+              إجمالي جهات الاتصال
+            </CardTitle>
             <Users className='h-4 w-4 text-muted-foreground' />
           </CardHeader>
           <CardContent>
@@ -651,8 +649,7 @@ function ContactsPageContent() {
           )}
         </div>
       </div>
-      </div>
-    </>
+    </div>
   );
 }
 

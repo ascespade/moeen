@@ -1,12 +1,26 @@
+/**
+ * Supabase Server Client
+ * عميل Supabase للخادم
+ * 
+ * Server-side Supabase client with cookie handling
+ */
+
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
+import type { Database } from '../../types/database.types';
 
+/**
+ * Create Supabase client for server-side usage
+ * Handles cookies automatically for SSR
+ * 
+ * @returns Supabase client instance
+ */
 export async function createClient() {
   const cookieStore = await cookies();
 
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key',
+  return createServerClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         getAll() {

@@ -31,7 +31,7 @@ function AuditLogsPageContent() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [actionFilter, setActionFilter] = useState<string>('all');
-  const [dateRange, setDateRange] = useState<string>('today');
+  const [_dateRange, _setDateRange] = useState<string>('today');
 
   const getStatusColor = (status: AuditLog['status']) => {
     switch (status) {

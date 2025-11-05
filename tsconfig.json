@@ -49,6 +49,7 @@
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/types/shims.d.ts",
+    "lib/**/*.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": [

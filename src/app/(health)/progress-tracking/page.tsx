@@ -204,11 +204,10 @@ const ProgressTrackingPage: React.FC = () => {
   }
 
   return (
-    <div aria-live="polite" aria-atomic="true" className="sr-only">
-  <span id="live-region"></span>
-</div>
-
-div className='container mx-auto px-4 py-8' dir='rtl'>
+    <div className='container mx-auto px-4 py-8' dir='rtl'>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        <span id="live-region"></span>
+      </div>
       {/* Header */}
       <div className='mb-8'>
         <div className='flex items-center justify-between mb-4'>
@@ -331,8 +330,10 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
       {/* Tabs */}
       <div className='mb-6'>
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
-          <button onClick={() => { setActiveTab('goals') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab('goals') } }}
- "> { setActiveTab('goals') } }}
+          <button
+            onClick={() => { setActiveTab('goals') }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('goals'); } }}
+            aria-label="عرض الأهداف"
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'goals'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -341,7 +342,10 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             الأهداف والمراحل
           </button>
-          <button onClick={() => { setActiveTab('assessments') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab('assessments') "> { setActiveTab('assessments') } }}
+          <button
+            onClick={() => { setActiveTab('assessments') }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('assessments'); } }}
+            aria-label="عرض التقييمات"
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'assessments'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -350,7 +354,10 @@ div className='container mx-auto px-4 py-8' dir='rtl'>
           >
             التقييمات
           </button>
-          <button onClick={() => { setActiveTab('reports') }} aria-label="{ if (e.key === "Enter' || e.k" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); () = aria-label="{ setActiveTab('reports') } }}"> { setActiveTab('reports') } }}
+          <button
+            onClick={() => { setActiveTab('reports') }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('reports'); } }}
+            aria-label="عرض التقارير"
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'reports'
                 ? 'bg-white text-gray-900 shadow-sm'

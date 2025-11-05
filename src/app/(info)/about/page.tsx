@@ -89,8 +89,8 @@ export default function AboutPage() {
               >
                 تواصل
               </Link>
-            </div>
-          </nav>
+            </nav>
+          </div>
         </div>
       </header>
 
@@ -105,7 +105,7 @@ export default function AboutPage() {
             نحن نؤمن بقوة التضامن والتعاون في بناء مجتمع أفضل. منصة مُعين تجمع
             بين المستفيدين والمتطوعين والمتبرعين لتقديم الدعم والمساعدة للجميع.
           </p>
-        </section>
+        </div>
       </section>
 
       {/* Stats Section */}
@@ -116,7 +116,7 @@ export default function AboutPage() {
               <div key={index} className='text-center'>
                 <div className='mb-2 text-3xl font-bold text-[var(--default-default)] md:text-4xl'>
                   {stat.number}
-                </section>
+                </div>
                 <div className='text-gray-600 dark:text-gray-400'>
                   {stat.label}
                 </div>
@@ -137,7 +137,7 @@ export default function AboutPage() {
               نسعى لبناء مجتمع متكامل يجمع بين جميع فئات المجتمع لتحقيق التضامن
               والتعاون
             </p>
-          </section>
+          </div>
 
           <div className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'>
             {features.map((feature, index) => (
@@ -174,7 +174,7 @@ export default function AboutPage() {
               </p>
               <div className='space-y-4'>
                 <div className='flex items-start gap-3'>
-                  <div className='mt-2 h-2 w-2 rounded-full bg-[var(--default-default)]'></section>
+                  <div className='mt-2 h-2 w-2 rounded-full bg-[var(--default-default)]'></div>
                   <p className='text-gray-600 dark:text-gray-400'>
                     توفير منصة آمنة وموثوقة للتواصل بين جميع فئات المجتمع
                   </p>
@@ -228,7 +228,7 @@ export default function AboutPage() {
             >
               تواصل معنا
             </Link>
-          </section>
+          </div>
         </div>
       </section>
 

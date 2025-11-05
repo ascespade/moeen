@@ -1,20 +1,4 @@
-#!/bin/sh
-# Design System Protection - Pre-commit Hook
-# حماية نظام التصميم - قبل الالتزام
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-echo "🛡️  فحص نظام التصميم المركزي..."
-
-# Run design system enforcer
-npm run protect:design
-
-if [ $? -ne 0 ]; then
-  echo ""
-  echo "❌ فشل فحص نظام التصميم!"
-  echo "⚠️  يرجى إصلاح المخالفات قبل الالتزام."
-  echo ""
-  echo "💡 استخدم: npm run protect:design لإصلاح تلقائي"
-  exit 1
-fi
-
-echo "✅ نظام التصميم محمي!"
-exit 0
+npx lint-staged

@@ -377,7 +377,7 @@ function PerformancePageContent() {
         ],
         tags: ['ذاكرة', 'نظام', 'موارد'],
       },
-    ];
+    ];*/
 
     // Alerts will be fetched from API if available
     setAlerts([]);
@@ -1095,7 +1095,6 @@ function PerformancePageContent() {
             )}
           </DialogContent>
         </Dialog>
-        </div>
       </div>
     </div>
   );

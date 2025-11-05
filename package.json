@@ -94,7 +94,8 @@
     "test:admin": "playwright test tests/admin.spec.ts tests/admin-comprehensive.spec.ts --reporter=list,html",
     "test:admin:headed": "playwright test tests/admin.spec.ts tests/admin-comprehensive.spec.ts --headed",
     "test:admin:auto": "playwright test tests/admin-auto-test.ts --reporter=list,html",
-    "test:admin:monitor": "node tests/admin-auto-monitor.mjs"
+    "test:admin:monitor": "node tests/admin-auto-monitor.mjs",
+    "prepare": "husky"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -115,6 +116,7 @@
     "clsx": "^2.1.1",
     "critters": "^0.0.23",
     "crypto-js": "^4.2.0",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.3.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
@@ -141,6 +143,8 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@playwright/test": "^1.40.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
@@ -155,10 +159,25 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "glob": "^11.0.3",
+    "husky": "^9.1.7",
     "js-yaml": "^4.1.0",
     "jsdom": "^27.0.1",
     "lighthouse": "^12.1.0",
+    "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
     "vitest": "^4.0.4"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mdx,css,html,yml,yaml,scss}": [
+      "prettier --write"
+    ]
   }
 }

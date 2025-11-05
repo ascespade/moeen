@@ -14,6 +14,7 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
  * Create patient with ip_address workaround
  * Uses API endpoint instead of direct insert
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function createPatientSafe(patientData: any) {
   // Option 1: Use API endpoint (recommended for production)
   try {
@@ -26,17 +27,19 @@ export async function createPatientSafe(patientData: any) {
     if (response.ok) {
       return { data: await response.json(), error: null };
     }
-  } catch (e) {
+  } catch (_e) {
     // Fallback to direct insert if API not available
   }
 
   // Option 2: Direct insert (will work once trigger is fixed)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return await supabase.from('patients').insert([patientData]).select();
 }
 
 /**
  * Update user with ip_address workaround
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function updateUserSafe(userId: string, updates: any) {
   // Option 1: Use API
   try {
@@ -49,7 +52,7 @@ export async function updateUserSafe(userId: string, updates: any) {
     if (response.ok) {
       return { data: await response.json(), error: null };
     }
-  } catch (e) {
+  } catch (_e) {
     // Fallback
   }
 
@@ -60,6 +63,7 @@ export async function updateUserSafe(userId: string, updates: any) {
 /**
  * Create appointment with proper doctor_id from doctors table
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function createAppointmentSafe(appointmentData: any) {
   // Ensure we have both date and time
   if (!appointmentData.appointment_time) {

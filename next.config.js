@@ -131,6 +131,20 @@ const nextConfig = {
   // Production source maps (disabled for performance)
   productionBrowserSourceMaps: false,
 
+  // ESLint configuration
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: false,
+  },
+
+  // TypeScript configuration
+  typescript: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has type errors.
+    ignoreBuildErrors: false,
+  },
+
   // Output configuration for Docker
   output: 'standalone',
 };

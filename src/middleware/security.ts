@@ -260,7 +260,7 @@ export class SecurityMiddleware {
     return this.config.allowedOrigins.some(allowedOrigin => {
       if (allowedOrigin === '*') return true;
       if (allowedOrigin.startsWith('*.')) {
-        const do<main= allowedOrigin.substring(2);
+        const domain = allowedOrigin.substring(2);
         return origin.endsWith(domain);
       }
       return origin === allowedOrigin;
