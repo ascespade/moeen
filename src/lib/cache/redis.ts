@@ -10,7 +10,7 @@ interface CacheConfig {
 }
 
 class RedisCache {
-  private _client: any;
+  private _client: unknown;
   private config: CacheConfig;
 
   constructor() {
@@ -117,17 +117,17 @@ class RedisCache {
 // Cache decorator for functions
 export function cached(
   ttl: number = 3600,
-  keyGenerator?: (...args: any[]) => string
+  keyGenerator?: (...args: unknown[]) => string
 ) {
   return function (
-    _target: any,
+    _target: unknown,
     propertyName: string,
     descriptor: PropertyDescriptor
   ) {
     const method = descriptor.value;
     const cache = new RedisCache();
 
-    descriptor.value = async function (...args: any[]) {
+    descriptor.value = async function (...args: unknown[]) {
       const cacheKey = keyGenerator
         ? keyGenerator(...args)
         : `${propertyName}:${JSON.stringify(args)}`;

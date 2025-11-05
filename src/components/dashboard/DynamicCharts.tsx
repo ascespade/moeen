@@ -5,7 +5,7 @@ import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 
 // Dynamic Chart Components using SVG and CSS
 interface ChartData {
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface DynamicChartsProps {
@@ -241,7 +241,7 @@ export function DynamicPieChart({
 }
 
 // Statistics Cards Component
-export function DynamicStatsCards({ data }: { data: any }) {
+export function DynamicStatsCards({ data }: { data: { statistics?: Record<string, unknown> } }) {
   const localizedNumber = useLocalizedNumber();
   if (!data?.statistics) {
     return (
@@ -320,7 +320,7 @@ export function DynamicStatsCards({ data }: { data: any }) {
 }
 
 // Recent Activities Component
-export function DynamicRecentActivities({ data }: { data: any }) {
+export function DynamicRecentActivities({ data }: { data: { recent_activities?: Array<{ activity_type: string; title: string; description: string; activity_timestamp: string }> } }) {
   if (!data?.recent_activities || data.recent_activities.length === 0) {
     return (
       <div className='bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm'>
@@ -368,7 +368,7 @@ export function DynamicRecentActivities({ data }: { data: any }) {
         الأنشطة الأخيرة
       </h3>
       <div className='space-y-4'>
-        {activities.map((activity: any, index: number) => (
+        {activities.map((activity: { activity_type: string; title: string; description: string; activity_timestamp: string }, index: number) => (
           <div key={index} className='flex items-start gap-3'>
             <div
               className={`p-2 rounded-full ${getActivityColor(activity.activity_type)}`}
