@@ -5,7 +5,7 @@
  */
 
 import { createClient } from '../supabase/server';
-import type { User } from '@/types/database.types';
+import type { User } from '../../types/database.types';
 
 /**
  * Get current session

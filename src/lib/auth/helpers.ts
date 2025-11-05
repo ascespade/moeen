@@ -9,7 +9,7 @@ import { createClient } from '../supabase/server';
 import { ROLES, PERMISSIONS, hasPermission as checkPermission } from '../constants';
 import { AppError } from '../errors';
 import { ERROR_CODES } from '../constants/errors';
-import type { User } from '@/types/database.types';
+import type { User } from '../../types/database.types';
 
 /**
  * Get current authenticated user
@@ -95,6 +95,9 @@ export function hasRoleAccess(userRole: string, requiredRole: string): boolean {
 export function hasPermission(userRole: string, permission: string): boolean {
   return checkPermission(userRole, permission);
 }
+
+// Re-export for convenience
+export { hasPermission as checkPermission };
 
 /**
  * Get user with profile

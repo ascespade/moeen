@@ -7,7 +7,7 @@
 
 import { requireAuth, requireRole, hasPermission } from './helpers';
 import { handleServerActionError } from '../errors';
-import type { User } from '@/types/database.types';
+import type { User } from '../../types/database.types';
 
 interface ActionOptions {
   requireAuth?: boolean;
