@@ -40,7 +40,7 @@ export default function LoginPage() {
         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
         setSubmitting(false);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
       setSubmitting(false);
     }
@@ -61,7 +61,7 @@ export default function LoginPage() {
         setError(result.error || 'بيانات الاعتماد غير صحيحة.');
         setSubmitting(false);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err?.message || 'حدث خطأ');
       setSubmitting(false);
     }

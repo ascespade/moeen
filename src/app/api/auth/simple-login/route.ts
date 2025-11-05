@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-  } catch (e: any) {
+  } catch (e: unknown) {
     return NextResponse.json(
       { success: false, error: e?.message || 'Internal error' },
       { status: 500 }

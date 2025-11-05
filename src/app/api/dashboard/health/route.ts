@@ -38,7 +38,7 @@ export async function GET() {
       responseTime,
       uptime: process.uptime(),
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         status: 'unhealthy',

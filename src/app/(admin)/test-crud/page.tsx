@@ -328,7 +328,7 @@ export default function CRUDTestPage() {
             duration: Date.now() - startTime,
           };
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       return {
         ...test,
         status: 'error',

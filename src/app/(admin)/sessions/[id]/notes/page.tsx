@@ -156,7 +156,7 @@ export default function SessionNotesPage() {
 
       alert('✅ تم حفظ ملاحظات الجلسة بنجاح!\n\nسيتم إرسال تحديث للأسرة.');
       router.push('/admin/appointments');
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error('Error saving session notes', error);
       alert(`خطأ: ${error.message || 'فشل في حفظ الملاحظات'}`);
     } finally {

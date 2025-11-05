@@ -115,7 +115,7 @@ export function runAutoFix(srcDir: string = 'src'): {
         totalChanges += result.changes;
         logger.info(`Fixed: ${file} (${result.changes} changes)`);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       errors.push(`${file}: ${error.message}`);
     }
   });

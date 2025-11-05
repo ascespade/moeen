@@ -58,7 +58,7 @@ export default function EnhancedLoginPage() {
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
     } finally {
       setSubmitting(false);
@@ -93,7 +93,7 @@ export default function EnhancedLoginPage() {
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err?.message || 'حدث خطأ');
     } finally {
       setSubmitting(false);

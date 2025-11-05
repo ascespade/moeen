@@ -105,7 +105,7 @@ export default function TherapistSchedulesPage() {
       if (error) throw error;
       await loadSchedules();
       alert('تم إضافة الجدول بنجاح!');
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error('Error adding schedule', error);
       alert(`خطأ: ${error.message || 'فشل في إضافة الجدول'}`);
     } finally {

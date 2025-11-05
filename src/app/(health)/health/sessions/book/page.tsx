@@ -104,7 +104,7 @@ export default function BookSessionPage() {
 
       alert('تم حجز الجلسة بنجاح! ✅\n\nسنرسل لك تذكيراً قبل موعد الجلسة.');
       router.push('/health/appointments');
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error('Error booking session', err);
       setError(err.message || 'حدث خطأ أثناء حجز الجلسة');
     } finally {

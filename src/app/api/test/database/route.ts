@@ -86,10 +86,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               accessible: !error,
               error: error?.message || null,
             };
-          } catch (err: any) {
+          } catch (err: unknown) {
             tableResults[table] = {
               accessible: false,
-              error: err.message,
+              error: err instanceof Error ? err.message : String(err),
             };
           }
         }
@@ -288,10 +288,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               error: appointmentsError.message,
             };
           }
-        } catch (err: any) {
+        } catch (err: unknown) {
           relationResults['appointments -> patients'] = {
             working: false,
-            error: err.message,
+            error: err instanceof Error ? err.message : String(err),
           };
         }
 
@@ -309,10 +309,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               ? 'patient_id column accessible'
               : 'Column check failed',
           };
-        } catch (err: any) {
+        } catch (err: unknown) {
           relationResults['foreign key column exists'] = {
             working: false,
-            error: err.message,
+            error: err instanceof Error ? err.message : String(err),
           };
         }
 
@@ -330,7 +330,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           { table: 'appointments', column: 'date' },
         ];
 
-        const indexResults: Record<string, any> = {};
+        const indexResults: Record<string, { performance: string; error: string | null; duration?: number }> = {};
 
         for (const idx of indexTests) {
           try {
@@ -351,10 +351,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               duration: idxDuration,
               error: error?.message || null,
             };
-          } catch (err: any) {
+          } catch (err: unknown) {
             indexResults[`${idx.table}.${idx.column}`] = {
               performance: 'error',
-              error: err.message,
+              error: err instanceof Error ? err.message : String(err),
             };
           }
         }
@@ -384,11 +384,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           { status: 400 }
         );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        error: error.message || 'Unknown error',
+        error: error instanceof Error ? error.message : 'Unknown error',
         duration: Date.now() - Date.now(),
       },
       { status: 500 }

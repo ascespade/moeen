@@ -21,7 +21,7 @@ export async function GET(
       success: true,
       permissions,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[API] Error fetching role permissions:', error);
     return NextResponse.json(
       {
