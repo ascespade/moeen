@@ -62,7 +62,7 @@ export default function LoginPage() {
         setSubmitting(false);
       }
     } catch (err: unknown) {
-      setError(err?.message || 'حدث خطأ');
+      setError(err instanceof Error ? err.message : 'حدث خطأ');
       setSubmitting(false);
     }
   };

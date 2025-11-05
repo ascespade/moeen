@@ -262,12 +262,17 @@ function calculateTherapyAnalytics(sessions: unknown[]): unknown {
 
   // Calculate averages
   Object.keys(byType).forEach((type) => {
-    byType[type].successRate = byType[type].successRate / byType[type].count || 0;
+    const typeData = byType[type];
+    if (typeData) {
+      typeData.successRate = typeData.successRate / typeData.count || 0;
+    }
   });
 
   Object.keys(byTherapist).forEach((therapistId) => {
-    byTherapist[therapistId].successRate =
-      byTherapist[therapistId].successRate / byTherapist[therapistId].sessions || 0;
+    const therapistData = byTherapist[therapistId];
+    if (therapistData) {
+      therapistData.successRate = therapistData.successRate / therapistData.sessions || 0;
+    }
   });
 
   return {
@@ -288,13 +293,14 @@ function calculateTherapyAnalytics(sessions: unknown[]): unknown {
 function calculateProgressTrends(sessions: unknown[]): Array<{ month: string; averageProgress: number }> {
   const trends: Record<string, { total: number; count: number }> = {};
   sessions.forEach((session: unknown) => {
-    if (!session.created_at) return;
-    const date = new Date(session.created_at);
+    const sessionObj = session as { created_at?: string; progress?: number };
+    if (!sessionObj.created_at) return;
+    const date = new Date(sessionObj.created_at);
     const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
     if (!trends[month]) {
       trends[month] = { total: 0, count: 0 };
     }
-    trends[month].total += session.progress || 0;
+    trends[month].total += sessionObj.progress || 0;
     trends[month].count++;
   });
 
@@ -309,7 +315,8 @@ function calculateProgressTrends(sessions: unknown[]): Array<{ month: string; av
 function calculateAppointmentStatusGroups(appointments: unknown[]): Array<{ status: string; count: number }> {
   const groups: Record<string, number> = {};
   appointments.forEach((apt: unknown) => {
-    const status = apt.status || 'غير محدد';
+    const aptObj = apt as { status?: string };
+    const status = aptObj.status || 'غير محدد';
     groups[status] = (groups[status] || 0) + 1;
   });
   return Object.entries(groups).map(([status, count]) => ({ status, count }));
@@ -318,8 +325,9 @@ function calculateAppointmentStatusGroups(appointments: unknown[]): Array<{ stat
 function calculateAppointmentTimeGroups(appointments: unknown[]): Array<{ hour: number; count: number }> {
   const groups: Record<number, number> = {};
   appointments.forEach((apt: unknown) => {
-    if (!apt.appointment_date) return;
-    const hour = new Date(apt.appointment_date).getHours();
+    const aptObj = apt as { appointment_date?: string };
+    if (!aptObj.appointment_date) return;
+    const hour = new Date(aptObj.appointment_date).getHours();
     groups[hour] = (groups[hour] || 0) + 1;
   });
   return Object.entries(groups)
@@ -331,8 +339,9 @@ function calculateAppointmentDayGroups(appointments: unknown[]): Array<{ day: st
   const groups: Record<string, number> = {};
   const dayNames = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
   appointments.forEach((apt: unknown) => {
-    if (!apt.appointment_date) return;
-    const day = dayNames[new Date(apt.appointment_date).getDay()];
+    const aptObj = apt as { appointment_date?: string };
+    if (!aptObj.appointment_date) return;
+    const day = dayNames[new Date(aptObj.appointment_date).getDay()];
     groups[day] = (groups[day] || 0) + 1;
   });
   return Object.entries(groups).map(([day, count]) => ({ day, count }));
@@ -340,21 +349,28 @@ function calculateAppointmentDayGroups(appointments: unknown[]): Array<{ day: st
 
 function calculateAverageProgress(sessions: unknown[]): number {
   if (sessions.length === 0) return 0;
-  const total = sessions.reduce((sum: number, s: unknown) => sum + (s.progress || 0), 0);
+  const total = sessions.reduce((sum: number, s: unknown) => {
+    const sessionObj = s as { progress?: number };
+    return sum + (sessionObj.progress || 0);
+  }, 0);
   return total / sessions.length;
 }
 
 function calculateAverageSessionDuration(sessions: unknown[]): number {
   if (sessions.length === 0) return 0;
-  const total = sessions.reduce((sum: number, s: unknown) => sum + (s.duration || 0), 0);
+  const total = sessions.reduce((sum: number, s: unknown) => {
+    const sessionObj = s as { duration?: number };
+    return sum + (sessionObj.duration || 0);
+  }, 0);
   return total / sessions.length;
 }
 
 function calculatePatientGrowth(patients: unknown[]): Array<{ month: string; count: number }> {
   const trends: Record<string, number> = {};
   patients.forEach((patient: unknown) => {
-    if (!patient.created_at) return;
-    const date = new Date(patient.created_at);
+    const patientObj = patient as { created_at?: string };
+    if (!patientObj.created_at) return;
+    const date = new Date(patientObj.created_at);
     const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
     trends[month] = (trends[month] || 0) + 1;
   });
