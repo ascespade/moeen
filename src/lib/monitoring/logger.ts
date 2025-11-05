@@ -146,7 +146,7 @@ class Logger {
   /**
    * Sanitize sensitive data before logging
    */
-  private sanitizeData(data: any): any {
+  private sanitizeData(data: unknown): any {
     if (!data) return data;
 
     const sensitiveKeys = [
