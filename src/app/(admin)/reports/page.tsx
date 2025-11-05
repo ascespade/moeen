@@ -106,7 +106,7 @@ interface Report {
     charts?: Array<{
       type: string;
       title: string;
-      data: any[];
+      data: unknown[];
     }>;
   };
   permissions: string[];

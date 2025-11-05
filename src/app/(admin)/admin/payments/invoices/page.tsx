@@ -41,7 +41,7 @@ function InvoicesPageContent() {
     }
   };
 
-  const generateInvoicePDF = (_payment: any) => {
+  const generateInvoicePDF = (_payment: unknown) => {
     // TODO: Implement PDF generation
     alert('سيتم تنفيذ توليد PDF قريباً');
   };

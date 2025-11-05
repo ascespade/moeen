@@ -133,7 +133,7 @@ export default function IntegrationSettings({
     loadIntegrationSettings();
   }, []);
 
-  const updateConfig = (section: keyof IntegrationConfig, updates: any) => {
+  const updateConfig = (section: keyof IntegrationConfig, updates: unknown) => {
     setConfig(prev => ({
       ...prev,
       [section]: { ...prev[section], ...updates },

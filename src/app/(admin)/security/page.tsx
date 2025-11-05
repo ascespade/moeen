@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
+import { logger } from '@/lib/utils/logger';
 
 interface SecurityEvent {
   id: string;
@@ -144,7 +145,7 @@ function SecurityPageContent() {
         setAlerts([]);
       }
     } catch (error) {
-      console.error('Error loading security data:', error);
+      logger.error('Error loading security data:', error, {})
       setSecurityEvents([]);
       setPolicies([]);
       setSessions([]);

@@ -83,7 +83,7 @@ export default function SecuritySettings({ onChange }: SecuritySettingsProps) {
     loadSecuritySettings();
   }, []);
 
-  const updateConfig = (section: keyof SecurityConfig, updates: any) => {
+  const updateConfig = (section: keyof SecurityConfig, updates: unknown) => {
     setConfig(prev => ({
       ...prev,
       [section]: { ...prev[section], ...updates },

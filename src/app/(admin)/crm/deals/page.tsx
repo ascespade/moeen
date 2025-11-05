@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 interface Deal {
   id: string;
@@ -46,7 +47,7 @@ export default function CRMDealsPage() {
           setDeals([]);
         }
       } catch (error) {
-        console.error('Error fetching deals:', error);
+        logger.error('Error fetching deals:', error, {})
         setDeals([]);
       } finally {
         setLoading(false);

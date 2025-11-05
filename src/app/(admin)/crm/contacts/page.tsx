@@ -29,6 +29,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { logger } from '@/lib/utils/logger';
 
 interface Contact {
   id: string;
@@ -106,7 +107,7 @@ function ContactsPageContent() {
         setActivities([]);
       }
     } catch (error) {
-      console.error('Error loading contacts:', error);
+      logger.error('Error loading contacts:', error, {})
       setContacts([]);
       setActivities([]);
     } finally {

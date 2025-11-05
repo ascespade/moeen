@@ -116,7 +116,7 @@ export default function TherapistSchedulesPage() {
   const updateSchedule = async (
     scheduleId: string,
     field: string,
-    value: any
+    value: unknown
   ) => {
     try {
       const supabase = createClient();

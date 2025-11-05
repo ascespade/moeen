@@ -7,6 +7,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { MonitoringReport } from '@/lib/monitoring/types';
+import { logger } from '@/lib/utils/logger';
 
 export default function MonitoringDashboard() {
   const [report, setReport] = useState<MonitoringReport | null>(null);
@@ -20,7 +21,7 @@ export default function MonitoringDashboard() {
         setReport(data);
         setIsLoading(false);
       } catch (error) {
-        console.error('Error fetching monitoring data:', error);
+        logger.error('Error fetching monitoring data:', error, {})
         setIsLoading(false);
       }
     };

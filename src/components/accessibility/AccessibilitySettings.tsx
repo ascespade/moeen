@@ -29,7 +29,7 @@ const AccessibilitySettings: React.FC = () => {
   const { settings, updateSettings } = useAccessibility();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSettingChange = (key: keyof typeof settings, value: any) => {
+  const handleSettingChange = (key: keyof typeof settings, value: unknown) => {
     updateSettings({ [key]: value });
   };
 

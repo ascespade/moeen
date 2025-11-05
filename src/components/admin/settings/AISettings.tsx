@@ -167,7 +167,7 @@ export default function AISettings({ onChange }: AISettingsProps) {
     loadAISettings();
   }, []);
 
-  const updateConfig = (section: keyof AIConfig, updates: any) => {
+  const updateConfig = (section: keyof AIConfig, updates: unknown) => {
     setConfig(prev => ({
       ...prev,
       [section]: { ...prev[section], ...updates },

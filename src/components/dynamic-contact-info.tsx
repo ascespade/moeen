@@ -64,7 +64,7 @@ const DynamicContactInfo = memo(function DynamicContactInfo() {
 
         if (data.contact_info && Array.isArray(data.contact_info)) {
           setContactInfo(
-            data.contact_info.map((item: any) => ({
+            data.contact_info.map((item: unknown) => ({
               ...item,
               icon:
                 item.type === 'phone' ? (

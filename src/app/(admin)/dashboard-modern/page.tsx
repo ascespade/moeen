@@ -14,6 +14,7 @@ import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import {
+import { logger } from '@/lib/utils/logger';
   BarChart3,
   Calendar,
   DollarSign,
@@ -224,10 +225,10 @@ export default function ModernAdminDashboard() {
         props: {
           notifications: mockNotifications,
           maxHeight: 400,
-          onMarkAsRead: (id: string) => console.log('Mark as read:', id),
-          onMarkAllAsRead: () => console.log('Mark all as read'),
-          onActionClick: (notification: any) =>
-            console.log('Action:', notification),
+          onMarkAsRead: (id: string) => logger.info('Mark as read:', id),
+          onMarkAllAsRead: () => logger.info('Mark all as read'),
+          onActionClick: (notification: unknown) =>
+            logger.info('Action:', notification),
         },
       },
     ],
@@ -271,15 +272,15 @@ export default function ModernAdminDashboard() {
             isEditable={isGridEditable}
             onItemChange={items => {
               // Handle layout changes
-              console.log('Layout changed:', items);
+              logger.info('Layout changed:', items);
             }}
             onItemAdd={() => {
               // Handle adding new widget
-              console.log('Add new widget');
+              logger.info('Add new widget');
             }}
             onItemRemove={id => {
               // Handle removing widget
-              console.log('Remove widget:', id);
+              logger.info('Remove widget:', id);
             }}
             className='mb-8'
           />

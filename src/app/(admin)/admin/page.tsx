@@ -24,6 +24,7 @@ import { Label } from '@/components/ui/Label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 
 import {
+import { logger } from '@/lib/utils/logger';
   Users,
   Settings,
   Shield,
@@ -118,7 +119,7 @@ export default function AdminPage() {
       setCurrentUser(usersData.currentUser || null);
       setError(null);
     } catch (err) {
-      console.error('Error loading admin data:', err);
+      logger.error('Error loading admin data:', err, {})
       // Set empty arrays on error - no mock data
       setUsers([]);
       setConfigs([]);

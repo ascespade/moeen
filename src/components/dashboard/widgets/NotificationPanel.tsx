@@ -301,7 +301,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
                 </label>
                 <select
                   value={filterType}
-                  onChange={e => setFilterType(e.target.value as any)}
+                  onChange={e => setFilterType(e.target.value as unknown)}
                   className='w-full px-3 py-2 bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary-500'
                 >
                   <option value='all'>الكل</option>
@@ -317,7 +317,7 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
                 </label>
                 <select
                   value={filterPriority}
-                  onChange={e => setFilterPriority(e.target.value as any)}
+                  onChange={e => setFilterPriority(e.target.value as unknown)}
                   className='w-full px-3 py-2 bg-white dark:bg-neutral-700 border border-neutral-200 dark:border-neutral-600 rounded text-sm focus:outline-none focus:ring-2 focus:ring-primary-500'
                 >
                   <option value='all'>الكل</option>

@@ -36,12 +36,12 @@ interface DashboardMetrics {
       service: string;
       status: string;
       lastCheck: string;
-      details: any;
+      details: unknown;
     }>;
     metrics: Array<{
       service: string;
       lastUpdate: string;
-      metrics: any;
+      metrics: unknown;
     }>;
   };
   automation: {

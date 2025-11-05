@@ -74,7 +74,7 @@ export const PieChart: React.FC<PieChartProps> = ({
             labelLine={false}
             label={
               labelKey
-                ? ({ name, percent }: any) =>
+                ? ({ name, percent }: unknown) =>
                     `${name} ${((percent as number) * 100).toFixed(0)}%`
                 : false
             }

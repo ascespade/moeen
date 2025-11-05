@@ -97,10 +97,10 @@ export async function GET(_request: NextRequest) {
 
         if (response.ok) {
           testResults.passed++;
-          result.status = 'PASSED' as any;
+          result.status = 'PASSED' as unknown;
         } else {
           testResults.failed++;
-          result.status = 'FAILED' as any;
+          result.status = 'FAILED' as unknown;
         }
 
         testResults.results.push(result);

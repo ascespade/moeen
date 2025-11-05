@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { logger } from '@/lib/utils/logger';
 
 export default function PaymentsPage() {
   const [payments, setPayments] = useState<any[]>([]);
@@ -20,7 +21,7 @@ export default function PaymentsPage() {
       const data = await response.json();
       setPayments(data.payments || []);
     } catch (error) {
-      console.error('Error loading payments:', error);
+      logger.error('Error loading payments:', error, {})
     } finally {
       setLoading(false);
     }

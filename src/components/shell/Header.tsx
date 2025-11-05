@@ -474,8 +474,8 @@ export default function Header() {
                               // Mark all as read
                               await Promise.all(
                                 notifications
-                                  .filter((n: any) => !n.is_read)
-                                  .map((n: any) =>
+                                  .filter((n: unknown) => !n.is_read)
+                                  .map((n: unknown) =>
                                     fetch(`/api/notifications/${n.id}/read`, {
                                       method: 'POST',
                                       credentials: 'include',

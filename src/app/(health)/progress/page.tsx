@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { logger } from '@/lib/utils/logger';
 
 export default function ProgressPage() {
   const [goals, setGoals] = useState<any[]>([]);
@@ -19,7 +20,7 @@ export default function ProgressPage() {
       const data = await response.json();
       setGoals(data.goals || []);
     } catch (error) {
-      console.error('Error loading progress:', error);
+      logger.error('Error loading progress:', error, {})
     } finally {
       setLoading(false);
     }

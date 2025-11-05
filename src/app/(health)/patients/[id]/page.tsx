@@ -4,6 +4,7 @@ import { ROUTES } from '@/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
 import { realDB } from '@/lib/supabase-real';
+import { logger } from '@/lib/utils/logger';
 
 interface Patient {
   id: string;
@@ -67,7 +68,7 @@ export default function PatientDetailsPage({
         // Load sessions data
         const sessionsData = await realDB.getSessions(params.id);
         const transformedSessions: Session[] = sessionsData.map(
-          (session: any) => ({
+          (session: unknown) => ({
             id: session.id,
             date: session.session_date,
             doctor: session.doctors?.users?.name || 'غير محدد',
@@ -88,7 +89,7 @@ export default function PatientDetailsPage({
         setDocuments([]);
       } catch (err) {
         setError('فشل في تحميل بيانات المريض');
-        console.error('Error loading patient data:', err);
+        logger.error('Error loading patient data:', err, {})
       } finally {
         setLoading(false);
       }
@@ -268,8 +269,8 @@ export default function PatientDetailsPage({
               ].map(tab => (
                 <button
                   key={tab.id}
-                  onClick={() => { setActiveTab(tab.id as any) }}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab(tab.id as any); } }}
+                  onClick={() => { setActiveTab(tab.id as unknown) }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab(tab.id as unknown); } }}
                   aria-label={`تبديل إلى تبويب ${tab.label}`}
                   className={`border-b-2 px-1 py-4 text-sm font-medium ${
                     activeTab === tab.id

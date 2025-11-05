@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { logger } from '@/lib/utils/logger';
 
 export default function FamilyPage() {
   const [family, setFamily] = useState<any[]>([]);
@@ -19,7 +20,7 @@ export default function FamilyPage() {
       const data = await response.json();
       setFamily(data.family || []);
     } catch (error) {
-      console.error('Error loading family:', error);
+      logger.error('Error loading family:', error, {})
     } finally {
       setLoading(false);
     }

@@ -110,7 +110,7 @@ export default function AvailableSlotsPicker({
   }
 
   // Group slots by therapist
-  const slotsByTherapist = slots.reduce((acc: any, slot) => {
+  const slotsByTherapist = slots.reduce((acc: unknown, slot) => {
     if (!acc[slot.therapistId]) {
       acc[slot.therapistId] = {
         name: slot.therapistName,
@@ -127,7 +127,7 @@ export default function AvailableSlotsPicker({
         {slots.length} موعد متاح
       </p>
 
-      {Object.entries(slotsByTherapist).map(([therapistId, data]: any) => (
+      {Object.entries(slotsByTherapist).map(([therapistId, data]: unknown) => (
         <div key={therapistId} className='card p-6'>
           <h3 className='text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center'>
             <span className='text-2xl ml-2'>👨‍⚕️</span>
