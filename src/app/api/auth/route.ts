@@ -57,7 +57,7 @@ async function handleLogin(_request: NextRequest, body: unknown) {
     );
   }
 
-  const { email, _password } = validation.data;
+  const { email, password: _password } = validation.data;
 
   // In a real implementation, you would verify the password
   // For now, we'll just check if the user exists

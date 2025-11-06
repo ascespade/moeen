@@ -60,7 +60,7 @@ export async function POST(_request: NextRequest) {
       );
     }
 
-    const { action, parameters, context, _userId, conversationId } =
+    const { action, parameters, context, userId: _userId, conversationId } =
       validation.data;
 
     // Initialize chatbot components - temporarily disabled

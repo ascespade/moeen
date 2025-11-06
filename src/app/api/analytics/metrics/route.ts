@@ -17,12 +17,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getUserPermissions(
-      authResult.user.role,
-      authResult.user.meta?.permissions || []
+    const userPermissions = PermissionManager.getRolePermissions(
+      authResult.user.role
     );
 
-    if (!PermissionManager.canAccess(userPermissions, 'analytics', 'view')) {
+    if (!PermissionManager.hasPermission(userPermissions, 'analytics:view')) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }
