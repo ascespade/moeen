@@ -57,7 +57,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         .single();
 
       if (createError) {
-        logger.error('Patient creation error:', createError, {});
+        logger.error('Patient creation error:', { error: createError });
         return NextResponse.json(
           { error: `Failed to create patient: ${createError.message}` },
           { status: 500 }
@@ -145,7 +145,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (appointmentError) {
-      logger.error('Appointment creation error:', appointmentError, {});
+      logger.error('Appointment creation error:', { error: appointmentError });
       return NextResponse.json(
         { error: `Failed to create appointment: ${appointmentError.message}` },
         { status: 500 }

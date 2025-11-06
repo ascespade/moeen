@@ -98,7 +98,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: auditLogs, error: auditError, count } = await query;
 
     if (auditError) {
-      logger.error('Error fetching audit logs:', auditError, {});
+      logger.error('Error fetching audit logs:', { error: auditError });
       return NextResponse.json(
         {
           error: 'Failed to fetch audit logs',
@@ -155,7 +155,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    logger.error('Error in audit logs filter API:', error, {});
+    logger.error('Error in audit logs filter API:', { error });
     return NextResponse.json(
       {
         error: 'Internal server error',

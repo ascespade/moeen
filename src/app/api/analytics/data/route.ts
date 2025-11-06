@@ -147,7 +147,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    logger.error('Error fetching analytics data:', error, {});
+    logger.error('Error fetching analytics data:', { error });
     return NextResponse.json(
       {
         success: false,

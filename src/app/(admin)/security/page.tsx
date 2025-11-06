@@ -145,7 +145,7 @@ function SecurityPageContent() {
         setAlerts([]);
       }
     } catch (error) {
-      logger.error('Error loading security data:', error, {})
+      logger.error('Error loading security data:', { error })
       setSecurityEvents([]);
       setPolicies([]);
       setSessions([]);

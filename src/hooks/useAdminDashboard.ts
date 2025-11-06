@@ -137,10 +137,10 @@ export function useAdminDashboard(
       if (result.success) {
         setActivities(result.data || []);
       } else {
-        logger.error('Failed to fetch activities:', result.error, {});
+        logger.error('Failed to fetch activities:', { error: result.error });
       }
     } catch (err) {
-      logger.error('Error fetching activities:', err, {});
+      logger.error('Error fetching activities:', { error: err });
     }
   }, []);
 
@@ -152,10 +152,10 @@ export function useAdminDashboard(
       if (result.success) {
         setStaffWorkHours(result.data || []);
       } else {
-        logger.error('Failed to fetch staff hours:', result.error, {});
+        logger.error('Failed to fetch staff hours:', { error: result.error });
       }
     } catch (err) {
-      logger.error('Error fetching staff hours:', err, {});
+      logger.error('Error fetching staff hours:', { error: err });
     }
   }, []);
 

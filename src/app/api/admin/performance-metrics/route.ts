@@ -38,7 +38,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     if (error) {
       // Table doesn't exist yet - return empty array (no mock data)
-      logger.error('Performance metrics table not found:', error, {});
+      logger.error('Performance metrics table not found:', { error });
       return NextResponse.json({
         success: true,
         data: [],
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: metrics || [],
     });
   } catch (error) {
-    logger.error('Error fetching performance metrics:', error, {});
+    logger.error('Error fetching performance metrics:', { error });
     return NextResponse.json(
       {
         success: false,

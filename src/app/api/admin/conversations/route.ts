@@ -62,7 +62,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: conversations, error, count } = await query;
 
     if (error) {
-      logger.error('Error fetching conversations:', error, {});
+      logger.error('Error fetching conversations:', { error });
       // Return empty array if table doesn't exist (no mock data)
       return NextResponse.json({
         success: true,

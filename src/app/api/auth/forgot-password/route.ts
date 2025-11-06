@@ -71,7 +71,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     });
 
     if (error) {
-      logger.error('Password reset error:', error, {});
+      logger.error('Password reset error:', { error });
       // Don't reveal if email exists or not for security
       return NextResponse.json({
         success: true,
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           duration_ms: Date.now() - startTime,
         });
       } catch (auditError) {
-        logger.error('Audit log error (non-critical):', auditError, {});
+        logger.error('Audit log error (non-critical):', { error: auditError });
       }
     } else {
       // Log attempt for non-existent user
@@ -130,7 +130,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           duration_ms: Date.now() - startTime,
         });
       } catch (auditError) {
-        logger.error('Audit log error (non-critical):', auditError, {});
+        logger.error('Audit log error (non-critical):', { error: auditError });
       }
     }
 
@@ -139,7 +139,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني',
     });
   } catch (error) {
-    logger.error('Forgot password error:', error, {});
+    logger.error('Forgot password error:', { error });
     return NextResponse.json(
       {
         success: false,

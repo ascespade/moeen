@@ -85,7 +85,7 @@ export default function RegisterPage() {
       setSuccess(true);
       setFormData({ name: '', email: '', password: '', confirmPassword: '', agreeToTerms: false });
     } catch (error) {
-      logger.error('Registration error:', error, {})
+      logger.error('Registration error:', { error })
       setErrors({ general: 'حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى.' });
     } finally {
       setIsLoading(false);

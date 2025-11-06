@@ -70,7 +70,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: integrations,
     });
   } catch (error) {
-    logger.error('Error in integration settings API:', error, {});
+    logger.error('Error in integration settings API:', { error });
     return NextResponse.json(
       {
         error: 'Internal server error',
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       data: { message: 'Integration settings saved successfully', updates },
     });
   } catch (error) {
-    logger.error('Error saving integration settings:', error, {});
+    logger.error('Error saving integration settings:', { error });
     return NextResponse.json(
       {
         error: 'Internal server error',

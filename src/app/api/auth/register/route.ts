@@ -110,7 +110,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       });
 
     if (authError) {
-      logger.error('Auth creation error:', authError, {});
+      logger.error('Auth creation error:', { error: authError });
       return NextResponse.json(
         {
           success: false,
@@ -168,7 +168,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (profileError) {
-      logger.error('Profile creation error:', profileError, {});
+      logger.error('Profile creation error:', { error: profileError });
 
       // Try to delete the auth user
       try {
@@ -218,7 +218,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         duration_ms: Date.now() - startTime,
       });
     } catch (auditError) {
-      logger.error('Audit log error (non-critical):', auditError, {});
+      logger.error('Audit log error (non-critical):', { error: auditError });
     }
 
     return NextResponse.json(
@@ -234,7 +234,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       { status: 201 }
     );
   } catch (error) {
-    logger.error('Registration error:', error, {});
+    logger.error('Registration error:', { error });
     return NextResponse.json(
       {
         success: false,

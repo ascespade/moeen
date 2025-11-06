@@ -89,7 +89,7 @@ export default function PatientDetailsPage({
         setDocuments([]);
       } catch (err) {
         setError('فشل في تحميل بيانات المريض');
-        logger.error('Error loading patient data:', err, {})
+        logger.error('Error loading patient data:', { error: err })
       } finally {
         setLoading(false);
       }

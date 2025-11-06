@@ -239,7 +239,7 @@ const FamilySupportPage: React.FC = () => {
       setSupportSessions(transformedSessions);
       setResources(transformedResources);
     } catch (error) {
-      logger.error('Failed to load family support data:', error, {})
+      logger.error('Failed to load family support data:', { error })
       setError('فشل في تحميل بيانات دعم الأسر');
       setFamilyMembers([]);
       setSupportSessions([]);

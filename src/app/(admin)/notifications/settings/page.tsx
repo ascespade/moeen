@@ -33,7 +33,7 @@ export default function NotificationsSettingsPage() {
       if (templatesRes.data) setTemplates(templatesRes.data);
       if (rulesRes.data) setRules(rulesRes.data);
     } catch (error) {
-      logger.error('Error loading data:', error, {})
+      logger.error('Error loading data:', { error })
     } finally {
       setLoading(false);
     }

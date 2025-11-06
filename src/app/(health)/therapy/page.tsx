@@ -168,7 +168,7 @@ const TherapyPage: React.FC = () => {
       setSessions(transformedSessions);
       setGoals(transformedGoals);
     } catch (error) {
-      logger.error('Failed to load therapy data:', error, {})
+      logger.error('Failed to load therapy data:', { error })
       setError('فشل في تحميل بيانات العلاج');
       setSessions([]);
       setGoals([]);

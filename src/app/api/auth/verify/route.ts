@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     // Only log in development
     if (process.env.NODE_ENV === 'development') {
-      logger.error('[VERIFY] Error:', error, {});
+      logger.error('[VERIFY] Error:', { error });
     }
 
     return NextResponse.json(

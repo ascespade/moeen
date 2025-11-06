@@ -21,7 +21,7 @@ export default function PaymentsPage() {
       const data = await response.json();
       setPayments(data.payments || []);
     } catch (error) {
-      logger.error('Error loading payments:', error, {})
+      logger.error('Error loading payments:', { error })
     } finally {
       setLoading(false);
     }

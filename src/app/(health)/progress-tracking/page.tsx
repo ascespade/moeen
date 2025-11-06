@@ -132,7 +132,7 @@ const ProgressTrackingPage: React.FC = () => {
       setReports(reportsData);
     } catch (error) {
       setError('فشل في تحميل بيانات تتبع التقدم');
-      logger.error('Error loading progress data:', error, {})
+      logger.error('Error loading progress data:', { error })
     } finally {
       setLoading(false);
     }

@@ -93,7 +93,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    logger.error('Error fetching CRM data:', error, {});
+    logger.error('Error fetching CRM data:', { error });
     return NextResponse.json(
       {
         success: false,

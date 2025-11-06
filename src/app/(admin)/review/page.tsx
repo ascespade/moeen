@@ -24,7 +24,7 @@ function ReviewCenterPageContent() {
           setRows([]);
         }
       } catch (error) {
-        logger.error('Error loading review items:', error, {})
+        logger.error('Error loading review items:', { error })
         setRows([]);
       } finally {
         setLoading(false);

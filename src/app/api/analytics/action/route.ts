@@ -28,7 +28,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       });
 
       if (error) {
-        logger.error('Analytics insert error:', error, {});
+        logger.error('Analytics insert error:', { error });
       }
     }
 

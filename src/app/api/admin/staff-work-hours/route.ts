@@ -66,7 +66,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: staff, error: staffError } = await staffQuery;
 
     if (staffError) {
-      logger.error('Error fetching staff:', staffError, {});
+      logger.error('Error fetching staff:', { error: staffError });
       return NextResponse.json(
         {
           error: 'Failed to fetch staff data',
@@ -224,7 +224,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    logger.error('Error in staff work hours API:', error, {});
+    logger.error('Error in staff work hours API:', { error });
     return NextResponse.json(
       {
         error: 'Internal server error',

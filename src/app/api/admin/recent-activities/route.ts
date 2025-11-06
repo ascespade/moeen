@@ -58,7 +58,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: auditLogs, error: auditError } = await query;
 
     if (auditError) {
-      logger.error('Error fetching audit logs:', auditError, {});
+      logger.error('Error fetching audit logs:', { error: auditError });
       return NextResponse.json(
         {
           error: 'Failed to fetch activities',
@@ -128,7 +128,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    logger.error('Error in recent activities API:', error, {});
+    logger.error('Error in recent activities API:', { error });
     return NextResponse.json(
       {
         error: 'Internal server error',

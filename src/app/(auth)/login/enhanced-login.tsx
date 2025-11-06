@@ -50,7 +50,7 @@ export default function EnhancedLoginPage() {
             const userData = JSON.parse(userStr);
             currentRole = userData.role || 'agent';
           } catch (e) {
-            logger.error('Error parsing user:', e, {})
+            logger.error('Error parsing user:', { error: e })
           }
         }
 

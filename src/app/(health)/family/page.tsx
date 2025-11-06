@@ -20,7 +20,7 @@ export default function FamilyPage() {
       const data = await response.json();
       setFamily(data.family || []);
     } catch (error) {
-      logger.error('Error loading family:', error, {})
+      logger.error('Error loading family:', { error })
     } finally {
       setLoading(false);
     }

@@ -64,7 +64,7 @@ export default function SessionsPage() {
         setSessions(transformedSessions);
       } catch (err) {
         setError('فشل في تحميل بيانات الجلسات');
-        logger.error('Error loading sessions:', err, {})
+        logger.error('Error loading sessions:', { error: err })
       } finally {
         setLoading(false);
       }

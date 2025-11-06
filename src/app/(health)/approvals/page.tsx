@@ -47,7 +47,7 @@ const loadApprovalsFromDB = async (): Promise<Approval[]> => {
     if (!response.ok) throw new Error('Failed to load approvals');
     return await response.json();
   } catch (error) {
-    logger.error('Error loading approvals:', error, {})
+    logger.error('Error loading approvals:', { error })
     return [];
   }
 };
@@ -245,7 +245,7 @@ export default function ApprovalsPage() {
 
       setApprovals(transformedApprovals);
     } catch (err) {
-      logger.error('Failed to load approvals:', err, {})
+      logger.error('Failed to load approvals:', { error: err })
       setError('Failed to load approvals');
       setApprovals([]);
     } finally {

@@ -110,7 +110,7 @@ export default function MedicalFilePage() {
         setRecords(transformedRecords);
       } catch (err) {
         setError('فشل في تحميل الملفات الطبية');
-        logger.error('Error loading medical records:', err, {})
+        logger.error('Error loading medical records:', { error: err })
       } finally {
         setLoading(false);
       }

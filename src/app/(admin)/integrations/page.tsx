@@ -176,7 +176,7 @@ const IntegrationsPage: React.FC = () => {
 
       setIntegrations(integrations);
     } catch (error) {
-      logger.error('Error loading integrations:', error, {})
+      logger.error('Error loading integrations:', { error })
     } finally {
       setLoading(false);
     }

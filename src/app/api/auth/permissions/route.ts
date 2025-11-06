@@ -50,7 +50,7 @@ export async function GET(req: NextRequest) {
       permissions,
     });
   } catch (error) {
-    logger.error('Get permissions error:', error, {});
+    logger.error('Get permissions error:', { error });
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

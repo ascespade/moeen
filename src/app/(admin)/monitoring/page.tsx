@@ -21,7 +21,7 @@ export default function MonitoringDashboard() {
         setReport(data);
         setIsLoading(false);
       } catch (error) {
-        logger.error('Error fetching monitoring data:', error, {})
+        logger.error('Error fetching monitoring data:', { error })
         setIsLoading(false);
       }
     };

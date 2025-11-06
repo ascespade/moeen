@@ -153,7 +153,7 @@ const TrainingPage: React.FC = () => {
       setProgress(transformedProgress);
     } catch (error) {
       setError('فشل في تحميل بيانات التدريب');
-      logger.error('Error loading training data:', error, {})
+      logger.error('Error loading training data:', { error })
     } finally {
       setLoading(false);
     }

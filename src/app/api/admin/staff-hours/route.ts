@@ -109,7 +109,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: staffWorkHours,
     });
   } catch (error) {
-    logger.error('Staff hours API error:', error, {});
+    logger.error('Staff hours API error:', { error });
     return NextResponse.json(
       { error: 'Failed to fetch staff hours data' },
       { status: 500 }

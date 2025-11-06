@@ -321,8 +321,7 @@ export async function POST(req: NextRequest) {
     if (userError || !userData) {
       logger.warn(
         '[api/auth/login] user data not found for',
-        data.user.id,
-        userError?.message
+        { userId: data.user.id, error: userError?.message }
       );
 
       // Attempt to upsert an application user record if Supabase auth user exists
@@ -358,8 +357,7 @@ export async function POST(req: NextRequest) {
         } else {
           logger.error(
             '[api/auth/login] upsert failed for user',
-            data.user.id,
-            upsertErr?.message
+            { userId: data.user.id, error: upsertErr?.message }
           );
           return NextResponse.json(
             { success: false, error: 'User data not found' },

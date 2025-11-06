@@ -104,7 +104,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
         setError(result.error || 'فشل في تحميل المرضى');
       }
     } catch (err) {
-      logger.error('Error fetching patients:', err, {});
+      logger.error('Error fetching patients:', { error: err });
       setError('حدث خطأ أثناء تحميل المرضى');
     } finally {
       setLoading(false);
@@ -177,7 +177,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
           return false;
         }
       } catch (err) {
-        logger.error('Error creating patient:', err, {});
+        logger.error('Error creating patient:', { error: err });
         setError('حدث خطأ أثناء إنشاء المريض');
         return false;
       }
@@ -204,7 +204,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
           return false;
         }
       } catch (err) {
-        logger.error('Error updating patient:', err, {});
+        logger.error('Error updating patient:', { error: err });
         setError('حدث خطأ أثناء تحديث المريض');
         return false;
       }
@@ -229,7 +229,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
           return false;
         }
       } catch (err) {
-        logger.error('Error deleting patient:', err, {});
+        logger.error('Error deleting patient:', { error: err });
         setError('حدث خطأ أثناء حذف المريض');
         return false;
       }
@@ -273,7 +273,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
           return false;
         }
       } catch (err) {
-        logger.error('Error in bulk action:', err, {});
+        logger.error('Error in bulk action:', { error: err });
         setError('حدث خطأ أثناء تنفيذ العملية');
         return false;
       }
@@ -287,7 +287,7 @@ export function useAdminPatients(): UseAdminPatientsReturn {
       const result = await response.json();
       return result.success ? result.data : null;
     } catch (err) {
-      logger.error('Error fetching patient stats:', err, {});
+      logger.error('Error fetching patient stats:', { error: err });
       return null;
     }
   }, []);

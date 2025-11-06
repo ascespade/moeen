@@ -20,7 +20,7 @@ export default function ProgressPage() {
       const data = await response.json();
       setGoals(data.goals || []);
     } catch (error) {
-      logger.error('Error loading progress:', error, {})
+      logger.error('Error loading progress:', { error })
     } finally {
       setLoading(false);
     }

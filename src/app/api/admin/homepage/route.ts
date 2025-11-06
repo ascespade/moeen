@@ -41,13 +41,13 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       .select();
 
     if (error) {
-      logger.error('Failed to upsert settings:', error.message, {});
+      logger.error('Failed to upsert settings:', { error: error.message });
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, data });
   } catch (err) {
-    logger.error('Error in admin/homepage PUT:', err, {});
+    logger.error('Error in admin/homepage PUT:', { error: err });
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

@@ -168,7 +168,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    logger.error('Error in patient stats API:', error, {});
+    logger.error('Error in patient stats API:', { error });
     return NextResponse.json(
       {
         error: 'Internal server error',

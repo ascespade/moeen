@@ -163,7 +163,7 @@ class AuthHub {
       } = await supabase.auth.getUser();
       return user;
     } catch (error) {
-      logger.error('Get user error:', error, {});
+      logger.error('Get user error:', { error });
       return null;
     }
   }
@@ -192,7 +192,7 @@ class AuthHub {
         .maybeSingle();
 
       if (userError || !userData) {
-        logger.error('Failed to fetch user role:', userError, {});
+        logger.error('Failed to fetch user role:', { error: userError });
         return null;
       }
 
@@ -211,7 +211,7 @@ class AuthHub {
 
       return permissions;
     } catch (error) {
-      logger.error('Get user permissions error:', error, {});
+      logger.error('Get user permissions error:', { error });
       return null;
     }
   }
@@ -291,7 +291,7 @@ class AuthHub {
 
       return hasPermission;
     } catch (error) {
-      logger.error('Permission check error:', error, {});
+      logger.error('Permission check error:', { error });
       return false;
     }
   }
@@ -301,7 +301,7 @@ class AuthHub {
       const permissions = await this.getUserPermissions(userId);
       return permissions?.role || null;
     } catch (error) {
-      logger.error('Get user role error:', error, {});
+      logger.error('Get user role error:', { error });
       return null;
     }
   }
@@ -367,7 +367,7 @@ class AuthHub {
       if (error) throw error;
       return data;
     } catch (error) {
-      logger.error('Get user profile error:', error, {});
+      logger.error('Get user profile error:', { error });
       throw error;
     }
   }

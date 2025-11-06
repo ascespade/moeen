@@ -212,7 +212,7 @@ const APIKeysSettingsPage: React.FC = () => {
         setApiKeys(initialized);
       }
     } catch (error) {
-      logger.error('Error loading API keys:', error, {})
+      logger.error('Error loading API keys:', { error })
     } finally {
       setLoading(false);
     }
@@ -239,7 +239,7 @@ const APIKeysSettingsPage: React.FC = () => {
       setSuccessMessage('✅ تم حفظ المفاتيح بنجاح!');
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (error) {
-      logger.error('Error saving API keys:', error, {})
+      logger.error('Error saving API keys:', { error })
       alert('فشل حفظ المفاتيح');
     } finally {
       setSaving(false);
