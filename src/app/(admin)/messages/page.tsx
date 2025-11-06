@@ -29,7 +29,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -78,6 +77,7 @@ import {
   Send as Outbox,
   FileText as Drafts,
   AlertOctagon as Spam,
+  Monitor,
   Trash,
   ArchiveIcon,
   Bell,

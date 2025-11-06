@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useT } from '@/components/providers/I18nProvider';
 import { usePermissions } from '@/hooks/usePermissions';
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
-import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import {
   Card,
   CardContent,
@@ -29,7 +28,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -68,6 +66,13 @@ import {
   CheckCircle,
   XCircle,
   AlertTriangle,
+  Monitor,
+  Database,
+  Wifi,
+  Timer,
+  Gauge,
+  Smile,
+  Award,
 } from 'lucide-react';
 
 interface PerformanceMetric {
