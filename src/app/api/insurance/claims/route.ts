@@ -355,13 +355,13 @@ async function submitToInsuranceProvider(claim: unknown, provider: string) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        claimReference: claim.claimReference,
-        policyNumber: claim.policyNumber,
-        memberId: claim.memberId,
-        claimAmount: claim.claimAmount,
-        diagnosis: claim.diagnosis,
-        treatment: claim.treatment,
-        attachments: claim.attachments,
+        claimReference: (claim as any).claimReference,
+        policyNumber: (claim as any).policyNumber,
+        memberId: (claim as any).memberId,
+        claimAmount: (claim as any).claimAmount,
+        diagnosis: (claim as any).diagnosis,
+        treatment: (claim as any).treatment,
+        attachments: (claim as any).attachments,
       }),
     });
 

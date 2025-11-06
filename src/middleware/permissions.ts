@@ -1,6 +1,6 @@
 // Permission middleware for route protection
 import { NextRequest, NextResponse } from 'next/server';
-import { PermissionManager } from '@/lib/permissions';
+import { PermissionManager, type RoleId } from '@/lib/permissions';
 
 interface RoutePermission {
   path: string;

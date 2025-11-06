@@ -23,7 +23,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
   const logError = (error: unknown, context: string) => {
     const timestamp = new Date().toISOString();
-    const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${error.message || error}`;
+    const errorMessage = `[${timestamp}] Dashboard metrics error in ${context}: ${(error as Error).message || String(error)}`;
     // Log to file if possible
     try {
       const fs = require('fs');
@@ -443,7 +443,7 @@ async function getChatbotMetrics() {
     const summary = {
       activeFlows: data.length,
       totalNodes: data.reduce(
-        (acc: unknown, flow: unknown) => acc + (flow.nodes?.length || 0),
+        (acc: number, flow: any) => acc + (flow.nodes?.length || 0),
         0
       ),
       totalTemplates: 0, // Would need separate query

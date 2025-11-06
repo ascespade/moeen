@@ -261,12 +261,18 @@ function calculateTherapyAnalytics(sessions: any[]): any {
 
   // Calculate averages
   Object.keys(byType).forEach((type) => {
-    byType[type].successRate = byType[type].successRate / byType[type].count || 0;
+    const typeData = byType[type];
+    if (typeData) {
+      typeData.successRate = typeData.successRate / (typeData.count || 1);
+    }
   });
 
   Object.keys(byTherapist).forEach((therapistId) => {
-    byTherapist[therapistId].successRate =
-      byTherapist[therapistId].successRate / byTherapist[therapistId].sessions || 0;
+    const therapistData = byTherapist[therapistId];
+    if (therapistData) {
+      therapistData.successRate =
+        therapistData.successRate / (therapistData.sessions || 1);
+    }
   });
 
   return {
@@ -331,8 +337,11 @@ function calculateAppointmentDayGroups(appointments: any[]): Array<{ day: string
   const dayNames = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
   appointments.forEach((apt: any) => {
     if (!apt.appointment_date) return;
-    const day = dayNames[new Date(apt.appointment_date).getDay()];
-    groups[day] = (groups[day] || 0) + 1;
+    const dayIndex = new Date(apt.appointment_date).getDay();
+    const day = dayNames[dayIndex];
+    if (day) {
+      groups[day] = (groups[day] || 0) + 1;
+    }
   });
   return Object.entries(groups).map(([day, count]) => ({ day, count }));
 }

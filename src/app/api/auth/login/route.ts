@@ -63,6 +63,7 @@ export async function POST(req: NextRequest) {
               '[api/auth/login] demo/header creating auth user for',
               targetEmail
             );
+            const supabaseAdmin = createAdminClient();
             const { data: createdUser, error: createErr } =
               await supabaseAdmin.auth.admin.createUser({
                 email: targetEmail,
@@ -207,8 +208,9 @@ export async function POST(req: NextRequest) {
                 '[api/auth/login] fallback creating auth user for',
                 email
               );
+              const supabaseAdmin2 = createAdminClient();
               const { data: createdUser, error: createErr } =
-                await supabaseAdmin.auth.admin.createUser({
+                await supabaseAdmin2.auth.admin.createUser({
                   email,
                   password: DEFAULT_PASSWORD,
                   email_confirm: true,

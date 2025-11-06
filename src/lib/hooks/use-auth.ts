@@ -13,6 +13,8 @@ import { createClient } from '../supabase/client';
 import type { _User } from '@supabase/supabase-js';
 import type { User as DbUser } from '@/types/database.types';
 
+import { User } from '@supabase/supabase-js';
+
 export function useAuth() {
   const [user, setUser] = useState<DbUser | null>(null);
   const [authUser, setAuthUser] = useState<User | null>(null);

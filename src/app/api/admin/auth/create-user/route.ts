@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 1) Create or get Auth user
+    const supabaseAdmin = createAdminClient();
     const { data: existing } =
       await supabaseAdmin.auth.admin.listUsers({
         page: 1,

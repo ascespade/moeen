@@ -80,7 +80,10 @@ export class MonitoringSystem {
       if (!byCpu[task.cpu]) {
         byCpu[task.cpu] = [];
       }
-      byCpu[task.cpu].push(task);
+      const cpuTasks = byCpu[task.cpu];
+      if (cpuTasks) {
+        cpuTasks.push(task);
+      }
     });
     return byCpu;
   }

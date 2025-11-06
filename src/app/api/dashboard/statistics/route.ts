@@ -103,7 +103,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       }) || [];
 
     const monthlyRevenue = monthlyPayments.reduce(
-      (sum: number, p: unknown) => sum + (p.amount || 0),
+      (sum: number, p: any) => sum + (p.amount || 0),
       0
     );
 
