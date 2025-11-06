@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-// import { User, Session } from '@supabase/supabase-js';
+import { User, Session } from '@supabase/supabase-js';
 import { authHub } from '../AuthHub';
 
 export function useAuth() {

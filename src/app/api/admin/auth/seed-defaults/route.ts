@@ -1,6 +1,5 @@
-import { _NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase/admin';
-import { createClient } from '@/lib/supabase/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
 const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
@@ -48,6 +47,7 @@ export async function POST(req: any) {
   for (const u of USERS) {
     try {
       // Create or fetch auth user
+      const supabaseAdmin = createAdminClient();
       const { data: listed } = await supabaseAdmin.auth.admin.listUsers({
         page: 1,
         perPage: 1,

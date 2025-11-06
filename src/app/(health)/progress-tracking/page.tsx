@@ -119,10 +119,14 @@ const ProgressTrackingPage: React.FC = () => {
   const loadProgressData = async () => {
     try {
       setLoading(true);
-      // Load real data from database
-      const goalsData = await realDB.getProgressGoals();
-      const assessmentsData = await realDB.getAssessments();
-      const reportsData = await realDB.getProgressReports();
+      // Load data from API
+      const goalsResponse = await fetch('/api/progress/goals');
+      const assessmentsResponse = await fetch('/api/progress/assessments');
+      const reportsResponse = await fetch('/api/progress/reports');
+      
+      const goalsData = goalsResponse.ok ? await goalsResponse.json() : [];
+      const assessmentsData = assessmentsResponse.ok ? await assessmentsResponse.json() : [];
+      const reportsData = reportsResponse.ok ? await reportsResponse.json() : [];
 
       setGoals(goalsData);
       setAssessments(assessmentsData);

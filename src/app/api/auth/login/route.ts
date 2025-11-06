@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { supabaseAdmin } from '@/lib/supabase/admin';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { PermissionManager } from '@/lib/permissions';
 
 const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
