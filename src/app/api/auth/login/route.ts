@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json().catch(() => ({}) as unknown);
     // Log incoming request
-    logger.info('[api/auth/login] incoming login request', { value: { email } });
+    logger.info('[api/auth/login] incoming login request', { email });
 
     const demoEmailHeader = req.headers.get('x-demo-email');
     const internalSecretHeader = req.headers.get('x-admin-secret');
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
 
       if (allowDemoHeader) {
         const targetEmail = demoEmailHeader || email;
-        logger.info('[api/auth/login] demo/header fallback active', { value: { targetEmail } });
+        logger.info('[api/auth/login] demo/header fallback active', { targetEmail });
 
         // Try to find existing user row
         const { data: userRow, error: userRowErr } = await supabase
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
         if (!userRow && (isDev || debugAllow || !!internalSecretHeader)) {
           // Auto-create auth user via service role in dev/debug
           try {
-            logger.info('[api/auth/login] demo/header creating auth user', { value: { targetEmail } });
+            logger.info('[api/auth/login] demo/header creating auth user', { targetEmail });
             const supabaseAdmin = createAdminClient();
             const { data: createdUser, error: createErr } =
               await supabaseAdmin.auth.admin.createUser({
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
               }
             }
           } catch (e) {
-            logger.error('[api/auth/login] demo/header auto-create error', { error: e });
+            logger.error('[api/auth/login] demo/header auto-create error', e, {});
           }
         }
 
@@ -149,7 +149,7 @@ export async function POST(req: NextRequest) {
             },
           };
 
-          logger.info('[api/auth/login] demo/header fallback login succeeded', { value: { targetEmail } });
+          logger.info('[api/auth/login] demo/header fallback login succeeded', { targetEmail });
           return NextResponse.json(resBody);
         }
       }
@@ -258,7 +258,7 @@ export async function POST(req: NextRequest) {
                 }
               }
             } catch (e) {
-              logger.error('[api/auth/login] fallback create error', { error: e });
+              logger.error('[api/auth/login] fallback create error', e, {});
             }
           }
 
@@ -291,15 +291,15 @@ export async function POST(req: NextRequest) {
                 fallbackLogin: true,
               },
             };
-            logger.info('[api/auth/login] fallback login succeeded for', { value: email });
+            logger.info('[api/auth/login] fallback login succeeded for', email);
             return NextResponse.json(resBody);
           }
         }
       } catch (e) {
-        logger.error('[api/auth/login] fallback lookup error', { error: e });
+        logger.error('[api/auth/login] fallback lookup error', e, {});
       }
 
-      logger.error('[api/auth/login] auth error', { error: error?.message });
+      logger.error('[api/auth/login] auth error', error?.message, {});
       return NextResponse.json(
         { success: false, error: error?.message || 'Unauthorized' },
         { status: 401 }
@@ -367,7 +367,7 @@ export async function POST(req: NextRequest) {
           );
         }
       } catch (e) {
-        logger.error('[api/auth/login] error upserting missing user', { error: e });
+        logger.error('[api/auth/login] error upserting missing user', e, {});
         return NextResponse.json(
           { success: false, error: 'User data not found' },
           { status: 401 }
