@@ -366,7 +366,7 @@ async function createPatientFile(patientId: string, supabase: unknown) {
   });
 
   if (error) {
-    logger.error('Failed to create patient file:', error, {});
+    logger.error('Failed to create patient file:', { error });
   }
 }
 

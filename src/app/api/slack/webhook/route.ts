@@ -36,7 +36,7 @@ async function handleSlackEvent(event: unknown) {
   try {
     await slack.handleSlackEvent(event);
   } catch (error) {
-    logger.error('Error handling Slack event:', error, {});
+    logger.error('Error handling Slack event:', { error });
   }
 }
 

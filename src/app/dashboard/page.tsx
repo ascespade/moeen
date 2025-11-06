@@ -18,7 +18,7 @@ export default function DashboardRedirect() {
         const user = JSON.parse(userStr);
         role = user.role || 'agent';
       } catch (e) {
-        logger.error('Error parsing user:', e, {})
+        logger.error('Error parsing user:', { error: e })
       }
     }
 

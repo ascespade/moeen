@@ -35,7 +35,7 @@ function InvoicesPageContent() {
       if (error) throw error;
       setPayments(data || []);
     } catch (error) {
-      logger.error('Error loading payments', error);
+      logger.error('Error loading payments', { error });
     } finally {
       setLoading(false);
     }

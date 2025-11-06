@@ -95,7 +95,7 @@ function AnalyticsPageContent() {
         setAnalyticsData(null);
       }
     } catch (err) {
-      logger.error('Error loading analytics data:', err, {})
+      logger.error('Error loading analytics data:', { error: err })
       setError('حدث خطأ أثناء تحميل البيانات');
       setAnalyticsData(null);
     } finally {

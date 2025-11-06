@@ -63,7 +63,7 @@ export default function TherapistSchedulesPage() {
         setSelectedTherapist(data[0].id);
       }
     } catch (error) {
-      logger.error('Error loading therapists', error);
+      logger.error('Error loading therapists', { error });
     }
   };
 
@@ -82,7 +82,7 @@ export default function TherapistSchedulesPage() {
       if (error) throw error;
       setSchedules(data || []);
     } catch (error) {
-      logger.error('Error loading schedules', error);
+      logger.error('Error loading schedules', { error });
     } finally {
       setLoading(false);
     }
@@ -106,7 +106,7 @@ export default function TherapistSchedulesPage() {
       await loadSchedules();
       alert('تم إضافة الجدول بنجاح!');
     } catch (error: unknown) {
-      logger.error('Error adding schedule', error);
+      logger.error('Error adding schedule', { error });
       alert(`خطأ: ${error instanceof Error ? error.message : String(error) || 'فشل في إضافة الجدول'}`);
     } finally {
       setSaving(false);
@@ -128,7 +128,7 @@ export default function TherapistSchedulesPage() {
       if (error) throw error;
       await loadSchedules();
     } catch (error) {
-      logger.error('Error updating schedule', error);
+      logger.error('Error updating schedule', { error });
       alert('فشل في التحديث');
     }
   };
@@ -147,7 +147,7 @@ export default function TherapistSchedulesPage() {
       await loadSchedules();
       alert('تم الحذف بنجاح');
     } catch (error) {
-      logger.error('Error deleting schedule', error);
+      logger.error('Error deleting schedule', { error });
       alert('فشل في الحذف');
     }
   };

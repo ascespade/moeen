@@ -222,7 +222,7 @@ function UsersPageContent() {
         setError('فشل في تحميل المستخدمين');
       }
     } catch (err) {
-      logger.error('Error loading users:', err, {})
+      logger.error('Error loading users:', { error: err })
       setError('حدث خطأ أثناء تحميل المستخدمين');
     } finally {
       setLoading(false);

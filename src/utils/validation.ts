@@ -69,7 +69,10 @@ export const isNotEmpty = (value: unknown): boolean => {
 };
 
 export const isNumeric = (value: unknown): boolean => {
-  return !isNaN(parseFloat(value)) && isFinite(value);
+  if (typeof value === 'string' || typeof value === 'number') {
+    return !isNaN(parseFloat(String(value))) && isFinite(Number(value));
+  }
+  return false;
 };
 
 export const isInteger = (value: unknown): boolean => {

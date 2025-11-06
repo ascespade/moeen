@@ -57,7 +57,7 @@ export async function POST(
       data,
     });
   } catch (error) {
-    logger.error('Error in /api/notifications/[id]/read:', error, {});
+    logger.error('Error in /api/notifications/[id]/read:', { error });
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

@@ -34,7 +34,7 @@ export default function AdminHomepageEditor() {
         }));
         if (!cancelled) setServices(items);
       } catch (err) {
-        logger.warn('Failed to load services', err, {})
+        logger.warn('Failed to load services', { error: err })
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -81,7 +81,7 @@ export default function AdminHomepageEditor() {
       const url = await uploadImage(file);
       updateService(index, { image: url });
     } catch (err) {
-      logger.error('Upload failed', err, {})
+      logger.error('Upload failed', { error: err })
       updateService(index, { image: '' });
       alert('فشل رفع الصورة');
     }
@@ -100,7 +100,7 @@ export default function AdminHomepageEditor() {
       if (!res.ok) throw new Error(data?.error || 'Save failed');
       alert('تم حفظ المحتوى بنجاح');
     } catch (err) {
-      logger.error('Save error', err, {})
+      logger.error('Save error', { error: err })
       alert('فشل الحفظ');
     } finally {
       setSaving(false);

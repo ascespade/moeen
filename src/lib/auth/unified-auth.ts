@@ -226,7 +226,7 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
     }
     // Only log unexpected errors
     if (error instanceof Error && error.message && !error.message.includes('401')) {
-      logger.warn('[UnifiedAuth] Error fetching user:', error.message, {});
+      logger.warn('[UnifiedAuth] Error fetching user:', { error: error.message });
     }
     return null;
   }

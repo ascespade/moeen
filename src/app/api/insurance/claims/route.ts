@@ -154,7 +154,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       .eq('id', claim.id);
 
     if (updateError) {
-      logger.error('Failed to update claim submission status:', updateError, {});
+      logger.error('Failed to update claim submission status:', { error: updateError });
     }
 
     // Create audit log

@@ -61,7 +61,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    logger.error('Error fetching sessions:', error, {});
+    logger.error('Error fetching sessions:', { error });
     return NextResponse.json(
       { error: 'Failed to fetch sessions' },
       { status: 500 }
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
       message: 'Session created successfully',
     });
   } catch (error) {
-    logger.error('Error creating session:', error, {});
+    logger.error('Error creating session:', { error });
     return NextResponse.json(
       { error: 'Failed to create session' },
       { status: 500 }

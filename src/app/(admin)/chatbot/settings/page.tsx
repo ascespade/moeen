@@ -31,7 +31,7 @@ export default function ChatbotSettingsPage() {
         .single();
 
       if (error && error.code !== 'PGRST116') {
-        logger.error('Error loading config:', error, {})
+        logger.error('Error loading config:', { error })
       } else {
         setConfig(data || {
           name: 'معين',
@@ -43,7 +43,7 @@ export default function ChatbotSettingsPage() {
         });
       }
     } catch (error) {
-      logger.error('Error:', error, {})
+      logger.error('Error:', { error })
     } finally {
       setLoading(false);
     }
@@ -57,13 +57,13 @@ export default function ChatbotSettingsPage() {
         .upsert(config, { onConflict: 'id' });
 
       if (error) {
-        logger.error('Error saving config:', error, {})
+        logger.error('Error saving config:', { error })
         alert('حدث خطأ أثناء الحفظ');
       } else {
         alert('تم الحفظ بنجاح');
       }
     } catch (error) {
-      logger.error('Error:', error, {})
+      logger.error('Error:', { error })
       alert('حدث خطأ أثناء الحفظ');
     } finally {
       setSaving(false);

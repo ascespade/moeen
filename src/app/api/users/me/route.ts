@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
       permissions: permissions || null,
     });
   } catch (error) {
-    logger.error('Get user error:', error, {});
+    logger.error('Get user error:', { error });
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

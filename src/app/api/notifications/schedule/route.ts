@@ -188,7 +188,7 @@ export async function GET(_request: NextRequest) {
 
     // If error occurs, return empty array instead of 500 to prevent loops
     if (error) {
-      logger.error('Error fetching notifications:', error, {});
+      logger.error('Error fetching notifications:', { error });
       // Return empty array to prevent infinite loops
       return NextResponse.json({
         success: true,
@@ -239,7 +239,7 @@ export async function GET(_request: NextRequest) {
       count: enrichedNotifications?.length || 0,
     });
   } catch (error) {
-    logger.error('Unexpected error in notifications GET:', error, {});
+    logger.error('Unexpected error in notifications GET:', { error });
     // Always return success with empty array to prevent loops
     return NextResponse.json({
       success: true,

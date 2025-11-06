@@ -356,11 +356,11 @@ export default function DashboardPage() {
                         <div className='grid grid-cols-2 gap-4 text-sm'>
                           <div>
                             <span className='text-gray-500'>CPU:</span>{' '}
-                            {metric.metrics.cpuUsage || 0}%
+                            {(metric.metrics as { cpuUsage?: number })?.cpuUsage || 0}%
                           </div>
                           <div>
                             <span className='text-gray-500'>Memory:</span>{' '}
-                            {metric.metrics.memoryUsage || 0}%
+                            {(metric.metrics as { memoryUsage?: number })?.memoryUsage || 0}%
                           </div>
                         </div>
                       </div>
