@@ -98,8 +98,7 @@ export default function ModernAdminDashboard() {
   const localizedNumber = useLocalizedNumber();
 
   // Use the new hook for real data
-  const { stats, activities, staffWorkHours, loading, error, refetch } =
-    useAdminDashboard(selectedPeriod);
+  const { stats } = useAdminDashboard(selectedPeriod);
 
   // Dashboard grid items configuration
   const gridItems: GridItem[] = useMemo(
