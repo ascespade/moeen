@@ -92,7 +92,7 @@ export default function SessionNotesPage() {
         setGoals(goalsWithProgress);
       }
     } catch (error) {
-      logger.error('Error loading session data', error);
+      logger.error('Error loading session data', { error });
       alert('خطأ في تحميل البيانات');
     } finally {
       setLoading(false);
@@ -157,7 +157,7 @@ export default function SessionNotesPage() {
       alert('✅ تم حفظ ملاحظات الجلسة بنجاح!\n\nسيتم إرسال تحديث للأسرة.');
       router.push('/admin/appointments');
     } catch (error: unknown) {
-      logger.error('Error saving session notes', error);
+      logger.error('Error saving session notes', { error });
       alert(`خطأ: ${(error instanceof Error ? error.message : String(error)) || 'فشل في حفظ الملاحظات'}`);
     } finally {
       setSaving(false);

@@ -529,6 +529,7 @@ function ConversationsPageContent() {
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const _formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',

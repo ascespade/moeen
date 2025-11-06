@@ -177,7 +177,7 @@ export const useAuth = (): AuthState & AuthActions => {
         );
 
         if (!response.ok) {
-          logger.error('[useAuth] login failed', response.status, data, {});
+          logger.error('[useAuth] login failed', { status: response.status, data });
           // Dev fallback: if server says invalid credentials and password matches TEST_USERS_PASSWORD, try demo-email /api/auth/me fallback
           try {
             const fallbackPassword =
@@ -202,7 +202,7 @@ export const useAuth = (): AuthState & AuthActions => {
               );
               if (demoRes.ok) {
                 const demoData = await demoRes.json().catch(() => ({}));
-                logger.info('[useAuth] demo-email payload', demoData);
+                logger.info('[useAuth] demo-email payload', { data: demoData });
                 if (
                   demoData.success &&
                   (demoData.user || demoData.data?.user)
@@ -219,7 +219,7 @@ export const useAuth = (): AuthState & AuthActions => {
               }
             }
           } catch (e) {
-            logger.error('[useAuth] demo-email fallback error', e, {});
+            logger.error('[useAuth] demo-email fallback error', { error: e });
           }
 
           throw new Error(data.error || 'Login failed');
@@ -243,7 +243,7 @@ export const useAuth = (): AuthState & AuthActions => {
           );
           if (meRes.ok) {
             const meData = await meRes.json().catch(() => ({}) as unknown);
-            logger.info('[useAuth] /api/auth/me after login payload', meData);
+            logger.info('[useAuth] /api/auth/me after login payload', { data: meData });
             const meUser = meData?.data?.user || meData?.user;
             const mePerms =
               meData?.data?.permissions || meData?.permissions || [];
@@ -258,7 +258,7 @@ export const useAuth = (): AuthState & AuthActions => {
             );
           }
         } catch (e) {
-          logger.error('[useAuth] error fetching /api/auth/me after login', e, {});
+          logger.error('[useAuth] error fetching /api/auth/me after login', { error: e });
           // fallback to using returned data
         }
 
@@ -277,7 +277,7 @@ export const useAuth = (): AuthState & AuthActions => {
         );
         throw new Error(data.error || 'Login failed');
       } catch (error) {
-        logger.error('[useAuth] loginWithCredentials error', error, {});
+        logger.error('[useAuth] loginWithCredentials error', { error });
         throw error;
       }
     },

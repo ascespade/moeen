@@ -272,7 +272,7 @@ export default function ModernAdminDashboard() {
             isEditable={isGridEditable}
             onItemChange={items => {
               // Handle layout changes
-              logger.info('Layout changed:', items);
+              logger.info('Layout changed:', { items });
             }}
             onItemAdd={() => {
               // Handle adding new widget
@@ -280,7 +280,7 @@ export default function ModernAdminDashboard() {
             }}
             onItemRemove={id => {
               // Handle removing widget
-              logger.info('Remove widget:', id);
+              logger.info('Remove widget:', { id });
             }}
             className='mb-8'
           />

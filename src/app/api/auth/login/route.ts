@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
               }
             }
           } catch (e) {
-            logger.error('[api/auth/login] demo/header auto-create error', e, {});
+            logger.error('[api/auth/login] demo/header auto-create error', { error: e });
           }
         }
 
@@ -258,7 +258,7 @@ export async function POST(req: NextRequest) {
                 }
               }
             } catch (e) {
-              logger.error('[api/auth/login] fallback create error', e, {});
+              logger.error('[api/auth/login] fallback create error', { error: e });
             }
           }
 
@@ -291,15 +291,15 @@ export async function POST(req: NextRequest) {
                 fallbackLogin: true,
               },
             };
-            logger.info('[api/auth/login] fallback login succeeded for', email);
+            logger.info('[api/auth/login] fallback login succeeded for', { email });
             return NextResponse.json(resBody);
           }
         }
       } catch (e) {
-        logger.error('[api/auth/login] fallback lookup error', e, {});
+        logger.error('[api/auth/login] fallback lookup error', { error: e });
       }
 
-      logger.error('[api/auth/login] auth error', error?.message, {});
+      logger.error('[api/auth/login] auth error', { error: error?.message });
       return NextResponse.json(
         { success: false, error: error?.message || 'Unauthorized' },
         { status: 401 }
@@ -367,7 +367,7 @@ export async function POST(req: NextRequest) {
           );
         }
       } catch (e) {
-        logger.error('[api/auth/login] error upserting missing user', e, {});
+        logger.error('[api/auth/login] error upserting missing user', { error: e });
         return NextResponse.json(
           { success: false, error: 'User data not found' },
           { status: 401 }

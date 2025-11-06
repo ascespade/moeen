@@ -48,7 +48,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     );
 
     if (supervisorError || !supervisorId) {
-      logger.error('No supervisor available', supervisorError);
+      logger.error('No supervisor available', { error: supervisorError });
       return NextResponse.json(
         { error: 'No supervisor available' },
         { status: 503 }
@@ -76,7 +76,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (callError) {
-      logger.error('Error creating call request', callError);
+      logger.error('Error creating call request', { error: callError });
       return NextResponse.json(
         { error: 'Failed to create call request' },
         { status: 500 }
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         status: 'sent',
       });
     } catch (notificationError) {
-      logger.error('Error sending notifications', notificationError);
+      logger.error('Error sending notifications', { error: notificationError });
       // Continue anyway - request is created
     }
 
@@ -144,7 +144,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       requestId: callRequest.id,
     });
   } catch (error) {
-    logger.error('Error in call-request API', error);
+    logger.error('Error in call-request API', { error });
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -216,7 +216,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .limit(50);
 
     if (error) {
-      logger.error('Error fetching call requests', error);
+      logger.error('Error fetching call requests', { error });
       return NextResponse.json(
         { error: 'Failed to fetch requests' },
         { status: 500 }
@@ -228,7 +228,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       requests: requests || [],
     });
   } catch (error) {
-    logger.error('Error in GET call-request', error);
+    logger.error('Error in GET call-request', { error });
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

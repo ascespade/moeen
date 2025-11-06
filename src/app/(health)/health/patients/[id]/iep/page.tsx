@@ -114,7 +114,7 @@ export default function PatientIEPPage() {
         setGoals(goalsWithProgress);
       }
     } catch (error) {
-      logger.error('Error loading IEP data', error);
+      logger.error('Error loading IEP data', { error });
       alert('حدث خطأ في تحميل البيانات');
     } finally {
       setLoading(false);

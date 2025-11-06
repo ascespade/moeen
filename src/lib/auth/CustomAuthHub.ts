@@ -37,7 +37,7 @@ function getJWTExpiresIn(): string {
 const isDev = process.env.NODE_ENV === 'development';
 const log = (message: string, ...args: unknown[]) => {
   if (isDev) {
-    logger.info(`[AUTH-HUB] ${message}`, ...args);
+    logger.info(`[AUTH-HUB] ${message}`, args.length > 0 ? { args } : undefined);
   }
 };
 

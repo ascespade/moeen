@@ -184,7 +184,7 @@ function UsersPageContent() {
               user.profile?.fullName?.split(' ').slice(1).join(' ') || '',
             displayName: user.profile?.fullName || user.email,
             phone: user.profile?.phone,
-            avatar: (user as unknown).avatar,
+            avatar: (user as { avatar?: string }).avatar,
             role: user.role,
             roleDisplayName: getRoleDisplayName(user.role),
             status: user.isActive ? 'active' : 'inactive',

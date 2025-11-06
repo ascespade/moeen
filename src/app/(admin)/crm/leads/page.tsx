@@ -53,7 +53,7 @@ export default function CRMLeadsPage() {
           setLeads([]);
         }
       } catch (error) {
-        logger.error('Error fetching leads:', error, {})
+        logger.error('Error fetching leads:', { error })
         setLeads([]);
       } finally {
         setLoading(false);

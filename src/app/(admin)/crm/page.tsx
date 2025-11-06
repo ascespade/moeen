@@ -375,21 +375,22 @@ function CRMPageContent() {
   };
 
   const filteredData = getCurrentData().filter((item: unknown) => {
+    const itm = item as { name: string; company?: string; email: string; status?: string; stage?: string; priority: string };
     const matchesSearch =
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (item.company &&
-        item.company.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      item.email.toLowerCase().includes(searchTerm.toLowerCase());
+      itm.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (itm.company &&
+        itm.company.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      itm.email.toLowerCase().includes(searchTerm.toLowerCase());
 
     let matchesStatus = true;
     if (statusFilter !== 'all') {
       matchesStatus =
-        item.status === statusFilter || item.stage === statusFilter;
+        itm.status === statusFilter || itm.stage === statusFilter;
     }
 
     let matchesPriority = true;
     if (priorityFilter !== 'all') {
-      matchesPriority = item.priority === priorityFilter;
+      matchesPriority = itm.priority === priorityFilter;
     }
 
     return matchesSearch && matchesStatus && matchesPriority;
@@ -803,7 +804,7 @@ function CRMPageContent() {
                       onChange={(e) => {
                         if (e.target.checked) {
                           setSelectedItems(
-                            filteredData.map((item: unknown) => item.id)
+                            filteredData.map((item: unknown) => (item as { id: string }).id)
                           );
                         } else {
                           setSelectedItems([]);
@@ -824,18 +825,32 @@ function CRMPageContent() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredData.map((item: unknown) => (
-                  <TableRow key={item.id}>
+                {filteredData.map((item: unknown) => {
+                  const itm = item as {
+                    id: string;
+                    name: string;
+                    phone: string;
+                    company?: string;
+                    email: string;
+                    status?: string;
+                    stage?: string;
+                    priority: string;
+                    value?: number;
+                    probability?: number;
+                    lastActivity: string;
+                  };
+                  return (
+                  <TableRow key={itm.id}>
                     <TableCell>
                       <input type='checkbox'
                         className='rounded border-gray-300'
-                        checked={selectedItems.includes(item.id)}
+                        checked={selectedItems.includes(itm.id)}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setSelectedItems([...selectedItems, item.id]);
+                            setSelectedItems([...selectedItems, itm.id]);
                           } else {
                             setSelectedItems(
-                              selectedItems.filter(id => id !== item.id)
+                              selectedItems.filter(id => id !== itm.id)
                             );
                           }
                         }}
@@ -846,47 +861,47 @@ function CRMPageContent() {
                     <TableCell>
                       <div className='flex items-center gap-3'>
                         <div className='h-8 w-8 rounded-full bg-primary text-primary-foreground grid place-items-center text-sm'>
-                          {item.name.charAt(0)}
+                          {itm.name.charAt(0)}
                         </div>
                         <div>
-                          <div className='font-medium'>{item.name}</div>
+                          <div className='font-medium'>{itm.name}</div>
                           <div className='text-xs text-muted-foreground flex items-center gap-1'>
                             <Phone className='h-3 w-3' />
-                            {item.phone}
+                            {itm.phone}
                           </div>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div>
-                        <div className='font-medium'>{item.company || '-'}</div>
+                        <div className='font-medium'>{itm.company || '-'}</div>
                         <div className='text-xs text-muted-foreground'>
-                          {item.email}
+                          {itm.email}
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
                       {getStatusBadge(
-                        item.status || item.stage,
-                        activeTab as unknown
+                        itm.status || itm.stage || '',
+                        activeTab as 'lead' | 'contact' | 'deal'
                       )}
                     </TableCell>
-                    <TableCell>{getPriorityBadge(item.priority)}</TableCell>
+                    <TableCell>{getPriorityBadge(itm.priority)}</TableCell>
                     {(activeTab === 'leads' || activeTab === 'deals') && (
                       <TableCell>
                         <div className='text-sm font-medium'>
-                          {formatCurrency(item.value)}
+                          {formatCurrency(itm.value || 0)}
                         </div>
                         {activeTab === 'leads' && (
                           <div className='text-xs text-muted-foreground'>
-                            {item.probability}% احتمال
+                            {itm.probability || 0}% احتمال
                           </div>
                         )}
                       </TableCell>
                     )}
                     <TableCell>
                       <div className='text-sm'>
-                        {formatDate(item.lastActivity)}
+                        {formatDate(itm.lastActivity)}
                       </div>
                     </TableCell>
                     <TableCell className='text-right'>
@@ -927,7 +942,8 @@ function CRMPageContent() {
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
-                ))}
+                  );
+                })}
               </TableBody>
             </Table>
 

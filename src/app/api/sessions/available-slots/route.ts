@@ -76,7 +76,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: schedules, error: schedulesError } = await therapistsQuery;
 
     if (schedulesError) {
-      logger.error('Error fetching therapist schedules', schedulesError);
+      logger.error('Error fetching therapist schedules', { error: schedulesError });
       return NextResponse.json(
         { error: 'Error fetching schedules' },
         { status: 500 }
@@ -104,7 +104,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .in('status', ['scheduled', 'confirmed', 'in_progress']);
 
     if (appointmentsError) {
-      logger.error('Error fetching appointments', appointmentsError);
+      logger.error('Error fetching appointments', { error: appointmentsError });
     }
 
     // 5. Generate available slots
@@ -175,7 +175,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    logger.error('Error in available-slots API', error);
+    logger.error('Error in available-slots API', { error });
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

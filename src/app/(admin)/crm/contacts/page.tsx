@@ -107,7 +107,7 @@ function ContactsPageContent() {
         setActivities([]);
       }
     } catch (error) {
-      logger.error('Error loading contacts:', error, {})
+      logger.error('Error loading contacts:', { error })
       setContacts([]);
       setActivities([]);
     } finally {

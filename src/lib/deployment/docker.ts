@@ -465,7 +465,7 @@ echo "✅ Backup completed: $BACKUP_DIR"`,
 
       logger.info('All Docker configuration files generated successfully');
     } catch (error) {
-      logger.error('Failed to generate Docker configuration', error);
+      logger.error('Failed to generate Docker configuration', { error });
       throw error;
     }
   }

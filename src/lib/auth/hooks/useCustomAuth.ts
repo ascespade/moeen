@@ -140,7 +140,7 @@ export function useCustomAuth() {
         return { success: false, error: data.error || 'Login failed' };
       }
     } catch (error) {
-      logger.error('[useCustomAuth] Login error:', error, {});
+      logger.error('[useCustomAuth] Login error:', { error });
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Login failed',

@@ -226,6 +226,7 @@ export async function verifySession(_request: NextRequest): Promise<{
 }
 
 // Legacy function for backward compatibility (uses localStorage token)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function _verifyToken(
   token: string
 ): { id: string; email: string; role: string } | null {

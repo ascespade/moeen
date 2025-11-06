@@ -26,7 +26,7 @@ export function usePermissions() {
         setLoading(false);
       })
       .catch(error => {
-        logger.error('Failed to load permissions:', error, {});
+        logger.error('Failed to load permissions:', { error });
         setLoading(false);
       });
   }, [user, authLoading]);

@@ -484,7 +484,7 @@ function AppointmentsPageContent() {
               </div>
               <p className='text-xs text-muted-foreground'>
                 {Math.round(
-                  (appointments.filter((a: unknown) => a.status === 'completed').length /
+                  (appointments.filter((a: unknown) => (a as { status: string }).status === 'completed').length /
                     appointments.length) *
                     100
                 )}

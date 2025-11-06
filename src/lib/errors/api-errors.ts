@@ -134,7 +134,7 @@ export function logError(error: unknown, context?: Record<string, unknown>) {
 
   // Log to console in development (use logger in production)
   if (process.env.NODE_ENV === 'development') {
-    logger.error('API Error:', errorInfo, {});
+    logger.error('API Error:', { errorInfo });
   }
 
   // External logging service integration implemented for production

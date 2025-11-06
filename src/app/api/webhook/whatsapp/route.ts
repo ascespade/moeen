@@ -248,7 +248,7 @@ async function sendWhatsAppMessage(phoneNumber: string, message: string) {
     );
 
     if (!response.ok) {
-      logger.error('Failed to send WhatsApp message:', await response.text());
+      logger.error('Failed to send WhatsApp message:', { error: await response.text() });
     }
   } catch (error) {}
 }

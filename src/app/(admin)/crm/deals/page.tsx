@@ -47,7 +47,7 @@ export default function CRMDealsPage() {
           setDeals([]);
         }
       } catch (error) {
-        logger.error('Error fetching deals:', error, {})
+        logger.error('Error fetching deals:', { error })
         setDeals([]);
       } finally {
         setLoading(false);

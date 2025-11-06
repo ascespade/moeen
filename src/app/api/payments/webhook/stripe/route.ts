@@ -97,7 +97,7 @@ async function handlePaymentSucceeded(
     .eq('transactionId', paymentIntent.id);
 
   if (paymentError) {
-    logger.error('Failed to update payment status:', paymentError, {});
+    logger.error('Failed to update payment status:', { error: paymentError });
     return;
   }
 
@@ -155,7 +155,7 @@ async function handlePaymentFailed(
     .eq('transactionId', paymentIntent.id);
 
   if (paymentError) {
-    logger.error('Failed to update payment status:', paymentError, {});
+    logger.error('Failed to update payment status:', { error: paymentError });
     return;
   }
 
@@ -200,7 +200,7 @@ async function handlePaymentCanceled(
     .eq('transactionId', paymentIntent.id);
 
   if (paymentError) {
-    logger.error('Failed to update payment status:', paymentError, {});
+    logger.error('Failed to update payment status:', { error: paymentError });
     return;
   }
 

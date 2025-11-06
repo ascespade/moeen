@@ -124,7 +124,7 @@ class AuthHub {
         window.location.href = '/login';
       }
     } catch (error) {
-      logger.error('Logout error:', error, {});
+      logger.error('Logout error:', { error });
       throw error;
     }
   }
@@ -137,7 +137,7 @@ class AuthHub {
       } = await supabase.auth.getSession();
       return session;
     } catch (error) {
-      logger.error('Get session error:', error, {});
+      logger.error('Get session error:', { error });
       return null;
     }
   }
@@ -150,7 +150,7 @@ class AuthHub {
       } = await supabase.auth.refreshSession();
       return session;
     } catch (error) {
-      logger.error('Refresh session error:', error, {});
+      logger.error('Refresh session error:', { error });
       return null;
     }
   }

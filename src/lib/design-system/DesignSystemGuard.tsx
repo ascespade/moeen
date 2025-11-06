@@ -71,11 +71,11 @@ export class DesignSystemGuard extends Component<
     };
 
     if (!violations.isValid && this.props.strict) {
-      logger.error('Design System Violations:', violations, {})
+      logger.error('Design System Violations:', { violations })
     }
 
     if (warnings.length > 0) {
-      logger.warn('Design System Warnings:', warnings, {})
+      logger.warn('Design System Warnings:', { warnings })
     }
 
     this.setState({ violations });

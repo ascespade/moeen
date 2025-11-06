@@ -109,14 +109,14 @@ export interface Typography {
 
   // Font Weights - أوزان الخطوط
   fontWeight: {
-    thin: number;
-    light: number;
-    normal: number;
-    medium: number;
-    semibold: number;
-    bold: number;
-    extrabold: number;
-    black: number;
+    thin: number | string;
+    light: number | string;
+    normal: number | string;
+    medium: number | string;
+    semibold: number | string;
+    bold: number | string;
+    extrabold: number | string;
+    black: number | string;
   };
 
   // Line Heights - ارتفاعات الأسطر

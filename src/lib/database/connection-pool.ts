@@ -54,7 +54,7 @@ class DatabaseConnectionPool {
       this.activeConnections++;
       return connection;
     } catch (error) {
-      logger.error('Failed to create database connection', error);
+      logger.error('Failed to create database connection', { error });
       throw error;
     }
   }
@@ -115,7 +115,7 @@ class DatabaseConnectionPool {
         activeConnections: this.activeConnections,
       });
     } catch (error) {
-      logger.error('Error closing database connection', error);
+      logger.error('Error closing database connection', { error });
     }
   }
 
@@ -159,7 +159,7 @@ class DatabaseConnectionPool {
       this.releaseConnection(connection);
       return !error;
     } catch (error) {
-      logger.error('Database health check failed', error);
+      logger.error('Database health check failed', { error });
       return false;
     }
   }

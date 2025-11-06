@@ -40,7 +40,7 @@ export class ApiClient {
         ...options.headers,
       },
       // send cookies for same-origin requests
-      credentials: (options && (options as unknown).credentials) || 'include',
+      credentials: (options && typeof options === 'object' && 'credentials' in options ? (options as { credentials?: RequestCredentials }).credentials : undefined) || 'include',
     };
 
     try {

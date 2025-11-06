@@ -161,7 +161,7 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
           lastAdjustedRef.current.set(element, now);
         }
       } catch (error) {
-        logger.warn('Failed to apply theme adjustments:', error, {})
+        logger.warn('Failed to apply theme adjustments:', { error })
       }
     },
     [enabled, mode, onAdjustment, onReport]

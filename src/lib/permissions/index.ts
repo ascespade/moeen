@@ -706,7 +706,7 @@ export class PermissionManager {
       if (permError) {
         logger.error(
           `[PermissionManager] Error fetching permissions:`,
-          permError
+          { error: permError }
         );
         return [];
       }

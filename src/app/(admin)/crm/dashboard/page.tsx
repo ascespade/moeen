@@ -174,7 +174,7 @@ function CRMDashboardContent() {
         <div aria-live="polite" aria-atomic="true" className="sr-only">
           <span id="live-region"></span>
         </div>
-        <Badge variant={config.variant as unknown} className={config.color}>
+        <Badge variant={config.variant as 'outline' | 'secondary' | 'default' | 'error' | 'primary' | 'success' | 'warning' | 'info'} className={config.color}>
           {config.label}
         </Badge>
       </>

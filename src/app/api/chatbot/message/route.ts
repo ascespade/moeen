@@ -94,7 +94,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       response,
     });
   } catch (error) {
-    logger.error('Chatbot API error', error);
+    logger.error('Chatbot API error', { error });
 
     return NextResponse.json(
       {

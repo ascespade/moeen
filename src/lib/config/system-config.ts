@@ -243,7 +243,7 @@ export class SystemConfigManager {
         return this.mergeWithDefaults(parsed);
       }
     } catch (error) {
-      logger.error('Failed to load system config:', error, {});
+      logger.error('Failed to load system config:', { error });
     }
 
     return defaultSystemConfig;
@@ -257,7 +257,7 @@ export class SystemConfigManager {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(config));
     } catch (error) {
-      logger.error('Failed to save system config:', error, {});
+      logger.error('Failed to save system config:', { error });
     }
   }
 
