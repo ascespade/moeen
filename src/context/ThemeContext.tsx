@@ -9,6 +9,7 @@
 'use client';
 
 import {
+import { logger } from '@/lib/utils/logger';
   createContext,
   ReactNode,
   useContext,
@@ -68,7 +69,7 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({
   children,
-  defaultTheme = 'light' as any,
+  defaultTheme = 'light' as unknown,
   defaultLanguage = 'ar',
   enableSystemTheme = true,
   _enableLanguageSwitching = true,
@@ -85,9 +86,9 @@ export function ThemeProvider({
   const direction: string = language === 'ar' ? 'rtl' : 'ltr';
 
   // Computed values - القيم المحسوبة
-  const isDark = (resolvedTheme as any) === 'dark';
-  const isLight = (resolvedTheme as any) === 'light';
-  const isSystem = (theme as any) === 'system';
+  const isDark = (resolvedTheme as unknown) === 'dark';
+  const isLight = (resolvedTheme as unknown) === 'light';
+  const isSystem = (theme as unknown) === 'system';
 
   // ========================================
   // THEME FUNCTIONS - دوال الثيم
@@ -111,11 +112,11 @@ export function ThemeProvider({
 
   const toggleTheme = () => {
     if (isDark) {
-      setTheme('light' as any);
+      setTheme('light' as unknown);
     } else if (isLight) {
-      setTheme('system' as any);
+      setTheme('system' as unknown);
     } else {
-      setTheme('dark' as any);
+      setTheme('dark' as unknown);
     }
   };
 
@@ -133,7 +134,7 @@ export function ThemeProvider({
 
         // Set initial theme - تعيين الثيم الأولي
         if (storedTheme) {
-          setThemeState(storedTheme as any);
+          setThemeState(storedTheme as unknown);
         }
 
         // Set initial language - تعيين اللغة الأولية
@@ -152,7 +153,7 @@ export function ThemeProvider({
 
         setIsInitialized(true);
       } catch (error) {
-        // // console.error("Failed to initialize theme:", error);
+        // // logger.error("Failed to initialize theme:", error, {})
         // Fallback to defaults - العودة للقيم الافتراضية
         // applyThemeToDocument(resolveTheme(defaultTheme));
         // applyLanguageToDocument(defaultLanguage);
@@ -181,12 +182,12 @@ export function ThemeProvider({
 
   // Listen for system theme changes - الاستماع لتغييرات ثيم النظام
   useEffect(() => {
-    if (!enableSystemTheme || (theme as any) !== 'system') return;
+    if (!enableSystemTheme || (theme as unknown) !== 'system') return;
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const handleChange = () => {
-      if ((theme as any) === 'system') {
+      if ((theme as unknown) === 'system') {
         // applyThemeToDocument(getSystemTheme());
       }
     };

@@ -39,7 +39,7 @@ export async function PATCH(
     }
 
     // Build update object
-    const updateData: any = {};
+    const updateData: unknown = {};
     if (status) updateData.status = status;
     if (role) updateData.role = role;
 

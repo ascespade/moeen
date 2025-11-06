@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { toArabicNumbers } from '@/lib/utils/numbers';
 import { Phone, Send } from 'lucide-react';
 import { memo, useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 const ContactForm = memo(function ContactForm() {
   const [formData, setFormData] = useState({
@@ -56,7 +57,7 @@ const ContactForm = memo(function ContactForm() {
         setTimeout(() => setIsSubmitted(false), 5000);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      logger.error('Error submitting form', { error: error instanceof Error ? error.message : String(error) });
     } finally {
       setIsSubmitting(false);
     }
@@ -91,7 +92,7 @@ const ContactForm = memo(function ContactForm() {
               name='name'
               value={formData.name}
               onChange={handleChange}
-              
+
               className='peer py-3 px-4 pe-11 block w-full border border-[var(--brand-border)] rounded-lg text-sm focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] disabled:opacity-50 disabled:pointer-events-none bg-[var(--background)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)]'
               placeholder='الاسم الكامل'
               aria-label="الاسم الكامل"
@@ -128,7 +129,7 @@ const ContactForm = memo(function ContactForm() {
               name='email'
               value={formData.email}
               onChange={handleChange}
-              
+
               className='peer py-3 px-4 pe-11 block w-full border border-[var(--brand-border)] rounded-lg text-sm focus:border-[var(--brand-primary)] focus:ring-1 focus:ring-[var(--brand-primary)] disabled:opacity-50 disabled:pointer-events-none bg-[var(--background)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)]'
               placeholder='البريد الإلكتروني'
               aria-label="البريد الإلكتروني"

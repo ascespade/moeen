@@ -39,7 +39,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Check permissions using PermissionManager
     const canRead = PermissionManager.hasPermission(
-      authResult.user.role as any,
+      authResult.user.role as unknown,
       'doctors',
       'read',
       { userId: authResult.user.id }
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
 
     // Check permissions using PermissionManager
     const canCreate = PermissionManager.hasPermission(
-      authResult.user.role as any,
+      authResult.user.role as unknown,
       'doctors',
       'create',
       { userId: authResult.user.id }

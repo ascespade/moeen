@@ -3,7 +3,7 @@
  * Verifies login process with real database data and privilege checks
  */
 
-import { describe, it, expect, beforeAll, afterAll } from '@jest/globals';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 
 // Test configuration
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3001';
@@ -121,7 +121,9 @@ describe('Professional Login System - End-to-End Tests', () => {
       expect(parts.length).toBe(3);
 
       // Decode payload
-      const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+      const payload = JSON.parse(
+        atob(parts[1].replace(/-/g, '+').replace(/_/g, '/'))
+      );
 
       expect(payload.userId).toBeDefined();
       expect(payload.email).toBe(TEST_USERS.admin.email);
@@ -463,4 +465,3 @@ describe('Professional Login System - End-to-End Tests', () => {
 /**
  * Run tests with: npm test -- tests/login-security-test.ts
  */
-export default {};

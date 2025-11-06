@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // If user not found, return error - but continue if we have basic user info from auth
     if (userError) {
-      console.error('Error fetching user data:', userError);
+      logger.error('Error fetching user data:', userError, {});
       // Use auth user data as fallback
       const fallbackUserData = {
         id: authResult.user.id,
@@ -70,7 +71,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .maybe();
 
     if (staffError) {
-      console.warn('Error fetching staff members:', staffError);
+      logger.warn('Error fetching staff members:', staffError, {});
     }
 
     // Calculate staff activity metrics
@@ -86,7 +87,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             .eq('appointment_date', today);
 
           if (todayError) {
-            console.warn(
+            logger.warn(
               `Error fetching today tasks for staff ${staff.id}:`,
               todayError
             );
@@ -102,7 +103,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               .gte('appointment_date', today);
 
           if (completedError) {
-            console.warn(
+            logger.warn(
               `Error fetching completed tasks for staff ${staff.id}:`,
               completedError
             );
@@ -122,7 +123,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             efficiency,
           };
         } catch (error) {
-          console.warn(
+          logger.warn(
             `Error calculating metrics for staff ${staff.id}:`,
             error
           );
@@ -152,12 +153,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .eq('status', 'active');
 
       if (patientsError) {
-        console.warn('Error fetching patients count:', patientsError);
+        logger.warn('Error fetching patients count:', patientsError, {});
       } else {
         totalPatients = patientsCount || 0;
       }
     } catch (error) {
-      console.warn('Error in patients query:', error);
+      logger.warn('Error in patients query:', error, {});
     }
 
     try {
@@ -169,12 +170,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           .in('status', ['scheduled', 'confirmed', 'in_progress']);
 
       if (appointmentsError) {
-        console.warn('Error fetching appointments count:', appointmentsError);
+        logger.warn('Error fetching appointments count:', appointmentsError, {});
       } else {
         totalAppointments = appointmentsCount || 0;
       }
     } catch (error) {
-      console.warn('Error in appointments query:', error);
+      logger.warn('Error in appointments query:', error, {});
     }
 
     try {
@@ -185,10 +186,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .eq('status', 'approved');
 
       if (claimsError) {
-        console.warn('Error fetching claims data:', claimsError);
+        logger.warn('Error fetching claims data:', claimsError, {});
       } else {
         revenue =
-          claimsData?.reduce((sum: number, claim: any) => sum + (claim.amount || 0), 0) || 0;
+          claimsData?.reduce((sum: number, claim: unknown) => sum + (claim.amount || 0), 0) || 0;
       }
 
       // Claims processed (approved + rejected)
@@ -198,7 +199,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .in('status', ['approved', 'rejected']);
 
       if (claimsCountError) {
-        console.warn(
+        logger.warn(
           'Error fetching claims processed count:',
           claimsCountError
         );
@@ -206,11 +207,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         claimsProcessed = claimsCount || 0;
       }
     } catch (error) {
-      console.warn('Error in claims queries:', error);
+      logger.warn('Error in claims queries:', error, {});
     }
 
     // Get alerts (appointments needing attention, overdue tasks, etc.)
-    let alerts: any[] = [];
+    let alerts: unknown[] = [];
     try {
       const { data: upcomingAppointments, error: alertsError } = await supabase
         .from('appointments')
@@ -222,7 +223,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .maybe();
 
       if (alertsError) {
-        console.warn('Error fetching alerts:', alertsError);
+        logger.warn('Error fetching alerts:', alertsError, {});
       } else {
         alerts = (upcomingAppointments || []).slice(0, 3).map(apt => ({
           id: `alert-${apt.id}`,
@@ -232,11 +233,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         }));
       }
     } catch (error) {
-      console.warn('Error in alerts query:', error);
+      logger.warn('Error in alerts query:', error, {});
     }
 
     // Get recent reports (if reports table exists)
-    let reports: any[] = [];
+    let reports: unknown[] = [];
     try {
       const { data: reportsData, error: reportsError } = await supabase
         .from('reports')
@@ -246,7 +247,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .maybe();
 
       if (reportsError) {
-        console.warn('Error fetching reports:', reportsError);
+        logger.warn('Error fetching reports:', reportsError, {});
       } else {
         reports =
           reportsData?.map(report => ({
@@ -261,7 +262,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           })) || [];
       }
     } catch (error) {
-      console.warn('Error in reports query:', error);
+      logger.warn('Error in reports query:', error, {});
     }
 
     const response = {
@@ -281,7 +282,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json(response);
   } catch (error) {
-    console.error('Error in /api/supervisor/me:', error);
+    logger.error('Error in /api/supervisor/me:', error, {});
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

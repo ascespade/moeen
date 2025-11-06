@@ -129,7 +129,7 @@ interface Message {
   metadata?: {
     templateId?: string;
     campaignId?: string;
-    customFields?: Record<string, any>;
+    customFields?: Record<string, unknown>;
   };
 }
 

@@ -25,6 +25,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { realDB } from '@/lib/supabase-real';
+import { logger } from '@/lib/utils/logger';
 
 interface TrainingProgram {
   id: string;
@@ -99,7 +100,7 @@ const TrainingPage: React.FC = () => {
 
       // Transform real data to match interface
       const transformedPrograms: TrainingProgram[] = programsData.map(
-        (program: any) => ({
+        (program: unknown) => ({
           id: program.id,
           title: program.title || program.name,
           description: program.description,
@@ -127,7 +128,7 @@ const TrainingPage: React.FC = () => {
       );
 
       const transformedProgress: TrainingProgress[] = progressData.map(
-        (progress: any) => ({
+        (progress: unknown) => ({
           id: progress.id,
           participant_id: progress.participant_id || progress.user_id || '',
           program_id: progress.program_id || '',
@@ -152,7 +153,7 @@ const TrainingPage: React.FC = () => {
       setProgress(transformedProgress);
     } catch (error) {
       setError('فشل في تحميل بيانات التدريب');
-      console.error('Error loading training data:', error);
+      logger.error('Error loading training data:', error, {})
     } finally {
       setLoading(false);
     }

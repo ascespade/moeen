@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import {
+import { logger } from '@/lib/utils/logger';
   Activity,
   AlertTriangle,
   Calendar,
@@ -209,12 +210,12 @@ function AdminDashboardPage() {
                 credentials: 'include',
               });
             } catch (error) {
-              console.error('Logout error:', error);
+              logger.error('Logout error:', error, {})
             }
             try {
               localStorage.removeItem('user');
             } catch (error) {
-              console.error('LocalStorage error:', error);
+              logger.error('LocalStorage error:', error, {})
             }
             window.location.replace('/login');
           }}

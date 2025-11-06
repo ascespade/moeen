@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
+import { logger } from '@/lib/utils/logger';
 // import { requireAuth } from '@/lib/auth/authorize';
 
 export async function PUT(request: NextRequest): Promise<NextResponse> {
@@ -8,7 +9,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
     const supabase = getServiceSupabase();
 
     // Expect body like { services: [...], heroSlides: [...], testimonials: [...], gallery: [...] }
-    const entries: { key: string; value: any }[] = [];
+    const entries: { key: string; value: unknown }[] = [];
 
     if (body.services)
       entries.push({ key: 'homepage_services', value: body.services });
@@ -40,13 +41,13 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
       .select();
 
     if (error) {
-      console.error('Failed to upsert settings:', error.message);
+      logger.error('Failed to upsert settings:', error.message, {});
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, data });
   } catch (err) {
-    console.error('Error in admin/homepage PUT:', err);
+    logger.error('Error in admin/homepage PUT:', err, {});
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

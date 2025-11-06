@@ -1,10 +1,9 @@
 import { getBrowserSupabase } from './supabaseClient';
-import { _I18N_KEYS } from '@/constants/i18n-keys';
 
 export interface DynamicContent {
   id: string;
   key: string;
-  value: any;
+  value: unknown;
   category: string;
   is_public: boolean;
   created_at: string;
@@ -97,7 +96,7 @@ class DynamicContentManager {
         ]);
 
       if (error) {
-        throw new Error(`Failed to load homepage content: ${error.message}`);
+        throw new Error(`Failed to load homepage content: ${(error instanceof Error ? error.message : String(error))}`);
       }
 
       // Parse settings into structured content
@@ -153,7 +152,7 @@ class DynamicContentManager {
         .eq('namespace', namespace);
 
       if (error) {
-        throw new Error(`Failed to load translations: ${error.message}`);
+        throw new Error(`Failed to load translations: ${(error instanceof Error ? error.message : String(error))}`);
       }
 
       const translations: Record<string, string> = {};
@@ -176,7 +175,7 @@ class DynamicContentManager {
   /**
    * Get system settings
    */
-  async getSettings(keys: string[]): Promise<Record<string, any>> {
+  async getSettings(keys: string[]): Promise<Record<string, unknown>> {
     const cacheKey = `settings_${keys.join('_')}`;
 
     // Check cache first
@@ -194,10 +193,10 @@ class DynamicContentManager {
         .in('key', keys);
 
       if (error) {
-        throw new Error(`Failed to load settings: ${error.message}`);
+        throw new Error(`Failed to load settings: ${(error instanceof Error ? error.message : String(error))}`);
       }
 
-      const settings: Record<string, any> = {};
+      const settings: Record<string, unknown> = {};
       data?.forEach(item => {
         settings[item.key] = item.value;
       });
@@ -223,7 +222,7 @@ class DynamicContentManager {
     try {
       const updates: Array<{
         key: string;
-        value: any;
+        value: unknown;
         category: string;
         is_public: boolean;
       }> = [];
@@ -324,7 +323,7 @@ class DynamicContentManager {
   /**
    * Parse setting value from database result
    */
-  private parseSetting(settings: any[], key: string, defaultValue: unknown): any {
+  private parseSetting(settings: unknown[], key: string, defaultValue: unknown): unknown {
     const setting = settings.find(s => s.key === key);
     return setting ? setting.value : defaultValue;
   }

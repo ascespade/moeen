@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 interface User {
   id: string;
@@ -87,7 +88,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
         setError(result.error || 'فشل في تحميل المستخدمين');
       }
     } catch (err) {
-      console.error('Error fetching users:', err);
+      logger.error('Error fetching users:', err, {});
       setError('حدث خطأ أثناء تحميل المستخدمين');
     } finally {
       setLoading(false);
@@ -145,7 +146,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
           return false;
         }
       } catch (err) {
-        console.error('Error creating user:', err);
+        logger.error('Error creating user:', err, {});
         setError('حدث خطأ أثناء إنشاء المستخدم');
         return false;
       }
@@ -172,7 +173,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
           return false;
         }
       } catch (err) {
-        console.error('Error updating user:', err);
+        logger.error('Error updating user:', err, {});
         setError('حدث خطأ أثناء تحديث المستخدم');
         return false;
       }
@@ -197,7 +198,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
           return false;
         }
       } catch (err) {
-        console.error('Error deleting user:', err);
+        logger.error('Error deleting user:', err, {});
         setError('حدث خطأ أثناء حذف المستخدم');
         return false;
       }
@@ -241,7 +242,7 @@ export function useAdminUsers(): UseAdminUsersReturn {
           return false;
         }
       } catch (err) {
-        console.error('Error in bulk action:', err);
+        logger.error('Error in bulk action:', err, {});
         setError('حدث خطأ أثناء تنفيذ العملية');
         return false;
       }

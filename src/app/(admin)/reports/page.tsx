@@ -98,15 +98,15 @@ interface Report {
     dateRange?: { start: string; end: string };
     departments?: string[];
     users?: string[];
-    customFilters?: Record<string, any>;
+    customFilters?: Record<string, unknown>;
   };
   data?: {
     totalRecords: number;
-    summary: Record<string, any>;
+    summary: Record<string, unknown>;
     charts?: Array<{
       type: string;
       title: string;
-      data: any[];
+      data: unknown[];
     }>;
   };
   permissions: string[];

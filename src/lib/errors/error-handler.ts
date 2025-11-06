@@ -20,7 +20,7 @@ export interface ErrorResponse {
 /**
  * Handle error and return standardized response
  */
-export function handleError(error: any): ErrorResponse {
+export function handleError(error: unknown): ErrorResponse {
   // If it's already an AppError, return it
   if (error instanceof AppError) {
     logger.error('Application Error', {
@@ -85,7 +85,7 @@ export function handleError(error: any): ErrorResponse {
 /**
  * Handle API route error
  */
-export function handleApiError(error: any): NextResponse {
+export function handleApiError(error: unknown): NextResponse {
   const errorResponse = handleError(error);
   
   return NextResponse.json(
@@ -100,7 +100,7 @@ export function handleApiError(error: any): NextResponse {
 /**
  * Handle server action error
  */
-export function handleServerActionError(error: any): {
+export function handleServerActionError(error: unknown): {
   success: false;
   error: ErrorResponse;
 } {

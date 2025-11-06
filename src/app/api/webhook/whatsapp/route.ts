@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { logger } from '@/lib/logger';
+import { logger } from '@/lib/utils/logger';
 // import { requireAuth } from '@/lib/auth/authorize';
 
 const supabase = createClient(
@@ -159,23 +159,23 @@ async function processMessageWithAI(
     }
 
     let responseText =
-      (matchedIntent as any)?.response_template ||
+      (matchedIntent as unknown)?.response_template ||
       'مرحباً بك! كيف يمكنني مساعدتك؟';
 
     // معالجة النية
-    if ((matchedIntent as any)?.action_type === 'appointment') {
+    if ((matchedIntent as unknown)?.action_type === 'appointment') {
       responseText = await handleAppointmentIntent(
         conversationId,
         messageText,
         phoneNumber
       );
-    } else if ((matchedIntent as any)?.action_type === 'cancel') {
+    } else if ((matchedIntent as unknown)?.action_type === 'cancel') {
       responseText = await handleCancelIntent(
         conversationId,
         messageText,
         phoneNumber
       );
-    } else if ((matchedIntent as any)?.action_type === 'reminder') {
+    } else if ((matchedIntent as unknown)?.action_type === 'reminder') {
       responseText = await handleReminderIntent(
         conversationId,
         messageText,
@@ -189,7 +189,7 @@ async function processMessageWithAI(
       sender_type: 'bot',
       message_text: responseText,
       message_type: 'text',
-      intent_id: (matchedIntent as any)?.id,
+      intent_id: (matchedIntent as unknown)?.id,
       confidence_score: confidence,
       is_handled: true,
     });

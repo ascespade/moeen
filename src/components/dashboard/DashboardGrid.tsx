@@ -25,7 +25,7 @@ export interface GridItem {
   maxWidth?: number;
   maxHeight?: number;
   component: React.ComponentType<any>;
-  props?: Record<string, any>;
+  props?: Record<string, unknown>;
   title?: string;
   isResizable?: boolean;
   isDraggable?: boolean;

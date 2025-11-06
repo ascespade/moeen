@@ -2,6 +2,7 @@
 
 import { AdminCard } from '@/components/admin/ui';
 import { Input } from '@/components/ui/Input';
+import { logger } from '@/lib/utils/logger';
 import { Label } from '@/components/ui/Label';
 import { Switch } from '@/components/ui/Switch';
 import { Key, Lock, Shield } from 'lucide-react';
@@ -73,7 +74,7 @@ export default function SecuritySettings({ onChange }: SecuritySettingsProps) {
           setConfig(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading security settings:', error);
+        logger.error('Error loading security settings', { error: error instanceof Error ? error.message : String(error) });
       } finally {
         setLoading(false);
       }
@@ -82,7 +83,7 @@ export default function SecuritySettings({ onChange }: SecuritySettingsProps) {
     loadSecuritySettings();
   }, []);
 
-  const updateConfig = (section: keyof SecurityConfig, updates: any) => {
+  const updateConfig = (section: keyof SecurityConfig, updates: unknown) => {
     setConfig(prev => ({
       ...prev,
       [section]: { ...prev[section], ...updates },

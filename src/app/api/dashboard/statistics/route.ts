@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 
+import { logger } from '@/lib/utils/logger';
 export const revalidate = 60;
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
@@ -93,11 +94,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .eq('status', 'paid');
 
     const totalRevenue =
-      payments?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) ||
+      payments?.reduce((sum: number, p: unknown) => sum + (p.amount || 0), 0) ||
       0;
 
     const monthlyPayments =
-      payments?.filter((p: any) => {
+      payments?.filter((p: unknown) => {
         const paymentDate = new Date(p.created_at);
         return paymentDate >= startDate;
       }) || [];
@@ -188,8 +189,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     });
   } catch (error) {
     // Use logger instead of console.error
-    const logger = (await import('@/lib/monitoring/logger')).default;
-    logger.error('Dashboard statistics API error', { error });
+    logger.error('Dashboard statistics API error', { error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       {
         success: false,

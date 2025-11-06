@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -57,7 +58,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: auditLogs, error: auditError } = await query;
 
     if (auditError) {
-      console.error('Error fetching audit logs:', auditError);
+      logger.error('Error fetching audit logs:', auditError, {});
       return NextResponse.json(
         {
           error: 'Failed to fetch activities',
@@ -68,7 +69,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Transform audit logs to activity format
-    const activities = (auditLogs || []).map((log: any) => ({
+    const activities = (auditLogs || []).map((log: unknown) => ({
       id: log.id,
       type: mapResourceTypeToActivityType(log.resource_type),
       title: generateActivityTitle(log.action, log.resource_type),
@@ -97,7 +98,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Transform appointments to activities
     const appointmentActivities = (recentAppointments || []).map(
-      (apt: any) => ({
+      (apt: unknown) => ({
         id: `apt-${apt.id}`,
         type: 'appointment',
         title: apt.status === 'scheduled' ? 'موعد جديد' : 'تحديث موعد',
@@ -127,7 +128,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    console.error('Error in recent activities API:', error);
+    logger.error('Error in recent activities API:', error, {});
     return NextResponse.json(
       {
         error: 'Internal server error',
@@ -176,7 +177,7 @@ function generateActivityTitle(action: string, resourceType: string): string {
   return titleMap[action]?.[resourceType] || `${action} ${resourceType}`;
 }
 
-function generateActivityDescription(log: any): string {
+function generateActivityDescription(log: unknown): string {
   try {
     const details =
       typeof log.details === 'string' ? JSON.parse(log.details) : log.details;

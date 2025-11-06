@@ -21,12 +21,13 @@ export async function GET(
       success: true,
       permissions,
     });
-  } catch (error: any) {
-    console.error('[API] Error fetching role permissions:', error);
+  } catch (error: unknown) {
+    const { logger } = await import('@/lib/utils/logger');
+    logger.error('[API] Error fetching role permissions', { error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       {
         success: false,
-        error: error?.message || 'Failed to fetch permissions',
+        error: error instanceof Error ? error.message : 'Failed to fetch permissions',
       },
       { status: 500 }
     );

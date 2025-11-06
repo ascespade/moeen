@@ -174,7 +174,7 @@ export class CacheKeys {
 export class CacheManager {
   private static instance: CacheManager;
   private cache: MemoryCache;
-  private requestCache = new Map<string, Promise<any>>();
+  private requestCache = new Map<string, Promise<unknown>>();
 
   private constructor() {
     this.cache = new MemoryCache({
@@ -247,24 +247,24 @@ export class CacheManager {
   }
 
   // Specific cache methods for different data types
-  async getUser(id: string, fetcher: () => Promise<any>): Promise<any> {
+  async getUser(id: string, fetcher: () => Promise<unknown>): Promise<unknown> {
     return this.get(CacheKeys.user(id), fetcher, 10 * 60 * 1000); // 10 minutes
   }
 
-  async getPatient(id: string, fetcher: () => Promise<any>): Promise<any> {
+  async getPatient(id: string, fetcher: () => Promise<unknown>): Promise<unknown> {
     return this.get(CacheKeys.patient(id), fetcher, 5 * 60 * 1000); // 5 minutes
   }
 
-  async getDoctor(id: string, fetcher: () => Promise<any>): Promise<any> {
+  async getDoctor(id: string, fetcher: () => Promise<unknown>): Promise<unknown> {
     return this.get(CacheKeys.doctor(id), fetcher, 15 * 60 * 1000); // 15 minutes
   }
 
   async getAppointments(
-    fetcher: () => Promise<any>,
+    fetcher: () => Promise<unknown>,
     patientId?: string,
     doctorId?: string,
     date?: string
-  ): Promise<any> {
+  ): Promise<unknown> {
     return this.get(
       CacheKeys.appointments(patientId, doctorId, date),
       fetcher,
@@ -274,36 +274,36 @@ export class CacheManager {
 
   async getSessions(
     patientId: string,
-    fetcher: () => Promise<any>
-  ): Promise<any> {
+    fetcher: () => Promise<unknown>
+  ): Promise<unknown> {
     return this.get(CacheKeys.sessions(patientId), fetcher, 5 * 60 * 1000); // 5 minutes
   }
 
   async getConversations(
     patientId: string,
-    fetcher: () => Promise<any>
-  ): Promise<any> {
+    fetcher: () => Promise<unknown>
+  ): Promise<unknown> {
     return this.get(CacheKeys.conversations(patientId), fetcher, 1 * 60 * 1000); // 1 minute
   }
 
   async getAnalytics(
     period: string,
-    fetcher: () => Promise<any>
-  ): Promise<any> {
+    fetcher: () => Promise<unknown>
+  ): Promise<unknown> {
     return this.get(CacheKeys.analytics(period), fetcher, 5 * 60 * 1000); // 5 minutes
   }
 
   async getNotifications(
     userId: string,
-    fetcher: () => Promise<any>
-  ): Promise<any> {
+    fetcher: () => Promise<unknown>
+  ): Promise<unknown> {
     return this.get(CacheKeys.notifications(userId), fetcher, 1 * 60 * 1000); // 1 minute
   }
 
   async getInsuranceClaims(
     patientId: string,
-    fetcher: () => Promise<any>
-  ): Promise<any> {
+    fetcher: () => Promise<unknown>
+  ): Promise<unknown> {
     return this.get(
       CacheKeys.insuranceClaims(patientId),
       fetcher,
@@ -311,11 +311,11 @@ export class CacheManager {
     ); // 10 minutes
   }
 
-  async getCenterSettings(fetcher: () => Promise<any>): Promise<any> {
+  async getCenterSettings(fetcher: () => Promise<unknown>): Promise<unknown> {
     return this.get(CacheKeys.centerSettings(), fetcher, 30 * 60 * 1000); // 30 minutes
   }
 
-  async getMessageTemplates(fetcher: () => Promise<any>): Promise<any> {
+  async getMessageTemplates(fetcher: () => Promise<unknown>): Promise<unknown> {
     return this.get(CacheKeys.messageTemplates(), fetcher, 60 * 60 * 1000); // 1 hour
   }
 
@@ -380,7 +380,7 @@ export class CacheManager {
   }
 
   // Cache statistics
-  getStats(): any {
+  getStats(): unknown {
     return this.cache.stats();
   }
 
@@ -397,14 +397,14 @@ export function withCache(
   ttl?: number
 ) {
   return function (
-    _target: any,
+    _target: unknown,
     _propertyName: string,
     descriptor: PropertyDescriptor
   ) {
     const method = descriptor.value;
     const cache = CacheManager.getInstance();
 
-    descriptor.value = async function (request: NextRequest, ...args: any[]) {
+    descriptor.value = async function (request: NextRequest, ...args: unknown[]) {
       const key = keyGenerator(request);
 
       return cache.get(

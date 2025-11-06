@@ -1,5 +1,5 @@
-import { _NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase/admin';
+import { NextRequest, NextResponse } from 'next/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 
 const INTERNAL_SECRET = process.env.ADMIN_INTERNAL_SECRET;
@@ -19,7 +19,7 @@ const USERS = [
   { email: 'agent@test.local', name: 'Agent User', role: 'agent' },
 ];
 
-export async function POST(req: any) {
+export async function POST(req: NextRequest) {
   const isDev = process.env.NODE_ENV !== 'production';
   const referer = req.headers.get('referer') || '';
   const origin = req.headers.get('origin') || '';
@@ -48,6 +48,7 @@ export async function POST(req: any) {
   for (const u of USERS) {
     try {
       // Create or fetch auth user
+      const supabaseAdmin = createAdminClient();
       const { data: listed } = await supabaseAdmin.auth.admin.listUsers({
         page: 1,
         perPage: 1,
@@ -68,7 +69,7 @@ export async function POST(req: any) {
       }
 
       // Upsert application user
-      const userData: any = {
+      const userData: unknown = {
         id: authId,
         email: u.email,
         name: u.name,
@@ -152,7 +153,7 @@ export async function POST(req: any) {
       // Force update role in users table
       if (u.role && finalUser) {
         try {
-          const updateData: any = {
+          const updateData: unknown = {
             role: u.role,
             status: 'active',
             is_active: true,
@@ -167,7 +168,7 @@ export async function POST(req: any) {
             .from('users')
             .update(updateData)
             .eq('id', finalUser.id);
-        } catch (e: any) {
+        } catch (e: unknown) {
           // Error updating role - continue
         }
       }
@@ -188,7 +189,7 @@ export async function POST(req: any) {
       }
 
       created.push({ email: u.email, role: u.role });
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Continue with next user
     }
   }

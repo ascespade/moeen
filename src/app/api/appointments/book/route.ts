@@ -9,6 +9,7 @@ import { getClientInfo } from '@/lib/utils/request-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 
+import { logger } from '@/lib/utils/logger';
 const bookingSchema = z.object({
   patientId: z.string().uuid('Invalid patient ID'),
   doctorId: z.string().uuid('Invalid doctor ID'),
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Check role permissions using PermissionManager
     const { PermissionManager } = await import('@/lib/permissions');
     const canCreate = PermissionManager.hasPermission(
-      user.role as any,
+      user.role as unknown,
       'appointments',
       'create',
       {
@@ -61,7 +62,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json(
         {
           error: 'Validation failed',
-          details: validation.error.issues.map((err: any) => ({
+          details: validation.error.issues.map((err) => ({
             path: err.path.join('.'),
             message: err.message,
           })),
@@ -206,7 +207,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     });
   } catch (error) {
     // Use logger instead of console.error
-    const logger = (await import('@/lib/monitoring/logger')).default;
+    const { logger } = await import('@/lib/utils/logger');
     logger.error('Error in appointment booking', { error });
     return NextResponse.json(
       { error: 'Internal server error' },
@@ -271,7 +272,7 @@ async function checkAppointmentConflicts(
     .lt('scheduled_at', endTime.toISOString()); // Start before our end time
 
   // Filter for actual overlaps
-  const conflicts = (allAppointments || []).filter((appt: any) => {
+  const conflicts = (allAppointments || []).filter((appt: { scheduled_at: string; duration?: number | null }) => {
     const apptStart = new Date(appt.scheduled_at);
     const apptDuration = appt.duration || 30;
     const apptEnd = new Date(apptStart.getTime() + apptDuration * 60000);
@@ -284,6 +285,6 @@ async function checkAppointmentConflicts(
 
 async function sendAppointmentConfirmation(appointmentId: string) {
   // This will be implemented in the notification system
-  const logger = (await import('@/lib/monitoring/logger')).default;
+  const { logger } = await import('@/lib/utils/logger');
   logger.info('Sending appointment confirmation', { appointmentId });
 }

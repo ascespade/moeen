@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 interface Therapist {
   id: string;
@@ -105,9 +105,9 @@ export default function TherapistSchedulesPage() {
       if (error) throw error;
       await loadSchedules();
       alert('تم إضافة الجدول بنجاح!');
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.error('Error adding schedule', error);
-      alert(`خطأ: ${error.message || 'فشل في إضافة الجدول'}`);
+      alert(`خطأ: ${error instanceof Error ? error.message : String(error) || 'فشل في إضافة الجدول'}`);
     } finally {
       setSaving(false);
     }
@@ -116,7 +116,7 @@ export default function TherapistSchedulesPage() {
   const updateSchedule = async (
     scheduleId: string,
     field: string,
-    value: any
+    value: unknown
   ) => {
     try {
       const supabase = createClient();

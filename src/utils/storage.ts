@@ -1,3 +1,5 @@
+import { logger } from '@/lib/utils/logger';
+
 // Storage utilities
 export const storage = {
   // Local Storage
@@ -17,7 +19,11 @@ export const storage = {
 
     try {
       localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
   },
 
   remove: (key: string): void => {
@@ -25,7 +31,11 @@ export const storage = {
 
     try {
       localStorage.removeItem(key);
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
   },
 
   clear: (): void => {
@@ -33,7 +43,11 @@ export const storage = {
 
     try {
       localStorage.clear();
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
   },
 
   // Session Storage
@@ -53,7 +67,11 @@ export const storage = {
 
     try {
       sessionStorage.setItem(key, JSON.stringify(value));
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
   },
 
   removeSession: (key: string): void => {
@@ -61,7 +79,11 @@ export const storage = {
 
     try {
       sessionStorage.removeItem(key);
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
   },
 
   clearSession: (): void => {
@@ -69,7 +91,11 @@ export const storage = {
 
     try {
       sessionStorage.clear();
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      logger.error('Storage error', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
   },
 };
 

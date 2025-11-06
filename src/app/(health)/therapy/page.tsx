@@ -22,6 +22,7 @@ import {
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 interface TherapySession {
   id: string;
@@ -102,7 +103,7 @@ const TherapyPage: React.FC = () => {
 
       if (sessionsError) throw sessionsError;
 
-      const transformedSessions = (sessionsData || []).map((session: any) => ({
+      const transformedSessions = (sessionsData || []).map((session: unknown) => ({
         id: session.id,
         patient_id: session.patient_id,
         therapist_id: session.therapist_id,
@@ -153,7 +154,7 @@ const TherapyPage: React.FC = () => {
 
       if (goalsError) throw goalsError;
 
-      const transformedGoals = (goalsData || []).map((goal: any) => ({
+      const transformedGoals = (goalsData || []).map((goal: unknown) => ({
         id: goal.id,
         patient_id: goal.therapy_sessions?.patient_id || '',
         goal_title: goal.goal_title || '',
@@ -167,7 +168,7 @@ const TherapyPage: React.FC = () => {
       setSessions(transformedSessions);
       setGoals(transformedGoals);
     } catch (error) {
-      console.error('Failed to load therapy data:', error);
+      logger.error('Failed to load therapy data:', error, {})
       setError('فشل في تحميل بيانات العلاج');
       setSessions([]);
       setGoals([]);

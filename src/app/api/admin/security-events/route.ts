@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { handleApiError } from '@/lib/errors/error-handler';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -49,7 +50,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: events, error, _count } = await query;
 
     if (error) {
-      console.error('Error fetching security events:', error);
+      logger.error('Error fetching security events:', error, {});
       // Return empty array if table doesn't exist or query fails
       return NextResponse.json({
         success: false,

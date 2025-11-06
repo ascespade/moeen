@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -34,7 +35,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     const modules = (configs || []).reduce(
-      (acc: Record<string, any>, config: any) => {
+      (acc: Record<string, unknown>, config: unknown) => {
         try {
           acc[config.key] =
             typeof config.value === 'string'
@@ -65,7 +66,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: { ...defaultModules, ...modules },
     });
   } catch (error) {
-    console.error('Error in module settings API:', error);
+    logger.error('Error in module settings API:', error, {});
     return NextResponse.json(
       {
         error: 'Internal server error',
@@ -138,7 +139,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    console.error('Error saving module settings:', error);
+    logger.error('Error saving module settings:', error, {});
     return NextResponse.json(
       {
         error: 'Internal server error',

@@ -29,6 +29,7 @@ import {
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 interface FamilyMember {
   id: string;
@@ -132,7 +133,7 @@ const FamilySupportPage: React.FC = () => {
 
       // Transform family members
       const transformedFamilyMembers = (familyMembersData || []).map(
-        (member: any) => ({
+        (member: unknown) => ({
           id: member.id,
           patient_id: member.patient_id,
           first_name: member.name
@@ -176,7 +177,7 @@ const FamilySupportPage: React.FC = () => {
 
       if (sessionsError) throw sessionsError;
 
-      const transformedSessions = (sessionsData || []).map((session: any) => ({
+      const transformedSessions = (sessionsData || []).map((session: unknown) => ({
         id: session.id,
         family_member_id: session.patient_id,
         counselor_id: session.facilitator_id || '',
@@ -217,7 +218,7 @@ const FamilySupportPage: React.FC = () => {
       if (resourcesError) throw resourcesError;
 
       const transformedResources = (resourcesData || []).map(
-        (resource: any) => ({
+        (resource: unknown) => ({
           id: resource.id,
           title: resource.resource_title || '',
           description: resource.description || '',
@@ -238,7 +239,7 @@ const FamilySupportPage: React.FC = () => {
       setSupportSessions(transformedSessions);
       setResources(transformedResources);
     } catch (error) {
-      console.error('Failed to load family support data:', error);
+      logger.error('Failed to load family support data:', error, {})
       setError('فشل في تحميل بيانات دعم الأسر');
       setFamilyMembers([]);
       setSupportSessions([]);

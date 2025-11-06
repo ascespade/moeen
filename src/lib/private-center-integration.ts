@@ -464,8 +464,8 @@ export class PrivateCenterIntegration {
   private async callMOHAPI(
     _method: string,
     _endpoint: string,
-    _data?: any
-  ): Promise<any> {
+    _data?: unknown
+  ): Promise<unknown> {
     // Mock response for development
     return {
       success: true,
@@ -476,8 +476,8 @@ export class PrivateCenterIntegration {
   private async callSFDAPI(
     _method: string,
     _endpoint: string,
-    _data?: any
-  ): Promise<any> {
+    _data?: unknown
+  ): Promise<unknown> {
     // Mock response for development
     return {
       success: true,
@@ -488,8 +488,8 @@ export class PrivateCenterIntegration {
   private async callCCHIAPI(
     _method: string,
     _endpoint: string,
-    _data?: any
-  ): Promise<any> {
+    _data?: unknown
+  ): Promise<unknown> {
     // Mock response for development
     return {
       success: true,

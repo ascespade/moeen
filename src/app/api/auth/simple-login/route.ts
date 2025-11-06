@@ -23,7 +23,7 @@ function parseMaxAgeSeconds(expiresIn: string | undefined): number {
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password } = await req.json().catch(() => ({}) as any);
+    const { email, password } = await req.json().catch(() => ({ email: undefined, password: undefined })) as { email?: string; password?: string };
     if (!email || !password) {
       return NextResponse.json(
         { success: false, error: 'Missing credentials' },
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
       authOk = true;
     } else {
       try {
-        const supaAuth = await (supabase as any).auth.signInWithPassword({
+        const supaAuth = await (supabase as { auth: { signInWithPassword: (credentials: { email: string; password: string }) => Promise<{ error?: { message: string }; data?: { user?: { id: string } } }> } }).auth.signInWithPassword({
           email,
           password,
         });
@@ -92,12 +92,12 @@ export async function POST(req: NextRequest) {
       email: userRow.email,
       role: userRow.role,
       perms: permissions,
-    } as any;
+    };
 
     const expiresInStr: string = JWT_EXPIRES_IN || '7d';
     const token = jwt.sign(payload, jwtSecret, {
       expiresIn: expiresInStr,
-    } as any);
+    });
 
     const response = NextResponse.json({
       success: true,
@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
     });
 
     return response;
-  } catch (e: any) {
+  } catch (e: unknown) {
     return NextResponse.json(
       { success: false, error: e?.message || 'Internal error' },
       { status: 500 }

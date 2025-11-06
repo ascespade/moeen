@@ -1,6 +1,6 @@
 'use client';
 
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 import { createClient } from '@/lib/supabase/client';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -98,7 +98,7 @@ export default function PatientIEPPage() {
 
         // Load progress for each goal
         const goalsWithProgress = await Promise.all(
-          (goalsData || []).map(async (goal: any) => {
+          (goalsData || []).map(async (goal: unknown) => {
             const { data: progressData } = await supabase.rpc(
               'calculate_goal_progress',
               { p_goal_id: goal.id }

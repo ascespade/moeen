@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 declare global {
   interface Window {
@@ -32,9 +33,9 @@ export default function PrelineInit() {
         }
       } catch (error) {
         // Silently fail if Preline can't be loaded - don't block the app
-        console.warn(
-          'Preline initialization failed (this is optional):',
-          error
+        logger.warn(
+          'Preline initialization failed (this is optional)',
+          { error: error instanceof Error ? error.message : String(error) }
         );
       }
     };

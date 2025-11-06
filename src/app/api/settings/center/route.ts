@@ -45,7 +45,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       );
     }
 
-    const response: any = { center: centerInfo };
+    const response: unknown = { center: centerInfo };
 
     // جلب معلومات الموظفين إذا طُلب ذلك
     if (includeStaff) {

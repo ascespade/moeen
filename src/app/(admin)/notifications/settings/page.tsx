@@ -7,6 +7,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import { logger } from '@/lib/utils/logger';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -32,7 +33,7 @@ export default function NotificationsSettingsPage() {
       if (templatesRes.data) setTemplates(templatesRes.data);
       if (rulesRes.data) setRules(rulesRes.data);
     } catch (error) {
-      console.error('Error loading data:', error);
+      logger.error('Error loading data:', error, {})
     } finally {
       setLoading(false);
     }

@@ -36,18 +36,18 @@ interface DashboardMetrics {
       service: string;
       status: string;
       lastCheck: string;
-      details: any;
+      details: unknown;
     }>;
     metrics: Array<{
       service: string;
       lastUpdate: string;
-      metrics: any;
+      metrics: unknown;
     }>;
   };
   automation: {
     socialMedia: {
       totalPosts: number;
-      platforms: Record<string, any>;
+      platforms: Record<string, unknown>;
       engagement: {
         totalViews: number;
         totalLikes: number;

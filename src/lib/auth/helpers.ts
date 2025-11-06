@@ -116,7 +116,7 @@ export async function getUserWithProfile(userId?: string): Promise<(User & { pro
     if (error.code === 'PGRST116') {
       return null;
     }
-    throw AppError.internal(`Failed to fetch user: ${error.message}`);
+    throw AppError.internal(`Failed to fetch user: ${(error instanceof Error ? error.message : String(error))}`);
   }
 
   return data;

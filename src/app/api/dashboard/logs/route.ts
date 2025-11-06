@@ -77,7 +77,7 @@ async function getActivityLogs(filters: {
     if (error) throw error;
 
     return (
-      data?.map((log: any) => ({
+      data?.map((log: unknown) => ({
         id: log.id,
         timestamp: log.timestamp,
         service: log.service_name,
@@ -94,7 +94,7 @@ async function getActivityLogs(filters: {
   }
 }
 
-function generateLogSummary(logs: any[]) {
+function generateLogSummary(logs: unknown[]) {
   const summary = {
     total: logs.length,
     byLevel: {} as Record<string, number>,

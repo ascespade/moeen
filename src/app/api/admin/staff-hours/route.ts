@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -69,18 +70,18 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .lte('date', today);
 
     // Calculate real work hours from attendance records
-    const staffWorkHours = (staff || []).map((member: any) => {
+    const staffWorkHours = (staff || []).map((member: unknown) => {
       const todayRecord = todayAttendance?.find(
-        (a: any) => a.user_id === member.id
+        (a: unknown) => a.user_id === member.id
       );
       const weeklyHours =
         weeklyAttendance
-          ?.filter((a: any) => a.user_id === member.id)
-          ?.reduce((sum: number, record: any) => sum + (record.total_hours || 0), 0) || 0;
+          ?.filter((a: unknown) => a.user_id === member.id)
+          ?.reduce((sum: number, record: unknown) => sum + (record.total_hours || 0), 0) || 0;
       const monthlyHours =
         monthlyAttendance
-          ?.filter((a: any) => a.user_id === member.id)
-          ?.reduce((sum: number, record: any) => sum + (record.total_hours || 0), 0) || 0;
+          ?.filter((a: unknown) => a.user_id === member.id)
+          ?.reduce((sum: number, record: unknown) => sum + (record.total_hours || 0), 0) || 0;
 
       const isOnDuty =
         todayRecord && todayRecord.check_in_time && !todayRecord.check_out_time;
@@ -108,7 +109,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       data: staffWorkHours,
     });
   } catch (error) {
-    console.error('Staff hours API error:', error);
+    logger.error('Staff hours API error:', error, {});
     return NextResponse.json(
       { error: 'Failed to fetch staff hours data' },
       { status: 500 }

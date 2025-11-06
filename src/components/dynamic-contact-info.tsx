@@ -5,6 +5,7 @@ import { toArabicNumbers } from '@/lib/utils/numbers';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
 import { memo, useEffect, useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 interface ContactInfo {
   id: number;
@@ -63,7 +64,7 @@ const DynamicContactInfo = memo(function DynamicContactInfo() {
 
         if (data.contact_info && Array.isArray(data.contact_info)) {
           setContactInfo(
-            data.contact_info.map((item: any) => ({
+            data.contact_info.map((item: unknown) => ({
               ...item,
               icon:
                 item.type === 'phone' ? (
@@ -77,7 +78,7 @@ const DynamicContactInfo = memo(function DynamicContactInfo() {
           );
         }
       } catch (error) {
-        console.error('Error fetching contact info:', error);
+        logger.error('Error fetching contact info', { error: error instanceof Error ? error.message : String(error) });
       } finally {
         setLoading(false);
       }

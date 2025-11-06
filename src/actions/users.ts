@@ -36,7 +36,7 @@ export const createUserAction = withAction(
       .single();
 
     if (error) {
-      throw AppError.internal(`فشل إنشاء المستخدم: ${error.message}`);
+      throw AppError.internal(`فشل إنشاء المستخدم: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/admin/users');
@@ -64,7 +64,7 @@ export const updateUserAction = withAction(
       .single();
 
     if (error) {
-      throw AppError.internal(`فشل تحديث المستخدم: ${error.message}`);
+      throw AppError.internal(`فشل تحديث المستخدم: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/admin/users');
@@ -90,7 +90,7 @@ export const deleteUserAction = withAction(
       .eq('id', userId);
 
     if (error) {
-      throw AppError.internal(`فشل حذف المستخدم: ${error.message}`);
+      throw AppError.internal(`فشل حذف المستخدم: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/admin/users');
@@ -123,7 +123,7 @@ export const updateUserProfileAction = withAction(
       .single();
 
     if (error) {
-      throw AppError.internal(`فشل تحديث الملف الشخصي: ${error.message}`);
+      throw AppError.internal(`فشل تحديث الملف الشخصي: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/profile');

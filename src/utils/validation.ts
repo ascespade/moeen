@@ -96,7 +96,7 @@ export const matchesPattern = (value: string, pattern: RegExp): boolean => {
   return pattern.test(value);
 };
 
-export const validateForm = <T extends Record<string, any>>(
+export const validateForm = <T extends Record<string, unknown>>(
   data: T,
   rules: Record<
     keyof T,

@@ -11,8 +11,8 @@ import { ApiResponse } from '../types';
 export interface ApiRequestConfig {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   headers?: Record<string, string>;
-  body?: any;
-  params?: Record<string, any>;
+  body?: unknown;
+  params?: Record<string, unknown>;
   timeout?: number;
   retries?: number;
 }
@@ -87,7 +87,7 @@ class ApiClient {
     }
   }
 
-  private buildURL(endpoint: string, params?: Record<string, any>): string {
+  private buildURL(endpoint: string, params?: Record<string, unknown>): string {
     // Ensure we always construct an absolute URL. If baseURL is a relative path
     // (e.g. '/api'), resolve it against the current origin on the client or the
     // configured public app URL on the server.
@@ -134,7 +134,7 @@ class ApiClient {
     };
   }
 
-  private shouldRetry(error: any): boolean {
+  private shouldRetry(error: unknown): boolean {
     if (error.name === 'AbortError') return false;
     if (error.status >= 500) return true;
     if (error.status === 429) return true;
@@ -148,20 +148,20 @@ class ApiClient {
   // HTTP Methods
   async get<T>(
     endpoint: string,
-    params?: Record<string, any>
+    params?: Record<string, unknown>
   ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { method: 'GET', params });
   }
 
-  async post<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+  async post<T>(endpoint: string, body?: unknown): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { method: 'POST', body });
   }
 
-  async put<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+  async put<T>(endpoint: string, body?: unknown): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { method: 'PUT', body });
   }
 
-  async patch<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+  async patch<T>(endpoint: string, body?: unknown): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, { method: 'PATCH', body });
   }
 
@@ -173,7 +173,7 @@ class ApiClient {
   async login(credentials: {
     email: string;
     password: string;
-  }): Promise<ApiResponse<{ token: string; user: any }>> {
+  }): Promise<ApiResponse<{ token: string; user: unknown }>> {
     return this.post(API_ENDPOINTS.AUTH.LOGIN, credentials);
   }
 
@@ -194,7 +194,7 @@ class ApiClient {
     return this.get(API_ENDPOINTS.USERS.LIST, params);
   }
 
-  async createUser(userData: any): Promise<ApiResponse<any>> {
+  async createUser(userData: unknown): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.USERS.CREATE, userData);
   }
 
@@ -202,7 +202,7 @@ class ApiClient {
     return this.get(API_ENDPOINTS.USERS.GET(id));
   }
 
-  async updateUser(id: string, userData: any): Promise<ApiResponse<any>> {
+  async updateUser(id: string, userData: unknown): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.USERS.UPDATE(id), userData);
   }
 
@@ -219,7 +219,7 @@ class ApiClient {
     return this.get(API_ENDPOINTS.PATIENTS.LIST, params);
   }
 
-  async createPatient(patientData: any): Promise<ApiResponse<any>> {
+  async createPatient(patientData: unknown): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.PATIENTS.CREATE, patientData);
   }
 
@@ -227,13 +227,13 @@ class ApiClient {
     return this.get(API_ENDPOINTS.PATIENTS.GET(id));
   }
 
-  async updatePatient(id: string, patientData: any): Promise<ApiResponse<any>> {
+  async updatePatient(id: string, patientData: unknown): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.PATIENTS.UPDATE(id), patientData);
   }
 
   async activatePatient(
     id: string,
-    activationData?: any
+    activationData?: unknown
   ): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.PATIENTS.ACTIVATE(id), activationData);
   }
@@ -247,7 +247,7 @@ class ApiClient {
     return this.get(API_ENDPOINTS.DOCTORS.LIST, params);
   }
 
-  async createDoctor(doctorData: any): Promise<ApiResponse<any>> {
+  async createDoctor(doctorData: unknown): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.DOCTORS.CREATE, doctorData);
   }
 
@@ -255,7 +255,7 @@ class ApiClient {
     return this.get(API_ENDPOINTS.DOCTORS.GET(id));
   }
 
-  async updateDoctor(id: string, doctorData: any): Promise<ApiResponse<any>> {
+  async updateDoctor(id: string, doctorData: unknown): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.DOCTORS.UPDATE(id), doctorData);
   }
 
@@ -278,7 +278,7 @@ class ApiClient {
     return this.get(API_ENDPOINTS.APPOINTMENTS.LIST, params);
   }
 
-  async createAppointment(appointmentData: any): Promise<ApiResponse<any>> {
+  async createAppointment(appointmentData: unknown): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.APPOINTMENTS.CREATE, appointmentData);
   }
 
@@ -288,7 +288,7 @@ class ApiClient {
 
   async updateAppointment(
     id: string,
-    appointmentData: any
+    appointmentData: unknown
   ): Promise<ApiResponse<any>> {
     return this.patch(API_ENDPOINTS.APPOINTMENTS.UPDATE(id), appointmentData);
   }
@@ -306,11 +306,11 @@ class ApiClient {
     return this.get(API_ENDPOINTS.PAYMENTS.LIST, params);
   }
 
-  async createPayment(paymentData: any): Promise<ApiResponse<any>> {
+  async createPayment(paymentData: unknown): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.PAYMENTS.CREATE, paymentData);
   }
 
-  async processPayment(paymentData: any): Promise<ApiResponse<any>> {
+  async processPayment(paymentData: unknown): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.PAYMENTS.PROCESS, paymentData);
   }
 
@@ -324,13 +324,13 @@ class ApiClient {
     return this.get(API_ENDPOINTS.INSURANCE.CLAIMS, params);
   }
 
-  async createInsuranceClaim(claimData: any): Promise<ApiResponse<any>> {
+  async createInsuranceClaim(claimData: unknown): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.INSURANCE.CLAIMS, claimData);
   }
 
   async submitInsuranceClaim(
     id: string,
-    submitData: any
+    submitData: unknown
   ): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.INSURANCE.SUBMIT(id), submitData);
   }
@@ -345,7 +345,7 @@ class ApiClient {
     return this.get(API_ENDPOINTS.NOTIFICATIONS.LIST, params);
   }
 
-  async sendNotification(notificationData: any): Promise<ApiResponse<any>> {
+  async sendNotification(notificationData: unknown): Promise<ApiResponse<any>> {
     return this.post(API_ENDPOINTS.NOTIFICATIONS.SEND, notificationData);
   }
 
@@ -366,7 +366,7 @@ class ApiClient {
   async uploadFile(
     file: File,
     type: string,
-    metadata?: any
+    metadata?: unknown
   ): Promise<ApiResponse<any>> {
     const formData = new FormData();
     formData.append('file', file);

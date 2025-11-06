@@ -110,7 +110,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       });
 
     if (authError) {
-      console.error('Auth creation error:', authError);
+      logger.error('Auth creation error:', authError, {});
       return NextResponse.json(
         {
           success: false,
@@ -168,13 +168,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (profileError) {
-      console.error('Profile creation error:', profileError);
+      logger.error('Profile creation error:', profileError, {});
 
       // Try to delete the auth user
       try {
         await supabaseAdmin.auth.admin.deleteUser(authData.user.id);
       } catch (deleteError) {
-        console.error(
+        logger.error(
           'Failed to delete auth user after profile creation failure:',
           deleteError
         );
@@ -218,7 +218,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         duration_ms: Date.now() - startTime,
       });
     } catch (auditError) {
-      console.error('Audit log error (non-critical):', auditError);
+      logger.error('Audit log error (non-critical):', auditError, {});
     }
 
     return NextResponse.json(
@@ -234,7 +234,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       { status: 201 }
     );
   } catch (error) {
-    console.error('Registration error:', error);
+    logger.error('Registration error:', error, {});
     return NextResponse.json(
       {
         success: false,

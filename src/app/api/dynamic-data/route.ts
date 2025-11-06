@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
 import { requireAuth } from '@/lib/auth/authorize';
 
+import { logger } from '@/lib/utils/logger';
 export const dynamic = 'force-dynamic';
 
 export const revalidate = 60;
@@ -87,8 +88,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // Log error internally without exposing to client
     }
 
-    const settingsMap: Record<string, any> = {};
-    (settingsData || []).forEach((item: any) => {
+    const settingsMap: Record<string, unknown> = {};
+    (settingsData || []).forEach((item: unknown) => {
       try {
         settingsMap[item.key] =
           typeof item.value === 'string' ? JSON.parse(item.value) : item.value;
@@ -98,7 +99,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     });
 
     // Contact info stored in center_info or separate table
-    let contactInfo: any[] = [];
+    let contactInfo: unknown[] = [];
     if (centerData) {
       contactInfo = [
         {
@@ -126,7 +127,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const gallery = settingsMap['homepage_gallery'] || [];
 
     // Basic stats: attempt to query analytics/dashboard stats table if exists
-    let stats: Record<string, any> = {};
+    let stats: Record<string, unknown> = {};
     try {
       const { data: statsData } = await supabase
         .from('dashboard_stats')
@@ -138,7 +139,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // ignore if table doesn't exist
     }
 
-    const dynamicData: Record<string, any> = {
+    const dynamicData: Record<string, unknown> = {
       center_info: centerData || null,
       services,
       heroSlides,
@@ -160,8 +161,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json(dynamicData);
   } catch (error) {
     // Use logger instead of console.error
-    const logger = (await import('@/lib/monitoring/logger')).default;
-    logger.error('Error in dynamic-data API', { error });
+    logger.error('Error in dynamic-data API', { error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'فشل في جلب البيانات الديناميكية' },
       { status: 500 }

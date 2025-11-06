@@ -17,7 +17,7 @@ jest.mock('next/navigation', () => ({
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props: any) => {
+  default: (props: unknown) => {
     // eslint-disable-next-line @next/next/no-img-element
     return React.createElement('img', props);
   },
@@ -26,7 +26,7 @@ jest.mock('next/image', () => ({
 // Mock Next.js Link component
 jest.mock('next/link', () => ({
   __esModule: true,
-  default: ({ children, href, ...props }: any) => {
+  default: ({ children, href, ...props }: unknown) => {
     return React.createElement('a', { href, ...props }, children);
   },
 }));

@@ -15,6 +15,7 @@
 import { createClient } from '@/lib/supabase/server';
 import jwt from 'jsonwebtoken';
 import type { CustomAuthUser, UserPermissions, AuthResult } from './types';
+import { logger } from '@/lib/utils/logger';
 
 // Re-export types for convenience
 export type { CustomAuthUser, UserPermissions, AuthResult };
@@ -34,9 +35,9 @@ function getJWTExpiresIn(): string {
 
 // Logger helper (only in development)
 const isDev = process.env.NODE_ENV === 'development';
-const log = (message: string, ...args: any[]) => {
+const log = (message: string, ...args: unknown[]) => {
   if (isDev) {
-    console.log(`[AUTH-HUB] ${message}`, ...args);
+    logger.info(`[AUTH-HUB] ${message}`, ...args);
   }
 };
 
@@ -208,7 +209,7 @@ class CustomAuthHub {
   async verifyToken(token: string): Promise<CustomAuthUser | null> {
     try {
       const secret = getJWTSecret();
-      const decoded = jwt.verify(token, secret) as any;
+      const decoded = jwt.verify(token, secret) as unknown;
 
       // Verify user still exists and is active (optimized query with filter)
       const supabase = await createClient();
@@ -279,7 +280,7 @@ class CustomAuthHub {
         permData.length > 0
       ) {
         // Function worked - use its result
-        permissionCodes = permData.map((p: any) => p.permission_code);
+        permissionCodes = permData.map((p: unknown) => p.permission_code);
 
         // Get role from user (single optimized query)
         const { data: userData } = await supabase
@@ -323,7 +324,7 @@ class CustomAuthHub {
           .maybeSingle();
 
         if (userRolesData?.roles) {
-          const role = userRolesData.roles as any;
+          const role = userRolesData.roles as unknown;
 
           // Extract permission codes
           if (role.role_permissions) {
@@ -331,7 +332,7 @@ class CustomAuthHub {
               ? role.role_permissions
               : [role.role_permissions];
 
-            rolePerms.forEach((rp: any) => {
+            rolePerms.forEach((rp: unknown) => {
               if (rp?.permissions?.code) {
                 permissionCodes.push(rp.permissions.code);
               }
@@ -347,7 +348,7 @@ class CustomAuthHub {
           .eq('is_active', true);
 
         if (userPerms) {
-          userPerms.forEach((up: any) => {
+          userPerms.forEach((up: unknown) => {
             if (up?.permissions?.code) {
               permissionCodes.push(up.permissions.code);
             }

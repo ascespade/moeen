@@ -11,6 +11,7 @@ import { z } from 'zod';
 import { ValidationHelper } from '@/core/validation';
 import { authorize, requireRole } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/utils/logger';
 
 const paymentSchema = z.object({
   appointmentId: z.string().uuid('Invalid appointment ID'),
@@ -139,7 +140,7 @@ export async function POST(_request: NextRequest) {
 
     if (!paymentResult.success) {
       return NextResponse.json(
-        { error: (paymentResult as any).error },
+        { error: (paymentResult as unknown).error },
         { status: 400 }
       );
     }
@@ -158,8 +159,8 @@ export async function POST(_request: NextRequest) {
         description: description || `Payment for appointment ${appointmentId}`,
         metadata: {
           ...metadata,
-          patientId: (appointment as any).patientId,
-          doctorId: (appointment as any).doctorId,
+          patientId: (appointment as unknown).patientId,
+          doctorId: (appointment as unknown).doctorId,
         },
         processedBy: authUser.id,
       })
@@ -218,11 +219,11 @@ async function __processStripePayment(
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100), // Convert to cents
       currency: currency.toLowerCase(),
-      description: `Payment for appointment ${(appointment as any).id}`,
+      description: `Payment for appointment ${(appointment as unknown).id}`,
       metadata: {
-        appointmentId: (appointment as any).id,
-        patientId: (appointment as any).patientId,
-        doctorId: (appointment as any).doctorId,
+        appointmentId: (appointment as unknown).id,
+        patientId: (appointment as unknown).patientId,
+        doctorId: (appointment as unknown).doctorId,
       },
       ...(paymentData || {}),
     });
@@ -261,11 +262,11 @@ async function __processMoyasarPayment(
       body: JSON.stringify({
         amount: Math.round(amount * 100), // Convert to halalas
         currency: currency,
-        description: `Payment for appointment ${(appointment as any).id}`,
+        description: `Payment for appointment ${(appointment as unknown).id}`,
         metadata: {
-          appointmentId: (appointment as any).id,
-          patientId: (appointment as any).patientId,
-          doctorId: (appointment as any).doctorId,
+          appointmentId: (appointment as unknown).id,
+          patientId: (appointment as unknown).patientId,
+          doctorId: (appointment as unknown).doctorId,
         },
         ...(paymentData || {}),
       }),
@@ -337,5 +338,5 @@ async function __sendPaymentConfirmation(
   _appointment: unknown
 ) {
   // This will be implemented in the notification system
-  // // console.log(`Sending payment confirmation for payment ${paymentId}`);
+  logger.info(`Sending payment confirmation for payment ${paymentId}`);
 }

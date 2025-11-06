@@ -1,4 +1,4 @@
-import _logger from '@/lib/monitoring/_logger';
+import { logger } from '@/lib/utils/logger';
 // Conversation Flow Management System
 
 // Intent Analysis
@@ -37,7 +37,7 @@ export class IntentAnalyzer {
 
 // Action Executor
 export class ActionExecutor {
-  static async executeAction(action: string, data: unknown): Promise<any> {
+  static async executeAction(action: string, data: unknown): Promise<unknown> {
     switch (action) {
       case 'create_appointment':
         // Implement appointment creation
@@ -75,7 +75,7 @@ export interface FlowStep {
 export interface FlowCondition {
   field: string;
   operator: 'equals' | 'contains' | 'greater_than' | 'less_than';
-  value: any;
+  value: string | number;
   nextStep: string;
 }
 
@@ -438,7 +438,7 @@ export class FlowManager {
   }
 
   // Execute step action (Slack notifications, WhatsApp sending, etc.)
-  async executeStepAction(step: FlowStep, context: any = {}): Promise<boolean> {
+  async executeStepAction(step: FlowStep, context: Record<string, unknown> = {}): Promise<boolean> {
     try {
       switch (step.type) {
         case 'slack_notify':
@@ -460,7 +460,7 @@ export class FlowManager {
   // Execute Slack notification
   private async executeSlackNotification(
     step: FlowStep,
-    context: any
+    context: Record<string, unknown>
   ): Promise<void> {
     try {
       const response = await fetch('/api/slack/notify', {
@@ -478,7 +478,9 @@ export class FlowManager {
       });
 
       if (!response.ok) {
-        console.error('Failed to send message:', await response.text());
+        logger.error('Failed to send message', {
+          response: await response.text(),
+        });
       }
     } catch (error) {}
   }
@@ -486,7 +488,7 @@ export class FlowManager {
   // Execute WhatsApp send
   private async executeWhatsAppSend(
     _step: FlowStep,
-    _context: any
+    _context: Record<string, unknown>
   ): Promise<void> {
     try {
       // This would integrate with the existing WhatsApp system

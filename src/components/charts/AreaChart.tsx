@@ -19,7 +19,7 @@ import {
 import { useTheme } from '@/core/theme';
 
 interface AreaChartProps {
-  data: any[];
+  data: unknown[];
   dataKey: string;
   xAxisKey: string;
   areas?: Array<{

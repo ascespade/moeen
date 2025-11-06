@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import SessionTypeSelector from '@/components/booking/SessionTypeSelector';
 import AvailableSlotsPicker from '@/components/booking/AvailableSlotsPicker';
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 interface SessionType {
   id: string;
@@ -104,7 +104,7 @@ export default function BookSessionPage() {
 
       alert('تم حجز الجلسة بنجاح! ✅\n\nسنرسل لك تذكيراً قبل موعد الجلسة.');
       router.push('/health/appointments');
-    } catch (err: any) {
+    } catch (err: unknown) {
       logger.error('Error booking session', err);
       setError(err.message || 'حدث خطأ أثناء حجز الجلسة');
     } finally {

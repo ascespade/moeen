@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, _useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { AdminCard } from '@/components/admin/ui';
-import { _Switch } from '@/components/ui/_Switch';
+import { Switch } from '@/components/ui/Switch';
 import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
-import { _Bell, Mail, Smartphone } from 'lucide-react';
+import { Bell, Mail, Smartphone } from 'lucide-react';
 
 interface NotificationConfig {
   email: {
@@ -59,7 +59,7 @@ export default function NotificationSettings({
   const [config, setConfig] = useState<NotificationConfig>(defaultConfig);
   const [loading, _setLoading] = useState(true);
 
-  const updateConfig = (section: keyof NotificationConfig, updates: any) => {
+  const updateConfig = (section: keyof NotificationConfig, updates: Partial<NotificationConfig[keyof NotificationConfig]>) => {
     setConfig(prev => ({
       ...prev,
       [section]: { ...prev[section], ...updates },

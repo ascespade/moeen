@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export async function POST(
   request: NextRequest,
@@ -56,7 +57,7 @@ export async function POST(
       data,
     });
   } catch (error) {
-    console.error('Error in /api/notifications/[id]/read:', error);
+    logger.error('Error in /api/notifications/[id]/read:', error, {});
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

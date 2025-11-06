@@ -47,6 +47,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import {
+import { logger } from '@/lib/utils/logger';
   Plus,
   Search,
   Filter,
@@ -191,7 +192,7 @@ function CRMPageContent() {
           setTotalPages(0);
         }
       } catch (error) {
-        console.error('Error fetching CRM data:', error);
+        logger.error('Error fetching CRM data:', error, {})
         setLeads([]);
         setContacts([]);
         setDeals([]);
@@ -373,7 +374,7 @@ function CRMPageContent() {
     }
   };
 
-  const filteredData = getCurrentData().filter((item: any) => {
+  const filteredData = getCurrentData().filter((item: unknown) => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (item.company &&
@@ -487,7 +488,7 @@ function CRMPageContent() {
       },
     };
 
-    const config = (statusConfigs as any)[type]?.[status] || {
+    const config = (statusConfigs as unknown)[type]?.[status] || {
       label: status,
       variant: 'outline' as const,
       className: '',
@@ -675,7 +676,7 @@ function CRMPageContent() {
             <Button
               key={tab.id}
               variant={activeTab === tab.id ? 'primary' : 'outline'}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id as unknown)}
               className='flex items-center gap-2'
             >
               {getTabIcon(tab.id)}
@@ -802,7 +803,7 @@ function CRMPageContent() {
                       onChange={(e) => {
                         if (e.target.checked) {
                           setSelectedItems(
-                            filteredData.map((item: any) => item.id)
+                            filteredData.map((item: unknown) => item.id)
                           );
                         } else {
                           setSelectedItems([]);
@@ -823,7 +824,7 @@ function CRMPageContent() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredData.map((item: any) => (
+                {filteredData.map((item: unknown) => (
                   <TableRow key={item.id}>
                     <TableCell>
                       <input type='checkbox'
@@ -867,7 +868,7 @@ function CRMPageContent() {
                     <TableCell>
                       {getStatusBadge(
                         item.status || item.stage,
-                        activeTab as any
+                        activeTab as unknown
                       )}
                     </TableCell>
                     <TableCell>{getPriorityBadge(item.priority)}</TableCell>

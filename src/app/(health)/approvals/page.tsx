@@ -7,6 +7,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useCallback, useEffect, useState } from 'react';
 
 import Image from 'next/image';
+import { logger } from '@/lib/utils/logger';
 
 interface Approval {
   id: string;
@@ -46,7 +47,7 @@ const loadApprovalsFromDB = async (): Promise<Approval[]> => {
     if (!response.ok) throw new Error('Failed to load approvals');
     return await response.json();
   } catch (error) {
-    console.error('Error loading approvals:', error);
+    logger.error('Error loading approvals:', error, {})
     return [];
   }
 };
@@ -213,7 +214,7 @@ export default function ApprovalsPage() {
       if (queryError) throw queryError;
 
       // Transform data to match interface - using snake_case to camelCase
-      const transformedApprovals = (data || []).map((approval: any) => ({
+      const transformedApprovals = (data || []).map((approval: unknown) => ({
         id: approval.id,
         patientName: approval.patients
           ? `${approval.patients.first_name} ${approval.patients.last_name}`
@@ -244,7 +245,7 @@ export default function ApprovalsPage() {
 
       setApprovals(transformedApprovals);
     } catch (err) {
-      console.error('Failed to load approvals:', err);
+      logger.error('Failed to load approvals:', err, {})
       setError('Failed to load approvals');
       setApprovals([]);
     } finally {

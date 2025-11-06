@@ -15,7 +15,7 @@ export async function GET(_request: NextRequest) {
     const healthChecks: {
       timestamp: string;
       status: string;
-      services: Record<string, any>;
+      services: Record<string, unknown>;
       errors: string[];
     } = {
       timestamp: new Date().toISOString(),
@@ -26,7 +26,7 @@ export async function GET(_request: NextRequest) {
 
     // Test database connection
     try {
-      const { _data, error } = await supabase
+      const { error } = await supabase
         .from('users')
         .select('count')
         .limit(1);
@@ -39,7 +39,7 @@ export async function GET(_request: NextRequest) {
     } catch (error) {
       healthChecks.services.database = {
         status: 'error',
-        error: error.message,
+        error: (error instanceof Error ? error.message : String(error)),
       };
       healthChecks.errors.push('Database connection failed');
     }
@@ -54,14 +54,14 @@ export async function GET(_request: NextRequest) {
     } catch (error) {
       healthChecks.services.auth = {
         status: 'error',
-        error: error.message,
+        error: (error instanceof Error ? error.message : String(error)),
       };
       healthChecks.errors.push('Authentication service failed');
     }
 
     // Test storage
     try {
-      const { _data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('medical-files')
         .list('', { limit: 1 });
 
@@ -72,7 +72,7 @@ export async function GET(_request: NextRequest) {
     } catch (error) {
       healthChecks.services.storage = {
         status: 'error',
-        error: error.message,
+        error: (error instanceof Error ? error.message : String(error)),
       };
       healthChecks.errors.push('Storage service failed');
     }
@@ -89,7 +89,7 @@ export async function GET(_request: NextRequest) {
       {
         timestamp: new Date().toISOString(),
         status: 'unhealthy',
-        error: error.message,
+        error: (error instanceof Error ? error.message : String(error)),
       },
       { status: 500 }
     );

@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
-import { logger } from '@/lib/logger';
+import { logger } from '@/lib/utils/logger';
 
 export function __auditMiddleware(request: NextRequest) {
   const startTime = Date.now();
@@ -41,7 +41,7 @@ export function __auditErrorMiddleware(error: Error, request: NextRequest) {
     error: {
       name: error.name,
       message: error.message,
-      stack: error.stack,
+      stack: (error instanceof Error ? error.stack : undefined),
     },
   });
 

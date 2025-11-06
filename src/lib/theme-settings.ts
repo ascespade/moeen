@@ -1,3 +1,5 @@
+import { logger } from '@/lib/utils/logger';
+
 /**
  * Advanced Theme Management System - نظام إدارة الثيمات المتقدم Beschreibung
  * Real-time theme management with intelligent color adjustments
@@ -216,7 +218,9 @@ export function loadThemeSettings(): AdvancedThemeSettings {
       return { ...defaultThemeSettings, ...parsed };
     }
   } catch (error) {
-    console.warn('Failed to load theme settings:', error);
+    logger.warn('Failed to load theme settings', {
+      error: error instanceof Error ? error.message : String(error),
+    });
   }
 
   return defaultThemeSettings;
@@ -233,7 +237,9 @@ export function saveThemeSettings(settings: AdvancedThemeSettings): void {
   try {
     localStorage.setItem('advanced_theme_settings', JSON.stringify(settings));
   } catch (error) {
-    console.warn('Failed to save theme settings:', error);
+    logger.warn('Failed to save theme settings', {
+      error: error instanceof Error ? error.message : String(error),
+    });
   }
 }
 

@@ -6,6 +6,7 @@
  */
 
 import { realDB } from '@/lib/supabase-real';
+import { logger } from '@/lib/utils/logger';
 
 export interface Translation {
   id: string;
@@ -47,9 +48,11 @@ class TranslationManager {
       });
 
       this.isLoaded = true;
-      console.log(`✅ Loaded ${Object.keys(this.cache).length} translations`);
+      logger.info(`Loaded ${Object.keys(this.cache).length} translations`);
     } catch (error) {
-      console.error('❌ Failed to load translations:', error);
+      logger.error('Failed to load translations', {
+        error: error instanceof Error ? error.message : String(error),
+      });
       // Fallback to empty cache
       this.cache = {};
       this.isLoaded = true;
@@ -66,13 +69,13 @@ class TranslationManager {
 
   t(key: string, fallback?: string): string {
     if (!this.isLoaded) {
-      console.warn(`Translation not loaded, using fallback for key: ${key}`);
+      logger.warn(`Translation not loaded, using fallback for key: ${key}`);
       return fallback || key;
     }
 
     const translation = this.cache[key];
     if (!translation) {
-      console.warn(`Missing translation for key: ${key}`);
+      logger.warn(`Missing translation for key: ${key}`);
       return fallback || key;
     }
 
@@ -112,7 +115,9 @@ class TranslationManager {
       // Update cache
       this.cache[key] = { ar, en, context };
     } catch (error) {
-      console.error('Failed to add translation:', error);
+      logger.error('Failed to add translation', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 

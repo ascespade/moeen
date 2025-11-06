@@ -19,7 +19,7 @@ import {
 import { useTheme } from '@/core/theme';
 
 interface LineChartProps {
-  data: any[];
+  data: unknown[];
   dataKey: string;
   xAxisKey: string;
   lines?: Array<{

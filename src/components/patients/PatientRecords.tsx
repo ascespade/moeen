@@ -3,23 +3,19 @@
 import React, { useState, useEffect } from 'react';
 import {
   User,
-  _Phone,
-  _Mail,
-  _Calendar,
-  _FileText,
+  Phone,
+  Mail,
+  Calendar,
+  FileText,
   Plus,
-  _Edit,
-  _Trash2,
   Search,
-  _Filter,
-  _Download,
-  _Eye,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
+import { logger } from '@/lib/utils/logger';
 import {
   Select,
   SelectContent,
@@ -191,7 +187,9 @@ const PatientRecords: React.FC = () => {
       setMedicalRecords(records);
       return;
     } catch (error) {
-      console.error('Error loading medical records:', error);
+      logger.error('Error loading medical records', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
 
     // Fallback: Empty array (no mock data)
@@ -331,7 +329,7 @@ const PatientRecords: React.FC = () => {
         </div>
         <Select
           value={filterStatus}
-          onValueChange={(value: any) => setFilterStatus(value)}
+          onValueChange={(value: string) => setFilterStatus(value)}
         >
           <SelectTrigger className='w-48'>
             <span className='text-gray-400'>فلترة الحالة</span>
@@ -722,8 +720,8 @@ const PatientRecords: React.FC = () => {
                   </label>
                   <Select
                     value={newPatient.gender}
-                    onValueChange={(value: any) =>
-                      setNewPatient(prev => ({ ...prev, gender: value }))
+                    onValueChange={(value: string) =>
+                      setNewPatient(prev => ({ ...prev, gender: value as 'male' | 'female' }))
                     }
                   >
                     <SelectTrigger>

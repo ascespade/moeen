@@ -26,6 +26,8 @@ export interface UserPermissions {
   restrictions?: string[];
 }
 
+import { logger } from '@/lib/utils/logger';
+
 // Re-export PERMISSIONS from constants (client-safe)
 export { PERMISSIONS } from './constants';
 
@@ -702,7 +704,7 @@ export class PermissionManager {
         .eq('is_active', true);
 
       if (permError) {
-        console.error(
+        logger.error(
           `[PermissionManager] Error fetching permissions:`,
           permError
         );
@@ -711,7 +713,7 @@ export class PermissionManager {
 
       const permissions: string[] =
         permissionsData
-          ?.map((rp: any) => rp.permissions?.code)
+          ?.map((rp: unknown) => rp.permissions?.code)
           .filter((code: string) => code) || [];
 
       // Cache the result
@@ -721,10 +723,11 @@ export class PermissionManager {
       });
 
       return permissions;
-    } catch (error) {
-      console.error(
-        `[PermissionManager] Error fetching permissions for role ${roleId}:`,
-        error
+    } catch (error: unknown) {
+      const { logger } = await import('@/lib/utils/logger');
+      logger.error(
+        `[PermissionManager] Error fetching permissions for role ${roleId}`,
+        { error: error instanceof Error ? error.message : String(error) }
       );
       // Fallback: return empty array on error
       return [];
@@ -789,8 +792,8 @@ export class PermissionManager {
     category: string
   ): string[] {
     return userPermissions.filter(permission => {
-      const permissionObj = Object.values(PERMISSIONS as Record<string, any>).find(
-        (p: any) => p.id === permission
+      const permissionObj = Object.values(PERMISSIONS as Record<string, unknown>).find(
+        (p: unknown) => p.id === permission
       );
       return permissionObj?.category === category;
     });

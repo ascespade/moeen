@@ -1,5 +1,6 @@
 'use client';
 import { Badge } from '@/components/ui/Badge';
+import { logger } from '@/lib/utils/logger';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
@@ -127,7 +128,7 @@ export default function DynamicDoctorsList({
       }
     } catch (err) {
       setError('فشل في تحميل قائمة الأطباء');
-      console.error('Error fetching doctors:', err);
+      logger.error('Error fetching doctors', { error: err instanceof Error ? err.message : String(err) });
     } finally {
       setLoading(false);
     }
@@ -271,9 +272,9 @@ export default function DynamicDoctorsList({
                   {doctor.phone && (
                     <div className='flex items-center gap-2'>
                       <Phone className='h-4 w-4 text-muted-foreground' />
-                      <a 
+                      <a
                         href={`tel:${doctor.phone}`}
-                        className='text-sm text-default hover:underline' 
+                        className='text-sm text-default hover:underline'
                         aria-label={doctor.phone}
                       >
                         {doctor.phone}
@@ -284,9 +285,9 @@ export default function DynamicDoctorsList({
                   {doctor.email && (
                     <div className='flex items-center gap-2'>
                       <Mail className='h-4 w-4 text-muted-foreground' />
-                      <a 
+                      <a
                         href={`mailto:${doctor.email}`}
-                        className='text-sm text-default hover:underline' 
+                        className='text-sm text-default hover:underline'
                         aria-label={doctor.email}
                       >
                         {doctor.email}

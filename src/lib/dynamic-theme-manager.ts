@@ -1,6 +1,7 @@
 'use client';
 
 import { ThemeManager, ThemeConfig } from './theme-manager';
+import { logger } from '@/lib/utils/logger';
 
 export interface DynamicThemeConfig extends ThemeConfig {
   autoSwitch: boolean;
@@ -83,7 +84,9 @@ export class DynamicThemeManager {
         return { ...defaultDynamicThemeConfig, ...parsed };
       }
     } catch (error) {
-      console.warn('Failed to load dynamic theme config:', error);
+      logger.warn('Failed to load dynamic theme config', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
 
     return defaultDynamicThemeConfig;
@@ -98,7 +101,9 @@ export class DynamicThemeManager {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(config));
       this.applyConfig(config);
     } catch (error) {
-      console.warn('Failed to save dynamic theme config:', error);
+      logger.warn('Failed to save dynamic theme config', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 

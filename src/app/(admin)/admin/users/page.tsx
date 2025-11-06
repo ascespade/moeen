@@ -60,6 +60,7 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { formatDate, formatTime } from '@/utils/common';
+import { logger } from '@/lib/utils/logger';
 
 interface User {
   id: string;
@@ -183,7 +184,7 @@ function UsersPageContent() {
               user.profile?.fullName?.split(' ').slice(1).join(' ') || '',
             displayName: user.profile?.fullName || user.email,
             phone: user.profile?.phone,
-            avatar: (user as any).avatar,
+            avatar: (user as unknown).avatar,
             role: user.role,
             roleDisplayName: getRoleDisplayName(user.role),
             status: user.isActive ? 'active' : 'inactive',
@@ -221,7 +222,7 @@ function UsersPageContent() {
         setError('فشل في تحميل المستخدمين');
       }
     } catch (err) {
-      console.error('Error loading users:', err);
+      logger.error('Error loading users:', err, {})
       setError('حدث خطأ أثناء تحميل المستخدمين');
     } finally {
       setLoading(false);

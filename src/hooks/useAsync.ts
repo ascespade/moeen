@@ -14,7 +14,7 @@ interface AsyncOptions {
 }
 
 export const useAsync = <T>(
-  asyncFunction: (...args: any[]) => Promise<T>,
+  asyncFunction: (...args: unknown[]) => Promise<T>,
   options: AsyncOptions = {}
 ) => {
   const { immediate = false, onSuccess, onError } = options;
@@ -28,7 +28,7 @@ export const useAsync = <T>(
   const isMountedRef = useRef(true);
 
   const execute = useCallback(
-    async (...args: any[]) => {
+    async (...args: unknown[]) => {
       setState(prev => ({ ...prev, loading: true, error: null }));
 
       try {

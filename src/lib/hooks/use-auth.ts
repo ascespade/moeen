@@ -1,7 +1,7 @@
 /**
  * useAuth Hook - Custom Hook for Authentication
  * خطاف useAuth - خطاف مخصص للمصادقة
- * 
+ *
  * React hook for authentication state and actions
  */
 
@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '../supabase/client';
 import type { _User } from '@supabase/supabase-js';
 import type { User as DbUser } from '@/types/database.types';
+import { logger } from '@/lib/utils/logger';
 
 export function useAuth() {
   const [user, setUser] = useState<DbUser | null>(null);
@@ -50,7 +51,9 @@ export function useAuth() {
           setUser(userData);
         }
       } catch (err) {
-        console.error('Auth error:', err);
+        logger.error('Auth error', {
+          error: err instanceof Error ? err.message : String(err),
+        });
         setUser(null);
         setAuthUser(null);
       } finally {

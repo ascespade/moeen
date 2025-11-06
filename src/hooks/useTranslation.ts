@@ -1,5 +1,5 @@
 'use client';
-import _logger from '@/lib/monitoring/_logger';
+import { logger } from '@/lib/utils/logger';
 
 import { useState, useEffect, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
@@ -20,7 +20,9 @@ export function useTranslation(namespace: string = 'common') {
         .eq('namespace', namespace);
 
       if (error) {
-        console.error('Error loading translations:', error);
+        logger.error('Error loading translations', {
+          error: error instanceof Error ? error.message : String(error),
+        });
         return;
       }
 
@@ -35,7 +37,9 @@ export function useTranslation(namespace: string = 'common') {
         setTranslations(translationsMap);
       }
     } catch (error) {
-      console.error('Error loading translations:', error);
+      logger.error('Error loading translations', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     } finally {
       setIsLoading(false);
     }

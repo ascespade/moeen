@@ -73,7 +73,7 @@ export class PerformanceMonitor {
     const startCpuUsage = process.cpuUsage();
 
     // Store request context
-    (request as any).__performanceContext = {
+    (request as unknown).__performanceContext = {
       requestId,
       startTime,
       startCpuUsage,
@@ -89,7 +89,7 @@ export class PerformanceMonitor {
     response: NextResponse,
     error?: Error
   ): void {
-    const context = (request as any).__performanceContext;
+    const context = (request as unknown).__performanceContext;
     if (!context) return;
 
     const { requestId, startTime, startCpuUsage } = context;
@@ -436,7 +436,7 @@ interface RealTimeMetrics {
 
 // Performance middleware
 export function withPerformanceMonitoring(handler: Function) {
-  return async (request: NextRequest, ...args: any[]) => {
+  return async (request: NextRequest, ...args: unknown[]) => {
     const monitor = PerformanceMonitor.getInstance();
     monitor.startMonitoring(request);
 

@@ -44,6 +44,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import {
+import { logger } from '@/lib/utils/logger';
   MessageSquare,
   Search,
   Filter,
@@ -138,7 +139,7 @@ interface Message {
     sentiment?: 'positive' | 'negative' | 'neutral';
     intent?: string;
     confidence?: number;
-    entities?: any[];
+    entities?: unknown[];
   };
 }
 
@@ -177,7 +178,7 @@ function ConversationsPageContent() {
           setTotalPages(0);
         }
       } catch (error) {
-        console.error('Error fetching conversations:', error);
+        logger.error('Error fetching conversations:', error, {})
         setConversations([]);
         setTotalPages(0);
       } finally {

@@ -51,7 +51,7 @@ export interface ChannelListParams extends PaginationParams {
 }
 
 export interface ChannelListResponse extends PaginatedResponse<any> {
-  data: any[]; // Will be replaced with proper Channel type
+  data: unknown[]; // Will be replaced with proper Channel type
 }
 
 // Messages API Types
@@ -68,7 +68,7 @@ export interface MessageListParams extends PaginationParams {
 }
 
 export interface MessageListResponse extends PaginatedResponse<any> {
-  data: any[]; // Will be replaced with proper Message type
+  data: unknown[]; // Will be replaced with proper Message type
 }
 
 // Users API Types
@@ -79,7 +79,7 @@ export interface UserListParams extends PaginationParams {
 }
 
 export interface UserListResponse extends PaginatedResponse<any> {
-  data: any[]; // Will be replaced with proper User type
+  data: unknown[]; // Will be replaced with proper User type
 }
 
 export interface UpdateUserRequest {

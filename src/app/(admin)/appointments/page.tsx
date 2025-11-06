@@ -104,7 +104,7 @@ function AppointmentsPageContent() {
   }, [searchTerm, statusFilter, typeFilter, dateFilter, updateFilters]);
 
   // Map hook data (snake_case) to page data (camelCase) for compatibility
-  const mappedAppointments = hookAppointments.map((appointment: any) => {
+  const mappedAppointments = hookAppointments.map((appointment: unknown) => {
     const scheduledAt = new Date(appointment.scheduled_at);
     return {
       id: appointment.id,
@@ -442,7 +442,7 @@ function AppointmentsPageContent() {
             <CardContent>
               <div className='text-2xl font-bold'>
                 {
-                  appointments.filter((a: any) => {
+                  appointments.filter((a: unknown) => {
                     if (!a.date) return false;
                     const appointmentDate = new Date(a.date);
                     const today = new Date();
@@ -463,11 +463,11 @@ function AppointmentsPageContent() {
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
-                {appointments.filter((a: any) => a.status === 'completed').length}
+                {appointments.filter((a: unknown) => a.status === 'completed').length}
               </div>
               <p className='text-xs text-muted-foreground'>
                 {Math.round(
-                  (appointments.filter((a: any) => a.status === 'completed').length /
+                  (appointments.filter((a: unknown) => a.status === 'completed').length /
                     appointments.length) *
                     100
                 )}
@@ -573,7 +573,7 @@ function AppointmentsPageContent() {
                       className='rounded border-[var(--brand-border)]'
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedAppointments(appointments.map((a: any) => a.id));
+                          setSelectedAppointments(appointments.map((a: unknown) => a.id));
                         } else {
                           setSelectedAppointments([]);
                         }
@@ -591,7 +591,7 @@ function AppointmentsPageContent() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {appointments.map((appointment: any) => (
+                {appointments.map((appointment: unknown) => (
                   <TableRow key={appointment.id}>
                     <TableCell>
                       <input type='checkbox'

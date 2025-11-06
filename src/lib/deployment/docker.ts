@@ -5,7 +5,7 @@
 
 import { writeFileSync } from 'fs';
 import { join } from 'path';
-import { logger } from '../monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 class DockerConfigGenerator {
   static generateDockerfile(): string {

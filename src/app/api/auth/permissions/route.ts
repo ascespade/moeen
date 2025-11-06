@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { customAuthHub } from '@/lib/auth/CustomAuthHub';
 import jwt from 'jsonwebtoken';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -32,7 +33,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const decoded = jwt.verify(token, secret) as any;
+    const decoded = jwt.verify(token, secret) as unknown;
 
     // Get permissions
     const permissions = await customAuthHub.getUserPermissions(decoded.userId);
@@ -49,7 +50,7 @@ export async function GET(req: NextRequest) {
       permissions,
     });
   } catch (error) {
-    console.error('Get permissions error:', error);
+    logger.error('Get permissions error:', error, {});
     return NextResponse.json(
       { success: false, error: 'Internal server error' },
       { status: 500 }

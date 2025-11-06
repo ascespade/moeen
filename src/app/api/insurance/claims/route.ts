@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server';
 import { ValidationHelper } from '@/core/validation';
 import { handleApiError } from '@/lib/errors/error-handler';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 const claimSchema = z.object({
   appointmentId: z.string().uuid('Invalid appointment ID'),
@@ -153,7 +154,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       .eq('id', claim.id);
 
     if (updateError) {
-      console.error('Failed to update claim submission status:', updateError);
+      logger.error('Failed to update claim submission status:', updateError, {});
     }
 
     // Create audit log
@@ -355,13 +356,13 @@ async function submitToInsuranceProvider(claim: unknown, provider: string) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        claimReference: claim.claimReference,
-        policyNumber: claim.policyNumber,
-        memberId: claim.memberId,
-        claimAmount: claim.claimAmount,
-        diagnosis: claim.diagnosis,
-        treatment: claim.treatment,
-        attachments: claim.attachments,
+        claimReference: (claim as { claimReference?: string }).claimReference,
+        policyNumber: (claim as { policyNumber?: string }).policyNumber,
+        memberId: (claim as { memberId?: string }).memberId,
+        claimAmount: (claim as { claimAmount?: number }).claimAmount,
+        diagnosis: (claim as { diagnosis?: string }).diagnosis,
+        treatment: (claim as { treatment?: string }).treatment,
+        attachments: (claim as { attachments?: string[] }).attachments,
       }),
     });
 
@@ -377,10 +378,10 @@ async function submitToInsuranceProvider(claim: unknown, provider: string) {
         response: `Provider API error: ${response.status}`,
       };
     }
-  } catch (error) {
+  } catch (error: unknown) {
     return {
       success: false,
-      response: `Provider integration error: ${error}`,
+      response: `Provider integration error: ${error instanceof Error ? error.message : String(error)}`,
     };
   }
 }

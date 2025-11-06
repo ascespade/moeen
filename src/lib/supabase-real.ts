@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { logger } from '@/lib/utils/logger';
 // Real Supabase Integration for Hemam Center
 // import type { Database } from '@/types/supabase';
 
@@ -23,7 +24,7 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
 });
 
 // Use a relaxed admin alias to mitigate strict generics during development
-const admin: any = supabaseAdmin as any;
+const admin: unknown = supabaseAdmin as unknown;
 
 // Real Database Manager with actual Supabase queries
 export class RealSupabaseManager {
@@ -54,7 +55,7 @@ export class RealSupabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to create user: ${error.message}`);
+    if (error) throw new Error(`Failed to create user: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -65,7 +66,7 @@ export class RealSupabaseManager {
       .eq('id', userId)
       .single();
 
-    if (error) throw new Error(`Failed to get user: ${error.message}`);
+    if (error) throw new Error(`Failed to get user: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -76,7 +77,7 @@ export class RealSupabaseManager {
       .eq('phone', phone)
       .single();
 
-    if (error) throw new Error(`Failed to get user by phone: ${error.message}`);
+    if (error) throw new Error(`Failed to get user by phone: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -88,7 +89,7 @@ export class RealSupabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to update user: ${error.message}`);
+    if (error) throw new Error(`Failed to update user: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -107,7 +108,7 @@ export class RealSupabaseManager {
 
     const { data, error } = await query;
 
-    if (error) throw new Error(`Failed to search users: ${error.message}`);
+    if (error) throw new Error(`Failed to search users: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -128,7 +129,7 @@ export class RealSupabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to create doctor: ${error.message}`);
+    if (error) throw new Error(`Failed to create doctor: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -144,7 +145,7 @@ export class RealSupabaseManager {
       .eq('id', doctorId)
       .single();
 
-    if (error) throw new Error(`Failed to get doctor: ${error.message}`);
+    if (error) throw new Error(`Failed to get doctor: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -161,7 +162,7 @@ export class RealSupabaseManager {
       .eq('is_available', true);
 
     if (error)
-      throw new Error(`Failed to get doctors by specialty: ${error.message}`);
+      throw new Error(`Failed to get doctors by specialty: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -184,7 +185,7 @@ export class RealSupabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to create patient: ${error.message}`);
+    if (error) throw new Error(`Failed to create patient: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -202,7 +203,7 @@ export class RealSupabaseManager {
       .eq('id', patientId)
       .single();
 
-    if (error) throw new Error(`Failed to get patient: ${error.message}`);
+    if (error) throw new Error(`Failed to get patient: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -218,7 +219,7 @@ export class RealSupabaseManager {
       .eq('assigned_doctor_id', doctorId);
 
     if (error)
-      throw new Error(`Failed to get patients by doctor: ${error.message}`);
+      throw new Error(`Failed to get patients by doctor: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -254,7 +255,7 @@ export class RealSupabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to create appointment: ${error.message}`);
+      throw new Error(`Failed to create appointment: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -296,7 +297,7 @@ export class RealSupabaseManager {
 
     const { data, error } = await query;
 
-    if (error) throw new Error(`Failed to get appointments: ${error.message}`);
+    if (error) throw new Error(`Failed to get appointments: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -309,7 +310,7 @@ export class RealSupabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to update appointment: ${error.message}`);
+      throw new Error(`Failed to update appointment: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -344,7 +345,7 @@ export class RealSupabaseManager {
       )
       .single();
 
-    if (error) throw new Error(`Failed to create session: ${error.message}`);
+    if (error) throw new Error(`Failed to create session: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -367,7 +368,7 @@ export class RealSupabaseManager {
 
     const { data, error } = await query;
 
-    if (error) throw new Error(`Failed to get sessions: ${error.message}`);
+    if (error) throw new Error(`Failed to get sessions: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -379,7 +380,7 @@ export class RealSupabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to update session: ${error.message}`);
+    if (error) throw new Error(`Failed to update session: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -406,7 +407,7 @@ export class RealSupabaseManager {
       .select()
       .single();
 
-    if (error) throw new Error(`Failed to log conversation: ${error.message}`);
+    if (error) throw new Error(`Failed to log conversation: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -421,7 +422,7 @@ export class RealSupabaseManager {
 
     const { data, error } = await query;
 
-    if (error) throw new Error(`Failed to get conversations: ${error.message}`);
+    if (error) throw new Error(`Failed to get conversations: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -444,7 +445,7 @@ export class RealSupabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to create insurance claim: ${error.message}`);
+      throw new Error(`Failed to create insurance claim: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -456,7 +457,7 @@ export class RealSupabaseManager {
       .order('submitted_at', { ascending: false });
 
     if (error)
-      throw new Error(`Failed to get insurance claims: ${error.message}`);
+      throw new Error(`Failed to get insurance claims: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -469,7 +470,7 @@ export class RealSupabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to update insurance claim: ${error.message}`);
+      throw new Error(`Failed to update insurance claim: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -489,7 +490,7 @@ export class RealSupabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to create notification: ${error.message}`);
+      throw new Error(`Failed to create notification: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -504,7 +505,7 @@ export class RealSupabaseManager {
 
     const { data, error } = await query;
 
-    if (error) throw new Error(`Failed to get notifications: ${error.message}`);
+    if (error) throw new Error(`Failed to get notifications: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -517,7 +518,7 @@ export class RealSupabaseManager {
       .single();
 
     if (error)
-      throw new Error(`Failed to mark notification as read: ${error.message}`);
+      throw new Error(`Failed to mark notification as read: ${(error instanceof Error ? error.message : String(error))}`);
     return data;
   }
 
@@ -528,11 +529,11 @@ export class RealSupabaseManager {
       .select('id, created_at, role')
       .eq('role', 'patient');
 
-    if (error) throw new Error(`Failed to get patient stats: ${error.message}`);
+    if (error) throw new Error(`Failed to get patient stats: ${(error instanceof Error ? error.message : String(error))}`);
 
-    const total = (data as any[]).length;
-    const active = (data as any[]).filter((p: any) => p.created_at).length;
-    const newLast30Days = (data as any[]).filter((p: any) => {
+    const total = (data as unknown[]).length;
+    const active = (data as unknown[]).filter((p: unknown) => p.created_at).length;
+    const newLast30Days = (data as unknown[]).filter((p: unknown) => {
       const createdAt = new Date(p.created_at as string);
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -548,16 +549,16 @@ export class RealSupabaseManager {
       .select('status, appointment_date, created_at');
 
     if (error)
-      throw new Error(`Failed to get appointment stats: ${error.message}`);
+      throw new Error(`Failed to get appointment stats: ${(error instanceof Error ? error.message : String(error))}`);
 
-    const total = (data as any[]).length;
-    const completed = (data as any[]).filter(
-      (a: any) => a.status === 'completed'
+    const total = (data as unknown[]).length;
+    const completed = (data as unknown[]).filter(
+      (a: unknown) => a.status === 'completed'
     ).length;
-    const cancelled = (data as any[]).filter(
-      (a: any) => a.status === 'cancelled'
+    const cancelled = (data as unknown[]).filter(
+      (a: unknown) => a.status === 'cancelled'
     ).length;
-    const upcoming = (data as any[]).filter((a: any) => {
+    const upcoming = (data as unknown[]).filter((a: unknown) => {
       const appointmentDate = new Date(a.appointment_date as string);
       return appointmentDate >= new Date() && a.status === 'scheduled';
     }).length;
@@ -571,13 +572,13 @@ export class RealSupabaseManager {
       .select('crisis_level, created_at');
 
     if (error)
-      throw new Error(`Failed to get conversation stats: ${error.message}`);
+      throw new Error(`Failed to get conversation stats: ${(error instanceof Error ? error.message : String(error))}`);
 
-    const total = (data as any[]).length;
-    const crisis = (data as any[]).filter(
-      (c: any) => c.crisis_level === 'crisis'
+    const total = (data as unknown[]).length;
+    const crisis = (data as unknown[]).filter(
+      (c: unknown) => c.crisis_level === 'crisis'
     ).length;
-    const recent = (data as any[]).filter((c: any) => {
+    const recent = (data as unknown[]).filter((c: unknown) => {
       const createdAt = new Date(c.created_at as string);
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -831,7 +832,7 @@ export class RealSupabaseManager {
     );
 
     if (arError) {
-      console.warn(
+      logger.warn(
         `Failed to upsert AR translation for ${translationData.key}:`,
         arError
       );
@@ -849,7 +850,7 @@ export class RealSupabaseManager {
     );
 
     if (enError) {
-      console.warn(
+      logger.warn(
         `Failed to upsert EN translation for ${translationData.key}:`,
         enError
       );
@@ -873,7 +874,7 @@ export class RealSupabaseManager {
       .single();
 
     if (error) {
-      throw new Error(`Failed to update translation: ${error.message}`);
+      throw new Error(`Failed to update translation: ${(error instanceof Error ? error.message : String(error))}`);
     }
     return data;
   }

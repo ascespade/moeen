@@ -66,7 +66,7 @@ const MoainChatbot: React.FC = () => {
       const data = await response.json();
 
       if (data.success && data.messages) {
-        const dbMessages: ChatMessage[] = data.messages.map((msg: any) => ({
+        const dbMessages: ChatMessage[] = data.messages.map((msg: unknown) => ({
           id: msg.id,
           type: msg.sender_type === 'user' ? 'user' : 'bot',
           content: msg.message_text,

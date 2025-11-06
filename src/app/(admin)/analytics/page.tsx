@@ -67,6 +67,7 @@ interface AnalyticsData {
 
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
+import { logger } from '@/lib/utils/logger';
 
 function AnalyticsPageContent() {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(
@@ -94,7 +95,7 @@ function AnalyticsPageContent() {
         setAnalyticsData(null);
       }
     } catch (err) {
-      console.error('Error loading analytics data:', err);
+      logger.error('Error loading analytics data:', err, {})
       setError('حدث خطأ أثناء تحميل البيانات');
       setAnalyticsData(null);
     } finally {

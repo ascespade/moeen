@@ -23,6 +23,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { logger } from '@/lib/utils/logger';
 
 interface ProgressGoal {
   id: string;
@@ -131,7 +132,7 @@ const ProgressTrackingPage: React.FC = () => {
       setReports(reportsData);
     } catch (error) {
       setError('فشل في تحميل بيانات تتبع التقدم');
-      console.error('Error loading progress data:', error);
+      logger.error('Error loading progress data:', error, {})
     } finally {
       setLoading(false);
     }

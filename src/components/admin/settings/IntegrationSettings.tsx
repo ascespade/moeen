@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { AdminCard } from '@/components/admin/ui';
+import { logger } from '@/lib/utils/logger';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Label } from '@/components/ui/Label';
@@ -123,7 +124,7 @@ export default function IntegrationSettings({
           setConfig(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading integration settings:', error);
+        logger.error('Error loading integration settings', { error: error instanceof Error ? error.message : String(error) });
       } finally {
         setLoading(false);
       }
@@ -132,7 +133,7 @@ export default function IntegrationSettings({
     loadIntegrationSettings();
   }, []);
 
-  const updateConfig = (section: keyof IntegrationConfig, updates: any) => {
+  const updateConfig = (section: keyof IntegrationConfig, updates: unknown) => {
     setConfig(prev => ({
       ...prev,
       [section]: { ...prev[section], ...updates },
@@ -157,7 +158,7 @@ export default function IntegrationSettings({
         alert(`فشل اختبار اتصال ${service}: ${result.error}`);
       }
     } catch (error) {
-      console.error(`Error testing ${service}:`, error);
+      logger.error(`Error testing ${service}`, { error: error instanceof Error ? error.message : String(error) });
       alert(`حدث خطأ أثناء اختبار اتصال ${service}`);
     } finally {
       setTestingConnections(prev => ({ ...prev, [service]: false }));

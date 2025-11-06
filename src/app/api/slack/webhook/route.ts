@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { SlackIntegration } from '@/lib/slack-integration';
+import { logger } from '@/lib/utils/logger';
 // import { _createClient } from '@/lib/supabase/server';
 // import { _requireAuth } from '@/lib/auth/authorize';
 
@@ -31,11 +32,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function handleSlackEvent(event: any) {
+async function handleSlackEvent(event: unknown) {
   try {
     await slack.handleSlackEvent(event);
   } catch (error) {
-    console.error('Error handling Slack event:', error);
+    logger.error('Error handling Slack event:', error, {});
   }
 }
 

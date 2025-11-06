@@ -212,7 +212,7 @@ export function generateViolationReport(violations: RuleViolation[]): string {
   if (errors.length > 0) {
     report += `❌ أخطاء (${errors.length}):\n`;
     errors.forEach((error, index) => {
-      report += `${index + 1}. ${error.message}\n   ${error.description}\n\n`;
+      report += `${index + 1}. ${(error instanceof Error ? error.message : String(error))}\n   ${error.description}\n\n`;
     });
   }
 

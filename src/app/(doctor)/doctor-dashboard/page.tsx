@@ -10,6 +10,7 @@ import {
 } from '@/components/dashboard/layouts/DashboardLayout';
 import DoctorDashboard from '@/components/dashboard/widgets/DoctorDashboard';
 import {
+import { logger } from '@/lib/utils/logger';
   Calendar,
   Users,
   FileText,
@@ -76,10 +77,10 @@ export default function DoctorDashboardPage() {
             role: 'طبيب أسرة',
             avatar: undefined,
           },
-          onSearch: query => console.log('Search:', query),
+          onSearch: query => logger.info('Search:', query),
           showNotifications: true,
           notificationCount: 3,
-          onNotificationsClick: () => console.log('Show notifications'),
+          onNotificationsClick: () => logger.info('Show notifications'),
         }}
         sidebar={{
           navigation: doctorNavigation,

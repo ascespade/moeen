@@ -4,6 +4,7 @@
  */
 
 import { ERROR_MESSAGES } from '../constants';
+import { logger as loggerUtil } from '@/lib/utils/logger';
 
 // Base Error Class
 export abstract class BaseError extends Error {
@@ -284,16 +285,8 @@ export class ErrorHandler {
   private logger: { error: (message: string, data?: unknown) => void };
 
   private constructor() {
-    // Initialize logger - import from logger utility
-    try {
-      // Try to use centralized logger
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      const { logger } = require('@/lib/logger');
-      this.logger = logger;
-    } catch {
-      // Fallback to console
-      this.logger = console;
-    }
+    // Initialize logger - use centralized logger
+    this.logger = loggerUtil || console;
   }
 
   public static getInstance(): ErrorHandler {

@@ -3,7 +3,7 @@
  * Provides functions for testing various external integrations
  */
 
-import _logger from '@/lib/monitoring/_logger';
+import { logger } from '@/lib/utils/logger';
 import { createClient } from '@/lib/supabase/client';
 
 // ================================================================
@@ -68,8 +68,8 @@ export async function logIntegrationTest(
   integrationType: string,
   testType: string,
   status: 'success' | 'failed' | 'timeout',
-  requestData: any = null,
-  responseData: any = null,
+  requestData: unknown = null,
+  responseData: unknown = null,
   errorMessage: string | null = null,
   durationMs: number | null = null,
   testedBy: string | null = null
@@ -88,7 +88,9 @@ export async function logIntegrationTest(
   });
 
   if (error) {
-    console.error('Error logging integration test:', error);
+    logger.error('Error logging integration test', {
+      error: error instanceof Error ? error.message : String(error),
+    });
   }
 }
 
@@ -101,7 +103,14 @@ export async function logIntegrationTest(
  */
 export async function testWhatsAppConnection(
   config: WhatsAppConfig
-): Promise<any> {
+): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  status_code?: number;
+  duration_ms: number;
+  data?: unknown;
+}> {
   const startTime = Date.now();
 
   try {
@@ -139,11 +148,11 @@ export async function testWhatsAppConnection(
       data,
       duration_ms: durationMs,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error instanceof Error ? error.message : 'Unknown error',
       duration_ms: durationMs,
     };
   }
@@ -156,7 +165,14 @@ export async function testWhatsAppConnection(
 /**
  * Test SMS Gateway connection (Twilio)
  */
-export async function testSmsConnection(config: SMSConfig): Promise<any> {
+export async function testSmsConnection(config: SMSConfig): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  status_code?: number;
+  duration_ms: number;
+  data?: unknown;
+}> {
   const startTime = Date.now();
 
   try {
@@ -197,11 +213,11 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
       data,
       duration_ms: durationMs,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error instanceof Error ? error.message : 'Unknown error',
       duration_ms: durationMs,
     };
   }
@@ -214,7 +230,14 @@ export async function testSmsConnection(config: SMSConfig): Promise<any> {
 /**
  * Test Email Service connection (SendGrid)
  */
-export async function testEmailConnection(config: EmailConfig): Promise<any> {
+export async function testEmailConnection(config: EmailConfig): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  status_code?: number;
+  duration_ms: number;
+  data?: unknown;
+}> {
   const startTime = Date.now();
 
   try {
@@ -248,11 +271,11 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
       data,
       duration_ms: durationMs,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error instanceof Error ? error.message : 'Unknown error',
       duration_ms: durationMs,
     };
   }
@@ -267,7 +290,14 @@ export async function testEmailConnection(config: EmailConfig): Promise<any> {
  */
 export async function testGoogleCalendarConnection(
   config: GoogleCalendarConfig
-): Promise<any> {
+): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  status_code?: number;
+  duration_ms: number;
+  data?: unknown;
+}> {
   const startTime = Date.now();
 
   try {
@@ -334,11 +364,11 @@ export async function testGoogleCalendarConnection(
       data,
       duration_ms: durationMs,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error instanceof Error ? error.message : 'Unknown error',
       duration_ms: durationMs,
     };
   }
@@ -351,7 +381,14 @@ export async function testGoogleCalendarConnection(
 /**
  * Test Slack Webhook connection
  */
-export async function testSlackConnection(config: SlackConfig): Promise<any> {
+export async function testSlackConnection(config: SlackConfig): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  status_code?: number;
+  duration_ms: number;
+  data?: unknown;
+}> {
   const startTime = Date.now();
 
   try {
@@ -385,11 +422,11 @@ export async function testSlackConnection(config: SlackConfig): Promise<any> {
       message: 'Slack connection successful',
       duration_ms: durationMs,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error instanceof Error ? error.message : 'Unknown error',
       duration_ms: durationMs,
     };
   }
@@ -402,7 +439,14 @@ export async function testSlackConnection(config: SlackConfig): Promise<any> {
 /**
  * Test Seha Platform API connection
  */
-export async function testSehaConnection(config: SehaConfig): Promise<any> {
+export async function testSehaConnection(config: SehaConfig): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  status_code?: number;
+  duration_ms: number;
+  data?: unknown;
+}> {
   const startTime = Date.now();
 
   try {
@@ -440,11 +484,11 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
       data,
       duration_ms: durationMs,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error instanceof Error ? error.message : 'Unknown error',
       duration_ms: durationMs,
     };
   }
@@ -457,7 +501,14 @@ export async function testSehaConnection(config: SehaConfig): Promise<any> {
 /**
  * Test Tatman Insurance API connection
  */
-export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
+export async function testTatmanConnection(config: TatmanConfig): Promise<{
+  success: boolean;
+  message?: string;
+  error?: string;
+  status_code?: number;
+  duration_ms: number;
+  data?: unknown;
+}> {
   const startTime = Date.now();
 
   try {
@@ -495,11 +546,11 @@ export async function testTatmanConnection(config: TatmanConfig): Promise<any> {
       data,
       duration_ms: durationMs,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     const durationMs = Date.now() - startTime;
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error instanceof Error ? error.message : 'Unknown error',
       duration_ms: durationMs,
     };
   }

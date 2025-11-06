@@ -110,7 +110,7 @@ async function handleAppointmentCreated(
   appointmentId: string,
   _doctorId: string,
   _patientId: string,
-  supabase: any
+  supabase: unknown
 ) {
   try {
     // جلب بيانات الموعد والطبيب والمريض
@@ -150,7 +150,7 @@ async function handleAppointmentConfirmed(
   appointmentId: string,
   _doctorId: string,
   _patientId: string,
-  supabase: any
+  supabase: unknown
 ) {
   try {
     const { data: appointment } = await supabase
@@ -189,7 +189,7 @@ async function handleAppointmentCancelled(
   appointmentId: string,
   _doctorId: string,
   _patientId: string,
-  supabase: any
+  supabase: unknown
 ) {
   try {
     const { data: appointment } = await supabase
@@ -228,7 +228,7 @@ async function handleAppointmentReminder(
   appointmentId: string,
   _doctorId: string,
   _patientId: string,
-  supabase: any
+  supabase: unknown
 ) {
   try {
     const { data: appointment } = await supabase
@@ -268,7 +268,7 @@ async function handlePatientMessage(
   doctorId: string,
   message: string,
   channel: string,
-  supabase: any
+  supabase: unknown
 ) {
   try {
     // جلب بيانات المريض
@@ -293,7 +293,7 @@ async function handleDoctorResponse(
   patientId: string,
   doctorId: string,
   message: string,
-  supabase: any
+  supabase: unknown
 ) {
   try {
     // جلب بيانات الطبيب
