@@ -10,7 +10,7 @@ const supabaseKey =
 
 test.describe('🔧 Verify ip_address Fix', () => {
   let supabase: any;
-  let createdIds: string[] = [];
+  const createdIds: string[] = [];
 
   test.beforeAll(async () => {
     supabase = createClient(supabaseUrl, supabaseKey);

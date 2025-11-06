@@ -25,7 +25,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     if (loading) return;
 
     const isPublicRoute = PUBLIC_ROUTES.some(
-      route => pathname === route || pathname.startsWith(route + '/')
+      route => pathname === route || pathname.startsWith(`${route  }/`)
     );
 
     if (!user && !isPublicRoute) {

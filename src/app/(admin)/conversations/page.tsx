@@ -43,8 +43,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
-import {
 import { logger } from '@/lib/utils/logger';
+import {
   MessageSquare,
   Search,
   Filter,
@@ -178,7 +178,7 @@ function ConversationsPageContent() {
           setTotalPages(0);
         }
       } catch (error) {
-        logger.error('Error fetching conversations:', error, {})
+        logger.error('Error fetching conversations:', { error })
         setConversations([]);
         setTotalPages(0);
       } finally {

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { storage } from '@/utils/storage';
 import { logger } from '@/lib/utils/logger';
+import { storage } from '@/utils/storage';
 // Local storage hooks
 
 export const useLocalStorage = <T>(
@@ -26,7 +26,9 @@ export const useLocalStorage = <T>(
           value instanceof Function ? value(storedValue) : value;
         setStoredValue(valueToStore);
         storage.set(key, valueToStore);
-      logger.error('Error', { error: error });
+      } catch (error) {
+        logger.error('Error', { error });
+      }
     },
     [key, storedValue]
   );
@@ -35,7 +37,9 @@ export const useLocalStorage = <T>(
     try {
       setStoredValue(initialValue);
       storage.remove(key);
-    logger.error('Error', { error: error });
+    } catch (error) {
+      logger.error('Error', { error });
+    }
   }, [key, initialValue]);
 
   return [storedValue, setValue, removeValue];
@@ -64,7 +68,9 @@ export const useSessionStorage = <T>(
           value instanceof Function ? value(storedValue) : value;
         setStoredValue(valueToStore);
         storage.setSession(key, valueToStore);
-      logger.error('Error', { error: error });
+      } catch (error) {
+        logger.error('Error', { error });
+      }
     },
     [key, storedValue]
   );
@@ -73,7 +79,9 @@ export const useSessionStorage = <T>(
     try {
       setStoredValue(initialValue);
       storage.removeSession(key);
-    logger.error('Error', { error: error });
+    } catch (error) {
+      logger.error('Error', { error });
+    }
   }, [key, initialValue]);
 
   return [storedValue, setValue, removeValue];

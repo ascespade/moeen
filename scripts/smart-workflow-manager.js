@@ -318,9 +318,9 @@ class SmartWorkflowManager {
 
     const report = {
       timestamp: new Date().toISOString(),
-      analysis: analysis,
-      suggestion: suggestion,
-      execution: execution,
+      analysis,
+      suggestion,
+      execution,
       summary: {
         totalErrors: analysis.errors.length,
         totalWarnings: analysis.warnings.length,

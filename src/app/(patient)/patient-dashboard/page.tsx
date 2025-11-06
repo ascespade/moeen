@@ -4,8 +4,8 @@ import React from 'react';
 import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import { DashboardLayout } from '@/components/dashboard/layouts/DashboardLayout';
 import PatientDashboard from '@/components/dashboard/widgets/PatientDashboard';
-import {
 import { logger } from '@/lib/utils/logger';
+import {
   Heart,
   Calendar,
   Settings,

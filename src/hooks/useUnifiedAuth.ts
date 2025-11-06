@@ -9,8 +9,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import {
 import { logger } from '@/lib/utils/logger';
+import {
   AuthUser,
   initializeAuth,
   loginWithCredentials,
@@ -125,7 +125,7 @@ export function useUnifiedAuth(): UseUnifiedAuthReturn {
       setUser(null);
       router.push('/login');
     } catch (error) {
-      logger.error('[useUnifiedAuth] Logout error:', error, {});
+      logger.error('[useUnifiedAuth] Logout error:', { error });
     } finally {
       setIsLoading(false);
     }

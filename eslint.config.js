@@ -23,6 +23,7 @@ export default [
       'temp_complex/**',
       'src/__tests__/**',
       'src/scripts/**',
+      '.agent-system/**',
       'ci_memory.sqlite',
       '*.log',
     ],
@@ -39,8 +40,6 @@ export default [
           jsx: true,
         },
       },
-    },
-    languageOptions: {
       globals: {
         // Browser globals
         window: 'readonly',
@@ -79,7 +78,7 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescript,
-      react: react,
+      react,
       'react-hooks': reactHooks,
       '@next/next': next,
     },
@@ -125,6 +124,18 @@ export default [
     rules: {
       'no-console': 'off',
       '@typescript-eslint/no-var-requires': 'off',
+    },
+  },
+  {
+    files: ['vitest.config.ts', '*.config.ts', '*.config.js'],
+    languageOptions: {
+      globals: {
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        exports: 'readonly',
+      },
     },
   },
 ];

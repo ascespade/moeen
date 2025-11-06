@@ -173,8 +173,8 @@ export default function RouteGuard({
               redirectingRef.current = true;
               setIsAuthorized(false);
               router.replace(
-                '/login?redirect=' +
-                  encodeURIComponent(window.location.pathname)
+                `/login?redirect=${ 
+                  encodeURIComponent(window.location.pathname)}`
               );
             }
             return;
@@ -318,8 +318,8 @@ export default function RouteGuard({
             setTimeout(() => {
               if (isMounted) {
                 router.replace(
-                  '/login?redirect=' +
-                    encodeURIComponent(window.location.pathname)
+                  `/login?redirect=${ 
+                    encodeURIComponent(window.location.pathname)}`
                 );
               }
             }, 2000);

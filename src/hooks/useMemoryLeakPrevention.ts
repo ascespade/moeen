@@ -12,7 +12,9 @@ export const useMemoryLeakPrevention = () => {
     cleanupFunctions.current.forEach(fn => {
       try {
         fn();
-      logger.error('Error', { error: error });
+      } catch (error) {
+        logger.error('Error', { error });
+      }
     });
     cleanupFunctions.current = [];
   }, []);

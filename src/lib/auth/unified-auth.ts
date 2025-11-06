@@ -7,9 +7,9 @@
  */
 
 import { getBrowserSupabase } from '@/lib/supabaseClient';
+import { logger } from '@/lib/utils/logger';
 // Import only permission checking utilities (no server dependencies)
 import {
-import { logger } from '@/lib/utils/logger';
   hasPermission as checkPermission,
   hasAnyPermission as checkAnyPermission,
   canAccess as checkCanAccess,
@@ -329,7 +329,7 @@ export async function logout(): Promise<void> {
       credentials: 'include',
     });
   } catch (error) {
-    logger.error('[UnifiedAuth] Logout error:', error, {});
+    logger.error('[UnifiedAuth] Logout error:', { error });
   } finally {
     clearAuth();
   }

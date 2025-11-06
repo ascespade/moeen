@@ -46,8 +46,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
-import {
 import { logger } from '@/lib/utils/logger';
+import {
   Plus,
   Search,
   Filter,
@@ -192,7 +192,7 @@ function CRMPageContent() {
           setTotalPages(0);
         }
       } catch (error) {
-        logger.error('Error fetching CRM data:', error, {})
+        logger.error('Error fetching CRM data:', { error })
         setLeads([]);
         setContacts([]);
         setDeals([]);
