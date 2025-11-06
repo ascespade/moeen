@@ -29,7 +29,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -72,7 +71,6 @@ import {
   Settings,
   TrendingUp,
   Target,
-  FileText,
   Paperclip,
   Inbox,
   Send as Outbox,
@@ -134,7 +132,9 @@ interface Message {
 }
 
 function MessagesPageContent() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useT();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);

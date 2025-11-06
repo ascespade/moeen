@@ -29,8 +29,7 @@ if (typeof window !== 'undefined') {
         if (!className.includes('var(--')) {
           logger.warn(
             `⚠️ Design System Violation: Found "${pattern}" in element:`,
-            element,
-            '\n💡 Use CSS variables instead: bg-[var(--background)]'
+            { element, suggestion: 'Use CSS variables instead: bg-[var(--background)]' }
           );
 
           // Highlight in development

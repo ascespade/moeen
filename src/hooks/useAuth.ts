@@ -171,9 +171,7 @@ export const useAuth = (): AuthState & AuthActions => {
         const data = await response.json().catch(() => ({}));
         logger.info(
           '[useAuth] /api/auth/login response status',
-          response.status,
-          'data:',
-          data
+          { status: response.status, data }
         );
 
         if (!response.ok) {

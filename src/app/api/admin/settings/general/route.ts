@@ -28,7 +28,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .order('key');
 
     if (error) {
-      logger.error('Error fetching general settings:', error, {});
+      logger.error('Error fetching general settings:', { error });
       return NextResponse.json(
         {
           error: 'Failed to fetch settings',
@@ -144,7 +144,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         );
 
         if (error) {
-          logger.error('Error', { error: `Error saving setting ${key}:`, error });
+          logger.error('Error saving setting', { key, error });
           return { key, error: error.message };
         }
         return { key, success: true };

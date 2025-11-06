@@ -77,7 +77,7 @@ export default function DoctorDashboardPage() {
             role: 'طبيب أسرة',
             avatar: undefined,
           },
-          onSearch: query => logger.info('Search:', query),
+          onSearch: query => logger.info('Search:', { query }),
           showNotifications: true,
           notificationCount: 3,
           onNotificationsClick: () => logger.info('Show notifications'),

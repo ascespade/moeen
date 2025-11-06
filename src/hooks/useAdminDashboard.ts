@@ -124,7 +124,7 @@ export function useAdminDashboard(
         setError('فشل في تحميل الإحصائيات');
       }
     } catch (err) {
-      logger.error('Error fetching dashboard stats:', err, {});
+      logger.error('Error fetching dashboard stats:', { error: err });
       setError('حدث خطأ أثناء تحميل الإحصائيات');
     }
   }, [period]);

@@ -1,8 +1,5 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { ROUTES } from '@/constants/routes';
-import Image from 'next/image';
-import Link from 'next/link';
 import { logger } from '@/lib/utils/logger';
 
 interface Lead {
@@ -33,7 +30,7 @@ interface Lead {
 
 export default function CRMLeadsPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');

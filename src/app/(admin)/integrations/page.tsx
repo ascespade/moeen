@@ -16,7 +16,6 @@ import {
   Phone,
   Mail,
   Calendar,
-  Database,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
@@ -35,10 +34,10 @@ interface Integration {
 }
 
 const IntegrationsPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [integrations, setIntegrations] = useState<Integration[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -63,21 +62,21 @@ const IntegrationsPage: React.FC = () => {
           name: 'Supabase Database',
           description: 'قاعدة البيانات الرئيسية - PostgreSQL + Realtime',
           type: 'database',
-          status: apiKeys.find((k: unknown) => k.id === 'supabase_anon')?.key_value
+          status: apiKeys.find((k: unknown) => (k as { id: string }).id === 'supabase_anon')?.key_value
             ? 'active'
             : 'inactive',
           provider: 'Supabase',
           last_sync: new Date().toISOString(),
-          health_score: apiKeys.find((k: unknown) => k.id === 'supabase_anon')
+          health_score: apiKeys.find((k: unknown) => (k as { id: string }).id === 'supabase_anon')
             ?.key_value
             ? 98
             : 0,
           config: {
             url:
-              apiKeys.find((k: unknown) => k.id === 'supabase_url')?.key_value ||
+              apiKeys.find((k: unknown) => (k as { id: string }).id === 'supabase_url')?.key_value ||
               'غير مُعد',
             status:
-              apiKeys.find((k: unknown) => k.id === 'supabase_anon')?.status ||
+              apiKeys.find((k: unknown) => (k as { id: string }).id === 'supabase_anon')?.status ||
               'inactive',
           },
         },
@@ -86,22 +85,22 @@ const IntegrationsPage: React.FC = () => {
           name: 'WhatsApp Business API',
           description: 'تكامل مع واتساب لإرسال الرسائل والتذكيرات التلقائية',
           type: 'api',
-          status: apiKeys.find((k: unknown) => k.id === 'whatsapp_token')?.key_value
+          status: apiKeys.find((k: unknown) => (k as { id: string }).id === 'whatsapp_token')?.key_value
             ? 'active'
             : 'inactive',
           provider: 'Meta',
           last_sync: new Date().toISOString(),
           health_score:
-            apiKeys.find((k: unknown) => k.id === 'whatsapp_token')?.status ===
+            apiKeys.find((k: unknown) => (k as { id: string }).id === 'whatsapp_token')?.status ===
             'active'
               ? 95
               : 0,
           config: {
             phone_number:
-              apiKeys.find((k: unknown) => k.id === 'whatsapp_phone')?.key_value ||
+              apiKeys.find((k: unknown) => (k as { id: string }).id === 'whatsapp_phone')?.key_value ||
               'غير مُعد',
             token_status:
-              apiKeys.find((k: unknown) => k.id === 'whatsapp_token')?.status ||
+              apiKeys.find((k: unknown) => (k as { id: string }).id === 'whatsapp_token')?.status ||
               'inactive',
           },
         },
@@ -110,18 +109,18 @@ const IntegrationsPage: React.FC = () => {
           name: 'Google Calendar',
           description: 'مزامنة المواعيد تلقائياً مع تقويم جوجل',
           type: 'oauth',
-          status: apiKeys.find((k: unknown) => k.id === 'google_client_id')
+          status: apiKeys.find((k: unknown) => (k as { id: string }).id === 'google_client_id')
             ?.key_value
             ? 'active'
             : 'inactive',
           provider: 'Google',
           last_sync: new Date().toISOString(),
-          health_score: apiKeys.find((k: unknown) => k.id === 'google_client_id')
+          health_score: apiKeys.find((k: unknown) => (k as { id: string }).id === 'google_client_id')
             ?.key_value
             ? 92
             : 0,
           config: {
-            client_id: apiKeys.find((k: unknown) => k.id === 'google_client_id')
+            client_id: apiKeys.find((k: unknown) => (k as { id: string }).id === 'google_client_id')
               ?.key_value
               ? 'مُعد'
               : 'غير مُعد',
@@ -133,18 +132,18 @@ const IntegrationsPage: React.FC = () => {
           name: 'Stripe Payments',
           description: 'معالجة الدفعات الإلكترونية والاشتراكات',
           type: 'api',
-          status: apiKeys.find((k: unknown) => k.id === 'stripe_secret')?.key_value
+          status: apiKeys.find((k: unknown) => (k as { id: string }).id === 'stripe_secret')?.key_value
             ? 'active'
             : 'inactive',
           provider: 'Stripe',
           last_sync: new Date().toISOString(),
           health_score:
-            apiKeys.find((k: unknown) => k.id === 'stripe_secret')?.status ===
+            apiKeys.find((k: unknown) => (k as { id: string }).id === 'stripe_secret')?.status ===
             'active'
               ? 94
               : 0,
           config: {
-            public_key: apiKeys.find((k: unknown) => k.id === 'stripe_public')
+            public_key: apiKeys.find((k: unknown) => (k as { id: string }).id === 'stripe_public')
               ?.key_value
               ? 'مُعد'
               : 'غير مُعد',
@@ -156,18 +155,18 @@ const IntegrationsPage: React.FC = () => {
           name: 'Email / SMTP',
           description: 'إرسال الإشعارات والتقارير عبر البريد الإلكتروني',
           type: 'email',
-          status: apiKeys.find((k: unknown) => k.id === 'smtp_host')?.key_value
+          status: apiKeys.find((k: unknown) => (k as { id: string }).id === 'smtp_host')?.key_value
             ? 'active'
             : 'inactive',
           provider: 'SMTP',
           last_sync: new Date().toISOString(),
-          health_score: apiKeys.find((k: unknown) => k.id === 'smtp_host')
+          health_score: apiKeys.find((k: unknown) => (k as { id: string }).id === 'smtp_host')
             ?.key_value
             ? 88
             : 0,
           config: {
             host:
-              apiKeys.find((k: unknown) => k.id === 'smtp_host')?.key_value ||
+              apiKeys.find((k: unknown) => (k as { id: string }).id === 'smtp_host')?.key_value ||
               'غير مُعد',
             port: '587',
           },

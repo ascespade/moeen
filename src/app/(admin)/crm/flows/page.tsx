@@ -49,7 +49,7 @@ interface ConversationFlow {
 }
 
 const FlowsManagementPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [flows, setFlows] = useState<ConversationFlow[]>([]);
   const [loading, setLoading] = useState(true);

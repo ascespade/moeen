@@ -214,34 +214,61 @@ export default function ApprovalsPage() {
       if (queryError) throw queryError;
 
       // Transform data to match interface - using snake_case to camelCase
-      const transformedApprovals = (data || []).map((approval: unknown) => ({
-        id: approval.id,
-        patientName: approval.patients
-          ? `${approval.patients.first_name} ${approval.patients.last_name}`
-          : 'Unknown',
-        patientId: approval.patient_id,
-        requestType: approval.request_type,
-        requestTitle: approval.request_title,
-        description: approval.description,
-        requestedBy: approval.requested_by,
-        requestedDate: approval.requested_date || approval.created_at,
-        status: approval.status,
-        approvedBy: approval.approved_by,
-        approvedDate: approval.approved_date,
-        rejectionReason: approval.rejection_reason,
-        priority: approval.priority,
-        estimatedCost: parseFloat(approval.estimated_cost || 0),
-        insuranceCoverage: parseFloat(approval.insurance_coverage || 0),
-        patientContribution: parseFloat(approval.patient_contribution || 0),
-        isBlocked: approval.is_blocked || false,
-        blockReason: approval.block_reason,
-        hasOutstandingBalance: approval.has_outstanding_balance || false,
-        outstandingAmount: parseFloat(approval.outstanding_amount || 0),
-        attachments: Array.isArray(approval.attachments)
-          ? approval.attachments
-          : [],
-        notes: approval.notes,
-      }));
+      const transformedApprovals = (data || []).map((approval: unknown) => {
+        const apt = approval as {
+          id: string;
+          patient_id: string;
+          request_type: string;
+          request_title: string;
+          description: string;
+          requested_by: string;
+          requested_date?: string;
+          created_at: string;
+          status: string;
+          approved_by?: string;
+          approved_date?: string;
+          rejection_reason?: string;
+          priority: string;
+          estimated_cost?: string | number;
+          insurance_coverage?: string | number;
+          patient_contribution?: string | number;
+          is_blocked?: boolean;
+          block_reason?: string;
+          has_outstanding_balance?: boolean;
+          outstanding_amount?: string | number;
+          attachments?: unknown[];
+          notes?: string;
+          patients?: { first_name?: string; last_name?: string };
+        };
+        return {
+          id: apt.id,
+          patientName: apt.patients
+            ? `${apt.patients.first_name || ''} ${apt.patients.last_name || ''}`.trim() || 'Unknown'
+            : 'Unknown',
+          patientId: apt.patient_id,
+          requestType: apt.request_type,
+          requestTitle: apt.request_title,
+          description: apt.description,
+          requestedBy: apt.requested_by,
+          requestedDate: apt.requested_date || apt.created_at,
+          status: apt.status,
+          approvedBy: apt.approved_by,
+          approvedDate: apt.approved_date,
+          rejectionReason: apt.rejection_reason,
+          priority: apt.priority,
+          estimatedCost: parseFloat(String(apt.estimated_cost || 0)),
+          insuranceCoverage: parseFloat(String(apt.insurance_coverage || 0)),
+          patientContribution: parseFloat(String(apt.patient_contribution || 0)),
+          isBlocked: apt.is_blocked || false,
+          blockReason: apt.block_reason,
+          hasOutstandingBalance: apt.has_outstanding_balance || false,
+          outstandingAmount: parseFloat(String(apt.outstanding_amount || 0)),
+          attachments: Array.isArray(apt.attachments)
+            ? apt.attachments
+            : [],
+          notes: apt.notes,
+        };
+      });
 
       setApprovals(transformedApprovals);
     } catch (err) {

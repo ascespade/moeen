@@ -185,8 +185,7 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
       if (response.status !== 401) {
         logger.warn(
           '[UnifiedAuth] Error fetching user:',
-          response.status,
-          response.statusText
+          { status: response.status, statusText: response.statusText }
         );
       }
       return null;

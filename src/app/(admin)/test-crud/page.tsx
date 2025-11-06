@@ -152,7 +152,7 @@ export default function CRUDTestPage() {
           const tablesData = await tablesRes.json();
           const accessibleTables = Object.values(
             tablesData.tables || {}
-          ).filter((t: unknown) => t.accessible).length;
+          ).filter((t: unknown) => (t as { accessible: boolean }).accessible).length;
           const totalTables = Object.keys(tablesData.tables || {}).length;
           return {
             ...test,
@@ -295,7 +295,7 @@ export default function CRUDTestPage() {
           const relationsData = await relationsRes.json();
           const workingRelations = Object.values(
             relationsData.relations || {}
-          ).filter((r: unknown) => r.working).length;
+          ).filter((r: unknown) => (r as { working: boolean }).working).length;
           const totalRelations = Object.keys(
             relationsData.relations || {}
           ).length;
@@ -332,7 +332,7 @@ export default function CRUDTestPage() {
       return {
         ...test,
         status: 'error',
-        message: error.message || 'حدث خطأ غير متوقع',
+        message: (error as Error).message || 'حدث خطأ غير متوقع',
         duration: Date.now() - startTime,
       };
     }
@@ -562,7 +562,7 @@ export default function CRUDTestPage() {
               <Button
                 key={cat.id}
                 onClick={() => {
-                  setSelectedCategory(cat.id as unknown);
+                  setSelectedCategory(cat.id as 'all' | 'connection' | 'crud' | 'performance' | 'relations');
                   if (cat.id !== 'all') {
                     runCategoryTests(cat.id as TestResult['category']);
                   }
@@ -646,7 +646,7 @@ export default function CRUDTestPage() {
                             تفاصيل إضافية
                           </summary>
                           <pre className='mt-2 p-2 bg-[var(--brand-surface)] rounded text-xs overflow-x-auto'>
-                            {JSON.stringify(test.details, null, 2)}
+                            {JSON.stringify(test.details as unknown, null, 2)}
                           </pre>
                         </details>
                       )}

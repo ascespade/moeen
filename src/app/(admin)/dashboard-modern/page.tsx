@@ -95,12 +95,12 @@ export default function ModernAdminDashboard() {
     'today' | 'week' | 'month' | 'year'
   >('month');
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isGridEditable, setIsGridEditable] = useState(false);
   const localizedNumber = useLocalizedNumber();
 
   // Use the new hook for real data
-  const { stats, activities, staffWorkHours, loading, error, refetch } =
-    useAdminDashboard(selectedPeriod);
+  const { stats } = useAdminDashboard(selectedPeriod);
 
   // Dashboard grid items configuration
   const gridItems: GridItem[] = useMemo(
@@ -225,10 +225,10 @@ export default function ModernAdminDashboard() {
         props: {
           notifications: mockNotifications,
           maxHeight: 400,
-          onMarkAsRead: (id: string) => logger.info('Mark as read:', id),
+          onMarkAsRead: (id: string) => logger.info('Mark as read:', { id }),
           onMarkAllAsRead: () => logger.info('Mark all as read'),
           onActionClick: (notification: unknown) =>
-            logger.info('Action:', notification),
+            logger.info('Action:', { notification }),
         },
       },
     ],

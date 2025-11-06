@@ -80,7 +80,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       limit,
     });
   } catch (error) {
-    logger.error('Error fetching conversations:', error, {});
+    logger.error('Error fetching conversations:', { error });
     return NextResponse.json(
       {
         success: false,

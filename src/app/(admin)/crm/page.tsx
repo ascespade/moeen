@@ -155,7 +155,9 @@ interface Deal {
 }
 
 function CRMPageContent() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useT();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [activeTab, setActiveTab] = useState<'leads' | 'contacts' | 'deals'>(
     'leads'
@@ -170,6 +172,7 @@ function CRMPageContent() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
   // Fetch real data from API
@@ -677,7 +680,7 @@ function CRMPageContent() {
             <Button
               key={tab.id}
               variant={activeTab === tab.id ? 'primary' : 'outline'}
-              onClick={() => setActiveTab(tab.id as unknown)}
+              onClick={() => setActiveTab(tab.id as 'leads' | 'contacts' | 'deals')}
               className='flex items-center gap-2'
             >
               {getTabIcon(tab.id)}

@@ -109,6 +109,7 @@ interface Doctor {
 }
 
 export default function DoctorsPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -601,6 +602,7 @@ export default function DoctorsPage() {
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getGenderBadge = (gender: string) => {
     return gender === 'male' ? (
       <Badge variant='outline' className='bg-blue-100 text-blue-800'>
@@ -613,6 +615,7 @@ export default function DoctorsPage() {
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',

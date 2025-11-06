@@ -85,6 +85,7 @@ export default function CRMActivitiesPage() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getTypeText = (type: Activity['type']) => {
     switch (type) {
       case 'call':
