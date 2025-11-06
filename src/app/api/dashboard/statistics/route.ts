@@ -189,8 +189,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     });
   } catch (error) {
     // Use logger instead of console.error
-    const logger = (await import('@/lib/monitoring/logger')).default;
-    logger.error('Dashboard statistics API error', { error });
+    logger.error('Dashboard statistics API error', { error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       {
         success: false,

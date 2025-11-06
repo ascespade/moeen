@@ -161,8 +161,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json(dynamicData);
   } catch (error) {
     // Use logger instead of console.error
-    const logger = (await import('@/lib/monitoring/logger')).default;
-    logger.error('Error in dynamic-data API', { error });
+    logger.error('Error in dynamic-data API', { error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: 'فشل في جلب البيانات الديناميكية' },
       { status: 500 }

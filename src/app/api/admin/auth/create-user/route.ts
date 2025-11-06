@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase/admin';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { createClient } from '@/lib/supabase/server';
 
 // This endpoint requires an internal secret header to prevent abuse
@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 1) Create or get Auth user
+    const supabaseAdmin = createAdminClient();
     const { data: existing } =
       await supabaseAdmin.auth.admin.listUsers({
         page: 1,

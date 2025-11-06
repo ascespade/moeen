@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { supabaseAdmin } from '@/lib/supabase/admin';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { PermissionManager } from '@/lib/permissions';
+import { logger } from '@/lib/utils/logger';
 
 const DEFAULT_PASSWORD = process.env.TEST_USERS_PASSWORD || 'A123456';
 
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json().catch(() => ({}) as unknown);
-    try {
-      logger.info('[api/auth/login] incoming login request email:', email);
-    } catch (e) {}
+    // Log incoming request
+    logger.info('[api/auth/login] incoming login request', { value: { email } });
 
     const demoEmailHeader = req.headers.get('x-demo-email');
     const internalSecretHeader = req.headers.get('x-admin-secret');
@@ -39,10 +39,7 @@ export async function POST(req: NextRequest) {
 
       if (allowDemoHeader) {
         const targetEmail = demoEmailHeader || email;
-        logger.info(
-          '[api/auth/login] demo/header fallback active for',
-          targetEmail
-        );
+        logger.info('[api/auth/login] demo/header fallback active', { value: { targetEmail } });
 
         // Try to find existing user row
         const { data: userRow, error: userRowErr } = await supabase
@@ -52,17 +49,15 @@ export async function POST(req: NextRequest) {
           .single();
 
         logger.info('[api/auth/login] demo/header user lookup', {
-          userRow,
-          userRowErr: userRowErr?.message || null,
+          userRow: userRow ? 'found' : 'not found',
+          error: userRowErr?.message || null,
         });
 
         if (!userRow && (isDev || debugAllow || !!internalSecretHeader)) {
           // Auto-create auth user via service role in dev/debug
           try {
-            logger.info(
-              '[api/auth/login] demo/header creating auth user for',
-              targetEmail
-            );
+            logger.info('[api/auth/login] demo/header creating auth user', { value: { targetEmail } });
+            const supabaseAdmin = createAdminClient();
             const { data: createdUser, error: createErr } =
               await supabaseAdmin.auth.admin.createUser({
                 email: targetEmail,
@@ -71,10 +66,7 @@ export async function POST(req: NextRequest) {
               } as unknown);
 
             if (createErr || !createdUser?.user) {
-              logger.error(
-                '[api/auth/login] demo/header createUser failed',
-                createErr?.message
-              );
+              logger.error('[api/auth/login] demo/header createUser failed', { error: createErr?.message });
             } else {
               const authId = createdUser.user.id;
               // Upsert into users table using server client
@@ -95,8 +87,8 @@ export async function POST(req: NextRequest) {
                 .single();
 
               logger.info('[api/auth/login] demo/header upsert users result', {
-                up,
-                upErr: upErr?.message || null,
+                success: !!up,
+                error: upErr?.message || null,
               });
 
               if (up && !upErr) {
@@ -123,7 +115,7 @@ export async function POST(req: NextRequest) {
               }
             }
           } catch (e) {
-            logger.error('[api/auth/login] demo/header auto-create error', e, {});
+            logger.error('[api/auth/login] demo/header auto-create error', { error: e });
           }
         }
 
@@ -157,15 +149,12 @@ export async function POST(req: NextRequest) {
             },
           };
 
-          logger.info(
-            '[api/auth/login] demo/header fallback login succeeded for',
-            targetEmail
-          );
+          logger.info('[api/auth/login] demo/header fallback login succeeded', { value: { targetEmail } });
           return NextResponse.json(resBody);
         }
       }
     } catch (e) {
-      logger.error('[api/auth/login] demo/header fallback error', e, {});
+      logger.error('[api/auth/login] demo/header fallback error', { error: e instanceof Error ? e.message : String(e) });
       // continue to normal flow
     }
 
@@ -207,6 +196,7 @@ export async function POST(req: NextRequest) {
                 '[api/auth/login] fallback creating auth user for',
                 email
               );
+              const supabaseAdmin = createAdminClient();
               const { data: createdUser, error: createErr } =
                 await supabaseAdmin.auth.admin.createUser({
                   email,
@@ -268,7 +258,7 @@ export async function POST(req: NextRequest) {
                 }
               }
             } catch (e) {
-              logger.error('[api/auth/login] fallback create error', e, {});
+              logger.error('[api/auth/login] fallback create error', { error: e });
             }
           }
 
@@ -301,15 +291,15 @@ export async function POST(req: NextRequest) {
                 fallbackLogin: true,
               },
             };
-            logger.info('[api/auth/login] fallback login succeeded for', email);
+            logger.info('[api/auth/login] fallback login succeeded for', { value: email });
             return NextResponse.json(resBody);
           }
         }
       } catch (e) {
-        logger.error('[api/auth/login] fallback lookup error', e, {});
+        logger.error('[api/auth/login] fallback lookup error', { error: e });
       }
 
-      logger.error('[api/auth/login] auth error', error?.message, {});
+      logger.error('[api/auth/login] auth error', { error: error?.message });
       return NextResponse.json(
         { success: false, error: error?.message || 'Unauthorized' },
         { status: 401 }
@@ -377,7 +367,7 @@ export async function POST(req: NextRequest) {
           );
         }
       } catch (e) {
-        logger.error('[api/auth/login] error upserting missing user', e, {});
+        logger.error('[api/auth/login] error upserting missing user', { error: e });
         return NextResponse.json(
           { success: false, error: 'User data not found' },
           { status: 401 }
