@@ -168,35 +168,35 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 // Helper functions
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // function _getDateRanges(period: string) {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-  switch (period) {
-    case 'today':
-      return {
-        startDate: today.toISOString(),
-        endDate: new Date(today.getTime() + 24 * 60 * 60 * 1000).toISOString(),
-      };
-
-    case 'week':
-      const weekStart = new Date(today);
-      weekStart.setDate(today.getDate() - today.getDay() + 1);
-      return {
-        startDate: weekStart.toISOString(),
-        endDate: new Date(
-          weekStart.getTime() + 7 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-      };
-
-    case 'month':
-      const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-      const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-      return {
-        startDate: monthStart.toISOString(),
-        endDate: monthEnd.toISOString(),
-      };
-
-    case 'year':
+//   const now = new Date();
+//   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+//
+//   switch (period) {
+//     case 'today':
+//       return {
+//         startDate: today.toISOString(),
+//         endDate: new Date(today.getTime() + 24 * 60 * 60 * 1000).toISOString(),
+//       };
+//
+//     case 'week':
+//       const weekStart = new Date(today);
+//       weekStart.setDate(today.getDate() - today.getDay() + 1);
+//       return {
+//         startDate: weekStart.toISOString(),
+//         endDate: new Date(
+//           weekStart.getTime() + 7 * 24 * 60 * 60 * 1000
+//         ).toISOString(),
+//       };
+//
+//     case 'month':
+//       const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+//       const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+//       return {
+//         startDate: monthStart.toISOString(),
+//         endDate: monthEnd.toISOString(),
+//       };
+//
+//     case 'year':
       const yearStart = new Date(today.getFullYear(), 0, 1);
       const yearEnd = new Date(today.getFullYear(), 11, 31);
       return {
