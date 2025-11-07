@@ -76,11 +76,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       const weeklyHours =
         weeklyAttendance
           ?.filter((a: any) => a.user_id === member.id)
-          ?.reduce((sum: number, record: any) => sum + (record.total_hours || 0), 0) || 0;
+          ?.reduce(
+            (sum: number, record: any) => sum + (record.total_hours || 0),
+            0
+          ) || 0;
       const monthlyHours =
         monthlyAttendance
           ?.filter((a: any) => a.user_id === member.id)
-          ?.reduce((sum: number, record: any) => sum + (record.total_hours || 0), 0) || 0;
+          ?.reduce(
+            (sum: number, record: any) => sum + (record.total_hours || 0),
+            0
+          ) || 0;
 
       const isOnDuty =
         todayRecord && todayRecord.check_in_time && !todayRecord.check_out_time;

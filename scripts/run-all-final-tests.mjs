@@ -3,7 +3,7 @@
 /**
  * Run All Final Tests
  * ????? ???? ?????????? ????????
- * 
+ *
  * This script runs:
  * 1. Build test
  * 2. Lint test
@@ -37,10 +37,10 @@ const results = {
 // 1. Build Test
 console.log('1??  Testing Build...');
 try {
-  execSync('npm run build', { 
-    cwd: projectRoot, 
+  execSync('npm run build', {
+    cwd: projectRoot,
     stdio: 'pipe',
-    timeout: 300000
+    timeout: 300000,
   });
   results.build.passed = true;
   console.log('   ? Build passed\n');
@@ -53,10 +53,10 @@ try {
 // 2. Lint Test
 console.log('2??  Testing Lint...');
 try {
-  execSync('npm run lint', { 
-    cwd: projectRoot, 
+  execSync('npm run lint', {
+    cwd: projectRoot,
     stdio: 'pipe',
-    timeout: 120000
+    timeout: 120000,
   });
   results.lint.passed = true;
   console.log('   ? Lint passed\n');
@@ -69,10 +69,10 @@ try {
 // 3. Type Check
 console.log('3??  Testing Type Check...');
 try {
-  execSync('npx tsc --noEmit', { 
-    cwd: projectRoot, 
+  execSync('npx tsc --noEmit', {
+    cwd: projectRoot,
     stdio: 'pipe',
-    timeout: 120000
+    timeout: 120000,
   });
   results.typeCheck.passed = true;
   console.log('   ? Type check passed\n');
@@ -85,10 +85,10 @@ try {
 // 4. Playwright Tests
 console.log('4??  Testing Playwright...');
 try {
-  execSync('npx playwright test --reporter=list', { 
-    cwd: projectRoot, 
+  execSync('npx playwright test --reporter=list', {
+    cwd: projectRoot,
     stdio: 'pipe',
-    timeout: 300000
+    timeout: 300000,
   });
   results.playwright.passed = true;
   console.log('   ? Playwright tests passed\n');
@@ -102,10 +102,10 @@ try {
 console.log('5??  Testing Supabase Integration...');
 try {
   // Run Supabase connection tests
-  execSync('node scripts/round6-comprehensive-testing.mjs --supabase-only', { 
-    cwd: projectRoot, 
+  execSync('node scripts/round6-comprehensive-testing.mjs --supabase-only', {
+    cwd: projectRoot,
     stdio: 'pipe',
-    timeout: 120000
+    timeout: 120000,
   });
   results.supabase.passed = true;
   console.log('   ? Supabase tests passed\n');
@@ -118,10 +118,10 @@ try {
 // 6. 5 Rounds + Round 6
 console.log('6??  Running 5 Rounds + Round 6...');
 try {
-  execSync('node scripts/run-all-audits-and-tests.mjs', { 
-    cwd: projectRoot, 
+  execSync('node scripts/run-all-audits-and-tests.mjs', {
+    cwd: projectRoot,
     stdio: 'inherit',
-    timeout: 600000 // 10 minutes
+    timeout: 600000, // 10 minutes
   });
   results.rounds.passed = true;
   console.log('\n   ? All rounds passed\n');
@@ -144,7 +144,7 @@ console.log(`5 Rounds + 6: ${results.rounds.passed ? '?' : '?'}`);
 
 const totalTests = 6;
 const passedTests = Object.values(results).filter(r => r.passed).length;
-const successRate = (passedTests / totalTests * 100).toFixed(1);
+const successRate = ((passedTests / totalTests) * 100).toFixed(1);
 
 console.log(`\nSuccess Rate: ${successRate}% (${passedTests}/${totalTests})`);
 console.log('='.repeat(70) + '\n');
@@ -153,7 +153,11 @@ console.log('='.repeat(70) + '\n');
 import { writeFileSync } from 'fs';
 writeFileSync(
   join(projectRoot, 'FINAL_TEST_RESULTS.json'),
-  JSON.stringify({ ...results, successRate, timestamp: new Date().toISOString() }, null, 2)
+  JSON.stringify(
+    { ...results, successRate, timestamp: new Date().toISOString() },
+    null,
+    2
+  )
 );
 
 if (passedTests === totalTests) {

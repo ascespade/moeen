@@ -1,12 +1,16 @@
 /**
  * Auth Helpers - Authentication Helper Functions
  * مساعدات المصادقة - دوال مساعدة للمصادقة
- * 
+ *
  * Helper functions for authentication and authorization
  */
 
 import { createClient } from '../supabase/server';
-import { ROLES, _PERMISSIONS, hasPermission as checkPermission } from '../constants';
+import {
+  ROLES,
+  _PERMISSIONS,
+  hasPermission as checkPermission,
+} from '../constants';
 import { AppError } from '../errors';
 import { _ERROR_CODES } from '../constants/errors';
 import type { User } from '../../types/database.types';
@@ -102,7 +106,9 @@ export { hasPermission as checkPermission };
 /**
  * Get user with profile
  */
-export async function getUserWithProfile(userId?: string): Promise<(User & { profile?: unknown }) | null> {
+export async function getUserWithProfile(
+  userId?: string
+): Promise<(User & { profile?: unknown }) | null> {
   const supabase = await createClient();
   const targetUserId = userId || (await requireAuth()).id;
 

@@ -26,7 +26,11 @@ const testUsers = [
   { email: 'doctor@test.com', password: 'Doctor123!', role: 'doctor' },
   { email: 'patient@test.com', password: 'Patient123!', role: 'patient' },
   { email: 'staff@test.com', password: 'Staff123!', role: 'staff' },
-  { email: 'supervisor@test.com', password: 'Supervisor123!', role: 'supervisor' },
+  {
+    email: 'supervisor@test.com',
+    password: 'Supervisor123!',
+    role: 'supervisor',
+  },
   { email: 'manager@test.com', password: 'Manager123!', role: 'manager' },
   { email: 'therapist@test.com', password: 'Therapist123!', role: 'therapist' },
   { email: 'nurse@test.com', password: 'Nurse123!', role: 'nurse' },
@@ -35,18 +39,18 @@ const testUsers = [
 
 async function createTestUsers() {
   console.log('?? Creating Test Users...\n');
-  
+
   for (const user of testUsers) {
     try {
       // Check if user exists
       const { data: existing } = await supabase.auth.admin.listUsers();
       const exists = existing?.users?.some(u => u.email === user.email);
-      
+
       if (exists) {
         console.log(`  ??  ${user.email} already exists - skipping`);
         continue;
       }
-      
+
       // Create user
       const { data, error } = await supabase.auth.admin.createUser({
         email: user.email,
@@ -56,31 +60,32 @@ async function createTestUsers() {
           role: user.role,
         },
       });
-      
+
       if (error) {
         console.log(`  ? ${user.email}: ${error.message}`);
       } else {
         console.log(`  ? ${user.email} (${user.role}) created`);
-        
+
         // Update user role in users table
         if (data.user) {
-          await supabase
-            .from('users')
-            .upsert({
+          await supabase.from('users').upsert(
+            {
               id: data.user.id,
               email: user.email,
               role: user.role,
               full_name: `${user.role} User`,
-            }, {
+            },
+            {
               onConflict: 'id',
-            });
+            }
+          );
         }
       }
     } catch (error) {
       console.log(`  ? ${user.email}: ${error.message}`);
     }
   }
-  
+
   console.log('\n? Test users creation completed\n');
 }
 

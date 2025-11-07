@@ -1,7 +1,7 @@
 /**
  * Database Types - Supabase Database Types
  * أنواع قاعدة البيانات - أنواع قاعدة بيانات Supabase
- * 
+ *
  * Generated from Supabase schema
  * To regenerate: npx supabase gen types typescript --project-id [PROJECT_ID] > src/types/database.types.ts
  */
@@ -193,16 +193,25 @@ export interface Database {
       [_ in never]: never;
     };
     Enums: {
-      user_role: 'admin' | 'doctor' | 'patient' | 'staff' | 'supervisor' | 'user';
+      user_role:
+        | 'admin'
+        | 'doctor'
+        | 'patient'
+        | 'staff'
+        | 'supervisor'
+        | 'user';
       user_status: 'active' | 'inactive' | 'blocked';
     };
   };
 }
 
 // Helper types
-export type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row'];
-export type TablesInsert<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Insert'];
-export type TablesUpdate<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Update'];
+export type Tables<T extends keyof Database['public']['Tables']> =
+  Database['public']['Tables'][T]['Row'];
+export type TablesInsert<T extends keyof Database['public']['Tables']> =
+  Database['public']['Tables'][T]['Insert'];
+export type TablesUpdate<T extends keyof Database['public']['Tables']> =
+  Database['public']['Tables'][T]['Update'];
 
 // Specific table types
 export type User = Tables<'users'>;

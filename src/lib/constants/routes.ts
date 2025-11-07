@@ -1,7 +1,7 @@
 /**
  * Route Constants - Centralized Routes
  * ثوابت المسارات - المسارات المركزية
- * 
+ *
  * All application routes defined here
  */
 

@@ -14,7 +14,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Database connection string
-const dbUrl = process.env.DATABASE_URL || 
+const dbUrl =
+  process.env.DATABASE_URL ||
   'postgresql://postgres.socwpqzcalgvpzjwavgh:rZqeMdbeyCwXW5cB@aws-1-eu-central-1.pooler.supabase.com:6543/postgres';
 
 // Parse the connection string manually
@@ -27,12 +28,12 @@ const [, user, password, host, port, database] = match;
 
 const client = new pg.Client({
   connectionString: dbUrl,
-  ssl: { 
+  ssl: {
     rejectUnauthorized: false,
-    require: true
+    require: true,
   },
   connectionTimeoutMillis: 10000,
-  query_timeout: 30000
+  query_timeout: 30000,
 });
 
 async function applyChanges() {
@@ -62,7 +63,7 @@ async function applyChanges() {
           WHERE table_schema = 'public' 
           AND table_name = 'missing_translations'
         );
-      `
+      `,
     });
 
     // Fix 2: Ensure call_requests table exists with correct structure
@@ -86,7 +87,7 @@ async function applyChanges() {
           WHERE table_schema = 'public' 
           AND table_name = 'call_requests'
         );
-      `
+      `,
     });
 
     // Fix 3: Ensure notification_logs table exists
@@ -108,7 +109,7 @@ async function applyChanges() {
           WHERE table_schema = 'public' 
           AND table_name = 'notification_logs'
         );
-      `
+      `,
     });
 
     // Fix 4: Add indexes for better performance
@@ -122,7 +123,7 @@ async function applyChanges() {
         CREATE INDEX IF NOT EXISTS idx_call_requests_status ON call_requests(status);
         CREATE INDEX IF NOT EXISTS idx_notification_logs_recipient ON notification_logs(recipient_id);
       `,
-      check: null
+      check: null,
     });
 
     // Fix 5: Ensure get_on_duty_supervisor function exists
@@ -150,19 +151,19 @@ async function applyChanges() {
           SELECT FROM pg_proc 
           WHERE proname = 'get_on_duty_supervisor'
         );
-      `
+      `,
     });
 
     // Apply fixes
     console.log('?? Applying fixes...\n');
-    
+
     for (const fix of fixes) {
       try {
         // Check if already exists
         if (fix.check) {
           const checkResult = await client.query(fix.check);
           const exists = checkResult.rows[0].exists;
-          
+
           if (exists && fix.name.includes('table')) {
             console.log(`??  ${fix.name} - Already exists, skipping...`);
             continue;
@@ -180,12 +181,24 @@ async function applyChanges() {
 
     // Verify changes
     console.log('\n?? Verifying changes...\n');
-    
+
     const verifyQueries = [
-      { name: 'missing_translations table', sql: `SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'missing_translations'` },
-      { name: 'call_requests table', sql: `SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'call_requests'` },
-      { name: 'notification_logs table', sql: `SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'notification_logs'` },
-      { name: 'get_on_duty_supervisor function', sql: `SELECT COUNT(*) FROM pg_proc WHERE proname = 'get_on_duty_supervisor'` },
+      {
+        name: 'missing_translations table',
+        sql: `SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'missing_translations'`,
+      },
+      {
+        name: 'call_requests table',
+        sql: `SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'call_requests'`,
+      },
+      {
+        name: 'notification_logs table',
+        sql: `SELECT COUNT(*) FROM information_schema.tables WHERE table_name = 'notification_logs'`,
+      },
+      {
+        name: 'get_on_duty_supervisor function',
+        sql: `SELECT COUNT(*) FROM pg_proc WHERE proname = 'get_on_duty_supervisor'`,
+      },
     ];
 
     for (const verify of verifyQueries) {
@@ -212,7 +225,7 @@ async function applyChanges() {
       FROM information_schema.tables
       WHERE table_schema = 'public' AND table_type = 'BASE TABLE';
     `;
-    
+
     const stats = await client.query(statsQuery);
     console.log(`   Tables: ${stats.rows[0].total_tables}`);
     console.log(`   Functions: ${stats.rows[0].total_functions}`);
@@ -220,7 +233,6 @@ async function applyChanges() {
 
     await client.end();
     console.log('\n? All changes applied successfully!\n');
-
   } catch (error) {
     console.error('? Error applying changes:', error.message);
     if (client) await client.end();
@@ -229,10 +241,12 @@ async function applyChanges() {
 }
 
 // Run
-applyChanges().then(() => {
-  console.log('?? Done!');
-  process.exit(0);
-}).catch((error) => {
-  console.error('? Failed:', error);
-  process.exit(1);
-});
+applyChanges()
+  .then(() => {
+    console.log('?? Done!');
+    process.exit(0);
+  })
+  .catch(error => {
+    console.error('? Failed:', error);
+    process.exit(1);
+  });

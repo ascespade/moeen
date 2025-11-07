@@ -39,10 +39,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     }
 
-    return NextResponse.json(
-      { error: 'Invalid action' },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: 'Invalid action' }, { status: 400 });
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message || 'Failed to update monitoring' },
@@ -50,4 +47,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

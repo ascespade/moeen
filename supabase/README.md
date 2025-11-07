@@ -11,7 +11,7 @@ This directory contains the **centralized** database schema files imported from 
    - All tables, indexes, constraints, triggers, and functions
    - Imported from project: `socwpqzcalgvpzjwavgh`
 
-2. **`00_complete_seed.sql`** (2 KB)  
+2. **`00_complete_seed.sql`** (2 KB)
    - Initial seed data
    - Roles, languages, and translations
 
@@ -48,7 +48,7 @@ The schema includes 60+ tables covering:
 ### Database Stats
 
 - **Tables**: 60+ tables
-- **Views**: 12+ views  
+- **Views**: 12+ views
 - **Functions**: 40+ functions
 - **Enums**: 11 enums
 - **Total Size**: ~200 KB
@@ -62,4 +62,3 @@ The schema includes 60+ tables covering:
 ---
 
 **Last Updated**: Based on live database schema from project `moeen`
-

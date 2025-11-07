@@ -1,10 +1,19 @@
 /**
  * Date Utilities - أدوات التاريخ
- * 
+ *
  * Date manipulation utilities
  */
 
-import { format, addDays, addMonths, addYears, isBefore, isAfter, differenceInDays, differenceInHours } from 'date-fns';
+import {
+  format,
+  addDays,
+  addMonths,
+  addYears,
+  isBefore,
+  isAfter,
+  differenceInDays,
+  differenceInHours,
+} from 'date-fns';
 import { ar, enUS } from 'date-fns/locale';
 import { CONFIG } from '../constants/config';
 
@@ -71,13 +80,14 @@ export function formatDateForDisplay(
   date: Date | string | number,
   locale: 'ar' | 'en' = 'ar'
 ): string {
-  const dateObj = typeof date === 'string' || typeof date === 'number' 
-    ? new Date(date) 
-    : date;
-  
+  const dateObj =
+    typeof date === 'string' || typeof date === 'number'
+      ? new Date(date)
+      : date;
+
   const localeObj = locale === 'ar' ? ar : enUS;
   const formatStr = locale === 'ar' ? 'dd/MM/yyyy' : 'MM/dd/yyyy';
-  
+
   return format(dateObj, formatStr, { locale: localeObj });
 }
 

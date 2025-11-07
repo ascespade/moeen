@@ -61,7 +61,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { formatDate, formatTime } from '@/utils/common';
 
-interface User {
+interface UserData {
   id: string;
   username: string;
   email: string;
@@ -118,8 +118,8 @@ interface ApiUserResponse {
 }
 
 function UsersPageContent() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<UserData[]>([]);
+  const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -172,8 +172,8 @@ function UsersPageContent() {
       const result = await response.json();
 
       if (result.success) {
-        // Transform API data to match our User interface
-        const transformedUsers: User[] = (result.data || []).map(
+        // Transform API data to match our UserData interface
+        const transformedUsers: UserData[] = (result.data || []).map(
           (user: ApiUserResponse) => ({
             id: user.id,
             username: user.email.split('@')[0],
@@ -340,12 +340,12 @@ function UsersPageContent() {
     );
   };
 
-  const handleViewUser = (user: User) => {
+  const handleViewUser = (user: UserData) => {
     setSelectedUser(user);
     setIsUserDialogOpen(true);
   };
 
-  const handleEditUser = (user: User) => {
+  const handleEditUser = (user: UserData) => {
     setSelectedUser(user);
     setIsEditDialogOpen(true);
   };
@@ -385,7 +385,7 @@ function UsersPageContent() {
         </Button>
       </AdminHeader>
 
-      <main className='container-app py-8 space-y-8' id="main-content">
+      <main className='container-app py-8 space-y-8' id='main-content'>
         {/* Stats Cards - Modern Design */}
         <div className='grid grid-cols-1 md:grid-cols-4 gap-6'>
           <AdminStatsCard
@@ -493,9 +493,10 @@ function UsersPageContent() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className='w-12'>
-                        <input type='checkbox'
+                        <input
+                          type='checkbox'
                           className='rounded border-gray-300'
-                          onChange={(e) => {
+                          onChange={e => {
                             if (e.target.checked) {
                               setSelectedUsers(filteredUsers.map(u => u.id));
                             } else {
@@ -518,10 +519,11 @@ function UsersPageContent() {
                     {filteredUsers.map(user => (
                       <TableRow key={user.id}>
                         <TableCell>
-                          <input type='checkbox'
+                          <input
+                            type='checkbox'
                             className='rounded border-gray-300'
                             checked={selectedUsers.includes(user.id)}
-                            onChange={(e) => {
+                            onChange={e => {
                               if (e.target.checked) {
                                 setSelectedUsers([...selectedUsers, user.id]);
                               } else {

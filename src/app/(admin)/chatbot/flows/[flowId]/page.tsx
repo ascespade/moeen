@@ -143,7 +143,10 @@ export default function FlowBuilderPage({
   };
 
   return (
-    <div className='min-h-screen bg-[var(--default-surface)]' role='application'>
+    <div
+      className='min-h-screen bg-[var(--default-surface)]'
+      role='application'
+    >
       {/* Header */}
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-4'>
@@ -167,7 +170,7 @@ export default function FlowBuilderPage({
             <div className='flex items-center gap-3'>
               <button
                 onClick={() => setShowTestModal(true)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowTestModal(true);
@@ -180,7 +183,7 @@ export default function FlowBuilderPage({
               </button>
               <button
                 onClick={() => setShowPublishModal(true)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowPublishModal(true);
@@ -238,7 +241,8 @@ export default function FlowBuilderPage({
                     backgroundColor:
                       selectedNode?.id === node.id ? 'white' : 'white',
                   }}
-                  tabIndex={0} onClick={() => setSelectedNode(node)}
+                  tabIndex={0}
+                  onClick={() => setSelectedNode(node)}
                 >
                   <div className='mb-2 flex items-center gap-2'>
                     <span className='text-lg'>{getNodeIcon(node.type)}</span>
@@ -415,7 +419,10 @@ export default function FlowBuilderPage({
               )}
 
               <div className='pt-4'>
-                <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="حفظ التغييرات">
+                <button
+                  className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='حفظ التغييرات'
+                >
                   حفظ التغييرات
                 </button>
               </div>
@@ -432,7 +439,7 @@ export default function FlowBuilderPage({
               <h3 className='text-xl font-semibold'>نشر التدفق</h3>
               <button
                 onClick={() => setShowPublishModal(false)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowPublishModal(false);
@@ -459,7 +466,7 @@ export default function FlowBuilderPage({
               <div className='flex gap-3 pt-4'>
                 <button
                   onClick={() => setShowPublishModal(false)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowPublishModal(false);
@@ -472,7 +479,7 @@ export default function FlowBuilderPage({
                 </button>
                 <button
                   onClick={() => setShowPublishModal(false)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowPublishModal(false);
@@ -497,7 +504,7 @@ export default function FlowBuilderPage({
               <h3 className='text-xl font-semibold'>اختبار التدفق</h3>
               <button
                 onClick={() => setShowTestModal(false)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowTestModal(false);
@@ -561,7 +568,7 @@ export default function FlowBuilderPage({
               <div className='flex gap-3 pt-4'>
                 <button
                   onClick={() => setShowTestModal(false)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowTestModal(false);
@@ -572,7 +579,10 @@ export default function FlowBuilderPage({
                 >
                   إغلاق
                 </button>
-                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إعادة تشغيل الاختبار">
+                <button
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='إعادة تشغيل الاختبار'
+                >
                   إعادة تشغيل الاختبار
                 </button>
               </div>

@@ -167,16 +167,16 @@ export default function SessionNotesPage() {
   if (loading) {
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <div className='container-app py-8'>
-        <div className='card p-12 text-center'>
-          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
-          <p className='mt-4 text-gray-600 dark:text-gray-400'>
-            جاري التحميل...
-          </p>
-        </div>
+          <div className='card p-12 text-center'>
+            <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
+            <p className='mt-4 text-gray-600 dark:text-gray-400'>
+              جاري التحميل...
+            </p>
+          </div>
         </div>
       </>
     );
@@ -265,9 +265,10 @@ export default function SessionNotesPage() {
                     className='border border-gray-200 dark:border-gray-700 rounded-lg p-4'
                   >
                     <label className='flex items-start gap-3 cursor-pointer'>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         checked={selectedGoals.includes(goal.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedGoals([...selectedGoals, goal.id]);
                             setGoalProgress({
@@ -298,16 +299,19 @@ export default function SessionNotesPage() {
                             <label className='block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2'>
                               التقدم في هذه الجلسة (%)
                             </label>
-                            <input type='range'
+                            <input
+                              type='range'
                               min='0'
                               max='100'
                               value={
                                 goalProgress[goal.id] || goal.current_progress
                               }
-                              onChange={(e) => setGoalProgress({
+                              onChange={e =>
+                                setGoalProgress({
                                   ...goalProgress,
                                   [goal.id]: parseInt(e.target.value),
-                                })}
+                                })
+                              }
                               className='w-full'
                             />
                             <div className='flex justify-between text-sm text-gray-600 dark:text-gray-400'>
@@ -366,9 +370,17 @@ export default function SessionNotesPage() {
             </label>
             <div className='flex items-center gap-2 mb-4'>
               {[1, 2, 3, 4, 5].map(star => (
-                <button key={star}
-                  onClick={() => { setSessionRating(star) }}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSessionRating(star); } }}
+                <button
+                  key={star}
+                  onClick={() => {
+                    setSessionRating(star);
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setSessionRating(star);
+                    }
+                  }}
                   aria-label={`تقييم ${star} نجوم`}
                   className={`text-3xl transition-all ${
                     star <= sessionRating
@@ -407,11 +419,16 @@ export default function SessionNotesPage() {
 
           {/* Actions */}
           <div className='space-y-3'>
-            <button 
-              onClick={handleSaveNotes} 
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleSaveNotes(); } }}
+            <button
+              onClick={handleSaveNotes}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleSaveNotes();
+                }
+              }}
               disabled={saving || !notes.trim()}
-              className='btn btn-default w-full py-4 text-lg disabled:opacity-50' 
+              className='btn btn-default w-full py-4 text-lg disabled:opacity-50'
               aria-label={saving ? 'جاري الحفظ...' : 'حفظ الملاحظات'}
             >
               {saving ? (
@@ -424,11 +441,18 @@ export default function SessionNotesPage() {
               )}
             </button>
 
-            <button 
-              onClick={() => { router.back() }} 
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); router.back(); } }}
+            <button
+              onClick={() => {
+                router.back();
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  router.back();
+                }
+              }}
               className='btn btn-outline w-full'
-              aria-label="العودة للخلف"
+              aria-label='العودة للخلف'
             >
               إلغاء
             </button>

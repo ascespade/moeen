@@ -11,7 +11,9 @@ export const revalidate = 60;
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const authResult = await requireAuth(['admin', 'supervisor', 'manager'])(request);
+    const authResult = await requireAuth(['admin', 'supervisor', 'manager'])(
+      request
+    );
     if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -77,7 +79,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .eq('status', 'paid')
       .gte('created_at', startDate.toISOString());
 
-    const revenue = payments?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0;
+    const revenue =
+      payments?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) || 0;
 
     // Get patient analytics by age (if age field exists)
     const { data: patients } = await supabase
@@ -134,7 +137,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           rescheduleRate: 0, // Calculate from appointments
         },
         performanceMetrics: {
-          averageSessionDuration: calculateAverageSessionDuration(sessions || []),
+          averageSessionDuration: calculateAverageSessionDuration(
+            sessions || []
+          ),
           patientSatisfaction: 0, // From feedback if available
           therapistUtilization: 0, // Calculate from schedules
           facilityUtilization: 0, // Calculate from schedules
@@ -159,7 +164,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 }
 
 // Helper functions
-function calculateAgeGroups(patients: any[]): Array<{ age: string; count: number }> {
+function calculateAgeGroups(
+  patients: any[]
+): Array<{ age: string; count: number }> {
   const groups = {
     '0-5': 0,
     '6-12': 0,
@@ -190,7 +197,9 @@ function calculateAge(birthDate: string): number {
   return age;
 }
 
-function calculateGenderGroups(patients: any[]): Array<{ gender: string; count: number }> {
+function calculateGenderGroups(
+  patients: any[]
+): Array<{ gender: string; count: number }> {
   const groups: Record<string, number> = {};
   patients.forEach((patient: any) => {
     const gender = patient.gender || 'غير محدد';
@@ -199,7 +208,9 @@ function calculateGenderGroups(patients: any[]): Array<{ gender: string; count: 
   return Object.entries(groups).map(([gender, count]) => ({ gender, count }));
 }
 
-function calculateConditionGroups(patients: any[]): Array<{ condition: string; count: number }> {
+function calculateConditionGroups(
+  patients: any[]
+): Array<{ condition: string; count: number }> {
   const groups: Record<string, number> = {};
   patients.forEach((patient: any) => {
     const condition = patient.condition || 'غير محدد';
@@ -211,7 +222,9 @@ function calculateConditionGroups(patients: any[]): Array<{ condition: string; c
     .slice(0, 10);
 }
 
-function calculateStatusGroups(patients: any[]): Array<{ status: string; count: number }> {
+function calculateStatusGroups(
+  patients: any[]
+): Array<{ status: string; count: number }> {
   const groups: Record<string, number> = {};
   patients.forEach((patient: any) => {
     const status = patient.activated ? 'نشط' : 'غير نشط';
@@ -220,7 +233,9 @@ function calculateStatusGroups(patients: any[]): Array<{ status: string; count: 
   return Object.entries(groups).map(([status, count]) => ({ status, count }));
 }
 
-function calculateAppointmentTrends(appointments: any[]): Array<{ month: string; count: number }> {
+function calculateAppointmentTrends(
+  appointments: any[]
+): Array<{ month: string; count: number }> {
   const trends: Record<string, number> = {};
   appointments.forEach((apt: any) => {
     if (!apt.appointment_date) return;
@@ -235,7 +250,8 @@ function calculateAppointmentTrends(appointments: any[]): Array<{ month: string;
 
 function calculateTherapyAnalytics(sessions: any[]): any {
   const byType: Record<string, { count: number; successRate: number }> = {};
-  const byTherapist: Record<string, { sessions: number; successRate: number }> = {};
+  const byTherapist: Record<string, { sessions: number; successRate: number }> =
+    {};
 
   sessions.forEach((session: any) => {
     // By type
@@ -260,13 +276,15 @@ function calculateTherapyAnalytics(sessions: any[]): any {
   });
 
   // Calculate averages
-  Object.keys(byType).forEach((type) => {
-    byType[type].successRate = byType[type].successRate / byType[type].count || 0;
+  Object.keys(byType).forEach(type => {
+    byType[type].successRate =
+      byType[type].successRate / byType[type].count || 0;
   });
 
-  Object.keys(byTherapist).forEach((therapistId) => {
+  Object.keys(byTherapist).forEach(therapistId => {
     byTherapist[therapistId].successRate =
-      byTherapist[therapistId].successRate / byTherapist[therapistId].sessions || 0;
+      byTherapist[therapistId].successRate /
+        byTherapist[therapistId].sessions || 0;
   });
 
   return {
@@ -284,7 +302,9 @@ function calculateTherapyAnalytics(sessions: any[]): any {
   };
 }
 
-function calculateProgressTrends(sessions: any[]): Array<{ month: string; averageProgress: number }> {
+function calculateProgressTrends(
+  sessions: any[]
+): Array<{ month: string; averageProgress: number }> {
   const trends: Record<string, { total: number; count: number }> = {};
   sessions.forEach((session: any) => {
     if (!session.created_at) return;
@@ -305,7 +325,9 @@ function calculateProgressTrends(sessions: any[]): Array<{ month: string; averag
     .sort();
 }
 
-function calculateAppointmentStatusGroups(appointments: any[]): Array<{ status: string; count: number }> {
+function calculateAppointmentStatusGroups(
+  appointments: any[]
+): Array<{ status: string; count: number }> {
   const groups: Record<string, number> = {};
   appointments.forEach((apt: any) => {
     const status = apt.status || 'غير محدد';
@@ -314,7 +336,9 @@ function calculateAppointmentStatusGroups(appointments: any[]): Array<{ status: 
   return Object.entries(groups).map(([status, count]) => ({ status, count }));
 }
 
-function calculateAppointmentTimeGroups(appointments: any[]): Array<{ hour: number; count: number }> {
+function calculateAppointmentTimeGroups(
+  appointments: any[]
+): Array<{ hour: number; count: number }> {
   const groups: Record<number, number> = {};
   appointments.forEach((apt: any) => {
     if (!apt.appointment_date) return;
@@ -326,9 +350,19 @@ function calculateAppointmentTimeGroups(appointments: any[]): Array<{ hour: numb
     .sort((a, b) => a.hour - b.hour);
 }
 
-function calculateAppointmentDayGroups(appointments: any[]): Array<{ day: string; count: number }> {
+function calculateAppointmentDayGroups(
+  appointments: any[]
+): Array<{ day: string; count: number }> {
   const groups: Record<string, number> = {};
-  const dayNames = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+  const dayNames = [
+    'الأحد',
+    'الإثنين',
+    'الثلاثاء',
+    'الأربعاء',
+    'الخميس',
+    'الجمعة',
+    'السبت',
+  ];
   appointments.forEach((apt: any) => {
     if (!apt.appointment_date) return;
     const day = dayNames[new Date(apt.appointment_date).getDay()];
@@ -339,17 +373,25 @@ function calculateAppointmentDayGroups(appointments: any[]): Array<{ day: string
 
 function calculateAverageProgress(sessions: any[]): number {
   if (sessions.length === 0) return 0;
-  const total = sessions.reduce((sum: number, s: any) => sum + (s.progress || 0), 0);
+  const total = sessions.reduce(
+    (sum: number, s: any) => sum + (s.progress || 0),
+    0
+  );
   return total / sessions.length;
 }
 
 function calculateAverageSessionDuration(sessions: any[]): number {
   if (sessions.length === 0) return 0;
-  const total = sessions.reduce((sum: number, s: any) => sum + (s.duration || 0), 0);
+  const total = sessions.reduce(
+    (sum: number, s: any) => sum + (s.duration || 0),
+    0
+  );
   return total / sessions.length;
 }
 
-function calculatePatientGrowth(patients: any[]): Array<{ month: string; count: number }> {
+function calculatePatientGrowth(
+  patients: any[]
+): Array<{ month: string; count: number }> {
   const trends: Record<string, number> = {};
   patients.forEach((patient: any) => {
     if (!patient.created_at) return;
@@ -366,4 +408,3 @@ function calculatePatientGrowth(patients: any[]): Array<{ month: string; count: 
     return { month, count: cumulative };
   });
 }
-

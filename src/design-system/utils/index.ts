@@ -21,14 +21,14 @@ export const formatNationalId = (id: string) =>
 export const isValidEmail = (email: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 export const isValidPhone = (phone: string) =>
-  /^[\+]?[1-9][\d]{0,15}$/.test(phone.replace(/\s/g, ''));
+  /^[+]?[1-9][\d]{0,15}$/.test(phone.replace(/\s/g, ''));
 export const isValidNationalId = (id: string) => /^[1-2]\d{9}$/.test(id);
 
 // String utilities
 export const capitalize = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 export const truncate = (str: string, length: number) =>
-  str.length > length ? `${str.substring(0, length)  }...` : str;
+  str.length > length ? `${str.substring(0, length)}...` : str;
 export const slugify = (str: string) =>
   str
     .toLowerCase()

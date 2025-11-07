@@ -1,7 +1,7 @@
 /**
  * Post Validation Schemas - Zod
  * مخططات التحقق من المنشورات - Zod
- * 
+ *
  * All post-related validation schemas
  */
 

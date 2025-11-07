@@ -47,8 +47,10 @@ async function applyMigrations() {
 
       for (const statement of statements) {
         if (statement.trim()) {
-          const { error } = await supabase.rpc('exec_sql', { sql_query: statement });
-          
+          const { error } = await supabase.rpc('exec_sql', {
+            sql_query: statement,
+          });
+
           if (error) {
             // Try direct execution if RPC doesn't work
             console.log(`  ??  Statement failed, trying alternative method...`);

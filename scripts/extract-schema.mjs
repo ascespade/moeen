@@ -14,7 +14,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Database connection string
-const dbUrl = process.env.DATABASE_URL || 
+const dbUrl =
+  process.env.DATABASE_URL ||
   'postgresql://postgres.socwpqzcalgvpzjwavgh:rZqeMdbeyCwXW5cB@aws-1-eu-central-1.pooler.supabase.com:6543/postgres';
 
 // Parse the connection string manually
@@ -29,12 +30,12 @@ const client = new pg.Client({
   host,
   port: parseInt(port),
   database,
-  user,  // Use the full username including 'postgres.'
+  user, // Use the full username including 'postgres.'
   password,
-  ssl: { 
+  ssl: {
     rejectUnauthorized: false,
-    require: true
-  }
+    require: true,
+  },
 });
 
 async function extractSchema() {
@@ -104,7 +105,9 @@ async function extractSchema() {
           AND tc.table_name = $1;
       `;
 
-      const { rows: constraints } = await client.query(constraintsQuery, [tableName]);
+      const { rows: constraints } = await client.query(constraintsQuery, [
+        tableName,
+      ]);
 
       // Get indexes
       const indexesQuery = `
@@ -201,31 +204,33 @@ async function extractSchema() {
     // Save schema to file
     const schemaDir = path.join(process.cwd(), 'supabase');
     fs.mkdirSync(schemaDir, { recursive: true });
-    
+
     const schemaPath = path.join(schemaDir, 'schema.json');
     fs.writeFileSync(schemaPath, JSON.stringify(schema, null, 2));
-    
+
     // Also create a SQL representation
     const sqlPath = path.join(schemaDir, 'schema-summary.sql');
     let sqlOutput = `-- Database Schema Summary\n`;
     sqlOutput += `-- Extracted at: ${schema.timestamp}\n\n`;
-    
+
     for (const [tableName, tableInfo] of Object.entries(schema.tables)) {
       sqlOutput += `-- Table: ${tableName}\n`;
       sqlOutput += `CREATE TABLE IF NOT EXISTS ${tableName} (\n`;
-      
-      const columns = tableInfo.columns.map(col => {
-        let def = `  ${col.name} ${col.udt_name || col.type}`;
-        if (col.maxLength) def += `(${col.maxLength})`;
-        if (!col.nullable) def += ' NOT NULL';
-        if (col.default) def += ` DEFAULT ${col.default}`;
-        return def;
-      }).join(',\n');
-      
+
+      const columns = tableInfo.columns
+        .map(col => {
+          let def = `  ${col.name} ${col.udt_name || col.type}`;
+          if (col.maxLength) def += `(${col.maxLength})`;
+          if (!col.nullable) def += ' NOT NULL';
+          if (col.default) def += ` DEFAULT ${col.default}`;
+          return def;
+        })
+        .join(',\n');
+
       sqlOutput += columns;
       sqlOutput += '\n);\n\n';
     }
-    
+
     fs.writeFileSync(sqlPath, sqlOutput);
 
     console.log(`\n? Schema saved to: ${schemaPath}`);
@@ -237,7 +242,6 @@ async function extractSchema() {
     console.log(`   - Views: ${schema.views.length}`);
 
     await client.end();
-
   } catch (error) {
     console.error('? Error extracting schema:', error.message);
     if (client) await client.end();
@@ -246,10 +250,12 @@ async function extractSchema() {
 }
 
 // Run
-extractSchema().then(() => {
-  console.log('\n? Done!');
-  process.exit(0);
-}).catch((error) => {
-  console.error('? Failed:', error);
-  process.exit(1);
-});
+extractSchema()
+  .then(() => {
+    console.log('\n? Done!');
+    process.exit(0);
+  })
+  .catch(error => {
+    console.error('? Failed:', error);
+    process.exit(1);
+  });

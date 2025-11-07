@@ -1,7 +1,7 @@
 /**
  * Border & Radius System - Extracted from Homepage Design
  * نظام الحدود والزوايا - مستخرج من تصميم الصفحة الرئيسية
- * 
+ *
  * Source: src/styles/centralized.css
  * Reference: src/components/home/OriginalHero.tsx
  */

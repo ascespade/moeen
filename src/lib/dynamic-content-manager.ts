@@ -220,71 +220,67 @@ class DynamicContentManager {
   async updateHomepageContent(
     content: Partial<HomepageContent>
   ): Promise<void> {
-    try {
-      const updates: Array<{
-        key: string;
-        value: any;
-        category: string;
-        is_public: boolean;
-      }> = [];
+    const updates: Array<{
+      key: string;
+      value: any;
+      category: string;
+      is_public: boolean;
+    }> = [];
 
-      if (content.heroSlides) {
-        updates.push({
-          key: 'homepage_hero_slides',
-          value: content.heroSlides,
-          category: 'homepage',
-          is_public: true,
-        });
-      }
-
-      if (content.services) {
-        updates.push({
-          key: 'homepage_services',
-          value: content.services,
-          category: 'homepage',
-          is_public: true,
-        });
-      }
-
-      if (content.testimonials) {
-        updates.push({
-          key: 'homepage_testimonials',
-          value: content.testimonials,
-          category: 'homepage',
-          is_public: true,
-        });
-      }
-
-      if (content.galleryImages) {
-        updates.push({
-          key: 'homepage_gallery',
-          value: content.galleryImages,
-          category: 'homepage',
-          is_public: true,
-        });
-      }
-
-      if (content.faqs) {
-        updates.push({
-          key: 'homepage_faqs',
-          value: content.faqs,
-          category: 'homepage',
-          is_public: true,
-        });
-      }
-
-      // Upsert settings
-      for (const update of updates) {
-        await this.supabase
-          .from('settings')
-          .upsert(update, { onConflict: 'key' });
-      }
-
-      // Clear cache
-      this.cache.clear();
-    } catch (error) {
-      throw error;
+    if (content.heroSlides) {
+      updates.push({
+        key: 'homepage_hero_slides',
+        value: content.heroSlides,
+        category: 'homepage',
+        is_public: true,
+      });
     }
+
+    if (content.services) {
+      updates.push({
+        key: 'homepage_services',
+        value: content.services,
+        category: 'homepage',
+        is_public: true,
+      });
+    }
+
+    if (content.testimonials) {
+      updates.push({
+        key: 'homepage_testimonials',
+        value: content.testimonials,
+        category: 'homepage',
+        is_public: true,
+      });
+    }
+
+    if (content.galleryImages) {
+      updates.push({
+        key: 'homepage_gallery',
+        value: content.galleryImages,
+        category: 'homepage',
+        is_public: true,
+      });
+    }
+
+    if (content.faqs) {
+      updates.push({
+        key: 'homepage_faqs',
+        value: content.faqs,
+        category: 'homepage',
+        is_public: true,
+      });
+    }
+
+    // Upsert settings
+    for (const update of updates) {
+      await this.supabase
+        .from('settings')
+        .upsert(update, { onConflict: 'key' });
+    }
+
+    // Clear cache
+    this.cache.clear();
   }
 
   /**
@@ -298,20 +294,16 @@ class DynamicContentManager {
       value: string;
     }>
   ): Promise<void> {
-    try {
-      await this.supabase
-        .from('translations')
-        .upsert(translations, { onConflict: 'locale,namespace,key' });
+    await this.supabase
+      .from('translations')
+      .upsert(translations, { onConflict: 'locale,namespace,key' });
 
-      // Clear translation cache
-      this.cache.forEach((_value, key) => {
-        if (key.startsWith('translations_')) {
-          this.cache.delete(key);
-        }
-      });
-    } catch (error) {
-      throw error;
-    }
+    // Clear translation cache
+    this.cache.forEach((_value, key) => {
+      if (key.startsWith('translations_')) {
+        this.cache.delete(key);
+      }
+    });
   }
 
   /**
@@ -324,7 +316,11 @@ class DynamicContentManager {
   /**
    * Parse setting value from database result
    */
-  private parseSetting(settings: any[], key: string, defaultValue: unknown): any {
+  private parseSetting(
+    settings: any[],
+    key: string,
+    defaultValue: unknown
+  ): any {
     const setting = settings.find(s => s.key === key);
     return setting ? setting.value : defaultValue;
   }

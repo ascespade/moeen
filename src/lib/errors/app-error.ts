@@ -1,7 +1,7 @@
 /**
  * App Error - Custom Error Class
  * خطأ التطبيق - فئة الخطأ المخصصة
- * 
+ *
  * Centralized error handling with error codes
  */
 
@@ -42,7 +42,12 @@ export class AppError extends Error {
   }
 
   static forbidden(message?: string, details?: unknown): AppError {
-    return new AppError(ERROR_CODES.AUTH_PERMISSION_DENIED, message, 403, details);
+    return new AppError(
+      ERROR_CODES.AUTH_PERMISSION_DENIED,
+      message,
+      403,
+      details
+    );
   }
 
   static notFound(message?: string, details?: unknown): AppError {

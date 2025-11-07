@@ -358,8 +358,8 @@ function PerformancePageContent() {
     };
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <Badge variant={config.variant} className={config.className}>
           {config.label}
@@ -759,17 +759,18 @@ function PerformancePageContent() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input type='checkbox'
+                    <input
+                      type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => {
+                      onChange={e => {
                         if (e.target.checked) {
                           setSelectedMetrics(filteredMetrics.map(m => m.id));
                         } else {
                           setSelectedMetrics([]);
                         }
                       }}
-                      aria-label="تحديد الكل"
-                      aria-invalid="true"
+                      aria-label='تحديد الكل'
+                      aria-invalid='true'
                     />
                   </TableHead>
                   <TableHead>المؤشر</TableHead>
@@ -786,10 +787,11 @@ function PerformancePageContent() {
                 {filteredMetrics.map(metric => (
                   <TableRow key={metric.id}>
                     <TableCell>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedMetrics.includes(metric.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedMetrics([...selectedMetrics, metric.id]);
                           } else {
@@ -798,8 +800,8 @@ function PerformancePageContent() {
                             );
                           }
                         }}
-                        aria-label="تحديد المؤشر"
-                        aria-invalid="true"
+                        aria-label='تحديد المؤشر'
+                        aria-invalid='true'
                       />
                     </TableCell>
                     <TableCell>

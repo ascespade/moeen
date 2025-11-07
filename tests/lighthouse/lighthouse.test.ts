@@ -47,7 +47,9 @@ test.describe.skip('Lighthouse Performance Tests', () => {
     // expect(audit.lhr.categories.seo.score).toBeGreaterThan(0.85);
   });
 
-  test.skip('Patient Management should pass Lighthouse audit', async ({ page }) => {
+  test.skip('Patient Management should pass Lighthouse audit', async ({
+    page,
+  }) => {
     await page.goto('/login');
     await page.fill('[data-testid="email"]', 'admin@example.com');
     await page.fill('[data-testid="password"]', 'password');
@@ -70,7 +72,9 @@ test.describe.skip('Lighthouse Performance Tests', () => {
     // expect(audit.lhr.categories.accessibility.score).toBeGreaterThan(0.9);
   });
 
-  test.skip('Appointments page should pass Lighthouse audit', async ({ page }) => {
+  test.skip('Appointments page should pass Lighthouse audit', async ({
+    page,
+  }) => {
     await page.goto('/login');
     await page.fill('[data-testid="email"]', 'admin@example.com');
     await page.fill('[data-testid="password"]', 'password');

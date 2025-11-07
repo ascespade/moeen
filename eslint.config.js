@@ -13,7 +13,6 @@ export default [
       'src/lib/security-enhanced.ts',
       'src/lib/websocket-server.ts',
       'src/middleware.prod.ts',
-      'src/**',
       'src/middleware/**',
       'src/workflows/**',
       'src/theme/index.ts',
@@ -56,9 +55,7 @@ export default [
         ecmaFeatures: {
           jsx: true,
         },
-        // Enable full TypeScript type-aware linting
-        project: ['./tsconfig.json'],
-        tsconfigRootDir: process.cwd(),
+        // Non-type-aware linting since tsconfig excludes src files
       },
       globals: {
         // Browser globals
@@ -108,7 +105,7 @@ export default [
     },
     settings: {
       react: {
-        version: 'detect',
+        version: '18.0',
       },
     },
     rules: {

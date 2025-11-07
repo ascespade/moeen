@@ -17,9 +17,7 @@ const projectRoot = join(__dirname, '..');
 
 console.log('?? Fixing All Syntax Errors...\n');
 
-const allFiles = [
-  ...await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }),
-];
+const allFiles = [...(await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }))];
 
 let stats = {
   inputtype: 0,
@@ -51,28 +49,36 @@ for (const file of allFiles) {
     }
 
     // Fix malformed onChange handlers: onChange={e = aria-label="..."> -> onChange={(e) => ...}
-    const malformedOnChangePattern = /onChange=\{e\s*=\s*aria-label=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
+    const malformedOnChangePattern =
+      /onChange=\{e\s*=\s*aria-label=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
     if (malformedOnChangePattern.test(content)) {
-      content = content.replace(malformedOnChangePattern, (match, ariaLabel, handler) => {
-        // Extract the actual handler logic
-        const handlerMatch = handler.match(/set([^(]+)\(([^)]+)\)/);
-        if (handlerMatch) {
-          const setter = handlerMatch[1];
-          const value = handlerMatch[2];
-          return `onChange={(e) => set${setter}(${value})} aria-label="${ariaLabel}"`;
+      content = content.replace(
+        malformedOnChangePattern,
+        (match, ariaLabel, handler) => {
+          // Extract the actual handler logic
+          const handlerMatch = handler.match(/set([^(]+)\(([^)]+)\)/);
+          if (handlerMatch) {
+            const setter = handlerMatch[1];
+            const value = handlerMatch[2];
+            return `onChange={(e) => set${setter}(${value})} aria-label="${ariaLabel}"`;
+          }
+          return `onChange={(e) => ${handler}} aria-label="${ariaLabel}"`;
         }
-        return `onChange={(e) => ${handler}} aria-label="${ariaLabel}"`;
-      });
+      );
       stats.malformedOnChange++;
       modified = true;
     }
 
     // Fix malformed onClick in button: onClick={() = aria-label="Button"> -> onClick={() => ...} aria-label="..."
-    const malformedOnClickPattern = /onClick=\{\(\)\s*=\s*aria-label=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
+    const malformedOnClickPattern =
+      /onClick=\{\(\)\s*=\s*aria-label=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
     if (malformedOnClickPattern.test(content)) {
-      content = content.replace(malformedOnClickPattern, (match, ariaLabel, handler) => {
-        return `onClick={() => ${handler}} aria-label="${ariaLabel}"`;
-      });
+      content = content.replace(
+        malformedOnClickPattern,
+        (match, ariaLabel, handler) => {
+          return `onClick={() => ${handler}} aria-label="${ariaLabel}"`;
+        }
+      );
       stats.malformedOnChange++;
       modified = true;
     }
@@ -87,9 +93,10 @@ for (const file of allFiles) {
     }
 
     // Fix duplicate onKeyDown handlers that were incorrectly inserted
-    const duplicateOnKeyDownPattern = /onKeyDown=\{\(e\)\s*=>\s*\{[^}]*\}\s*\}\s*onKeyDown=\{\(e\)\s*=>\s*\{[^}]*\}\s*\}/g;
+    const duplicateOnKeyDownPattern =
+      /onKeyDown=\{\(e\)\s*=>\s*\{[^}]*\}\s*\}\s*onKeyDown=\{\(e\)\s*=>\s*\{[^}]*\}\s*\}/g;
     if (duplicateOnKeyDownPattern.test(content)) {
-      content = content.replace(duplicateOnKeyDownPattern, (match) => {
+      content = content.replace(duplicateOnKeyDownPattern, match => {
         // Keep only the first one
         const firstMatch = match.match(/onKeyDown=\{\(e\)\s*=>\s*\{[^}]+\}\}/);
         return firstMatch ? firstMatch[0] : match;
@@ -100,15 +107,19 @@ for (const file of allFiles) {
 
     // Remove aria-label that was incorrectly inserted in the middle of handlers
     // Pattern: ... aria-label="..." > handler
-    const ariaInHandlerPattern = /(\w+)\s*aria-label=["']([^"']+)["']\s*>\s*([^<]+)/g;
+    const ariaInHandlerPattern =
+      /(\w+)\s*aria-label=["']([^"']+)["']\s*>\s*([^<]+)/g;
     if (ariaInHandlerPattern.test(content)) {
-      content = content.replace(ariaInHandlerPattern, (match, before, ariaLabel, after) => {
-        // Only fix if it looks like it's in the wrong place
-        if (after.includes('set') || after.includes('=>')) {
-          return `${before}>${after}`;
+      content = content.replace(
+        ariaInHandlerPattern,
+        (match, before, ariaLabel, after) => {
+          // Only fix if it looks like it's in the wrong place
+          if (after.includes('set') || after.includes('=>')) {
+            return `${before}>${after}`;
+          }
+          return match;
         }
-        return match;
-      });
+      );
       modified = true;
     }
 

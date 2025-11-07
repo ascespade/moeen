@@ -408,8 +408,8 @@ function SecurityPageContent() {
 
   return (
     <>
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
       <div className='container mx-auto px-4 py-8' dir='rtl'>
         {/* Header */}
@@ -419,7 +419,9 @@ function SecurityPageContent() {
               <h1 className='text-3xl font-bold text-gray-900'>
                 مركز الأمان والحماية
               </h1>
-              <p className='text-gray-600 mt-2'>مراقبة الأمان وحماية البيانات</p>
+              <p className='text-gray-600 mt-2'>
+                مراقبة الأمان وحماية البيانات
+              </p>
             </div>
             <div className='flex gap-2'>
               <Button onClick={loadSecurityData} variant='outline' size='sm'>
@@ -505,50 +507,78 @@ function SecurityPageContent() {
         {/* Tabs */}
         <div className='flex space-x-1 bg-surface p-1 rounded-lg mb-6'>
           <button
-            onClick={() => { setSelectedTab('events') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('events'); } }}
+            onClick={() => {
+              setSelectedTab('events');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedTab('events');
+              }
+            }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'events'
                 ? 'bg-white text-gray-900 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
-            aria-label="الأحداث الأمنية"
+            aria-label='الأحداث الأمنية'
           >
             الأحداث الأمنية
           </button>
           <button
-            onClick={() => { setSelectedTab('sessions') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('sessions'); } }}
+            onClick={() => {
+              setSelectedTab('sessions');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedTab('sessions');
+              }
+            }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'sessions'
                 ? 'bg-white text-gray-900 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
-            aria-label="الجلسات النشطة"
+            aria-label='الجلسات النشطة'
           >
             الجلسات النشطة
           </button>
           <button
-            onClick={() => { setSelectedTab('alerts') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('alerts'); } }}
+            onClick={() => {
+              setSelectedTab('alerts');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedTab('alerts');
+              }
+            }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'alerts'
                 ? 'bg-white text-gray-900 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
-            aria-label="التنبيهات"
+            aria-label='التنبيهات'
           >
             التنبيهات
           </button>
           <button
-            onClick={() => { setSelectedTab('policies') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedTab('policies'); } }}
+            onClick={() => {
+              setSelectedTab('policies');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setSelectedTab('policies');
+              }
+            }}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === 'policies'
                 ? 'bg-white text-gray-900 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
             }`}
-            aria-label="السياسات"
+            aria-label='السياسات'
           >
             السياسات
           </button>
@@ -599,298 +629,306 @@ function SecurityPageContent() {
             {/* Security Events Tab */}
             {selectedTab === 'events' && (
               <div className='space-y-4'>
-              {filteredEvents.length === 0 ? (
-                <Card>
-                  <CardContent className='p-12 text-center'>
-                    <Shield className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-                    <h3 className='text-lg font-semibold text-gray-900 mb-2'>
-                      لا توجد أحداث أمنية
-                    </h3>
-                    <p className='text-gray-600'>
-                      ستظهر الأحداث الأمنية هنا عند حدوثها
-                    </p>
-                  </CardContent>
-                </Card>
-              ) : (
-                filteredEvents.map(event => (
-                  <Card
-                    key={event.id}
-                    className='hover:shadow-md transition-shadow'
-                  >
-                    <CardContent className='p-6'>
-                      <div className='flex items-start justify-between'>
-                        <div className='flex items-start gap-4'>
-                          <div className='p-2 bg-white rounded-full'>
-                            {getEventIcon(event.type)}
-                          </div>
-                          <div className='flex-1'>
-                            <div className='flex items-center gap-2 mb-2'>
-                              <h3 className='text-lg font-semibold'>
-                                {event.user_name}
-                              </h3>
-                              {getRiskBadge(event.risk_level)}
-                              {getStatusBadge(event.status)}
-                            </div>
-                            <p className='text-gray-700 mb-3'>
-                              {event.details}
-                            </p>
-                            <div className='grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600'>
-                              <div className='flex items-center gap-2'>
-                                <Globe className='w-4 h-4' />
-                                <span>{event.ip_address}</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                <MapPin className='w-4 h-4' />
-                                <span>{event.location}</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                {getDeviceIcon(event.device_type)}
-                                <span>
-                                  {event.device_type} - {event.browser}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className='text-right'>
-                          <div className='text-sm text-gray-500'>
-                            {new Date(event.timestamp).toLocaleDateString(
-                              'ar-SA'
-                            )}
-                          </div>
-                          <div className='text-xs text-gray-400'>
-                            {new Date(event.timestamp).toLocaleTimeString(
-                              'ar-SA'
-                            )}
-                          </div>
-                        </div>
-                      </div>
+                {filteredEvents.length === 0 ? (
+                  <Card>
+                    <CardContent className='p-12 text-center'>
+                      <Shield className='h-12 w-12 text-gray-400 mx-auto mb-4' />
+                      <h3 className='text-lg font-semibold text-gray-900 mb-2'>
+                        لا توجد أحداث أمنية
+                      </h3>
+                      <p className='text-gray-600'>
+                        ستظهر الأحداث الأمنية هنا عند حدوثها
+                      </p>
                     </CardContent>
                   </Card>
-                ))
-              )}
+                ) : (
+                  filteredEvents.map(event => (
+                    <Card
+                      key={event.id}
+                      className='hover:shadow-md transition-shadow'
+                    >
+                      <CardContent className='p-6'>
+                        <div className='flex items-start justify-between'>
+                          <div className='flex items-start gap-4'>
+                            <div className='p-2 bg-white rounded-full'>
+                              {getEventIcon(event.type)}
+                            </div>
+                            <div className='flex-1'>
+                              <div className='flex items-center gap-2 mb-2'>
+                                <h3 className='text-lg font-semibold'>
+                                  {event.user_name}
+                                </h3>
+                                {getRiskBadge(event.risk_level)}
+                                {getStatusBadge(event.status)}
+                              </div>
+                              <p className='text-gray-700 mb-3'>
+                                {event.details}
+                              </p>
+                              <div className='grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600'>
+                                <div className='flex items-center gap-2'>
+                                  <Globe className='w-4 h-4' />
+                                  <span>{event.ip_address}</span>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                  <MapPin className='w-4 h-4' />
+                                  <span>{event.location}</span>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                  {getDeviceIcon(event.device_type)}
+                                  <span>
+                                    {event.device_type} - {event.browser}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className='text-right'>
+                            <div className='text-sm text-gray-500'>
+                              {new Date(event.timestamp).toLocaleDateString(
+                                'ar-SA'
+                              )}
+                            </div>
+                            <div className='text-xs text-gray-400'>
+                              {new Date(event.timestamp).toLocaleTimeString(
+                                'ar-SA'
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
               </div>
             )}
 
-          {/* Active Sessions Tab */}
-          {selectedTab === 'sessions' && (
-            <div className='space-y-4'>
-              {sessions.length === 0 ? (
-                <Card>
-                  <CardContent className='p-12 text-center'>
-                    <Users className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-                    <h3 className='text-lg font-semibold text-gray-900 mb-2'>
-                      لا توجد جلسات نشطة
-                    </h3>
-                    <p className='text-gray-600'>ستظهر الجلسات النشطة هنا</p>
-                  </CardContent>
-                </Card>
-              ) : (
-                sessions.map(session => (
-                  <Card
-                    key={session.id}
-                    className='hover:shadow-md transition-shadow'
-                  >
-                    <CardContent className='p-6'>
-                      <div className='flex items-start justify-between'>
-                        <div className='flex items-start gap-4'>
-                          <div className='p-2 bg-white rounded-full'>
-                            {getDeviceIcon(session.device)}
+            {/* Active Sessions Tab */}
+            {selectedTab === 'sessions' && (
+              <div className='space-y-4'>
+                {sessions.length === 0 ? (
+                  <Card>
+                    <CardContent className='p-12 text-center'>
+                      <Users className='h-12 w-12 text-gray-400 mx-auto mb-4' />
+                      <h3 className='text-lg font-semibold text-gray-900 mb-2'>
+                        لا توجد جلسات نشطة
+                      </h3>
+                      <p className='text-gray-600'>ستظهر الجلسات النشطة هنا</p>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  sessions.map(session => (
+                    <Card
+                      key={session.id}
+                      className='hover:shadow-md transition-shadow'
+                    >
+                      <CardContent className='p-6'>
+                        <div className='flex items-start justify-between'>
+                          <div className='flex items-start gap-4'>
+                            <div className='p-2 bg-white rounded-full'>
+                              {getDeviceIcon(session.device)}
+                            </div>
+                            <div className='flex-1'>
+                              <h3 className='text-lg font-semibold'>
+                                {session.user_name}
+                              </h3>
+                              <p className='text-gray-700 mb-3'>
+                                {session.device}
+                              </p>
+                              <div className='grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600'>
+                                <div className='flex items-center gap-2'>
+                                  <Globe className='w-4 h-4' />
+                                  <span>{session.ip_address}</span>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                  <MapPin className='w-4 h-4' />
+                                  <span>{session.location}</span>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                  <Clock className='w-4 h-4' />
+                                  <span>
+                                    تسجيل الدخول:{' '}
+                                    {new Date(
+                                      session.login_time
+                                    ).toLocaleString('ar-SA')}
+                                  </span>
+                                </div>
+                                <div className='flex items-center gap-2'>
+                                  <Activity className='w-4 h-4' />
+                                  <span>
+                                    آخر نشاط:{' '}
+                                    {new Date(
+                                      session.last_activity
+                                    ).toLocaleString('ar-SA')}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <div className='flex-1'>
-                            <h3 className='text-lg font-semibold'>
-                              {session.user_name}
-                            </h3>
-                            <p className='text-gray-700 mb-3'>
-                              {session.device}
-                            </p>
-                            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600'>
-                              <div className='flex items-center gap-2'>
-                                <Globe className='w-4 h-4' />
-                                <span>{session.ip_address}</span>
+                          <div className='flex items-center gap-2'>
+                            <Badge
+                              variant={
+                                session.is_active ? 'primary' : 'secondary'
+                              }
+                            >
+                              {session.is_active ? 'نشط' : 'غير نشط'}
+                            </Badge>
+                            <Button variant='outline' size='sm'>
+                              <XCircle className='w-4 h-4' />
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+            )}
+
+            {/* Security Alerts Tab */}
+            {selectedTab === 'alerts' && (
+              <div className='space-y-4'>
+                {alerts.length === 0 ? (
+                  <Card>
+                    <CardContent className='p-12 text-center'>
+                      <AlertTriangle className='h-12 w-12 text-gray-400 mx-auto mb-4' />
+                      <h3 className='text-lg font-semibold text-gray-900 mb-2'>
+                        لا توجد تنبيهات أمنية
+                      </h3>
+                      <p className='text-gray-600'>
+                        ستظهر التنبيهات الأمنية هنا
+                      </p>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  alerts.map(alert => (
+                    <Card
+                      key={alert.id}
+                      className='hover:shadow-md transition-shadow'
+                    >
+                      <CardContent className='p-6'>
+                        <div className='flex items-start justify-between'>
+                          <div className='flex items-start gap-4'>
+                            <div className='p-2 bg-white rounded-full'>
+                              <AlertTriangle className='w-4 h-4 text-default-error' />
+                            </div>
+                            <div className='flex-1'>
+                              <div className='flex items-center gap-2 mb-2'>
+                                <h3 className='text-lg font-semibold'>
+                                  {alert.title}
+                                </h3>
+                                {getSeverityBadge(alert.severity)}
+                                {getStatusBadge(alert.status)}
                               </div>
-                              <div className='flex items-center gap-2'>
-                                <MapPin className='w-4 h-4' />
-                                <span>{session.location}</span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                <Clock className='w-4 h-4' />
+                              <p className='text-gray-700 mb-3'>
+                                {alert.description}
+                              </p>
+                              <div className='flex items-center gap-4 text-sm text-gray-600'>
+                                <span>النوع: {alert.type}</span>
                                 <span>
-                                  تسجيل الدخول:{' '}
-                                  {new Date(session.login_time).toLocaleString(
-                                    'ar-SA'
-                                  )}
+                                  المسؤول: {alert.assigned_to || 'غير محدد'}
                                 </span>
-                              </div>
-                              <div className='flex items-center gap-2'>
-                                <Activity className='w-4 h-4' />
                                 <span>
-                                  آخر نشاط:{' '}
+                                  التاريخ:{' '}
                                   {new Date(
-                                    session.last_activity
-                                  ).toLocaleString('ar-SA')}
+                                    alert.created_at
+                                  ).toLocaleDateString('ar-SA')}
                                 </span>
                               </div>
                             </div>
                           </div>
+                          <div className='flex gap-2'>
+                            <Button variant='outline' size='sm'>
+                              <Eye className='w-4 h-4' />
+                            </Button>
+                            <Button variant='outline' size='sm'>
+                              <CheckCircle className='w-4 h-4' />
+                            </Button>
+                          </div>
                         </div>
-                        <div className='flex items-center gap-2'>
-                          <Badge
-                            variant={
-                              session.is_active ? 'primary' : 'secondary'
-                            }
-                          >
-                            {session.is_active ? 'نشط' : 'غير نشط'}
-                          </Badge>
-                          <Button variant='outline' size='sm'>
-                            <XCircle className='w-4 h-4' />
-                          </Button>
-                        </div>
-                      </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+            )}
+
+            {/* Security Policies Tab */}
+            {selectedTab === 'policies' && (
+              <div className='space-y-4'>
+                {policies.length === 0 ? (
+                  <Card>
+                    <CardContent className='p-12 text-center'>
+                      <FileText className='h-12 w-12 text-gray-400 mx-auto mb-4' />
+                      <h3 className='text-lg font-semibold text-gray-900 mb-2'>
+                        لا توجد سياسات أمنية
+                      </h3>
+                      <p className='text-gray-600'>
+                        ستظهر السياسات الأمنية هنا
+                      </p>
                     </CardContent>
                   </Card>
-                ))
-              )}
-            </div>
-          )}
-
-          {/* Security Alerts Tab */}
-          {selectedTab === 'alerts' && (
-            <div className='space-y-4'>
-              {alerts.length === 0 ? (
-                <Card>
-                  <CardContent className='p-12 text-center'>
-                    <AlertTriangle className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-                    <h3 className='text-lg font-semibold text-gray-900 mb-2'>
-                      لا توجد تنبيهات أمنية
-                    </h3>
-                    <p className='text-gray-600'>ستظهر التنبيهات الأمنية هنا</p>
-                  </CardContent>
-                </Card>
-              ) : (
-                alerts.map(alert => (
-                  <Card
-                    key={alert.id}
-                    className='hover:shadow-md transition-shadow'
-                  >
-                    <CardContent className='p-6'>
-                      <div className='flex items-start justify-between'>
-                        <div className='flex items-start gap-4'>
-                          <div className='p-2 bg-white rounded-full'>
-                            <AlertTriangle className='w-4 h-4 text-default-error' />
-                          </div>
+                ) : (
+                  policies.map(policy => (
+                    <Card
+                      key={policy.id}
+                      className='hover:shadow-md transition-shadow'
+                    >
+                      <CardContent className='p-6'>
+                        <div className='flex items-start justify-between'>
                           <div className='flex-1'>
                             <div className='flex items-center gap-2 mb-2'>
                               <h3 className='text-lg font-semibold'>
-                                {alert.title}
+                                {policy.name}
                               </h3>
-                              {getSeverityBadge(alert.severity)}
-                              {getStatusBadge(alert.status)}
+                              <Badge
+                                variant={
+                                  policy.is_active ? 'primary' : 'secondary'
+                                }
+                              >
+                                {policy.is_active ? 'نشط' : 'غير نشط'}
+                              </Badge>
+                              <Badge variant='secondary'>
+                                {policy.category}
+                              </Badge>
                             </div>
-                            <p className='text-gray-700 mb-3'>
-                              {alert.description}
+                            <p className='text-gray-700 mb-4'>
+                              {policy.description}
                             </p>
-                            <div className='flex items-center gap-4 text-sm text-gray-600'>
-                              <span>النوع: {alert.type}</span>
-                              <span>
-                                المسؤول: {alert.assigned_to || 'غير محدد'}
-                              </span>
-                              <span>
-                                التاريخ:{' '}
-                                {new Date(alert.created_at).toLocaleDateString(
-                                  'ar-SA'
-                                )}
-                              </span>
+                            <div className='space-y-2'>
+                              <h4 className='text-sm font-semibold'>
+                                القواعد:
+                              </h4>
+                              <ul className='list-disc list-inside space-y-1 text-sm text-gray-600'>
+                                {policy.rules.map((rule, index) => (
+                                  <li key={index}>{rule}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div className='mt-4 text-xs text-gray-500'>
+                              آخر تحديث:{' '}
+                              {new Date(policy.last_updated).toLocaleDateString(
+                                'ar-SA'
+                              )}{' '}
+                              بواسطة {policy.updated_by}
                             </div>
                           </div>
-                        </div>
-                        <div className='flex gap-2'>
-                          <Button variant='outline' size='sm'>
-                            <Eye className='w-4 h-4' />
-                          </Button>
-                          <Button variant='outline' size='sm'>
-                            <CheckCircle className='w-4 h-4' />
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              )}
-            </div>
-          )}
-
-          {/* Security Policies Tab */}
-          {selectedTab === 'policies' && (
-            <div className='space-y-4'>
-              {policies.length === 0 ? (
-                <Card>
-                  <CardContent className='p-12 text-center'>
-                    <FileText className='h-12 w-12 text-gray-400 mx-auto mb-4' />
-                    <h3 className='text-lg font-semibold text-gray-900 mb-2'>
-                      لا توجد سياسات أمنية
-                    </h3>
-                    <p className='text-gray-600'>ستظهر السياسات الأمنية هنا</p>
-                  </CardContent>
-                </Card>
-              ) : (
-                policies.map(policy => (
-                  <Card
-                    key={policy.id}
-                    className='hover:shadow-md transition-shadow'
-                  >
-                    <CardContent className='p-6'>
-                      <div className='flex items-start justify-between'>
-                        <div className='flex-1'>
-                          <div className='flex items-center gap-2 mb-2'>
-                            <h3 className='text-lg font-semibold'>
-                              {policy.name}
-                            </h3>
-                            <Badge
-                              variant={
-                                policy.is_active ? 'primary' : 'secondary'
-                              }
-                            >
-                              {policy.is_active ? 'نشط' : 'غير نشط'}
-                            </Badge>
-                            <Badge variant='secondary'>{policy.category}</Badge>
-                          </div>
-                          <p className='text-gray-700 mb-4'>
-                            {policy.description}
-                          </p>
-                          <div className='space-y-2'>
-                            <h4 className='text-sm font-semibold'>القواعد:</h4>
-                            <ul className='list-disc list-inside space-y-1 text-sm text-gray-600'>
-                              {policy.rules.map((rule, index) => (
-                                <li key={index}>{rule}</li>
-                              ))}
-                            </ul>
-                          </div>
-                          <div className='mt-4 text-xs text-gray-500'>
-                            آخر تحديث:{' '}
-                            {new Date(policy.last_updated).toLocaleDateString(
-                              'ar-SA'
-                            )}{' '}
-                            بواسطة {policy.updated_by}
+                          <div className='flex gap-2'>
+                            <Button variant='outline' size='sm'>
+                              <Edit className='w-4 h-4' />
+                            </Button>
+                            <Button variant='outline' size='sm'>
+                              <Settings className='w-4 h-4' />
+                            </Button>
                           </div>
                         </div>
-                        <div className='flex gap-2'>
-                          <Button variant='outline' size='sm'>
-                            <Edit className='w-4 h-4' />
-                          </Button>
-                          <Button variant='outline' size='sm'>
-                            <Settings className='w-4 h-4' />
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              )}
-            </div>
-          )}
-        </>
-      )}
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </>
   );

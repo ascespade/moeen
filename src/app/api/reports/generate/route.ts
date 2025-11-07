@@ -202,9 +202,7 @@ async function __generateDashboardMetrics(
 
   // Calculate metrics
   const totalPatients = patients.length;
-  const activatedPatients = patients.filter(
-    (p: any) => p.isActivated
-  ).length;
+  const activatedPatients = patients.filter((p: any) => p.isActivated).length;
   const totalAppointments = appointments.length;
   const completedAppointments = appointments.filter(
     (a: any) => a.status === 'completed'
@@ -333,8 +331,7 @@ async function __generateAppointmentAnalytics(
     trends: grouped.map(group => ({
       period: group.period,
       total: group.data.length,
-      completed: group.data.filter((a: any) => a.status === 'completed')
-        .length,
+      completed: group.data.filter((a: any) => a.status === 'completed').length,
     })),
   };
 }
@@ -413,7 +410,10 @@ async function __generateInsuranceClaimsReport(
     total: claims.length,
     byProvider: __groupByField(claims, 'provider'),
     byStatus: __groupByField(claims, 'claimStatus'),
-    totalAmount: claims.reduce((sum: number, c: any) => sum + (c.amount || 0), 0),
+    totalAmount: claims.reduce(
+      (sum: number, c: any) => sum + (c.amount || 0),
+      0
+    ),
     approvalRate:
       claims.length > 0
         ? (claims.filter(c => c.claimStatus === 'approved').length /

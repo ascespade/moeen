@@ -328,185 +328,205 @@ const APIKeysSettingsPage: React.FC = () => {
 
   return (
     <>
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
       <div className='container mx-auto px-4 py-8 max-w-6xl' dir='rtl'>
-      <div className='mb-8'>
-        <div className='flex items-center justify-between'>
-          <div>
-            <h1 className='text-3xl font-bold text-gray-900 flex items-center gap-3'>
-              <Key className='w-8 h-8 text-default-default' />
-              إدارة مفاتيح API
-            </h1>
-            <p className='text-gray-600 mt-2'>
-              إدارة وتأمين مفاتيح الوصول لجميع الخدمات المتكاملة
-            </p>
-          </div>
-          <Button
-            onClick={handleSave}
-            disabled={saving}
-            className='flex items-center gap-2'
-          >
-            <Save className='w-4 h-4' />
-            {saving ? 'جارٍ الحفظ...' : 'حفظ التغييرات'}
-          </Button>
-        </div>
-
-        {successMessage && (
-          <div className='mt-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 flex items-center gap-2'>
-            <CheckCircle className='w-5 h-5' />
-            {successMessage}
-          </div>
-        )}
-      </div>
-
-      {/* Security Notice */}
-      <Card className='mb-6 border-default-warning bg-amber-50'>
-        <CardContent className='p-4'>
-          <div className='flex items-start gap-3'>
-            <Shield className='w-5 h-5 text-amber-600 mt-0.5' />
-            <div className='flex-1'>
-              <h3 className='font-semibold text-amber-900 mb-1'>تنبيه أمني</h3>
-              <p className='text-sm text-amber-800'>
-                جميع المفاتيح السرية يتم تشفيرها باستخدام AES-256 قبل الحفظ. لا
-                تشارك هذه المفاتيح مع أي شخص ولا ترفعها إلى مستودعات الكود
-                العامة.
+        <div className='mb-8'>
+          <div className='flex items-center justify-between'>
+            <div>
+              <h1 className='text-3xl font-bold text-gray-900 flex items-center gap-3'>
+                <Key className='w-8 h-8 text-default-default' />
+                إدارة مفاتيح API
+              </h1>
+              <p className='text-gray-600 mt-2'>
+                إدارة وتأمين مفاتيح الوصول لجميع الخدمات المتكاملة
               </p>
             </div>
+            <Button
+              onClick={handleSave}
+              disabled={saving}
+              className='flex items-center gap-2'
+            >
+              <Save className='w-4 h-4' />
+              {saving ? 'جارٍ الحفظ...' : 'حفظ التغييرات'}
+            </Button>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* API Keys by Service */}
-      <div className='space-y-6'>
-        {Object.entries(groupedKeys).map(([service, keys]) => (
-          <Card key={service}>
-            <CardHeader>
-              <CardTitle className='text-xl capitalize'>
-                {service === 'supabase' && '🗄️ Supabase Database'}
-                {service === 'whatsapp' && '💬 WhatsApp Business'}
-                {service === 'google' && '📅 Google Services'}
-                {service === 'stripe' && '💳 Stripe Payments'}
-                {service === 'email' && '📧 Email / SMTP'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className='space-y-4'>
-                {keys.map(keyConfig => {
-                  const Sun = keyConfig.icon;
-                  const isVisible = visibleKeys.has(keyConfig.id);
-                  const displayValue = isVisible
-                    ? keyConfig.key_value
-                    : '••••••••••••••••';
+          {successMessage && (
+            <div className='mt-4 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 flex items-center gap-2'>
+              <CheckCircle className='w-5 h-5' />
+              {successMessage}
+            </div>
+          )}
+        </div>
 
-                  return (
-                    <div
-                      key={keyConfig.id}
-                      className='border rounded-lg p-4 space-y-3'
-                    >
-                      <div className='flex items-center justify-between'>
-                        <div className='flex items-center gap-3'>
-                          <Sun className='w-5 h-5 text-gray-600' />
-                          <div>
-                            <h4 className='font-semibold text-gray-900'>
-                              {keyConfig.name}
-                            </h4>
-                            <p className='text-sm text-gray-600'>
-                              {keyConfig.description}
-                            </p>
+        {/* Security Notice */}
+        <Card className='mb-6 border-default-warning bg-amber-50'>
+          <CardContent className='p-4'>
+            <div className='flex items-start gap-3'>
+              <Shield className='w-5 h-5 text-amber-600 mt-0.5' />
+              <div className='flex-1'>
+                <h3 className='font-semibold text-amber-900 mb-1'>
+                  تنبيه أمني
+                </h3>
+                <p className='text-sm text-amber-800'>
+                  جميع المفاتيح السرية يتم تشفيرها باستخدام AES-256 قبل الحفظ.
+                  لا تشارك هذه المفاتيح مع أي شخص ولا ترفعها إلى مستودعات الكود
+                  العامة.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* API Keys by Service */}
+        <div className='space-y-6'>
+          {Object.entries(groupedKeys).map(([service, keys]) => (
+            <Card key={service}>
+              <CardHeader>
+                <CardTitle className='text-xl capitalize'>
+                  {service === 'supabase' && '🗄️ Supabase Database'}
+                  {service === 'whatsapp' && '💬 WhatsApp Business'}
+                  {service === 'google' && '📅 Google Services'}
+                  {service === 'stripe' && '💳 Stripe Payments'}
+                  {service === 'email' && '📧 Email / SMTP'}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className='space-y-4'>
+                  {keys.map(keyConfig => {
+                    const Sun = keyConfig.icon;
+                    const isVisible = visibleKeys.has(keyConfig.id);
+                    const displayValue = isVisible
+                      ? keyConfig.key_value
+                      : '••••••••••••••••';
+
+                    return (
+                      <div
+                        key={keyConfig.id}
+                        className='border rounded-lg p-4 space-y-3'
+                      >
+                        <div className='flex items-center justify-between'>
+                          <div className='flex items-center gap-3'>
+                            <Sun className='w-5 h-5 text-gray-600' />
+                            <div>
+                              <h4 className='font-semibold text-gray-900'>
+                                {keyConfig.name}
+                              </h4>
+                              <p className='text-sm text-gray-600'>
+                                {keyConfig.description}
+                              </p>
+                            </div>
                           </div>
-                        </div>
-                        <Badge
-                          variant={
-                            keyConfig.status === 'active'
-                              ? 'primary'
-                              : keyConfig.status === 'invalid'
-                                ? 'error'
-                                : 'secondary'
-                          }
-                        >
-                          {keyConfig.status === 'active' && '✅ نشط'}
-                          {keyConfig.status === 'invalid' && '❌ غير صالح'}
-                          {keyConfig.status === 'inactive' && '⚪ غير مفعل'}
-                        </Badge>
-                      </div>
-
-                      <div className='flex gap-2'>
-                        <div className='flex-1 relative'>
-                          <Input
-                            type={isVisible ? 'text' : 'password'}
-                            value={keyConfig.key_value}
-                            onChange={e =>
-                              updateKeyValue(keyConfig.id, e.target.value)
-                            }
-                            placeholder={keyConfig.placeholder}
-                            className='pr-24 font-mono text-sm'
-                          />
-                          <div className='absolute left-2 top-1/2 -translate-y-1/2 flex gap-1'>
-                            <button type='button'
-                              onClick={() => { toggleVisibility(keyConfig.id) }}
-                              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleVisibility(keyConfig.id); } }}
-                              className='p-1 hover:bg-gray-100 rounded'
-                              aria-label={isVisible ? 'إخفاء المفتاح' : 'إظهار المفتاح'}
-                            >
-                              {isVisible ? (
-                                <EyeOff className='w-4 h-4' />
-                              ) : (
-                                <Eye className='w-4 h-4' />
-                              )}
-                            </button>
-                            {keyConfig.key_value && (
-                              <button type='button'
-                                onClick={() => { copyToClipboard(keyConfig.key_value) }}
-                                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); copyToClipboard(keyConfig.key_value); } }}
-                                aria-label="نسخ المفتاح"
-                                className='p-1 hover:bg-gray-100 rounded'
-                              >
-                                <Copy className='w-4 h-4' />
-                              </button>
-                            )}
-                          </div>
-                        </div>
-
-                        {keyConfig.validation_url && (
-                          <Button
-                            variant='outline'
-                            size='sm'
-                            onClick={() => handleTestKey(keyConfig.id)}
-                            disabled={
-                              !keyConfig.key_value ||
-                              testingKey === keyConfig.id
+                          <Badge
+                            variant={
+                              keyConfig.status === 'active'
+                                ? 'primary'
+                                : keyConfig.status === 'invalid'
+                                  ? 'error'
+                                  : 'secondary'
                             }
                           >
-                            {testingKey === keyConfig.id ? (
-                              <RefreshCw className='w-4 h-4 animate-spin' />
-                            ) : (
-                              <>
-                                <CheckCircle className='w-4 h-4 ml-1' />
-                                اختبار
-                              </>
-                            )}
-                          </Button>
-                        )}
-                      </div>
+                            {keyConfig.status === 'active' && '✅ نشط'}
+                            {keyConfig.status === 'invalid' && '❌ غير صالح'}
+                            {keyConfig.status === 'inactive' && '⚪ غير مفعل'}
+                          </Badge>
+                        </div>
 
-                      <div className='text-xs text-gray-500'>
-                        <code className='bg-gray-100 px-2 py-1 rounded'>
-                          {keyConfig.key_name}
-                        </code>
-                        {keyConfig.is_encrypted && (
-                          <span className='mr-2 text-green-600'>🔒 مشفر</span>
-                        )}
+                        <div className='flex gap-2'>
+                          <div className='flex-1 relative'>
+                            <Input
+                              type={isVisible ? 'text' : 'password'}
+                              value={keyConfig.key_value}
+                              onChange={e =>
+                                updateKeyValue(keyConfig.id, e.target.value)
+                              }
+                              placeholder={keyConfig.placeholder}
+                              className='pr-24 font-mono text-sm'
+                            />
+                            <div className='absolute left-2 top-1/2 -translate-y-1/2 flex gap-1'>
+                              <button
+                                type='button'
+                                onClick={() => {
+                                  toggleVisibility(keyConfig.id);
+                                }}
+                                onKeyDown={e => {
+                                  if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    toggleVisibility(keyConfig.id);
+                                  }
+                                }}
+                                className='p-1 hover:bg-gray-100 rounded'
+                                aria-label={
+                                  isVisible ? 'إخفاء المفتاح' : 'إظهار المفتاح'
+                                }
+                              >
+                                {isVisible ? (
+                                  <EyeOff className='w-4 h-4' />
+                                ) : (
+                                  <Eye className='w-4 h-4' />
+                                )}
+                              </button>
+                              {keyConfig.key_value && (
+                                <button
+                                  type='button'
+                                  onClick={() => {
+                                    copyToClipboard(keyConfig.key_value);
+                                  }}
+                                  onKeyDown={e => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                      e.preventDefault();
+                                      copyToClipboard(keyConfig.key_value);
+                                    }
+                                  }}
+                                  aria-label='نسخ المفتاح'
+                                  className='p-1 hover:bg-gray-100 rounded'
+                                >
+                                  <Copy className='w-4 h-4' />
+                                </button>
+                              )}
+                            </div>
+                          </div>
+
+                          {keyConfig.validation_url && (
+                            <Button
+                              variant='outline'
+                              size='sm'
+                              onClick={() => handleTestKey(keyConfig.id)}
+                              disabled={
+                                !keyConfig.key_value ||
+                                testingKey === keyConfig.id
+                              }
+                            >
+                              {testingKey === keyConfig.id ? (
+                                <RefreshCw className='w-4 h-4 animate-spin' />
+                              ) : (
+                                <>
+                                  <CheckCircle className='w-4 h-4 ml-1' />
+                                  اختبار
+                                </>
+                              )}
+                            </Button>
+                          )}
+                        </div>
+
+                        <div className='text-xs text-gray-500'>
+                          <code className='bg-gray-100 px-2 py-1 rounded'>
+                            {keyConfig.key_name}
+                          </code>
+                          {keyConfig.is_encrypted && (
+                            <span className='mr-2 text-green-600'>🔒 مشفر</span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                    );
+                  })}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </>
   );

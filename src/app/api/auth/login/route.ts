@@ -100,9 +100,8 @@ export async function POST(req: NextRequest) {
               });
 
               if (up && !upErr) {
-                const rolePermissions = await PermissionManager.getRolePermissions(
-                  up.role
-                );
+                const rolePermissions =
+                  await PermissionManager.getRolePermissions(up.role);
                 const userResponse = {
                   id: up.id,
                   email: up.email,
@@ -238,9 +237,8 @@ export async function POST(req: NextRequest) {
                 });
 
                 if (up && !upErr) {
-                  const rolePermissions = await PermissionManager.getRolePermissions(
-                    up.role
-                  );
+                  const rolePermissions =
+                    await PermissionManager.getRolePermissions(up.role);
                   const userResponse = {
                     id: up.id,
                     email: up.email,
@@ -394,7 +392,9 @@ export async function POST(req: NextRequest) {
     }
 
     // Get user permissions based on role
-    const rolePermissions = await PermissionManager.getRolePermissions(userData.role);
+    const rolePermissions = await PermissionManager.getRolePermissions(
+      userData.role
+    );
 
     // Generate dynamic JWT token (contains all user info - no DB query needed in middleware)
     const jwtSecret = process.env.JWT_SECRET;

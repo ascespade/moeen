@@ -24,13 +24,15 @@ export default function AdminHomepageEditor() {
       try {
         const res = await fetch('/api/dynamic-data?type=services');
         const data = await res.json();
-        const items = (data.services || []).map((s: ServiceItem, idx: number) => ({
-          id: s.id ?? idx + 1,
-          title: s.title,
-          description: s.description,
-          image: s.image,
-          link: s.link,
-        }));
+        const items = (data.services || []).map(
+          (s: ServiceItem, idx: number) => ({
+            id: s.id ?? idx + 1,
+            title: s.title,
+            description: s.description,
+            image: s.image,
+            link: s.link,
+          })
+        );
         if (!cancelled) setServices(items);
       } catch (err) {
         console.warn('Failed to load services', err);
@@ -139,7 +141,9 @@ export default function AdminHomepageEditor() {
                     type='text'
                     className='form-input w-full'
                     value={s.title}
-                    onChange={(e) => updateService(idx, { title: e.target.value })}
+                    onChange={e =>
+                      updateService(idx, { title: e.target.value })
+                    }
                     aria-label='عنوان الخدمة'
                   />
                 </div>
@@ -151,7 +155,9 @@ export default function AdminHomepageEditor() {
                     type='text'
                     className='form-input w-full'
                     value={s.description || ''}
-                    onChange={(e) => updateService(idx, { description: e.target.value })}
+                    onChange={e =>
+                      updateService(idx, { description: e.target.value })
+                    }
                     aria-label='وصف الخدمة'
                   />
                 </div>
@@ -164,7 +170,7 @@ export default function AdminHomepageEditor() {
                     type='url'
                     className='form-input w-full'
                     value={s.link || ''}
-                    onChange={(e) => updateService(idx, { link: e.target.value })}
+                    onChange={e => updateService(idx, { link: e.target.value })}
                     aria-label='رابط الخدمة'
                   />
                 </div>
@@ -175,7 +181,7 @@ export default function AdminHomepageEditor() {
                     <input
                       type='file'
                       accept='image/*'
-                      onChange={(e) => handleFileChange(e, idx)}
+                      onChange={e => handleFileChange(e, idx)}
                       aria-label='رفع صورة للخدمة'
                     />
                     {s.image && s.image !== 'uploading' && (

@@ -1,7 +1,7 @@
 /**
  * Users Queries - Centralized User Queries
  * استعلامات المستخدمين - الاستعلامات المركزية
- * 
+ *
  * All user-related database queries
  */
 
@@ -52,23 +52,25 @@ export const getUserById = cache(async (id: string): Promise<User | null> => {
 /**
  * Get user by email
  */
-export const getUserByEmail = cache(async (email: string): Promise<User | null> => {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('users')
-    .select('*')
-    .eq('email', email)
-    .single();
+export const getUserByEmail = cache(
+  async (email: string): Promise<User | null> => {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
 
-  if (error) {
-    if (error.code === 'PGRST116') {
-      return null;
+    if (error) {
+      if (error.code === 'PGRST116') {
+        return null;
+      }
+      throw new Error(`Failed to fetch user: ${error.message}`);
     }
-    throw new Error(`Failed to fetch user: ${error.message}`);
-  }
 
-  return data;
-});
+    return data;
+  }
+);
 
 /**
  * Get users by role

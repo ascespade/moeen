@@ -1,7 +1,7 @@
 /**
  * Roles - User Roles and Permissions
  * الأدوار - أدوار المستخدمين والصلاحيات
- * 
+ *
  * All user roles and their definitions
  */
 
@@ -66,4 +66,4 @@ export function isStaff(role: string): boolean {
 }
 
 // Type exports
-export type Role = typeof ROLES[keyof typeof ROLES];
+export type Role = (typeof ROLES)[keyof typeof ROLES];

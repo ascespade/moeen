@@ -42,16 +42,17 @@ for (const file of apiFiles) {
     // Fix: headers: { ... } }}); -> headers: { ... } });
     const headerPattern = /headers:\s*\{[^}]*\}\s*\}\}\);\);/g;
     if (headerPattern.test(content)) {
-      content = content.replace(headerPattern, (match) => {
+      content = content.replace(headerPattern, match => {
         return match.replace(/}\);\);/g, '});');
       });
       modified = true;
     }
 
     // Fix: missing closing paren in NextResponse.json with headers
-    const nextResponsePattern = /NextResponse\.json\([^)]+\)\s*,\s*\{\s*status:\s*\d+[^}]*headers:\s*\{[^}]*\}\s*\}\s*\);\);/g;
+    const nextResponsePattern =
+      /NextResponse\.json\([^)]+\)\s*,\s*\{\s*status:\s*\d+[^}]*headers:\s*\{[^}]*\}\s*\}\s*\);\);/g;
     if (nextResponsePattern.test(content)) {
-      content = content.replace(nextResponsePattern, (match) => {
+      content = content.replace(nextResponsePattern, match => {
         return match.replace(/}\);\);/g, '});');
       });
       modified = true;
@@ -60,7 +61,7 @@ for (const file of apiFiles) {
     // Fix: broken import statements
     const brokenImportPattern = /import\s+[^;]+}\s*from\s+['"]@\/[^;]*$/gm;
     if (brokenImportPattern.test(content)) {
-      content = content.replace(brokenImportPattern, (match) => {
+      content = content.replace(brokenImportPattern, match => {
         if (!match.includes(';')) {
           return match + ';';
         }
@@ -70,9 +71,10 @@ for (const file of apiFiles) {
     }
 
     // Fix: incomplete const declarations
-    const incompleteConstPattern = /const\s+\{[^}]*\}\s*=\s*await\s+authorize\([^)]*\)\s*$/gm;
+    const incompleteConstPattern =
+      /const\s+\{[^}]*\}\s*=\s*await\s+authorize\([^)]*\)\s*$/gm;
     if (incompleteConstPattern.test(content)) {
-      content = content.replace(incompleteConstPattern, (match) => {
+      content = content.replace(incompleteConstPattern, match => {
         if (!match.includes(';')) {
           return match + ';';
         }
@@ -82,13 +84,14 @@ for (const file of apiFiles) {
     }
 
     // Fix: duplicate code blocks (like " = await authorize(request);" after authorization)
-    const duplicateAuthPattern = /const\s+\{[^}]*\}\s*=\s*await\s+authorize\([^)]*\);\s*[\s\S]*?=\s*await\s+authorize\([^)]*\);/g;
+    const duplicateAuthPattern =
+      /const\s+\{[^}]*\}\s*=\s*await\s+authorize\([^)]*\);\s*[\s\S]*?=\s*await\s+authorize\([^)]*\);/g;
     if (duplicateAuthPattern.test(content)) {
       // Remove duplicate authorization calls
       const lines = content.split('\n');
       let lastAuthLine = -1;
       const cleanedLines = [];
-      
+
       for (let i = 0; i < lines.length; i++) {
         if (lines[i].includes('await authorize(request)')) {
           if (lastAuthLine >= 0 && i - lastAuthLine < 10) {
@@ -99,7 +102,7 @@ for (const file of apiFiles) {
         }
         cleanedLines.push(lines[i]);
       }
-      
+
       content = cleanedLines.join('\n');
       modified = true;
     }
@@ -119,10 +122,10 @@ console.log(`\n?? Summary: Fixed ${fixedCount} files\n`);
 // Run build to check
 console.log('?? Checking build...\n');
 try {
-  execSync('npm run build', { 
-    cwd: projectRoot, 
+  execSync('npm run build', {
+    cwd: projectRoot,
     stdio: 'pipe',
-    timeout: 300000
+    timeout: 300000,
   });
   console.log('? Build passed!\n');
 } catch (error) {

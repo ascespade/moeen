@@ -155,7 +155,7 @@ export default function ChatbotTemplatesPage() {
             <div className='flex items-center gap-3'>
               <button
                 onClick={() => setShowCreateModal(true)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowCreateModal(true);
@@ -171,7 +171,7 @@ export default function ChatbotTemplatesPage() {
         </div>
       </header>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
@@ -214,9 +214,11 @@ export default function ChatbotTemplatesPage() {
               <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 البحث
               </label>
-              <input type='text'
+              <input
+                type='text'
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} aria-label="text"
+                onChange={e => setSearchTerm(e.target.value)}
+                aria-label='text'
                 placeholder='ابحث في القوالب...'
                 className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
@@ -275,7 +277,10 @@ export default function ChatbotTemplatesPage() {
             </div>
 
             <div className='flex items-end'>
-              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
+              <button
+                className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                aria-label='تطبيق الفلاتر'
+              >
                 تطبيق الفلاتر
               </button>
             </div>
@@ -358,7 +363,7 @@ export default function ChatbotTemplatesPage() {
                       <div className='flex gap-2'>
                         <button
                           onClick={() => setShowPreviewModal(template)}
-                          onKeyDown={(e) => {
+                          onKeyDown={e => {
                             if (e.key === 'Enter' || e.key === ' ') {
                               e.preventDefault();
                               setShowPreviewModal(template);
@@ -375,7 +380,10 @@ export default function ChatbotTemplatesPage() {
                         >
                           تعديل
                         </Link>
-                        <button className='text-default-success hover:text-green-700' aria-label="نسخ">
+                        <button
+                          className='text-default-success hover:text-green-700'
+                          aria-label='نسخ'
+                        >
                           نسخ
                         </button>
                       </div>
@@ -411,7 +419,7 @@ export default function ChatbotTemplatesPage() {
               <h3 className='text-xl font-semibold'>إنشاء قالب جديد</h3>
               <button
                 onClick={() => setShowCreateModal(false)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowCreateModal(false);
@@ -500,7 +508,7 @@ export default function ChatbotTemplatesPage() {
                 <button
                   type='button'
                   onClick={() => setShowCreateModal(false)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowCreateModal(false);
@@ -511,8 +519,11 @@ export default function ChatbotTemplatesPage() {
                 >
                   إلغاء
                 </button>
-                <button type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إنشاء القالب">
+                <button
+                  type='submit'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='إنشاء القالب'
+                >
                   إنشاء القالب
                 </button>
               </div>
@@ -529,7 +540,7 @@ export default function ChatbotTemplatesPage() {
               <h3 className='text-xl font-semibold'>معاينة القالب</h3>
               <button
                 onClick={() => setShowPreviewModal(null)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowPreviewModal(null);
@@ -574,7 +585,7 @@ export default function ChatbotTemplatesPage() {
               <div className='flex gap-3 pt-4'>
                 <button
                   onClick={() => setShowPreviewModal(null)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowPreviewModal(null);
@@ -585,7 +596,10 @@ export default function ChatbotTemplatesPage() {
                 >
                   إغلاق
                 </button>
-                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="استخدام القالب">
+                <button
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='استخدام القالب'
+                >
                   استخدام القالب
                 </button>
               </div>

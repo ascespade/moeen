@@ -28,8 +28,10 @@ const VideoStorySection = memo(function VideoStorySection() {
               {/* Play Button Overlay */}
               <div className='absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center'>
                 <button
-                  onClick={() => { setIsVideoPlaying(true) }}
-                  onKeyDown={(e) => {
+                  onClick={() => {
+                    setIsVideoPlaying(true);
+                  }}
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setIsVideoPlaying(true);
@@ -131,25 +133,29 @@ const VideoStorySection = memo(function VideoStorySection() {
       {isVideoPlaying && (
         <div
           className='fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4'
-          tabIndex={0} onClick={() => setIsVideoPlaying(false)}
+          tabIndex={0}
+          onClick={() => setIsVideoPlaying(false)}
         >
           <div
             className='relative w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden'
-            tabIndex={0} onClick={e => e.stopPropagation()}
+            tabIndex={0}
+            onClick={e => e.stopPropagation()}
           >
             {/* Video would go here */}
             <div className='absolute inset-0 flex items-center justify-center'>
               <p className='text-white'>سيتم إضافة الفيديو قريباً</p>
             </div>
             <button
-              onClick={() => { setIsVideoPlaying(false) }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                setIsVideoPlaying(false);
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   setIsVideoPlaying(false);
                 }
               }}
-              aria-label="إيقاف الفيديو"
+              aria-label='إيقاف الفيديو'
               className='absolute top-4 left-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/70'
             >
               ✕

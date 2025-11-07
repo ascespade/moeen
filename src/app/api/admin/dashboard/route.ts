@@ -39,9 +39,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .from('insurance_claims')
       .select('*', { count: 'exact', head: true });
 
-    await supabase
-      .from('payments')
-      .select('*', { count: 'exact', head: true });
+    await supabase.from('payments').select('*', { count: 'exact', head: true });
 
     // Get revenue data
     const { data: paymentsData } = await supabase
@@ -50,10 +48,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .eq('status', 'paid');
 
     const totalRevenue =
-      paymentsData?.reduce(
-        (sum: number, p: any) => sum + (p.amount || 0),
-        0
-      ) || 0;
+      paymentsData?.reduce((sum: number, p: any) => sum + (p.amount || 0), 0) ||
+      0;
 
     const stats = {
       totalPatients: totalPatients || 0,

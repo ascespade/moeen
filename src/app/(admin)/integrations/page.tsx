@@ -217,101 +217,105 @@ const IntegrationsPage: React.FC = () => {
 
   return (
     <>
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
       <div className='container mx-auto px-4 py-8' dir='rtl'>
-      <div className='mb-8'>
-        <h1 className='text-3xl font-bold text-gray-900'>التكاملات الخارجية</h1>
-        <p className='text-gray-600 mt-2'>
-          إدارة التكاملات مع الخدمات الخارجية
-        </p>
-      </div>
+        <div className='mb-8'>
+          <h1 className='text-3xl font-bold text-gray-900'>
+            التكاملات الخارجية
+          </h1>
+          <p className='text-gray-600 mt-2'>
+            إدارة التكاملات مع الخدمات الخارجية
+          </p>
+        </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-        {integrations.map(integration => (
-          <Card
-            key={integration.id}
-            className='hover:shadow-md transition-shadow'
-          >
-            <CardHeader>
-              <div className='flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                  {getTypeIcon(integration.type)}
-                  <div>
-                    <CardTitle className='text-lg'>
-                      {integration.name}
-                    </CardTitle>
-                    <p className='text-sm text-gray-600'>
-                      {integration.provider}
-                    </p>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+          {integrations.map(integration => (
+            <Card
+              key={integration.id}
+              className='hover:shadow-md transition-shadow'
+            >
+              <CardHeader>
+                <div className='flex items-center justify-between'>
+                  <div className='flex items-center gap-3'>
+                    {getTypeIcon(integration.type)}
+                    <div>
+                      <CardTitle className='text-lg'>
+                        {integration.name}
+                      </CardTitle>
+                      <p className='text-sm text-gray-600'>
+                        {integration.provider}
+                      </p>
+                    </div>
+                  </div>
+                  {getStatusIcon(integration.status)}
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className='text-sm text-gray-700 mb-4'>
+                  {integration.description}
+                </p>
+
+                <div className='space-y-2 mb-4'>
+                  <div className='flex justify-between text-sm'>
+                    <span>الحالة:</span>
+                    <Badge
+                      variant={
+                        integration.status === 'active'
+                          ? 'primary'
+                          : 'secondary'
+                      }
+                    >
+                      {integration.status === 'active' ? 'نشط' : 'غير نشط'}
+                    </Badge>
+                  </div>
+                  <div className='flex justify-between text-sm'>
+                    <span>آخر مزامنة:</span>
+                    <span>
+                      {new Date(integration.last_sync).toLocaleDateString(
+                        'ar-SA'
+                      )}
+                    </span>
+                  </div>
+                  <div className='flex justify-between text-sm'>
+                    <span>صحة الاتصال:</span>
+                    <span
+                      className={
+                        integration.health_score > 80
+                          ? 'text-default-success'
+                          : 'text-default-error'
+                      }
+                    >
+                      {integration.health_score}%
+                    </span>
                   </div>
                 </div>
-                {getStatusIcon(integration.status)}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className='text-sm text-gray-700 mb-4'>
-                {integration.description}
-              </p>
 
-              <div className='space-y-2 mb-4'>
-                <div className='flex justify-between text-sm'>
-                  <span>الحالة:</span>
-                  <Badge
-                    variant={
-                      integration.status === 'active' ? 'primary' : 'secondary'
-                    }
+                <div className='flex gap-2'>
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    className='flex-1'
+                    onClick={() => router.push('/settings/api-keys')}
                   >
-                    {integration.status === 'active' ? 'نشط' : 'غير نشط'}
-                  </Badge>
-                </div>
-                <div className='flex justify-between text-sm'>
-                  <span>آخر مزامنة:</span>
-                  <span>
-                    {new Date(integration.last_sync).toLocaleDateString(
-                      'ar-SA'
-                    )}
-                  </span>
-                </div>
-                <div className='flex justify-between text-sm'>
-                  <span>صحة الاتصال:</span>
-                  <span
-                    className={
-                      integration.health_score > 80
-                        ? 'text-default-success'
-                        : 'text-default-error'
-                    }
+                    <Settings className='w-4 h-4 mr-1' />
+                    إعدادات
+                  </Button>
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    className='flex-1'
+                    onClick={() => loadIntegrations()}
                   >
-                    {integration.health_score}%
-                  </span>
+                    <RefreshCw className='w-4 h-4 mr-1' />
+                    تحديث
+                  </Button>
                 </div>
-              </div>
-
-              <div className='flex gap-2'>
-                <Button
-                  variant='outline'
-                  size='sm'
-                  className='flex-1'
-                  onClick={() => router.push('/settings/api-keys')}
-                >
-                  <Settings className='w-4 h-4 mr-1' />
-                  إعدادات
-                </Button>
-                <Button
-                  variant='outline'
-                  size='sm'
-                  className='flex-1'
-                  onClick={() => loadIntegrations()}
-                >
-                  <RefreshCw className='w-4 h-4 mr-1' />
-                  تحديث
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </>
   );

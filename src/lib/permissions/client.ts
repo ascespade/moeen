@@ -21,4 +21,3 @@ export { PERMISSIONS } from './constants';
 
 // PermissionManager is NOT exported - use API endpoint instead
 // For client-side, use: fetch('/api/permissions/role/[roleId]')
-

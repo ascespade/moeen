@@ -1,4 +1,3 @@
-
 type PlaceholderSquareProps = {
   title: string;
   description: string;
@@ -33,12 +32,12 @@ export default function PlaceholderSquare({
             </ol>
           )}
           {docsLink && (
-            <a 
+            <a
               className='mt-3 inline-block text-sm text-[var(--default-default)] hover:underline'
               href={docsLink}
               target='_blank'
-              rel='noreferrer' 
-              aria-label="Documentation"
+              rel='noreferrer'
+              aria-label='Documentation'
             >
               Documentation
             </a>

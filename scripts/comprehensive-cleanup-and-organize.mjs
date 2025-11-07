@@ -3,7 +3,7 @@
 /**
  * Comprehensive Cleanup and Organization Script
  * ?????? ???? ??????? ????????
- * 
+ *
  * This script:
  * 1. Identifies and archives old/unused files
  * 2. Removes duplicate documentation
@@ -12,7 +12,16 @@
  * 5. Organizes project structure
  */
 
-import { readFileSync, writeFileSync, existsSync, readdirSync, statSync, unlinkSync, rmdirSync, mkdirSync } from 'fs';
+import {
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  readdirSync,
+  statSync,
+  unlinkSync,
+  rmdirSync,
+  mkdirSync,
+} from 'fs';
 import { join, dirname, basename } from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
@@ -95,16 +104,18 @@ const rootMdFiles = readdirSync(projectRoot)
   .filter(f => f.endsWith('.md') && !essentialDocs.includes(f))
   .filter(f => {
     const name = f.toLowerCase();
-    return name.includes('complete') || 
-           name.includes('final') || 
-           name.includes('summary') || 
-           name.includes('report') || 
-           name.includes('audit') ||
-           name.includes('improvement') ||
-           name.includes('fix') ||
-           name.includes('status') ||
-           name.includes('plan') ||
-           name.includes('guide');
+    return (
+      name.includes('complete') ||
+      name.includes('final') ||
+      name.includes('summary') ||
+      name.includes('report') ||
+      name.includes('audit') ||
+      name.includes('improvement') ||
+      name.includes('fix') ||
+      name.includes('status') ||
+      name.includes('plan') ||
+      name.includes('guide')
+    );
   });
 
 rootMdFiles.forEach(file => {
@@ -122,9 +133,14 @@ rootMdFiles.forEach(file => {
 // 2. Archive old JSON reports
 console.log('\n?? Cleaning up JSON report files...');
 const jsonReports = readdirSync(projectRoot)
-  .filter(f => f.endsWith('.json') && 
-    (f.includes('report') || f.includes('audit') || f.includes('summary')))
-  .filter(f => !['package.json', 'package-lock.json', 'tsconfig.json'].includes(f));
+  .filter(
+    f =>
+      f.endsWith('.json') &&
+      (f.includes('report') || f.includes('audit') || f.includes('summary'))
+  )
+  .filter(
+    f => !['package.json', 'package-lock.json', 'tsconfig.json'].includes(f)
+  );
 
 jsonReports.forEach(file => {
   const source = join(projectRoot, file);
@@ -140,8 +156,9 @@ jsonReports.forEach(file => {
 
 // 3. Archive old SQL files
 console.log('\n???  Cleaning up SQL files...');
-const sqlFiles = readdirSync(projectRoot)
-  .filter(f => f.endsWith('.sql') && !f.startsWith('supabase/'));
+const sqlFiles = readdirSync(projectRoot).filter(
+  f => f.endsWith('.sql') && !f.startsWith('supabase/')
+);
 
 sqlFiles.forEach(file => {
   const source = join(projectRoot, file);
@@ -163,27 +180,30 @@ const allScripts = readdirSync(join(projectRoot, 'scripts'))
 
 const scriptsToArchive = allScripts.filter(script => {
   const scriptName = basename(script);
-  const isEssential = essentialScripts.some(es => script.includes(basename(es)));
-  
+  const isEssential = essentialScripts.some(es =>
+    script.includes(basename(es))
+  );
+
   // Archive if:
   // - Not essential
   // - Contains "ai_" prefix (old AI scripts)
   // - Contains "test" or "fix" in name (old test/fix scripts)
   // - Duplicate names
-  return !isEssential && (
-    scriptName.startsWith('ai_') ||
-    scriptName.includes('_test') ||
-    scriptName.includes('_fix') ||
-    scriptName.includes('generate') ||
-    scriptName.includes('backup') ||
-    scriptName.includes('monitoring') ||
-    scriptName.includes('dashboard') ||
-    scriptName.includes('enterprise') ||
-    scriptName.includes('master') ||
-    scriptName.includes('comprehensive-fix') ||
-    scriptName.includes('comprehensive-audit') ||
-    scriptName.includes('expert-audit') ||
-    scriptName.includes('prevent-future')
+  return (
+    !isEssential &&
+    (scriptName.startsWith('ai_') ||
+      scriptName.includes('_test') ||
+      scriptName.includes('_fix') ||
+      scriptName.includes('generate') ||
+      scriptName.includes('backup') ||
+      scriptName.includes('monitoring') ||
+      scriptName.includes('dashboard') ||
+      scriptName.includes('enterprise') ||
+      scriptName.includes('master') ||
+      scriptName.includes('comprehensive-fix') ||
+      scriptName.includes('comprehensive-audit') ||
+      scriptName.includes('expert-audit') ||
+      scriptName.includes('prevent-future'))
   );
 });
 

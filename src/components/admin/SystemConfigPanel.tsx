@@ -33,8 +33,12 @@ export default function SystemConfigPanel() {
       <div className='border-b border-gray-200 dark:border-gray-700 mb-6'>
         <nav className='-mb-px flex space-x-8'>
           {tabs.map(tab => (
-            <button key={tab.id}
-              onClick={() => { setActiveTab(tab.id as any) }} aria-label={`التبديل إلى تبويب ${tab.label || tab.id}`}
+            <button
+              key={tab.id}
+              onClick={() => {
+                setActiveTab(tab.id as any);
+              }}
+              aria-label={`التبديل إلى تبويب ${tab.label || tab.id}`}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === tab.id
                   ? 'border-blue-500 text-blue-600 dark:text-blue-400'
@@ -66,13 +70,19 @@ export default function SystemConfigPanel() {
                       {t(`modules.${moduleName}`)}
                     </h3>
                     <label className='relative inline-flex items-center cursor-pointer'>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         checked={moduleConfig.enabled}
-                        onChange={(e) => toggleModule(moduleName, e.target.checked)
-                        } aria-label="checkbox"
+                        onChange={e =>
+                          toggleModule(moduleName, e.target.checked)
+                        }
+                        aria-label='checkbox'
                         className='sr-only peer'
                       />
-                      <div  role="main"className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                      <div
+                        role='main'
+                        className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                      ></div>
                     </label>
                   </div>
                   <div className='space-y-2'>
@@ -121,13 +131,19 @@ export default function SystemConfigPanel() {
                       </h3>
                     </div>
                     <label className='relative inline-flex items-center cursor-pointer'>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         checked={featureConfig.enabled}
-                        onChange={(e) => toggleAIFeature(featureName, e.target.checked)
-                        } aria-label="checkbox"
+                        onChange={e =>
+                          toggleAIFeature(featureName, e.target.checked)
+                        }
+                        aria-label='checkbox'
                         className='sr-only peer'
                       />
-                      <div  role="main"className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                      <div
+                        role='main'
+                        className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+                      ></div>
                     </label>
                   </div>
 

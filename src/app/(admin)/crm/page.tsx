@@ -494,8 +494,8 @@ function CRMPageContent() {
     };
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <Badge variant={config.variant} className={config.className}>
           {config.label}
@@ -592,23 +592,23 @@ function CRMPageContent() {
           </div>
           <div className='flex items-center gap-4'>
             <Button variant='outline'>
-                <Download className='h-4 w-4 mr-2' />
-                تصدير
-              </Button>
-              <Button variant='outline'>
-                <Upload className='h-4 w-4 mr-2' />
-                استيراد
-              </Button>
-            </div>
+              <Download className='h-4 w-4 mr-2' />
+              تصدير
+            </Button>
+            <Button variant='outline'>
+              <Upload className='h-4 w-4 mr-2' />
+              استيراد
+            </Button>
           </div>
+        </div>
 
-          {/* Stats Cards */}
-          <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
-            <Card>
-              <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                <CardTitle className='text-sm font-medium'>
-                  العملاء المحتملين
-                </CardTitle>
+        {/* Stats Cards */}
+        <div className='grid grid-cols-1 md:grid-cols-4 gap-6 mb-8'>
+          <Card>
+            <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
+              <CardTitle className='text-sm font-medium'>
+                العملاء المحتملين
+              </CardTitle>
               <Target className='h-4 w-4 text-muted-foreground' />
             </CardHeader>
             <CardContent>
@@ -797,9 +797,10 @@ function CRMPageContent() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input type='checkbox'
+                    <input
+                      type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => {
+                      onChange={e => {
                         if (e.target.checked) {
                           setSelectedItems(
                             filteredData.map((item: any) => item.id)
@@ -808,8 +809,8 @@ function CRMPageContent() {
                           setSelectedItems([]);
                         }
                       }}
-                      aria-label="تحديد الكل"
-                      aria-invalid="true"
+                      aria-label='تحديد الكل'
+                      aria-invalid='true'
                     />
                   </TableHead>
                   <TableHead>الاسم</TableHead>
@@ -826,10 +827,11 @@ function CRMPageContent() {
                 {filteredData.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedItems.includes(item.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedItems([...selectedItems, item.id]);
                           } else {
@@ -838,8 +840,8 @@ function CRMPageContent() {
                             );
                           }
                         }}
-                        aria-label="تحديد العنصر"
-                        aria-invalid="true"
+                        aria-label='تحديد العنصر'
+                        aria-invalid='true'
                       />
                     </TableCell>
                     <TableCell>

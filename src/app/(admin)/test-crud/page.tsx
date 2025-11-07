@@ -35,7 +35,8 @@ interface TestResult {
   details?: any;
 }
 
-type PartialTestResult = Partial<TestResult> & Pick<TestResult, 'id' | 'name' | 'category'>;
+type PartialTestResult = Partial<TestResult> &
+  Pick<TestResult, 'id' | 'name' | 'category'>;
 
 const ALL_TESTS: Omit<
   TestResult,
@@ -343,7 +344,10 @@ export default function CRUDTestPage() {
     const updatedTests = [...tests];
 
     for (let i = 0; i < updatedTests.length; i++) {
-      updatedTests[i] = { ...updatedTests[i], status: 'running' as const } as TestResult;
+      updatedTests[i] = {
+        ...updatedTests[i],
+        status: 'running' as const,
+      } as TestResult;
       setTests([...updatedTests]);
 
       const testId = updatedTests[i]?.id;
@@ -371,7 +375,10 @@ export default function CRUDTestPage() {
       const index = updatedTests.findIndex(t => t.id === categoryTest.id);
       if (index === -1) continue;
 
-      updatedTests[index] = { ...updatedTests[index], status: 'running' as const } as TestResult;
+      updatedTests[index] = {
+        ...updatedTests[index],
+        status: 'running' as const,
+      } as TestResult;
       setTests([...updatedTests]);
 
       const result = await runTest(categoryTest.id);
@@ -397,8 +404,8 @@ export default function CRUDTestPage() {
       case 'running':
         return (
           <>
-            <div aria-live="polite" aria-atomic="true" className="sr-only">
-              <span id="live-region"></span>
+            <div aria-live='polite' aria-atomic='true' className='sr-only'>
+              <span id='live-region'></span>
             </div>
             <RefreshCw className='w-5 h-5 text-[var(--brand-primary)] animate-spin' />
           </>
@@ -689,4 +696,3 @@ export default function CRUDTestPage() {
     </div>
   );
 }
-

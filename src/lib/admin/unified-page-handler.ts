@@ -18,7 +18,7 @@ export async function checkPageAccess(
   userPermissions: string[]
 ): Promise<PageAccessResult> {
   const pageConfig = getPageConfig(pathname);
-  
+
   if (!pageConfig) {
     // Page not found in config, allow access (default behavior)
     return { authorized: true };
@@ -36,11 +36,14 @@ export async function checkPageAccess(
   }
 
   // Check specific permissions
-  if (pageConfig.requiredPermissions && pageConfig.requiredPermissions.length > 0) {
+  if (
+    pageConfig.requiredPermissions &&
+    pageConfig.requiredPermissions.length > 0
+  ) {
     const hasAllPermissions = pageConfig.requiredPermissions.every(permission =>
       userPermissions.includes(permission)
     );
-    
+
     if (!hasAllPermissions) {
       return {
         authorized: false,
@@ -52,4 +55,3 @@ export async function checkPageAccess(
 
   return { authorized: true };
 }
-

@@ -8,4 +8,3 @@ export type PermissionId = string;
 
 // Role ID is a string (roles are managed in Database)
 export type RoleId = string;
-

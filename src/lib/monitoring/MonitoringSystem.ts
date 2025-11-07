@@ -49,12 +49,12 @@ export class MonitoringSystem {
       error: 0,
     };
 
-    this.tasks.forEach((task) => {
+    this.tasks.forEach(task => {
       byStatus[task.status]++;
     });
 
     const byCpu: Record<number, number> = {};
-    this.tasks.forEach((task) => {
+    this.tasks.forEach(task => {
       if (task.status === 'running') {
         byCpu[task.cpu] = (byCpu[task.cpu] || 0) + 1;
       }
@@ -63,7 +63,8 @@ export class MonitoringSystem {
     return {
       total: this.totalTasks,
       completed: this.completedTasks,
-      progress: this.totalTasks > 0 ? (this.completedTasks / this.totalTasks) * 100 : 0,
+      progress:
+        this.totalTasks > 0 ? (this.completedTasks / this.totalTasks) * 100 : 0,
       byStatus,
       byCpu,
       tasks: Array.from(this.tasks.values()),
@@ -76,7 +77,7 @@ export class MonitoringSystem {
    */
   getTasksByCPU(): Record<number, TaskStatus[]> {
     const byCpu: Record<number, TaskStatus[]> = {};
-    this.tasks.forEach((task) => {
+    this.tasks.forEach(task => {
       if (!byCpu[task.cpu]) {
         byCpu[task.cpu] = [];
       }
@@ -100,7 +101,7 @@ export class MonitoringSystem {
    */
   private notifyListeners(): void {
     const report = this.getReport();
-    this.listeners.forEach((listener) => {
+    this.listeners.forEach(listener => {
       try {
         listener(report);
       } catch (error) {
@@ -129,4 +130,3 @@ export class MonitoringSystem {
 
 // Singleton instance
 export const monitoringSystem = new MonitoringSystem();
-

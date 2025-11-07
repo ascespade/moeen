@@ -76,13 +76,22 @@ export default function RegisterPage() {
           });
           setErrors(newErrors);
         } else {
-          setErrors({ general: data.message || 'حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى.' });
+          setErrors({
+            general:
+              data.message || 'حدث خطأ أثناء إنشاء الحساب. حاول مرة أخرى.',
+          });
         }
         return;
       }
 
       setSuccess(true);
-      setFormData({ name: '', email: '', password: '', confirmPassword: '', agreeToTerms: false });
+      setFormData({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        agreeToTerms: false,
+      });
     } catch (error) {
       console.error('Registration error:', error);
       setErrors({ general: 'حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى.' });
@@ -120,7 +129,13 @@ export default function RegisterPage() {
       <div className='w-full max-w-md'>
         <div className='mb-8 text-center'>
           <div className='mb-4 flex items-center justify-center gap-3'>
-            <Image src='/logo.png' alt='مُعين' width={50} height={50} className='rounded-lg' />
+            <Image
+              src='/logo.png'
+              alt='مُعين'
+              width={50}
+              height={50}
+              className='rounded-lg'
+            />
             <h1 className='text-default text-3xl font-bold'>مُعين</h1>
           </div>
           <h2 className='mb-2 text-2xl font-semibold text-gray-900 dark:text-white'>
@@ -140,7 +155,10 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit} className='space-y-6'>
             <div>
-              <label htmlFor='name' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
+              <label
+                htmlFor='name'
+                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
+              >
                 الاسم الكامل
               </label>
               <input
@@ -154,14 +172,19 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أدخل اسمك الكامل'
                 disabled={isLoading}
-                aria-label="أدخل اسمك الكامل"
+                aria-label='أدخل اسمك الكامل'
                 aria-invalid={errors.name ? 'true' : 'false'}
               />
-              {errors.name && <p className='mt-1 text-sm text-default-error'>{errors.name}</p>}
+              {errors.name && (
+                <p className='mt-1 text-sm text-default-error'>{errors.name}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor='email' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
+              <label
+                htmlFor='email'
+                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
+              >
                 البريد الإلكتروني
               </label>
               <input
@@ -175,14 +198,21 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أدخل بريدك الإلكتروني'
                 disabled={isLoading}
-                aria-label="أدخل بريدك الإلكتروني"
+                aria-label='أدخل بريدك الإلكتروني'
                 aria-invalid={errors.email ? 'true' : 'false'}
               />
-              {errors.email && <p className='mt-1 text-sm text-default-error'>{errors.email}</p>}
+              {errors.email && (
+                <p className='mt-1 text-sm text-default-error'>
+                  {errors.email}
+                </p>
+              )}
             </div>
 
             <div>
-              <label htmlFor='password' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
+              <label
+                htmlFor='password'
+                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
+              >
                 كلمة المرور
               </label>
               <input
@@ -196,14 +226,21 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أدخل كلمة المرور'
                 disabled={isLoading}
-                aria-label="أدخل كلمة المرور"
+                aria-label='أدخل كلمة المرور'
                 aria-invalid={errors.password ? 'true' : 'false'}
               />
-              {errors.password && <p className='mt-1 text-sm text-default-error'>{errors.password}</p>}
+              {errors.password && (
+                <p className='mt-1 text-sm text-default-error'>
+                  {errors.password}
+                </p>
+              )}
             </div>
 
             <div>
-              <label htmlFor='confirmPassword' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
+              <label
+                htmlFor='confirmPassword'
+                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
+              >
                 تأكيد كلمة المرور
               </label>
               <input
@@ -217,10 +254,14 @@ export default function RegisterPage() {
                 }`}
                 placeholder='أعد إدخال كلمة المرور'
                 disabled={isLoading}
-                aria-label="أعد إدخال كلمة المرور"
+                aria-label='أعد إدخال كلمة المرور'
                 aria-invalid={errors.confirmPassword ? 'true' : 'false'}
               />
-              {errors.confirmPassword && <p className='mt-1 text-sm text-default-error'>{errors.confirmPassword}</p>}
+              {errors.confirmPassword && (
+                <p className='mt-1 text-sm text-default-error'>
+                  {errors.confirmPassword}
+                </p>
+              )}
             </div>
 
             <div>
@@ -232,20 +273,30 @@ export default function RegisterPage() {
                   onChange={handleInputChange}
                   className='mt-1 h-4 w-4 rounded border-gray-300 text-[var(--default-default)] focus:ring-[var(--default-default)]'
                   disabled={isLoading}
-                  aria-label="agreeToTerms"
+                  aria-label='agreeToTerms'
                 />
                 <span className='text-sm text-gray-700 dark:text-gray-300'>
                   أوافق على{' '}
-                  <Link href='/terms' className='text-[var(--default-default)] hover:underline'>
+                  <Link
+                    href='/terms'
+                    className='text-[var(--default-default)] hover:underline'
+                  >
                     الشروط والأحكام
                   </Link>{' '}
                   و{' '}
-                  <Link href='/privacy' className='text-[var(--default-default)] hover:underline'>
+                  <Link
+                    href='/privacy'
+                    className='text-[var(--default-default)] hover:underline'
+                  >
                     سياسة الخصوصية
                   </Link>
                 </span>
               </label>
-              {errors.agreeToTerms && <p className='mt-1 text-sm text-default-error'>{errors.agreeToTerms}</p>}
+              {errors.agreeToTerms && (
+                <p className='mt-1 text-sm text-default-error'>
+                  {errors.agreeToTerms}
+                </p>
+              )}
             </div>
 
             <button
@@ -268,7 +319,10 @@ export default function RegisterPage() {
           <div className='mt-6 text-center'>
             <p className='text-gray-600 dark:text-gray-300'>
               لديك حساب بالفعل؟{' '}
-              <Link href={ROUTES.LOGIN} className='font-semibold text-[var(--default-default)] hover:underline'>
+              <Link
+                href={ROUTES.LOGIN}
+                className='font-semibold text-[var(--default-default)] hover:underline'
+              >
                 تسجيل الدخول
               </Link>
             </p>

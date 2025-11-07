@@ -27,7 +27,7 @@ const testResults = {
 
 try {
   console.log('\n?? Starting Playwright E2E Tests...\n');
-  
+
   const output = execSync(
     'npx playwright test tests/e2e/all-user-types.test.ts --reporter=list --reporter=json',
     {
@@ -37,9 +37,9 @@ try {
       timeout: 600000, // 10 minutes
     }
   );
-  
+
   console.log(output);
-  
+
   // Parse console output for test results
   const lines = output.split('\n');
   for (const line of lines) {
@@ -49,26 +49,29 @@ try {
       testResults.failed.push(line.trim());
     }
   }
-  
+
   testResults.total = testResults.passed.length + testResults.failed.length;
-  
 } catch (error) {
   console.log('\n??  Tests completed with some failures\n');
-  
+
   // Try to parse error output
   const errorOutput = error.stdout?.toString() || error.message;
   console.log(errorOutput);
-  
+
   // Extract test results from error output
   const lines = errorOutput.split('\n');
   for (const line of lines) {
     if (line.includes('?') || line.includes('PASSED') || line.includes('?')) {
       testResults.passed.push(line.trim());
-    } else if (line.includes('?') || line.includes('FAILED') || line.includes('?')) {
+    } else if (
+      line.includes('?') ||
+      line.includes('FAILED') ||
+      line.includes('?')
+    ) {
       testResults.failed.push(line.trim());
     }
   }
-  
+
   testResults.total = testResults.passed.length + testResults.failed.length;
 }
 
@@ -84,7 +87,10 @@ console.log(`?? Total: ${testResults.total}`);
 console.log(`??  Duration: ${(duration / 1000).toFixed(2)}s`);
 
 if (testResults.total > 0) {
-  const successRate = ((testResults.passed.length / testResults.total) * 100).toFixed(1);
+  const successRate = (
+    (testResults.passed.length / testResults.total) *
+    100
+  ).toFixed(1);
   console.log(`?? Success Rate: ${successRate}%`);
 }
 
@@ -109,9 +115,11 @@ const report = {
     passed: testResults.passed.length,
     failed: testResults.failed.length,
     total: testResults.total,
-    successRate: testResults.total > 0 
-      ? ((testResults.passed.length / testResults.total) * 100).toFixed(1) + '%'
-      : '0%',
+    successRate:
+      testResults.total > 0
+        ? ((testResults.passed.length / testResults.total) * 100).toFixed(1) +
+          '%'
+        : '0%',
   },
   passed: testResults.passed,
   failed: testResults.failed,

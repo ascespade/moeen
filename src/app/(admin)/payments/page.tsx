@@ -32,48 +32,48 @@ export default function PaymentsPage() {
 
   return (
     <>
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
       <div className='p-8'>
-      <div className='mb-6 flex items-center justify-between'>
-        <h1 className='text-3xl font-bold'>Payments Management</h1>
-        <Button>New Payment</Button>
-      </div>
+        <div className='mb-6 flex items-center justify-between'>
+          <h1 className='text-3xl font-bold'>Payments Management</h1>
+          <Button>New Payment</Button>
+        </div>
 
-      <div className='grid gap-4'>
-        {payments.length === 0 ? (
-          <Card>
-            <div className='p-8 text-center text-gray-500'>
-              No payments recorded yet.
-            </div>
-          </Card>
-        ) : (
-          payments.map(payment => (
-            <Card key={payment.id}>
-              <div className='p-4'>
-                <div className='flex items-center justify-between'>
-                  <div>
-                    <h3 className='font-semibold'>
-                      Payment #{payment.id?.slice(0, 8)}
-                    </h3>
-                    <p className='text-sm text-gray-600'>
-                      Amount: ${payment.amount}
-                    </p>
-                  </div>
-                  <Badge
-                    variant={
-                      payment.status === 'completed' ? 'success' : 'warning'
-                    }
-                  >
-                    {payment.status}
-                  </Badge>
-                </div>
+        <div className='grid gap-4'>
+          {payments.length === 0 ? (
+            <Card>
+              <div className='p-8 text-center text-gray-500'>
+                No payments recorded yet.
               </div>
             </Card>
-          ))
-        )}
-      </div>
+          ) : (
+            payments.map(payment => (
+              <Card key={payment.id}>
+                <div className='p-4'>
+                  <div className='flex items-center justify-between'>
+                    <div>
+                      <h3 className='font-semibold'>
+                        Payment #{payment.id?.slice(0, 8)}
+                      </h3>
+                      <p className='text-sm text-gray-600'>
+                        Amount: ${payment.amount}
+                      </p>
+                    </div>
+                    <Badge
+                      variant={
+                        payment.status === 'completed' ? 'success' : 'warning'
+                      }
+                    >
+                      {payment.status}
+                    </Badge>
+                  </div>
+                </div>
+              </Card>
+            ))
+          )}
+        </div>
       </div>
     </>
   );

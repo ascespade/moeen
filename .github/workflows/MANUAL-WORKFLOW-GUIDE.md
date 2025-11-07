@@ -7,6 +7,7 @@
 ## 🎯 الأوضاع المتاحة
 
 ### 1️⃣ `test-only` - فقط الاختبارات
+
 ```yaml
 إيش يسوي؟
 - يشغل Playwright tests
@@ -20,6 +21,7 @@
 ```
 
 ### 2️⃣ `test-and-fix` - اختبار + إصلاح
+
 ```yaml
 إيش يسوي؟
 - يشغل الاختبارات
@@ -33,6 +35,7 @@
 ```
 
 ### 3️⃣ `test-fix-enhance` - اختبار + إصلاح + تحسين
+
 ```yaml
 إيش يسوي؟
 - كل شيء في test-and-fix
@@ -46,6 +49,7 @@
 ```
 
 ### 4️⃣ `enhance-only` - فقط التحسين
+
 ```yaml
 إيش يسوي؟
 - يشغل Cursor Agent للتحسينات
@@ -101,10 +105,13 @@ gh workflow run cursor-manual-workflow.yml \
 ## ⚙️ الإعدادات المطلوبة
 
 ### GitHub Secrets
+
 يجب إضافة Secret التالي:
+
 - `CURSOR_API_KEY` - من Cursor Dashboard
 
 ### كيفية إضافة Secret
+
 1. روح Repository → **Settings**
 2. اضغط **Secrets and variables** → **Actions**
 3. اضغط تبويب **Secrets**
@@ -118,22 +125,22 @@ graph TD
     A[Start Workflow] --> B{Mode?}
     B -->|test-*| C[🧪 Run Tests]
     B -->|enhance-only| H[✨ Enhance]
-    
+
     C --> D{Pass?}
     D -->|Yes + Stop| E[✅ Done]
     D -->|No or Continue| F{Mode has fix?}
-    
+
     F -->|No| E
     F -->|Yes| G[🔧 Auto-Fix]
-    
+
     G --> I{Verify}
     I -->|Pass| J[✅ Create PR]
     I -->|Fail| K[❌ Report]
-    
+
     J --> L{Mode has enhance?}
     L -->|Yes| H
     L -->|No| E
-    
+
     H --> M[✅ Create PR]
     M --> N[📊 Final Report]
     E --> N
@@ -143,24 +150,28 @@ graph TD
 ## 🎯 أمثلة استخدام
 
 ### مثال 1: فحص سريع
+
 ```bash
 # شغل الاختبارات فقط
 gh workflow run cursor-manual-workflow.yml -f mode="test-only" -f stop_on_success="true"
 ```
 
 ### مثال 2: إصلاح تلقائي
+
 ```bash
 # لو فيه اختبارات فاشلة، أصلحها تلقائياً
 gh workflow run cursor-manual-workflow.yml -f mode="test-and-fix" -f stop_on_success="false"
 ```
 
 ### مثال 3: تحسين شامل
+
 ```bash
 # إصلاح + تحسين الكود
 gh workflow run cursor-manual-workflow.yml -f mode="test-fix-enhance" -f stop_on_success="false"
 ```
 
 ### مثال 4: تحسين فقط
+
 ```bash
 # حسّن الكود بدون اختبار
 gh workflow run cursor-manual-workflow.yml -f mode="enhance-only"
@@ -169,6 +180,7 @@ gh workflow run cursor-manual-workflow.yml -f mode="enhance-only"
 ## 🛡️ القواعد والأمان
 
 ### ما الـ Agent يعدله:
+
 ✅ `src/**/*`
 ✅ `tests/**/*`
 ✅ `e2e/**/*`
@@ -176,12 +188,14 @@ gh workflow run cursor-manual-workflow.yml -f mode="enhance-only"
 ✅ `lib/**/*`
 
 ### ما الـ Agent ما يعدله:
+
 ❌ `package.json`
 ❌ `package-lock.json`
 ❌ Workflows (`.github/workflows/*.yml`)
 ❌ Config files خارج `src/`
 
 ### الـ Agent ما يسوي:
+
 ❌ `git commit` مباشر
 ❌ `git push` للـ main
 ❌ تعطيل الاختبارات
@@ -189,11 +203,11 @@ gh workflow run cursor-manual-workflow.yml -f mode="enhance-only"
 
 ## 📊 الـ Models المتاحة
 
-| Model | السرعة | الجودة | متى تستخدمه؟ |
-|-------|--------|--------|---------------|
-| `claude-sonnet-4` | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | إصلاحات معقدة |
-| `gpt-4o` | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ | إصلاحات عادية |
-| `gpt-4-turbo` | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | إصلاحات سريعة |
+| Model             | السرعة     | الجودة     | متى تستخدمه؟  |
+| ----------------- | ---------- | ---------- | ------------- |
+| `claude-sonnet-4` | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ | إصلاحات معقدة |
+| `gpt-4o`          | ⭐⭐⭐⭐   | ⭐⭐⭐⭐   | إصلاحات عادية |
+| `gpt-4-turbo`     | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | إصلاحات سريعة |
 
 ## 🔗 روابط مفيدة
 
@@ -218,6 +232,7 @@ gh workflow run cursor-manual-workflow.yml -f mode="enhance-only"
 ## 🎉 جاهز؟
 
 ابدأ الآن:
+
 ```bash
 gh workflow run cursor-manual-workflow.yml
 ```
@@ -227,4 +242,3 @@ gh workflow run cursor-manual-workflow.yml
 **تم بواسطة:** Cursor Agent 🤖  
 **آخر تحديث:** اليوم  
 **الإصدار:** 1.0.0
-

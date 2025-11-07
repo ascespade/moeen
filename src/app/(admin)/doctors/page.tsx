@@ -591,8 +591,8 @@ export default function DoctorsPage() {
     };
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <Badge variant={config.variant} className={config.className}>
           {config.label}
@@ -904,14 +904,14 @@ export default function DoctorsPage() {
                     <input
                       type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => {
+                      onChange={e => {
                         if (e.target.checked) {
                           setSelectedDoctors(filteredDoctors.map(d => d.id));
                         } else {
                           setSelectedDoctors([]);
                         }
                       }}
-                      aria-label="تحديد الكل"
+                      aria-label='تحديد الكل'
                     />
                   </TableHead>
                   <TableHead>الطبيب</TableHead>
@@ -931,7 +931,7 @@ export default function DoctorsPage() {
                         type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedDoctors.includes(doctor.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedDoctors([...selectedDoctors, doctor.id]);
                           } else {
@@ -940,7 +940,7 @@ export default function DoctorsPage() {
                             );
                           }
                         }}
-                        aria-label="تحديد الطبيب"
+                        aria-label='تحديد الطبيب'
                       />
                     </TableCell>
                     <TableCell>

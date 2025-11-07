@@ -1,7 +1,7 @@
 /**
  * Comprehensive Round 7 Testing
  * ???????? ?????? ??? 7
- * 
+ *
  * Final verification that everything works as expected
  */
 
@@ -10,7 +10,6 @@ import { test, expect } from '@playwright/test';
 const baseURL = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000';
 
 test.describe('Round 7: Final Comprehensive Verification', () => {
-  
   test('? System Health Check', async ({ request }) => {
     const response = await request.get(`${baseURL}/api/health`);
     expect([200, 404]).toContain(response.status());
@@ -26,7 +25,9 @@ test.describe('Round 7: Final Comprehensive Verification', () => {
   test('? Login Page Accessible', async ({ page }) => {
     await page.goto(`${baseURL}/login`);
     await page.waitForLoadState('networkidle');
-    const emailInput = page.locator('input[type="email"], input[name="email"]').first();
+    const emailInput = page
+      .locator('input[type="email"], input[name="email"]')
+      .first();
     await expect(emailInput).toBeVisible({ timeout: 10000 });
   });
 
@@ -72,9 +73,10 @@ test.describe('Round 7: Final Comprehensive Verification', () => {
   test('? Accessibility - Semantic HTML', async ({ page }) => {
     await page.goto(baseURL);
     await page.waitForLoadState('networkidle');
-    const hasNav = await page.locator('nav, [role="navigation"]').count() > 0;
-    const hasMain = await page.locator('main, [role="main"]').count() > 0;
-    const hasHeader = await page.locator('header, [role="banner"]').count() > 0;
+    const hasNav = (await page.locator('nav, [role="navigation"]').count()) > 0;
+    const hasMain = (await page.locator('main, [role="main"]').count()) > 0;
+    const hasHeader =
+      (await page.locator('header, [role="banner"]').count()) > 0;
     expect(hasNav || hasMain || hasHeader).toBeTruthy();
   });
 

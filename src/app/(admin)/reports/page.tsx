@@ -319,8 +319,8 @@ export default function ReportsPage() {
     };
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <Badge variant={config.variant} className={config.className}>
           {config.label}
@@ -460,7 +460,7 @@ export default function ReportsPage() {
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))  } ${  sizes[i]}`;
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))} ${sizes[i]}`;
   };
 
   const formatDate = (dateString: string) => {
@@ -666,16 +666,17 @@ export default function ReportsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input type='checkbox'
+                    <input
+                      type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => {
+                      onChange={e => {
                         if (e.target.checked) {
                           setSelectedReports(filteredReports.map(r => r.id));
                         } else {
                           setSelectedReports([]);
                         }
                       }}
-                      aria-label="تحديد الكل"
+                      aria-label='تحديد الكل'
                     />
                   </TableHead>
                   <TableHead>النوع</TableHead>
@@ -691,10 +692,11 @@ export default function ReportsPage() {
                 {filteredReports.map(report => (
                   <TableRow key={report.id}>
                     <TableCell>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedReports.includes(report.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedReports([...selectedReports, report.id]);
                           } else {

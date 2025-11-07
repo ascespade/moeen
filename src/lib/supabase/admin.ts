@@ -1,7 +1,7 @@
 /**
  * Supabase Admin Client
  * عميل Supabase للمدير
- * 
+ *
  * Server-side admin client with service role key
  * Use only in server-side code, never expose to client
  */
@@ -12,10 +12,10 @@ import type { Database } from '../../types/database.types';
 /**
  * Create Supabase admin client with service role key
  * Bypasses Row Level Security (RLS)
- * 
+ *
  * WARNING: Only use in server-side code (API routes, server actions)
  * Never expose this to the client
- * 
+ *
  * @returns Supabase admin client instance
  */
 export function createAdminClient() {

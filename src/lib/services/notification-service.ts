@@ -1,7 +1,7 @@
 /**
  * Notification Service - Business Logic for Notifications
  * خدمة الإشعارات - منطق الأعمال للإشعارات
- * 
+ *
  * Business logic layer for notification operations
  */
 
@@ -50,11 +50,15 @@ export class NotificationService {
       .single();
 
     if (error) {
-      throw AppError.internal(`Failed to create notification: ${error.message}`);
+      throw AppError.internal(
+        `Failed to create notification: ${error.message}`
+      );
     }
 
     if (!notification) {
-      throw AppError.internal('Failed to create notification: No data returned');
+      throw AppError.internal(
+        'Failed to create notification: No data returned'
+      );
     }
 
     return notification as Notification;
@@ -63,7 +67,10 @@ export class NotificationService {
   /**
    * Mark notification as read
    */
-  static async markAsRead(notificationId: string, userId: string): Promise<void> {
+  static async markAsRead(
+    notificationId: string,
+    userId: string
+  ): Promise<void> {
     const adminClient = createAdminClient();
     const { error } = await adminClient
       .from('notifications')
@@ -72,7 +79,9 @@ export class NotificationService {
       .eq('user_id', userId);
 
     if (error) {
-      throw AppError.internal(`Failed to mark notification as read: ${error.message}`);
+      throw AppError.internal(
+        `Failed to mark notification as read: ${error.message}`
+      );
     }
   }
 
@@ -88,14 +97,19 @@ export class NotificationService {
       .eq('read', false);
 
     if (error) {
-      throw AppError.internal(`Failed to mark all notifications as read: ${error.message}`);
+      throw AppError.internal(
+        `Failed to mark all notifications as read: ${error.message}`
+      );
     }
   }
 
   /**
    * Get user notifications
    */
-  static async getUserNotifications(userId: string, limit?: number): Promise<Notification[]> {
+  static async getUserNotifications(
+    userId: string,
+    limit?: number
+  ): Promise<Notification[]> {
     const adminClient = createAdminClient();
     let query = adminClient
       .from('notifications')
@@ -110,7 +124,9 @@ export class NotificationService {
     const { data, error } = await query;
 
     if (error) {
-      throw AppError.internal(`Failed to fetch notifications: ${error.message}`);
+      throw AppError.internal(
+        `Failed to fetch notifications: ${error.message}`
+      );
     }
 
     return (data || []) as Notification[];

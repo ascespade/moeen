@@ -240,9 +240,7 @@ function getPreviousDateRanges(period: string) {
 
 function calculateDemographics(patients: any[]) {
   const maleCount = patients.filter((p: any) => p.gender === 'male').length;
-  const femaleCount = patients.filter(
-    (p: any) => p.gender === 'female'
-  ).length;
+  const femaleCount = patients.filter((p: any) => p.gender === 'female').length;
 
   const ageGroups = {
     children: patients.filter((p: any) => p.age < 18).length,
@@ -291,9 +289,7 @@ function calculateSessionStats(sessions: any[]) {
   const completed = sessions.filter(
     (s: any) => s.status === 'completed'
   ).length;
-  const upcoming = sessions.filter(
-    (s: any) => s.status === 'scheduled'
-  ).length;
+  const upcoming = sessions.filter((s: any) => s.status === 'scheduled').length;
 
   const sessionTypes = sessions.reduce(
     (acc: Record<string, number>, session: any) => {

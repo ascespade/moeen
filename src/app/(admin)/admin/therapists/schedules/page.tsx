@@ -208,7 +208,7 @@ export default function TherapistSchedulesPage() {
                 </h3>
                 <button
                   onClick={() => addSchedule(dayIndex)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       addSchedule(dayIndex);
@@ -234,13 +234,18 @@ export default function TherapistSchedulesPage() {
                         <label className='text-sm text-gray-600 dark:text-gray-400'>
                           من
                         </label>
-                        <input type='time'
+                        <input
+                          type='time'
                           value={schedule.start_time}
-                          onChange={(e) => updateSchedule(
+                          onChange={e =>
+                            updateSchedule(
                               schedule.id,
                               'start_time',
                               e.target.value
-                            )} aria-label="time" aria-invalid="true"
+                            )
+                          }
+                          aria-label='time'
+                          aria-invalid='true'
                           className='px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                         />
                       </div>
@@ -249,25 +254,33 @@ export default function TherapistSchedulesPage() {
                         <label className='text-sm text-gray-600 dark:text-gray-400'>
                           إلى
                         </label>
-                        <input type='time'
+                        <input
+                          type='time'
                           value={schedule.end_time}
-                          onChange={(e) => updateSchedule(
+                          onChange={e =>
+                            updateSchedule(
                               schedule.id,
                               'end_time',
                               e.target.value
-                            )} aria-label="time" aria-invalid="true"
+                            )
+                          }
+                          aria-label='time'
+                          aria-invalid='true'
                           className='px-3 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                         />
                       </div>
 
                       <label className='flex items-center gap-2 cursor-pointer'>
-                        <input type='checkbox'
+                        <input
+                          type='checkbox'
                           checked={schedule.is_available}
-                          onChange={(e) => updateSchedule(
+                          onChange={e =>
+                            updateSchedule(
                               schedule.id,
                               'is_available',
                               e.target.checked
-                            )}
+                            )
+                          }
                           aria-label='تحديد حالة الجدول'
                           className='w-5 h-5 rounded border-gray-300 dark:border-gray-600'
                         />
@@ -278,7 +291,7 @@ export default function TherapistSchedulesPage() {
 
                       <button
                         onClick={() => deleteSchedule(schedule.id)}
-                        onKeyDown={(e) => {
+                        onKeyDown={e => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
                             deleteSchedule(schedule.id);

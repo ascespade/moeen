@@ -48,13 +48,19 @@ export default function LogsAdminPage() {
       result = result.filter(r => r.type === filter);
     }
     if (q.trim()) {
-      result = result.filter(r => r.message.toLowerCase().includes(q.toLowerCase()));
+      result = result.filter(r =>
+        r.message.toLowerCase().includes(q.toLowerCase())
+      );
     }
     return result;
   }, [filter, q]);
 
   return (
-    <main id="main-content" className='min-h-screen bg-[var(--background)]' role='main'>
+    <main
+      id='main-content'
+      className='min-h-screen bg-[var(--background)]'
+      role='main'
+    >
       <div className='container-app py-6'>
         <h1 className='text-2xl font-bold mb-6'>سجلات النظام</h1>
         <div className='card p-4'>
@@ -63,7 +69,7 @@ export default function LogsAdminPage() {
             <select
               className='h-10 rounded-md border px-2'
               value={filter}
-              onChange={(e) => setFilter(e.target.value)}
+              onChange={e => setFilter(e.target.value)}
               aria-label='تصفية السجلات'
             >
               <option value='all'>الكل</option>
@@ -76,7 +82,7 @@ export default function LogsAdminPage() {
               className='h-10 rounded-md border px-3 w-full md:w-64'
               placeholder='بحث'
               value={q}
-              onChange={(e) => setQ(e.target.value)}
+              onChange={e => setQ(e.target.value)}
               aria-label='بحث في السجلات'
             />
           </div>

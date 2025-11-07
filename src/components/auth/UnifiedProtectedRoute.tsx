@@ -121,8 +121,10 @@ export default function UnifiedProtectedRoute({
               ليس لديك الصلاحيات اللازمة للوصول إلى هذه الصفحة
             </p>
             <button
-              onClick={() => router.push(user ? getDefaultRoute(user.role) : '/login')}
-              onKeyDown={(e) => {
+              onClick={() =>
+                router.push(user ? getDefaultRoute(user.role) : '/login')
+              }
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   router.push(user ? getDefaultRoute(user.role) : '/login');

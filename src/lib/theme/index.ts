@@ -1,7 +1,7 @@
 /**
  * Theme System - Complete Design Tokens
  * نظام الثيم - معاملات التصميم الكاملة
- * 
+ *
  * Centralized export of all design tokens extracted from homepage
  */
 

@@ -18,8 +18,8 @@ const projectRoot = join(__dirname, '..');
 console.log('? Comprehensive Accessibility Improvement to 90%+...\n');
 
 const allFiles = [
-  ...await glob('src/app/**/page.tsx', { cwd: projectRoot }),
-  ...await glob('src/components/**/*.tsx', { cwd: projectRoot }),
+  ...(await glob('src/app/**/page.tsx', { cwd: projectRoot })),
+  ...(await glob('src/components/**/*.tsx', { cwd: projectRoot })),
 ];
 
 let stats = {
@@ -44,24 +44,52 @@ for (const file of allFiles) {
 
     // Replace div with semantic HTML
     const semanticReplacements = [
-      { pattern: /<div className="nav/i, replacement: '<nav className="nav', close: '</nav>' },
-      { pattern: /<div className="main/i, replacement: '<main className="main', close: '</main>' },
-      { pattern: /<div className="header/i, replacement: '<header className="header', close: '</header>' },
-      { pattern: /<div className="footer/i, replacement: '<footer className="footer', close: '</footer>' },
-      { pattern: /<div className="article/i, replacement: '<article className="article', close: '</article>' },
-      { pattern: /<div className="section/i, replacement: '<section className="section', close: '</section>' },
-      { pattern: /<div className="aside/i, replacement: '<aside className="aside', close: '</aside>' },
+      {
+        pattern: /<div className="nav/i,
+        replacement: '<nav className="nav',
+        close: '</nav>',
+      },
+      {
+        pattern: /<div className="main/i,
+        replacement: '<main className="main',
+        close: '</main>',
+      },
+      {
+        pattern: /<div className="header/i,
+        replacement: '<header className="header',
+        close: '</header>',
+      },
+      {
+        pattern: /<div className="footer/i,
+        replacement: '<footer className="footer',
+        close: '</footer>',
+      },
+      {
+        pattern: /<div className="article/i,
+        replacement: '<article className="article',
+        close: '</article>',
+      },
+      {
+        pattern: /<div className="section/i,
+        replacement: '<section className="section',
+        close: '</section>',
+      },
+      {
+        pattern: /<div className="aside/i,
+        replacement: '<aside className="aside',
+        close: '</aside>',
+      },
     ];
 
     for (const { pattern, replacement, close } of semanticReplacements) {
       if (pattern.test(content)) {
         content = content.replace(pattern, replacement);
-        
+
         // Find and replace corresponding closing tag
         const lines = content.split('\n');
         let depth = 0;
         let found = false;
-        
+
         for (let i = 0; i < lines.length; i++) {
           if (lines[i].match(pattern)) {
             found = true;
@@ -78,7 +106,7 @@ for (const file of allFiles) {
             }
           }
         }
-        
+
         if (found) {
           content = lines.join('\n');
           modified = true;
@@ -87,13 +115,25 @@ for (const file of allFiles) {
     }
 
     // Add semantic roles
-    if (content.includes('<div className="navigation') && !content.includes('role="navigation"')) {
-      content = content.replace(/<div className="navigation/g, '<div className="navigation" role="navigation"');
+    if (
+      content.includes('<div className="navigation') &&
+      !content.includes('role="navigation"')
+    ) {
+      content = content.replace(
+        /<div className="navigation/g,
+        '<div className="navigation" role="navigation"'
+      );
       modified = true;
     }
 
-    if (content.includes('<div className="content') && !content.includes('role="main"')) {
-      content = content.replace(/<div className="content/g, '<div className="content" role="main"');
+    if (
+      content.includes('<div className="content') &&
+      !content.includes('role="main"')
+    ) {
+      content = content.replace(
+        /<div className="content/g,
+        '<div className="content" role="main"'
+      );
       modified = true;
     }
 
@@ -123,15 +163,15 @@ for (const file of allFiles) {
     // Add aria-label to buttons
     const buttonPattern = /<button([^>]*?)>(.*?)<\/button>/gs;
     const matches = [...content.matchAll(buttonPattern)];
-    
+
     for (const match of matches) {
       const attrs = match[1];
       let text = match[2].replace(/<[^>]+>/g, '').trim();
-      
+
       if (attrs.includes('aria-label') || attrs.includes('aria-labelledby')) {
         continue;
       }
-      
+
       let ariaLabel = '';
       if (text && text.length > 0 && text.length < 50) {
         ariaLabel = text.replace(/"/g, '&quot;').slice(0, 50);
@@ -152,7 +192,7 @@ for (const file of allFiles) {
           ariaLabel = 'Button';
         }
       }
-      
+
       const newAttrs = attrs.trim() + ` aria-label="${ariaLabel}"`;
       const newButton = `<button${newAttrs}>${match[2]}</button>`;
       content = content.replace(match[0], newButton);
@@ -163,15 +203,15 @@ for (const file of allFiles) {
     // Add aria-label to links
     const linkPattern = /<a([^>]*?)>(.*?)<\/a>/gs;
     const linkMatches = [...content.matchAll(linkPattern)];
-    
+
     for (const match of linkMatches) {
       const attrs = match[1];
       let text = match[2].replace(/<[^>]+>/g, '').trim();
-      
+
       if (attrs.includes('aria-label') || attrs.includes('aria-labelledby')) {
         continue;
       }
-      
+
       if (text && text.length > 0) {
         const ariaLabel = text.replace(/"/g, '&quot;').slice(0, 50);
         const newAttrs = attrs.trim() + ` aria-label="${ariaLabel}"`;
@@ -185,18 +225,22 @@ for (const file of allFiles) {
     // Add aria-label to inputs
     const inputPattern = /<input([^>]*?)>/g;
     const inputMatches = [...content.matchAll(inputPattern)];
-    
+
     for (const match of inputMatches) {
       const attrs = match[1];
-      
-      if (attrs.includes('aria-label') || attrs.includes('aria-labelledby') || attrs.includes('id=') && content.includes(`<label for=`)) {
+
+      if (
+        attrs.includes('aria-label') ||
+        attrs.includes('aria-labelledby') ||
+        (attrs.includes('id=') && content.includes(`<label for=`))
+      ) {
         continue;
       }
-      
+
       // Try to find placeholder or name
       const placeholderMatch = attrs.match(/placeholder=["']([^"']+)["']/);
       const nameMatch = attrs.match(/name=["']([^"']+)["']/);
-      
+
       if (placeholderMatch || nameMatch) {
         const label = placeholderMatch ? placeholderMatch[1] : nameMatch[1];
         const newAttrs = attrs.trim() + ` aria-label="${label}"`;
@@ -227,21 +271,21 @@ for (const file of allFiles) {
   const filePath = join(projectRoot, file);
   try {
     let content = readFileSync(filePath, 'utf-8');
-    
+
     if (!content.includes("'use client'")) continue;
-    
+
     let modified = false;
 
     // Add onKeyDown to buttons with onClick
     const buttonPattern = /<button([^>]*?)onClick=\{([^}]+)\}([^>]*?)>/g;
     const matches = [...content.matchAll(buttonPattern)];
-    
+
     for (const match of matches) {
       const attrs = match[1] + match[3];
       const onClickHandler = match[2];
-      
+
       if (attrs.includes('onKeyDown')) continue;
-      
+
       // Extract handler function
       const handlerMatch = onClickHandler.match(/(\([^)]*\)\s*=>\s*[^,}]+)/);
       if (handlerMatch) {
@@ -257,11 +301,11 @@ for (const file of allFiles) {
     // Add tabIndex to divs with onClick
     const divPattern = /<div([^>]*?)onClick=\{([^}]+)\}([^>]*?)>/g;
     const divMatches = [...content.matchAll(divPattern)];
-    
+
     for (const match of divMatches) {
       const attrs = match[1] + match[3];
       if (attrs.includes('tabIndex')) continue;
-      
+
       const newDiv = `<div${match[1]}tabIndex={0} onClick={${match[2]}}${match[3]}>`;
       content = content.replace(match[0], newDiv);
       modified = true;
@@ -292,16 +336,16 @@ for (const file of allFiles) {
     // Add alt to images
     const imgPattern = /<img([^>]*?)>/g;
     const imgMatches = [...content.matchAll(imgPattern)];
-    
+
     for (const match of imgMatches) {
       const attrs = match[1];
-      
+
       if (attrs.includes('alt=')) continue;
-      
+
       // Try to find src or title
       const srcMatch = attrs.match(/src=["']([^"']+)["']/);
       const titleMatch = attrs.match(/title=["']([^"']+)["']/);
-      
+
       let altText = '';
       if (titleMatch) {
         altText = titleMatch[1];
@@ -312,7 +356,7 @@ for (const file of allFiles) {
       } else {
         altText = 'Image';
       }
-      
+
       const newAttrs = attrs.trim() + ` alt="${altText}"`;
       const newImg = `<img${newAttrs}>`;
       content = content.replace(match[0], newImg);
@@ -340,7 +384,7 @@ for (const file of allFiles.slice(0, 50)) {
   const filePath = join(projectRoot, file);
   try {
     let content = readFileSync(filePath, 'utf-8');
-    
+
     // Add skip link if it's a page
     if (file.includes('/page.tsx') && !content.includes('skip-to-main')) {
       // Find body or main content
@@ -356,14 +400,20 @@ for (const file of allFiles.slice(0, 50)) {
         } else if (content.includes('return')) {
           content = content.replace(/(return\s*\([^<]*<)/, `$1\n${skipLink}\n`);
         }
-        
+
         // Add id to main
         if (content.includes('<main')) {
-          content = content.replace(/<main([^>]*?)>/g, '<main$1 id="main-content">');
+          content = content.replace(
+            /<main([^>]*?)>/g,
+            '<main$1 id="main-content">'
+          );
         } else if (content.includes('role="main"')) {
-          content = content.replace(/role="main"([^>]*?)>/g, 'role="main" id="main-content"$1>');
+          content = content.replace(
+            /role="main"([^>]*?)>/g,
+            'role="main" id="main-content"$1>'
+          );
         }
-        
+
         writeFileSync(filePath, content, 'utf-8');
         stats.skipLinks++;
         if (stats.skipLinks <= 20) {
@@ -385,18 +435,28 @@ for (const file of allFiles.slice(0, 50)) {
   const filePath = join(projectRoot, file);
   try {
     let content = readFileSync(filePath, 'utf-8');
-    
+
     // Add aria-live region for dynamic content
-    if ((content.includes('useState') || content.includes('useEffect')) && !content.includes('aria-live')) {
+    if (
+      (content.includes('useState') || content.includes('useEffect')) &&
+      !content.includes('aria-live')
+    ) {
       // Check if there's dynamic content that would benefit from aria-live
-      if (content.includes('messages') || content.includes('notifications') || content.includes('alerts')) {
+      if (
+        content.includes('messages') ||
+        content.includes('notifications') ||
+        content.includes('alerts')
+      ) {
         const liveRegion = `
 <div aria-live="polite" aria-atomic="true" className="sr-only">
   <span id="live-region"></span>
 </div>
 `;
         if (content.includes('return')) {
-          content = content.replace(/(return\s*\([^<]*<)/, `$1\n${liveRegion}\n`);
+          content = content.replace(
+            /(return\s*\([^<]*<)/,
+            `$1\n${liveRegion}\n`
+          );
           writeFileSync(filePath, content, 'utf-8');
           stats.liveRegions++;
           if (stats.liveRegions <= 20) {
@@ -412,7 +472,14 @@ for (const file of allFiles.slice(0, 50)) {
 
 console.log(`\n?? Live Regions: Added to ${stats.liveRegions} components\n`);
 
-stats.total = stats.semantic + stats.aria + stats.keyboard + stats.alt + stats.labels + stats.skipLinks + stats.liveRegions;
+stats.total =
+  stats.semantic +
+  stats.aria +
+  stats.keyboard +
+  stats.alt +
+  stats.labels +
+  stats.skipLinks +
+  stats.liveRegions;
 
 console.log('\n' + '='.repeat(70));
 console.log('?? Accessibility Improvement Summary');

@@ -266,14 +266,15 @@ const ModernHero = memo(function ModernHero({
           {heroImages.map((_, index) => (
             <button
               key={index}
-              onClick={() => { setCurrentImageIndex(index) }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                setCurrentImageIndex(index);
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   setCurrentImageIndex(index);
                 }
               }}
-              aria-label={`التبديل إلى الصورة ${index + 1}`}
               className={`group relative h-3 rounded-full transition-all duration-500 ease-out ${
                 index === currentImageIndex
                   ? 'w-12 bg-primary-400 shadow-lg'

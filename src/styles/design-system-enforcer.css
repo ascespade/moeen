@@ -48,7 +48,7 @@
 }
 
 /* Force bg-background to use CSS variable */
-.bg-background:not([class*="var(--"]) {
+.bg-background:not([class*='var(--']) {
   background-color: var(--background) !important;
 }
 
@@ -73,15 +73,15 @@
 
 /* Prevent hardcoded colors in production */
 @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
-  [class*="bg-red-"]:not([class*="var(--"]):not(.btn):not(.card),
-  [class*="bg-blue-"]:not([class*="var(--"]):not(.btn):not(.card),
-  [class*="bg-green-"]:not([class*="var(--"]):not(.btn):not(.card),
-  [class*="bg-yellow-"]:not([class*="var(--"]):not(.btn):not(.card),
-  [class*="bg-purple-"]:not([class*="var(--"]):not(.btn):not(.card),
-  [class*="bg-pink-"]:not([class*="var(--"]):not(.btn):not(.card),
-  [class*="bg-indigo-"]:not([class*="var(--"]):not(.btn):not(.card),
-  [class*="bg-teal-"]:not([class*="var(--"]):not(.btn):not(.card),
-  [class*="bg-orange-"]:not([class*="var(--"]):not(.btn):not(.card) {
+  [class*='bg-red-']:not([class*='var(--']):not(.btn):not(.card),
+  [class*='bg-blue-']:not([class*='var(--']):not(.btn):not(.card),
+  [class*='bg-green-']:not([class*='var(--']):not(.btn):not(.card),
+  [class*='bg-yellow-']:not([class*='var(--']):not(.btn):not(.card),
+  [class*='bg-purple-']:not([class*='var(--']):not(.btn):not(.card),
+  [class*='bg-pink-']:not([class*='var(--']):not(.btn):not(.card),
+  [class*='bg-indigo-']:not([class*='var(--']):not(.btn):not(.card),
+  [class*='bg-teal-']:not([class*='var(--']):not(.btn):not(.card),
+  [class*='bg-orange-']:not([class*='var(--']):not(.btn):not(.card) {
     /* These will be caught by validator, but provide warning in console */
   }
 }
@@ -94,12 +94,14 @@
 }
 
 /* Ensure proper spacing */
-[class*="p-"]:not([class*="px-"]):not([class*="py-"]):not([class*="pt-"]):not([class*="pb-"]):not([class*="pl-"]):not([class*="pr-"]) {
+[class*='p-']:not([class*='px-']):not([class*='py-']):not([class*='pt-']):not(
+    [class*='pb-']
+  ):not([class*='pl-']):not([class*='pr-']) {
   /* Valid spacing classes */
 }
 
 /* Accessibility: Ensure proper contrast */
-[class*="text-"]:not([class*="var(--text-"]) {
+[class*='text-']:not([class*='var(--text-']) {
   /* Will be validated for contrast */
 }
 
@@ -116,4 +118,3 @@
     background: var(--background) !important;
   }
 }
-

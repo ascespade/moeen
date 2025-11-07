@@ -9,10 +9,14 @@ async function testLogin() {
 
   try {
     console.log('📱 Going to login page...');
-    await page.goto('http://localhost:3002/login', { waitUntil: 'networkidle' });
+    await page.goto('http://localhost:3002/login', {
+      waitUntil: 'networkidle',
+    });
 
     console.log('✅ Page loaded');
-    await page.waitForSelector('[data-testid="email-input"]', { timeout: 5000 });
+    await page.waitForSelector('[data-testid="email-input"]', {
+      timeout: 5000,
+    });
 
     // Fill credentials
     await page.fill('[data-testid="email-input"]', 'admin@test.com');
@@ -53,7 +57,6 @@ async function testLogin() {
 
       await page.screenshot({ path: './test-results/failed.png' });
     }
-
   } catch (error) {
     console.error('❌ Error:', error.message);
     await page.screenshot({ path: './test-results/error.png' });
@@ -64,8 +67,3 @@ async function testLogin() {
 }
 
 testLogin().catch(console.error);
-
-
-
-
-

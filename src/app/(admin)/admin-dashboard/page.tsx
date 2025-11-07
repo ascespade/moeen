@@ -152,7 +152,6 @@ export default function DashboardPage() {
     return () => clearInterval(interval);
   }, []);
 
-
   const getHealthBadge = (status: string) => {
     switch (status) {
       case 'healthy':
@@ -404,7 +403,8 @@ export default function DashboardPage() {
                     {metrics?.healthcare.appointments.today || 0}
                   </div>
                   <p className='text-xs text-muted-foreground'>
-                    {metrics?.healthcare.appointments.thisWeek || 0} في هذا الأسبوع
+                    {metrics?.healthcare.appointments.thisWeek || 0} في هذا
+                    الأسبوع
                   </p>
                 </CardContent>
               </Card>

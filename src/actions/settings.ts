@@ -1,7 +1,7 @@
 /**
  * Settings Actions - Server Actions for Settings Management
  * إجراءات الإعدادات - Server Actions لإدارة الإعدادات
- * 
+ *
  * All settings-related server actions
  */
 
@@ -43,16 +43,16 @@ export const updateGeneralSettingsAction = withAction(
     }
 
     // Update profile if exists
-    const { error: profileError } = await adminClient
-      .from('profiles')
-      .upsert({
-        user_id: user.id,
-        language: validated.language,
-        timezone: validated.timezone || null,
-      });
+    const { error: profileError } = await adminClient.from('profiles').upsert({
+      user_id: user.id,
+      language: validated.language,
+      timezone: validated.timezone || null,
+    });
 
     if (profileError) {
-      throw AppError.internal(`فشل تحديث الملف الشخصي: ${profileError.message}`);
+      throw AppError.internal(
+        `فشل تحديث الملف الشخصي: ${profileError.message}`
+      );
     }
 
     revalidatePath('/settings');
@@ -71,13 +71,11 @@ export const updateAppearanceSettingsAction = withAction(
     const validated = appearanceSettingsSchema.parse(input);
     const adminClient = createAdminClient();
 
-    const { error } = await adminClient
-      .from('settings')
-      .upsert({
-        user_id: user.id,
-        key: 'appearance',
-        value: validated as Json,
-      } as SettingInsert);
+    const { error } = await adminClient.from('settings').upsert({
+      user_id: user.id,
+      key: 'appearance',
+      value: validated as Json,
+    } as SettingInsert);
 
     if (error) {
       throw AppError.internal(`فشل تحديث إعدادات المظهر: ${error.message}`);
@@ -99,13 +97,11 @@ export const updateNotificationSettingsAction = withAction(
     const validated = notificationSettingsSchema.parse(input);
     const adminClient = createAdminClient();
 
-    const { error } = await adminClient
-      .from('settings')
-      .upsert({
-        user_id: user.id,
-        key: 'notifications',
-        value: validated as Json,
-      } as SettingInsert);
+    const { error } = await adminClient.from('settings').upsert({
+      user_id: user.id,
+      key: 'notifications',
+      value: validated as Json,
+    } as SettingInsert);
 
     if (error) {
       throw AppError.internal(`فشل تحديث إعدادات الإشعارات: ${error.message}`);
@@ -127,13 +123,11 @@ export const updateSecuritySettingsAction = withAction(
     const validated = securitySettingsSchema.parse(input);
     const adminClient = createAdminClient();
 
-    const { error } = await adminClient
-      .from('settings')
-      .upsert({
-        user_id: user.id,
-        key: 'security',
-        value: validated as Json,
-      } as SettingInsert);
+    const { error } = await adminClient.from('settings').upsert({
+      user_id: user.id,
+      key: 'security',
+      value: validated as Json,
+    } as SettingInsert);
 
     if (error) {
       throw AppError.internal(`فشل تحديث إعدادات الأمان: ${error.message}`);

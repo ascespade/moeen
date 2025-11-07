@@ -19,8 +19,44 @@ const _ALLOWED_CLASSES = {
   layout: ['flex', 'grid', 'inline-flex', 'block', 'inline-block'],
 
   // Spacing
-  padding: ['p-1', 'p-2', 'p-3', 'p-4', 'p-6', 'p-8', 'px-1', 'px-2', 'px-3', 'px-4', 'px-6', 'px-8', 'py-1', 'py-2', 'py-3', 'py-4', 'py-6', 'py-8'],
-  margin: ['m-1', 'm-2', 'm-3', 'm-4', 'm-6', 'm-8', 'mt-1', 'mt-2', 'mt-3', 'mt-4', 'mb-1', 'mb-2', 'mb-3', 'mb-4', 'mb-6', 'mb-8'],
+  padding: [
+    'p-1',
+    'p-2',
+    'p-3',
+    'p-4',
+    'p-6',
+    'p-8',
+    'px-1',
+    'px-2',
+    'px-3',
+    'px-4',
+    'px-6',
+    'px-8',
+    'py-1',
+    'py-2',
+    'py-3',
+    'py-4',
+    'py-6',
+    'py-8',
+  ],
+  margin: [
+    'm-1',
+    'm-2',
+    'm-3',
+    'm-4',
+    'm-6',
+    'm-8',
+    'mt-1',
+    'mt-2',
+    'mt-3',
+    'mt-4',
+    'mb-1',
+    'mb-2',
+    'mb-3',
+    'mb-4',
+    'mb-6',
+    'mb-8',
+  ],
   gap: ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-6', 'gap-8'],
 
   // Colors - MUST use CSS variables
@@ -40,10 +76,7 @@ const _ALLOWED_CLASSES = {
     'text-white',
     'text-black',
   ],
-  border: [
-    'border-[var(--brand-border)]',
-    'border-[var(--brand-primary)]',
-  ],
+  border: ['border-[var(--brand-border)]', 'border-[var(--brand-primary)]'],
 
   // Components
   button: ['btn', 'btn-default', 'btn-outline', 'btn-secondary'],
@@ -54,7 +87,17 @@ const _ALLOWED_CLASSES = {
   responsive: ['sm:', 'md:', 'lg:', 'xl:', '2xl:'],
 
   // Utilities
-  utilities: ['rounded', 'rounded-lg', 'rounded-md', 'rounded-xl', 'shadow', 'shadow-lg', 'shadow-md', 'transition-all', 'transition-colors'],
+  utilities: [
+    'rounded',
+    'rounded-lg',
+    'rounded-md',
+    'rounded-xl',
+    'shadow',
+    'shadow-lg',
+    'shadow-md',
+    'transition-all',
+    'transition-colors',
+  ],
 };
 
 // Forbidden patterns
@@ -73,7 +116,10 @@ const FORBIDDEN_PATTERNS = [
 /**
  * Validate CSS classes in a string
  */
-export function validateCSSClasses(classes: string, context?: string): ValidationResult {
+export function validateCSSClasses(
+  classes: string,
+  context?: string
+): ValidationResult {
   const errors: string[] = [];
   const warnings: string[] = [];
   const suggestions: string[] = [];
@@ -115,7 +161,12 @@ export function validateCSSClasses(classes: string, context?: string): Validatio
   const hasColorClasses = /(bg|text|border)-/.test(classes);
   const hasCSSVariables = /var\(--/.test(classes);
 
-  if (hasColorClasses && !hasCSSVariables && !classes.includes('btn') && !classes.includes('card')) {
+  if (
+    hasColorClasses &&
+    !hasCSSVariables &&
+    !classes.includes('btn') &&
+    !classes.includes('card')
+  ) {
     warnings.push(
       `Color classes detected without CSS variables ${context ? `in ${context}` : ''}. Consider using CSS variables for theme support.`
     );
@@ -132,7 +183,10 @@ export function validateCSSClasses(classes: string, context?: string): Validatio
 /**
  * Validate a React component's className props
  */
-export function validateComponent(componentCode: string, componentName: string): ValidationResult {
+export function validateComponent(
+  componentCode: string,
+  componentName: string
+): ValidationResult {
   const errors: string[] = [];
   const warnings: string[] = [];
   const suggestions: string[] = [];
@@ -205,7 +259,9 @@ export function autoFixCSSClasses(classes: string): string {
 /**
  * Validate entire file
  */
-export async function validateFile(_filePath: string): Promise<ValidationResult> {
+export async function validateFile(
+  _filePath: string
+): Promise<ValidationResult> {
   // This would read the file and validate it
   // For now, return a placeholder
   return {
@@ -215,4 +271,3 @@ export async function validateFile(_filePath: string): Promise<ValidationResult>
     suggestions: [],
   };
 }
-

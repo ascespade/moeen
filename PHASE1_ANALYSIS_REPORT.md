@@ -1,4 +1,5 @@
 # Phase 1: Project Analysis Report
+
 ## تحليل المشروع - المرحلة الأولى
 
 ---
@@ -17,58 +18,51 @@
 ### Current Design System (Homepage Reference)
 
 #### Colors (from `src/styles/centralized.css`)
+
 ```css
 /* Brand Colors */
---brand-primary: #f97316 (Orange)
---brand-primary-hover: #ea580c
---brand-secondary: #eab308 (Yellow)
---brand-accent: #0284c7 (Blue)
-
-/* Feature Colors */
---feature-innovation: #22c55e (Green)
---feature-inclusivity: #3b82f6 (Blue)
---feature-quality-start: #eab308 (Yellow)
---feature-quality-end: #f97316 (Orange)
---feature-care-start: #ec4899 (Pink)
---feature-care-end: #ef4444 (Red)
-
-/* Neutrals */
---background: #ffffff
---panel: #f8faf9
---brand-surface: #f1f5f9
---brand-border: #cbd5e1
-
-/* Text Colors */
---text-primary: #1e293b
---text-secondary: #475569
---text-muted: #64748b
+--brand-primary: #f97316 (Orange) --brand-primary-hover: #ea580c
+  --brand-secondary: #eab308 (Yellow) --brand-accent: #0284c7 (Blue)
+  /* Feature Colors */ --feature-innovation: #22c55e (Green)
+  --feature-inclusivity: #3b82f6 (Blue) --feature-quality-start: #eab308
+  (Yellow) --feature-quality-end: #f97316 (Orange) --feature-care-start: #ec4899
+  (Pink) --feature-care-end: #ef4444 (Red) /* Neutrals */ --background: #ffffff
+  --panel: #f8faf9 --brand-surface: #f1f5f9 --brand-border: #cbd5e1
+  /* Text Colors */ --text-primary: #1e293b --text-secondary: #475569
+  --text-muted: #64748b;
 ```
 
 #### Typography
+
 - **Font Stack:** Tajawal, Noto Sans Arabic, Cairo, Amiri, system fonts
 - **Sizes:** 4xl, 5xl (headings), xl, lg, base, sm (body)
 - **Weights:** 600 (semibold for headings), 400 (normal)
 
 #### Spacing
+
 - Variables: `--space-1` to `--space-8`
 - Container: `container-app` (max-width: 1200px)
 
 #### Shadows
+
 - `--shadow-sm`: 0 1px 2px rgba(16, 24, 40, 0.05)
 - `--shadow-md`: 0 4px 6px rgba(2, 6, 23, 0.08)
 - `--shadow-lg`: 0 10px 15px rgba(2, 6, 23, 0.12)
 
 #### Borders & Radius
+
 - `--radius-sm`: 0.25rem
 - `--radius-md`: 0.375rem
 - `--radius-lg`: 0.5rem
 
 #### Animations
+
 - `--transition-fast`: 150ms ease-out
 - `--transition-normal`: 300ms ease-out
 - `fade-in` keyframe animation
 
 #### Component Styles
+
 - **Buttons:** `.btn-default`, `.btn-outline`, `.btn-secondary`
 - **Cards:** `.card` with hover effects
 - **Navigation:** `.nav`, `.nav-link`
@@ -78,6 +72,7 @@
 ## 🗂️ Project Structure Analysis
 
 ### Current Structure
+
 ```
 src/
 ├── app/                    # Next.js App Router
@@ -105,6 +100,7 @@ src/
 ```
 
 ### Required Structure (from JSON config)
+
 ```
 src/
 ├── lib/
@@ -179,6 +175,7 @@ src/
 20. **src/app/(health)/sessions/page.tsx**
 
 ### Mock Data Patterns Found
+
 - `const mock* = [...]`
 - `const fake* = [...]`
 - `const dummy* = [...]`
@@ -192,6 +189,7 @@ src/
 ## 🔐 Authentication & Middleware Analysis
 
 ### Current State
+
 - **Middleware Files Found:**
   - `src/middleware.prod.ts` (exists but disabled)
   - `src/middleware.disabled.ts`
@@ -199,6 +197,7 @@ src/
   - **No active `middleware.ts`** ✅ (Good - matches requirement)
 
 ### Auth Protection
+
 - **Current:** Mixed approaches (some pages use hooks, some don't)
 - **Required:** Layout-based protection + wrappers
 - **Auth Files:** Scattered in `src/lib/auth/` (needs centralization)
@@ -208,11 +207,13 @@ src/
 ## 📁 Centralization Status
 
 ### ✅ Already Centralized
+
 - Routes: `src/constants/routes.ts` (exists but incomplete)
 - Design tokens: `src/styles/centralized.css`
 - Supabase clients: `src/lib/supabase/`
 
 ### ❌ Needs Centralization
+
 - **API Endpoints:** Scattered across codebase
 - **Messages:** Hardcoded in components
 - **Error Handling:** Partial in `src/lib/errors/`
@@ -227,6 +228,7 @@ src/
 ## 🎯 Component Analysis
 
 ### Homepage Components (Reference)
+
 1. **OriginalHero** - Uses design tokens correctly ✅
 2. **OriginalFeatures** - Uses design tokens correctly ✅
 3. **ServicesWithImages** - Fetches from API ✅
@@ -237,6 +239,7 @@ src/
 8. **ContactFormWithMap** - Needs verification
 
 ### UI Components Status
+
 - **shadcn/ui:** Not fully integrated
 - **Design System:** Partially implemented
 - **Dark Mode:** Working but needs verification
@@ -247,6 +250,7 @@ src/
 ## 🔍 TypeScript & Code Quality
 
 ### Current Issues
+
 - **TypeScript:** Not strict mode (needs `tsconfig.json` update)
 - **`any` types:** Found multiple instances (needs removal)
 - **Inline styles:** Some found (needs removal)
@@ -257,12 +261,14 @@ src/
 ## 📋 Database & API Analysis
 
 ### Supabase Setup
+
 - ✅ Client: `src/lib/supabase/client.ts`
 - ✅ Server: `src/lib/supabase/server.ts`
 - ✅ Admin: `src/lib/supabase/admin.ts`
 - ❌ Queries: No centralized queries directory
 
 ### API Routes
+
 - **Total:** 140 files in `src/app/api/`
 - **Status:** Need standardization
 - **Auth Protection:** Mixed approaches
@@ -272,6 +278,7 @@ src/
 ## 🚀 Implementation Priority
 
 ### Phase 1 (Current) - Analysis ✅
+
 - [x] Analyze project structure
 - [x] Extract design from homepage
 - [x] Identify mock data
@@ -279,6 +286,7 @@ src/
 - [x] Create refactoring plan
 
 ### Phase 2 (Next) - Setup
+
 1. Create `.cursorrules`
 2. Setup Husky + lint-staged
 3. Configure `tsconfig.json` (strict mode)
@@ -286,6 +294,7 @@ src/
 5. Setup Supabase types generation
 
 ### Phase 3 - Design System
+
 1. Extract colors to `lib/theme/colors.ts`
 2. Extract typography to `lib/theme/typography.ts`
 3. Extract spacing to `lib/theme/spacing.ts`

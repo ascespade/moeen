@@ -54,7 +54,7 @@ export class DesignSystemGuard extends Component<
 
     // Find all elements with className
     const elements = document.querySelectorAll('[class]');
-    elements.forEach((element) => {
+    elements.forEach(element => {
       const className = element.getAttribute('class') || '';
       const result = validateCSSClasses(className, this.props.componentName);
       errors.push(...result.errors);
@@ -86,11 +86,11 @@ export class DesignSystemGuard extends Component<
 
     if (strict && !violations.isValid) {
       return (
-        <div className="border-2 border-red-500 p-4 bg-red-50 rounded">
-          <h3 className="text-red-800 font-bold mb-2">
+        <div className='border-2 border-red-500 p-4 bg-red-50 rounded'>
+          <h3 className='text-red-800 font-bold mb-2'>
             Design System Violation Detected
           </h3>
-          <ul className="list-disc list-inside text-red-700">
+          <ul className='list-disc list-inside text-red-700'>
             {violations.errors.map((error, index) => (
               <li key={index}>{error}</li>
             ))}
@@ -106,7 +106,10 @@ export class DesignSystemGuard extends Component<
 /**
  * Hook to validate and auto-fix CSS classes
  */
-export function useDesignSystemValidation(classes: string, componentName: string) {
+export function useDesignSystemValidation(
+  classes: string,
+  componentName: string
+) {
   const [violations, setViolations] = React.useState<ValidationResult>({
     isValid: true,
     errors: [],
@@ -121,4 +124,3 @@ export function useDesignSystemValidation(classes: string, componentName: string
 
   return violations;
 }
-

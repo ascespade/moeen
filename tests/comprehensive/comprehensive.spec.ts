@@ -25,12 +25,16 @@ test.describe('Comprehensive Application Tests', () => {
 
   test('API health check', async ({ request }) => {
     try {
-      const response = await request.get('http://localhost:3000/api/health', { timeout: 5000 });
+      const response = await request.get('http://localhost:3000/api/health', {
+        timeout: 5000,
+      });
       expect(response.status()).toBeLessThan(500);
     } catch (error) {
       // API might not exist, but that's ok - we're testing structure
       // Create a simple health endpoint check
-      const response = await request.get('http://localhost:3000/', { timeout: 5000 });
+      const response = await request.get('http://localhost:3000/', {
+        timeout: 5000,
+      });
       expect(response.status()).toBeLessThan(500);
     }
   });
@@ -57,7 +61,7 @@ test.describe('Comprehensive Application Tests', () => {
         }
       }
     });
-    
+
     try {
       await page.goto('http://localhost:3000', { timeout: 5000 });
       // Give page time to load

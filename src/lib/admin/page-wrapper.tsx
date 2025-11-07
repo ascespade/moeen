@@ -45,7 +45,10 @@ export function AdminPageWrapper({
     // Check authentication
     if (!isAuthenticated || !user) {
       // Use window.location only for initial auth redirect
-      if (typeof window !== 'undefined' && !window.location.pathname.includes('/login')) {
+      if (
+        typeof window !== 'undefined' &&
+        !window.location.pathname.includes('/login')
+      ) {
         window.location.href = '/login';
       }
       return;
@@ -53,15 +56,20 @@ export function AdminPageWrapper({
 
     // Get page config if not provided
     const pageConfig = getPageConfig(pathname);
-    const finalRequiredPermissions = requiredPermissions.length > 0
-      ? requiredPermissions
-      : (pageConfig?.requiredPermissions || []);
-    const finalRequiredRoles = requiredRoles.length > 0
-      ? requiredRoles
-      : (pageConfig?.requiredRoles || []);
+    const finalRequiredPermissions =
+      requiredPermissions.length > 0
+        ? requiredPermissions
+        : pageConfig?.requiredPermissions || [];
+    const finalRequiredRoles =
+      requiredRoles.length > 0
+        ? requiredRoles
+        : pageConfig?.requiredRoles || [];
 
     // Check role permissions
-    if (finalRequiredRoles.length > 0 && !finalRequiredRoles.includes(user.role)) {
+    if (
+      finalRequiredRoles.length > 0 &&
+      !finalRequiredRoles.includes(user.role)
+    ) {
       // Use Next.js router for internal navigation (no refresh)
       router.push('/admin/dashboard');
       return;

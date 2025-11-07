@@ -127,7 +127,7 @@ class CursorAgentIntegration {
       const options = {
         hostname: 'api.cursor.sh',
         port: 443,
-        path: `/v1/background-agent${  endpoint}`,
+        path: `/v1/background-agent${endpoint}`,
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

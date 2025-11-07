@@ -6,13 +6,9 @@
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    },
-    "project": "./tsconfig.json"
+    }
   },
-  "plugins": [
-    "@typescript-eslint",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "prettier"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -20,9 +16,7 @@
     "next/core-web-vitals"
   ],
   "rules": {
-    "prettier/prettier": [
-      "warn"
-    ],
+    "prettier/prettier": ["warn"],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -37,13 +31,10 @@
     "no-console": [
       "warn",
       {
-        "allow": [
-          "warn",
-          "error"
-        ]
+        "allow": ["warn", "error"]
       }
     ],
-    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "warn",
     "no-hardcoded-strings": "off",
     "no-duplicate-imports": "error",

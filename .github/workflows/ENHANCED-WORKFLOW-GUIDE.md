@@ -61,6 +61,7 @@ gh workflow run "cursor-manual-workflow-enhanced.yml" \
 ## How It Works
 
 ### Phase 1: Testing
+
 - Checks out code
 - Installs dependencies
 - Runs Playwright tests
@@ -68,6 +69,7 @@ gh workflow run "cursor-manual-workflow-enhanced.yml" \
 - Uploads artifacts
 
 ### Phase 2: Smart Analysis (if tests fail)
+
 - Downloads test logs
 - Analyzes error patterns using regex
 - Identifies issue types (timeout, notFound, visibility, api)
@@ -75,11 +77,13 @@ gh workflow run "cursor-manual-workflow-enhanced.yml" \
 - Opens PR with findings
 
 ### Phase 3: Enhancement (optional)
+
 - Scans for TODO comments
 - Provides code quality insights
 - Creates enhancement report
 
 ### Phase 4: Final Report
+
 - Summary of all phases
 - Links to artifacts
 - Status of each phase
@@ -102,6 +106,7 @@ gh workflow run "cursor-manual-workflow-enhanced.yml" \
 ### Pull Request
 
 When tests fail, a PR is automatically created with:
+
 - Analysis report
 - Suggested fixes
 - Link to workflow run
@@ -110,22 +115,26 @@ When tests fail, a PR is automatically created with:
 ## Configuration
 
 No additional secrets required! The workflow uses:
+
 - `GITHUB_TOKEN` (automatic)
 - Standard Node.js/Playwright setup
 
 ## Troubleshooting
 
 ### Tests Pass but Workflow Fails
+
 - Check the workflow logs
 - Review artifact downloads
 - Ensure all paths are correct
 
 ### Analysis Not Running
+
 - Verify test logs exist
 - Check artifact upload/download
 - Review file permissions
 
 ### PR Not Created
+
 - Check GitHub token permissions
 - Verify branch doesn't already exist
 - Review git configuration
@@ -162,11 +171,13 @@ For actual automated fixes, consider:
 ## Migration from Original
 
 The original workflow failed because:
+
 - `cursor-agent` CLI doesn't exist
 - Installation steps failed
 - No fallback mechanism
 
 This enhanced version:
+
 - ✅ Uses built-in analysis
 - ✅ Works immediately
 - ✅ Provides real value

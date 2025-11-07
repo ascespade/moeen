@@ -32,7 +32,7 @@ const results = {
 for (const suite of testSuites) {
   try {
     console.log(`\n?? Running ${suite.name}...\n`);
-    
+
     const output = execSync(
       `npx playwright test ${suite.file} --reporter=list`,
       {
@@ -42,28 +42,35 @@ for (const suite of testSuites) {
         timeout: 300000,
       }
     );
-    
+
     console.log(output);
-    
+
     const lines = output.split('\n');
     for (const line of lines) {
       if (line.includes('?') || line.includes('PASSED') || line.includes('?')) {
         results.passed.push(`${suite.name}: ${line.trim()}`);
-      } else if (line.includes('?') || line.includes('FAILED') || line.includes('?')) {
+      } else if (
+        line.includes('?') ||
+        line.includes('FAILED') ||
+        line.includes('?')
+      ) {
         results.failed.push(`${suite.name}: ${line.trim()}`);
       }
     }
-    
   } catch (error) {
     console.log(`\n??  ${suite.name} completed with some failures\n`);
     const errorOutput = error.stdout?.toString() || error.message;
     console.log(errorOutput);
-    
+
     const lines = errorOutput.split('\n');
     for (const line of lines) {
       if (line.includes('?') || line.includes('PASSED') || line.includes('?')) {
         results.passed.push(`${suite.name}: ${line.trim()}`);
-      } else if (line.includes('?') || line.includes('FAILED') || line.includes('?')) {
+      } else if (
+        line.includes('?') ||
+        line.includes('FAILED') ||
+        line.includes('?')
+      ) {
         results.failed.push(`${suite.name}: ${line.trim()}`);
       }
     }
@@ -82,7 +89,9 @@ console.log(`?? Total: ${results.total}`);
 console.log(`??  Duration: ${(duration / 1000).toFixed(2)}s`);
 
 if (results.total > 0) {
-  const successRate = ((results.passed.length / results.total) * 100).toFixed(1);
+  const successRate = ((results.passed.length / results.total) * 100).toFixed(
+    1
+  );
   console.log(`?? Success Rate: ${successRate}%`);
 }
 
@@ -93,9 +102,10 @@ const report = {
     passed: results.passed.length,
     failed: results.failed.length,
     total: results.total,
-    successRate: results.total > 0 
-      ? ((results.passed.length / results.total) * 100).toFixed(1) + '%'
-      : '0%',
+    successRate:
+      results.total > 0
+        ? ((results.passed.length / results.total) * 100).toFixed(1) + '%'
+        : '0%',
   },
   passed: results.passed,
   failed: results.failed,

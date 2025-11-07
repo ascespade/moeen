@@ -2,7 +2,7 @@
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import { memo, useEffect, useState } from 'react';
 
-interface DynamicStats {
+interface DynamicStat {
   id: number;
   value: string;
   label: string;
@@ -10,7 +10,7 @@ interface DynamicStats {
   color: string;
 }
 
-const defaultStats: DynamicStats[] = [
+const defaultStats: DynamicStat[] = [
   {
     id: 1,
     value: '1,247',
@@ -42,7 +42,7 @@ const defaultStats: DynamicStats[] = [
 ];
 
 const DynamicStats = memo(function DynamicStats() {
-  const [stats, setStats] = useState<DynamicStats[]>([]);
+  const [stats, setStats] = useState<DynamicStat[]>([]);
   const [loading, setLoading] = useState(true);
   const [hasFetched, setHasFetched] = useState(false);
   const localizedNumber = useLocalizedNumber();
@@ -106,17 +106,17 @@ const DynamicStats = memo(function DynamicStats() {
   if (loading) {
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-        {[1, 2, 3, 4].map(i => (
-          <div key={i} className='text-center animate-pulse'>
-            <div className='h-12 w-12 bg-gray-200 rounded-full mx-auto mb-2'></div>
-            <div className='h-8 bg-gray-200 rounded mb-2'></div>
-            <div className='h-4 bg-gray-200 rounded'></div>
-          </div>
-        ))}
+          {[1, 2, 3, 4].map(i => (
+            <div key={i} className='text-center animate-pulse'>
+              <div className='h-12 w-12 bg-gray-200 rounded-full mx-auto mb-2'></div>
+              <div className='h-8 bg-gray-200 rounded mb-2'></div>
+              <div className='h-4 bg-gray-200 rounded'></div>
+            </div>
+          ))}
         </div>
       </>
     );

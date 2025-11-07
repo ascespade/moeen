@@ -1,7 +1,7 @@
 /**
  * useUser Hook - Custom Hook for User Data
  * خطاف useUser - خطاف مخصص لبيانات المستخدم
- * 
+ *
  * React hook for fetching and managing user data
  */
 

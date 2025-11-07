@@ -1,7 +1,7 @@
 /**
  * Queries - Centralized Exports
  * الاستعلامات - التصديرات المركزية
- * 
+ *
  * All database queries exported from here
  */
 

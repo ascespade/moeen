@@ -50,13 +50,19 @@ try {
       return false;
     }
   }).length;
-  
+
   const revalidateRatio = routesWithRevalidate / apiRoutes.length;
   perfScore += revalidateRatio * 30;
-  details.push(`Revalidate: ${routesWithRevalidate}/${apiRoutes.length} (${(revalidateRatio * 100).toFixed(1)}%)`);
+  details.push(
+    `Revalidate: ${routesWithRevalidate}/${apiRoutes.length} (${(revalidateRatio * 100).toFixed(1)}%)`
+  );
 
   // Check for lazy loading
-  const lazyComponents = existsSync(join(projectRoot, 'src/components/lazy/LazyComponents.tsx')) ? 1 : 0;
+  const lazyComponents = existsSync(
+    join(projectRoot, 'src/components/lazy/LazyComponents.tsx')
+  )
+    ? 1
+    : 0;
   perfScore += lazyComponents * 20;
   if (lazyComponents) details.push('LazyComponents system exists');
 
@@ -78,7 +84,9 @@ try {
   }
 
   // Check for LoadingSkeleton
-  const hasLoadingSkeleton = existsSync(join(projectRoot, 'src/components/ui/LoadingSkeleton.tsx'));
+  const hasLoadingSkeleton = existsSync(
+    join(projectRoot, 'src/components/ui/LoadingSkeleton.tsx')
+  );
   perfScore += hasLoadingSkeleton ? 10 : 0;
   if (hasLoadingSkeleton) details.push('LoadingSkeleton component exists');
 
@@ -95,9 +103,14 @@ try {
   const details = [];
 
   // Check for NotificationToast with aria-live
-  const hasNotificationToast = existsSync(join(projectRoot, 'src/components/ui/NotificationToast.tsx'));
+  const hasNotificationToast = existsSync(
+    join(projectRoot, 'src/components/ui/NotificationToast.tsx')
+  );
   if (hasNotificationToast) {
-    const content = readFileSync(join(projectRoot, 'src/components/ui/NotificationToast.tsx'), 'utf-8');
+    const content = readFileSync(
+      join(projectRoot, 'src/components/ui/NotificationToast.tsx'),
+      'utf-8'
+    );
     if (content.includes('aria-live')) {
       a11yScore += 25;
       details.push('NotificationToast with aria-live');
@@ -105,7 +118,9 @@ try {
   }
 
   // Check for aria-labels in components
-  const componentFiles = await glob('src/components/**/*.tsx', { cwd: projectRoot });
+  const componentFiles = await glob('src/components/**/*.tsx', {
+    cwd: projectRoot,
+  });
   const filesWithAria = componentFiles.slice(0, 50).filter(f => {
     try {
       const content = readFileSync(join(projectRoot, f), 'utf-8');
@@ -116,7 +131,9 @@ try {
   }).length;
   const ariaRatio = filesWithAria / Math.min(componentFiles.length, 50);
   a11yScore += ariaRatio * 30;
-  details.push(`Aria-labels: ${filesWithAria}/${Math.min(componentFiles.length, 50)} files`);
+  details.push(
+    `Aria-labels: ${filesWithAria}/${Math.min(componentFiles.length, 50)} files`
+  );
 
   // Check for semantic HTML
   const pageFiles = await glob('src/app/**/page.tsx', { cwd: projectRoot });
@@ -130,7 +147,9 @@ try {
   }).length;
   const semanticRatio = filesWithSemantic / Math.min(pageFiles.length, 20);
   a11yScore += semanticRatio * 25;
-  details.push(`Semantic HTML: ${filesWithSemantic}/${Math.min(pageFiles.length, 20)} files`);
+  details.push(
+    `Semantic HTML: ${filesWithSemantic}/${Math.min(pageFiles.length, 20)} files`
+  );
 
   // Check for keyboard navigation support
   const hasKeyboardSupport = componentFiles.slice(0, 30).filter(f => {
@@ -157,14 +176,18 @@ try {
   const details = [];
 
   // Check for LoadingSkeleton
-  const hasLoadingSkeleton = existsSync(join(projectRoot, 'src/components/ui/LoadingSkeleton.tsx'));
+  const hasLoadingSkeleton = existsSync(
+    join(projectRoot, 'src/components/ui/LoadingSkeleton.tsx')
+  );
   if (hasLoadingSkeleton) {
     uxScore += 30;
     details.push('LoadingSkeleton component exists');
   }
 
   // Check for NotificationManager
-  const hasNotifications = existsSync(join(projectRoot, 'src/lib/notifications.ts'));
+  const hasNotifications = existsSync(
+    join(projectRoot, 'src/lib/notifications.ts')
+  );
   if (hasNotifications) {
     uxScore += 30;
     details.push('NotificationManager system exists');
@@ -172,7 +195,10 @@ try {
 
   // Check if NotificationToast is in layout
   if (existsSync(join(projectRoot, 'src/app/layout.tsx'))) {
-    const layout = readFileSync(join(projectRoot, 'src/app/layout.tsx'), 'utf-8');
+    const layout = readFileSync(
+      join(projectRoot, 'src/app/layout.tsx'),
+      'utf-8'
+    );
     if (layout.includes('NotificationToast')) {
       uxScore += 20;
       details.push('NotificationToast integrated in layout');
@@ -191,7 +217,9 @@ try {
   }).length;
   const loadingRatio = filesWithLoading / Math.min(pageFiles.length, 30);
   uxScore += loadingRatio * 20;
-  details.push(`Loading states: ${filesWithLoading}/${Math.min(pageFiles.length, 30)} files`);
+  details.push(
+    `Loading states: ${filesWithLoading}/${Math.min(pageFiles.length, 30)} files`
+  );
 
   evaluation.ux = { score: uxScore, maxScore: 100, details };
   console.log(`   Score: ${uxScore}/100\n`);
@@ -206,21 +234,27 @@ try {
   const details = [];
 
   // Check for centralized styles
-  const hasCentralizedCSS = existsSync(join(projectRoot, 'src/styles/centralized.css'));
+  const hasCentralizedCSS = existsSync(
+    join(projectRoot, 'src/styles/centralized.css')
+  );
   if (hasCentralizedCSS) {
     centralScore += 20;
     details.push('Centralized CSS exists');
   }
 
   // Check for centralized notifications
-  const hasNotifications = existsSync(join(projectRoot, 'src/lib/notifications.ts'));
+  const hasNotifications = existsSync(
+    join(projectRoot, 'src/lib/notifications.ts')
+  );
   if (hasNotifications) {
     centralScore += 20;
     details.push('Centralized notifications');
   }
 
   // Check for centralized permissions
-  const hasPermissions = existsSync(join(projectRoot, 'src/lib/permissions.ts'));
+  const hasPermissions = existsSync(
+    join(projectRoot, 'src/lib/permissions.ts')
+  );
   if (hasPermissions) {
     centralScore += 20;
     details.push('Centralized permissions');
@@ -234,14 +268,18 @@ try {
   }
 
   // Check for LazyComponents
-  const hasLazyComponents = existsSync(join(projectRoot, 'src/components/lazy/LazyComponents.tsx'));
+  const hasLazyComponents = existsSync(
+    join(projectRoot, 'src/components/lazy/LazyComponents.tsx')
+  );
   if (hasLazyComponents) {
     centralScore += 15;
     details.push('Centralized LazyComponents');
   }
 
   // Check for LoadingSkeleton
-  const hasLoadingSkeleton = existsSync(join(projectRoot, 'src/components/ui/LoadingSkeleton.tsx'));
+  const hasLoadingSkeleton = existsSync(
+    join(projectRoot, 'src/components/ui/LoadingSkeleton.tsx')
+  );
   if (hasLoadingSkeleton) {
     centralScore += 10;
     details.push('Centralized LoadingSkeleton');
@@ -267,26 +305,40 @@ const categories = [
 
 categories.forEach(cat => {
   const evalData = evaluation[cat.key];
-  const percentage = (evalData.score / evalData.maxScore * 100).toFixed(1);
+  const percentage = ((evalData.score / evalData.maxScore) * 100).toFixed(1);
   const status = percentage >= 90 ? '?' : percentage >= 70 ? '??' : '?';
-  console.log(`${status} ${cat.name}: ${percentage}% (${evalData.score}/${evalData.maxScore})`);
+  console.log(
+    `${status} ${cat.name}: ${percentage}% (${evalData.score}/${evalData.maxScore})`
+  );
   if (evalData.details.length > 0) {
     evalData.details.forEach(d => console.log(`   - ${d}`));
   }
 });
 
-const totalScore = categories.reduce((sum, cat) => sum + evaluation[cat.key].score, 0);
-const maxTotalScore = categories.reduce((sum, cat) => sum + evaluation[cat.key].maxScore, 0);
-const overallPercentage = (totalScore / maxTotalScore * 100).toFixed(1);
+const totalScore = categories.reduce(
+  (sum, cat) => sum + evaluation[cat.key].score,
+  0
+);
+const maxTotalScore = categories.reduce(
+  (sum, cat) => sum + evaluation[cat.key].maxScore,
+  0
+);
+const overallPercentage = ((totalScore / maxTotalScore) * 100).toFixed(1);
 
-console.log(`\n?? Overall Score: ${overallPercentage}% (${totalScore}/${maxTotalScore})`);
+console.log(
+  `\n?? Overall Score: ${overallPercentage}% (${totalScore}/${maxTotalScore})`
+);
 console.log('='.repeat(70) + '\n');
 
 // Save report
 import { writeFileSync } from 'fs';
 writeFileSync(
   join(projectRoot, 'FINAL_EVALUATION_REPORT.json'),
-  JSON.stringify({ evaluation, overallPercentage, timestamp: new Date().toISOString() }, null, 2)
+  JSON.stringify(
+    { evaluation, overallPercentage, timestamp: new Date().toISOString() },
+    null,
+    2
+  )
 );
 
 console.log('?? Report saved to: FINAL_EVALUATION_REPORT.json\n');

@@ -21,7 +21,7 @@ export default {
         'brand-info': '#0284c7',
         'brand-border': '#cbd5e1',
         'brand-surface': '#f1f5f9',
-        
+
         // Feature colors - from homepage
         'feature-innovation': '#22c55e',
         'feature-inclusivity': '#3b82f6',
@@ -29,7 +29,7 @@ export default {
         'feature-quality-end': '#f97316',
         'feature-care-start': '#ec4899',
         'feature-care-end': '#ef4444',
-        
+
         // Text colors
         'text-primary': '#1e293b',
         'text-secondary': '#475569',
@@ -96,7 +96,7 @@ export default {
         slow: '500ms',
       },
       maxWidth: {
-        'container': '1200px',
+        container: '1200px',
       },
     },
   },

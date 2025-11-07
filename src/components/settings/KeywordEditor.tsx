@@ -23,22 +23,24 @@ export default function KeywordEditor({
   return (
     <div className='grid gap-3'>
       <div className='grid grid-cols-[1fr_auto] gap-2'>
-        <input className='h-10 rounded-md border px-3'
+        <input
+          className='h-10 rounded-md border px-3'
           placeholder='أدخل كلمة طوارئ'
           value={value}
-          onChange={(e) => setValue(e.target.value)} aria-label="أدخل كلمة طوارئ"
+          onChange={e => setValue(e.target.value)}
+          aria-label='أدخل كلمة طوارئ'
           onKeyDown={e => e.key === 'Enter' && add()}
         />
-        <button 
+        <button
           className='h-10 rounded-md border px-3'
           onClick={add}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               add();
             }
           }}
-          aria-label="إضافة"
+          aria-label='إضافة'
         >
           إضافة
         </button>
@@ -50,10 +52,12 @@ export default function KeywordEditor({
             className='inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-800 px-3 h-8 text-sm'
           >
             {k}
-            <button 
+            <button
               className='text-amber-900'
-              onClick={() => { remove(k) }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                remove(k);
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   remove(k);

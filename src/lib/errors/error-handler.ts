@@ -1,7 +1,7 @@
 /**
  * Error Handler - Global Error Handler
  * معالج الأخطاء - معالج الأخطاء العام
- * 
+ *
  * Centralized error handling and logging
  */
 
@@ -41,9 +41,11 @@ export function handleError(error: any): ErrorResponse {
 
   // If it's a Zod validation error
   if (error && typeof error === 'object' && 'issues' in error) {
-    const validationError = error as { issues: Array<{ path: string[]; message: string }> };
+    const validationError = error as {
+      issues: Array<{ path: string[]; message: string }>;
+    };
     const firstError = validationError.issues[0];
-    
+
     logger.error('Validation Error', {
       errors: validationError.issues,
     });
@@ -87,7 +89,7 @@ export function handleError(error: any): ErrorResponse {
  */
 export function handleApiError(error: any): NextResponse {
   const errorResponse = handleError(error);
-  
+
   return NextResponse.json(
     {
       success: false,
@@ -105,7 +107,7 @@ export function handleServerActionError(error: any): {
   error: ErrorResponse;
 } {
   const errorResponse = handleError(error);
-  
+
   return {
     success: false,
     error: errorResponse,

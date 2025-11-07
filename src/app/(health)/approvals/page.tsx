@@ -272,7 +272,11 @@ export default function ApprovalsPage() {
   if (loading) {
     return (
       <div className='flex items-center justify-center min-h-screen'>
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="انتقل للمحتوى الرئيسي">
+        <a
+          href='#main-content'
+          className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded'
+          aria-label='انتقل للمحتوى الرئيسي'
+        >
           انتقل للمحتوى الرئيسي
         </a>
         <div className='text-center'>
@@ -471,7 +475,7 @@ export default function ApprovalsPage() {
         </div>
       </header>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <Card className='p-6 text-center'>

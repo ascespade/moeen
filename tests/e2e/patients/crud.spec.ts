@@ -19,7 +19,6 @@ test.describe('Patient Management', () => {
   test('should display patients list', async ({ page }) => {
     // TODO: Navigate to patients page after authentication
     // await page.goto(`${baseURL}/dashboard/patients`);
-    
     // Should show patients table or list
     // await expect(page.locator('text=/patients|المرضى/i')).toBeVisible();
   });
@@ -74,14 +73,19 @@ test.describe('Patient Management', () => {
 });
 
 test.describe('Patient Permissions', () => {
-  test('should restrict patient creation to authorized roles', async ({ request }) => {
+  test('should restrict patient creation to authorized roles', async ({
+    request,
+  }) => {
     // Test that unauthenticated requests fail
-    const response = await request.post(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/api/patients`, {
-      data: {
-        name: 'Test Patient',
-        email: 'test@example.com',
-      },
-    });
+    const response = await request.post(
+      `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/api/patients`,
+      {
+        data: {
+          name: 'Test Patient',
+          email: 'test@example.com',
+        },
+      }
+    );
 
     expect(response.status()).toBe(401);
   });
@@ -92,11 +96,12 @@ test.describe('Patient Permissions', () => {
     //   headers: { Authorization: `Bearer ${staffToken}` },
     //   data: testConfig.testData.patient,
     // });
-    
     // expect(response.status()).toBe(201);
   });
 
-  test('should prevent patients from creating other patients', async ({ request }) => {
+  test('should prevent patients from creating other patients', async ({
+    request,
+  }) => {
     // TODO: Implement with patient authentication
     // Should return 403 Forbidden
   });

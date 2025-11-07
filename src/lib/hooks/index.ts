@@ -1,7 +1,7 @@
 /**
  * Hooks - Centralized Exports
  * الخطافات - التصديرات المركزية
- * 
+ *
  * All custom hooks exported from here
  */
 

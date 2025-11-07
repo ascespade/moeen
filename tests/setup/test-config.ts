@@ -6,13 +6,13 @@
 export const testConfig = {
   // API Configuration
   apiBaseURL: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001',
-  
+
   // Database Configuration
   database: {
     url: process.env.TEST_DATABASE_URL || process.env.SUPABASE_URL,
     key: process.env.TEST_DATABASE_KEY || process.env.SUPABASE_ANON_KEY,
   },
-  
+
   // Test Users
   testUsers: {
     admin: {
@@ -28,14 +28,14 @@ export const testConfig = {
       password: process.env.TEST_PATIENT_PASSWORD || 'Test@1234',
     },
   },
-  
+
   // Timeouts
   timeouts: {
     api: 10000, // 10 seconds
     database: 5000, // 5 seconds
     e2e: 30000, // 30 seconds
   },
-  
+
   // Test Data
   testData: {
     patient: {

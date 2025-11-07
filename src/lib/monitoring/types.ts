@@ -47,4 +47,3 @@ export interface TaskConfig {
   cpu: number;
   data: any;
 }
-

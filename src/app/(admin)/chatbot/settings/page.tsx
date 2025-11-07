@@ -32,14 +32,16 @@ export default function ChatbotSettingsPage() {
       if (error && error.code !== 'PGRST116') {
         console.error('Error loading config:', error);
       } else {
-        setConfig(data || {
-          name: 'معين',
-          personality_type: 'professional_friendly',
-          tone: 'warm_caring',
-          language: 'ar',
-          response_style: '',
-          temperature: 0.7,
-        });
+        setConfig(
+          data || {
+            name: 'معين',
+            personality_type: 'professional_friendly',
+            tone: 'warm_caring',
+            language: 'ar',
+            response_style: '',
+            temperature: 0.7,
+          }
+        );
       }
     } catch (error) {
       console.error('Error:', error);
@@ -71,91 +73,110 @@ export default function ChatbotSettingsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen" role="status" aria-live="polite">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-gray-600">جاري التحميل...</p>
+      <div
+        className='flex items-center justify-center min-h-screen'
+        role='status'
+        aria-live='polite'
+      >
+        <div className='text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto'></div>
+          <p className='mt-4 text-gray-600'>جاري التحميل...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">إعدادات المساعد معين</h1>
+    <div className='container mx-auto p-6'>
+      <h1 className='text-3xl font-bold mb-6'>إعدادات المساعد معين</h1>
 
-      <div className="bg-white rounded-lg shadow p-6 space-y-6">
+      <div className='bg-white rounded-lg shadow p-6 space-y-6'>
         {/* Basic Settings */}
         <section>
-          <h2 className="text-xl font-semibold mb-4">الإعدادات الأساسية</h2>
-          
-          <div className="space-y-4">
+          <h2 className='text-xl font-semibold mb-4'>الإعدادات الأساسية</h2>
+
+          <div className='space-y-4'>
             <div>
-              <label className="block text-sm font-medium mb-2">الاسم</label>
+              <label className='block text-sm font-medium mb-2'>الاسم</label>
               <input
-                type="text"
+                type='text'
                 value={config?.name || 'معين'}
-                onChange={(e) => setConfig({ ...config, name: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-                aria-label="اسم المساعد"
+                onChange={e => setConfig({ ...config, name: e.target.value })}
+                className='w-full px-4 py-2 border rounded-lg'
+                aria-label='اسم المساعد'
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">نوع الشخصية</label>
+              <label className='block text-sm font-medium mb-2'>
+                نوع الشخصية
+              </label>
               <select
                 value={config?.personality_type || 'professional_friendly'}
-                onChange={(e) => setConfig({ ...config, personality_type: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-                aria-label="نوع الشخصية"
+                onChange={e =>
+                  setConfig({ ...config, personality_type: e.target.value })
+                }
+                className='w-full px-4 py-2 border rounded-lg'
+                aria-label='نوع الشخصية'
               >
-                <option value="professional_friendly">مهني ودود</option>
-                <option value="warm_caring">دافئ ومهتم</option>
-                <option value="professional_formal">مهني رسمي</option>
+                <option value='professional_friendly'>مهني ودود</option>
+                <option value='warm_caring'>دافئ ومهتم</option>
+                <option value='professional_formal'>مهني رسمي</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">نبرة الصوت</label>
+              <label className='block text-sm font-medium mb-2'>
+                نبرة الصوت
+              </label>
               <select
                 value={config?.tone || 'warm_caring'}
-                onChange={(e) => setConfig({ ...config, tone: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
-                aria-label="نبرة الصوت"
+                onChange={e => setConfig({ ...config, tone: e.target.value })}
+                className='w-full px-4 py-2 border rounded-lg'
+                aria-label='نبرة الصوت'
               >
-                <option value="warm_caring">دافئ ومهتم</option>
-                <option value="professional">مهني</option>
-                <option value="casual">عادي</option>
+                <option value='warm_caring'>دافئ ومهتم</option>
+                <option value='professional'>مهني</option>
+                <option value='casual'>عادي</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">أسلوب الرد</label>
+              <label className='block text-sm font-medium mb-2'>
+                أسلوب الرد
+              </label>
               <textarea
                 value={config?.response_style || ''}
-                onChange={(e) => setConfig({ ...config, response_style: e.target.value })}
-                className="w-full px-4 py-2 border rounded-lg"
+                onChange={e =>
+                  setConfig({ ...config, response_style: e.target.value })
+                }
+                className='w-full px-4 py-2 border rounded-lg'
                 rows={5}
-                placeholder="وصف أسلوب الرد المطلوب..."
-                aria-label="أسلوب الرد"
+                placeholder='وصف أسلوب الرد المطلوب...'
+                aria-label='أسلوب الرد'
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">
+              <label className='block text-sm font-medium mb-2'>
                 Temperature: {config?.temperature || 0.7}
               </label>
               <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.1"
+                type='range'
+                min='0'
+                max='1'
+                step='0.1'
                 value={config?.temperature || 0.7}
-                onChange={(e) => setConfig({ ...config, temperature: parseFloat(e.target.value) })}
-                className="w-full"
-                aria-label="درجة الحرارة"
+                onChange={e =>
+                  setConfig({
+                    ...config,
+                    temperature: parseFloat(e.target.value),
+                  })
+                }
+                className='w-full'
+                aria-label='درجة الحرارة'
               />
-              <p className="text-sm text-gray-500 mt-1">
+              <p className='text-sm text-gray-500 mt-1'>
                 قيم منخفضة = ردود أكثر تحديداً، قيم عالية = ردود أكثر إبداعاً
               </p>
             </div>
@@ -163,12 +184,12 @@ export default function ChatbotSettingsPage() {
         </section>
 
         {/* Save Button */}
-        <div className="flex justify-end">
+        <div className='flex justify-end'>
           <button
             onClick={saveConfig}
             disabled={saving}
-            className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50"
-            aria-label="حفظ الإعدادات"
+            className='px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark disabled:opacity-50'
+            aria-label='حفظ الإعدادات'
           >
             {saving ? 'جاري الحفظ...' : 'حفظ الإعدادات'}
           </button>

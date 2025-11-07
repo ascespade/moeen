@@ -19,10 +19,10 @@ export default function DirectionToggle() {
   };
 
   return (
-    <button 
+    <button
       type='button'
       onClick={toggle}
-      onKeyDown={(e) => {
+      onKeyDown={e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           toggle();

@@ -46,8 +46,10 @@ export function DataTable<T extends Record<string, unknown>>({
             {columns.map(c => (
               <th key={String(c.key)} className='px-4 py-3 text-start'>
                 <button
-                  onClick={() => { toggleSort(c.key); }}
-                  onKeyDown={(e) => {
+                  onClick={() => {
+                    toggleSort(c.key);
+                  }}
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       toggleSort(c.key);
@@ -85,8 +87,10 @@ export function DataTable<T extends Record<string, unknown>>({
         </span>
         <div className='flex gap-1'>
           <button
-            onClick={() => { setPage(1); }}
-            onKeyDown={(e) => {
+            onClick={() => {
+              setPage(1);
+            }}
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setPage(1);
@@ -99,8 +103,10 @@ export function DataTable<T extends Record<string, unknown>>({
             «
           </button>
           <button
-            onClick={() => { setPage(p => Math.max(1, p - 1)); }}
-            onKeyDown={(e) => {
+            onClick={() => {
+              setPage(p => Math.max(1, p - 1));
+            }}
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setPage(p => Math.max(1, p - 1));
@@ -116,8 +122,10 @@ export function DataTable<T extends Record<string, unknown>>({
             {page} / {pages}
           </span>
           <button
-            onClick={() => { setPage(p => Math.min(pages, p + 1)); }}
-            onKeyDown={(e) => {
+            onClick={() => {
+              setPage(p => Math.min(pages, p + 1));
+            }}
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setPage(p => Math.min(pages, p + 1));
@@ -130,8 +138,10 @@ export function DataTable<T extends Record<string, unknown>>({
             ›
           </button>
           <button
-            onClick={() => { setPage(pages); }}
-            onKeyDown={(e) => {
+            onClick={() => {
+              setPage(pages);
+            }}
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setPage(pages);

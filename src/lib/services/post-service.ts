@@ -1,7 +1,7 @@
 /**
  * Post Service - Business Logic for Posts
  * خدمة المنشورات - منطق الأعمال للمنشورات
- * 
+ *
  * Business logic layer for post operations
  */
 
@@ -38,7 +38,11 @@ export class PostService {
   /**
    * Update post
    */
-  static async updatePost(id: string, data: PostUpdate, userId: string): Promise<Post> {
+  static async updatePost(
+    id: string,
+    data: PostUpdate,
+    userId: string
+  ): Promise<Post> {
     const adminClient = createAdminClient();
 
     // Check ownership
@@ -53,7 +57,9 @@ export class PostService {
     }
 
     if (existingPost.user_id !== userId) {
-      throw AppError.forbidden('You do not have permission to update this post');
+      throw AppError.forbidden(
+        'You do not have permission to update this post'
+      );
     }
 
     const { data: post, error } = await adminClient
@@ -92,13 +98,12 @@ export class PostService {
     }
 
     if (existingPost.user_id !== userId) {
-      throw AppError.forbidden('You do not have permission to delete this post');
+      throw AppError.forbidden(
+        'You do not have permission to delete this post'
+      );
     }
 
-    const { error } = await adminClient
-      .from('posts')
-      .delete()
-      .eq('id', id);
+    const { error } = await adminClient.from('posts').delete().eq('id', id);
 
     if (error) {
       throw AppError.internal(`Failed to delete post: ${error.message}`);

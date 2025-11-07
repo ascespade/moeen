@@ -191,7 +191,7 @@ export default function AISettings({ onChange }: AISettingsProps) {
       if (result.success) {
         alert('تم اختبار الشات بوت بنجاح! ✅');
       } else {
-        alert(`فشل اختبار الشات بوت: ${  result.error}`);
+        alert(`فشل اختبار الشات بوت: ${result.error}`);
       }
     } catch (error) {
       console.error('Error testing chatbot:', error);

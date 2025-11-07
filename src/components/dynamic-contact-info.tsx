@@ -89,20 +89,20 @@ const DynamicContactInfo = memo(function DynamicContactInfo() {
   if (loading) {
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
-        {[1, 2, 3].map(i => (
-          <div
-            key={i}
-            className='bg-[var(--panel)] p-8 text-center animate-pulse rounded-lg border border-[var(--brand-border)]'
-          >
-            <div className='h-16 w-16 bg-[var(--brand-surface)] rounded-lg mx-auto mb-4'></div>
-            <div className='h-6 bg-[var(--brand-surface)] rounded mb-2'></div>
-            <div className='h-4 bg-[var(--brand-surface)] rounded mb-4'></div>
-          </div>
-        ))}
+          {[1, 2, 3].map(i => (
+            <div
+              key={i}
+              className='bg-[var(--panel)] p-8 text-center animate-pulse rounded-lg border border-[var(--brand-border)]'
+            >
+              <div className='h-16 w-16 bg-[var(--brand-surface)] rounded-lg mx-auto mb-4'></div>
+              <div className='h-6 bg-[var(--brand-surface)] rounded mb-2'></div>
+              <div className='h-4 bg-[var(--brand-surface)] rounded mb-4'></div>
+            </div>
+          ))}
         </div>
       </>
     );

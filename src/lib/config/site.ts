@@ -1,6 +1,6 @@
 /**
  * Site Configuration - إعدادات الموقع
- * 
+ *
  * Site-wide configuration
  */
 
@@ -9,7 +9,7 @@ export const siteConfig = {
   nameEn: 'Mu3een',
   description: 'مركز الهمم لرعاية ذوي الاحتياجات الخاصة',
   url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-  
+
   // Contact
   contact: {
     email: 'info@mu3een.com',

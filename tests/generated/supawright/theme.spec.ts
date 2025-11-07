@@ -21,7 +21,7 @@ test.describe('theme Module - Supawright Tests', () => {
     }
   });
 
-  test(I18N_KEYS.THEME.LABEL - Database connection', async () => {
+  test('I18N_KEYS.THEME.LABEL - Database connection', async () => {
     const { data, error } = await supabase
       .from('_supabase_migrations')
       .select('*')
@@ -29,7 +29,7 @@ test.describe('theme Module - Supawright Tests', () => {
     expect(error).toBeNull();
   });
 
-  test(I18N_KEYS.THEME.LABEL - Authentication', async () => {
+  test('I18N_KEYS.THEME.LABEL - Authentication', async () => {
     // Test anonymous access
     const { data: anonData, error: anonError } = await supabase
       .from('_supabase_migrations')
@@ -39,7 +39,7 @@ test.describe('theme Module - Supawright Tests', () => {
     expect(anonError).toBeNull();
   });
 
-  test(I18N_KEYS.THEME.LABEL - Data validation', async () => {
+  test('I18N_KEYS.THEME.LABEL - Data validation', async () => {
     // Test data validation rules
     const testData = {
       id: Math.random().toString(36).substr(2, 9),
@@ -61,7 +61,7 @@ test.describe('theme Module - Supawright Tests', () => {
     }
   });
 
-  test(I18N_KEYS.THEME.LABEL - Row Level Security', async () => {
+  test('I18N_KEYS.THEME.LABEL - Row Level Security', async () => {
     // Test RLS policies
     const { data, error } = await supabase
       .from('_supabase_migrations')
@@ -71,7 +71,7 @@ test.describe('theme Module - Supawright Tests', () => {
     expect(error).toBeNull();
   });
 
-  test(I18N_KEYS.THEME.LABEL - Database performance', async () => {
+  test('I18N_KEYS.THEME.LABEL - Database performance', async () => {
     const startTime = Date.now();
 
     const { data, error } = await supabase
@@ -85,7 +85,7 @@ test.describe('theme Module - Supawright Tests', () => {
     expect(queryTime).toBeLessThan(1000); // Should complete within 1 second
   });
 
-  test(I18N_KEYS.THEME.LABEL - Concurrent operations', async () => {
+  test('I18N_KEYS.THEME.LABEL - Concurrent operations', async () => {
     // Test concurrent database operations
     const promises = [];
 
@@ -100,7 +100,7 @@ test.describe('theme Module - Supawright Tests', () => {
     });
   });
 
-  test(I18N_KEYS.THEME.LABEL - Error handling', async () => {
+  test('I18N_KEYS.THEME.LABEL - Error handling', async () => {
     // Test error handling for invalid queries
     const { data, error } = await supabase
       .from('non_existent_table')
@@ -110,7 +110,7 @@ test.describe('theme Module - Supawright Tests', () => {
     expect(data).toBeNull();
   });
 
-  test(I18N_KEYS.THEME.LABEL - Data integrity', async () => {
+  test('I18N_KEYS.THEME.LABEL - Data integrity', async () => {
     // Test data integrity constraints
     const { data, error } = await supabase
       .from('_supabase_migrations')
@@ -123,7 +123,7 @@ test.describe('theme Module - Supawright Tests', () => {
     }
   });
 
-  test(I18N_KEYS.THEME.LABEL - Real-time subscriptions', async () => {
+  test('I18N_KEYS.THEME.LABEL - Real-time subscriptions', async () => {
     // Test real-time functionality
     const channel = supabase.channel('test-channel');
 
@@ -139,7 +139,7 @@ test.describe('theme Module - Supawright Tests', () => {
     await supabase.removeChannel(channel);
   });
 
-  test(I18N_KEYS.THEME.LABEL - Database migrations', async () => {
+  test('I18N_KEYS.THEME.LABEL - Database migrations', async () => {
     // Test migration status
     const { data, error } = await supabase
       .from('_supabase_migrations')

@@ -28,24 +28,21 @@ const ignoreDirs = [
   '.cache',
 ];
 
-const ignoreFiles = [
-  '.DS_Store',
-  'Thumbs.db',
-  '*.log',
-  '*.tmp',
-  '*.temp',
-];
+const ignoreFiles = ['.DS_Store', 'Thumbs.db', '*.log', '*.tmp', '*.temp'];
 
 function shouldIgnore(name, isDir) {
   if (ignoreDirs.includes(name)) return true;
-  if (!isDir && ignoreFiles.some(pattern => name.includes(pattern))) return true;
+  if (!isDir && ignoreFiles.some(pattern => name.includes(pattern)))
+    return true;
   if (name.startsWith('.')) return true;
   return false;
 }
 
 function generateTree(dir, prefix = '', isLast = true) {
   const items = readdirSync(dir)
-    .filter(item => !shouldIgnore(item, statSync(join(dir, item)).isDirectory()))
+    .filter(
+      item => !shouldIgnore(item, statSync(join(dir, item)).isDirectory())
+    )
     .sort();
 
   let tree = '';

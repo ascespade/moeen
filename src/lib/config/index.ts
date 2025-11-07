@@ -1,7 +1,7 @@
 /**
  * Config - Centralized Exports
  * الإعدادات - التصديرات المركزية
- * 
+ *
  * All configuration exports
  */
 

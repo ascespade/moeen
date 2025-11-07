@@ -20,7 +20,8 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
       style={{
         backgroundColor: 'var(--modal-backdrop, rgba(0, 0, 0, 0.5))',
       }}
-      tabIndex={0} onClick={onClose}
+      tabIndex={0}
+      onClick={onClose}
     >
       <div
         className='relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl transition-all'
@@ -28,7 +29,8 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
           backgroundColor: 'var(--panel, var(--background))',
           border: '1px solid var(--brand-border)',
         }}
-        tabIndex={0} onClick={e => e.stopPropagation()}
+        tabIndex={0}
+        onClick={e => e.stopPropagation()}
       >
         {/* Header */}
         <div
@@ -43,7 +45,7 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
           </h2>
           <button
             onClick={onClose}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 onClose();
@@ -53,7 +55,7 @@ const PrivacyPolicyModal = memo(function PrivacyPolicyModal({
             style={{
               backgroundColor: 'transparent',
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               e.currentTarget.style.backgroundColor =
                 'var(--brand-surface, rgba(0,0,0,0.05))';
             }}

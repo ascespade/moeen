@@ -243,7 +243,11 @@ function extractDetails(details: any): string {
       const parsed = JSON.parse(details);
       return parsed.description || parsed.message || details;
     }
-    return (details as any)?.description || (details as any)?.message || 'لا توجد تفاصيل';
+    return (
+      (details as any)?.description ||
+      (details as any)?.message ||
+      'لا توجد تفاصيل'
+    );
   } catch {
     return details?.toString() || 'لا توجد تفاصيل';
   }
@@ -286,14 +290,11 @@ async function getAuditStats(supabase: any, filters: any) {
   const stats = {
     total: statusCounts?.length || 0,
     success:
-      statusCounts?.filter((log: any) => log.status === 'success').length ||
-      0,
+      statusCounts?.filter((log: any) => log.status === 'success').length || 0,
     failed:
-      statusCounts?.filter((log: any) => log.status === 'failed').length ||
-      0,
+      statusCounts?.filter((log: any) => log.status === 'failed').length || 0,
     warning:
-      statusCounts?.filter((log: any) => log.status === 'warning').length ||
-      0,
+      statusCounts?.filter((log: any) => log.status === 'warning').length || 0,
   };
 
   return stats;

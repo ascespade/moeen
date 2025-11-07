@@ -23,7 +23,7 @@ export default function AdminLayout({
   useEffect(() => {
     // Redirect if not authenticated
     if (!loading && !isAuthenticated) {
-      router.push(`/login?redirect=${  encodeURIComponent(pathname)}`);
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
 

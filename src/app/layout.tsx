@@ -75,7 +75,7 @@ export default function RootLayout({
       <body
         className='antialiased bg-[var(--background)] text-[var(--foreground)] font-sans'
         suppressHydrationWarning
-        role="application"
+        role='application'
       >
         <ThemeProvider>
           <DesignSystemProvider initialConfig={{ spacing: 'compact' }}>

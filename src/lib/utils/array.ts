@@ -1,6 +1,6 @@
 /**
  * Array Utilities - أدوات المصفوفات
- * 
+ *
  * Array manipulation utilities
  */
 
@@ -18,14 +18,17 @@ export function groupBy<T>(
   array: T[],
   keyFn: (item: T) => string
 ): Record<string, T[]> {
-  return array.reduce((groups, item) => {
-    const key = keyFn(item);
-    if (!groups[key]) {
-      groups[key] = [];
-    }
-    groups[key].push(item);
-    return groups;
-  }, {} as Record<string, T[]>);
+  return array.reduce(
+    (groups, item) => {
+      const key = keyFn(item);
+      if (!groups[key]) {
+        groups[key] = [];
+      }
+      groups[key].push(item);
+      return groups;
+    },
+    {} as Record<string, T[]>
+  );
 }
 
 /**
@@ -39,7 +42,7 @@ export function sortBy<T>(
   return [...array].sort((a, b) => {
     const aVal = keyFn(a);
     const bVal = keyFn(b);
-    
+
     if (aVal < bVal) return direction === 'asc' ? -1 : 1;
     if (aVal > bVal) return direction === 'asc' ? 1 : -1;
     return 0;
@@ -51,11 +54,11 @@ export function sortBy<T>(
  */
 export function chunk<T>(array: T[], size: number): T[][] {
   const chunks: T[][] = [];
-  
+
   for (let i = 0; i < array.length; i += size) {
     chunks.push(array.slice(i, i + size));
   }
-  
+
   return chunks;
 }
 
@@ -70,14 +73,14 @@ export function flatten<T>(array: T[][]): T[] {
  * Get intersection of two arrays
  */
 export function intersection<T>(array1: T[], array2: T[]): T[] {
-  return array1.filter((item) => array2.includes(item));
+  return array1.filter(item => array2.includes(item));
 }
 
 /**
  * Get difference of two arrays
  */
 export function difference<T>(array1: T[], array2: T[]): T[] {
-  return array1.filter((item) => !array2.includes(item));
+  return array1.filter(item => !array2.includes(item));
 }
 
 /**
@@ -85,12 +88,12 @@ export function difference<T>(array1: T[], array2: T[]): T[] {
  */
 export function shuffle<T>(array: T[]): T[] {
   const shuffled = [...array];
-  
+
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
-  
+
   return shuffled;
 }
 

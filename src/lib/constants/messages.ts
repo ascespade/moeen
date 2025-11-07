@@ -1,7 +1,7 @@
 /**
  * Messages - Centralized User Messages
  * الرسائل - رسائل المستخدم المركزية
- * 
+ *
  * All user-facing messages (success, error, info, confirmation)
  */
 
@@ -62,7 +62,8 @@ export const MESSAGES = {
   // Confirmation Messages
   CONFIRM: {
     DELETE: 'هل أنت متأكد من حذف هذا العنصر؟',
-    DELETE_PERMANENT: 'هل أنت متأكد من الحذف الدائم؟ لا يمكن التراجع عن هذا الإجراء',
+    DELETE_PERMANENT:
+      'هل أنت متأكد من الحذف الدائم؟ لا يمكن التراجع عن هذا الإجراء',
     LOGOUT: 'هل أنت متأكد من تسجيل الخروج؟',
     RESET: 'هل أنت متأكد من إعادة تعيين النموذج؟ ستفقد جميع التغييرات',
     CANCEL: 'هل أنت متأكد من إلغاء العملية؟',
@@ -73,11 +74,15 @@ export const MESSAGES = {
   // Validation Messages
   VALIDATION: {
     REQUIRED: (field: string) => `${field} مطلوب`,
-    MIN_LENGTH: (field: string, min: number) => `${field} يجب أن يكون ${min} أحرف على الأقل`,
-    MAX_LENGTH: (field: string, max: number) => `${field} يجب أن لا يتجاوز ${max} حرف`,
+    MIN_LENGTH: (field: string, min: number) =>
+      `${field} يجب أن يكون ${min} أحرف على الأقل`,
+    MAX_LENGTH: (field: string, max: number) =>
+      `${field} يجب أن لا يتجاوز ${max} حرف`,
     INVALID_FORMAT: (field: string) => `تنسيق ${field} غير صحيح`,
-    MUST_MATCH: (field: string, matchField: string) => `${field} يجب أن يتطابق مع ${matchField}`,
-    INVALID_RANGE: (field: string, min: number, max: number) => `${field} يجب أن يكون بين ${min} و ${max}`,
+    MUST_MATCH: (field: string, matchField: string) =>
+      `${field} يجب أن يتطابق مع ${matchField}`,
+    INVALID_RANGE: (field: string, min: number, max: number) =>
+      `${field} يجب أن يكون بين ${min} و ${max}`,
   },
 
   // Form Labels
@@ -112,13 +117,16 @@ export function getMessage(
   category: keyof typeof MESSAGES,
   key: string
 ): string {
-  const categoryMessages = MESSAGES[category] as Record<string, string | ((...args: unknown[]) => string)>;
+  const categoryMessages = MESSAGES[category] as Record<
+    string,
+    string | ((...args: unknown[]) => string)
+  >;
   const message = categoryMessages[key];
-  
+
   if (typeof message === 'function') {
     return message as unknown as string;
   }
-  
+
   return message || '';
 }
 

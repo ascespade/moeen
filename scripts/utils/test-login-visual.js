@@ -23,13 +23,15 @@ async function testLogin() {
     console.log('📱 Navigating to login page...');
     await page.goto('http://localhost:3002/login', {
       waitUntil: 'networkidle',
-      timeout: 30000
+      timeout: 30000,
     });
 
     console.log('✅ Login page loaded');
 
     // Wait for login form to be visible
-    await page.waitForSelector('[data-testid="email-input"]', { timeout: 10000 });
+    await page.waitForSelector('[data-testid="email-input"]', {
+      timeout: 10000,
+    });
     console.log('✅ Login form visible');
 
     // Fill email
@@ -48,7 +50,10 @@ async function testLogin() {
     }
 
     // Take screenshot before login
-    await page.screenshot({ path: './test-results/before-login.png', fullPage: true });
+    await page.screenshot({
+      path: './test-results/before-login.png',
+      fullPage: true,
+    });
     console.log('📸 Screenshot saved: before-login.png');
 
     // Click login button
@@ -62,8 +67,12 @@ async function testLogin() {
       // Wait for either redirect or error message
       await Promise.race([
         page.waitForURL(/\/dashboard|\/admin/, { timeout: 10000 }),
-        page.waitForSelector('.status-error', { timeout: 5000 }).catch(() => null),
-        page.waitForSelector('text=/جار تسجيل الدخول/', { timeout: 3000 }).catch(() => null),
+        page
+          .waitForSelector('.status-error', { timeout: 5000 })
+          .catch(() => null),
+        page
+          .waitForSelector('text=/جار تسجيل الدخول/', { timeout: 3000 })
+          .catch(() => null),
       ]);
 
       // Check current URL
@@ -77,7 +86,10 @@ async function testLogin() {
       console.log(`📍 Final URL: ${finalUrl}`);
 
       // Take screenshot after login attempt
-      await page.screenshot({ path: './test-results/after-login.png', fullPage: true });
+      await page.screenshot({
+        path: './test-results/after-login.png',
+        fullPage: true,
+      });
       console.log('📸 Screenshot saved: after-login.png');
 
       // Check for errors
@@ -97,14 +109,19 @@ async function testLogin() {
         const authCookie = cookies.find(c => c.name === 'auth_token');
         if (authCookie) {
           console.log('✅ Auth cookie found!');
-          console.log(`   Cookie value: ${authCookie.value.substring(0, 50)}...`);
+          console.log(
+            `   Cookie value: ${authCookie.value.substring(0, 50)}...`
+          );
         } else {
           console.log('⚠️ Warning: Auth cookie not found');
         }
 
         // Wait a bit to see the dashboard
         await page.waitForTimeout(3000);
-        await page.screenshot({ path: './test-results/dashboard.png', fullPage: true });
+        await page.screenshot({
+          path: './test-results/dashboard.png',
+          fullPage: true,
+        });
         console.log('📸 Screenshot saved: dashboard.png');
       } else if (finalUrl.includes('/login')) {
         console.log('❌ FAILED: Still on login page');
@@ -112,12 +129,13 @@ async function testLogin() {
       } else {
         console.log(`⚠️ Unexpected URL: ${finalUrl}`);
       }
-
     } catch (error) {
       console.log(`❌ Error during login: ${error.message}`);
-      await page.screenshot({ path: './test-results/error-state.png', fullPage: true });
+      await page.screenshot({
+        path: './test-results/error-state.png',
+        fullPage: true,
+      });
     }
-
   } catch (error) {
     console.error('❌ Test Error:', error);
     await page.screenshot({ path: './test-results/error.png', fullPage: true });
@@ -134,4 +152,3 @@ async function testLogin() {
 
 // Run test
 testLogin().catch(console.error);
-

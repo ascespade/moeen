@@ -369,7 +369,9 @@ export function hasPermission(
 
 // Note: This function is deprecated - use API endpoint /api/permissions/role/[roleId] instead
 // Kept for backward compatibility but should not be used in client components
-export async function getRolePermissions(role: UserRole): Promise<RolePermission[]> {
+export async function getRolePermissions(
+  role: UserRole
+): Promise<RolePermission[]> {
   // Use API endpoint for client-side compatibility
   if (typeof window !== 'undefined') {
     try {

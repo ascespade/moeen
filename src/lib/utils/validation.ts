@@ -1,6 +1,6 @@
 /**
  * Validation Utilities - أدوات التحقق
- * 
+ *
  * Common validation utilities
  */
 
@@ -21,7 +21,7 @@ export function isValidEmail(email: string): boolean {
 export function isValidPhone(phone: string): boolean {
   // Remove all non-digit characters
   const cleaned = phone.replace(/\D/g, '');
-  
+
   // Saudi phone: 05XXXXXXXX or 9665XXXXXXXX
   return /^(05|9665)\d{8}$/.test(cleaned);
 }
@@ -36,11 +36,15 @@ export function isValidPassword(password: string): {
   const errors: string[] = [];
 
   if (password.length < CONFIG.PASSWORD_MIN_LENGTH) {
-    errors.push(`كلمة المرور يجب أن تكون ${CONFIG.PASSWORD_MIN_LENGTH} أحرف على الأقل`);
+    errors.push(
+      `كلمة المرور يجب أن تكون ${CONFIG.PASSWORD_MIN_LENGTH} أحرف على الأقل`
+    );
   }
 
   if (password.length > CONFIG.PASSWORD_MAX_LENGTH) {
-    errors.push(`كلمة المرور يجب أن لا تتجاوز ${CONFIG.PASSWORD_MAX_LENGTH} حرف`);
+    errors.push(
+      `كلمة المرور يجب أن لا تتجاوز ${CONFIG.PASSWORD_MAX_LENGTH} حرف`
+    );
   }
 
   return {
@@ -64,17 +68,17 @@ export function isValidUrl(url: string): boolean {
 /**
  * Validate file type
  */
-export function isValidFileType(
-  file: File,
-  allowedTypes: string[]
-): boolean {
+export function isValidFileType(file: File, allowedTypes: string[]): boolean {
   return allowedTypes.includes(file.type);
 }
 
 /**
  * Validate file size
  */
-export function isValidFileSize(file: File, maxSize: number = CONFIG.MAX_FILE_SIZE): boolean {
+export function isValidFileSize(
+  file: File,
+  maxSize: number = CONFIG.MAX_FILE_SIZE
+): boolean {
   return file.size <= maxSize;
 }
 
@@ -93,10 +97,10 @@ export function validateSchema<T>(
   data: unknown
 ): { success: true; data: T } | { success: false; errors: z.ZodError } {
   const result = schema.safeParse(data);
-  
+
   if (result.success) {
     return { success: true, data: result.data };
   }
-  
+
   return { success: false, errors: result.error };
 }

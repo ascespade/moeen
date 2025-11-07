@@ -14,11 +14,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
+const supabaseServiceKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
 
 if (!supabaseUrl || !supabaseServiceKey) {
   console.error('? Missing Supabase credentials in environment variables');
-  console.error('Required: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY');
+  console.error(
+    'Required: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY'
+  );
   process.exit(1);
 }
 
@@ -56,14 +59,18 @@ async function pullSchema() {
       console.log(`?? Processing table: ${tableName}`);
 
       // Get columns
-      const { data: columns } = await supabase.rpc('get_table_columns', {
-        table_name: tableName,
-      }).catch(() => ({ data: null }));
+      const { data: columns } = await supabase
+        .rpc('get_table_columns', {
+          table_name: tableName,
+        })
+        .catch(() => ({ data: null }));
 
       // Get constraints
-      const { data: constraints } = await supabase.rpc('get_table_constraints', {
-        table_name: tableName,
-      }).catch(() => ({ data: null }));
+      const { data: constraints } = await supabase
+        .rpc('get_table_constraints', {
+          table_name: tableName,
+        })
+        .catch(() => ({ data: null }));
 
       schema.tables.push({
         name: tableName,
@@ -73,13 +80,17 @@ async function pullSchema() {
     }
 
     // Get enums
-    const { data: enums } = await supabase.rpc('get_enums').catch(() => ({ data: null }));
+    const { data: enums } = await supabase
+      .rpc('get_enums')
+      .catch(() => ({ data: null }));
     if (enums) {
       schema.enums = enums;
     }
 
     // Get functions
-    const { data: functions } = await supabase.rpc('get_functions').catch(() => ({ data: null }));
+    const { data: functions } = await supabase
+      .rpc('get_functions')
+      .catch(() => ({ data: null }));
     if (functions) {
       schema.functions = functions;
     }
@@ -94,7 +105,6 @@ async function pullSchema() {
     console.log(`   - Tables: ${schema.tables.length}`);
     console.log(`   - Enums: ${schema.enums?.length || 0}`);
     console.log(`   - Functions: ${schema.functions?.length || 0}`);
-
   } catch (error) {
     console.error('? Error pulling schema:', error);
     process.exit(1);
@@ -104,7 +114,7 @@ async function pullSchema() {
 // Alternative: Use pg_dump if available
 async function pullSchemaWithPgDump() {
   const dbUrl = process.env.DATABASE_URL || process.env.SUPABASE_DB_URL;
-  
+
   if (!dbUrl) {
     console.error('? DATABASE_URL not found. Using API method...');
     return pullSchema();

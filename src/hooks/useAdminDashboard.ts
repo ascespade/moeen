@@ -178,7 +178,11 @@ export function useAdminDashboard(
         setLoading(true);
         setError(null);
         try {
-          await Promise.all([fetchStats(), fetchActivities(), fetchStaffHours()]);
+          await Promise.all([
+            fetchStats(),
+            fetchActivities(),
+            fetchStaffHours(),
+          ]);
         } finally {
           setLoading(false);
         }

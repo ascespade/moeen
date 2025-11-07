@@ -166,7 +166,9 @@ function ConversationsPageContent() {
     const fetchConversations = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/admin/conversations?page=${currentPage}&limit=10`);
+        const response = await fetch(
+          `/api/admin/conversations?page=${currentPage}&limit=10`
+        );
         const result = await response.json();
 
         if (result.success && result.data) {
@@ -761,7 +763,7 @@ function ConversationsPageContent() {
                     <input
                       type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => {
+                      onChange={e => {
                         if (e.target.checked) {
                           setSelectedConversations(
                             filteredConversations.map(c => c.id)
@@ -790,12 +792,13 @@ function ConversationsPageContent() {
                     className={!conversation.isRead ? 'bg-blue-50' : ''}
                   >
                     <TableCell>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedConversations.includes(
                           conversation.id
                         )}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedConversations([
                               ...selectedConversations,

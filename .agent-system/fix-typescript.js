@@ -16,8 +16,7 @@ for (const file of apiFiles) {
 
     // Ensure import exists
     if (!content.includes('createClient')) {
-      content =
-        `import { createClient } from '@/lib/supabase/server';\n${  content}`;
+      content = `import { createClient } from '@/lib/supabase/server';\n${content}`;
     }
 
     // Fix: const supabase = createClient without ()

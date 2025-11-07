@@ -66,7 +66,7 @@ export default function VerifyEmailPage() {
             <div className='space-y-3'>
               <button
                 onClick={handleResend}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     handleResend();
@@ -74,7 +74,13 @@ export default function VerifyEmailPage() {
                 }}
                 disabled={isResending || isResent}
                 className='flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--default-default)] px-4 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)] disabled:cursor-not-allowed disabled:opacity-50'
-                aria-label={isResending ? 'جاري الإرسال...' : isResent ? 'تم الإرسال مرة أخرى' : 'إعادة إرسال الرابط'}
+                aria-label={
+                  isResending
+                    ? 'جاري الإرسال...'
+                    : isResent
+                      ? 'تم الإرسال مرة أخرى'
+                      : 'إعادة إرسال الرابط'
+                }
               >
                 {isResending ? (
                   <>

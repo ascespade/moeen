@@ -1,7 +1,7 @@
 /**
  * useLocalStorage Hook - Custom Hook for Local Storage
  * خطاف useLocalStorage - خطاف مخصص للتخزين المحلي
- * 
+ *
  * React hook for managing localStorage with React state
  */
 
@@ -29,7 +29,8 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   const setValue = (value: T | ((val: T) => T)) => {
     try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value;
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
 
       if (typeof window !== 'undefined') {

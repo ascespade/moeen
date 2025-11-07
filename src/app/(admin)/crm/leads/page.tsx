@@ -130,14 +130,14 @@ export default function CRMLeadsPage() {
             <div className='flex rounded-lg border border-gray-300'>
               <button
                 onClick={() => setViewMode('table')}
-                aria-label="عرض الجدول"
+                aria-label='عرض الجدول'
                 className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 جدول
               </button>
               <button
                 onClick={() => setViewMode('kanban')}
-                aria-label="عرض كانبان"
+                aria-label='عرض كانبان'
                 className={`px-3 py-2 text-sm ${viewMode === 'kanban' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 كانبان
@@ -145,7 +145,7 @@ export default function CRMLeadsPage() {
             </div>
             <button
               onClick={() => setShowCreateModal(true)}
-              aria-label="إضافة عميل محتمل جديد"
+              aria-label='إضافة عميل محتمل جديد'
               className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
             >
               إضافة عميل محتمل
@@ -154,7 +154,7 @@ export default function CRMLeadsPage() {
         </div>
       </header>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-default'>
@@ -186,7 +186,7 @@ export default function CRMLeadsPage() {
               {Math.round(
                 leads.length > 0
                   ? leads.reduce((sum, l) => sum + (l.probability || 0), 0) /
-                    leads.length
+                      leads.length
                   : 0
               )}
               %
@@ -203,9 +203,11 @@ export default function CRMLeadsPage() {
               <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 البحث
               </label>
-              <input type='text'
+              <input
+                type='text'
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} aria-label="text"
+                onChange={e => setSearchTerm(e.target.value)}
+                aria-label='text'
                 placeholder='ابحث بالاسم أو البريد أو الشركة...'
                 className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
@@ -230,7 +232,10 @@ export default function CRMLeadsPage() {
               </select>
             </div>
             <div className='flex items-end'>
-              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
+              <button
+                className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                aria-label='تطبيق الفلاتر'
+              >
                 تطبيق الفلاتر
               </button>
             </div>
@@ -322,10 +327,16 @@ export default function CRMLeadsPage() {
                       </td>
                       <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                         <div className='flex gap-2'>
-                          <button className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]' aria-label="عرض">
+                          <button
+                            className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
+                            aria-label='عرض'
+                          >
                             عرض
                           </button>
-                          <button className='text-gray-600 hover:text-gray-900' aria-label="تعديل">
+                          <button
+                            className='text-gray-600 hover:text-gray-900'
+                            aria-label='تعديل'
+                          >
                             تعديل
                           </button>
                         </div>
@@ -389,10 +400,16 @@ export default function CRMLeadsPage() {
                           </div>
                         </div>
                         <div className='mt-3 flex gap-1'>
-                          <button className='flex-1 rounded bg-[var(--default-default)] px-2 py-1 text-xs text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="عرض">
+                          <button
+                            className='flex-1 rounded bg-[var(--default-default)] px-2 py-1 text-xs text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                            aria-label='عرض'
+                          >
                             عرض
                           </button>
-                          <button className='rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-surface' aria-label="تحريك">
+                          <button
+                            className='rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-surface'
+                            aria-label='تحريك'
+                          >
                             تحريك
                           </button>
                         </div>
@@ -424,7 +441,11 @@ export default function CRMLeadsPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة عميل محتمل جديد</h3>
-              <button onClick={() => { setShowCreateModal(false) }} aria-label="button"
+              <button
+                onClick={() => {
+                  setShowCreateModal(false);
+                }}
+                aria-label='button'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -440,7 +461,7 @@ export default function CRMLeadsPage() {
                     type='text'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='أدخل الاسم الكامل'
-                    aria-label="أدخل الاسم الكامل"
+                    aria-label='أدخل الاسم الكامل'
                   />
                 </div>
                 <div>
@@ -451,7 +472,7 @@ export default function CRMLeadsPage() {
                     type='email'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='example@company.com'
-                    aria-label="البريد الإلكتروني"
+                    aria-label='البريد الإلكتروني'
                   />
                 </div>
               </div>
@@ -464,7 +485,7 @@ export default function CRMLeadsPage() {
                     type='tel'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0501234567'
-                    aria-label="رقم الهاتف"
+                    aria-label='رقم الهاتف'
                   />
                 </div>
                 <div>
@@ -475,7 +496,7 @@ export default function CRMLeadsPage() {
                     type='text'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='اسم الشركة'
-                    aria-label="اسم الشركة"
+                    aria-label='اسم الشركة'
                   />
                 </div>
               </div>
@@ -501,7 +522,7 @@ export default function CRMLeadsPage() {
                     max='100'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0-100'
-                    aria-label="نقاط التقييم"
+                    aria-label='نقاط التقييم'
                   />
                 </div>
                 <div>
@@ -512,19 +533,26 @@ export default function CRMLeadsPage() {
                     type='number'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0'
-                    aria-label="القيمة المتوقعة"
+                    aria-label='القيمة المتوقعة'
                   />
                 </div>
               </div>
               <div className='flex gap-3 pt-4'>
-                <button type='button'
-                  onClick={() => { setShowCreateModal(false) }} aria-label="button"
+                <button
+                  type='button'
+                  onClick={() => {
+                    setShowCreateModal(false);
+                  }}
+                  aria-label='button'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <button type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة العميل المحتمل">
+                <button
+                  type='submit'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='إضافة العميل المحتمل'
+                >
                   إضافة العميل المحتمل
                 </button>
               </div>

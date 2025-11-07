@@ -46,7 +46,9 @@ export default function ResetPasswordPage() {
       await new Promise(resolve => setTimeout(resolve, 2000));
       setIsSuccess(true);
     } catch (error) {
-      setErrors({ general: 'حدث خطأ أثناء إعادة تعيين كلمة المرور. حاول مرة أخرى.' });
+      setErrors({
+        general: 'حدث خطأ أثناء إعادة تعيين كلمة المرور. حاول مرة أخرى.',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -63,7 +65,8 @@ export default function ResetPasswordPage() {
             تم تغيير كلمة المرور!
           </h1>
           <p className='mb-6 text-gray-600 dark:text-gray-300'>
-            تم تغيير كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة المرور الجديدة.
+            تم تغيير كلمة المرور بنجاح. يمكنك الآن تسجيل الدخول باستخدام كلمة
+            المرور الجديدة.
           </p>
           <Link
             href={ROUTES.LOGIN}
@@ -81,7 +84,13 @@ export default function ResetPasswordPage() {
       <div className='w-full max-w-md'>
         <div className='mb-8 text-center'>
           <div className='mb-4 flex items-center justify-center gap-3'>
-            <Image src='/logo.png' alt='مُعين' width={50} height={50} className='rounded-lg' />
+            <Image
+              src='/logo.png'
+              alt='مُعين'
+              width={50}
+              height={50}
+              className='rounded-lg'
+            />
             <h1 className='text-default text-3xl font-bold'>مُعين</h1>
           </div>
           <h2 className='mb-2 text-2xl font-semibold text-gray-900 dark:text-white'>
@@ -101,7 +110,10 @@ export default function ResetPasswordPage() {
 
           <form onSubmit={handleSubmit} className='space-y-6'>
             <div>
-              <label htmlFor='password' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
+              <label
+                htmlFor='password'
+                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
+              >
                 كلمة المرور الجديدة
               </label>
               <input
@@ -115,17 +127,24 @@ export default function ResetPasswordPage() {
                 }`}
                 placeholder='أدخل كلمة المرور الجديدة'
                 disabled={isLoading}
-                aria-label="أدخل كلمة المرور الجديدة"
+                aria-label='أدخل كلمة المرور الجديدة'
                 aria-invalid={errors.password ? 'true' : 'false'}
               />
-              {errors.password && <p className='mt-1 text-sm text-default-error'>{errors.password}</p>}
+              {errors.password && (
+                <p className='mt-1 text-sm text-default-error'>
+                  {errors.password}
+                </p>
+              )}
               <p className='mt-1 text-xs text-gray-500'>
                 يجب أن تكون كلمة المرور 6 أحرف على الأقل
               </p>
             </div>
 
             <div>
-              <label htmlFor='confirmPassword' className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
+              <label
+                htmlFor='confirmPassword'
+                className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'
+              >
                 تأكيد كلمة المرور
               </label>
               <input
@@ -139,10 +158,14 @@ export default function ResetPasswordPage() {
                 }`}
                 placeholder='أعد إدخال كلمة المرور الجديدة'
                 disabled={isLoading}
-                aria-label="أعد إدخال كلمة المرور الجديدة"
+                aria-label='أعد إدخال كلمة المرور الجديدة'
                 aria-invalid={errors.confirmPassword ? 'true' : 'false'}
               />
-              {errors.confirmPassword && <p className='mt-1 text-sm text-default-error'>{errors.confirmPassword}</p>}
+              {errors.confirmPassword && (
+                <p className='mt-1 text-sm text-default-error'>
+                  {errors.confirmPassword}
+                </p>
+              )}
             </div>
 
             <div className='rounded-lg border border-blue-200 bg-surface p-4'>
@@ -176,7 +199,10 @@ export default function ResetPasswordPage() {
           <div className='mt-6 text-center'>
             <p className='text-gray-600 dark:text-gray-300'>
               تذكرت كلمة المرور؟{' '}
-              <Link href={ROUTES.LOGIN} className='font-semibold text-[var(--default-default)] hover:underline'>
+              <Link
+                href={ROUTES.LOGIN}
+                className='font-semibold text-[var(--default-default)] hover:underline'
+              >
                 تسجيل الدخول
               </Link>
             </p>

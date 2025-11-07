@@ -1,7 +1,7 @@
 /**
  * Auth Validation Schemas - Zod
  * مخططات التحقق من المصادقة - Zod
- * 
+ *
  * All authentication validation schemas
  */
 
@@ -27,8 +27,14 @@ export const registerSchema = z
   .object({
     name: z
       .string()
-      .min(CONFIG.NAME_MIN_LENGTH, MESSAGES.VALIDATION.MIN_LENGTH('الاسم', CONFIG.NAME_MIN_LENGTH))
-      .max(CONFIG.NAME_MAX_LENGTH, MESSAGES.VALIDATION.MAX_LENGTH('الاسم', CONFIG.NAME_MAX_LENGTH)),
+      .min(
+        CONFIG.NAME_MIN_LENGTH,
+        MESSAGES.VALIDATION.MIN_LENGTH('الاسم', CONFIG.NAME_MIN_LENGTH)
+      )
+      .max(
+        CONFIG.NAME_MAX_LENGTH,
+        MESSAGES.VALIDATION.MAX_LENGTH('الاسم', CONFIG.NAME_MAX_LENGTH)
+      ),
     email: z
       .string()
       .min(1, MESSAGES.ERROR.REQUIRED_FIELD)
@@ -39,11 +45,11 @@ export const registerSchema = z
       .min(CONFIG.PASSWORD_MIN_LENGTH, MESSAGES.ERROR.INVALID_PASSWORD)
       .max(CONFIG.PASSWORD_MAX_LENGTH),
     confirmPassword: z.string().min(1, MESSAGES.ERROR.REQUIRED_FIELD),
-    agreeToTerms: z.boolean().refine((val) => val === true, {
+    agreeToTerms: z.boolean().refine(val => val === true, {
       message: 'يجب الموافقة على الشروط والأحكام',
     }),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: MESSAGES.ERROR.PASSWORD_MISMATCH,
     path: ['confirmPassword'],
   });
@@ -66,7 +72,7 @@ export const resetPasswordSchema = z
       .max(CONFIG.PASSWORD_MAX_LENGTH),
     confirmPassword: z.string().min(1, MESSAGES.ERROR.REQUIRED_FIELD),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine(data => data.password === data.confirmPassword, {
     message: MESSAGES.ERROR.PASSWORD_MISMATCH,
     path: ['confirmPassword'],
   });
@@ -86,7 +92,7 @@ export const changePasswordSchema = z
       .max(CONFIG.PASSWORD_MAX_LENGTH),
     confirmPassword: z.string().min(1, MESSAGES.ERROR.REQUIRED_FIELD),
   })
-  .refine((data) => data.newPassword === data.confirmPassword, {
+  .refine(data => data.newPassword === data.confirmPassword, {
     message: MESSAGES.ERROR.PASSWORD_MISMATCH,
     path: ['confirmPassword'],
   });

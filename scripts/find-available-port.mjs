@@ -16,14 +16,18 @@ export function findAvailablePort(startPort = 3000, maxAttempts = 100) {
     let currentPort = startPort;
     let attempts = 0;
 
-    const tryPort = (port) => {
+    const tryPort = port => {
       if (attempts >= maxAttempts) {
-        reject(new Error(`Could not find available port after ${maxAttempts} attempts`));
+        reject(
+          new Error(
+            `Could not find available port after ${maxAttempts} attempts`
+          )
+        );
         return;
       }
 
       const server = createServer();
-      
+
       server.listen(port, () => {
         server.once('close', () => {
           resolve(port);
@@ -31,7 +35,7 @@ export function findAvailablePort(startPort = 3000, maxAttempts = 100) {
         server.close();
       });
 
-      server.on('error', (err) => {
+      server.on('error', err => {
         if (err.code === 'EADDRINUSE') {
           attempts++;
           currentPort++;

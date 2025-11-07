@@ -137,4 +137,3 @@ if (require.main === module) {
     result.errors.forEach(error => console.log(`  - ${error}`));
   }
 }
-

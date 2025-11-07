@@ -107,9 +107,7 @@ export default function ChatbotFlowsPage() {
   return (
     <div className='container mx-auto px-4 py-8' role='application'>
       <div className='mb-8'>
-        <h1 className='text-default text-2xl font-bold'>
-          تدفقات الشات بوت
-        </h1>
+        <h1 className='text-default text-2xl font-bold'>تدفقات الشات بوت</h1>
         <p className='text-gray-600 dark:text-gray-300'>
           إدارة تدفقات المحادثة الذكية
         </p>
@@ -117,7 +115,7 @@ export default function ChatbotFlowsPage() {
       <div className='flex items-center gap-3 mb-6'>
         <button
           onClick={() => setShowCreateModal(true)}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               setShowCreateModal(true);
@@ -130,7 +128,7 @@ export default function ChatbotFlowsPage() {
         </button>
       </div>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
@@ -170,9 +168,11 @@ export default function ChatbotFlowsPage() {
               <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 البحث
               </label>
-              <input type='text'
+              <input
+                type='text'
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} aria-label="text"
+                onChange={e => setSearchTerm(e.target.value)}
+                aria-label='text'
                 placeholder='ابحث في التدفقات...'
                 className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
@@ -213,7 +213,10 @@ export default function ChatbotFlowsPage() {
             </div>
 
             <div className='flex items-end'>
-              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
+              <button
+                className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                aria-label='تطبيق الفلاتر'
+              >
                 تطبيق الفلاتر
               </button>
             </div>
@@ -280,10 +283,16 @@ export default function ChatbotFlowsPage() {
                 >
                   فتح المحرر
                 </Link>
-                <button className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="نسخ">
+                <button
+                  className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface'
+                  aria-label='نسخ'
+                >
                   نسخ
                 </button>
-                <button className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="أرشفة">
+                <button
+                  className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface'
+                  aria-label='أرشفة'
+                >
                   أرشفة
                 </button>
               </div>
@@ -315,7 +324,7 @@ export default function ChatbotFlowsPage() {
               <h3 className='text-xl font-semibold'>إنشاء تدفق جديد</h3>
               <button
                 onClick={() => setShowCreateModal(false)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowCreateModal(false);
@@ -380,7 +389,7 @@ export default function ChatbotFlowsPage() {
                 <button
                   type='button'
                   onClick={() => setShowCreateModal(false)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowCreateModal(false);
@@ -391,8 +400,11 @@ export default function ChatbotFlowsPage() {
                 >
                   إلغاء
                 </button>
-                <button type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إنشاء التدفق">
+                <button
+                  type='submit'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='إنشاء التدفق'
+                >
                   إنشاء التدفق
                 </button>
               </div>

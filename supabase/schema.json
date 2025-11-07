@@ -14090,18 +14090,8 @@
     }
   },
   "enums": {
-    "aal_level": [
-      "aal1",
-      "aal2",
-      "aal3"
-    ],
-    "action": [
-      "INSERT",
-      "UPDATE",
-      "DELETE",
-      "TRUNCATE",
-      "ERROR"
-    ],
+    "aal_level": ["aal1", "aal2", "aal3"],
+    "action": ["INSERT", "UPDATE", "DELETE", "TRUNCATE", "ERROR"],
     "ai_model": [
       "gemini_pro",
       "gemini_flash",
@@ -14110,17 +14100,8 @@
       "claude",
       "custom"
     ],
-    "automation_trigger": [
-      "keyword",
-      "time",
-      "condition",
-      "manual",
-      "webhook"
-    ],
-    "buckettype": [
-      "STANDARD",
-      "ANALYTICS"
-    ],
+    "automation_trigger": ["keyword", "time", "condition", "manual", "webhook"],
+    "buckettype": ["STANDARD", "ANALYTICS"],
     "channel_type": [
       "whatsapp",
       "telegram",
@@ -14131,17 +14112,8 @@
       "phone",
       "web"
     ],
-    "code_challenge_method": [
-      "s256",
-      "plain"
-    ],
-    "conversation_priority": [
-      "low",
-      "medium",
-      "high",
-      "urgent",
-      "critical"
-    ],
+    "code_challenge_method": ["s256", "plain"],
+    "conversation_priority": ["low", "medium", "high", "urgent", "critical"],
     "conversation_status": [
       "active",
       "pending",
@@ -14149,42 +14121,12 @@
       "archived",
       "escalated"
     ],
-    "equality_op": [
-      "eq",
-      "neq",
-      "lt",
-      "lte",
-      "gt",
-      "gte",
-      "in"
-    ],
-    "factor_status": [
-      "unverified",
-      "verified"
-    ],
-    "factor_type": [
-      "totp",
-      "webauthn",
-      "phone"
-    ],
-    "flow_status": [
-      "active",
-      "inactive",
-      "draft",
-      "testing"
-    ],
-    "message_direction": [
-      "inbound",
-      "outbound",
-      "system"
-    ],
-    "message_status": [
-      "sent",
-      "delivered",
-      "read",
-      "failed",
-      "pending"
-    ],
+    "equality_op": ["eq", "neq", "lt", "lte", "gt", "gte", "in"],
+    "factor_status": ["unverified", "verified"],
+    "factor_type": ["totp", "webauthn", "phone"],
+    "flow_status": ["active", "inactive", "draft", "testing"],
+    "message_direction": ["inbound", "outbound", "system"],
+    "message_status": ["sent", "delivered", "read", "failed", "pending"],
     "message_type": [
       "text",
       "image",
@@ -14194,30 +14136,11 @@
       "system",
       "ai_response"
     ],
-    "metric_type": [
-      "count",
-      "percentage",
-      "duration",
-      "rating",
-      "score"
-    ],
-    "oauth_authorization_status": [
-      "pending",
-      "approved",
-      "denied",
-      "expired"
-    ],
-    "oauth_client_type": [
-      "public",
-      "confidential"
-    ],
-    "oauth_registration_type": [
-      "dynamic",
-      "manual"
-    ],
-    "oauth_response_type": [
-      "code"
-    ],
+    "metric_type": ["count", "percentage", "duration", "rating", "score"],
+    "oauth_authorization_status": ["pending", "approved", "denied", "expired"],
+    "oauth_client_type": ["public", "confidential"],
+    "oauth_registration_type": ["dynamic", "manual"],
+    "oauth_response_type": ["code"],
     "one_time_token_type": [
       "confirmation_token",
       "reauthentication_token",
@@ -14226,26 +14149,9 @@
       "email_change_token_current",
       "phone_change_token"
     ],
-    "report_period": [
-      "hourly",
-      "daily",
-      "weekly",
-      "monthly",
-      "yearly"
-    ],
-    "user_role": [
-      "admin",
-      "manager",
-      "agent",
-      "demo",
-      "supervisor"
-    ],
-    "user_status": [
-      "active",
-      "inactive",
-      "suspended",
-      "pending"
-    ]
+    "report_period": ["hourly", "daily", "weekly", "monthly", "yearly"],
+    "user_role": ["admin", "manager", "agent", "demo", "supervisor"],
+    "user_status": ["active", "inactive", "suspended", "pending"]
   },
   "functions": [
     {

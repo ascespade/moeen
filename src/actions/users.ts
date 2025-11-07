@@ -1,7 +1,7 @@
 /**
  * Users Actions - Server Actions for User Management
  * إجراءات المستخدمين - Server Actions لإدارة المستخدمين
- * 
+ *
  * All user-related server actions
  */
 
@@ -10,7 +10,11 @@
 import { revalidatePath } from 'next/cache';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { withAction } from '@/lib/auth/with-action';
-import { createUserSchema, updateUserSchema, userProfileSchema } from '@/lib/validations';
+import {
+  createUserSchema,
+  updateUserSchema,
+  userProfileSchema,
+} from '@/lib/validations';
 import { AppError } from '@/lib/errors';
 import { PERMISSIONS } from '@/lib/constants';
 import type { UserInsert, UserUpdate } from '@/types/database.types';
@@ -84,10 +88,7 @@ export const deleteUserAction = withAction(
   async (_user, userId: string) => {
     const adminClient = createAdminClient();
 
-    const { error } = await adminClient
-      .from('users')
-      .delete()
-      .eq('id', userId);
+    const { error } = await adminClient.from('users').delete().eq('id', userId);
 
     if (error) {
       throw AppError.internal(`فشل حذف المستخدم: ${error.message}`);

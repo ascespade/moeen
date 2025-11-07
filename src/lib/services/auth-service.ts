@@ -1,7 +1,7 @@
 /**
  * Auth Service - Business Logic for Authentication
  * خدمة المصادقة - منطق الأعمال للمصادقة
- * 
+ *
  * Business logic layer for authentication operations
  */
 
@@ -17,9 +17,13 @@ export class AuthService {
   /**
    * Sign up new user
    */
-  static async signUp(email: string, password: string, name: string): Promise<{ user: User }> {
+  static async signUp(
+    email: string,
+    password: string,
+    name: string
+  ): Promise<{ user: User }> {
     const supabase = await createClient();
-    
+
     // Sign up with Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
@@ -36,18 +40,18 @@ export class AuthService {
 
     // Create user record in users table
     const adminClient = createAdminClient();
-    const { error: userError } = await adminClient
-      .from('users')
-      .insert({
-        id: authData.user.id,
-        email,
-        name,
-        role: 'user',
-        status: 'active',
-      } as UserInsert);
+    const { error: userError } = await adminClient.from('users').insert({
+      id: authData.user.id,
+      email,
+      name,
+      role: 'user',
+      status: 'active',
+    } as UserInsert);
 
     if (userError) {
-      throw AppError.internal(`Failed to create user record: ${userError.message}`);
+      throw AppError.internal(
+        `Failed to create user record: ${userError.message}`
+      );
     }
 
     // Fetch created user
@@ -67,7 +71,10 @@ export class AuthService {
   /**
    * Sign in user
    */
-  static async signIn(email: string, password: string): Promise<{ user: User }> {
+  static async signIn(
+    email: string,
+    password: string
+  ): Promise<{ user: User }> {
     const supabase = await createClient();
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -119,7 +126,9 @@ export class AuthService {
     });
 
     if (error) {
-      throw AppError.internal(`Failed to send password reset email: ${error.message}`);
+      throw AppError.internal(
+        `Failed to send password reset email: ${error.message}`
+      );
     }
   }
 

@@ -14,12 +14,13 @@ import pg from 'pg';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const dbUrl = process.env.DATABASE_URL || 
+const dbUrl =
+  process.env.DATABASE_URL ||
   'postgresql://postgres.socwpqzcalgvpzjwavgh:rZqeMdbeyCwXW5cB@aws-1-eu-central-1.pooler.supabase.com:6543/postgres';
 
 const client = new pg.Client({
   connectionString: dbUrl,
-  ssl: { rejectUnauthorized: false, require: true }
+  ssl: { rejectUnauthorized: false, require: true },
 });
 
 const results = {
@@ -27,7 +28,7 @@ const results = {
   round2_design: { issues: [], fixes: [], improvements: [] },
   round3_technical: { issues: [], fixes: [], improvements: [] },
   round4_database: { issues: [], fixes: [], improvements: [] },
-  round5_business: { issues: [], fixes: [], improvements: [] }
+  round5_business: { issues: [], fixes: [], improvements: [] },
 };
 
 // ============================================
@@ -37,50 +38,58 @@ async function round1_codeExpert() {
   console.log('\n' + '='.repeat(70));
   console.log('?? ROUND 1: CODE EXPERT - Expert Programmer Analysis');
   console.log('='.repeat(70) + '\n');
-  
+
   const round1 = results.round1_code;
-  
+
   // 1. Architecture & Patterns
   console.log('?? Checking Architecture & Patterns...');
   const apiFiles = await glob('src/app/api/**/*.ts');
-  
+
   for (const file of apiFiles.slice(0, 30)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
+
     // Check for consistent error handling
-    if (content.includes('export async function') && !content.includes('try {') && content.includes('await')) {
+    if (
+      content.includes('export async function') &&
+      !content.includes('try {') &&
+      content.includes('await')
+    ) {
       round1.issues.push({
         file,
         issue: 'Missing error handling',
         severity: 'high',
-        suggestion: 'Add try-catch with consistent error response'
+        suggestion: 'Add try-catch with consistent error response',
       });
-      
+
       // Auto-fix
       if (content.includes('return NextResponse.json')) {
-        const fixed = content.replace(
-          /(export async function \w+[^{]*\{)/,
-          '$1\n  try {'
-        ).replace(
-          /(return NextResponse\.json\([^;]+;\s*)$/m,
-          '$1  } catch (error) {\n    return NextResponse.json(\n      { error: error instanceof Error ? error.message : \'Internal server error\' },\n      { status: 500 }\n    );\n  }'
-        );
+        const fixed = content
+          .replace(/(export async function \w+[^{]*\{)/, '$1\n  try {')
+          .replace(
+            /(return NextResponse\.json\([^;]+;\s*)$/m,
+            "$1  } catch (error) {\n    return NextResponse.json(\n      { error: error instanceof Error ? error.message : 'Internal server error' },\n      { status: 500 }\n    );\n  }"
+          );
         fs.writeFileSync(file, fixed);
         round1.fixes.push(`Added error handling to ${file}`);
       }
     }
-    
+
     // Check for proper typing
-    if (content.includes('request: NextRequest') && !content.includes('Promise<NextResponse>')) {
-      const funcMatch = content.match(/(export async function \w+)\(request: NextRequest\)/);
+    if (
+      content.includes('request: NextRequest') &&
+      !content.includes('Promise<NextResponse>')
+    ) {
+      const funcMatch = content.match(
+        /(export async function \w+)\(request: NextRequest\)/
+      );
       if (funcMatch) {
         round1.issues.push({
           file,
           issue: 'Missing return type annotation',
           severity: 'medium',
-          suggestion: 'Add explicit return type'
+          suggestion: 'Add explicit return type',
         });
-        
+
         const fixed = content.replace(
           /(export async function \w+)\(request: NextRequest\)/,
           '$1(request: NextRequest): Promise<NextResponse>'
@@ -90,46 +99,56 @@ async function round1_codeExpert() {
       }
     }
   }
-  
+
   // 2. Code Organization
   console.log('?? Checking Code Organization...');
   const components = await glob('src/components/**/*.{ts,tsx}');
-  
+
   for (const component of components.slice(0, 30)) {
     const content = fs.readFileSync(component, 'utf-8');
-    
+
     // Check for proper component structure
-    if (content.includes('function') && !content.includes('interface') && !content.includes('type')) {
+    if (
+      content.includes('function') &&
+      !content.includes('interface') &&
+      !content.includes('type')
+    ) {
       const propsMatch = content.match(/function\s+(\w+)\s*\(([^)]+)\)/);
       if (propsMatch && propsMatch[2].trim() && !propsMatch[2].includes(':')) {
         round1.issues.push({
           file: component,
           issue: 'Component props not typed',
           severity: 'medium',
-          suggestion: 'Add TypeScript interface for props'
+          suggestion: 'Add TypeScript interface for props',
         });
       }
     }
-    
+
     // Check for separation of concerns
-    if (content.split('\n').length > 300 && content.includes('fetch') && content.includes('useState')) {
+    if (
+      content.split('\n').length > 300 &&
+      content.includes('fetch') &&
+      content.includes('useState')
+    ) {
       round1.issues.push({
         file: component,
         issue: 'Component violates single responsibility',
         severity: 'medium',
-        suggestion: 'Extract data fetching to custom hook'
+        suggestion: 'Extract data fetching to custom hook',
       });
     }
   }
-  
+
   // 3. Type Safety
   console.log('?? Checking Type Safety...');
-  const tsFiles = await glob('src/**/*.{ts,tsx}', { ignore: ['**/node_modules/**', '**/*.test.*'] });
-  
+  const tsFiles = await glob('src/**/*.{ts,tsx}', {
+    ignore: ['**/node_modules/**', '**/*.test.*'],
+  });
+
   for (const file of tsFiles.slice(0, 50)) {
     let content = fs.readFileSync(file, 'utf-8');
     let modified = false;
-    
+
     // Replace 'any' with 'unknown' where safe
     if (content.includes(': any') && !file.includes('.test.')) {
       content = content.replace(/: any(?=[,;)\]\}])/g, ': unknown');
@@ -137,12 +156,12 @@ async function round1_codeExpert() {
       round1.fixes.push(`Improved type safety in ${file}`);
       modified = true;
     }
-    
+
     if (modified) {
       round1.improvements.push(`Type safety improved in ${file}`);
     }
   }
-  
+
   // 4. Create reusable utilities
   console.log('?? Creating Reusable Utilities...');
   const utilsPath = path.join(process.cwd(), 'src/utils/api-utils.ts');
@@ -186,9 +205,11 @@ export function validateRequest(request: NextRequest, requiredFields: string[]):
     fs.writeFileSync(utilsPath, utilsContent);
     round1.improvements.push('Created reusable API utilities');
   }
-  
-  console.log(`\n? Round 1 Complete: ${round1.issues.length} issues, ${round1.fixes.length} fixes, ${round1.improvements.length} improvements`);
-  
+
+  console.log(
+    `\n? Round 1 Complete: ${round1.issues.length} issues, ${round1.fixes.length} fixes, ${round1.improvements.length} improvements`
+  );
+
   return round1;
 }
 
@@ -199,88 +220,104 @@ async function round2_designExpert() {
   console.log('\n' + '='.repeat(70));
   console.log('?? ROUND 2: DESIGN EXPERT - UI/UX & Accessibility Analysis');
   console.log('='.repeat(70) + '\n');
-  
+
   const round2 = results.round2_design;
-  
+
   // 1. Accessibility Checks
   console.log('? Checking Accessibility...');
   const componentFiles = await glob('src/components/**/*.{ts,tsx}');
-  
+
   for (const file of componentFiles.slice(0, 30)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
+
     // Check for buttons without labels
-    if (content.includes('<button') && !content.includes('aria-label') && !content.includes('aria-labelledby')) {
+    if (
+      content.includes('<button') &&
+      !content.includes('aria-label') &&
+      !content.includes('aria-labelledby')
+    ) {
       const buttonText = content.match(/<button[^>]*>([^<]+)</);
       if (!buttonText || buttonText[1].trim().length === 0) {
         round2.issues.push({
           file,
           issue: 'Button missing accessibility attributes',
           severity: 'medium',
-          suggestion: 'Add aria-label or aria-labelledby'
+          suggestion: 'Add aria-label or aria-labelledby',
         });
       }
     }
-    
+
     // Check for images without alt
     if (content.includes('<img') && !content.includes('alt=')) {
       round2.issues.push({
         file,
         issue: 'Image missing alt attribute',
         severity: 'high',
-        suggestion: 'Add descriptive alt text'
+        suggestion: 'Add descriptive alt text',
       });
     }
-    
+
     // Check for form inputs without labels
-    if (content.includes('<input') && !content.includes('aria-label') && !content.includes('aria-labelledby') && !content.match(/<label[^>]*>[\s\S]*?<\/label>/)) {
+    if (
+      content.includes('<input') &&
+      !content.includes('aria-label') &&
+      !content.includes('aria-labelledby') &&
+      !content.match(/<label[^>]*>[\s\S]*?<\/label>/)
+    ) {
       round2.issues.push({
         file,
         issue: 'Input missing label or aria-label',
         severity: 'high',
-        suggestion: 'Add label or aria-label for inputs'
+        suggestion: 'Add label or aria-label for inputs',
       });
     }
   }
-  
+
   // 2. Design System Consistency
   console.log('?? Checking Design System Consistency...');
-  
+
   // Check for hardcoded colors
-  const styleFiles = await glob('src/**/*.{ts,tsx,css}', { ignore: ['**/node_modules/**'] });
+  const styleFiles = await glob('src/**/*.{ts,tsx,css}', {
+    ignore: ['**/node_modules/**'],
+  });
   for (const file of styleFiles.slice(0, 30)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
+
     // Check for hardcoded colors (basic check)
     if (content.match(/#[0-9a-fA-F]{6}|rgb\(|rgba\(/)) {
       round2.issues.push({
         file,
         issue: 'Hardcoded color values detected',
         severity: 'low',
-        suggestion: 'Use design system color tokens'
+        suggestion: 'Use design system color tokens',
       });
     }
   }
-  
+
   // 3. Responsive Design
   console.log('?? Checking Responsive Design...');
-  
+
   for (const file of componentFiles.slice(0, 30)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
+
     // Check for responsive classes
-    if (content.includes('className') && !content.includes('md:') && !content.includes('lg:') && !content.includes('sm:')) {
+    if (
+      content.includes('className') &&
+      !content.includes('md:') &&
+      !content.includes('lg:') &&
+      !content.includes('sm:')
+    ) {
       if (content.split('\n').length > 100) {
         round2.issues.push({
           file,
           issue: 'Component may not be responsive',
           severity: 'low',
-          suggestion: 'Add responsive breakpoints (md:, lg:, etc.)'
+          suggestion: 'Add responsive breakpoints (md:, lg:, etc.)',
         });
       }
     }
   }
-  
+
   // 4. Create accessibility utilities
   console.log('? Creating Accessibility Utilities...');
   const a11yPath = path.join(process.cwd(), 'src/utils/a11y-utils.ts');
@@ -314,9 +351,11 @@ export function announceToScreenReader(message: string): void {
     fs.writeFileSync(a11yPath, a11yContent);
     round2.improvements.push('Created accessibility utilities');
   }
-  
-  console.log(`\n? Round 2 Complete: ${round2.issues.length} issues, ${round2.fixes.length} fixes, ${round2.improvements.length} improvements`);
-  
+
+  console.log(
+    `\n? Round 2 Complete: ${round2.issues.length} issues, ${round2.fixes.length} fixes, ${round2.improvements.length} improvements`
+  );
+
   return round2;
 }
 
@@ -325,86 +364,105 @@ export function announceToScreenReader(message: string): void {
 // ============================================
 async function round3_technicalExpert() {
   console.log('\n' + '='.repeat(70));
-  console.log('??  ROUND 3: TECHNICAL EXPERT - Performance & Security Analysis');
+  console.log(
+    '??  ROUND 3: TECHNICAL EXPERT - Performance & Security Analysis'
+  );
   console.log('='.repeat(70) + '\n');
-  
+
   const round3 = results.round3_technical;
-  
+
   // 1. Performance Checks
   console.log('?? Checking Performance...');
-  
+
   const apiFiles = await glob('src/app/api/**/*.ts');
-  
+
   for (const file of apiFiles.slice(0, 30)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
+
     // Check for N+1 queries
-    if (content.includes('await') && content.match(/await[\s\S]*?await[\s\S]*?await/g)) {
+    if (
+      content.includes('await') &&
+      content.match(/await[\s\S]*?await[\s\S]*?await/g)
+    ) {
       round3.issues.push({
         file,
         issue: 'Potential N+1 query problem',
         severity: 'medium',
-        suggestion: 'Use Promise.all for parallel queries'
+        suggestion: 'Use Promise.all for parallel queries',
       });
     }
-    
+
     // Check for missing caching
-    if (content.includes('GET') && !content.includes('cache') && !content.includes('revalidate')) {
+    if (
+      content.includes('GET') &&
+      !content.includes('cache') &&
+      !content.includes('revalidate')
+    ) {
       round3.issues.push({
         file,
         issue: 'Missing caching strategy',
         severity: 'low',
-        suggestion: 'Add cache headers or revalidation'
+        suggestion: 'Add cache headers or revalidation',
       });
     }
   }
-  
+
   // 2. Security Checks
   console.log('?? Checking Security...');
-  
+
   for (const file of apiFiles.slice(0, 30)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
+
     // Check for missing authentication
-    if (content.includes('export async function') && 
-        !content.includes('requireAuth') && 
-        !content.includes('authorize') &&
-        !file.includes('public')) {
+    if (
+      content.includes('export async function') &&
+      !content.includes('requireAuth') &&
+      !content.includes('authorize') &&
+      !file.includes('public')
+    ) {
       round3.issues.push({
         file,
         issue: 'API route may be missing authentication',
         severity: 'critical',
-        suggestion: 'Add authentication middleware'
+        suggestion: 'Add authentication middleware',
       });
     }
-    
+
     // Check for SQL injection risks
-    if (content.includes('query') && content.includes('${') && !content.includes('$1')) {
+    if (
+      content.includes('query') &&
+      content.includes('${') &&
+      !content.includes('$1')
+    ) {
       round3.issues.push({
         file,
         issue: 'Potential SQL injection risk',
         severity: 'critical',
-        suggestion: 'Use parameterized queries'
+        suggestion: 'Use parameterized queries',
       });
     }
   }
-  
+
   // 3. Error Handling
   console.log('???  Checking Error Handling...');
-  
+
   for (const file of apiFiles.slice(0, 30)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
-    if (content.includes('await') && !content.includes('try {') && !content.includes('catch')) {
+
+    if (
+      content.includes('await') &&
+      !content.includes('try {') &&
+      !content.includes('catch')
+    ) {
       round3.issues.push({
         file,
         issue: 'Missing error handling',
         severity: 'high',
-        suggestion: 'Add try-catch blocks'
+        suggestion: 'Add try-catch blocks',
       });
     }
   }
-  
+
   // 4. Create performance utilities
   console.log('? Creating Performance Utilities...');
   const perfPath = path.join(process.cwd(), 'src/utils/performance-utils.ts');
@@ -453,9 +511,11 @@ export function throttle<T extends (...args: any[]) => any>(
     fs.writeFileSync(perfPath, perfContent);
     round3.improvements.push('Created performance utilities');
   }
-  
-  console.log(`\n? Round 3 Complete: ${round3.issues.length} issues, ${round3.fixes.length} fixes, ${round3.improvements.length} improvements`);
-  
+
+  console.log(
+    `\n? Round 3 Complete: ${round3.issues.length} issues, ${round3.fixes.length} fixes, ${round3.improvements.length} improvements`
+  );
+
   return round3;
 }
 
@@ -466,16 +526,16 @@ async function round4_databaseExpert() {
   console.log('\n' + '='.repeat(70));
   console.log('???  ROUND 4: DATABASE ADMIN - Schema & Query Optimization');
   console.log('='.repeat(70) + '\n');
-  
+
   const round4 = results.round4_database;
-  
+
   try {
     await client.connect();
     console.log('? Connected to database\n');
-    
+
     // 1. Schema Validation
     console.log('?? Validating Schema...');
-    
+
     // Check for missing indexes
     const { rows: tables } = await client.query(`
       SELECT table_name 
@@ -484,149 +544,185 @@ async function round4_databaseExpert() {
       AND table_type = 'BASE TABLE'
       ORDER BY table_name
     `);
-    
+
     for (const table of tables.slice(0, 20)) {
       const tableName = table.table_name;
-      
+
       // Check for primary key
-      const { rows: pkCheck } = await client.query(`
+      const { rows: pkCheck } = await client.query(
+        `
         SELECT COUNT(*) as count
         FROM information_schema.table_constraints
         WHERE table_schema = 'public'
         AND table_name = $1
         AND constraint_type = 'PRIMARY KEY'
-      `, [tableName]);
-      
+      `,
+        [tableName]
+      );
+
       if (parseInt(pkCheck[0].count) === 0) {
         round4.issues.push({
           table: tableName,
           issue: 'Table missing primary key',
           severity: 'critical',
-          suggestion: `Add primary key to ${tableName}`
+          suggestion: `Add primary key to ${tableName}`,
         });
       }
-      
+
       // Check for indexes on foreign keys
-      const { rows: fkCheck } = await client.query(`
+      const { rows: fkCheck } = await client.query(
+        `
         SELECT column_name
         FROM information_schema.key_column_usage
         WHERE table_schema = 'public'
         AND table_name = $1
         AND position_in_unique_constraint IS NOT NULL
-      `, [tableName]);
-      
+      `,
+        [tableName]
+      );
+
       for (const fk of fkCheck) {
-        const { rows: idxCheck } = await client.query(`
+        const { rows: idxCheck } = await client.query(
+          `
           SELECT COUNT(*) as count
           FROM pg_indexes
           WHERE schemaname = 'public'
           AND tablename = $1
           AND indexdef LIKE $2
-        `, [tableName, `%${fk.column_name}%`]);
-        
+        `,
+          [tableName, `%${fk.column_name}%`]
+        );
+
         if (parseInt(idxCheck[0].count) === 0) {
           round4.issues.push({
             table: tableName,
             issue: `Missing index on foreign key ${fk.column_name}`,
             severity: 'high',
-            suggestion: `CREATE INDEX idx_${tableName}_${fk.column_name} ON ${tableName}(${fk.column_name})`
+            suggestion: `CREATE INDEX idx_${tableName}_${fk.column_name} ON ${tableName}(${fk.column_name})`,
           });
         }
       }
-      
+
       // Check for indexes on frequently queried columns
-      const commonColumns = ['created_at', 'updated_at', 'status', 'user_id', 'email'];
+      const commonColumns = [
+        'created_at',
+        'updated_at',
+        'status',
+        'user_id',
+        'email',
+      ];
       for (const col of commonColumns) {
-        const { rows: colCheck } = await client.query(`
+        const { rows: colCheck } = await client.query(
+          `
           SELECT COUNT(*) as count
           FROM information_schema.columns
           WHERE table_schema = 'public'
           AND table_name = $1
           AND column_name = $2
-        `, [tableName, col]);
-        
+        `,
+          [tableName, col]
+        );
+
         if (parseInt(colCheck[0].count) > 0) {
-          const { rows: idxCheck } = await client.query(`
+          const { rows: idxCheck } = await client.query(
+            `
             SELECT COUNT(*) as count
             FROM pg_indexes
             WHERE schemaname = 'public'
             AND tablename = $1
             AND indexdef LIKE $2
-          `, [tableName, `%${col}%`]);
-          
+          `,
+            [tableName, `%${col}%`]
+          );
+
           if (parseInt(idxCheck[0].count) === 0) {
             round4.improvements.push({
               table: tableName,
-              suggestion: `Add index on ${tableName}.${col} for better query performance`
+              suggestion: `Add index on ${tableName}.${col} for better query performance`,
             });
           }
         }
       }
     }
-    
+
     // 2. Query Optimization
     console.log('? Checking Query Patterns...');
-    
+
     const apiFiles = await glob('src/app/api/**/*.ts');
     for (const file of apiFiles.slice(0, 20)) {
       const content = fs.readFileSync(file, 'utf-8');
-      
+
       // Check for SELECT *
-      if (content.includes('.select(\'*\')') || content.includes('.select("*")')) {
+      if (
+        content.includes(".select('*')") ||
+        content.includes('.select("*")')
+      ) {
         round4.issues.push({
           file,
           issue: 'Using SELECT * in query',
           severity: 'medium',
-          suggestion: 'Select only required columns for better performance'
+          suggestion: 'Select only required columns for better performance',
         });
       }
-      
+
       // Check for missing joins
-      if (content.includes('.select(') && content.includes('!inner') && !content.includes('join')) {
+      if (
+        content.includes('.select(') &&
+        content.includes('!inner') &&
+        !content.includes('join')
+      ) {
         round4.issues.push({
           file,
           issue: 'Using implicit joins (Supabase syntax)',
           severity: 'low',
-          suggestion: 'Consider explicit joins for complex queries'
+          suggestion: 'Consider explicit joins for complex queries',
         });
       }
     }
-    
+
     // 3. Data Integrity
     console.log('?? Checking Data Integrity...');
-    
+
     // Check for missing constraints
     for (const table of tables.slice(0, 10)) {
       const tableName = table.table_name;
-      
+
       // Check for NOT NULL constraints on important columns
-      const { rows: nullableCheck } = await client.query(`
+      const { rows: nullableCheck } = await client.query(
+        `
         SELECT column_name, is_nullable
         FROM information_schema.columns
         WHERE table_schema = 'public'
         AND table_name = $1
         AND column_name IN ('email', 'phone', 'status', 'created_at')
-      `, [tableName]);
-      
+      `,
+        [tableName]
+      );
+
       for (const col of nullableCheck) {
-        if (col.is_nullable === 'YES' && ['email', 'phone'].includes(col.column_name)) {
+        if (
+          col.is_nullable === 'YES' &&
+          ['email', 'phone'].includes(col.column_name)
+        ) {
           round4.issues.push({
             table: tableName,
             issue: `Column ${col.column_name} should be NOT NULL`,
             severity: 'medium',
-            suggestion: `ALTER TABLE ${tableName} ALTER COLUMN ${col.column_name} SET NOT NULL`
+            suggestion: `ALTER TABLE ${tableName} ALTER COLUMN ${col.column_name} SET NOT NULL`,
           });
         }
       }
     }
-    
+
     await client.end();
   } catch (error) {
     console.error('Database connection error:', error.message);
   }
-  
-  console.log(`\n? Round 4 Complete: ${round4.issues.length} issues, ${round4.fixes.length} fixes, ${round4.improvements.length} improvements`);
-  
+
+  console.log(
+    `\n? Round 4 Complete: ${round4.issues.length} issues, ${round4.fixes.length} fixes, ${round4.improvements.length} improvements`
+  );
+
   return round4;
 }
 
@@ -635,86 +731,112 @@ async function round4_databaseExpert() {
 // ============================================
 async function round5_businessLogicExpert() {
   console.log('\n' + '='.repeat(70));
-  console.log('?? ROUND 5: BUSINESS LOGIC EXPERT - Healthcare Workflow Analysis');
+  console.log(
+    '?? ROUND 5: BUSINESS LOGIC EXPERT - Healthcare Workflow Analysis'
+  );
   console.log('='.repeat(70) + '\n');
-  
+
   const round5 = results.round5_business;
-  
+
   // 1. Healthcare Workflows
   console.log('?? Checking Healthcare Workflows...');
-  
+
   // Check appointment workflow
   const appointmentFiles = await glob('src/**/*appointment*.{ts,tsx}');
   for (const file of appointmentFiles.slice(0, 10)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
+
     // Check for appointment validation
-    if (content.includes('appointment') && !content.includes('validation') && !content.includes('validate')) {
+    if (
+      content.includes('appointment') &&
+      !content.includes('validation') &&
+      !content.includes('validate')
+    ) {
       round5.issues.push({
         file,
         issue: 'Missing appointment validation',
         severity: 'high',
-        suggestion: 'Add validation for appointment data (date, time, doctor availability)'
+        suggestion:
+          'Add validation for appointment data (date, time, doctor availability)',
       });
     }
-    
+
     // Check for conflict detection
-    if (content.includes('create') && content.includes('appointment') && !content.includes('conflict') && !content.includes('available')) {
+    if (
+      content.includes('create') &&
+      content.includes('appointment') &&
+      !content.includes('conflict') &&
+      !content.includes('available')
+    ) {
       round5.issues.push({
         file,
         issue: 'Missing appointment conflict detection',
         severity: 'critical',
-        suggestion: 'Check for scheduling conflicts before creating appointment'
+        suggestion:
+          'Check for scheduling conflicts before creating appointment',
       });
     }
   }
-  
+
   // 2. Patient Data Management
   console.log('?? Checking Patient Data Management...');
-  
+
   const patientFiles = await glob('src/**/*patient*.{ts,tsx}');
   for (const file of patientFiles.slice(0, 10)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
+
     // Check for medical record handling
-    if (content.includes('patient') && !content.includes('medical') && !content.includes('record')) {
+    if (
+      content.includes('patient') &&
+      !content.includes('medical') &&
+      !content.includes('record')
+    ) {
       round5.issues.push({
         file,
         issue: 'Patient data may be missing medical records',
         severity: 'medium',
-        suggestion: 'Ensure medical records are linked to patient data'
+        suggestion: 'Ensure medical records are linked to patient data',
       });
     }
-    
+
     // Check for privacy compliance
-    if (content.includes('patient') && content.includes('fetch') && !content.includes('auth') && !content.includes('permission')) {
+    if (
+      content.includes('patient') &&
+      content.includes('fetch') &&
+      !content.includes('auth') &&
+      !content.includes('permission')
+    ) {
       round5.issues.push({
         file,
         issue: 'Patient data access may not be properly secured',
         severity: 'critical',
-        suggestion: 'Add authorization checks for patient data access'
+        suggestion: 'Add authorization checks for patient data access',
       });
     }
   }
-  
+
   // 3. Healthcare Business Rules
   console.log('?? Checking Business Rules...');
-  
+
   // Check for insurance claim workflow
   const insuranceFiles = await glob('src/**/*insurance*.{ts,tsx}');
   for (const file of insuranceFiles.slice(0, 10)) {
     const content = fs.readFileSync(file, 'utf-8');
-    
-    if (content.includes('claim') && !content.includes('approval') && !content.includes('status')) {
+
+    if (
+      content.includes('claim') &&
+      !content.includes('approval') &&
+      !content.includes('status')
+    ) {
       round5.issues.push({
         file,
         issue: 'Insurance claim workflow may be incomplete',
         severity: 'high',
-        suggestion: 'Add approval workflow and status tracking'
+        suggestion: 'Add approval workflow and status tracking',
       });
     }
   }
-  
+
   // 4. Create business logic utilities
   console.log('?? Creating Business Logic Utilities...');
   const businessPath = path.join(process.cwd(), 'src/utils/business-logic.ts');
@@ -781,65 +903,70 @@ export function calculateInsuranceCoverage(
     fs.writeFileSync(businessPath, businessContent);
     round5.improvements.push('Created healthcare business logic utilities');
   }
-  
-  console.log(`\n? Round 5 Complete: ${round5.issues.length} issues, ${round5.fixes.length} fixes, ${round5.improvements.length} improvements`);
-  
+
+  console.log(
+    `\n? Round 5 Complete: ${round5.issues.length} issues, ${round5.fixes.length} fixes, ${round5.improvements.length} improvements`
+  );
+
   return round5;
 }
 
 // Main execution
 async function main() {
   console.log('?? Starting Five Rounds Comprehensive Audit...\n');
-  
+
   const rounds = await Promise.all([
     round1_codeExpert(),
     round2_designExpert(),
     round3_technicalExpert(),
     round4_databaseExpert(),
-    round5_businessLogicExpert()
+    round5_businessLogicExpert(),
   ]);
-  
+
   // Generate comprehensive report
   const report = {
     timestamp: new Date().toISOString(),
     summary: {
       totalIssues: rounds.reduce((sum, r) => sum + r.issues.length, 0),
       totalFixes: rounds.reduce((sum, r) => sum + r.fixes.length, 0),
-      totalImprovements: rounds.reduce((sum, r) => sum + r.improvements.length, 0)
+      totalImprovements: rounds.reduce(
+        (sum, r) => sum + r.improvements.length,
+        0
+      ),
     },
     rounds: {
       round1_code: {
         issues: results.round1_code.issues.length,
         fixes: results.round1_code.fixes.length,
-        improvements: results.round1_code.improvements.length
+        improvements: results.round1_code.improvements.length,
       },
       round2_design: {
         issues: results.round2_design.issues.length,
         fixes: results.round2_design.fixes.length,
-        improvements: results.round2_design.improvements.length
+        improvements: results.round2_design.improvements.length,
       },
       round3_technical: {
         issues: results.round3_technical.issues.length,
         fixes: results.round3_technical.fixes.length,
-        improvements: results.round3_technical.improvements.length
+        improvements: results.round3_technical.improvements.length,
       },
       round4_database: {
         issues: results.round4_database.issues.length,
         fixes: results.round4_database.fixes.length,
-        improvements: results.round4_database.improvements.length
+        improvements: results.round4_database.improvements.length,
       },
       round5_business: {
         issues: results.round5_business.issues.length,
         fixes: results.round5_business.fixes.length,
-        improvements: results.round5_business.improvements.length
-      }
+        improvements: results.round5_business.improvements.length,
+      },
     },
-    details: results
+    details: results,
   };
-  
+
   const reportPath = path.join(process.cwd(), 'five-rounds-audit-report.json');
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
-  
+
   console.log('\n' + '='.repeat(70));
   console.log('?? FINAL SUMMARY');
   console.log('='.repeat(70));
@@ -847,11 +974,21 @@ async function main() {
   console.log(`Total Fixes Applied: ${report.summary.totalFixes}`);
   console.log(`Total Improvements: ${report.summary.totalImprovements}`);
   console.log('\nBreakdown by Round:');
-  console.log(`  Round 1 (Code): ${report.rounds.round1_code.issues} issues, ${report.rounds.round1_code.fixes} fixes`);
-  console.log(`  Round 2 (Design): ${report.rounds.round2_design.issues} issues, ${report.rounds.round2_design.fixes} fixes`);
-  console.log(`  Round 3 (Technical): ${report.rounds.round3_technical.issues} issues, ${report.rounds.round3_technical.fixes} fixes`);
-  console.log(`  Round 4 (Database): ${report.rounds.round4_database.issues} issues, ${report.rounds.round4_database.fixes} fixes`);
-  console.log(`  Round 5 (Business): ${report.rounds.round5_business.issues} issues, ${report.rounds.round5_business.fixes} fixes`);
+  console.log(
+    `  Round 1 (Code): ${report.rounds.round1_code.issues} issues, ${report.rounds.round1_code.fixes} fixes`
+  );
+  console.log(
+    `  Round 2 (Design): ${report.rounds.round2_design.issues} issues, ${report.rounds.round2_design.fixes} fixes`
+  );
+  console.log(
+    `  Round 3 (Technical): ${report.rounds.round3_technical.issues} issues, ${report.rounds.round3_technical.fixes} fixes`
+  );
+  console.log(
+    `  Round 4 (Database): ${report.rounds.round4_database.issues} issues, ${report.rounds.round4_database.fixes} fixes`
+  );
+  console.log(
+    `  Round 5 (Business): ${report.rounds.round5_business.issues} issues, ${report.rounds.round5_business.fixes} fixes`
+  );
   console.log('\n?? Full report saved to: five-rounds-audit-report.json');
   console.log('='.repeat(70));
 }

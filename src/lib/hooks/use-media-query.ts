@@ -1,7 +1,7 @@
 /**
  * useMediaQuery Hook - Custom Hook for Media Queries
  * خطاف useMediaQuery - خطاف مخصص لاستعلامات الوسائط
- * 
+ *
  * React hook for responsive design with media queries
  */
 

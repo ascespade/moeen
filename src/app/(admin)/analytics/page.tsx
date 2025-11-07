@@ -84,7 +84,9 @@ function AnalyticsPageContent() {
       setError(null);
 
       // Fetch real data from API
-      const response = await fetch(`/api/analytics/data?period=${selectedPeriod}`);
+      const response = await fetch(
+        `/api/analytics/data?period=${selectedPeriod}`
+      );
       const result = await response.json();
 
       if (result.success && result.data) {
@@ -119,7 +121,6 @@ function AnalyticsPageContent() {
     if (rate < 0) return 'text-default-error';
     return 'text-gray-600';
   };
-
 
   return (
     <div className='container mx-auto px-4 py-8' dir='rtl' role='application'>
@@ -160,7 +161,7 @@ function AnalyticsPageContent() {
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
           <button
             onClick={() => setSelectedView('overview')}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setSelectedView('overview');
@@ -177,7 +178,7 @@ function AnalyticsPageContent() {
           </button>
           <button
             onClick={() => setSelectedView('patients')}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setSelectedView('patients');
@@ -194,7 +195,7 @@ function AnalyticsPageContent() {
           </button>
           <button
             onClick={() => setSelectedView('therapy')}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setSelectedView('therapy');
@@ -211,7 +212,7 @@ function AnalyticsPageContent() {
           </button>
           <button
             onClick={() => setSelectedView('appointments')}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setSelectedView('appointments');

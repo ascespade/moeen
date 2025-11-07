@@ -188,15 +188,15 @@ export default function MoeenChatbot({
   return (
     <>
       {/* Floating Button */}
-      <button 
+      <button
         onClick={() => setIsOpen(!isOpen)}
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             setIsOpen(!isOpen);
           }
         }}
-                className={`fixed ${positionClasses} z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-primary)] text-white shadow-lg border-2 border-white transition-all hover:scale-110 hover:shadow-xl ${
+        className={`fixed ${positionClasses} z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[var(--brand-primary)] text-white shadow-lg border-2 border-white transition-all hover:scale-110 hover:shadow-xl ${
           isOpen ? 'rotate-90' : ''
         }`}
         aria-label={isOpen ? 'إغلاق مساعد معين' : 'فتح مساعد معين'}
@@ -235,16 +235,19 @@ export default function MoeenChatbot({
         </div>
       )}
 
-          {/* Chat Window */}
+      {/* Chat Window */}
       {isOpen && (
         <div
           className={`fixed ${positionClasses} z-40 mb-16 h-[500px] w-[360px] overflow-hidden rounded-xl bg-[var(--panel)] shadow-2xl border border-[var(--brand-border)] flex flex-col`}
-          role="dialog"
-          aria-label="محادثة معين"
-          aria-modal="true"
+          role='dialog'
+          aria-label='محادثة معين'
+          aria-modal='true'
         >
           {/* Header */}
-          <header className='bg-[var(--brand-primary)] p-3 text-white' role="banner">
+          <header
+            className='bg-[var(--brand-primary)] p-3 text-white'
+            role='banner'
+          >
             <div className='flex items-center justify-between'>
               <div className='flex items-center gap-2'>
                 <div className='h-10 w-10 rounded-full bg-white/20 flex items-center justify-center text-xl backdrop-blur'>
@@ -263,7 +266,11 @@ export default function MoeenChatbot({
           </header>
 
           {/* Messages */}
-          <main className='flex-1 overflow-y-auto p-3 space-y-3 bg-[var(--background)]' role="main" aria-label="الرسائل">
+          <main
+            className='flex-1 overflow-y-auto p-3 space-y-3 bg-[var(--background)]'
+            role='main'
+            aria-label='الرسائل'
+          >
             {messages.map(message => (
               <div
                 key={message.id}
@@ -324,10 +331,10 @@ export default function MoeenChatbot({
               </p>
               <div className='grid grid-cols-2 gap-2'>
                 {quickActions.map(action => (
-                  <button 
+                  <button
                     key={action.id}
                     onClick={() => handleQuickAction(action.action)}
-                    onKeyDown={(e) => {
+                    onKeyDown={e => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         handleQuickAction(action.action);
@@ -344,22 +351,29 @@ export default function MoeenChatbot({
           )}
 
           {/* Input */}
-          <footer className='border-t border-[var(--brand-border)] p-3 bg-[var(--panel)]' role="contentinfo">
-            <span id="chatbot-input-help" className="sr-only">اكتب رسالتك واضغط Enter للإرسال</span>
+          <footer
+            className='border-t border-[var(--brand-border)] p-3 bg-[var(--panel)]'
+            role='contentinfo'
+          >
+            <span id='chatbot-input-help' className='sr-only'>
+              اكتب رسالتك واضغط Enter للإرسال
+            </span>
             <div className='flex gap-2'>
-              <input type='text'
+              <input
+                type='text'
                 value={input}
-                onChange={(e) => setInput(e.target.value)} aria-label="text" aria-invalid="true"
+                onChange={e => setInput(e.target.value)}
+                aria-invalid='true'
                 onKeyPress={handleKeyPress}
                 placeholder='اكتب رسالتك...'
                 className='flex-1 rounded-md border border-[var(--brand-border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20'
                 disabled={isLoading}
-                aria-label="حقل إدخال الرسالة"
-                aria-describedby="chatbot-input-help"
+                aria-label='حقل إدخال الرسالة'
+                aria-describedby='chatbot-input-help'
               />
-              <button 
+              <button
                 onClick={() => handleSendMessage()}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     handleSendMessage();

@@ -661,9 +661,7 @@ async function getCrmMetrics() {
 
     const calls = activities.filter((a: any) => a.type === 'call').length;
 
-    const meetings = activities.filter(
-      (a: any) => a.type === 'meeting'
-    ).length;
+    const meetings = activities.filter((a: any) => a.type === 'meeting').length;
 
     const tasks = activities.filter((a: any) => a.type === 'task').length;
 

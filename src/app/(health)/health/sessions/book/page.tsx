@@ -29,7 +29,8 @@ interface Slot {
 export default function BookSessionPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const [selectedSessionType, setSelectedSessionType] = useState<SessionType | null>(null);
+  const [selectedSessionType, setSelectedSessionType] =
+    useState<SessionType | null>(null);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [patientName, setPatientName] = useState('');
@@ -58,7 +59,9 @@ export default function BookSessionPage() {
 
     try {
       const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('يجب تسجيل الدخول أولاً');
 
       let patientId;
@@ -73,7 +76,11 @@ export default function BookSessionPage() {
       } else {
         const { data: newPatient, error: patientError } = await supabase
           .from('patients')
-          .insert({ first_name: patientName, last_name: '', date_of_birth: null })
+          .insert({
+            first_name: patientName,
+            last_name: '',
+            date_of_birth: null,
+          })
           .select()
           .single();
         if (patientError) throw patientError;
@@ -119,13 +126,13 @@ export default function BookSessionPage() {
 
   return (
     <div className='container-app py-8'>
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
 
       <div className='card p-6 mb-8'>
         <div className='flex items-center justify-between'>
-          {[1, 2, 3, 4].map((num) => (
+          {[1, 2, 3, 4].map(num => (
             <div key={num} className='flex items-center flex-1'>
               <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full font-bold ${
@@ -143,12 +150,20 @@ export default function BookSessionPage() {
                     : 'text-gray-500'
                 }`}
               >
-                {num === 1 ? 'نوع الجلسة' : num === 2 ? 'التاريخ' : num === 3 ? 'الوقت' : 'التأكيد'}
+                {num === 1
+                  ? 'نوع الجلسة'
+                  : num === 2
+                    ? 'التاريخ'
+                    : num === 3
+                      ? 'الوقت'
+                      : 'التأكيد'}
               </span>
               {num < 4 && (
                 <div
                   className={`flex-1 h-1 mx-4 rounded ${
-                    step > num ? 'bg-[var(--default-default)]' : 'bg-gray-200 dark:bg-gray-700'
+                    step > num
+                      ? 'bg-[var(--default-default)]'
+                      : 'bg-gray-200 dark:bg-gray-700'
                   }`}
                 />
               )}
@@ -176,8 +191,13 @@ export default function BookSessionPage() {
         <div>
           <button
             onClick={() => setStep(1)}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStep(1); } }}
-            aria-label="العودة إلى الخطوة السابقة"
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setStep(1);
+              }
+            }}
+            aria-label='العودة إلى الخطوة السابقة'
             className='btn btn-outline mb-6'
           >
             ← العودة
@@ -195,7 +215,8 @@ export default function BookSessionPage() {
                   {selectedSessionType.name_ar}
                 </h2>
                 <p className='text-gray-600 dark:text-gray-400'>
-                  {selectedSessionType.duration} دقيقة • {selectedSessionType.price} ريال
+                  {selectedSessionType.duration} دقيقة •{' '}
+                  {selectedSessionType.price} ريال
                 </p>
               </div>
             </div>
@@ -207,14 +228,14 @@ export default function BookSessionPage() {
             <input
               type='date'
               value={selectedDate}
-              onChange={(e) => {
+              onChange={e => {
                 setSelectedDate(e.target.value);
                 if (e.target.value) setStep(3);
               }}
               min={today}
               max={maxDateStr}
               className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)] text-lg'
-              aria-label="اختر التاريخ"
+              aria-label='اختر التاريخ'
             />
             <p className='text-sm text-gray-500 dark:text-gray-400 mt-4'>
               ساعات العمل: الأحد - الخميس، 7 صباحاً - 7 مساءً
@@ -227,8 +248,13 @@ export default function BookSessionPage() {
         <div>
           <button
             onClick={() => setStep(2)}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStep(2); } }}
-            aria-label="العودة إلى الخطوة السابقة"
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setStep(2);
+              }
+            }}
+            aria-label='العودة إلى الخطوة السابقة'
             className='btn btn-outline mb-6'
           >
             ← العودة
@@ -249,8 +275,13 @@ export default function BookSessionPage() {
         <div>
           <button
             onClick={() => setStep(3)}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setStep(3); } }}
-            aria-label="العودة إلى الخطوة السابقة"
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setStep(3);
+              }
+            }}
+            aria-label='العودة إلى الخطوة السابقة'
             className='btn btn-outline mb-6'
           >
             ← العودة
@@ -281,7 +312,9 @@ export default function BookSessionPage() {
                     <p className='font-semibold text-gray-900 dark:text-white'>
                       {selectedSlot.therapistName}
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>الأخصائي</p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                      الأخصائي
+                    </p>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
@@ -295,7 +328,9 @@ export default function BookSessionPage() {
                         day: 'numeric',
                       })}
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>التاريخ</p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                      التاريخ
+                    </p>
                   </div>
                 </div>
                 <div className='flex items-start gap-3'>
@@ -304,12 +339,16 @@ export default function BookSessionPage() {
                     <p className='font-semibold text-gray-900 dark:text-white'>
                       {selectedSlot.startTime}
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>الوقت</p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                      الوقت
+                    </p>
                   </div>
                 </div>
                 <div className='border-t dark:border-gray-700 pt-4'>
                   <div className='flex items-center justify-between'>
-                    <span className='text-gray-600 dark:text-gray-400'>التكلفة</span>
+                    <span className='text-gray-600 dark:text-gray-400'>
+                      التكلفة
+                    </span>
                     <span className='text-2xl font-bold text-[var(--default-default)]'>
                       {selectedSessionType.price} ريال
                     </span>
@@ -330,11 +369,11 @@ export default function BookSessionPage() {
                   <input
                     type='text'
                     value={patientName}
-                    onChange={(e) => setPatientName(e.target.value)}
+                    onChange={e => setPatientName(e.target.value)}
                     className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='أدخل اسم الطفل'
                     required
-                    aria-label="اسم الطفل"
+                    aria-label='اسم الطفل'
                   />
                 </div>
                 <div>
@@ -347,7 +386,7 @@ export default function BookSessionPage() {
                     rows={3}
                     className='w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='أي ملاحظات إضافية...'
-                    aria-label="ملاحظات"
+                    aria-label='ملاحظات'
                   />
                 </div>
                 {error && (
@@ -358,7 +397,12 @@ export default function BookSessionPage() {
                 <button
                   type='button'
                   onClick={handleBookSession}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBookSession(); } }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleBookSession();
+                    }
+                  }}
                   disabled={loading || !patientName.trim()}
                   className='btn btn-default w-full py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed'
                   aria-label={loading ? 'جاري الحجز...' : 'تأكيد الحجز'}

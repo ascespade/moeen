@@ -1,7 +1,7 @@
 /**
  * With Action - Server Action Wrapper
  * معالج Server Actions
- * 
+ *
  * Wraps server actions with authentication and error handling
  */
 
@@ -22,7 +22,11 @@ export function withAction<T extends unknown[], R>(
   action: (user: User, ...args: T) => Promise<R>,
   options: ActionOptions = {}
 ) {
-  return async (...args: T): Promise<{ success: true; data: R } | { success: false; error: unknown }> => {
+  return async (
+    ...args: T
+  ): Promise<
+    { success: true; data: R } | { success: false; error: unknown }
+  > => {
     try {
       let user: User | null = null;
 

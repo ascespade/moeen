@@ -2,9 +2,9 @@
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
   push:
-    branches: [ chore/merge-orbit-home ]
+    branches: [chore/merge-orbit-home]
 
 jobs:
   test:

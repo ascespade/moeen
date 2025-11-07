@@ -4,7 +4,7 @@ test.describe('Authentication Tests - Login', () => {
   test.beforeEach(async ({ page }) => {
     // Navigate to login page
     await page.goto('/login');
-    
+
     // Wait for page to load
     await page.waitForLoadState('networkidle');
   });
@@ -20,16 +20,16 @@ test.describe('Authentication Tests - Login', () => {
     // Fill login form
     await page.fill('input[type="email"]', 'admin@test.com');
     await page.fill('input[type="password"]', 'Admin123!');
-    
+
     // Submit form
     await page.click('button[type="submit"]');
-    
+
     // Wait for redirect (could go to dashboard or admin/dashboard)
     await page.waitForURL(/\/(dashboard|admin)/, { timeout: 15000 });
-    
+
     // Verify we're on a protected route (not login)
     expect(page.url()).not.toContain('/login');
-    
+
     // Verify auth_token cookie exists
     const cookies = await page.context().cookies();
     const authCookie = cookies.find(c => c.name === 'auth_token');
@@ -41,10 +41,10 @@ test.describe('Authentication Tests - Login', () => {
     await page.fill('input[type="email"]', 'doctor@test.com');
     await page.fill('input[type="password"]', 'Doctor123!');
     await page.click('button[type="submit"]');
-    
+
     await page.waitForURL(/\/(dashboard)/, { timeout: 15000 });
     expect(page.url()).not.toContain('/login');
-    
+
     const cookies = await page.context().cookies();
     expect(cookies.find(c => c.name === 'auth_token')).toBeDefined();
   });
@@ -53,10 +53,10 @@ test.describe('Authentication Tests - Login', () => {
     await page.fill('input[type="email"]', 'patient@test.com');
     await page.fill('input[type="password"]', 'Patient123!');
     await page.click('button[type="submit"]');
-    
+
     await page.waitForURL(/\/(dashboard)/, { timeout: 15000 });
     expect(page.url()).not.toContain('/login');
-    
+
     const cookies = await page.context().cookies();
     expect(cookies.find(c => c.name === 'auth_token')).toBeDefined();
   });
@@ -65,10 +65,10 @@ test.describe('Authentication Tests - Login', () => {
     await page.fill('input[type="email"]', 'staff@test.com');
     await page.fill('input[type="password"]', 'Staff123!');
     await page.click('button[type="submit"]');
-    
+
     await page.waitForURL(/\/(dashboard)/, { timeout: 15000 });
     expect(page.url()).not.toContain('/login');
-    
+
     const cookies = await page.context().cookies();
     expect(cookies.find(c => c.name === 'auth_token')).toBeDefined();
   });
@@ -77,10 +77,12 @@ test.describe('Authentication Tests - Login', () => {
     await page.fill('input[type="email"]', 'invalid@test.com');
     await page.fill('input[type="password"]', 'WrongPassword123!');
     await page.click('button[type="submit"]');
-    
+
     // Wait for error message
-    await page.waitForSelector('text=/خطأ|error|invalid|credentials/i', { timeout: 5000 });
-    
+    await page.waitForSelector('text=/خطأ|error|invalid|credentials/i', {
+      timeout: 5000,
+    });
+
     // Should still be on login page
     expect(page.url()).toContain('/login');
   });
@@ -89,7 +91,7 @@ test.describe('Authentication Tests - Login', () => {
     // Find and click admin quick login button
     const adminButton = page.locator('button:has-text("Admin")');
     await adminButton.click();
-    
+
     // Wait for redirect (could be dashboard or admin/dashboard)
     await page.waitForURL(/\/(dashboard|admin)/, { timeout: 15000 });
     expect(page.url()).not.toContain('/login');

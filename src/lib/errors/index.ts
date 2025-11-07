@@ -1,7 +1,7 @@
 /**
  * Errors - Centralized Exports
  * الأخطاء - التصديرات المركزية
- * 
+ *
  * All error handling exports
  */
 

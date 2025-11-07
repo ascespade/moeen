@@ -120,10 +120,7 @@ export function hasAnyPermission(
   userPermissions: string[],
   requiredPermissions: string[]
 ): boolean {
-  return checkAnyPermission(
-    userPermissions,
-    requiredPermissions
-  );
+  return checkAnyPermission(userPermissions, requiredPermissions);
 }
 
 /**

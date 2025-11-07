@@ -1,7 +1,7 @@
 /**
  * Permissions - User Permissions
  * الصلاحيات - صلاحيات المستخدمين
- * 
+ *
  * All permissions defined here
  */
 
@@ -117,4 +117,4 @@ export function getRolePermissions(role: string): string[] {
 }
 
 // Type exports
-export type Permission = typeof PERMISSIONS[keyof typeof PERMISSIONS];
+export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];

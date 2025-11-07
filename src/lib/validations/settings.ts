@@ -1,7 +1,7 @@
 /**
  * Settings Validation Schemas - Zod
  * مخططات التحقق من الإعدادات - Zod
- * 
+ *
  * All settings-related validation schemas
  */
 
@@ -13,8 +13,14 @@ import { CONFIG } from '../constants/config';
 export const generalSettingsSchema = z.object({
   name: z
     .string()
-    .min(CONFIG.NAME_MIN_LENGTH, MESSAGES.VALIDATION.MIN_LENGTH('الاسم', CONFIG.NAME_MIN_LENGTH))
-    .max(CONFIG.NAME_MAX_LENGTH, MESSAGES.VALIDATION.MAX_LENGTH('الاسم', CONFIG.NAME_MAX_LENGTH)),
+    .min(
+      CONFIG.NAME_MIN_LENGTH,
+      MESSAGES.VALIDATION.MIN_LENGTH('الاسم', CONFIG.NAME_MIN_LENGTH)
+    )
+    .max(
+      CONFIG.NAME_MAX_LENGTH,
+      MESSAGES.VALIDATION.MAX_LENGTH('الاسم', CONFIG.NAME_MAX_LENGTH)
+    ),
   email: z
     .string()
     .email(MESSAGES.ERROR.INVALID_EMAIL)
@@ -56,6 +62,8 @@ export const apiKeysSettingsSchema = z.object({
 // Type exports
 export type GeneralSettingsInput = z.infer<typeof generalSettingsSchema>;
 export type AppearanceSettingsInput = z.infer<typeof appearanceSettingsSchema>;
-export type NotificationSettingsInput = z.infer<typeof notificationSettingsSchema>;
+export type NotificationSettingsInput = z.infer<
+  typeof notificationSettingsSchema
+>;
 export type SecuritySettingsInput = z.infer<typeof securitySettingsSchema>;
 export type ApiKeysSettingsInput = z.infer<typeof apiKeysSettingsSchema>;

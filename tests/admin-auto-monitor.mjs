@@ -3,7 +3,7 @@
 /**
  * Automated Admin Test Monitor
  * مراقب تلقائي لاختبارات الادمن
- * 
+ *
  * Monitors console/terminal for errors and runs tests automatically
  */
 
@@ -28,7 +28,7 @@ class AdminTestMonitor {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] ${message}\n`;
     console.log(logMessage.trim());
-    
+
     try {
       await writeFile(LOG_FILE, logMessage, { flag: 'a' });
     } catch (err) {
@@ -38,7 +38,7 @@ class AdminTestMonitor {
 
   async checkServer() {
     try {
-      const response = await fetch(`${BASE_URL}/api/health`).catch(() => 
+      const response = await fetch(`${BASE_URL}/api/health`).catch(() =>
         fetch(`${BASE_URL}/`).catch(() => null)
       );
       return response !== null && response.status < 500;
@@ -50,15 +50,15 @@ class AdminTestMonitor {
   async runTests() {
     this.testCount++;
     await this.log(`🧪 Running admin tests (Run #${this.testCount})...`);
-    
+
     try {
       const { stdout, stderr } = await execAsync(
         `cd /home/ubuntu/moeen && npx playwright test tests/admin.spec.ts tests/admin-comprehensive.spec.ts --reporter=list,json 2>&1`,
         { timeout: 120000 }
       );
-      
+
       const output = stdout + stderr;
-      
+
       // Check if tests passed
       if (output.includes('passed') && !output.includes('failed')) {
         await this.log('✅ All admin tests passed!');
@@ -80,12 +80,12 @@ class AdminTestMonitor {
   async checkConsoleErrors() {
     // This would check browser console, but we'll use server health for now
     const serverHealthy = await this.checkServer();
-    
+
     if (!serverHealthy) {
       await this.log('⚠️  Server health check failed');
       return true; // Error detected
     }
-    
+
     return false;
   }
 
@@ -95,18 +95,18 @@ class AdminTestMonitor {
     await this.log(`Check interval: ${MONITOR_INTERVAL}ms`);
     await this.log('Press Ctrl+C to stop');
     await this.log('');
-    
+
     this.isRunning = true;
-    
+
     // Initial test run
     await this.runTests();
-    
+
     // Start monitoring loop
     while (this.isRunning) {
       try {
         // Check for errors
         const hasError = await this.checkConsoleErrors();
-        
+
         if (hasError || this.lastError) {
           await this.log('🔍 Error detected, running tests...');
           await this.runTests();
@@ -114,7 +114,7 @@ class AdminTestMonitor {
           // Periodic test run
           await this.runTests();
         }
-        
+
         // Wait before next check
         await new Promise(resolve => setTimeout(resolve, MONITOR_INTERVAL));
       } catch (error) {

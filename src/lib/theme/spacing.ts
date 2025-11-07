@@ -1,7 +1,7 @@
 /**
  * Spacing System - Extracted from Homepage Design
  * نظام المسافات - مستخرج من تصميم الصفحة الرئيسية
- * 
+ *
  * Source: src/styles/centralized.css
  * Reference: src/components/home/OriginalHero.tsx
  */

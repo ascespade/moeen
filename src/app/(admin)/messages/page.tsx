@@ -626,8 +626,10 @@ function MessagesPageContent() {
                   {folders.map(folder => (
                     <button
                       key={folder.id}
-                      onClick={() => { setSelectedFolder(folder.id) }}
-                      onKeyDown={(e) => {
+                      onClick={() => {
+                        setSelectedFolder(folder.id);
+                      }}
+                      onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
                           setSelectedFolder(folder.id);
@@ -805,9 +807,10 @@ function MessagesPageContent() {
                   <TableHeader>
                     <TableRow>
                       <TableHead className='w-12'>
-                        <input type='checkbox'
+                        <input
+                          type='checkbox'
                           className='rounded border-gray-300'
-                          onChange={(e) => {
+                          onChange={e => {
                             if (e.target.checked) {
                               setSelectedMessages(
                                 filteredMessages.map(m => m.id)
@@ -816,8 +819,8 @@ function MessagesPageContent() {
                               setSelectedMessages([]);
                             }
                           }}
-                          aria-label="تحديد الكل"
-                          aria-invalid="true"
+                          aria-label='تحديد الكل'
+                          aria-invalid='true'
                         />
                       </TableHead>
                       <TableHead>المرسل</TableHead>
@@ -837,10 +840,11 @@ function MessagesPageContent() {
                         className={!message.isRead ? 'bg-blue-50' : ''}
                       >
                         <TableCell>
-                          <input type='checkbox'
+                          <input
+                            type='checkbox'
                             className='rounded border-gray-300'
                             checked={selectedMessages.includes(message.id)}
-                            onChange={(e) => {
+                            onChange={e => {
                               if (e.target.checked) {
                                 setSelectedMessages([
                                   ...selectedMessages,
@@ -854,8 +858,8 @@ function MessagesPageContent() {
                                 );
                               }
                             }}
-                            aria-label="تحديد الرسالة"
-                            aria-invalid="true"
+                            aria-label='تحديد الرسالة'
+                            aria-invalid='true'
                           />
                         </TableCell>
                         <TableCell>

@@ -55,11 +55,11 @@ export default function ForgotPasswordPage() {
   if (isSuccess) {
     return (
       <div className='flex min-h-screen items-center justify-center bg-[var(--default-surface)] p-4'>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
-          <div className='card w-full max-w-md p-8 text-center'>
-            <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
+        <div className='card w-full max-w-md p-8 text-center'>
+          <div className='mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl'>
             ✅
           </div>
           <h1 className='mb-4 text-2xl font-bold text-gray-900 dark:text-white'>
@@ -81,14 +81,14 @@ export default function ForgotPasswordPage() {
                 setIsSuccess(false);
                 setEmail('');
               }}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   setIsSuccess(false);
                   setEmail('');
                 }
               }}
-              aria-label="إرسال رابط آخر"
+              aria-label='إرسال رابط آخر'
               className='w-full rounded-lg border border-gray-300 px-6 py-3 text-gray-700 transition-colors hover:bg-surface'
             >
               إرسال رابط آخر
@@ -143,11 +143,11 @@ export default function ForgotPasswordPage() {
                 type='email'
                 id='email'
                 value={email}
-                onChange={(e) => {
+                onChange={e => {
                   setEmail(e.target.value);
                   if (error) setError('');
                 }}
-                aria-label="email"
+                aria-label='email'
                 aria-invalid={error ? 'true' : 'false'}
                 className='form-input'
                 placeholder='أدخل بريدك الإلكتروني'
@@ -161,7 +161,9 @@ export default function ForgotPasswordPage() {
               type='submit'
               disabled={isLoading}
               className='btn btn-default btn-lg w-full'
-              aria-label={isLoading ? 'جاري الإرسال...' : 'إرسال رابط إعادة التعيين'}
+              aria-label={
+                isLoading ? 'جاري الإرسال...' : 'إرسال رابط إعادة التعيين'
+              }
             >
               {isLoading ? (
                 <>
@@ -197,14 +199,14 @@ export default function ForgotPasswordPage() {
                 setEmail('');
                 setError('');
               }}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   setEmail('');
                   setError('');
                 }
               }}
-              aria-label="حاول مرة أخرى"
+              aria-label='حاول مرة أخرى'
               className='text-[var(--default-default)] hover:underline'
             >
               حاول مرة أخرى

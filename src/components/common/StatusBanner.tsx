@@ -17,13 +17,13 @@ export default function StatusBanner() {
         <button
           className='h-8 px-3 rounded-md border border-amber-200 dark:border-amber-800'
           onClick={() => setVisible(false)}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               setVisible(false);
             }
           }}
-          aria-label="إخفاء"
+          aria-label='إخفاء'
         >
           إخفاء
         </button>

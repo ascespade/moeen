@@ -7,9 +7,12 @@ import { TaskConfig } from './types';
 import { monitoringSystem } from './MonitoringSystem';
 
 // Use environment variable or default to 4
-const NUM_CPUS = typeof window === 'undefined'
-  ? (process.env.NEXT_PUBLIC_NUM_CPUS ? parseInt(process.env.NEXT_PUBLIC_NUM_CPUS) : 4)
-  : 4;
+const NUM_CPUS =
+  typeof window === 'undefined'
+    ? process.env.NEXT_PUBLIC_NUM_CPUS
+      ? parseInt(process.env.NEXT_PUBLIC_NUM_CPUS)
+      : 4
+    : 4;
 
 export class WorkerPool {
   private taskQueue: TaskConfig[] = [];
@@ -131,10 +134,10 @@ export class WorkerPool {
 
   private async runCodeAnalysis(task: TaskConfig, _cpu: number): Promise<any> {
     // Simulate code analysis
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     monitoringSystem.updateTask(task.id, { progress: 60 });
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     monitoringSystem.updateTask(task.id, { progress: 90 });
 
     return {
@@ -144,11 +147,14 @@ export class WorkerPool {
     };
   }
 
-  private async runPerformanceCheck(task: TaskConfig, _cpu: number): Promise<any> {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+  private async runPerformanceCheck(
+    task: TaskConfig,
+    _cpu: number
+  ): Promise<any> {
+    await new Promise(resolve => setTimeout(resolve, 1500));
     monitoringSystem.updateTask(task.id, { progress: 50 });
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1500));
     monitoringSystem.updateTask(task.id, { progress: 100 });
 
     return {
@@ -159,10 +165,10 @@ export class WorkerPool {
   }
 
   private async runSecurityCheck(task: TaskConfig, _cpu: number): Promise<any> {
-    await new Promise((resolve) => setTimeout(resolve, 1800));
+    await new Promise(resolve => setTimeout(resolve, 1800));
     monitoringSystem.updateTask(task.id, { progress: 70 });
 
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+    await new Promise(resolve => setTimeout(resolve, 1200));
     monitoringSystem.updateTask(task.id, { progress: 100 });
 
     return {
@@ -173,13 +179,13 @@ export class WorkerPool {
   }
 
   private async runBrowserTest(task: TaskConfig, _cpu: number): Promise<any> {
-    await new Promise((resolve) => setTimeout(resolve, 2500));
+    await new Promise(resolve => setTimeout(resolve, 2500));
     monitoringSystem.updateTask(task.id, { progress: 40 });
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     monitoringSystem.updateTask(task.id, { progress: 80 });
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     monitoringSystem.updateTask(task.id, { progress: 100 });
 
     return {
@@ -210,7 +216,7 @@ export class WorkerPool {
   async shutdown(): Promise<void> {
     // Wait for all tasks to complete
     while (this.isRunning || this.activeTasks.size > 0) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 100));
     }
 
     this.taskQueue = [];
@@ -220,4 +226,3 @@ export class WorkerPool {
 
 // Singleton instance
 export const workerPool = new WorkerPool();
-

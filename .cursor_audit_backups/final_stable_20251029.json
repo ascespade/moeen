@@ -68,7 +68,5 @@
     "real_time_updates": true
   },
   "production_ready": true,
-  "warnings_only": [
-    "React Hook useEffect dependency warnings (non-critical)"
-  ]
+  "warnings_only": ["React Hook useEffect dependency warnings (non-critical)"]
 }

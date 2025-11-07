@@ -24,19 +24,19 @@ for (const route of apiRoutes) {
   const filePath = join(projectRoot, route);
   try {
     let content = readFileSync(filePath, 'utf-8');
-    
+
     // Skip if already has revalidate
     if (content.includes('export const revalidate')) continue;
-    
+
     // Only add to GET routes
     if (!content.includes('export async function GET')) continue;
-    
+
     // Add revalidate before GET function
     content = content.replace(
       /export async function GET/g,
       'export const revalidate = 60;\n\nexport async function GET'
     );
-    
+
     writeFileSync(filePath, content, 'utf-8');
     fixedCount++;
     if (fixedCount <= 10) {

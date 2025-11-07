@@ -1,7 +1,7 @@
 /**
  * User Service - Business Logic for Users
  * خدمة المستخدمين - منطق الأعمال للمستخدمين
- * 
+ *
  * Business logic layer for user operations
  */
 
@@ -63,10 +63,7 @@ export class UserService {
    */
   static async deleteUser(id: string): Promise<void> {
     const adminClient = createAdminClient();
-    const { error } = await adminClient
-      .from('users')
-      .delete()
-      .eq('id', id);
+    const { error } = await adminClient.from('users').delete().eq('id', id);
 
     if (error) {
       throw AppError.internal(`Failed to delete user: ${error.message}`);

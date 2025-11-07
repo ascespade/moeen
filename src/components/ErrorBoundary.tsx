@@ -50,8 +50,10 @@ export class ErrorBoundary extends Component<Props, State> {
               لاحقاً.
             </p>
             <button
-              onClick={() => { window.location.reload() }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                window.location.reload();
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   window.location.reload();

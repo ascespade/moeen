@@ -17,9 +17,7 @@ const projectRoot = join(__dirname, '..');
 
 console.log('?? Fixing All Remaining Syntax Errors...\n');
 
-const allFiles = [
-  ...await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }),
-];
+const allFiles = [...(await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }))];
 
 let stats = {
   buttonclassName: 0,

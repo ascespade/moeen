@@ -12,11 +12,11 @@ on:
   # Run on push to main branch
   push:
     branches: [main]
-  
+
   # Run on pull requests
   pull_request:
     branches: [main]
-  
+
   # Allow manual triggering with options
   workflow_dispatch:
     inputs:
@@ -48,11 +48,11 @@ jobs:
       (github.event_name == 'push' || 
        github.event_name == 'pull_request' || 
        github.event.inputs.run_tests == 'true')
-    
+
     strategy:
       matrix:
-        test-module: [modules]  # Add more modules here if needed
-    
+        test-module: [modules] # Add more modules here if needed
+
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
@@ -77,12 +77,12 @@ jobs:
         run: |
           echo "🧪 Starting test execution with auto-retry..."
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          
+
           ATTEMPT=1
           TESTS_PASSED=false
-          
+
           mkdir -p ./logs
-          
+
           while [ $ATTEMPT -le ${MAX_ATTEMPTS} ] && [ "$TESTS_PASSED" != "true" ]; do
             echo ""
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -112,7 +112,7 @@ jobs:
             
             ATTEMPT=$((ATTEMPT + 1))
           done
-          
+
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           if [ "$TESTS_PASSED" == "true" ]; then
@@ -147,7 +147,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     if: always()
-    
+
     steps:
       - name: 📥 Download Test Results
         uses: actions/download-artifact@v4
@@ -158,34 +158,34 @@ jobs:
       - name: 📊 Analyze Test Results
         run: |
           echo "📊 Analyzing test results..."
-          
+
           cat > analyze.js << 'EOF'
           const fs = require('fs');
           const path = require('path');
-          
+
           console.log('🔍 Analyzing test results...');
-          
+
           // Find all test logs
           const logsDir = './logs';
           if (!fs.existsSync(logsDir)) {
             console.log('⚠️ No logs directory found');
             process.exit(0);
           }
-          
+
           const files = fs.readdirSync(logsDir);
           const logFiles = files.filter(f => f.endsWith('.log'));
-          
+
           if (logFiles.length === 0) {
             console.log('⚠️ No log files found');
             process.exit(0);
           }
-          
+
           // Read latest log
           const latestLog = fs.readFileSync(
             path.join(logsDir, logFiles[logFiles.length - 1]), 
             'utf8'
           );
-          
+
           // Analyze errors
           const errors = {
             timeout: (latestLog.match(/timeout|timed out/gi) || []).length,
@@ -194,7 +194,7 @@ jobs:
             api: (latestLog.match(/network|fetch.*error|api.*error/gi) || []).length,
             assertion: (latestLog.match(/assertion.*failed|expect.*failed/gi) || []).length
           };
-          
+
           // Generate report
           const report = {
             timestamp: new Date().toISOString(),
@@ -206,12 +206,12 @@ jobs:
                 .sort(([,a], [,b]) => b - a)[0][0]
             }
           };
-          
+
           fs.writeFileSync('./analysis-report.json', JSON.stringify(report, null, 2));
           console.log('✅ Analysis complete');
           console.log(JSON.stringify(report, null, 2));
           EOF
-          
+
           node analyze.js
 
       - name: 📊 Display Analysis
@@ -242,7 +242,7 @@ jobs:
     needs: [test, analyze]
     runs-on: ubuntu-latest
     if: always()
-    
+
     steps:
       - name: 📋 Generate Summary
         run: |

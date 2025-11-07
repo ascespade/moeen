@@ -37,34 +37,34 @@ class ValidationSystem {
 
     // Code Quality Gates
     await this.validateCodeQuality();
-    
+
     // Testing Gates
     await this.validateTesting();
-    
+
     // Security Gates
     await this.validateSecurity();
-    
+
     // Performance Gates
     await this.validatePerformance();
-    
+
     // Functionality Gates
     await this.validateFunctionality();
-    
+
     // Compliance Gates
     await this.validateCompliance();
 
     // Calculate overall status
     this.calculateOverallStatus();
-    
+
     // Generate report
     this.generateReport();
-    
+
     return this.results;
   }
 
   async validateCodeQuality() {
     console.log('📋 Validating Code Quality...');
-    
+
     const gates = {
       eslint: false,
       typescript: false,
@@ -98,9 +98,9 @@ class ValidationSystem {
 
       // Code coverage (if available)
       try {
-        const coverageResult = execSync('npm run test:coverage 2>&1 || true', { 
-          cwd: workspaceRoot, 
-          encoding: 'utf-8' 
+        const coverageResult = execSync('npm run test:coverage 2>&1 || true', {
+          cwd: workspaceRoot,
+          encoding: 'utf-8',
         });
         // Check if coverage report exists
         if (existsSync(join(workspaceRoot, 'coverage'))) {
@@ -112,7 +112,6 @@ class ValidationSystem {
       } catch (e) {
         console.log('  ⚠️ Code Coverage: Not available');
       }
-
     } catch (error) {
       console.error('  ❌ Code Quality validation error:', error.message);
     }
@@ -122,7 +121,7 @@ class ValidationSystem {
 
   async validateTesting() {
     console.log('\n🧪 Validating Testing...');
-    
+
     const gates = {
       unitTests: false,
       integrationTests: false,
@@ -131,11 +130,7 @@ class ValidationSystem {
     };
 
     // Check test files exist
-    const testDirs = [
-      'tests/unit',
-      'tests/integration',
-      'tests/e2e',
-    ];
+    const testDirs = ['tests/unit', 'tests/integration', 'tests/e2e'];
 
     let testFilesFound = 0;
     testDirs.forEach(dir => {
@@ -144,11 +139,12 @@ class ValidationSystem {
         try {
           const { readdirSync, statSync } = require('fs');
           const files = readdirSync(testDir, { recursive: true });
-          const testFiles = files.filter(f => 
-            f.endsWith('.test.ts') || 
-            f.endsWith('.spec.ts') ||
-            f.endsWith('.test.tsx') ||
-            f.endsWith('.spec.tsx')
+          const testFiles = files.filter(
+            f =>
+              f.endsWith('.test.ts') ||
+              f.endsWith('.spec.ts') ||
+              f.endsWith('.test.tsx') ||
+              f.endsWith('.spec.tsx')
           );
           testFilesFound += testFiles.length;
         } catch (e) {
@@ -167,10 +163,10 @@ class ValidationSystem {
     // Try running tests (non-blocking)
     try {
       console.log('  ℹ️ Running unit tests...');
-      execSync('npm run test:unit 2>&1 || true', { 
-        cwd: workspaceRoot, 
+      execSync('npm run test:unit 2>&1 || true', {
+        cwd: workspaceRoot,
         encoding: 'utf-8',
-        timeout: 30000 
+        timeout: 30000,
       });
       gates.unitTests = true;
       console.log('  ✅ Unit Tests: Available');
@@ -183,7 +179,7 @@ class ValidationSystem {
 
   async validateSecurity() {
     console.log('\n🔒 Validating Security...');
-    
+
     const gates = {
       noCriticalVulnerabilities: false,
       authorizationCoverage: false,
@@ -193,20 +189,22 @@ class ValidationSystem {
 
     // Security audit
     try {
-      const auditResult = execSync('npm audit --json 2>&1 || true', { 
-        cwd: workspaceRoot, 
-        encoding: 'utf-8' 
+      const auditResult = execSync('npm audit --json 2>&1 || true', {
+        cwd: workspaceRoot,
+        encoding: 'utf-8',
       });
-      
+
       try {
         const audit = JSON.parse(auditResult);
         const metadata = audit?.metadata?.vulnerabilities || {};
-        
+
         if (metadata.critical === 0 && metadata.high === 0) {
           gates.noCriticalVulnerabilities = true;
           console.log('  ✅ No Critical/High Vulnerabilities');
         } else {
-          console.log(`  ⚠️ Vulnerabilities found: ${metadata.critical} critical, ${metadata.high} high`);
+          console.log(
+            `  ⚠️ Vulnerabilities found: ${metadata.critical} critical, ${metadata.high} high`
+          );
         }
       } catch (e) {
         console.log('  ⚠️ Could not parse audit results');
@@ -219,9 +217,10 @@ class ValidationSystem {
     try {
       const { readdirSync } = require('fs');
       const apiDir = join(workspaceRoot, 'src/app/api');
-      const routeFiles = readdirSync(apiDir, { recursive: true })
-        .filter((f) => f.endsWith('route.ts'));
-      
+      const routeFiles = readdirSync(apiDir, { recursive: true }).filter(f =>
+        f.endsWith('route.ts')
+      );
+
       let authorizedRoutes = 0;
       routeFiles.forEach(file => {
         const content = readFileSync(join(apiDir, file), 'utf-8');
@@ -235,14 +234,20 @@ class ValidationSystem {
         gates.authorizationCoverage = true;
         console.log(`  ✅ Authorization Coverage: ${coverage.toFixed(1)}%`);
       } else {
-        console.log(`  ⚠️ Authorization Coverage: ${coverage.toFixed(1)}% (target: ≥80%)`);
+        console.log(
+          `  ⚠️ Authorization Coverage: ${coverage.toFixed(1)}% (target: ≥80%)`
+        );
       }
     } catch (e) {
       console.log('  ⚠️ Could not check authorization coverage');
     }
 
     // Check RLS policies
-    if (existsSync(join(workspaceRoot, 'supabase/migrations/01_enable_rls_policies.sql'))) {
+    if (
+      existsSync(
+        join(workspaceRoot, 'supabase/migrations/01_enable_rls_policies.sql')
+      )
+    ) {
       gates.rlsPolicies = true;
       console.log('  ✅ RLS Policies: Migration file exists');
     } else {
@@ -262,7 +267,7 @@ class ValidationSystem {
 
   async validatePerformance() {
     console.log('\n⚡ Validating Performance...');
-    
+
     const gates = {
       bundleSize: false,
       buildSuccess: false,
@@ -271,10 +276,10 @@ class ValidationSystem {
     // Check if build succeeds
     try {
       console.log('  ℹ️ Checking build...');
-      execSync('npm run build 2>&1 | tail -20 || true', { 
-        cwd: workspaceRoot, 
+      execSync('npm run build 2>&1 | tail -20 || true', {
+        cwd: workspaceRoot,
         encoding: 'utf-8',
-        timeout: 120000 
+        timeout: 120000,
       });
       gates.buildSuccess = true;
       console.log('  ✅ Build: Success');
@@ -287,7 +292,7 @@ class ValidationSystem {
 
   async validateFunctionality() {
     console.log('\n✅ Validating Functionality...');
-    
+
     const gates = {
       apiRoutesExist: false,
       coreFeatures: false,
@@ -298,9 +303,10 @@ class ValidationSystem {
       const { readdirSync } = require('fs');
       const apiDir = join(workspaceRoot, 'src/app/api');
       if (existsSync(apiDir)) {
-        const routes = readdirSync(apiDir, { recursive: true })
-          .filter((f) => f.endsWith('route.ts'));
-        
+        const routes = readdirSync(apiDir, { recursive: true }).filter(f =>
+          f.endsWith('route.ts')
+        );
+
         if (routes.length > 50) {
           gates.apiRoutesExist = true;
           console.log(`  ✅ API Routes: ${routes.length} routes found`);
@@ -318,12 +324,16 @@ class ValidationSystem {
       'src/app/api/appointments/route.ts',
     ];
 
-    const existingFeatures = coreFeatures.filter(f => existsSync(join(workspaceRoot, f)));
+    const existingFeatures = coreFeatures.filter(f =>
+      existsSync(join(workspaceRoot, f))
+    );
     if (existingFeatures.length === coreFeatures.length) {
       gates.coreFeatures = true;
       console.log('  ✅ Core Features: All present');
     } else {
-      console.log(`  ⚠️ Core Features: ${existingFeatures.length}/${coreFeatures.length} present`);
+      console.log(
+        `  ⚠️ Core Features: ${existingFeatures.length}/${coreFeatures.length} present`
+      );
     }
 
     this.results.qualityGates.functionality = gates;
@@ -331,7 +341,7 @@ class ValidationSystem {
 
   async validateCompliance() {
     console.log('\n📋 Validating Compliance...');
-    
+
     const gates = {
       auditLogging: false,
       rlsPolicies: false,
@@ -344,7 +354,11 @@ class ValidationSystem {
       console.log('  ✅ HIPAA: Audit logging implemented');
     }
 
-    if (existsSync(join(workspaceRoot, 'supabase/migrations/01_enable_rls_policies.sql'))) {
+    if (
+      existsSync(
+        join(workspaceRoot, 'supabase/migrations/01_enable_rls_policies.sql')
+      )
+    ) {
       gates.rlsPolicies = true;
       console.log('  ✅ HIPAA: RLS policies ready');
     }
@@ -380,19 +394,23 @@ class ValidationSystem {
     this.results.passed = passRate >= 80;
 
     console.log(`\n📊 Overall Status: ${this.results.metrics.status}`);
-    console.log(`   Pass Rate: ${passRate.toFixed(1)}% (${passedGates}/${totalGates} gates passed)`);
+    console.log(
+      `   Pass Rate: ${passRate.toFixed(1)}% (${passedGates}/${totalGates} gates passed)`
+    );
   }
 
   generateReport() {
     writeFileSync(REPORT_FILE, JSON.stringify(this.results, null, 2), 'utf-8');
     console.log(`\n📄 Report saved to: ${REPORT_FILE}`);
-    
+
     if (this.results.passed) {
       console.log('\n✅ Phase 4 Validation: PASSED');
       console.log('   System meets quality gates and is ready for production!');
     } else {
       console.log('\n⚠️ Phase 4 Validation: NEEDS IMPROVEMENT');
-      console.log('   Some quality gates did not pass. Review report for details.');
+      console.log(
+        '   Some quality gates did not pass. Review report for details.'
+      );
     }
   }
 }
