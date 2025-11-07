@@ -40,7 +40,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Always generate fresh JWT with all required fields
-    const jwtToken = jwt.sign(
+    const jwt = await import('jsonwebtoken');
+    const jwtToken = jwt.default.sign(
       {
         userId: result.user.id,
         email: result.user.email,
@@ -50,7 +51,7 @@ export async function POST(req: NextRequest) {
       jwtSecret,
       {
         expiresIn: process.env.JWT_EXPIRES_IN || '7d',
-      }
+      } as any
     );
 
     // Create response

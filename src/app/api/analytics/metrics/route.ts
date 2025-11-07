@@ -21,7 +21,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       authResult.user.role
     );
 
-    if (!PermissionManager.hasPermission(userPermissions, 'analytics:view')) {
+    if (!userPermissions.includes('analytics:view')) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }

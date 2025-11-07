@@ -421,7 +421,7 @@ export async function POST(req: NextRequest) {
       jwtSecret,
       {
         expiresIn: process.env.JWT_EXPIRES_IN || '7d',
-      }
+      } as any
     );
 
     // Prepare user response object
