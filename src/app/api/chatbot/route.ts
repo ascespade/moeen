@@ -22,12 +22,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getUserPermissions(
-      authResult.user.role,
-      authResult.user.meta?.permissions || []
+    const userPermissions = PermissionManager.getRolePermissionsSync(
+      authResult.user.role
     );
 
-    if (!PermissionManager.canAccess(userPermissions, 'chatbot', 'view')) {
+    if (!userPermissions.includes('chatbot:use')) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }
@@ -73,12 +72,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getUserPermissions(
-      authResult.user.role,
-      authResult.user.meta?.permissions || []
+    const userPermissions = PermissionManager.getRolePermissionsSync(
+      authResult.user.role
     );
 
-    if (!PermissionManager.canAccess(userPermissions, 'chatbot', 'create')) {
+    if (!userPermissions.includes('chatbot:create')) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient permissions' },
         { status: 403 }

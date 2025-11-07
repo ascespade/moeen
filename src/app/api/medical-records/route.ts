@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { authorize } from '@/lib/auth/authorize';
-import { _PermissionManager } from '@/lib/permissions';
+import { PermissionManager } from '@/lib/permissions';
 import { validateData, medicalRecordSchema } from '@/lib/validation/schemas';
 
 export const revalidate = 60;
