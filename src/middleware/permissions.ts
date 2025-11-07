@@ -129,7 +129,7 @@ export function checkRoutePermission(
 ): { allowed: boolean; reason?: string } {
   // Find matching route
   const route = ROUTE_PERMISSIONS.find(
-    route => pathname === route.path || pathname.startsWith(route.path + '/')
+    route => pathname === route.path || pathname.startsWith(`${route.path  }/`)
   );
 
   if (!route) {

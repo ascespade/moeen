@@ -1,7 +1,8 @@
 // Component types
+import type { ReactNode } from 'react';
 export interface ComponentProps {
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export interface ButtonProps extends ComponentProps {

@@ -127,7 +127,7 @@ function CRMDashboardContent() {
       if (data.success) {
         loadDashboardData(); // إعادة تحميل البيانات
       } else {
-        alert('فشل في تحديث حالة الموعد: ' + data.error);
+        alert(`فشل في تحديث حالة الموعد: ${  data.error}`);
       }
     } catch (error) {
       alert('حدث خطأ في تحديث حالة الموعد');

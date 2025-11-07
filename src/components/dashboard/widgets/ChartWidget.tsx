@@ -275,8 +275,8 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
       // Area fill
       if (isArea) {
         const areaPoints =
-          points +
-          ` ${width - padding},${height - padding} ${padding},${height - padding}`;
+          `${points 
+          } ${width - padding},${height - padding} ${padding},${height - padding}`;
         elements.push(
           <polygon
             key={`area-${datasetIndex}`}

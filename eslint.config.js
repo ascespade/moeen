@@ -13,6 +13,10 @@ export default [
       'src/lib/security-enhanced.ts',
       'src/lib/websocket-server.ts',
       'src/middleware.prod.ts',
+      '.agent-system/**',
+      '.eslintrc.*',
+      '.prettierrc.js',
+      'tests/generated/**',
       'node_modules/**',
       '.next/**',
       'out/**',
@@ -29,7 +33,7 @@ export default [
   },
   js.configs.recommended,
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
+    files: ['src/**/*.{ts,tsx}'],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
@@ -38,9 +42,10 @@ export default [
         ecmaFeatures: {
           jsx: true,
         },
+        // Enable full TypeScript type-aware linting
+        project: ['./tsconfig.json'],
+        tsconfigRootDir: process.cwd(),
       },
-    },
-    languageOptions: {
       globals: {
         // Browser globals
         window: 'readonly',
@@ -79,7 +84,7 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescript,
-      react: react,
+      react,
       'react-hooks': reactHooks,
       '@next/next': next,
     },
@@ -106,6 +111,172 @@ export default [
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
       '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+  // JS/JSX files use default parser (no TS project requirement)
+  {
+    files: ['**/*.{js,jsx}'],
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        console: 'readonly',
+        fetch: 'readonly',
+        process: 'readonly',
+        Buffer: 'readonly',
+        setInterval: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        clearInterval: 'readonly',
+      },
+    },
+    plugins: {
+      react,
+      'react-hooks': reactHooks,
+      '@next/next': next,
+    },
+    rules: {
+      ...react.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      ...next.configs.recommended.rules,
+      'no-unused-vars': 'warn',
+      'no-console': 'warn',
+      'prefer-const': 'warn',
+      'no-var': 'warn',
+      'object-shorthand': 'warn',
+      'prefer-template': 'warn',
+      'no-useless-escape': 'warn',
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-uses-react': 'off',
+    },
+  },
+  // Tests - TypeScript: use TS parser without project for parsing only
+  {
+    files: ['tests/**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        // Node/test globals
+        process: 'readonly',
+        Buffer: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        global: 'readonly',
+        // Browser-like globals sometimes used in tests
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        fetch: 'readonly',
+        Headers: 'readonly',
+        Request: 'readonly',
+        Response: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        console: 'readonly',
+        jest: 'readonly',
+        performance: 'readonly',
+        PerformanceNavigationTiming: 'readonly',
+      },
+    },
+    plugins: {
+      '@typescript-eslint': typescript,
+      react: react,
+      'react-hooks': reactHooks,
+    },
+    rules: {
+      ...react.configs.recommended.rules,
+      ...reactHooks.configs.recommended.rules,
+      'no-console': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+    },
+  },
+  // Tests - JavaScript
+  {
+    files: ['tests/**/*.{js,jsx,mjs}'],
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+      },
+      globals: {
+        process: 'readonly',
+        Buffer: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        global: 'readonly',
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        fetch: 'readonly',
+        Headers: 'readonly',
+        Request: 'readonly',
+        Response: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        console: 'readonly',
+        jest: 'readonly',
+      },
+    },
+    rules: {
+      'no-console': 'off',
+      'no-unused-vars': 'off',
+    },
+  },
+  // Root config/scripts files
+  {
+    files: [
+      '*.config.js',
+      '*.setup.js',
+      '*.config.mjs',
+      '*.setup.mjs',
+      '.eslintrc.*',
+      'commitlint.config.js',
+      'lighthouse.config.js',
+      'jest.config.js',
+    ],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+        Buffer: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        global: 'readonly',
+        jest: 'readonly',
+        URLSearchParams: 'readonly',
+      },
+    },
+    rules: {
+      'no-console': 'off',
+      'no-undef': 'off',
+      'no-unused-vars': 'off',
     },
   },
   {

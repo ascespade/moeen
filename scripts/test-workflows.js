@@ -266,9 +266,9 @@ class WorkflowTester {
     console.log('\n📊 Test Report');
     console.log('='.repeat(50));
 
-    let totalTests = this.testResults.length;
-    let passedTests = this.testResults.filter(r => r.success).length;
-    let failedTests = totalTests - passedTests;
+    const totalTests = this.testResults.length;
+    const passedTests = this.testResults.filter(r => r.success).length;
+    const failedTests = totalTests - passedTests;
 
     for (const result of this.testResults) {
       console.log(`\n📄 ${result.file}`);

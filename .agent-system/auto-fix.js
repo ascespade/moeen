@@ -16,7 +16,7 @@ console.log(
 );
 
 const LOG_FILE = 'tmp/auto-fix.log';
-const BACKUP_DIR = 'tmp/backup-' + Date.now();
+const BACKUP_DIR = `tmp/backup-${  Date.now()}`;
 
 function log(message, level = 'info') {
   const timestamp = new Date().toISOString();
@@ -24,7 +24,7 @@ function log(message, level = 'info') {
   console.log(logMessage);
 
   try {
-    fs.appendFileSync(LOG_FILE, logMessage + '\n');
+    fs.appendFileSync(LOG_FILE, `${logMessage  }\n`);
   } catch (err) {
     // Ignore
   }

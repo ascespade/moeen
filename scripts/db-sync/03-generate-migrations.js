@@ -17,7 +17,7 @@ const DB_SCHEMA = JSON.parse(
   fs.readFileSync('/workspace/tmp/db-schema-scan.json')
 );
 
-let migrationSQL = [];
+const migrationSQL = [];
 let migrationNumber = 74; // Next migration after 073
 
 function header(title) {
@@ -166,7 +166,7 @@ COMMIT;
   return {
     number: migrationNumber++,
     name: '074_soft_delete_system',
-    sql: sql,
+    sql,
     safety: 'safe',
     description: 'Add soft delete columns and functions to all tables',
   };
@@ -328,7 +328,7 @@ COMMIT;
   return {
     number: migrationNumber++,
     name: '075_reminder_system',
-    sql: sql,
+    sql,
     safety: 'safe',
     description: 'Automated reminder system with WhatsApp/SMS/Email',
   };
@@ -462,7 +462,7 @@ COMMIT;
   return {
     number: migrationNumber++,
     name: '076_booking_validation',
-    sql: sql,
+    sql,
     safety: 'safe',
     description: 'Booking conflict detection and validation functions',
   };
@@ -612,7 +612,7 @@ COMMIT;
   return {
     number: migrationNumber++,
     name: '077_search_functions',
-    sql: sql,
+    sql,
     safety: 'safe',
     description: 'Full-text search with Arabic support',
   };

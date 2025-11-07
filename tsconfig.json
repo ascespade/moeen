@@ -57,6 +57,7 @@
     ".next",
     "temp_complex",
     "tests",
+    "tests/generated/**",
     "test-results",
     "playwright-report",
     "scripts",

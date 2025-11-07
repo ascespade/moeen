@@ -665,7 +665,7 @@ function AnalyticsPageContent() {
       )}
     </div>
   );
-};
+}
 
 export default function AnalyticsPage() {
   const pageConfig = ADMIN_PAGES.analytics;

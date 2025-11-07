@@ -148,7 +148,7 @@ export default function EnhancedSidebar() {
         <ul className='space-y-2'>
           {menuItems.map(item => {
             const isActive =
-              pathname === item.path || pathname.startsWith(item.path + '/');
+              pathname === item.path || pathname.startsWith(`${item.path  }/`);
             const Icon = item.icon ? getIconComponent(item.icon) : null;
 
             return (
