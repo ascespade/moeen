@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Always generate fresh JWT with all required fields
+    const expiresIn: string = process.env.JWT_EXPIRES_IN || '7d';
     const jwtToken = jwt.sign(
       {
         userId: result.user.id,
@@ -47,9 +48,9 @@ export async function POST(req: NextRequest) {
         role: result.user.role,
         status: result.user.status || 'active',
       },
-      jwtSecret,
+      jwtSecret as string,
       {
-        expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+        expiresIn,
       }
     );
 

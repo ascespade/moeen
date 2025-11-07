@@ -327,7 +327,7 @@ async function __generateAppointmentAnalytics(
     byType: __groupByField(appointments, 'type'),
     averageDuration:
       appointments.reduce(
-        (sum: unknown, apt: unknown) => sum + (apt.duration || 30),
+        (sum: number, apt: any) => sum + ((apt?.duration) || 30),
         0
       ) / appointments.length,
     trends: grouped.map(group => ({
@@ -369,7 +369,7 @@ async function __generateRevenueReport(
 
   return {
     totalRevenue: paidPayments.reduce(
-      (sum: number, p: unknown) => sum + (p.amount || 0),
+      (sum: number, p: any) => sum + ((p?.amount) || 0),
       0
     ),
     byMethod: __groupByField(paidPayments, 'method'),
@@ -377,7 +377,7 @@ async function __generateRevenueReport(
     dailyRevenue: grouped.map(group => ({
       period: group.period,
       revenue: group.data.reduce(
-        (sum: number, p: unknown) => sum + (p.amount || 0),
+        (sum: number, p: any) => sum + ((p?.amount) || 0),
         0
       ),
       count: group.data.length,

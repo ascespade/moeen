@@ -36,3 +36,9 @@ export function createAdminClient() {
     },
   });
 }
+
+/**
+ * Default admin client instance
+ * Use this for convenience, or create your own with createAdminClient()
+ */
+export const supabaseAdmin = createAdminClient();

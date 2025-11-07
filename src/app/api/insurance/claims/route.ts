@@ -324,7 +324,7 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function submitToInsuranceProvider(claim: unknown, provider: string) {
+async function submitToInsuranceProvider(claim: any, provider: string) {
   try {
     // This would integrate with actual insurance provider APIs
     // For now, we'll simulate the submission
@@ -355,13 +355,13 @@ async function submitToInsuranceProvider(claim: unknown, provider: string) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        claimReference: claim.claimReference,
-        policyNumber: claim.policyNumber,
-        memberId: claim.memberId,
-        claimAmount: claim.claimAmount,
-        diagnosis: claim.diagnosis,
-        treatment: claim.treatment,
-        attachments: claim.attachments,
+        claimReference: claim?.claimReference,
+        policyNumber: claim?.policyNumber,
+        memberId: claim?.memberId,
+        claimAmount: claim?.claimAmount,
+        diagnosis: claim?.diagnosis,
+        treatment: claim?.treatment,
+        attachments: claim?.attachments,
       }),
     });
 

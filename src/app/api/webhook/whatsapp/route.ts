@@ -72,11 +72,11 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function processWhatsAppMessage(message: unknown, value: unknown) {
+async function processWhatsAppMessage(message: any, value: any) {
   try {
-    const phoneNumber = message.from;
-    const messageText = message.text?.body || '';
-    const messageId = message.id;
+    const phoneNumber = message?.from;
+    const messageText = message?.text?.body || '';
+    const messageId = message?.id;
 
     // البحث عن محادثة موجودة أو إنشاء جديدة
     let { data: conversation } = await supabase

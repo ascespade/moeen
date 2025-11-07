@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/authorize';
-import { _PermissionManager } from '@/lib/permissions';
+import { PermissionManager } from '@/lib/permissions';
 
 const sessionSchema = z.object({
   patient_id: z.string().uuid('Invalid patient ID'),

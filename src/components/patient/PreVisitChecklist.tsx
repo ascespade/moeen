@@ -10,10 +10,10 @@ import { I18N_KEYS } from '@/constants/i18n-keys';
 
 import {
   CheckCircle,
-  _AlertCircle,
+  AlertCircle,
   Clock,
   FileText,
-  _Shield,
+  Shield,
   CreditCard,
   Stethoscope,
 } from 'lucide-react';

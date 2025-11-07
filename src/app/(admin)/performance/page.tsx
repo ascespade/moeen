@@ -68,6 +68,13 @@ import {
   CheckCircle,
   XCircle,
   AlertTriangle,
+  Monitor,
+  Database,
+  Wifi,
+  Timer,
+  Gauge,
+  Smile,
+  Award,
 } from 'lucide-react';
 
 interface PerformanceMetric {

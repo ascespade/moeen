@@ -108,13 +108,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function generateCSV(data: unknown, customFields?: string[]) {
+async function generateCSV(data: any, customFields?: string[]) {
   // Simple CSV generation
-  const headers = customFields || Object.keys(data);
+  const headers = customFields || Object.keys(data || {});
   const csvContent = [
     headers.join(','),
-    ...Object.values(data).map((row: any) =>
-      headers.map((header) => `"${row[header] || ''}"`).join(',')
+    ...(Array.isArray(data) ? data : Object.values(data || {})).map((row: any) =>
+      headers.map((header) => `"${row?.[header] || ''}"`).join(',')
     ),
   ].join('\n');
 

@@ -113,15 +113,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           const timeString = time.toTimeString().slice(0, 5);
 
           // Check if slot is during a break
-          const isBreakTime = breaks.some((breakTime: unknown) => {
+          const isBreakTime = breaks.some((breakTime: any) => {
             const breakStart = new Date(date);
-            const [breakStartHour, breakStartMinute] = breakTime.start
+            const [breakStartHour, breakStartMinute] = (breakTime?.start || '')
               .split(':')
               .map(Number);
             breakStart.setHours(breakStartHour, breakStartMinute, 0, 0);
 
             const breakEnd = new Date(date);
-            const [breakEndHour, breakEndMinute] = breakTime.end
+            const [breakEndHour, breakEndMinute] = (breakTime?.end || '')
               .split(':')
               .map(Number);
             breakEnd.setHours(breakEndHour, breakEndMinute, 0, 0);

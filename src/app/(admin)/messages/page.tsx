@@ -81,6 +81,7 @@ import {
   Trash,
   ArchiveIcon,
   Bell,
+  Monitor,
 } from 'lucide-react';
 
 interface Message {

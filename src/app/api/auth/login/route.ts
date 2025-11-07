@@ -406,6 +406,7 @@ export async function POST(req: NextRequest) {
     }
 
     const jwt = await import('jsonwebtoken');
+    const expiresIn: string = process.env.JWT_EXPIRES_IN || '7d';
     const jwtToken = jwt.default.sign(
       {
         userId: userData.id,
@@ -416,9 +417,9 @@ export async function POST(req: NextRequest) {
         // Don't require DB verification in middleware for performance
         verifyStatus: false,
       },
-      jwtSecret,
+      jwtSecret as string,
       {
-        expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+        expiresIn,
       }
     );
 

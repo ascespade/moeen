@@ -163,7 +163,7 @@ async function updateChecklist(request: NextRequest, body: unknown) {
     }
 
     const supabase = await createClient();
-    const { patientId, appointmentId, checklistItems } = body;
+    const { patientId, appointmentId, checklistItems } = body as any;
 
     // Validate input
     const validation = await ValidationHelper.validateAsync(
@@ -354,7 +354,7 @@ async function requestFileAccess(request: NextRequest, body: any) {
   }
 }
 
-async function createPatientFile(patientId: string, supabase: unknown) {
+async function createPatientFile(patientId: string, supabase: any) {
   // Create initial patient file structure
   const { error } = await supabase.from('patient_files').insert({
     patientId,
@@ -369,11 +369,11 @@ async function createPatientFile(patientId: string, supabase: unknown) {
   }
 }
 
-async function sendActivationNotification(patient: unknown, supabase: unknown) {
+async function sendActivationNotification(patient: any, supabase: any) {
   // Send activation notification to patient
   await supabase.from('notifications').insert({
     type: 'patient_activated',
-    recipientId: patient.id,
+    recipientId: patient?.id,
     recipientType: 'patient',
     title: 'حسابك مفعل الآن',
     message: 'تم تفعيل حسابك بنجاح. يمكنك الآن الوصول إلى ملفك الطبي.',
