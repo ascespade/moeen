@@ -69,11 +69,10 @@ export default function PatientsPage() {
   const [filterStatus, setFilterStatus] = useState<
     'all' | 'active' | 'inactive' | 'blocked'
   >('all');
-  const [, setFilterCondition] = useState<string>('all');
-  const [, setFilterSeverity] = useState<string>('all');
-  const [, setSelectedPatient] =
-    useState<PatientWithStats | null>(null);
-  const [, setShowDetails] = useState(false);
+  // const [, setFilterCondition] = useState<string>('all');
+  // const [, setFilterSeverity] = useState<string>('all');
+  // const [, setSelectedPatient] = useState<PatientWithStats | null>(null);
+  // const [, setShowDetails] = useState(false);
 
   // Load patients from database
   useEffect(() => {

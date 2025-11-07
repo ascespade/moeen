@@ -448,8 +448,8 @@ export default function CRUDTestPage() {
 
   const passedTests = tests.filter(t => t.status === 'success').length;
   const failedTests = tests.filter(t => t.status === 'error').length;
-  const _runningTests = tests.filter(t => t.status === 'running').length;
-  const _pendingTests = tests.filter(t => t.status === 'pending').length;
+  // const _runningTests = tests.filter(t => t.status === 'running').length;
+  // const _pendingTests = tests.filter(t => t.status === 'pending').length;
 
   return (
     <div className='min-h-screen bg-[var(--background)] p-6'>

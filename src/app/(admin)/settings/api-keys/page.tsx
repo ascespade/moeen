@@ -396,7 +396,7 @@ const APIKeysSettingsPage: React.FC = () => {
                 {keys.map(keyConfig => {
                   const Sun = keyConfig.icon;
                   const isVisible = visibleKeys.has(keyConfig.id);
-                  const _displayValue = isVisible
+                  // const _displayValue = isVisible
                     ? keyConfig.key_value
                     : '••••••••••••••••';
 

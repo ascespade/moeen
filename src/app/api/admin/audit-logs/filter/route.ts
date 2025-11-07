@@ -167,7 +167,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
 // Helper functions
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _getDateRanges(period: string) {
+// function _getDateRanges(period: string) {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
