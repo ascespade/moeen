@@ -24,7 +24,7 @@ import {
   RefreshCw,
   TestTube,
 } from 'lucide-react';
-import { _cn } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 interface IntegrationConfig {
   whatsapp: {

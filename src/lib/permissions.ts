@@ -350,6 +350,42 @@ export class PermissionManager {
     const allowedRoutes = roleRoutes[role] || [];
     return allowedRoutes.some(allowed => route.startsWith(allowed));
   }
+
+  /**
+   * Get user permissions (for backward compatibility)
+   */
+  static getUserPermissions(
+    userRole: string | UserRole,
+    customPermissions: string[] = []
+  ): string[] {
+    const role = userRole as UserRole;
+    const rolePermissions = this.getRolePermissions(role);
+    const permissions: string[] = [];
+    
+    rolePermissions.forEach(perm => {
+      perm.actions.forEach(action => {
+        if (perm.resource === '*') {
+          permissions.push(`*:${action}`);
+        } else {
+          permissions.push(`${perm.resource}:${action}`);
+        }
+      });
+    });
+    
+    return [...permissions, ...customPermissions];
+  }
+
+  /**
+   * Check if user can access a resource with an action
+   */
+  static canAccess(
+    userPermissions: string[],
+    resource: string,
+    action: string
+  ): boolean {
+    const permission = `${resource}:${action}`;
+    return userPermissions.includes(permission) || userPermissions.includes('*:*') || userPermissions.includes(`*:${action}`);
+  }
 }
 
 /**

@@ -19,6 +19,7 @@ import {
   Brain,
   Heart,
   Zap,
+  FileText,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';

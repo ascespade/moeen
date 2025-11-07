@@ -6,13 +6,13 @@ import {
   Clock,
   User,
   Phone,
-  _Mail,
-  _MapPin,
+  Mail,
+  MapPin,
   Plus,
   Edit,
   Trash2,
-  _CheckCircle,
-  _XCircle,
+  CheckCircle,
+  XCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';

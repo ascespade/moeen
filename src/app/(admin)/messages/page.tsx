@@ -29,7 +29,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -72,9 +71,9 @@ import {
   Settings,
   TrendingUp,
   Target,
-  FileText,
   Paperclip,
   Inbox,
+  Monitor,
   Send as Outbox,
   FileText as Drafts,
   AlertOctagon as Spam,

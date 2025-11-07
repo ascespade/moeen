@@ -1,7 +1,6 @@
 'use client';
 
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
-import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import {
@@ -35,7 +34,7 @@ interface TestResult {
   details?: any;
 }
 
-type PartialTestResult = Partial<TestResult> & Pick<TestResult, 'id' | 'name' | 'category'>;
+// type PartialTestResult = Partial<TestResult> & Pick<TestResult, 'id' | 'name' | 'category'>;
 
 const ALL_TESTS: Omit<
   TestResult,

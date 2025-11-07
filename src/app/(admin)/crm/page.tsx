@@ -29,7 +29,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -154,8 +153,6 @@ interface Deal {
 }
 
 function CRMPageContent() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [activeTab, setActiveTab] = useState<'leads' | 'contacts' | 'deals'>(
     'leads'
   );
@@ -169,7 +166,6 @@ function CRMPageContent() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
   // Fetch real data from API
   useEffect(() => {

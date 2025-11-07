@@ -26,7 +26,7 @@ interface Deal {
 
 export default function CRMDealsPage() {
   const [deals, setDeals] = useState<Deal[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStage, setSelectedStage] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('kanban');

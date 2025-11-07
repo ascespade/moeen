@@ -163,7 +163,8 @@ async function updateChecklist(request: NextRequest, body: unknown) {
     }
 
     const supabase = await createClient();
-    const { patientId, appointmentId, checklistItems } = body;
+    const bodyData = body as { patientId?: string; appointmentId?: string; checklistItems?: unknown };
+    const { patientId, appointmentId, checklistItems } = bodyData;
 
     // Validate input
     const validation = await ValidationHelper.validateAsync(

@@ -24,10 +24,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import {
-  encrypt,
-  decrypt,
   encryptApiKey,
-  decryptApiKey,
 } from '@/lib/encryption';
 import { createClient } from '@/lib/supabase/client';
 

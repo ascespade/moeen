@@ -36,3 +36,9 @@ export function createAdminClient() {
     },
   });
 }
+
+/**
+ * Singleton admin client instance
+ * Use this for convenience, but prefer createAdminClient() for better control
+ */
+export const supabaseAdmin = createAdminClient();

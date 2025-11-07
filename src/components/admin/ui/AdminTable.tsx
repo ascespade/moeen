@@ -3,7 +3,7 @@
 import {
   Table,
   TableBody,
-  _TableCell,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
