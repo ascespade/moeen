@@ -76,7 +76,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // Calculate staff activity metrics
     const today = new Date().toISOString().split('T')[0];
     const staffActivity = await Promise.all(
-      (staffMembers || []).slice(0, 10).map(async staff => {
+      (staffMembers || []).slice(0, 10).map(async (staff: any) => {
         try {
           // Get today's appointments for this staff member
           const { count: todayTasks, error: todayError } = await supabase
@@ -224,7 +224,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       if (alertsError) {
         console.warn('Error fetching alerts:', alertsError);
       } else {
-        alerts = (upcomingAppointments || []).slice(0, 3).map(apt => ({
+        alerts = (upcomingAppointments || []).slice(0, 3).map((apt: any) => ({
           id: `alert-${apt.id}`,
           type: 'info' as const,
           message: `Upcoming appointment on ${apt.appointment_date}`,
@@ -249,7 +249,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         console.warn('Error fetching reports:', reportsError);
       } else {
         reports =
-          reportsData?.map(report => ({
+          reportsData?.map((report: any) => ({
             id: report.id,
             name: report.name || 'Untitled Report',
             type: report.type || 'general',

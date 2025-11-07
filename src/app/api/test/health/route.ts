@@ -39,7 +39,7 @@ export async function GET(_request: NextRequest) {
     } catch (error) {
       healthChecks.services.database = {
         status: 'error',
-        error: error.message,
+        error: (error as Error).message,
       };
       healthChecks.errors.push('Database connection failed');
     }
@@ -54,7 +54,7 @@ export async function GET(_request: NextRequest) {
     } catch (error) {
       healthChecks.services.auth = {
         status: 'error',
-        error: error.message,
+        error: (error as Error).message,
       };
       healthChecks.errors.push('Authentication service failed');
     }
@@ -72,7 +72,7 @@ export async function GET(_request: NextRequest) {
     } catch (error) {
       healthChecks.services.storage = {
         status: 'error',
-        error: error.message,
+        error: (error as Error).message,
       };
       healthChecks.errors.push('Storage service failed');
     }
@@ -89,7 +89,7 @@ export async function GET(_request: NextRequest) {
       {
         timestamp: new Date().toISOString(),
         status: 'unhealthy',
-        error: error.message,
+        error: (error as Error).message,
       },
       { status: 500 }
     );

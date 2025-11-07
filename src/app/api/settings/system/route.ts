@@ -57,7 +57,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // تحويل البيانات إلى شكل مناسب
     const settings =
       data?.reduce(
-        (acc, setting) => {
+        (acc: any, setting: any) => {
           let value = setting.value;
 
           // تحويل الأنواع المختلفة

@@ -327,7 +327,7 @@ async function __generateAppointmentAnalytics(
     byType: __groupByField(appointments, 'type'),
     averageDuration:
       appointments.reduce(
-        (sum: unknown, apt: unknown) => sum + (apt.duration || 30),
+        (sum: number, apt: any) => sum + (apt.duration || 30),
         0
       ) / appointments.length,
     trends: grouped.map(group => ({
@@ -364,7 +364,7 @@ async function __generateRevenueReport(
 
   if (!payments) return {};
 
-  const paidPayments = payments.filter(p => p.status === 'paid');
+  const paidPayments = payments.filter((p: any) => p.status === 'paid');
   const grouped = __groupDataByPeriod(paidPayments, 'createdAt', groupBy || '');
 
   return {
@@ -416,7 +416,7 @@ async function __generateInsuranceClaimsReport(
     totalAmount: claims.reduce((sum: number, c: any) => sum + (c.amount || 0), 0),
     approvalRate:
       claims.length > 0
-        ? (claims.filter(c => c.claimStatus === 'approved').length /
+        ? (claims.filter((c: any) => c.claimStatus === 'approved').length /
             claims.length) *
           100
         : 0,

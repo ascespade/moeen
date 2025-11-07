@@ -110,10 +110,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 async function generateCSV(data: unknown, customFields?: string[]) {
   // Simple CSV generation
-  const headers = customFields || Object.keys(data);
+  const headers = customFields || Object.keys(data as any);
   const csvContent = [
     headers.join(','),
-    ...Object.values(data).map((row: any) =>
+    ...Object.values(data as any).map((row: any) =>
       headers.map((header) => `"${row[header] || ''}"`).join(',')
     ),
   ].join('\n');

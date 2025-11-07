@@ -72,7 +72,7 @@ export async function GET(
 
       // Convert to namespace.key format
       const translationObject = (defaultTranslations || []).reduce(
-        (acc, t) => ({
+        (acc: any, t: any) => ({
           ...acc,
           [`${t.namespace}.${t.key}`]: t.value,
         }),

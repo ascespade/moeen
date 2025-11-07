@@ -354,9 +354,9 @@ async function requestFileAccess(request: NextRequest, body: any) {
   }
 }
 
-async function createPatientFile(patientId: string, supabase: unknown) {
+async function createPatientFile(patientId: string, supabase: any) {
   // Create initial patient file structure
-  const { error } = await supabase.from('patient_files').insert({
+  const { error } = await (supabase as any).from('patient_files').insert({
     patientId,
     fileType: 'main',
     title: 'Patient File',
@@ -369,11 +369,11 @@ async function createPatientFile(patientId: string, supabase: unknown) {
   }
 }
 
-async function sendActivationNotification(patient: unknown, supabase: unknown) {
+async function sendActivationNotification(patient: any, supabase: any) {
   // Send activation notification to patient
-  await supabase.from('notifications').insert({
+  await (supabase as any).from('notifications').insert({
     type: 'patient_activated',
-    recipientId: patient.id,
+    recipientId: (patient as any).id,
     recipientType: 'patient',
     title: 'حسابك مفعل الآن',
     message: 'تم تفعيل حسابك بنجاح. يمكنك الآن الوصول إلى ملفك الطبي.',

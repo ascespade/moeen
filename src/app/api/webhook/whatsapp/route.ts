@@ -72,11 +72,11 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function processWhatsAppMessage(message: unknown, value: unknown) {
+async function processWhatsAppMessage(message: any, value: any) {
   try {
-    const phoneNumber = message.from;
-    const messageText = message.text?.body || '';
-    const messageId = message.id;
+    const phoneNumber = (message as any).from;
+    const messageText = (message as any).text?.body || '';
+    const messageId = (message as any).id;
 
     // البحث عن محادثة موجودة أو إنشاء جديدة
     let { data: conversation } = await supabase
@@ -92,7 +92,7 @@ async function processWhatsAppMessage(message: unknown, value: unknown) {
         .from('chatbot_conversations')
         .insert({
           whatsapp_number: phoneNumber,
-          customer_name: value.contacts?.[0]?.profile?.name || 'مجهول',
+          customer_name: (value as any).contacts?.[0]?.profile?.name || 'مجهول',
           conversation_state: 'active',
           context_data: {},
         })
@@ -154,7 +154,7 @@ async function processMessageWithAI(
     // إذا لم يتم العثور على نية، استخدم النية العامة
     if (!matchedIntent) {
       matchedIntent =
-        intents?.find(i => i.action_type === 'general') || intents?.[0];
+        intents?.find((i: any) => i.action_type === 'general') || intents?.[0];
       confidence = 0.3;
     }
 

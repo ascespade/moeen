@@ -118,7 +118,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       payments
         ?.filter((p: any) => p.status === 'completed')
         .reduce(
-          (sum: number, p: unknown) => sum + parseFloat(p.amount.toString()),
+          (sum: number, p: any) => sum + parseFloat((p.amount || 0).toString()),
           0
         ) || 0;
 
@@ -151,7 +151,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     // Payment method breakdown
     const paymentMethods =
       payments?.reduce(
-        (acc: unknown, payment: unknown) => {
+        (acc: any, payment: any) => {
           const method = payment.method;
           acc[method] = (acc[method] || 0) + 1;
           return acc;
@@ -195,7 +195,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             );
           })
           .reduce(
-            (sum: number, p: unknown) => sum + parseFloat(p.amount.toString()),
+            (sum: number, p: any) => sum + parseFloat((p.amount || 0).toString()),
             0
           ) || 0;
 
