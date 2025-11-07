@@ -6,7 +6,7 @@ import {
   FileText,
   Clock,
   CheckCircle,
-  _AlertCircle,
+  AlertCircle,
   Stethoscope,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
