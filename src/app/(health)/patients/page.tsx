@@ -168,65 +168,67 @@ export default function PatientsPage() {
 
   // getStatusBadge function not used
   // const getStatusBadge = (status: string) => {
-    const statusMap = {
-      active: {
-        label: 'نشط',
-        variant: 'primary' as const,
-        color: 'text-default-success',
-      },
-      inactive: {
-        label: 'غير نشط',
-        variant: 'secondary' as const,
-        color: 'text-gray-600',
-      },
-      blocked: {
-        label: 'محظور',
-        variant: 'error' as const,
-        color: 'text-default-error',
-      },
-    };
+  //   const statusMap = {
+  //     active: {
+  //       label: 'نشط',
+  //       variant: 'primary' as const,
+  //       color: 'text-default-success',
+  //     },
+  //     inactive: {
+  //       label: 'غير نشط',
+  //       variant: 'secondary' as const,
+  //       color: 'text-gray-600',
+  //     },
+  //     blocked: {
+  //       label: 'محظور',
+  //       variant: 'error' as const,
+  //       color: 'text-default-error',
+  //     },
+  //   };
+  //
+  //   const statusInfo = statusMap[status as keyof typeof statusMap] || {
+  //     label: status,
+  //     variant: 'primary' as const,
+  //     color: 'text-gray-600',
+  //   };
+  //   return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
+  // };
 
-    const statusInfo = statusMap[status as keyof typeof statusMap] || {
-      label: status,
-      variant: 'primary' as const,
-      color: 'text-gray-600',
-    };
-    return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
-  };
+  // getSeverityBadge function not used
+  // const getSeverityBadge = (severity: string) => {
+  //   const severityMap = {
+  //     mild: {
+  //       label: 'خفيف',
+  //       variant: 'primary' as const,
+  //       color: 'text-default-success',
+  //     },
+  //     moderate: {
+  //       label: 'متوسط',
+  //       variant: 'secondary' as const,
+  //       color: 'text-yellow-600',
+  //     },
+  //     severe: {
+  //       label: 'شديد',
+  //       variant: 'error' as const,
+  //       color: 'text-default-error',
+  //     },
+  //   };
+  //
+  //   const severityInfo = severityMap[severity as keyof typeof severityMap] || {
+  //     label: severity,
+  //     variant: 'primary' as const,
+  //     color: 'text-gray-600',
+  //   };
+  //   return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;
+  // };
 
-  const getSeverityBadge = (severity: string) => {
-    const severityMap = {
-      mild: {
-        label: 'خفيف',
-        variant: 'primary' as const,
-        color: 'text-default-success',
-      },
-      moderate: {
-        label: 'متوسط',
-        variant: 'secondary' as const,
-        color: 'text-yellow-600',
-      },
-      severe: {
-        label: 'شديد',
-        variant: 'error' as const,
-        color: 'text-default-error',
-      },
-    };
-
-    const severityInfo = severityMap[severity as keyof typeof severityMap] || {
-      label: severity,
-      variant: 'primary' as const,
-      color: 'text-gray-600',
-    };
-    return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;
-  };
-
-  const getProgressColor = (percentage: number) => {
-    if (percentage >= 80) return 'bg-default-success';
-    if (percentage >= 60) return 'bg-default-warning';
-    if (percentage >= 40) return 'bg-default-default';
-    return 'bg-default-error';
-  };
+  // getProgressColor function not used
+  // const getProgressColor = (percentage: number) => {
+  //   if (percentage >= 80) return 'bg-default-success';
+  //   if (percentage >= 60) return 'bg-default-warning';
+  //   if (percentage >= 40) return 'bg-default-default';
+  //   return 'bg-default-error';
+  // };
 
   if (loading) {
     return (

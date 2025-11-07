@@ -41,15 +41,15 @@ interface Approval {
 // جلب الموافقات من قاعدة البيانات
 // Load approvals from database
 // const loadApprovalsFromDB = async (): Promise<Approval[]> => {
-  try {
-    const response = await fetch('/api/approvals');
-    if (!response.ok) throw new Error('Failed to load approvals');
-    return await response.json();
-  } catch (error) {
-    console.error('Error loading approvals:', error);
-    return [];
-  }
-};
+//   try {
+//     const response = await fetch('/api/approvals');
+//     if (!response.ok) throw new Error('Failed to load approvals');
+//     return await response.json();
+//   } catch (error) {
+//     console.error('Error loading approvals:', error);
+//     return [];
+//   }
+// };
 
 // Legacy mock data - replaced with database query
 const mockApprovals: Approval[] = [
