@@ -66,12 +66,12 @@ interface TherapyGoal {
 }
 
 const TherapyPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [sessions, setSessions] = useState<TherapySession[]>([]);
   const [goals, setGoals] = useState<TherapyGoal[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');

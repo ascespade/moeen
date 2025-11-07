@@ -12,7 +12,7 @@ import {
   Target,
   TrendingUp,
   Plus,
-  Search,
+  // Search,
   MoreVertical,
   Edit,
   Eye,
@@ -72,12 +72,12 @@ interface TrainingProgress {
 }
 
 const TrainingPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [programs, setPrograms] = useState<TrainingProgram[]>([]);
   const [progress, setProgress] = useState<TrainingProgress[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [filterLevel, setFilterLevel] = useState<string>('all');

@@ -46,7 +46,7 @@ export default function LoginPage() {
     }
   };
 
-  const handleQuickLogin = async (testEmail: string, testPassword: string, role: string) => {
+  const handleQuickLogin = async (testEmail: string, testPassword: string, _role: string) => {
     setEmail(testEmail);
     setPassword(testPassword);
     setError(null);

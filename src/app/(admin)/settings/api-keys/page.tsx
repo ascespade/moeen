@@ -47,9 +47,9 @@ interface ApiKeyConfig {
 }
 
 const APIKeysSettingsPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [apiKeys, setApiKeys] = useState<ApiKeyConfig[]>([]);
   const [visibleKeys, setVisibleKeys] = useState<Set<string>>(new Set());
@@ -194,7 +194,7 @@ const APIKeysSettingsPage: React.FC = () => {
   const loadApiKeys = async () => {
     try {
       setLoading(true);
-      const supabase = createClient();
+      const _supabase = createClient();
 
       // Load from database or localStorage
       const stored = localStorage.getItem('api_keys_config');
@@ -396,7 +396,7 @@ const APIKeysSettingsPage: React.FC = () => {
                 {keys.map(keyConfig => {
                   const Sun = keyConfig.icon;
                   const isVisible = visibleKeys.has(keyConfig.id);
-                  const displayValue = isVisible
+                  const _displayValue = isVisible
                     ? keyConfig.key_value
                     : '••••••••••••••••';
 

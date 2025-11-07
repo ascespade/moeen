@@ -1,7 +1,6 @@
 'use client';
 
-import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
-import { ADMIN_PAGES } from '@/lib/admin/page-config';
+// AdminPageWrapper and ADMIN_PAGES not used
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import {
@@ -35,7 +34,7 @@ interface TestResult {
   details?: any;
 }
 
-type PartialTestResult = Partial<TestResult> & Pick<TestResult, 'id' | 'name' | 'category'>;
+// type PartialTestResult = Partial<TestResult> & Pick<TestResult, 'id' | 'name' | 'category'>;
 
 const ALL_TESTS: Omit<
   TestResult,
@@ -449,8 +448,8 @@ export default function CRUDTestPage() {
 
   const passedTests = tests.filter(t => t.status === 'success').length;
   const failedTests = tests.filter(t => t.status === 'error').length;
-  const runningTests = tests.filter(t => t.status === 'running').length;
-  const pendingTests = tests.filter(t => t.status === 'pending').length;
+  const _runningTests = tests.filter(t => t.status === 'running').length;
+  const _pendingTests = tests.filter(t => t.status === 'pending').length;
 
   return (
     <div className='min-h-screen bg-[var(--background)] p-6'>
@@ -621,7 +620,7 @@ export default function CRUDTestPage() {
           </CardHeader>
           <CardContent>
             <div className='space-y-3'>
-              {filteredTests.map((test, index) => (
+              {filteredTests.map((test) => (
                 <div
                   key={test.id}
                   className='flex items-start justify-between p-4 border border-[var(--brand-border)] rounded-lg hover:bg-[var(--brand-surface)] transition-colors'

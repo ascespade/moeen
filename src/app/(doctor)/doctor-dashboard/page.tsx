@@ -4,8 +4,8 @@ import React from 'react';
 import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import {
   DashboardLayout,
-  DashboardHeader,
-  DashboardSidebar,
+  // DashboardHeader,
+  // DashboardSidebar,
   DashboardContent,
 } from '@/components/dashboard/layouts/DashboardLayout';
 import DoctorDashboard from '@/components/dashboard/widgets/DoctorDashboard';

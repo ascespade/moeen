@@ -1,22 +1,22 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-import { ROUTES } from '@/constants/routes';
+// import { ROUTES } from '@/constants/routes';
 
 import { createClient } from '@/lib/supabase/client';
-import { realDB } from '@/lib/supabase-real';
+// import { realDB } from '@/lib/supabase-real';
 
-import Image from 'next/image';
+// import Image from 'next/image';
 
 import Link from 'next/link';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 
-import { Button } from '@/components/ui/Button';
+// import { Button } from '@/components/ui/Button';
 
 import { Badge } from '@/components/ui/Badge';
 
-import { Input } from '@/components/ui/Input';
+// import { Input } from '@/components/ui/Input';
 
 import {
   Search,
@@ -69,11 +69,11 @@ export default function PatientsPage() {
   const [filterStatus, setFilterStatus] = useState<
     'all' | 'active' | 'inactive' | 'blocked'
   >('all');
-  const [filterCondition, setFilterCondition] = useState<string>('all');
-  const [filterSeverity, setFilterSeverity] = useState<string>('all');
-  const [selectedPatient, setSelectedPatient] =
+  const [, setFilterCondition] = useState<string>('all');
+  const [, setFilterSeverity] = useState<string>('all');
+  const [, setSelectedPatient] =
     useState<PatientWithStats | null>(null);
-  const [showDetails, setShowDetails] = useState(false);
+  const [, setShowDetails] = useState(false);
 
   // Load patients from database
   useEffect(() => {
@@ -166,7 +166,8 @@ export default function PatientsPage() {
     }
   };
 
-  const getStatusBadge = (status: string) => {
+  // getStatusBadge function not used
+  // const getStatusBadge = (status: string) => {
     const statusMap = {
       active: {
         label: 'نشط',

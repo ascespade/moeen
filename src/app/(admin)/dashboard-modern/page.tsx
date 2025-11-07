@@ -94,7 +94,7 @@ export default function ModernAdminDashboard() {
     'today' | 'week' | 'month' | 'year'
   >('month');
 
-  const [isGridEditable, setIsGridEditable] = useState(false);
+  const [isGridEditable] = useState(false);
   const localizedNumber = useLocalizedNumber();
 
   // Use the new hook for real data

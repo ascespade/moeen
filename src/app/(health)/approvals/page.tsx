@@ -40,7 +40,7 @@ interface Approval {
 
 // جلب الموافقات من قاعدة البيانات
 // Load approvals from database
-const loadApprovalsFromDB = async (): Promise<Approval[]> => {
+// const loadApprovalsFromDB = async (): Promise<Approval[]> => {
   try {
     const response = await fetch('/api/approvals');
     if (!response.ok) throw new Error('Failed to load approvals');
@@ -191,7 +191,7 @@ export default function ApprovalsPage() {
   const [typeFilter, setTypeFilter] = useState<'all' | Approval['requestType']>(
     'all'
   );
-  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [, setShowCreateModal] = useState(false);
 
   const loadApprovals = useCallback(async () => {
     try {
