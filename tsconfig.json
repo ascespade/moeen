@@ -44,6 +44,7 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
+    "src/app/**",
     "node_modules",
     ".next",
     "temp_complex",
