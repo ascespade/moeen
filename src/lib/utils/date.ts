@@ -6,7 +6,7 @@
 
 import { format, addDays, addMonths, addYears, isBefore, isAfter, differenceInDays, differenceInHours } from 'date-fns';
 import { ar, enUS } from 'date-fns/locale';
-import { _CONFIG } from '../constants/config';
+import { CONFIG } from '../constants/config';
 
 /**
  * Get current date
