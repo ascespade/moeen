@@ -17,6 +17,8 @@ export default [
       '.eslintrc.*',
       '.prettierrc.js',
       'tests/generated/**',
+      'tests/**',
+      'scripts/**',
       'node_modules/**',
       '.next/**',
       'out/**',
@@ -80,6 +82,10 @@ export default [
         // TextEncoder/Decoder
         TextEncoder: 'readonly',
         TextDecoder: 'readonly',
+        // Common web globals used in some src files
+        atob: 'readonly',
+        btoa: 'readonly',
+        crypto: 'readonly',
       },
     },
     plugins: {
@@ -108,7 +114,11 @@ export default [
       'react/jsx-uses-react': 'off', // Not needed in Next.js 13+
       '@typescript-eslint/no-unused-vars': [
         'warn',
-        { argsIgnorePattern: '^_', varsIgnorePattern: '^_', ignoreRestSiblings: true },
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
       ],
       '@typescript-eslint/no-explicit-any': 'off',
     },
@@ -197,7 +207,7 @@ export default [
     },
     plugins: {
       '@typescript-eslint': typescript,
-      react: react,
+      react,
       'react-hooks': reactHooks,
     },
     rules: {
