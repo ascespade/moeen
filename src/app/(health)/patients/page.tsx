@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-// import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/constants/routes';
 
 import { createClient } from '@/lib/supabase/client';
 // import { realDB } from '@/lib/supabase-real';
@@ -14,7 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 
 // import { Button } from '@/components/ui/Button';
 
-import { Badge } from '@/components/ui/Badge';
+// import { Badge } from '@/components/ui/Badge';
 
 // import { Input } from '@/components/ui/Input';
 

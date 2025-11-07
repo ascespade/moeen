@@ -22,7 +22,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getRolePermissionsSync(
+    const userPermissions = await PermissionManager.getRolePermissions(
       authResult.user.role
     );
 
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getRolePermissionsSync(
+    const userPermissions = await PermissionManager.getRolePermissions(
       authResult.user.role
     );
 
