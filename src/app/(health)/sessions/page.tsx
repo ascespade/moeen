@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 // import { ROUTES } from '@/constants/routes';
 import { realDB } from '@/lib/supabase-real';
 
-import Image from 'next/image';
 import { logger } from '@/lib/utils/logger';
 
 interface Session {
@@ -35,36 +34,39 @@ export default function SessionsPage() {
 
         // Transform data to match our interface
         const transformedSessions: Session[] = sessionsData.map(
-          (session: unknown) => ({
-            id: session.id,
-            patientName: session.patients?.users?.name || 'غير محدد',
-            doctorName: session.doctors?.users?.name || 'غير محدد',
-            type: session.type || 'علاج',
-            startTime: session.session_time || '00:00',
-            endTime: session.session_time
-              ? new Date(
-                  new Date(`2000-01-01T${session.session_time}`).getTime() +
-                    (session.duration_minutes || 60) * 60000
-                )
-                  .toTimeString()
-                  .slice(0, 5)
-              : '00:00',
-            status:
-              session.status === 'completed'
-                ? 'completed'
-                : session.status === 'in_progress'
-                  ? 'in-progress'
-                  : session.status === 'cancelled'
-                    ? 'cancelled'
-                    : 'upcoming',
-            notes: session.notes || '',
-          })
+          (session: unknown) => {
+            const s = session as any;
+            return {
+              id: s?.id ?? '',
+              patientName: s?.patients?.users?.name ?? 'غير محدد',
+              doctorName: s?.doctors?.users?.name ?? 'غير محدد',
+              type: s?.type ?? 'علاج',
+              startTime: s?.session_time ?? '00:00',
+              endTime: s?.session_time
+                ? new Date(
+                    new Date(`2000-01-01T${s?.session_time}`).getTime() +
+                      (s?.duration_minutes ?? 60) * 60000
+                  )
+                    .toTimeString()
+                    .slice(0, 5)
+                : '00:00',
+              status:
+                s?.status === 'completed'
+                  ? 'completed'
+                  : s?.status === 'in_progress'
+                    ? 'in-progress'
+                    : s?.status === 'cancelled'
+                      ? 'cancelled'
+                      : 'upcoming',
+              notes: s?.notes ?? '',
+            };
+          }
         );
 
         setSessions(transformedSessions);
       } catch (err) {
         setError('فشل في تحميل بيانات الجلسات');
-        logger.error('Error loading sessions:', { error: err })
+        logger.error('Error loading sessions:', { error: err });
       } finally {
         setLoading(false);
       }
@@ -125,11 +127,18 @@ export default function SessionsPage() {
         <div className='text-center'>
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
-          <button 
-            onClick={() => { window.location.reload() }} 
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.reload(); } }}
+          <button
+            onClick={() => {
+              window.location.reload();
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.location.reload();
+              }
+            }}
             className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
-            aria-label="إعادة المحاولة"
+            aria-label='إعادة المحاولة'
           >
             إعادة المحاولة
           </button>
@@ -140,7 +149,7 @@ export default function SessionsPage() {
 
   return (
     <div className='min-h-screen bg-[var(--default-surface)]'>
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         {/* Page Header */}
         <div className='mb-8 flex items-center justify-between'>
           <div>
@@ -162,19 +171,33 @@ export default function SessionsPage() {
               <option value='cancelled'>ملغية</option>
             </select>
             <div className='flex rounded-lg border border-gray-300'>
-              <button 
-                onClick={() => { setViewMode('cards') }} 
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setViewMode('cards'); } }}
+              <button
+                onClick={() => {
+                  setViewMode('cards');
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setViewMode('cards');
+                  }
+                }}
                 className={`px-3 py-2 text-sm ${viewMode === 'cards' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
-                aria-label="عرض البطاقات"
+                aria-label='عرض البطاقات'
               >
                 بطاقات
               </button>
-              <button 
-                onClick={() => { setViewMode('table') }} 
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setViewMode('table'); } }}
+              <button
+                onClick={() => {
+                  setViewMode('table');
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setViewMode('table');
+                  }
+                }}
                 className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
-                aria-label="عرض الجدول"
+                aria-label='عرض الجدول'
               >
                 جدول
               </button>
@@ -262,21 +285,33 @@ export default function SessionsPage() {
 
                 <div className='flex gap-2'>
                   {session.status === 'upcoming' && (
-                    <button className='btn-default flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="بدء الجلسة">
+                    <button
+                      className='btn-default flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                      aria-label='بدء الجلسة'
+                    >
                       بدء الجلسة
                     </button>
                   )}
                   {session.status === 'in-progress' && (
-                    <button className='flex-1 rounded-lg bg-default-success py-2 text-sm text-white transition-colors hover:bg-green-700' aria-label="إنهاء الجلسة">
+                    <button
+                      className='flex-1 rounded-lg bg-default-success py-2 text-sm text-white transition-colors hover:bg-green-700'
+                      aria-label='إنهاء الجلسة'
+                    >
                       إنهاء الجلسة
                     </button>
                   )}
                   {session.status === 'completed' && (
-                    <button className='flex-1 rounded-lg border border-gray-300 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="عرض التفاصيل">
+                    <button
+                      className='flex-1 rounded-lg border border-gray-300 py-2 text-sm text-gray-700 transition-colors hover:bg-surface'
+                      aria-label='عرض التفاصيل'
+                    >
                       عرض التفاصيل
                     </button>
                   )}
-                  <button className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface' aria-label="تعديل">
+                  <button
+                    className='rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-surface'
+                    aria-label='تعديل'
+                  >
                     تعديل
                   </button>
                 </div>
@@ -345,16 +380,25 @@ export default function SessionsPage() {
                       <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                         <div className='flex gap-2'>
                           {session.status === 'upcoming' && (
-                            <button className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]' aria-label="بدء">
+                            <button
+                              className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
+                              aria-label='بدء'
+                            >
                               بدء
                             </button>
                           )}
                           {session.status === 'in-progress' && (
-                            <button className='text-default-success hover:text-green-700' aria-label="إنهاء">
+                            <button
+                              className='text-default-success hover:text-green-700'
+                              aria-label='إنهاء'
+                            >
                               إنهاء
                             </button>
                           )}
-                          <button className='text-gray-600 hover:text-gray-900' aria-label="تعديل">
+                          <button
+                            className='text-gray-600 hover:text-gray-900'
+                            aria-label='تعديل'
+                          >
                             تعديل
                           </button>
                         </div>
