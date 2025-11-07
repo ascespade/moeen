@@ -642,8 +642,7 @@ export default function DoctorsPage() {
             </p>
           </div>
           <div className='flex items-center gap-4'>
-            {hasPermission('doctors:create') && (
-              <Dialog
+            <Dialog
                 open={isCreateDialogOpen}
                 onOpenChange={setIsCreateDialogOpen}
               >
@@ -734,7 +733,6 @@ export default function DoctorsPage() {
                   </div>
                 </DialogContent>
               </Dialog>
-            )}
             <Button variant='outline'>
               <Download className='h-4 w-4 mr-2' />
               تصدير
@@ -998,18 +996,14 @@ export default function DoctorsPage() {
                             <Eye className='h-4 w-4 mr-2' />
                             عرض الملف
                           </DropdownMenuItem>
-                          {hasPermission('doctors:edit') && (
-                            <DropdownMenuItem>
-                              <Edit className='h-4 w-4 mr-2' />
-                              تعديل
-                            </DropdownMenuItem>
-                          )}
-                          {hasPermission('doctors:schedules') && (
-                            <DropdownMenuItem>
-                              <Calendar className='h-4 w-4 mr-2' />
-                              الجدولة
-                            </DropdownMenuItem>
-                          )}
+                          <DropdownMenuItem>
+                            <Edit className='h-4 w-4 mr-2' />
+                            تعديل
+                          </DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <Calendar className='h-4 w-4 mr-2' />
+                            الجدولة
+                          </DropdownMenuItem>
                           <DropdownMenuItem>
                             <Users className='h-4 w-4 mr-2' />
                             المرضى
@@ -1023,15 +1017,13 @@ export default function DoctorsPage() {
                             <Mail className='h-4 w-4 mr-2' />
                             إرسال رسالة
                           </DropdownMenuItem>
-                          {hasPermission('doctors:delete') && (
-                            <>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem className='text-destructive'>
-                                <Trash2 className='h-4 w-4 mr-2' />
-                                حذف
-                              </DropdownMenuItem>
-                            </>
-                          )}
+                          <>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className='text-destructive'>
+                              <Trash2 className='h-4 w-4 mr-2' />
+                              حذف
+                            </DropdownMenuItem>
+                          </>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
