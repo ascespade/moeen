@@ -5,7 +5,7 @@ import { AdminCard } from '@/components/admin/ui';
 // import { _Switch } from '@/components/ui/_Switch';
 import { Label } from '@/components/ui/Label';
 import { Textarea } from '@/components/ui/Textarea';
-import { Bell, Mail, Smartphone } from 'lucide-react';
+import { Mail, Smartphone } from 'lucide-react';
 
 interface NotificationConfig {
   email: {

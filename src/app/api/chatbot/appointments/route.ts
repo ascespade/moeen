@@ -264,7 +264,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function sendWhatsAppConfirmation(_phone: string, appointment: any) {
+async function sendWhatsAppConfirmation(_phone: string, _appointment: any) {
   // هذا مثال لإرسال رسالة WhatsApp
   // في التطبيق الحقيقي، ستحتاج إلى تكامل مع WhatsApp Business API
 

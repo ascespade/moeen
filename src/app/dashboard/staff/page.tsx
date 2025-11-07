@@ -54,7 +54,7 @@ interface StaffData {
 
 export default function StaffDashboard() {
   const { t } = useT();
-  const { settings } = useTheme();
+  const { } = useTheme();
   // const _theme = settings.mode;
   const [staffData, setStaffData] = useState<StaffData | null>(null);
   const [isLoading, setIsLoading] = useState(true);

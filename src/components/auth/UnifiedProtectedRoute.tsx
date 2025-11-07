@@ -26,10 +26,10 @@ export default function UnifiedProtectedRoute({
   requiredPermissions,
   fallback,
 }: UnifiedProtectedRouteProps) {
-  const { user, isAuthenticated, isLoading, _hasPermission, hasAnyPermission } =
+  const { user, isAuthenticated, isLoading, hasAnyPermission } =
     useUnifiedAuth();
   const router = useRouter();
-  const _pathname = usePathname();
+  // const _pathname = usePathname();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [hasChecked, setHasChecked] = useState(false);
 

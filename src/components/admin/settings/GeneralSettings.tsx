@@ -92,7 +92,7 @@ const currencies = [
   { value: 'USD', label: 'دولار أمريكي (USD)', symbol: '$' },
 ];
 
-export default function GeneralSettings({ onChange, onSave }: GeneralSettingsProps) {
+export default function GeneralSettings({ onChange }: GeneralSettingsProps) {
   const [config, setConfig] = useState<GeneralConfig>(defaultConfig);
   const [loading, setLoading] = useState(true);
 
@@ -311,7 +311,7 @@ export default function GeneralSettings({ onChange, onSave }: GeneralSettingsPro
             <div className='grid grid-cols-2 md:grid-cols-4 gap-3'>
               {weekDays.map(day => (
                 <button key={day.id}
-                  onClick={() => { toggleWorkDay(day.id) }} aria-label={`${day.enabled ? 'تعطيل' : 'تفعيل'} يوم ${day.name}`}
+                  onClick={() => { toggleWorkDay(day.id) }} aria-label={`${config.businessHours.days.includes(day.id) ? 'تعطيل' : 'تفعيل'} يوم ${day.label}`}
                   className={cn(
                     'p-3 rounded-lg border transition-all duration-200 text-sm font-medium',
                     config.businessHours.days.includes(day.id)

@@ -29,7 +29,7 @@ import {
   encryptApiKey,
   // decryptApiKey,
 } from '@/lib/encryption';
-import { createClient } from '@/lib/supabase/client';
+// import { createClient } from '@/lib/supabase/client';
 
 interface ApiKeyConfig {
   id: string;

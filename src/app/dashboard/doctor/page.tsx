@@ -44,7 +44,7 @@ interface DoctorData {
 
 export default function DoctorDashboard() {
   const { t } = useT();
-  const { settings } = useTheme();
+  const { } = useTheme();
   // const _theme = settings.mode;
   const [doctorData, setDoctorData] = useState<DoctorData | null>(null);
   const [isLoading, setIsLoading] = useState(true);

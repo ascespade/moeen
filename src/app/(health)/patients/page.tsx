@@ -11,10 +11,7 @@ import { createClient } from '@/lib/supabase/client';
 import Link from 'next/link';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import {
-  Search,
-  Filter,
-} from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 
 interface Patient {
   id: string;
