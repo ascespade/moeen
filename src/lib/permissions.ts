@@ -194,6 +194,11 @@ export const ROLE_PERMISSIONS: Record<UserRole, RolePermission[]> = {
     { resource: 'messages', actions: ['create', 'read'] },
     { resource: 'profile', actions: ['read', 'update'] },
   ],
+
+  demo: [
+    { resource: 'profile', actions: ['read'] },
+    { resource: 'chatbot', actions: ['create', 'read'] },
+  ],
 };
 
 /**
@@ -209,6 +214,7 @@ export const DEFAULT_ROUTES: Record<UserRole, string> = {
   therapist: '/doctor/doctor-dashboard',
   nurse: '/staff/staff-dashboard',
   agent: '/admin/dashboard',
+  demo: '/patient/patient-dashboard',
 };
 
 /**
@@ -330,7 +336,7 @@ export class PermissionManager {
    * Check if role can access a specific route
    */
   static canAccessRoute(role: UserRole, route: string): boolean {
-    const _defaultRoute = DEFAULT_ROUTES[role];
+    // const _defaultRoute = DEFAULT_ROUTES[role];
 
     // Admin can access all routes
     if (role === 'admin') return true;
@@ -346,6 +352,7 @@ export class PermissionManager {
       therapist: ['/doctor', '/health'],
       nurse: ['/staff', '/health'],
       agent: ['/admin', '/chatbot'],
+      demo: ['/patient', '/health'],
     };
 
     const allowedRoutes = roleRoutes[role] || [];
@@ -405,6 +412,7 @@ export function getRoleLabel(role: UserRole, lang: 'en' | 'ar' = 'ar'): string {
     therapist: { en: 'Therapist', ar: 'معالج' },
     nurse: { en: 'Nurse', ar: 'ممرض/ممرضة' },
     agent: { en: 'Agent', ar: 'وكيل' },
+    demo: { en: 'Demo', ar: 'تجريبي' },
   };
 
   return labels[role]?.[lang] || role;
