@@ -21,7 +21,7 @@ export default function LanguageSwitcher({
   const [language, setLanguage] = useState<'ar' | 'en'>('ar');
   const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { _t } = useI18n(language);
+  const { } = useI18n(language);
 
   // Only run on client-side
   useEffect(() => {

@@ -3,7 +3,7 @@
  */
 
 import { customAuthHub } from '@/lib/auth/CustomAuthHub';
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {

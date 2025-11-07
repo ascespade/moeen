@@ -6,7 +6,7 @@ import {
   FileText,
   Clock,
   CheckCircle,
-  AlertCircle,
+  // AlertCircle,
   Stethoscope,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -45,7 +45,7 @@ interface DoctorData {
 export default function DoctorDashboard() {
   const { t } = useT();
   const { settings } = useTheme();
-  const _theme = settings.mode;
+  // const _theme = settings.mode;
   const [doctorData, setDoctorData] = useState<DoctorData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

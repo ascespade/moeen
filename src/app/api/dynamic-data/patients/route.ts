@@ -26,7 +26,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const gender = searchParams.get('gender');
     const ageRange = searchParams.get('age_range'); // e.g., "0-18", "18-65", "65+"
 
-    let _query;
+    // let _query;
 
     if (includeUsers) {
       // استخدام الدالة الذكية التي تجلب المرضى مع معلومات المستخدمين

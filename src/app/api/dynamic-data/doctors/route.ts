@@ -25,7 +25,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const specialization = searchParams.get('specialization');
     const includeUsers = searchParams.get('include_users') === 'true';
 
-    let _query;
+    // let _query;
 
     if (includeUsers) {
       // استخدام الدالة الذكية التي تجلب الأطباء مع معلومات المستخدمين

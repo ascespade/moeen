@@ -263,7 +263,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 async function getSystemHealth() {
   try {
     // Check if table exists first
-    const { _data, error } = await supabase
+    const { error } = await supabase
       .from('system_health')
       .select('id')
       .limit(1);
@@ -297,7 +297,7 @@ async function getSystemHealth() {
 async function getSystemMetrics() {
   try {
     // Check if table exists first
-    const { _data, error } = await supabase
+    const { error } = await supabase
       .from('system_metrics')
       .select('id')
       .limit(1);

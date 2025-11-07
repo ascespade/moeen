@@ -3,7 +3,7 @@
 import {
   Table,
   TableBody,
-  _TableCell,
+  // _TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -133,7 +133,7 @@ export default function AdminTable({
                     <Button
                       key={page}
                       variant={
-                        pagination.currentPage === page ? 'default' : 'outline'
+                        pagination.currentPage === page ? 'primary' : 'outline'
                       }
                       size='sm'
                       onClick={() => pagination.onPageChange(page)}

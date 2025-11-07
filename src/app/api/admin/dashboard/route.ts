@@ -94,61 +94,61 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _getActivityTitle(action: string, entityType: string): string {
-  const titles: Record<string, Record<string, string>> = {
-    create: {
-      appointment: 'موعد جديد',
-      patient: 'مريض جديد',
-      claim: 'مطالبة تأمين',
-      payment: 'دفعة جديدة',
-      user: 'موظف جديد',
-    },
-    update: {
-      appointment: 'تحديث موعد',
-      patient: 'تحديث بيانات مريض',
-      claim: 'تحديث مطالبة',
-      payment: 'تحديث دفعة',
-      user: 'تحديث بيانات موظف',
-    },
-    delete: {
-      appointment: 'حذف موعد',
-      patient: 'حذف مريض',
-      claim: 'حذف مطالبة',
-      payment: 'حذف دفعة',
-      user: 'حذف موظف',
-    },
-  };
-
-  return titles[action]?.[entityType] || 'نشاط جديد';
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _getActivityStatus(action: string): string {
-  const statusMap: Record<string, string> = {
-    create: 'success',
-    update: 'secondary',
-    delete: 'error',
-    approve: 'success',
-    reject: 'error',
-  };
-
-  return statusMap[action] || 'secondary';
-}
+// function _getActivityTitle(action: string, entityType: string): string {
+//   const titles: Record<string, Record<string, string>> = {
+//     create: {
+//       appointment: 'موعد جديد',
+//       patient: 'مريض جديد',
+//       claim: 'مطالبة تأمين',
+//       payment: 'دفعة جديدة',
+//       user: 'موظف جديد',
+//     },
+//     update: {
+//       appointment: 'تحديث موعد',
+//       patient: 'تحديث بيانات مريض',
+//       claim: 'تحديث مطالبة',
+//       payment: 'تحديث دفعة',
+//       user: 'تحديث بيانات موظف',
+//     },
+//     delete: {
+//       appointment: 'حذف موعد',
+//       patient: 'حذف مريض',
+//       claim: 'حذف مطالبة',
+//       payment: 'حذف دفعة',
+//       user: 'حذف موظف',
+//     },
+//   };
+//
+//   return titles[action]?.[entityType] || 'نشاط جديد';
+// }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _formatTimestamp(timestamp: string): string {
-  const now = new Date();
-  const activityTime = new Date(timestamp);
-  const diffInMinutes = Math.floor(
-    (now.getTime() - activityTime.getTime()) / (1000 * 60)
-  );
+// function _getActivityStatus(action: string): string {
+//   const statusMap: Record<string, string> = {
+//     create: 'success',
+//     update: 'secondary',
+//     delete: 'error',
+//     approve: 'success',
+//     reject: 'error',
+//   };
+//
+//   return statusMap[action] || 'secondary';
+// }
 
-  if (diffInMinutes < 1) return 'الآن';
-  if (diffInMinutes < 60) return `منذ ${diffInMinutes} دقيقة`;
-
-  const diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) return `منذ ${diffInHours} ساعة`;
-
-  const diffInDays = Math.floor(diffInHours / 24);
-  return `منذ ${diffInDays} يوم`;
-}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// function _formatTimestamp(timestamp: string): string {
+//   const now = new Date();
+//   const activityTime = new Date(timestamp);
+//   const diffInMinutes = Math.floor(
+//     (now.getTime() - activityTime.getTime()) / (1000 * 60)
+//   );
+//
+//   if (diffInMinutes < 1) return 'الآن';
+//   if (diffInMinutes < 60) return `منذ ${diffInMinutes} دقيقة`;
+//
+//   const diffInHours = Math.floor(diffInMinutes / 60);
+//   if (diffInHours < 24) return `منذ ${diffInHours} ساعة`;
+//
+//   const diffInDays = Math.floor(diffInHours / 24);
+//   return `منذ ${diffInDays} يوم`;
+// }

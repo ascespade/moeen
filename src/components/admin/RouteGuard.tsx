@@ -17,7 +17,7 @@ export default function RouteGuard({
   children,
   requiredPermissions = [],
   requiredRoles = [],
-  _fallbackPath = '/unauthorized',
+  // _fallbackPath = '/unauthorized',
 }: RouteGuardProps) {
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
   const [userRole, setUserRole] = useState<string>('');

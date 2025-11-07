@@ -268,7 +268,7 @@ async function sendWhatsAppConfirmation(_phone: string, appointment: any) {
   // هذا مثال لإرسال رسالة WhatsApp
   // في التطبيق الحقيقي، ستحتاج إلى تكامل مع WhatsApp Business API
 
-  const _message = `تم حجز موعدك بنجاح!
+  // const _message = `تم حجز موعدك بنجاح!
 
 التفاصيل:
 👨‍⚕️ الطبيب: ${appointment.doctors.first_name} ${appointment.doctors.last_name}

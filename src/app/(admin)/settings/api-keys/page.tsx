@@ -194,7 +194,7 @@ const APIKeysSettingsPage: React.FC = () => {
   const loadApiKeys = async () => {
     try {
       setLoading(true);
-      const _supabase = createClient();
+      // const _supabase = createClient();
 
       // Load from database or localStorage
       const stored = localStorage.getItem('api_keys_config');

@@ -23,7 +23,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '50');
     const action = searchParams.get('action');
-    const _success = searchParams.get('success');
+    // const _success = searchParams.get('success');
 
     let query = supabase
       .from('audit_logs')
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       query = query.eq('action', action);
     }
 
-    const { data: events, error, _count } = await query;
+    const { data: events, error } = await query;
 
     if (error) {
       console.error('Error fetching security events:', error);

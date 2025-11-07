@@ -6,8 +6,8 @@ import {
   CreditCard,
   FileText,
   Clock,
-  CheckCircle,
-  AlertCircle,
+  // CheckCircle,
+  // AlertCircle,
   Upload,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -55,7 +55,7 @@ interface StaffData {
 export default function StaffDashboard() {
   const { t } = useT();
   const { settings } = useTheme();
-  const _theme = settings.mode;
+  // const _theme = settings.mode;
   const [staffData, setStaffData] = useState<StaffData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 

@@ -6,8 +6,8 @@ import {
   Clock,
   User,
   Phone,
-  _Mail,
-  _MapPin,
+  // _Mail,
+  // _MapPin,
   Plus,
   Edit,
   Trash2,
@@ -195,7 +195,7 @@ const AppointmentManager: React.FC = () => {
     setShowAddForm(false);
   };
 
-  const _handleUpdateAppointment = async (
+  // const _handleUpdateAppointment = async (
     id: string,
     updates: Partial<Appointment>
   ) => {

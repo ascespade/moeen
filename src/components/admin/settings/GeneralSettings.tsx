@@ -130,7 +130,7 @@ export default function GeneralSettings({ onChange, onSave }: GeneralSettingsPro
     onChange();
   };
 
-  const _saveSettings = async () => {
+  // const _saveSettings = async () => {
     if (onSave) {
       await onSave(config);
     } else {
