@@ -142,9 +142,8 @@ export function checkRoutePermission(
   }
 
   // Check permissions
-  const hasRequiredPermissions = PermissionManager.hasAnyPermission(
-    userPermissions,
-    route.permissions
+  const hasRequiredPermissions = route.permissions.some(permission =>
+    PermissionManager.hasPermission(userPermissions, permission)
   );
 
   if (!hasRequiredPermissions) {

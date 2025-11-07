@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, _useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { AdminCard } from '@/components/admin/ui';
 import { _Switch } from '@/components/ui/_Switch';
 import { Label } from '@/components/ui/Label';

@@ -144,7 +144,7 @@ export const revalidate = 60;
 export async function GET(_request: NextRequest) {
   try {
     // Optional: authorize user (but don't block if not authenticated for GET)
-    const { _user } = await authorize(_request).catch(() => ({
+    const { user: _user } = await authorize(_request).catch(() => ({
       user: null,
       error: null,
     }));
