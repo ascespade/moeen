@@ -520,20 +520,20 @@ function NotificationsPageContent() {
 
   // formatDate function not used
   // const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ar-SA', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
+  //   return new Date(dateString).toLocaleDateString('ar-SA', {
+  //     year: 'numeric',
+  //     month: 'short',
+  //     day: 'numeric',
+  //   });
+  // };
 
   // formatTime function not used
   // const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('ar-SA', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
+  //   return new Date(dateString).toLocaleTimeString('ar-SA', {
+  //     hour: '2-digit',
+  //     minute: '2-digit',
+  //   });
+  // };
 
   const handleViewNotification = (notification: Notification) => {
     setSelectedNotification(notification);

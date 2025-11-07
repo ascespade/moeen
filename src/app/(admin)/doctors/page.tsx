@@ -603,25 +603,25 @@ export default function DoctorsPage() {
 
   // getGenderBadge function not used
   // const getGenderBadge = (gender: string) => {
-    return gender === 'male' ? (
-      <Badge variant='outline' className='bg-blue-100 text-blue-800'>
-        ذكر
-      </Badge>
-    ) : (
-      <Badge variant='outline' className='bg-pink-100 text-pink-800'>
-        أنثى
-      </Badge>
-    );
-  };
+  //   return gender === 'male' ? (
+  //     <Badge variant='outline' className='bg-blue-100 text-blue-800'>
+  //       ذكر
+  //     </Badge>
+  //   ) : (
+  //     <Badge variant='outline' className='bg-pink-100 text-pink-800'>
+  //       أنثى
+  //     </Badge>
+  //   );
+  // };
 
   // formatDate function not used
   // const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ar-SA', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
+  //   return new Date(dateString).toLocaleDateString('ar-SA', {
+  //     year: 'numeric',
+  //     month: 'short',
+  //     day: 'numeric',
+  //   });
+  // };
 
   const calculateAge = (dateOfBirth: string) => {
     const today = new Date();

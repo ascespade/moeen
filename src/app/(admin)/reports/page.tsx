@@ -473,11 +473,11 @@ export default function ReportsPage() {
 
   // formatTime function not used
   // const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('ar-SA', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
+  //   return new Date(dateString).toLocaleTimeString('ar-SA', {
+  //     hour: '2-digit',
+  //     minute: '2-digit',
+  //   });
+  // };
 
   const handleViewReport = (report: Report) => {
     setSelectedReport(report);
