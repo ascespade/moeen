@@ -87,21 +87,21 @@ export default function CRMActivitiesPage() {
 
   // getTypeText function not used
   // const getTypeText = (type: Activity['type']) => {
-    switch (type) {
-      case 'call':
-        return 'مكالمة';
-      case 'meeting':
-        return 'اجتماع';
-      case 'email':
-        return 'بريد إلكتروني';
-      case 'task':
-        return 'مهمة';
-      case 'note':
-        return 'ملاحظة';
-      default:
-        return 'نشاط';
-    }
-  };
+  //   switch (type) {
+  //     case 'call':
+  //       return 'مكالمة';
+  //     case 'meeting':
+  //       return 'اجتماع';
+  //     case 'email':
+  //       return 'بريد إلكتروني';
+  //     case 'task':
+  //       return 'مهمة';
+  //     case 'note':
+  //       return 'ملاحظة';
+  //     default:
+  //       return 'نشاط';
+  //   }
+  // };
 
   const getStatusColor = (status: Activity['status']) => {
     switch (status) {
