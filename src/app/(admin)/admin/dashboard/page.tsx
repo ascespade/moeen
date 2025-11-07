@@ -2,14 +2,14 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { AdminCard, AdminStatsCard, AdminHeader } from '@/components/admin/ui';
+import { AdminCard, AdminHeader, AdminStatsCard } from '@/components/admin/ui';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
-import { cn } from '@/lib/utils';
-import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
+import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
+import { cn } from '@/lib/utils';
 import {
   Activity,
   AlertTriangle,

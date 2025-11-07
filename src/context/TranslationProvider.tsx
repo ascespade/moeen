@@ -1,5 +1,5 @@
 'use client';
-import logger from '@/lib/monitoring/logger';
+// import logger from '@/lib/monitoring/logger';
 
 import React, {
   createContext,
@@ -46,7 +46,7 @@ export function TranslationProvider({
 
       if (data) {
         const translationsMap = data.reduce(
-          (acc, item) => {
+          (acc: Record<string, string>, item: any) => {
             const fullKey = item.namespace
               ? `${item.namespace}.${item.key}`
               : item.key;

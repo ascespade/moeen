@@ -26,7 +26,7 @@ export function useTranslation(namespace: string = 'common') {
 
       if (data) {
         const translationsMap = data.reduce(
-          (acc, item) => {
+          (acc: Record<string, string>, item: any) => {
             acc[item.key] = item.value;
             return acc;
           },

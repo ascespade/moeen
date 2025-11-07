@@ -12,7 +12,7 @@ import {
   RefreshCw,
   TrendingUp,
 } from 'lucide-react';
-import React, { useMemo } from 'react';
+import React from 'react';
 
 export interface ChartData {
   labels: string[];

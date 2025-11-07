@@ -3,7 +3,7 @@ import LanguageSwitcher from '@/components/common/LanguageSwitcher';
 import ThemeSwitcher from '@/components/common/ThemeSwitcher';
 import { useT } from '@/components/providers/I18nProvider';
 import { I18N_KEYS } from '@/constants/i18n-keys';
-import { useLanguage, useTheme } from '@/design-system/hooks';
+import { useLanguage } from '@/design-system/hooks';
 import { useSystemConfig } from '@/lib/config/system-config';
 import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { useCustomAuth } from '@/lib/auth/hooks/useCustomAuth';
@@ -22,7 +22,7 @@ import {
   Bot,
 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   // const { _theme } = useTheme();

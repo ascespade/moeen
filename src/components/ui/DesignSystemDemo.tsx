@@ -6,7 +6,7 @@ import FeatureCard from './FeatureCard';
 import StatCard from './StatCard';
 import ThemeToggle from './ThemeToggle';
 import RTLToggle from './RTLToggle';
-import { cn } from '@/lib/utils';
+// import { cn } from '@/lib/utils';
 
 export default function DesignSystemDemo() {
   return (

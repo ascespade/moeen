@@ -48,7 +48,7 @@ interface ApiKeyConfig {
 
 const APIKeysSettingsPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
-  const router = useRouter();
+  // const router = useRouter();
   const [, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [apiKeys, setApiKeys] = useState<ApiKeyConfig[]>([]);

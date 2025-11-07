@@ -3,17 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   User,
-  Phone,
-  Mail,
-  Calendar,
-  FileText,
   Plus,
-  Edit,
-  Trash2,
   Search,
-  Filter,
-  Download,
-  Eye,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -105,15 +96,15 @@ const PatientRecords: React.FC = () => {
   });
 
   // نموذج إضافة سجل طبي
-  const [newRecord, setNewRecord] = useState({
-    date: '',
-    doctorName: '',
-    diagnosis: '',
-    treatment: '',
-    notes: '',
-    followUpRequired: false,
-    followUpDate: '',
-  });
+  // const [newRecord, setNewRecord] = useState({
+  //   date: '',
+  //   doctorName: '',
+  //   diagnosis: '',
+  //   treatment: '',
+  //   notes: '',
+  //   followUpRequired: false,
+  //   followUpDate: '',
+  // });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {

@@ -91,7 +91,7 @@ const mockHealthMetrics = [
 ];
 
 const PatientDashboard: React.FC<PatientDashboardProps> = ({
-  _patientId,
+  // _patientId,
   className,
 }) => {
   const [selectedView, setSelectedView] = useState<

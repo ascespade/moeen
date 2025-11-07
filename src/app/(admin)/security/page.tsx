@@ -101,7 +101,7 @@ interface SecurityAlert {
 
 function SecurityPageContent() {
   const { isAuthenticated } = useAuth();
-  const router = useRouter();
+  // const router = useRouter();
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([]);
   const [policies, setPolicies] = useState<SecurityPolicy[]>([]);
   const [sessions, setSessions] = useState<UserSession[]>([]);

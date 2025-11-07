@@ -40,7 +40,7 @@ export async function getInsuranceClaims(filters?: {
   if (error) throw error;
 
   return (
-    data?.map(claim => ({
+    data?.map((claim: any) => ({
       id: claim.id,
       publicId: claim.public_id,
       patientId: claim.patient_id,
@@ -140,7 +140,7 @@ export async function getFamilyMembers(patientId: string) {
   if (error) throw error;
 
   return (
-    data?.map(member => ({
+    data?.map((member: any) => ({
       id: member.id,
       publicId: member.public_id,
       patientId: member.patient_id,
@@ -178,7 +178,7 @@ export async function getSupportSessions(patientId?: string, limit?: number) {
   if (error) throw error;
 
   return (
-    data?.map(session => ({
+    data?.map((session: any) => ({
       id: session.id,
       publicId: session.public_id,
       patientId: session.patient_id,
@@ -235,7 +235,7 @@ export async function getTherapySessions(filters?: {
   if (error) throw error;
 
   return (
-    data?.map(session => ({
+    data?.map((session: any) => ({
       id: session.id,
       publicId: session.public_id,
       patientId: session.patient_id,
@@ -281,7 +281,7 @@ export async function getTherapyGoals(sessionId?: string, patientId?: string) {
   if (error) throw error;
 
   return (
-    data?.map(goal => ({
+    data?.map((goal: any) => ({
       id: goal.id,
       therapySessionId: goal.therapy_session_id,
       goalTitle: goal.goal_title,
