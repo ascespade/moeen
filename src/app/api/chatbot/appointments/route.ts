@@ -269,15 +269,15 @@ async function sendWhatsAppConfirmation(_phone: string, appointment: any) {
   // في التطبيق الحقيقي، ستحتاج إلى تكامل مع WhatsApp Business API
 
   // const _message = `تم حجز موعدك بنجاح!
-
-التفاصيل:
-👨‍⚕️ الطبيب: ${appointment.doctors.first_name} ${appointment.doctors.last_name}
-🏥 التخصص: ${appointment.doctors.specialty}
-📅 التاريخ: ${new Date(appointment.appointment_date).toLocaleDateString('ar-SA')}
-⏰ الوقت: ${appointment.appointment_time}
-📋 رقم الموعد: ${appointment.confirmation_code}
-
-مركز الهمم للرعاية الصحية`;
+  //
+  // التفاصيل:
+  // 👨‍⚕️ الطبيب: ${appointment.doctors.first_name} ${appointment.doctors.last_name}
+  // 🏥 التخصص: ${appointment.doctors.specialty}
+  // 📅 التاريخ: ${new Date(appointment.appointment_date).toLocaleDateString('ar-SA')}
+  // ⏰ الوقت: ${appointment.appointment_time}
+  // 📋 رقم الموعد: ${appointment.confirmation_code}
+  //
+  // مركز الهمم للرعاية الصحية`;
 
   // هنا يمكنك إضافة كود إرسال WhatsApp الفعلي
   // await whatsappAPI.sendMessage(phone, message);

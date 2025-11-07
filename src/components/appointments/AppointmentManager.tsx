@@ -196,18 +196,18 @@ const AppointmentManager: React.FC = () => {
   };
 
   // const _handleUpdateAppointment = async (
-    id: string,
-    updates: Partial<Appointment>
-  ) => {
-    setAppointments(prev =>
-      prev.map(apt =>
-        apt.id === id
-          ? { ...apt, ...updates, updatedAt: new Date().toISOString() }
-          : apt
-      )
-    );
-    setEditingAppointment(null);
-  };
+  //   id: string,
+  //   updates: Partial<Appointment>
+  // ) => {
+  //   setAppointments(prev =>
+  //     prev.map(apt =>
+  //       apt.id === id
+  //         ? { ...apt, ...updates, updatedAt: new Date().toISOString() }
+  //         : apt
+  //     )
+  //   );
+  //   setEditingAppointment(null);
+  // };
 
   const handleDeleteAppointment = async (id: string) => {
     if (confirm('هل أنت متأكد من حذف هذا الموعد؟')) {

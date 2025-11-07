@@ -251,18 +251,18 @@ export default function ModuleSettings({ onChange }: ModuleSettingsProps) {
   };
 
   // const _updateModuleSettings = (
-    moduleKey: keyof ModulesState,
-    settings: Record<string, any>
-  ) => {
-    setModules(prev => ({
-      ...prev,
-      [moduleKey]: {
-        ...prev[moduleKey],
-        settings: { ...prev[moduleKey].settings, ...settings },
-      },
-    }));
-    onChange();
-  };
+  //   moduleKey: keyof ModulesState,
+  //   settings: Record<string, any>
+  // ) => {
+  //   setModules(prev => ({
+  //     ...prev,
+  //     [moduleKey]: {
+  //       ...prev[moduleKey],
+  //       settings: { ...prev[moduleKey].settings, ...settings },
+  //     },
+  //   }));
+  //   onChange();
+  // };
 
   const getEnabledModulesCount = () => {
     return Object.values(modules).filter(module => module.enabled).length;

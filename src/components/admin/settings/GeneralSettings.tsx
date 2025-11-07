@@ -131,26 +131,26 @@ export default function GeneralSettings({ onChange, onSave }: GeneralSettingsPro
   };
 
   // const _saveSettings = async () => {
-    if (onSave) {
-      await onSave(config);
-    } else {
-      // Default save to API
-      try {
-        const response = await fetch('/api/admin/settings/general', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(config),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to save settings');
-        }
-      } catch (error) {
-        console.error('Error saving general settings:', error);
-        throw error;
-      }
-    }
-  };
+  //   if (onSave) {
+  //     await onSave(config);
+  //   } else {
+  //     // Default save to API
+  //     try {
+  //       const response = await fetch('/api/admin/settings/general', {
+  //         method: 'POST',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify(config),
+  //       });
+  //
+  //       if (!response.ok) {
+  //         throw new Error('Failed to save settings');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error saving general settings:', error);
+  //       throw error;
+  //     }
+  //   }
+  // };
 
   const toggleWorkDay = (day: string) => {
     const newDays = config.businessHours.days.includes(day)
