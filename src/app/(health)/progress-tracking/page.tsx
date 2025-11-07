@@ -1,28 +1,27 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
+import { useAuth } from '@/hooks/useAuth';
+import { logger } from '@/lib/utils/logger';
 import {
-  TrendingUp,
-  Target,
+  Activity,
   BarChart3,
-  Plus,
-  MoreVertical,
+  Brain,
   Edit,
   Eye,
-  Activity,
-  Brain,
-  Heart,
-  Zap,
   FileText,
+  Heart,
+  MoreVertical,
+  Plus,
+  Target,
+  TrendingUp,
+  Zap,
 } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { logger } from '@/lib/utils/logger';
+import React, { useEffect, useState } from 'react';
 
 interface ProgressGoal {
   id: string;
@@ -125,7 +124,7 @@ const ProgressTrackingPage: React.FC = () => {
       const goalsResponse = await fetch('/api/progress/goals');
       const assessmentsResponse = await fetch('/api/progress/assessments');
       const reportsResponse = await fetch('/api/progress/reports');
-      
+
       const goalsData = goalsResponse.ok ? await goalsResponse.json() : [];
       const assessmentsData = assessmentsResponse.ok ? await assessmentsResponse.json() : [];
       const reportsData = reportsResponse.ok ? await reportsResponse.json() : [];

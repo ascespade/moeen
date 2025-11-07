@@ -1,6 +1,6 @@
 'use client';
-import { useState, useEffect } from 'react';
 import { logger } from '@/lib/utils/logger';
+import { useEffect, useState } from 'react';
 
 interface Lead {
   id: string;
