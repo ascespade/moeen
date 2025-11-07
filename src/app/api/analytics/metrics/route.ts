@@ -17,7 +17,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Check permissions using unified permission system
-    const userPermissions = PermissionManager.getRolePermissions(
+    const userPermissions = await PermissionManager.getRolePermissions(
       authResult.user.role
     );
 
