@@ -13,6 +13,7 @@ export default [
       'src/lib/security-enhanced.ts',
       'src/lib/websocket-server.ts',
       'src/middleware.prod.ts',
+      'src/**',
       'src/middleware/**',
       'src/workflows/**',
       'src/theme/index.ts',
