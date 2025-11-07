@@ -463,11 +463,15 @@ function AppointmentsPageContent() {
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
-                {appointments.filter((a: any) => a.status === 'completed').length}
+                {
+                  appointments.filter((a: any) => a.status === 'completed')
+                    .length
+                }
               </div>
               <p className='text-xs text-muted-foreground'>
                 {Math.round(
-                  (appointments.filter((a: any) => a.status === 'completed').length /
+                  (appointments.filter((a: any) => a.status === 'completed')
+                    .length /
                     appointments.length) *
                     100
                 )}
@@ -569,11 +573,14 @@ function AppointmentsPageContent() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input type='checkbox'
+                    <input
+                      type='checkbox'
                       className='rounded border-[var(--brand-border)]'
-                      onChange={(e) => {
+                      onChange={e => {
                         if (e.target.checked) {
-                          setSelectedAppointments(appointments.map((a: any) => a.id));
+                          setSelectedAppointments(
+                            appointments.map((a: any) => a.id)
+                          );
                         } else {
                           setSelectedAppointments([]);
                         }
@@ -594,10 +601,11 @@ function AppointmentsPageContent() {
                 {appointments.map((appointment: any) => (
                   <TableRow key={appointment.id}>
                     <TableCell>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         className='rounded border-[var(--brand-border)]'
                         checked={selectedAppointments.includes(appointment.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedAppointments([
                               ...selectedAppointments,

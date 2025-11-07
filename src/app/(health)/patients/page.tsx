@@ -1,27 +1,10 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-import { ROUTES } from '@/constants/routes';
-
 import { createClient } from '@/lib/supabase/client';
-import { realDB } from '@/lib/supabase-real';
-
-import Image from 'next/image';
-
-import Link from 'next/link';
-
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-
-import { Button } from '@/components/ui/Button';
-
-import { Badge } from '@/components/ui/Badge';
-
-import { Input } from '@/components/ui/Input';
-
-import {
-  Search,
-  Filter,
-} from 'lucide-react';
+import Link from 'next/link';
+import { ROUTES } from '@/constants/routes';
 
 interface Patient {
   id: string;
@@ -69,11 +52,6 @@ export default function PatientsPage() {
   const [filterStatus, setFilterStatus] = useState<
     'all' | 'active' | 'inactive' | 'blocked'
   >('all');
-  const [filterCondition, setFilterCondition] = useState<string>('all');
-  const [filterSeverity, setFilterSeverity] = useState<string>('all');
-  const [selectedPatient, setSelectedPatient] =
-    useState<PatientWithStats | null>(null);
-  const [showDetails, setShowDetails] = useState(false);
 
   // Load patients from database
   useEffect(() => {
@@ -166,66 +144,6 @@ export default function PatientsPage() {
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    const statusMap = {
-      active: {
-        label: 'نشط',
-        variant: 'primary' as const,
-        color: 'text-default-success',
-      },
-      inactive: {
-        label: 'غير نشط',
-        variant: 'secondary' as const,
-        color: 'text-gray-600',
-      },
-      blocked: {
-        label: 'محظور',
-        variant: 'error' as const,
-        color: 'text-default-error',
-      },
-    };
-
-    const statusInfo = statusMap[status as keyof typeof statusMap] || {
-      label: status,
-      variant: 'primary' as const,
-      color: 'text-gray-600',
-    };
-    return <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>;
-  };
-
-  const getSeverityBadge = (severity: string) => {
-    const severityMap = {
-      mild: {
-        label: 'خفيف',
-        variant: 'primary' as const,
-        color: 'text-default-success',
-      },
-      moderate: {
-        label: 'متوسط',
-        variant: 'secondary' as const,
-        color: 'text-yellow-600',
-      },
-      severe: {
-        label: 'شديد',
-        variant: 'error' as const,
-        color: 'text-default-error',
-      },
-    };
-
-    const severityInfo = severityMap[severity as keyof typeof severityMap] || {
-      label: severity,
-      variant: 'primary' as const,
-      color: 'text-gray-600',
-    };
-    return <Badge variant={severityInfo.variant}>{severityInfo.label}</Badge>;
-  };
-
-  const getProgressColor = (percentage: number) => {
-    if (percentage >= 80) return 'bg-default-success';
-    if (percentage >= 60) return 'bg-default-warning';
-    if (percentage >= 40) return 'bg-default-default';
-    return 'bg-default-error';
-  };
 
   if (loading) {
     return (

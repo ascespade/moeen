@@ -6,7 +6,6 @@ import { ADMIN_PAGES } from '@/lib/admin/page-config';
 import { createClient } from '@/lib/supabase/client';
 import logger from '@/lib/monitoring/logger';
 
-
 function InvoicesPageContent() {
   const [payments, setPayments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -68,7 +67,9 @@ function InvoicesPageContent() {
             إدارة الفواتير والإيصالات
           </p>
         </div>
-        <button className='btn btn-default' aria-label="+ فاتورة جديدة">+ فاتورة جديدة</button>
+        <button className='btn btn-default' aria-label='+ فاتورة جديدة'>
+          + فاتورة جديدة
+        </button>
       </div>
 
       {/* Stats */}
@@ -176,7 +177,7 @@ function InvoicesPageContent() {
                   <td className='px-6 py-4'>
                     <button
                       onClick={() => generateInvoicePDF(payment)}
-                      onKeyDown={(e) => {
+                      onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
                           generateInvoicePDF(payment);

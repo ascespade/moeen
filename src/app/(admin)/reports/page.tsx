@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useT } from '@/components/providers/I18nProvider';
-import { usePermissions } from '@/hooks/usePermissions';
 import {
   Card,
   CardContent,
@@ -27,7 +25,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -116,8 +113,6 @@ interface Report {
 }
 
 export default function ReportsPage() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [reports, setReports] = useState<Report[]>([]);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(true);
@@ -471,12 +466,6 @@ export default function ReportsPage() {
     });
   };
 
-  const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('ar-SA', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
 
   const handleViewReport = (report: Report) => {
     setSelectedReport(report);

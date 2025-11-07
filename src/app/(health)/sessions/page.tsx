@@ -1,9 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { ROUTES } from '@/constants/routes';
 import { realDB } from '@/lib/supabase-real';
 
-import Image from 'next/image';
 
 interface Session {
   id: string;

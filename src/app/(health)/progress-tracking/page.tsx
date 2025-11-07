@@ -11,7 +11,6 @@ import {
   Target,
   BarChart3,
   Plus,
-  Search,
   MoreVertical,
   Edit,
   Eye,
@@ -19,10 +18,10 @@ import {
   Brain,
   Heart,
   Zap,
+  FileText,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 interface ProgressGoal {
   id: string;
@@ -96,13 +95,13 @@ interface ProgressReport {
 }
 
 const ProgressTrackingPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [goals, setGoals] = useState<ProgressGoal[]>([]);
   const [assessments, setAssessments] = useState<Assessment[]>([]);
   const [reports, setReports] = useState<ProgressReport[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState<
     'goals' | 'assessments' | 'reports'

@@ -68,7 +68,6 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 
-
 function PatientsPageContent() {
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   // Use the real hook for data fetching
@@ -475,7 +474,7 @@ function PatientsPageContent() {
                     <input
                       type='checkbox'
                       className='rounded border-[var(--brand-border)]'
-                      onChange={(e) => {
+                      onChange={e => {
                         if (e.target.checked) {
                           setSelectedPatients(patients.map(p => p.id));
                         } else {
@@ -498,10 +497,11 @@ function PatientsPageContent() {
                 {patients.map(patient => (
                   <TableRow key={patient.id}>
                     <TableCell>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         className='rounded border-[var(--brand-border)]'
                         checked={selectedPatients.includes(patient.id)}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedPatients([
                               ...selectedPatients,

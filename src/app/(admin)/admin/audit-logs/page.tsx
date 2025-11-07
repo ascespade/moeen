@@ -124,13 +124,17 @@ function AuditLogsPageContent() {
   return (
     <div className='min-h-screen bg-[var(--background)]' role='application'>
       {/* Skip Link */}
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="التخطي للمحتوى الرئيسي">
+      <a
+        href='#main-content'
+        className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded'
+        aria-label='التخطي للمحتوى الرئيسي'
+      >
         التخطي للمحتوى الرئيسي
       </a>
 
       {/* Live Region */}
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
       <header className='sticky top-0 z-10 border-b border-[var(--brand-border)] bg-[var(--panel)]'>
         <div className='container-app py-6'>
@@ -152,7 +156,7 @@ function AuditLogsPageContent() {
         </div>
       </header>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         {loading && (
           <div className='mb-8 flex items-center justify-center py-12'>
             <div className='text-center'>
@@ -222,7 +226,7 @@ function AuditLogsPageContent() {
                   <input
                     type='text'
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={e => setSearchTerm(e.target.value)}
                     placeholder='ابحث في السجلات...'
                     aria-label='ابحث في السجلات'
                     className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-3 py-2 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)]'
@@ -263,14 +267,14 @@ function AuditLogsPageContent() {
                 <div className='flex items-end'>
                   <button
                     onClick={fetchAuditLogs}
-                    onKeyDown={(e) => {
+                    onKeyDown={e => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         fetchAuditLogs();
                       }
                     }}
                     className='w-full rounded-lg bg-[var(--brand-primary)] py-2 text-white transition-colors hover:bg-[var(--brand-primary-hover)]'
-                    aria-label="تطبيق الفلاتر"
+                    aria-label='تطبيق الفلاتر'
                   >
                     تطبيق الفلاتر
                   </button>

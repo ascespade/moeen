@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
-import { useT } from '@/components/providers/I18nProvider';
-import { usePermissions } from '@/hooks/usePermissions';
 import {
   Card,
   CardContent,
@@ -29,7 +27,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -72,9 +69,9 @@ import {
   Settings,
   TrendingUp,
   Target,
-  FileText,
   Paperclip,
   Inbox,
+  Monitor,
   Send as Outbox,
   FileText as Drafts,
   AlertOctagon as Spam,
@@ -134,8 +131,6 @@ interface Message {
 }
 
 function MessagesPageContent() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [loading, setLoading] = useState(true);

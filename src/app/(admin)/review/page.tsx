@@ -8,7 +8,7 @@ type Item = { id: string; user: string; suggestion: string; createdAt: string };
 
 function ReviewCenterPageContent() {
   const [rows, setRows] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     const loadReviewItems = async () => {

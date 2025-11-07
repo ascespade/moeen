@@ -54,7 +54,7 @@ interface SupervisorData {
 
 export default function SupervisorDashboard() {
   const { t } = useT();
-  const { theme } = useTheme();
+  useTheme();
   const [supervisorData, setSupervisorData] = useState<SupervisorData | null>(
     null
   );

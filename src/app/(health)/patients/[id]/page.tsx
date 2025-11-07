@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { ROUTES } from '@/constants/routes';
-import Image from 'next/image';
 import Link from 'next/link';
 import { realDB } from '@/lib/supabase-real';
 

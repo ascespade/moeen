@@ -94,13 +94,13 @@ interface Resource {
 }
 
 const FamilySupportPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([]);
   const [supportSessions, setSupportSessions] = useState<SupportSession[]>([]);
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState<
     'members' | 'sessions' | 'resources'

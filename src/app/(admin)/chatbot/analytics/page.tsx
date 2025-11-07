@@ -103,9 +103,7 @@ export default function ChatbotAnalyticsPage() {
   return (
     <div className='container mx-auto px-4 py-8' role='application'>
       <div className='mb-8'>
-        <h1 className='text-default text-2xl font-bold'>
-          تحليلات الشات بوت
-        </h1>
+        <h1 className='text-default text-2xl font-bold'>تحليلات الشات بوت</h1>
         <p className='text-gray-600 dark:text-gray-300'>
           إحصائيات وأداء المحادثات الذكية
         </p>
@@ -130,7 +128,7 @@ export default function ChatbotAnalyticsPage() {
         </button>
       </div>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         {/* Key Metrics */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
@@ -188,7 +186,7 @@ export default function ChatbotAnalyticsPage() {
               <div className='flex gap-2'>
                 <button
                   onClick={() => setSelectedMetric('messages')}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setSelectedMetric('messages');
@@ -205,7 +203,7 @@ export default function ChatbotAnalyticsPage() {
                 </button>
                 <button
                   onClick={() => setSelectedMetric('users')}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setSelectedMetric('users');

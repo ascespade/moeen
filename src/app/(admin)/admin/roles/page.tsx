@@ -968,9 +968,10 @@ function RolesPageContent() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input type='checkbox'
+                    <input
+                      type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => {
+                      onChange={e => {
                         if (e.target.checked) {
                           setSelectedRoles(filteredRoles.map(r => r.id));
                         } else {
@@ -999,11 +1000,13 @@ function RolesPageContent() {
                           type='checkbox'
                           className='rounded border-gray-300'
                           checked={selectedRoles.includes(role.id)}
-                          onChange={(e) => {
+                          onChange={e => {
                             if (e.target.checked) {
                               setSelectedRoles([...selectedRoles, role.id]);
                             } else {
-                              setSelectedRoles(selectedRoles.filter(id => id !== role.id));
+                              setSelectedRoles(
+                                selectedRoles.filter(id => id !== role.id)
+                              );
                             }
                           }}
                           aria-label={`تحديد دور ${role.displayName}`}

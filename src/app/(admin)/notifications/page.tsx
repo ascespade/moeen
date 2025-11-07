@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
-import { useT } from '@/components/providers/I18nProvider';
-import { usePermissions } from '@/hooks/usePermissions';
 import {
   Card,
   CardContent,
@@ -29,7 +27,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -120,8 +117,6 @@ interface Notification {
 }
 
 function NotificationsPageContent() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [selectedNotification, setSelectedNotification] =
     useState<Notification | null>(null);
@@ -518,20 +513,6 @@ function NotificationsPageContent() {
     );
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('ar-SA', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
-
-  const formatTime = (dateString: string) => {
-    return new Date(dateString).toLocaleTimeString('ar-SA', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-  };
 
   const handleViewNotification = (notification: Notification) => {
     setSelectedNotification(notification);
