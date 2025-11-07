@@ -44,6 +44,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
+import { logger } from '@/lib/utils/logger';
 import {
   Activity,
   Plus,
@@ -157,7 +158,7 @@ function PerformancePageContent() {
           setTotalPages(0);
         }
       } catch (error) {
-        console.error('Error fetching performance metrics:', error);
+        logger.error('Error fetching performance metrics:', { error })
         setMetrics([]);
         setTotalPages(0);
       } finally {

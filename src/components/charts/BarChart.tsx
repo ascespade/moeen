@@ -19,7 +19,7 @@ import {
 import { useTheme } from '@/core/theme';
 
 interface BarChartProps {
-  data: any[];
+  data: unknown[];
   dataKey: string;
   xAxisKey: string;
   bars?: Array<{

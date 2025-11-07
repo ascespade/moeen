@@ -6,7 +6,7 @@ import {
   CreditCard,
   Shield,
   Clock,
-  // CheckCircle,
+  CheckCircle,
   AlertCircle,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';

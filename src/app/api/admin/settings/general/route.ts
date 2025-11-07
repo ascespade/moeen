@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       .order('key');
 
     if (error) {
-      console.error('Error fetching general settings:', error);
+      logger.error('Error fetching general settings:', { error });
       return NextResponse.json(
         {
           error: 'Failed to fetch settings',
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     // Transform configs to object format
     const settings = (configs || []).reduce(
-      (acc: Record<string, any>, config: any) => {
+      (acc: Record<string, unknown>, config: unknown) => {
         try {
           acc[config.key] =
             typeof config.value === 'string'
@@ -77,7 +78,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    console.error('Error in general settings API:', error);
+    logger.error('Error in general settings API:', { error });
     return NextResponse.json(
       {
         error: 'Internal server error',
@@ -143,7 +144,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         );
 
         if (error) {
-          console.error(`Error saving setting ${key}:`, error);
+          logger.error('Error saving setting', { key, error });
           return { key, error: error.message };
         }
         return { key, success: true };
@@ -170,7 +171,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    console.error('Error saving general settings:', error);
+    logger.error('Error saving general settings:', { error });
     return NextResponse.json(
       {
         error: 'Internal server error',

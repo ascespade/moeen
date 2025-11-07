@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
+import { logger } from '@/lib/utils/logger';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -56,7 +57,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         .single();
 
       if (createError) {
-        console.error('Patient creation error:', createError);
+        logger.error('Patient creation error:', { error: createError });
         return NextResponse.json(
           { error: `Failed to create patient: ${createError.message}` },
           { status: 500 }
@@ -144,7 +145,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       .single();
 
     if (appointmentError) {
-      console.error('Appointment creation error:', appointmentError);
+      logger.error('Appointment creation error:', { error: appointmentError });
       return NextResponse.json(
         { error: `Failed to create appointment: ${appointmentError.message}` },
         { status: 500 }
@@ -264,7 +265,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-async function sendWhatsAppConfirmation(_phone: string, _appointment: any) {
+async function sendWhatsAppConfirmation(_phone: string, appointment: unknown) {
   // هذا مثال لإرسال رسالة WhatsApp
   // في التطبيق الحقيقي، ستحتاج إلى تكامل مع WhatsApp Business API
 

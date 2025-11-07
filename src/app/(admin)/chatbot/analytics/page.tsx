@@ -113,7 +113,7 @@ export default function ChatbotAnalyticsPage() {
       <div className='flex items-center gap-3 mb-6'>
         <select
           value={selectedPeriod}
-          onChange={e => setSelectedPeriod(e.target.value as any)}
+          onChange={e => setSelectedPeriod(e.target.value as 'week' | 'month' | 'year' | 'day')}
           className='rounded-lg border border-gray-300 px-3 py-2 text-sm'
           aria-label='اختر الفترة الزمنية'
         >

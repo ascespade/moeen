@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PermissionManager } from '@/lib/permissions';
 import type { RoleId } from '@/lib/permissions/index';
 
+type RoleId = string;
+
 interface RoutePermission {
   path: string;
   permissions: string[];
@@ -130,7 +132,7 @@ export function checkRoutePermission(
 ): { allowed: boolean; reason?: string } {
   // Find matching route
   const route = ROUTE_PERMISSIONS.find(
-    route => pathname === route.path || pathname.startsWith(route.path + '/')
+    route => pathname === route.path || pathname.startsWith(`${route.path  }/`)
   );
 
   if (!route) {

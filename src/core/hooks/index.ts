@@ -208,7 +208,7 @@ export const usePatients = () => {
     useDataStore();
 
   const fetchPatients = useCallback(
-    async (params?: any) => {
+    async (params?: unknown) => {
       try {
         const response = await apiClient.getPatients(params);
         if (response.success && response.data) {
@@ -227,7 +227,7 @@ export const usePatients = () => {
   );
 
   const createPatient = useCallback(
-    async (patientData: any) => {
+    async (patientData: unknown) => {
       try {
         const response = await apiClient.createPatient(patientData);
         if (response.success && response.data) {
@@ -246,7 +246,7 @@ export const usePatients = () => {
   );
 
   const updatePatientData = useCallback(
-    async (id: string, patientData: any) => {
+    async (id: string, patientData: unknown) => {
       try {
         const response = await apiClient.updatePatient(id, patientData);
         if (response.success && response.data) {
@@ -283,7 +283,7 @@ export const useAppointments = () => {
   } = useDataStore();
 
   const fetchAppointments = useCallback(
-    async (params?: any) => {
+    async (params?: unknown) => {
       try {
         const response = await apiClient.getAppointments(params);
         if (response.success && response.data) {
@@ -302,7 +302,7 @@ export const useAppointments = () => {
   );
 
   const createAppointment = useCallback(
-    async (appointmentData: any) => {
+    async (appointmentData: unknown) => {
       try {
         const response = await apiClient.createAppointment(appointmentData);
         if (response.success && response.data) {
@@ -321,7 +321,7 @@ export const useAppointments = () => {
   );
 
   const updateAppointmentData = useCallback(
-    async (id: string, appointmentData: any) => {
+    async (id: string, appointmentData: unknown) => {
       try {
         const response = await apiClient.updateAppointment(id, appointmentData);
         if (response.success && response.data) {
@@ -371,7 +371,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
       const item = storageUtils.get(key);
       return item !== null ? item : initialValue;
     } catch (error) {
-      console.error(`Error reading localStorage key "${key}":`, error);
+      logger.error('Error', { error: `Error reading localStorage key "${key}":`, error });
       return initialValue;
     }
   });
@@ -384,7 +384,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
         setStoredValue(valueToStore);
         storageUtils.set(key, valueToStore);
       } catch (error) {
-        console.error(`Error setting localStorage key "${key}":`, error);
+        logger.error('Error', { error: `Error setting localStorage key "${key}":`, error });
       }
     },
     [key, storedValue]

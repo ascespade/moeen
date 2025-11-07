@@ -29,7 +29,8 @@ import {
   encryptApiKey,
   // decryptApiKey,
 } from '@/lib/encryption';
-// import { createClient } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
+import { logger } from '@/lib/utils/logger';
 
 interface ApiKeyConfig {
   id: string;
@@ -40,7 +41,7 @@ interface ApiKeyConfig {
   is_encrypted: boolean;
   status: 'active' | 'inactive' | 'invalid';
   last_tested?: string;
-  icon: any;
+  icon: unknown;
   description: string;
   placeholder: string;
   validation_url?: string;
@@ -209,7 +210,7 @@ const APIKeysSettingsPage: React.FC = () => {
         setApiKeys(initialized);
       }
     } catch (error) {
-      console.error('Error loading API keys:', error);
+      logger.error('Error loading API keys:', { error })
     } finally {
       setLoading(false);
     }
@@ -236,7 +237,7 @@ const APIKeysSettingsPage: React.FC = () => {
       setSuccessMessage('✅ تم حفظ المفاتيح بنجاح!');
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (error) {
-      console.error('Error saving API keys:', error);
+      logger.error('Error saving API keys:', { error })
       alert('فشل حفظ المفاتيح');
     } finally {
       setSaving(false);

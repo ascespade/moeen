@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Input } from '@/components/ui/Input';
 import { realDB } from '@/lib/supabase-real';
 import Image from 'next/image';
+import { logger } from '@/lib/utils/logger';
 
 interface MedicalRecord {
   id: string;
@@ -79,7 +80,7 @@ export default function MedicalFilePage() {
 
         // Transform data to match our interface
         const transformedRecords: MedicalRecord[] = patientsData.map(
-          (patient: any) => ({
+          (patient: unknown) => ({
             id: patient.id,
             patientName: patient.name || 'غير محدد',
             patientId: patient.national_id || patient.id,
@@ -109,7 +110,7 @@ export default function MedicalFilePage() {
         setRecords(transformedRecords);
       } catch (err) {
         setError('فشل في تحميل الملفات الطبية');
-        console.error('Error loading medical records:', err);
+        logger.error('Error loading medical records:', { error: err })
       } finally {
         setLoading(false);
       }

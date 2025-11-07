@@ -2,6 +2,7 @@
 import { createClient } from '@/lib/supabase/client';
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 interface InsuranceClaim {
   id: string;
@@ -49,7 +50,24 @@ export default function InsuranceClaimsPage() {
       if (queryError) throw queryError;
 
       // Transform data to match interface
-      const transformedClaims = (data || []).map((claim: any) => ({
+      const transformedClaims = (data || []).map((claim: {
+        id: string;
+        patient_name?: string;
+        patients?: { first_name?: string; last_name?: string };
+        patient_id: string;
+        claim_number: string;
+        amount: number;
+        status: string;
+        created_at?: string;
+        submission_date?: string;
+        review_date?: string;
+        insurance_provider?: string;
+        treatment_type?: string;
+        description?: string;
+        attachments?: string[];
+        reviewer?: string;
+        notes?: string;
+      }) => ({
         id: claim.id,
         patient_name:
           claim.patient_name ||
@@ -72,7 +90,9 @@ export default function InsuranceClaimsPage() {
 
       setClaims(transformedClaims);
     } catch (err) {
-      console.error('Failed to load claims:', err);
+      logger.error('Failed to load claims', {
+        error: err instanceof Error ? err.message : String(err),
+      });
       setError('Failed to load insurance claims');
       // Fallback to empty array
       setClaims([]);

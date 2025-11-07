@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
         page: 1,
         perPage: 1,
         filter: { email },
-      } as any);
+      } as unknown);
 
     let authUserId: string | null = null;
     if (existing && (existing.users?.length || 0) > 0) {
@@ -132,9 +132,9 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ success: true, user_id: upserted.id });
-  } catch (e: any) {
+  } catch (e: unknown) {
     return NextResponse.json(
-      { success: false, error: e?.message || 'Internal error' },
+      { success: false, error: e instanceof Error ? e.message : 'Internal error' },
       { status: 500 }
     );
   }

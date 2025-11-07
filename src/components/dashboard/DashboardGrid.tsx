@@ -25,7 +25,7 @@ export interface GridItem {
   maxWidth?: number;
   maxHeight?: number;
   component: React.ComponentType<any>;
-  props?: Record<string, any>;
+  props?: Record<string, unknown>;
   title?: string;
   isResizable?: boolean;
   isDraggable?: boolean;
@@ -436,8 +436,8 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
             // Export layout as JSON
             const dataStr = JSON.stringify(items, null, 2);
             const dataUri =
-              'data:application/json;charset=utf-8,' +
-              encodeURIComponent(dataStr);
+              `data:application/json;charset=utf-8,${ 
+              encodeURIComponent(dataStr)}`;
             const exportFileDefaultName = 'dashboard-layout.json';
 
             const linkElement = document.createElement('a');

@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
+import { logger } from '@/lib/utils/logger';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -61,7 +62,9 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      console.error('Error creating notification:', error);
+      logger.error('Error creating notification', {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return NextResponse.json(
         { error: 'Failed to create notification' },
         { status: 500 }
@@ -98,7 +101,9 @@ export async function POST(request: NextRequest) {
       notificationId: notification.id,
     });
   } catch (error) {
-    console.error('Notification API error:', error);
+    logger.error('Notification API error', {
+      error: error instanceof Error ? error.message : String(error),
+    });
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(

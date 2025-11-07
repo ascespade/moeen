@@ -87,7 +87,7 @@ export default function PatientsPage() {
 
         // Transform data to include stats
         const patientsWithStats: PatientWithStats[] = (patientsData || []).map(
-          (patient: any) => ({
+          (patient: unknown) => ({
             ...patient,
             name: `${patient.first_name} ${patient.last_name}`,
             age: patient.date_of_birth
@@ -295,7 +295,7 @@ export default function PatientsPage() {
               </label>
               <select
                 value={filterStatus}
-                onChange={e => setFilterStatus(e.target.value as any)}
+                onChange={e => setFilterStatus(e.target.value as unknown)}
                 className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-default-default focus:border-transparent'
               >
                 <option value='all'>جميع الحالات</option>
@@ -309,7 +309,7 @@ export default function PatientsPage() {
 
         {/* Patients Grid */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          {filteredPatients.map((patient: any) => (
+          {filteredPatients.map((patient: unknown) => (
             <div
               key={patient.id}
               className='bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow'
@@ -328,7 +328,7 @@ export default function PatientsPage() {
                         {patient.first_name} {patient.last_name}
                       </h3>
                       <p className='text-sm text-gray-500'>
-                        العمر: {(patient as any).age || 'غير محدد'} سنة
+                        العمر: {(patient as unknown).age || 'غير محدد'} سنة
                       </p>
                     </div>
                   </div>

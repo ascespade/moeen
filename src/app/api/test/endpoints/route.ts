@@ -97,10 +97,10 @@ export async function GET(_request: NextRequest) {
 
         if (response.ok) {
           testResults.passed++;
-          result.status = 'PASSED' as any;
+          result.status = 'PASSED' as unknown;
         } else {
           testResults.failed++;
-          result.status = 'FAILED' as any;
+          result.status = 'FAILED' as unknown;
         }
 
         testResults.results.push(result);
@@ -134,7 +134,7 @@ export async function GET(_request: NextRequest) {
       {
         timestamp: new Date().toISOString(),
         status: 'error',
-        error: (error as Error).message,
+        error: (error instanceof Error ? error.message : String(error)),
       },
       { status: 500 }
     );

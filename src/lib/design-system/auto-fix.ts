@@ -5,7 +5,8 @@
 
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
-import { autoFixCSSClasses, validateCSSClasses } from './validator';
+import { autoFixCSSClasses, _validateCSSClasses } from './validator';
+import { logger } from '@/lib/utils/logger';
 
 const EXTENSIONS = ['.tsx', '.ts', '.jsx', '.js'];
 const IGNORE_DIRS = ['node_modules', '.next', 'dist', 'build', '.git'];
@@ -85,7 +86,9 @@ function fixFile(filePath: string): { fixed: boolean; changes: number } {
 
     return { fixed: false, changes: 0 };
   } catch (error) {
-    console.error(`Error fixing file ${filePath}:`, error);
+    logger.error(`Error fixing file ${filePath}`, {
+      error: error instanceof Error ? error.message : String(error),
+    });
     return { fixed: false, changes: 0 };
   }
 }
@@ -110,10 +113,10 @@ export function runAutoFix(srcDir: string = 'src'): {
       if (result.fixed) {
         fixedFiles++;
         totalChanges += result.changes;
-        console.log(`✅ Fixed: ${file} (${result.changes} changes)`);
+        logger.info(`Fixed: ${file} (${result.changes} changes)`);
       }
-    } catch (error: any) {
-      errors.push(`${file}: ${error.message}`);
+    } catch (error: unknown) {
+      errors.push(`${file}: ${error instanceof Error ? error.message : String(error)}`);
     }
   });
 
@@ -128,13 +131,13 @@ export function runAutoFix(srcDir: string = 'src'): {
 // Run if called directly
 if (require.main === module) {
   const result = runAutoFix();
-  console.log('\n📊 Auto-Fix Summary:');
-  console.log(`Total files: ${result.totalFiles}`);
-  console.log(`Fixed files: ${result.fixedFiles}`);
-  console.log(`Total changes: ${result.totalChanges}`);
+  logger.info('Auto-Fix Summary', {
+    totalFiles: result.totalFiles,
+    fixedFiles: result.fixedFiles,
+    totalChanges: result.totalChanges,
+  });
   if (result.errors.length > 0) {
-    console.log(`\n❌ Errors: ${result.errors.length}`);
-    result.errors.forEach(error => console.log(`  - ${error}`));
+    logger.error('Auto-Fix errors', { errors: result.errors });
   }
 }
 

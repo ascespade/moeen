@@ -1,5 +1,5 @@
 'use client';
-// import _logger from '@/lib/monitoring/_logger';
+import { logger } from '@/lib/utils/logger';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useT } from '@/hooks/useT';
@@ -12,7 +12,7 @@ import { I18N_KEYS } from '@/constants/i18n-keys';
 
 import {
   FileText,
-  // Upload,
+  Upload,
   CheckCircle,
   AlertCircle,
   Clock,
@@ -70,7 +70,9 @@ export default function ClaimsManager({
         setClaims(data.claims || []);
       }
     } catch (error) {
-      console.error('Error fetching claims:', error);
+      logger.error('Error fetching claims', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     } finally {
       setIsLoading(false);
     }
@@ -111,7 +113,9 @@ export default function ClaimsManager({
         onClaimUpdate?.();
       }
     } catch (error) {
-      console.error('Error creating claim:', error);
+      logger.error('Error creating claim', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     } finally {
       setIsCreating(false);
     }
@@ -128,7 +132,9 @@ export default function ClaimsManager({
         onClaimUpdate?.();
       }
     } catch (error) {
-      console.error('Error submitting claim:', error);
+      logger.error('Error submitting claim', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   };
 

@@ -42,7 +42,8 @@
       "playwright"
     ],
     "noImplicitAny": true,
-    "strictFunctionTypes": true
+    "strictFunctionTypes": true,
+    "alwaysStrict": true
   },
   "include": [
     "next-env.d.ts",

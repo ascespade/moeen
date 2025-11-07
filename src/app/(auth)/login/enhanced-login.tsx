@@ -10,6 +10,7 @@ import { getDefaultRoute } from '@/lib/auth/RouteManager';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 export default function EnhancedLoginPage() {
   const router = useRouter();
@@ -49,7 +50,7 @@ export default function EnhancedLoginPage() {
             const userData = JSON.parse(userStr);
             currentRole = userData.role || 'agent';
           } catch (e) {
-            console.error('Error parsing user:', e);
+            logger.error('Error parsing user:', { error: e })
           }
         }
 
@@ -58,7 +59,7 @@ export default function EnhancedLoginPage() {
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err?.message || 'حدث خطأ أثناء تسجيل الدخول');
     } finally {
       setSubmitting(false);
@@ -93,7 +94,7 @@ export default function EnhancedLoginPage() {
       } else {
         setError(result.error || 'بيانات الاعتماد غير صحيحة');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err?.message || 'حدث خطأ');
     } finally {
       setSubmitting(false);

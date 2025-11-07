@@ -36,7 +36,7 @@ export const createPostAction = withAction(
       .single();
 
     if (error) {
-      throw AppError.internal(`فشل إنشاء المنشور: ${error.message}`);
+      throw AppError.internal(`فشل إنشاء المنشور: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/posts');
@@ -78,7 +78,7 @@ export const updatePostAction = withAction(
       .single();
 
     if (error) {
-      throw AppError.internal(`فشل تحديث المنشور: ${error.message}`);
+      throw AppError.internal(`فشل تحديث المنشور: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/posts');
@@ -118,7 +118,7 @@ export const deletePostAction = withAction(
       .eq('id', postId);
 
     if (error) {
-      throw AppError.internal(`فشل حذف المنشور: ${error.message}`);
+      throw AppError.internal(`فشل حذف المنشور: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/posts');

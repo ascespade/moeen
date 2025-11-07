@@ -10,9 +10,9 @@ const supabaseKey =
 
 test.describe('✅ ALL FIXED - Final Working Tests', () => {
   let supabase: any;
-  let testUserIds: string[] = [];
-  let testPatientIds: string[] = [];
-  let testAppointmentIds: string[] = [];
+  const testUserIds: string[] = [];
+  const testPatientIds: string[] = [];
+  const testAppointmentIds: string[] = [];
 
   test.beforeAll(async () => {
     supabase = createClient(supabaseUrl, supabaseKey);

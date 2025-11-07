@@ -4,6 +4,7 @@ import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
 
 import Image from 'next/image';
+import { logger } from '@/lib/utils/logger';
 
 interface AuditLog {
   id: string;
@@ -94,7 +95,7 @@ function AuditLogsPageContent() {
         throw new Error(result.error || 'Failed to fetch audit logs');
       }
     } catch (err) {
-      console.error('Error fetching audit logs:', err);
+      logger.error('Error fetching audit logs:', { error: err })
       setError(
         err instanceof Error ? err.message : 'Failed to fetch audit logs'
       );

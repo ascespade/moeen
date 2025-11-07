@@ -1,13 +1,14 @@
+import { logger } from '@/lib/utils/logger';
 export class APIError extends Error {
   public statusCode: number;
   public code: string;
-  public details?: any;
+  public details?: unknown;
 
   constructor(
     message: string,
     statusCode: number = 500,
     code?: string,
-    details?: any
+    details?: unknown
   ) {
     super(message);
     this.name = 'APIError';
@@ -18,7 +19,7 @@ export class APIError extends Error {
 }
 
 export class ValidationError extends APIError {
-  constructor(message: string, details?: any) {
+  constructor(message: string, details?: unknown) {
     super(message, 400, 'VALIDATION_ERROR', details);
   }
 }
@@ -42,7 +43,7 @@ export class NotFoundError extends APIError {
 }
 
 export class ConflictError extends APIError {
-  constructor(message: string, details?: any) {
+  constructor(message: string, details?: unknown) {
     super(message, 409, 'CONFLICT_ERROR', details);
   }
 }
@@ -64,25 +65,25 @@ export class ExternalServiceError extends APIError {
 }
 
 export class DatabaseError extends APIError {
-  constructor(message: string, details?: any) {
+  constructor(message: string, details?: unknown) {
     super(`Database error: ${message}`, 500, 'DATABASE_ERROR', details);
   }
 }
 
 export class PaymentError extends APIError {
-  constructor(message: string, details?: any) {
+  constructor(message: string, details?: unknown) {
     super(`Payment error: ${message}`, 400, 'PAYMENT_ERROR', details);
   }
 }
 
 export class InsuranceError extends APIError {
-  constructor(message: string, details?: any) {
+  constructor(message: string, details?: unknown) {
     super(`Insurance error: ${message}`, 400, 'INSURANCE_ERROR', details);
   }
 }
 
 // Error response formatter
-export function formatErrorResponse(error: any): {
+export function formatErrorResponse(error: unknown): {
   success: false;
   error: string;
   code?: string;
@@ -133,7 +134,7 @@ export function logError(error: unknown, context?: Record<string, unknown>) {
 
   // Log to console in development (use logger in production)
   if (process.env.NODE_ENV === 'development') {
-    console.error('API Error:', errorInfo);
+    logger.error('API Error:', { errorInfo });
   }
 
   // External logging service integration implemented for production

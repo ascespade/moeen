@@ -5,7 +5,7 @@ import { useT } from '@/hooks/useT';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
-import { logger } from '@/lib/logger';
+import { logger } from '@/lib/utils/logger';
 
 interface Props {
   children: ReactNode;
@@ -150,7 +150,7 @@ function ErrorFallback({ error, onRetry, onGoHome }: ErrorFallbackProps) {
 
 // Hook for functional components
 export function useErrorHandler() {
-  const handleError = (error: Error, errorInfo?: any) => {
+  const handleError = (error: Error, errorInfo?: ErrorInfo) => {
     // Log error
     fetch('/api/errors', {
       method: 'POST',

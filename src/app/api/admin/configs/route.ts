@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
 import { z } from 'zod';
 
+import { logger } from '@/lib/utils/logger';
 const configSchema = z.object({
   key: z.string().min(1, 'Key is required'),
   value: z.string(),

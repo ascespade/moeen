@@ -6,6 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/utils/logger';
 
 // Define protected routes and their required roles
 const PROTECTED_ROUTES: Record<string, string[]> = {
@@ -173,7 +174,9 @@ export async function authMiddleware(request: NextRequest) {
 
     return response;
   } catch (error) {
-    console.error('Auth middleware error:', error);
+    logger.error('Auth middleware error', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     // On error, redirect to login
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
@@ -223,6 +226,7 @@ export async function verifySession(_request: NextRequest): Promise<{
 }
 
 // Legacy function for backward compatibility (uses localStorage token)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function _verifyToken(
   token: string
 ): { id: string; email: string; role: string } | null {

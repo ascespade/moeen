@@ -9,6 +9,7 @@
 
 import React, { Component, ReactNode, ErrorInfo } from 'react';
 import { validateCSSClasses, type ValidationResult } from './validator';
+import { logger } from '@/lib/utils/logger';
 
 interface DesignSystemGuardProps {
   children: ReactNode;
@@ -70,11 +71,11 @@ export class DesignSystemGuard extends Component<
     };
 
     if (!violations.isValid && this.props.strict) {
-      console.error('Design System Violations:', violations);
+      logger.error('Design System Violations:', { violations })
     }
 
     if (warnings.length > 0) {
-      console.warn('Design System Warnings:', warnings);
+      logger.warn('Design System Warnings:', { warnings })
     }
 
     this.setState({ violations });

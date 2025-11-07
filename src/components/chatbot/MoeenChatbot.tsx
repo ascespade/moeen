@@ -1,6 +1,6 @@
 'use client';
 
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 import { useEffect, useRef, useState } from 'react';
 
 interface Message {
@@ -105,7 +105,7 @@ export default function MoeenChatbot({
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      logger.error('Call request error', error);
+      logger.error('Call request error', { error });
 
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -157,7 +157,7 @@ export default function MoeenChatbot({
 
       setMessages(prev => [...prev, assistantMessage]);
     } catch (error) {
-      logger.error('Chatbot error', error);
+      logger.error('Chatbot error', { error });
 
       // Fallback response
       const errorMessage: Message = {

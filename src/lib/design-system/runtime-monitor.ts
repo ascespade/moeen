@@ -1,3 +1,4 @@
+import { logger } from '@/lib/utils/logger';
 /**
  * Runtime Design System Monitor
  * مراقب نظام التصميم في الوقت الفعلي
@@ -26,10 +27,9 @@ if (typeof window !== 'undefined') {
         const className = element.getAttribute('class') || '';
         // Skip if already using CSS variables
         if (!className.includes('var(--')) {
-          console.warn(
+          logger.warn(
             `⚠️ Design System Violation: Found "${pattern}" in element:`,
-            element,
-            '\n💡 Use CSS variables instead: bg-[var(--background)]'
+            { element, suggestion: 'Use CSS variables instead: bg-[var(--background)]' }
           );
 
           // Highlight in development

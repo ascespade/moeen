@@ -115,7 +115,7 @@ interface Notification {
     templateId?: string;
     campaignId?: string;
     tags?: string[];
-    customFields?: Record<string, any>;
+    customFields?: Record<string, unknown>;
   };
 }
 

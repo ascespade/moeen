@@ -38,12 +38,12 @@ export async function GET() {
       responseTime,
       uptime: process.uptime(),
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         status: 'unhealthy',
         timestamp: new Date().toISOString(),
-        error: error.message,
+        error: error instanceof Error ? error.message : String(error),
         responseTime: 0,
       },
       { status: 500 }

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ROUTES } from '@/constants/routes';
 import Link from 'next/link';
 import Image from 'next/image';
+import { logger } from '@/lib/utils/logger';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -84,7 +85,7 @@ export default function RegisterPage() {
       setSuccess(true);
       setFormData({ name: '', email: '', password: '', confirmPassword: '', agreeToTerms: false });
     } catch (error) {
-      console.error('Registration error:', error);
+      logger.error('Registration error:', { error })
       setErrors({ general: 'حدث خطأ أثناء الاتصال بالخادم. حاول مرة أخرى.' });
     } finally {
       setIsLoading(false);

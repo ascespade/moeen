@@ -1,5 +1,5 @@
 'use client';
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 import { useCallback } from 'react';
 import { useT } from '@/hooks/useT';
@@ -56,7 +56,9 @@ export function useErrorHandler() {
           }).catch(error => {
             // Silently fail - error logging service unavailable
             if (process.env.NODE_ENV === 'development') {
-              console.error('Failed to log error to service:', error);
+              logger.error('Failed to log error to service', {
+                error: error instanceof Error ? error.message : String(error),
+              });
             }
           });
         }

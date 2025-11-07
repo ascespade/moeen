@@ -6,13 +6,13 @@ import {
   Clock,
   User,
   Phone,
-  // _Mail,
-  // _MapPin,
+  Mail,
+  MapPin,
   Plus,
   Edit,
   Trash2,
-  // _CheckCircle,
-  // _XCircle,
+  CheckCircle,
+  XCircle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -264,7 +264,7 @@ const AppointmentManager: React.FC = () => {
 
       {/* فلاتر */}
       <div className='flex gap-4 items-center'>
-        <Select value={filter} onValueChange={(value: any) => setFilter(value)}>
+        <Select value={filter} onValueChange={(value: string) => setFilter(value)}>
           <SelectTrigger className='w-48'>
             <span className='text-gray-400'>فلترة المواعيد</span>
           </SelectTrigger>

@@ -109,7 +109,8 @@ interface Doctor {
 }
 
 export default function DoctorsPage() {
-  const { } = useT();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { t } = useT();
   const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [loading, setLoading] = useState(true);
@@ -601,27 +602,27 @@ export default function DoctorsPage() {
     );
   };
 
-  // getGenderBadge function not used
-  // const getGenderBadge = (gender: string) => {
-  //   return gender === 'male' ? (
-  //     <Badge variant='outline' className='bg-blue-100 text-blue-800'>
-  //       ذكر
-  //     </Badge>
-  //   ) : (
-  //     <Badge variant='outline' className='bg-pink-100 text-pink-800'>
-  //       أنثى
-  //     </Badge>
-  //   );
-  // };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getGenderBadge = (gender: string) => {
+    return gender === 'male' ? (
+      <Badge variant='outline' className='bg-blue-100 text-blue-800'>
+        ذكر
+      </Badge>
+    ) : (
+      <Badge variant='outline' className='bg-pink-100 text-pink-800'>
+        أنثى
+      </Badge>
+    );
+  };
 
-  // formatDate function not used
-  // const formatDate = (dateString: string) => {
-  //   return new Date(dateString).toLocaleDateString('ar-SA', {
-  //     year: 'numeric',
-  //     month: 'short',
-  //     day: 'numeric',
-  //   });
-  // };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('ar-SA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
 
   const calculateAge = (dateOfBirth: string) => {
     const today = new Date();

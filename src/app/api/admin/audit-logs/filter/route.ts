@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -97,7 +98,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: auditLogs, error: auditError, count } = await query;
 
     if (auditError) {
-      console.error('Error fetching audit logs:', auditError);
+      logger.error('Error fetching audit logs:', { error: auditError });
       return NextResponse.json(
         {
           error: 'Failed to fetch audit logs',
@@ -108,7 +109,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     }
 
     // Transform data
-    const transformedLogs = (auditLogs || []).map((log: any) => ({
+    const transformedLogs = (auditLogs || []).map((log: unknown) => ({
       id: log.id,
       user: log.users?.full_name || log.users?.email || 'مستخدم غير معروف',
       userRole: log.users?.role || '',
@@ -154,7 +155,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    console.error('Error in audit logs filter API:', error);
+    logger.error('Error in audit logs filter API:', { error });
     return NextResponse.json(
       {
         error: 'Internal server error',
@@ -237,13 +238,13 @@ function getResourceDisplayName(resource: string): string {
   return resourceNames[resource] || resource;
 }
 
-function extractDetails(details: any): string {
+function extractDetails(details: unknown): string {
   try {
     if (typeof details === 'string') {
       const parsed = JSON.parse(details);
       return parsed.description || parsed.message || details;
     }
-    return (details as any)?.description || (details as any)?.message || 'لا توجد تفاصيل';
+    return (details as unknown)?.description || (details as unknown)?.message || 'لا توجد تفاصيل';
   } catch {
     return details?.toString() || 'لا توجد تفاصيل';
   }
@@ -272,7 +273,7 @@ function formatTimestamp(timestamp: string): string {
   });
 }
 
-async function getAuditStats(supabase: any, filters: any) {
+async function getAuditStats(supabase: unknown, filters: unknown) {
   // Get total counts by status
   const { data: statusCounts } = await supabase
     .from('audit_logs')
@@ -286,13 +287,13 @@ async function getAuditStats(supabase: any, filters: any) {
   const stats = {
     total: statusCounts?.length || 0,
     success:
-      statusCounts?.filter((log: any) => log.status === 'success').length ||
+      statusCounts?.filter((log: unknown) => log.status === 'success').length ||
       0,
     failed:
-      statusCounts?.filter((log: any) => log.status === 'failed').length ||
+      statusCounts?.filter((log: unknown) => log.status === 'failed').length ||
       0,
     warning:
-      statusCounts?.filter((log: any) => log.status === 'warning').length ||
+      statusCounts?.filter((log: unknown) => log.status === 'warning').length ||
       0,
   };
 

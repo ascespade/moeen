@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { requireAuth } from '@/lib/auth/authorize';
 
+import { logger } from '@/lib/utils/logger';
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -51,7 +52,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     const totalRevenue =
       paymentsData?.reduce(
-        (sum: number, p: any) => sum + (p.amount || 0),
+        (sum: number, p: unknown) => sum + (p.amount || 0),
         0
       ) || 0;
 

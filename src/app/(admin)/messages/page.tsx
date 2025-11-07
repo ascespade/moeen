@@ -71,7 +71,6 @@ import {
   Settings,
   TrendingUp,
   Target,
-  // FileText,
   Paperclip,
   Inbox,
   Send as Outbox,
@@ -129,13 +128,15 @@ interface Message {
   metadata?: {
     templateId?: string;
     campaignId?: string;
-    customFields?: Record<string, any>;
+    customFields?: Record<string, unknown>;
   };
 }
 
 function MessagesPageContent() {
-  const { } = useT();
-  const { } = usePermissions({ userRole: 'admin' });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { t } = useT();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { hasPermission } = usePermissions({ userRole: 'admin' });
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [loading, setLoading] = useState(true);

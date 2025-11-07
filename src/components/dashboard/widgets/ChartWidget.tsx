@@ -173,7 +173,7 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
 
   const renderBarChart = (
     labels: string[],
-    datasets: any[],
+    datasets: unknown[],
     maxValue: number,
     width: number,
     height: number,
@@ -252,7 +252,7 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
 
   const renderLineChart = (
     labels: string[],
-    datasets: any[],
+    datasets: unknown[],
     maxValue: number,
     width: number,
     height: number,
@@ -275,8 +275,8 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
       // Area fill
       if (isArea) {
         const areaPoints =
-          points +
-          ` ${width - padding},${height - padding} ${padding},${height - padding}`;
+          `${points 
+          } ${width - padding},${height - padding} ${padding},${height - padding}`;
         elements.push(
           <polygon
             key={`area-${datasetIndex}`}
@@ -332,7 +332,7 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
   };
 
   const renderPieChart = (
-    datasets: any[],
+    datasets: unknown[],
     width: number,
     height: number,
     isDoughnut: boolean

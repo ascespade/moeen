@@ -4,6 +4,7 @@ import React from 'react';
 import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
 import { DashboardLayout } from '@/components/dashboard/layouts/DashboardLayout';
 import PatientDashboard from '@/components/dashboard/widgets/PatientDashboard';
+import { logger } from '@/lib/utils/logger';
 import {
   Heart,
   Calendar,
@@ -78,10 +79,10 @@ export default function PatientDashboardPage() {
             role: 'مريض',
             avatar: undefined,
           },
-          onSearch: query => console.log('Search:', query),
+          onSearch: query => logger.info('Search:', query),
           showNotifications: true,
           notificationCount: 2,
-          onNotificationsClick: () => console.log('Show notifications'),
+          onNotificationsClick: () => logger.info('Show notifications'),
         }}
         sidebar={{
           navigation: patientNavigation,

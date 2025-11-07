@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { z } from 'zod';
 import { requireAuth } from '@/lib/auth/authorize';
-// import { PermissionManager } from '@/lib/permissions';
+import { _PermissionManager } from '@/lib/permissions';
+import { logger } from '@/lib/utils/logger';
 
 const sessionSchema = z.object({
   patient_id: z.string().uuid('Invalid patient ID'),
@@ -60,7 +61,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    console.error('Error fetching sessions:', error);
+    logger.error('Error fetching sessions:', { error });
     return NextResponse.json(
       { error: 'Failed to fetch sessions' },
       { status: 500 }
@@ -88,7 +89,7 @@ export async function POST(request: NextRequest) {
       message: 'Session created successfully',
     });
   } catch (error) {
-    console.error('Error creating session:', error);
+    logger.error('Error creating session:', { error });
     return NextResponse.json(
       { error: 'Failed to create session' },
       { status: 500 }

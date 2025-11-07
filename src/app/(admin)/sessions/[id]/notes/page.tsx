@@ -1,6 +1,6 @@
 'use client';
 
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 import { createClient } from '@/lib/supabase/client';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -76,10 +76,11 @@ export default function SessionNotesPage() {
 
         // Get current progress for each goal
         const goalsWithProgress = await Promise.all(
-          (goalsData || []).map(async (goal: any) => {
+          (goalsData || []).map(async (goal: unknown) => {
+            const goalTyped = goal as { id: string };
             const { data: progressData } = await supabase.rpc(
               'calculate_goal_progress',
-              { p_goal_id: goal.id }
+              { p_goal_id: goalTyped.id }
             );
 
             return {
@@ -92,7 +93,7 @@ export default function SessionNotesPage() {
         setGoals(goalsWithProgress);
       }
     } catch (error) {
-      logger.error('Error loading session data', error);
+      logger.error('Error loading session data', { error });
       alert('خطأ في تحميل البيانات');
     } finally {
       setLoading(false);
@@ -156,9 +157,9 @@ export default function SessionNotesPage() {
 
       alert('✅ تم حفظ ملاحظات الجلسة بنجاح!\n\nسيتم إرسال تحديث للأسرة.');
       router.push('/admin/appointments');
-    } catch (error: any) {
-      logger.error('Error saving session notes', error);
-      alert(`خطأ: ${error.message || 'فشل في حفظ الملاحظات'}`);
+    } catch (error: unknown) {
+      logger.error('Error saving session notes', { error });
+      alert(`خطأ: ${(error instanceof Error ? error.message : String(error)) || 'فشل في حفظ الملاحظات'}`);
     } finally {
       setSaving(false);
     }

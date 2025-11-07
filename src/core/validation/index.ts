@@ -336,7 +336,7 @@ export class ValidationHelper {
   public static validate<T>(
     schema: z.ZodSchema<T>,
     data: unknown,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): { success: true; data: T } | { success: false; error: ValidationError } {
     try {
       const validatedData = schema.parse(data);
@@ -359,7 +359,7 @@ export class ValidationHelper {
   public static async validateAsync<T>(
     schema: z.ZodSchema<T>,
     data: unknown,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): Promise<
     { success: true; data: T } | { success: false; error: ValidationError }
   > {
@@ -387,9 +387,9 @@ export class ValidationHelper {
   public static validateQueryParams<T>(
     schema: z.ZodSchema<T>,
     searchParams: URLSearchParams,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): { success: true; data: T } | { success: false; error: ValidationError } {
-    const params: Record<string, any> = {};
+    const params: Record<string, unknown> = {};
 
     for (const [key, value] of searchParams.entries()) {
       // Try to parse as number
@@ -412,7 +412,7 @@ export class ValidationHelper {
   public static validateRequestBody<T>(
     schema: z.ZodSchema<T>,
     body: unknown,
-    context?: Record<string, any>
+    context?: Record<string, unknown>
   ): { success: true; data: T } | { success: false; error: ValidationError } {
     return this.validate(schema, body, context);
   }
@@ -421,9 +421,9 @@ export class ValidationHelper {
 // Middleware for API Routes
 export const validateRequest = <T>(
   schema: z.ZodSchema<T>,
-  context?: Record<string, any>
+  context?: Record<string, unknown>
 ) => {
-  return (req: any, res: any, next: any) => {
+  return (req: unknown, res: unknown, next: unknown) => {
     const validation = ValidationHelper.validateRequestBody(
       schema,
       req.body,
@@ -444,9 +444,9 @@ export const validateRequest = <T>(
 
 export const validateQuery = <T>(
   schema: z.ZodSchema<T>,
-  context?: Record<string, any>
+  context?: Record<string, unknown>
 ) => {
-  return (req: any, res: any, next: any) => {
+  return (req: unknown, res: unknown, next: unknown) => {
     const searchParams = new URLSearchParams(req.url.split('?')[1] || '');
     const validation = ValidationHelper.validateQueryParams(
       schema,

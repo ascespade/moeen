@@ -69,7 +69,10 @@ export const isNotEmpty = (value: unknown): boolean => {
 };
 
 export const isNumeric = (value: unknown): boolean => {
-  return !isNaN(parseFloat(value)) && isFinite(value);
+  if (typeof value === 'string' || typeof value === 'number') {
+    return !isNaN(parseFloat(String(value))) && isFinite(Number(value));
+  }
+  return false;
 };
 
 export const isInteger = (value: unknown): boolean => {
@@ -96,7 +99,7 @@ export const matchesPattern = (value: string, pattern: RegExp): boolean => {
   return pattern.test(value);
 };
 
-export const validateForm = <T extends Record<string, any>>(
+export const validateForm = <T extends Record<string, unknown>>(
   data: T,
   rules: Record<
     keyof T,

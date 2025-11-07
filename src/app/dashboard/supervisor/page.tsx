@@ -4,11 +4,11 @@ import {
   Users,
   TrendingUp,
   AlertTriangle,
-  // CheckCircle,
+  CheckCircle,
   Clock,
   FileText,
   BarChart3,
-  // Settings,
+  Settings,
 } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 

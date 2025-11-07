@@ -1,13 +1,14 @@
 /**
  * useLocalStorage Hook - Custom Hook for Local Storage
  * خطاف useLocalStorage - خطاف مخصص للتخزين المحلي
- * 
+ *
  * React hook for managing localStorage with React state
  */
 
 'use client';
 
 import { useState, useEffect } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 /**
  * Hook to manage localStorage
@@ -22,7 +23,9 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       const item = window.localStorage.getItem(key);
       return item ? (JSON.parse(item) as T) : initialValue;
     } catch (error) {
-      console.error(`Error reading localStorage key "${key}":`, error);
+      logger.error(`Error reading localStorage key "${key}"`, {
+        error: error instanceof Error ? error.message : String(error),
+      });
       return initialValue;
     }
   });
@@ -36,7 +39,9 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {
-      console.error(`Error setting localStorage key "${key}":`, error);
+      logger.error(`Error setting localStorage key "${key}"`, {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   };
 
@@ -47,7 +52,9 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         window.localStorage.removeItem(key);
       }
     } catch (error) {
-      console.error(`Error removing localStorage key "${key}":`, error);
+      logger.error(`Error removing localStorage key "${key}"`, {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   };
 

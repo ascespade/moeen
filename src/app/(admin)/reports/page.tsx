@@ -98,15 +98,15 @@ interface Report {
     dateRange?: { start: string; end: string };
     departments?: string[];
     users?: string[];
-    customFilters?: Record<string, any>;
+    customFilters?: Record<string, unknown>;
   };
   data?: {
     totalRecords: number;
-    summary: Record<string, any>;
+    summary: Record<string, unknown>;
     charts?: Array<{
       type: string;
       title: string;
-      data: any[];
+      data: unknown[];
     }>;
   };
   permissions: string[];
@@ -460,7 +460,7 @@ export default function ReportsPage() {
     const k = 1024;
     const sizes = ['B', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(2))  } ${  sizes[i]}`;
   };
 
   const formatDate = (dateString: string) => {

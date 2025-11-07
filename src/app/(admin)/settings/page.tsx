@@ -49,8 +49,8 @@ export default function SettingsPage() {
                 { id: 'templates', label: 'القوالب', icon: '📝' },
               ].map(tab => (
                 <button key={tab.id}
-                  onClick={() => { setActiveTab(tab.id as any) }}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab(tab.id as any); } }}
+                  onClick={() => { setActiveTab(tab.id as 'api' | 'notifications' | 'general' | 'integrations' | 'templates') }}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab(tab.id as 'api' | 'notifications' | 'general' | 'integrations' | 'templates'); } }}
                   aria-label={tab.label}
                   className={`flex w-full items-center gap-3 rounded-lg px-4 py-3 text-right transition-colors ${
                     activeTab === tab.id

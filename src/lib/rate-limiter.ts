@@ -1,4 +1,3 @@
-import { NextRequest } from 'next/server';
 
 interface RateLimitConfig {
   windowMs: number;

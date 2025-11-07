@@ -43,6 +43,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
+import { logger } from '@/lib/utils/logger';
 import {
   MessageSquare,
   Search,
@@ -138,7 +139,7 @@ interface Message {
     sentiment?: 'positive' | 'negative' | 'neutral';
     intent?: string;
     confidence?: number;
-    entities?: any[];
+    entities?: unknown[];
   };
 }
 
@@ -177,7 +178,7 @@ function ConversationsPageContent() {
           setTotalPages(0);
         }
       } catch (error) {
-        console.error('Error fetching conversations:', error);
+        logger.error('Error fetching conversations:', { error })
         setConversations([]);
         setTotalPages(0);
       } finally {
@@ -528,14 +529,14 @@ function ConversationsPageContent() {
     );
   };
 
-  // Format date function not used
-  // const _formatDate = (dateString: string) => {
-  //   return new Date(dateString).toLocaleDateString('ar-SA', {
-  //     year: 'numeric',
-  //     month: 'short',
-  //     day: 'numeric',
-  //   });
-  // };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('ar-SA', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
 
   const formatTime = (dateString: string) => {
     return new Date(dateString).toLocaleTimeString('ar-SA', {

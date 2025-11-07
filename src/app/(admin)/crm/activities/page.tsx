@@ -85,23 +85,23 @@ export default function CRMActivitiesPage() {
     }
   };
 
-  // getTypeText function not used
-  // const getTypeText = (type: Activity['type']) => {
-  //   switch (type) {
-  //     case 'call':
-  //       return 'مكالمة';
-  //     case 'meeting':
-  //       return 'اجتماع';
-  //     case 'email':
-  //       return 'بريد إلكتروني';
-  //     case 'task':
-  //       return 'مهمة';
-  //     case 'note':
-  //       return 'ملاحظة';
-  //     default:
-  //       return 'نشاط';
-  //   }
-  // };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const getTypeText = (type: Activity['type']) => {
+    switch (type) {
+      case 'call':
+        return 'مكالمة';
+      case 'meeting':
+        return 'اجتماع';
+      case 'email':
+        return 'بريد إلكتروني';
+      case 'task':
+        return 'مهمة';
+      case 'note':
+        return 'ملاحظة';
+      default:
+        return 'نشاط';
+    }
+  };
 
   const getStatusColor = (status: Activity['status']) => {
     switch (status) {

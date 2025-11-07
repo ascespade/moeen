@@ -3,7 +3,7 @@
  * Provides helper functions for database operations with CUID support
  */
 
-import { generatePublicId, cuidEntity } from '@/lib/cuid';
+import {cuidEntity} from '@/lib/cuid';
 
 /**
  * Database helper functions for CUID generation and management
@@ -44,7 +44,7 @@ export class DatabaseUtils {
   /**
    * Create database insert data with auto-generated public_id
    */
-  static createInsertData<T extends Record<string, any>>(
+  static createInsertData<T extends Record<string, unknown>>(
     entityType: keyof typeof cuidEntity,
     data: Omit<T, 'id' | 'public_id'>
   ): T {
@@ -57,7 +57,7 @@ export class DatabaseUtils {
   /**
    * Create multiple insert records with auto-generated public_ids
    */
-  static createMultipleInsertData<T extends Record<string, any>>(
+  static createMultipleInsertData<T extends Record<string, unknown>>(
     entityType: keyof typeof cuidEntity,
     dataArray: Array<Omit<T, 'id' | 'public_id'>>
   ): T[] {
@@ -122,8 +122,8 @@ export class EntityOperations {
    * Patient operations
    */
   static patients = {
-    create: (data: any) => DatabaseUtils.createInsertData('patient', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('patient', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('patient', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -132,8 +132,8 @@ export class EntityOperations {
    * Appointment operations
    */
   static appointments = {
-    create: (data: any) => DatabaseUtils.createInsertData('appointment', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('appointment', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('appointment', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -142,8 +142,8 @@ export class EntityOperations {
    * Session operations
    */
   static sessions = {
-    create: (data: any) => DatabaseUtils.createInsertData('session', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('session', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('session', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -152,8 +152,8 @@ export class EntityOperations {
    * Chatbot flow operations
    */
   static chatbotFlows = {
-    create: (data: any) => DatabaseUtils.createInsertData('flow', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('flow', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('flow', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -162,8 +162,8 @@ export class EntityOperations {
    * CRM lead operations
    */
   static crmLeads = {
-    create: (data: any) => DatabaseUtils.createInsertData('lead', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('lead', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('lead', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -172,8 +172,8 @@ export class EntityOperations {
    * CRM deal operations
    */
   static crmDeals = {
-    create: (data: any) => DatabaseUtils.createInsertData('deal', data),
-    createMultiple: (dataArray: any[]) =>
+    create: (data: unknown) => DatabaseUtils.createInsertData('deal', data),
+    createMultiple: (dataArray: unknown[]) =>
       DatabaseUtils.createMultipleInsertData('deal', dataArray),
     findByPublicId: (publicId: string) => QueryBuilder.wherePublicId(publicId),
   };
@@ -186,7 +186,7 @@ export class DatabaseValidation {
   /**
    * Validate required fields for entity creation
    */
-  static validateRequiredFields<T extends Record<string, any>>(
+  static validateRequiredFields<T extends Record<string, unknown>>(
     data: T,
     requiredFields: (keyof T)[]
   ): { isValid: boolean; errors: string[] } {
@@ -254,7 +254,7 @@ export class MigrationHelpers {
   static createMigrationLog(
     migrationName: string,
     status: 'started' | 'completed' | 'failed',
-    details?: any
+    details?: unknown
   ) {
     return {
       migration: migrationName,

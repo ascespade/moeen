@@ -11,6 +11,7 @@ import {
   type AdvancedThemeSettings,
 } from '@/lib/theme-settings';
 import { useCallback, useEffect, useRef } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 export interface ThemeMonitorOptions {
   enabled?: boolean;
@@ -128,13 +129,13 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
               ) {
                 // SVGAnimatedString case
                 classNameStr =
-                  (element.className as any).baseVal?.split(' ')[0] || '';
+                  (element.className as unknown).baseVal?.split(' ')[0] || '';
               } else if (
                 typeof element.className === 'object' &&
                 'value' in element.className
               ) {
                 classNameStr =
-                  (element.className as any).value?.split(' ')[0] || '';
+                  (element.className as unknown).value?.split(' ')[0] || '';
               }
             }
           } catch (e) {
@@ -160,7 +161,7 @@ export function useThemeMonitor(options: ThemeMonitorOptions) {
           lastAdjustedRef.current.set(element, now);
         }
       } catch (error) {
-        console.warn('Failed to apply theme adjustments:', error);
+        logger.warn('Failed to apply theme adjustments:', { error })
       }
     },
     [enabled, mode, onAdjustment, onReport]

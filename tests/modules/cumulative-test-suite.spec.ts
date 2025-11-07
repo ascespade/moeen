@@ -10,7 +10,7 @@ test.describe('Complete Cumulative Test Suite - Moeen Medical Center', () => {
   let testUserId: string | null = null;
   let testPatientId: string | null = null;
   let testAppointmentId: string | null = null;
-  let testDoctorId: string | null = null;
+  const testDoctorId: string | null = null;
 
   // ========================================
   // PHASE 1: Authentication & Setup

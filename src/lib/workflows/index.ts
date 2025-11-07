@@ -264,7 +264,7 @@ export const RECEPTION_STAFF_WORKFLOW: Workflow = {
 /**
  * Insurance Workflow: From Doctor to Reception
  */
-export const INSURANCE_WORKFLOW: Workflow = {
+const INSURANCE_WORKFLOW: Workflow = {
   id: 'insurance-workflow',
   name: 'Insurance Workflow',
   description: 'Workflow for insurance claims from doctor to reception',

@@ -2,6 +2,7 @@
 
 import { AdminCard } from '@/components/admin/ui';
 import { Input } from '@/components/ui/Input';
+import { logger } from '@/lib/utils/logger';
 import { Label } from '@/components/ui/Label';
 import {
   Select,
@@ -106,7 +107,7 @@ export default function GeneralSettings({ onChange }: GeneralSettingsProps) {
           setConfig(prev => ({ ...prev, ...result.data }));
         }
       } catch (error) {
-        console.error('Error loading general settings:', error);
+        logger.error('Error loading general settings', { error: error instanceof Error ? error.message : String(error) });
       } finally {
         setLoading(false);
       }
@@ -130,27 +131,27 @@ export default function GeneralSettings({ onChange }: GeneralSettingsProps) {
     onChange();
   };
 
-  // const _saveSettings = async () => {
-  //   if (onSave) {
-  //     await onSave(config);
-  //   } else {
-  //     // Default save to API
-  //     try {
-  //       const response = await fetch('/api/admin/settings/general', {
-  //         method: 'POST',
-  //         headers: { 'Content-Type': 'application/json' },
-  //         body: JSON.stringify(config),
-  //       });
-  //
-  //       if (!response.ok) {
-  //         throw new Error('Failed to save settings');
-  //       }
-  //     } catch (error) {
-  //       console.error('Error saving general settings:', error);
-  //       throw error;
-  //     }
-  //   }
-  // };
+  const _saveSettings = async () => {
+    if (onSave) {
+      await onSave(config);
+    } else {
+      // Default save to API
+      try {
+        const response = await fetch('/api/admin/settings/general', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(config),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to save settings');
+        }
+      } catch (error) {
+        logger.error('Error saving general settings', { error: error instanceof Error ? error.message : String(error) });
+        throw error;
+      }
+    }
+  };
 
   const toggleWorkDay = (day: string) => {
     const newDays = config.businessHours.days.includes(day)

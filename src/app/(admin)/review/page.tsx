@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
+import { logger } from '@/lib/utils/logger';
 
 type Item = { id: string; user: string; suggestion: string; createdAt: string };
 
@@ -23,7 +24,7 @@ function ReviewCenterPageContent() {
           setRows([]);
         }
       } catch (error) {
-        console.error('Error loading review items:', error);
+        logger.error('Error loading review items:', { error })
         setRows([]);
       } finally {
         setLoading(false);

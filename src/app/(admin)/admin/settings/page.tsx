@@ -25,6 +25,7 @@ import IntegrationSettings from '@/components/admin/settings/IntegrationSettings
 import ModuleSettings from '@/components/admin/settings/ModuleSettings';
 import NotificationSettings from '@/components/admin/settings/NotificationSettings';
 import SecuritySettings from '@/components/admin/settings/SecuritySettings';
+import { logger } from '@/lib/utils/logger';
 
 type SettingsTab =
   | 'general'
@@ -125,7 +126,7 @@ function AdminSettingsPageContent() {
         throw new Error('Failed to save settings');
       }
     } catch (error) {
-      console.error('Error saving settings:', error);
+      logger.error('Error saving settings:', { error })
       alert('حدث خطأ أثناء حفظ الإعدادات. يرجى المحاولة مرة أخرى.');
     } finally {
       setIsSaving(false);

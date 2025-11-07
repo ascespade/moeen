@@ -238,7 +238,7 @@ export class SecurityMiddleware {
 
     const response = NextResponse.json({}, { status: 200 });
 
-    response.headers.set('Access-Control-Allow-Origin', origin);
+    response.headers.set('Access-Control-Allow-Origin', origin || '*');
     response.headers.set(
       'Access-Control-Allow-Methods',
       this.config.allowedMethods.join(', ')

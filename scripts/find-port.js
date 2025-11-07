@@ -14,7 +14,7 @@ import { createServer } from 'net';
  */
 function findAvailablePort(basePort = 3000, maxAttempts = 100) {
   return new Promise((resolve, reject) => {
-    let currentPort = basePort;
+    const currentPort = basePort;
     let attempts = 0;
 
     const tryPort = (port) => {

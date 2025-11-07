@@ -569,7 +569,7 @@ test.describe('Comprehensive System Tests', () => {
     const tsFiles = this.findFiles('.ts', '.tsx');
     for (const file of tsFiles) {
       try {
-        let content = fs.readFileSync(file, 'utf8');
+        const content = fs.readFileSync(file, 'utf8');
         let modified = false;
 
         // إزالة الـ imports غير المستخدمة

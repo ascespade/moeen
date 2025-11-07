@@ -24,7 +24,7 @@ export interface MoeenContext {
     timestamp: Date;
   }>;
   currentIntent?: string;
-  entities?: Record<string, any>;
+  entities?: Record<string, unknown>;
   appointmentContext?: {
     type?: string;
     date?: Date;
@@ -183,8 +183,8 @@ export class MoeenChatbot {
    * Extract entities from message
    * استخراج الكيانات من الرسالة
    */
-  extractEntities(message: string): Record<string, any> {
-    const entities: Record<string, any> = {};
+  extractEntities(message: string): Record<string, unknown> {
+    const entities: Record<string, unknown> = {};
 
     // Date patterns
     const datePatterns = [
@@ -256,7 +256,7 @@ export class MoeenChatbot {
   }
 
   private handleBookAppointment(
-    entities: Record<string, any>,
+    entities: Record<string, unknown>,
     _context: MoeenContext
   ): string {
     if (!entities.date || !entities.time) {
@@ -267,7 +267,7 @@ export class MoeenChatbot {
   }
 
   private handleRescheduleAppointment(
-    _entities: Record<string, any>,
+    _entities: Record<string, unknown>,
     _context: MoeenContext
   ): string {
     return 'حسناً، سأساعدك في إعادة الجدولة. يرجى إخباري برقم الموعد الحالي والتاريخ والوقت الجديدين المفضلين لديك.';

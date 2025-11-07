@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
+import { logger } from '@/lib/utils/logger';
 import {
   BarChart3,
   Calendar,
@@ -94,7 +95,8 @@ export default function ModernAdminDashboard() {
     'today' | 'week' | 'month' | 'year'
   >('month');
 
-  const [isGridEditable] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isGridEditable, setIsGridEditable] = useState(false);
   const localizedNumber = useLocalizedNumber();
 
   // Use the new hook for real data
@@ -223,10 +225,10 @@ export default function ModernAdminDashboard() {
         props: {
           notifications: mockNotifications,
           maxHeight: 400,
-          onMarkAsRead: (id: string) => console.log('Mark as read:', id),
-          onMarkAllAsRead: () => console.log('Mark all as read'),
-          onActionClick: (notification: any) =>
-            console.log('Action:', notification),
+          onMarkAsRead: (id: string) => logger.info('Mark as read:', { id }),
+          onMarkAllAsRead: () => logger.info('Mark all as read'),
+          onActionClick: (notification: unknown) =>
+            logger.info('Action:', { notification }),
         },
       },
     ],
@@ -270,15 +272,15 @@ export default function ModernAdminDashboard() {
             isEditable={isGridEditable}
             onItemChange={items => {
               // Handle layout changes
-              console.log('Layout changed:', items);
+              logger.info('Layout changed:', { items });
             }}
             onItemAdd={() => {
               // Handle adding new widget
-              console.log('Add new widget');
+              logger.info('Add new widget');
             }}
             onItemRemove={id => {
               // Handle removing widget
-              console.log('Remove widget:', id);
+              logger.info('Remove widget:', { id });
             }}
             className='mb-8'
           />

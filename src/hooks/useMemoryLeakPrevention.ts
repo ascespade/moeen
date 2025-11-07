@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
+import { logger } from '@/lib/utils/logger';
 // Hook to prevent memory leaks by cleaning up resources
 export const useMemoryLeakPrevention = () => {
   const cleanupFunctions = useRef<Array<() => void>>([]);
@@ -11,7 +12,9 @@ export const useMemoryLeakPrevention = () => {
     cleanupFunctions.current.forEach(fn => {
       try {
         fn();
-      } catch (error) { console.error(error); }
+      } catch (error) {
+        logger.error('Error', { error });
+      }
     });
     cleanupFunctions.current = [];
   }, []);

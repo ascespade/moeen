@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 import { requireAuth } from '@/lib/auth/authorize';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {

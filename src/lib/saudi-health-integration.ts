@@ -164,7 +164,7 @@ export class SaudiHealthSystemIntegration {
   }
 
   private mapSehaToHealthRecord(sehaData: unknown): SaudiHealthRecord {
-    const data = sehaData as any;
+    const data = sehaData as unknown;
     return {
       nationalId: data.nationalId,
       fullName: data.fullName,
@@ -430,8 +430,8 @@ export class SaudiHealthSystemIntegration {
   private async callSehaAPI(
     _method: string,
     _endpoint: string,
-    data?: any
-  ): Promise<any> {
+    data?: unknown
+  ): Promise<unknown> {
     // In real implementation, this would make actual API calls
     // Mock response for development
     return {
@@ -477,8 +477,8 @@ export class SaudiHealthSystemIntegration {
     _provider: InsuranceProvider,
     _method: string,
     _endpoint: string,
-    _data?: any
-  ): Promise<any> {
+    _data?: unknown
+  ): Promise<unknown> {
     // In real implementation, this would make actual API calls to insurance providers
     // Mock response for development
     return {

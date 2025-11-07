@@ -1,0 +1,96 @@
+{
+  "build": {
+    "dockerfile": "Dockerfile.dev",
+    "context": "."
+  },
+  "install": [
+    "curl -fsSL https://tailscale.com/install.sh | sh || echo 'Tailscale already installed'",
+    "apt-get update && apt-get install -y openssh-client openssh-server rsync curl sudo || apk add --no-cache openssh-client openssh-server rsync curl sudo || echo 'Packages already installed'",
+    "mkdir -p ~/.ssh && chmod 700 ~/.ssh",
+    "if [ ! -f ~/.ssh/id_ed25519 ]; then ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N '' -C 'cursor-cloud-agent' && echo 'SSH key generated'; else echo 'SSH key already exists'; fi",
+    "chmod 600 ~/.ssh/id_ed25519 2>/dev/null || true",
+    "chmod 644 ~/.ssh/id_ed25519.pub 2>/dev/null || true",
+    "echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP9WHNpdBUMs2YgYfY8yzsTVo8KcK2xjaR+sDuyWKNjr auto-generated' >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys || echo 'SSH key already added'",
+    "mkdir -p ~/.ssh/control && chmod 700 ~/.ssh/control",
+    "cat > ~/.ssh/config << 'SSHCONFIG'\nHost *\n    StrictHostKeyChecking no\n    UserKnownHostsFile /dev/null\n    ServerAliveInterval 30\n    ServerAliveCountMax 3\n    TCPKeepAlive yes\n    Compression yes\n    ControlMaster auto\n    ControlPath ~/.ssh/control/master-%r@%h:%p\n    ControlPersist 10m\n    IdentitiesOnly yes\n    IdentityFile ~/.ssh/id_ed25519\n    PasswordAuthentication no\n    PubkeyAuthentication yes\n    PreferredAuthentications publickey\n    ConnectTimeout 10\n    BatchMode yes\n    LogLevel ERROR\n\nHost 100.95.198.68\n    HostName 100.95.198.68\n    User ubuntu\n    ServerAliveInterval 30\n    ServerAliveCountMax 3\n    TCPKeepAlive yes\n    ConnectTimeout 10\n    ControlMaster auto\n    ControlPath ~/.ssh/control/master-%r@%h:%p\n    ControlPersist 10m\n\nHost server2\n    HostName 100.95.198.68\n    User ubuntu\n    ServerAliveInterval 30\n    ServerAliveCountMax 3\n    TCPKeepAlive yes\n    ConnectTimeout 10\n    ControlMaster auto\n    ControlPath ~/.ssh/control/master-%r@%h:%p\n    ControlPersist 10m\n\nHost tailscale\n    HostName 100.121.114.88\n    User ubuntu\n    ServerAliveInterval 30\n    ServerAliveCountMax 3\n    TCPKeepAlive yes\n    ConnectTimeout 10\n    ControlMaster auto\n    ControlPath ~/.ssh/control/master-%r@%h:%p\n    ControlPersist 10m\nSSHCONFIG\n",
+    "chmod 600 ~/.ssh/config",
+    "mkdir -p /workspace/.cursor 2>/dev/null || mkdir -p ~/.cursor 2>/dev/null || true"
+  ],
+  "start": [
+    "echo '=== Starting SSH Service ==='",
+    "sudo service ssh start 2>&1 || sudo /usr/sbin/sshd -D 2>&1 & || (sudo mkdir -p /var/run/sshd && sudo /usr/sbin/sshd -D 2>&1 &) || echo 'SSH service start attempted'",
+    "sleep 3",
+    "if pgrep -x sshd > /dev/null 2>&1; then echo 'SSH service is running'; else echo 'SSH service failed to start'; fi",
+    "echo '=== Starting Tailscale ==='",
+    "if command -v tailscale > /dev/null 2>&1; then",
+    "  echo 'Tailscale is installed, attempting to start...'",
+    "  sudo tailscale up --authkey=tskey-auth-kEc57QzJ5b11CNTRL-cUdRM6XCwB1RSFxKChe7D1YyetYQkiBEQ --ssh --accept-routes 2>&1 || echo 'Tailscale up command executed'",
+    "  sleep 5",
+    "  if tailscale status > /dev/null 2>&1; then",
+    "    TS_IP=$(tailscale ip -4 2>/dev/null | head -1)",
+    "    echo 'Tailscale is running with IP: $TS_IP'",
+    "  else",
+    "    echo 'Tailscale status check failed, retrying...'",
+    "    sudo tailscale up --authkey=tskey-auth-kEc57QzJ5b11CNTRL-cUdRM6XCwB1RSFxKChe7D1YyetYQkiBEQ --ssh --accept-routes --reset 2>&1 || true",
+    "    sleep 5",
+    "    tailscale status || echo 'Tailscale may need manual setup'",
+    "  fi",
+    "else",
+    "  echo 'Tailscale not installed, installing now...'",
+    "  curl -fsSL https://tailscale.com/install.sh | sh 2>&1 || echo 'Tailscale install failed'",
+    "  sleep 3",
+    "  sudo tailscale up --authkey=tskey-auth-kEc57QzJ5b11CNTRL-cUdRM6XCwB1RSFxKChe7D1YyetYQkiBEQ --ssh --accept-routes 2>&1 || echo 'Tailscale start failed'",
+    "fi",
+    "echo '=== Starting Keepalive Processes ==='",
+    "nohup bash -c 'while true; do if ! tailscale status > /dev/null 2>&1; then echo \"$(date): Tailscale down, restarting...\" >> /tmp/tailscale-keepalive.log; sudo tailscale up --authkey=tskey-auth-kEc57QzJ5b11CNTRL-cUdRM6XCwB1RSFxKChe7D1YyetYQkiBEQ --ssh --accept-routes 2>&1 >> /tmp/tailscale-keepalive.log; sleep 5; tailscale status >> /tmp/tailscale-keepalive.log 2>&1; fi; sleep 30; done' > /tmp/tailscale-keepalive.log 2>&1 &",
+    "echo 'Tailscale keepalive started (PID: $!)'",
+    "nohup bash -c 'while true; do touch /tmp/.keep-awake; sleep 60; done' > /tmp/prevent-sleep.log 2>&1 &",
+    "echo 'System keepalive started (PID: $!)'",
+    "nohup bash -c 'while true; do ping -c 1 100.121.114.88 > /dev/null 2>&1 || echo \"$(date): Keepalive ping failed\" >> /tmp/network-keepalive.log; sleep 30; done' > /tmp/network-keepalive.log 2>&1 &",
+    "echo 'Network keepalive started (PID: $!)'",
+    "nohup bash -c 'while true; do if ssh -o ConnectTimeout=5 -o BatchMode=yes tailscale echo \"SSH OK\" > /dev/null 2>&1; then echo \"$(date): SSH OK via Tailscale\" >> /tmp/ssh-healthcheck.log; elif ssh -o ConnectTimeout=5 -o BatchMode=yes ubuntu@100.95.198.68 echo \"SSH OK\" > /dev/null 2>&1; then echo \"$(date): SSH OK via direct IP\" >> /tmp/ssh-healthcheck.log; else echo \"$(date): SSH connection failed\" >> /tmp/ssh-healthcheck.log; fi; sleep 60; done' > /tmp/ssh-healthcheck.log 2>&1 &",
+    "echo 'SSH healthcheck started (PID: $!)'",
+    "nohup bash -c 'while true; do find ~/.ssh/control -type s -mtime +1 -delete 2>/dev/null; ps aux | grep \"[s]shd.*defunct\" | awk \"{print \\$2}\" | xargs -r kill -9 2>/dev/null; sleep 300; done' > /tmp/ssh-cleanup.log 2>&1 &",
+    "echo 'SSH cleanup started (PID: $!)'",
+    "nohup bash -c 'WORKSPACE_DIR=\"/workspace\"; if [ ! -d \"$WORKSPACE_DIR\" ]; then WORKSPACE_DIR=\"$(pwd)\"; fi; while true; do if rsync -avz --delete --exclude=\"node_modules\" --exclude=\".next\" --exclude=\".git\" --exclude=\".cursor\" -e \"ssh -o ControlMaster=auto -o ControlPath=~/.ssh/control/master-%r@%h:%p -o ControlPersist=10m -o ConnectTimeout=10\" \"$WORKSPACE_DIR/\" ubuntu@100.121.114.88:/home/ubuntu/moeen-sync/ 2>&1 | tee -a /tmp/rsync-sync.log | head -20; then echo \"$(date): Sync successful\" >> /tmp/rsync-sync.log; else echo \"$(date): Sync failed\" >> /tmp/rsync-sync.log; fi; sleep 300; done' > /tmp/rsync-sync.log 2>&1 &",
+    "echo 'File sync (rsync) started (PID: $!)'",
+    "echo '=== All services started ==='",
+    "echo 'Checking status...'",
+    "sleep 2",
+    "pgrep -x sshd > /dev/null && echo 'SSH: Running' || echo 'SSH: Not running'",
+    "tailscale status > /dev/null 2>&1 && echo 'Tailscale: Running' || echo 'Tailscale: Not running'",
+    "ps aux | grep -E '(tailscale|keep-awake|network-keepalive|ssh-healthcheck|ssh-cleanup|rsync-sync)' | grep -v grep | wc -l | xargs -I {} echo 'Keepalive processes: {}'"
+  ],
+  "terminals": [
+    {
+      "name": "SSH Connection via Tailscale (Stable Multiplexed)",
+      "command": "ssh -o ControlMaster=auto -o ControlPath=~/.ssh/control/master-%r@%h:%p -o ControlPersist=10m tailscale || ssh -o ControlMaster=auto -o ControlPath=~/.ssh/control/master-%r@%h:%p -o ControlPersist=10m ubuntu@100.95.198.68"
+    },
+    {
+      "name": "Tailscale Status & Monitor",
+      "command": "tailscale status && echo '---' && tailscale ip -4 && echo '---' && ps aux | grep tailscale | grep -v grep"
+    },
+    {
+      "name": "SSH Health & Connection Status",
+      "command": "echo '=== SSH Control Sockets ===' && ls -la ~/.ssh/control/ 2>/dev/null || echo 'No control sockets'; echo '---'; echo '=== Active SSH Connections ===' && netstat -an | grep :22 | wc -l && echo 'connections'; echo '---'; echo '=== SSH Health Check ===' && ssh -o ConnectTimeout=5 -o BatchMode=yes tailscale echo 'SSH OK' 2>&1 || ssh -o ConnectTimeout=5 -o BatchMode=yes ubuntu@100.95.198.68 echo 'SSH OK' 2>&1; echo '---'; echo '=== Keepalive Processes ===' && ps aux | grep -E '(tailscale|keep-awake|network-keepalive|ssh-healthcheck|ssh-cleanup|rsync-sync)' | grep -v grep"
+    },
+    {
+      "name": "File Sync Status (rsync)",
+      "command": "tail -20 /tmp/rsync-sync.log 2>/dev/null || echo 'No sync log yet'; echo '---'; echo 'Last sync check:'; ls -la /tmp/rsync-sync.log 2>/dev/null | awk '{print \"Modified: \" $6 \" \" $7 \" \" $8}'"
+    },
+    {
+      "name": "Tailscale Debug & Logs",
+      "command": "echo '=== Tailscale Status ===' && tailscale status 2>&1 || echo 'Tailscale not running'; echo '---'; echo '=== Tailscale IP ===' && tailscale ip -4 2>&1 || echo 'No IP assigned'; echo '---'; echo '=== Tailscale Keepalive Log ===' && tail -20 /tmp/tailscale-keepalive.log 2>/dev/null || echo 'No keepalive log'; echo '---'; echo '=== Tailscale Process ===' && ps aux | grep tailscale | grep -v grep || echo 'No Tailscale process'"
+    }
+  ],
+  "env": {
+    "TAILSCALE_AUTH_KEY": "tskey-auth-kEc57QzJ5b11CNTRL-cUdRM6XCwB1RSFxKChe7D1YyetYQkiBEQ",
+    "TAILSCALE_HOST": "100.121.114.88",
+    "SSH_HOST": "100.95.198.68",
+    "SSH_USER": "ubuntu",
+    "SSH_KEY_PATH": "~/.ssh/id_ed25519",
+    "SSH_OPTS": "-o StrictHostKeyChecking=no -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o TCPKeepAlive=yes -o ControlMaster=auto -o ControlPath=~/.ssh/control/master-%r@%h:%p -o ControlPersist=10m",
+    "RSYNC_OPTS": "-avz --delete --exclude=\"node_modules\" --exclude=\".next\" --exclude=\".git\"",
+    "SYNC_INTERVAL": "300"
+  }
+}

@@ -7,6 +7,7 @@
  */
 
 import { getBrowserSupabase } from '@/lib/supabaseClient';
+import { logger } from '@/lib/utils/logger';
 // Import only permission checking utilities (no server dependencies)
 import {
   hasPermission as checkPermission,
@@ -182,10 +183,9 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
     if (!response.ok) {
       // Only log non-401 errors
       if (response.status !== 401) {
-        console.warn(
+        logger.warn(
           '[UnifiedAuth] Error fetching user:',
-          response.status,
-          response.statusText
+          { status: response.status, statusText: response.statusText }
         );
       }
       return null;
@@ -218,14 +218,14 @@ export async function fetchCurrentUser(): Promise<AuthUser | null> {
     };
 
     return user;
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Ignore abort errors (timeout) and network errors silently
-    if (error?.name === 'AbortError') {
+    if (error instanceof Error && error.name === 'AbortError') {
       return null;
     }
     // Only log unexpected errors
-    if (error?.message && !error.message.includes('401')) {
-      console.warn('[UnifiedAuth] Error fetching user:', error.message);
+    if (error instanceof Error && error.message && !error.message.includes('401')) {
+      logger.warn('[UnifiedAuth] Error fetching user:', { error: error.message });
     }
     return null;
   }
@@ -328,7 +328,7 @@ export async function logout(): Promise<void> {
       credentials: 'include',
     });
   } catch (error) {
-    console.error('[UnifiedAuth] Logout error:', error);
+    logger.error('[UnifiedAuth] Logout error:', { error });
   } finally {
     clearAuth();
   }

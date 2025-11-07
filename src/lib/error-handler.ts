@@ -35,7 +35,7 @@ export class ErrorHandler {
   ): Promise<void> {
     const errorReport: ErrorReport = {
       message: error.message,
-      stack: error.stack,
+      stack: (error instanceof Error ? error.stack : undefined),
       context: {
         userId: context.userId,
         sessionId: context.sessionId,

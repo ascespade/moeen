@@ -1,4 +1,4 @@
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 interface EmailTemplate {
   subject: string;
   html: string;
@@ -8,7 +8,7 @@ interface EmailTemplate {
 interface EmailData {
   to: string;
   template: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   language?: 'ar' | 'en';
 }
 
@@ -43,13 +43,13 @@ export class EmailNotificationService {
         تأكيد الموعد
         عزيزي/عزيزتي {{patientName}}،
         تم تأكيد موعدك بنجاح مع الدكتور {{doctorName}}.
-        
+
         تفاصيل الموعد:
         التاريخ: {{appointmentDate}}
         الوقت: {{appointmentTime}}
         الطبيب: {{doctorName}}
         التخصص: {{speciality}}
-        
+
         يرجى الحضور قبل الموعد بـ 15 دقيقة.
         شكراً لاختياركم مركز الحمام.
       `,
@@ -77,13 +77,13 @@ export class EmailNotificationService {
         تأكيد الدفع
         عزيزي/عزيزتي {{patientName}}،
         تم استلام دفعتك بنجاح.
-        
+
         تفاصيل الدفع:
         المبلغ: {{amount}} ريال سعودي
         طريقة الدفع: {{paymentMethod}}
         رقم المعاملة: {{transactionId}}
         التاريخ: {{paymentDate}}
-        
+
         شكراً لاختياركم مركز الحمام.
       `,
     });
@@ -110,12 +110,12 @@ export class EmailNotificationService {
         تذكير بالموعد
         عزيزي/عزيزتي {{patientName}}،
         نذكرك بموعدك غداً مع الدكتور {{doctorName}}.
-        
+
         تفاصيل الموعد:
         التاريخ: {{appointmentDate}}
         الوقت: {{appointmentTime}}
         الطبيب: {{doctorName}}
-        
+
         يرجى الحضور قبل الموعد بـ 15 دقيقة.
         شكراً لاختياركم مركز الحمام.
       `,
@@ -145,7 +145,7 @@ export class EmailNotificationService {
 
       // In production, this would integrate with an email service like SendGrid, AWS SES, etc.
       if (process.env.NODE_ENV === 'development') {
-        console.log('Email would be sent:', {
+        logger.info('Email would be sent', {
           to: emailData.to,
           subject,
           html,

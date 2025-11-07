@@ -5,7 +5,7 @@
 
 import { writeFileSync } from 'fs';
 import { join } from 'path';
-import { logger } from '../monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 class DockerConfigGenerator {
   static generateDockerfile(): string {
@@ -465,7 +465,7 @@ echo "✅ Backup completed: $BACKUP_DIR"`,
 
       logger.info('All Docker configuration files generated successfully');
     } catch (error) {
-      logger.error('Failed to generate Docker configuration', error);
+      logger.error('Failed to generate Docker configuration', { error });
       throw error;
     }
   }

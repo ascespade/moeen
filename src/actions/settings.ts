@@ -80,7 +80,7 @@ export const updateAppearanceSettingsAction = withAction(
       } as SettingInsert);
 
     if (error) {
-      throw AppError.internal(`فشل تحديث إعدادات المظهر: ${error.message}`);
+      throw AppError.internal(`فشل تحديث إعدادات المظهر: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/settings');
@@ -108,7 +108,7 @@ export const updateNotificationSettingsAction = withAction(
       } as SettingInsert);
 
     if (error) {
-      throw AppError.internal(`فشل تحديث إعدادات الإشعارات: ${error.message}`);
+      throw AppError.internal(`فشل تحديث إعدادات الإشعارات: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/settings');
@@ -136,7 +136,7 @@ export const updateSecuritySettingsAction = withAction(
       } as SettingInsert);
 
     if (error) {
-      throw AppError.internal(`فشل تحديث إعدادات الأمان: ${error.message}`);
+      throw AppError.internal(`فشل تحديث إعدادات الأمان: ${(error instanceof Error ? error.message : String(error))}`);
     }
 
     revalidatePath('/settings');

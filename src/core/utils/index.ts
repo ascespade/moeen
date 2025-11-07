@@ -14,7 +14,7 @@ export const storageUtils = {
       return null;
     }
   },
-  set: (key: string, value: any) => {
+  set: (key: string, value: unknown) => {
     try {
       localStorage.setItem(key, JSON.stringify(value));
       return true;
@@ -41,7 +41,7 @@ export const storageUtils = {
 };
 
 // Debounce utility
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => any>(
   fn: T,
   delay: number
 ): ((...args: Parameters<T>) => void) => {

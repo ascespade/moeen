@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 import { requireAuth } from '@/lib/auth/authorize';
 
 export const revalidate = 60;
@@ -76,7 +76,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: schedules, error: schedulesError } = await therapistsQuery;
 
     if (schedulesError) {
-      logger.error('Error fetching therapist schedules', schedulesError);
+      logger.error('Error fetching therapist schedules', { error: schedulesError });
       return NextResponse.json(
         { error: 'Error fetching schedules' },
         { status: 500 }
@@ -99,16 +99,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         .eq('appointment_date', date)
         .in(
           'doctor_id',
-          schedules.map((s: any) => s.therapist_id)
+          schedules.map((s: unknown) => s.therapist_id)
         )
         .in('status', ['scheduled', 'confirmed', 'in_progress']);
 
     if (appointmentsError) {
-      logger.error('Error fetching appointments', appointmentsError);
+      logger.error('Error fetching appointments', { error: appointmentsError });
     }
 
     // 5. Generate available slots
-    const slots: any[] = [];
+    const slots: unknown[] = [];
     const duration = sessionType.duration;
 
     for (const schedule of schedules) {
@@ -122,11 +122,11 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // Filter out booked slots
       const bookedForThisTherapist =
         bookedAppointments?.filter(
-          (apt: any) => apt.doctor_id === schedule.therapist_id
+          (apt: unknown) => apt.doctor_id === schedule.therapist_id
         ) || [];
 
       for (const slot of timeSlots) {
-        const isBooked = bookedForThisTherapist.some((apt: any) =>
+        const isBooked = bookedForThisTherapist.some((apt: unknown) =>
           timesOverlap(
             slot.start,
             slot.end,
@@ -175,7 +175,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    logger.error('Error in available-slots API', error);
+    logger.error('Error in available-slots API', { error });
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

@@ -10,6 +10,7 @@ import { z } from 'zod';
 import { ValidationHelper } from '@/core/validation';
 import { authorize, requireRole } from '@/lib/auth/authorize';
 import { createClient } from '@/lib/supabase/server';
+import { logger } from '@/lib/utils/logger';
 
 const scheduleSchema = z.object({
   type: z.enum([
@@ -187,7 +188,7 @@ export async function GET(_request: NextRequest) {
 
     // If error occurs, return empty array instead of 500 to prevent loops
     if (error) {
-      console.error('Error fetching notifications:', error);
+      logger.error('Error fetching notifications:', { error });
       // Return empty array to prevent infinite loops
       return NextResponse.json({
         success: true,
@@ -203,8 +204,8 @@ export async function GET(_request: NextRequest) {
       try {
         // Try to get createdBy user info for notifications that have createdBy field
         const createdByIds = notifications
-          .map((n: any) => n.createdBy || n.created_by)
-          .filter((id: any) => id && typeof id === 'string');
+          .map((n: unknown) => n.createdBy || n.created_by)
+          .filter((id: unknown) => id && typeof id === 'string');
 
         if (createdByIds.length > 0) {
           const { data: users } = await supabase
@@ -213,8 +214,8 @@ export async function GET(_request: NextRequest) {
             .in('id', createdByIds);
 
           if (users) {
-            const userMap = new Map(users.map((u: any) => [u.id, u]));
-            enrichedNotifications = notifications.map((n: any) => ({
+            const userMap = new Map(users.map((u: unknown) => [u.id, u]));
+            enrichedNotifications = notifications.map((n: unknown) => ({
               ...n,
               createdByUser:
                 n.createdBy || n.created_by
@@ -225,7 +226,7 @@ export async function GET(_request: NextRequest) {
         }
       } catch (enrichError) {
         // Ignore enrichment errors - just return basic notifications
-        console.warn(
+        logger.warn(
           'Failed to enrich notifications with user data:',
           enrichError
         );
@@ -238,7 +239,7 @@ export async function GET(_request: NextRequest) {
       count: enrichedNotifications?.length || 0,
     });
   } catch (error) {
-    console.error('Unexpected error in notifications GET:', error);
+    logger.error('Unexpected error in notifications GET:', { error });
     // Always return success with empty array to prevent loops
     return NextResponse.json({
       success: true,
@@ -295,25 +296,25 @@ async function __generateNotificationContent(
       title: 'تأكيد الموعد',
       message:
         customMessage ||
-        `تم تأكيد موعدك في ${(templateData as any)?.date} مع ${(templateData as any)?.doctorName}`,
+        `تم تأكيد موعدك في ${(templateData as unknown)?.date} مع ${(templateData as unknown)?.doctorName}`,
     },
     appointment_reminder: {
       title: 'تذكير بالموعد',
       message:
         customMessage ||
-        `تذكير: لديك موعد غداً في ${(templateData as any)?.time} مع ${(templateData as any)?.doctorName}`,
+        `تذكير: لديك موعد غداً في ${(templateData as unknown)?.time} مع ${(templateData as unknown)?.doctorName}`,
     },
     payment_confirmation: {
       title: 'تأكيد الدفع',
       message:
         customMessage ||
-        `تم تأكيد دفعتك بقيمة ${(templateData as any)?.amount} ريال`,
+        `تم تأكيد دفعتك بقيمة ${(templateData as unknown)?.amount} ريال`,
     },
     insurance_claim_update: {
       title: 'تحديث مطالبة التأمين',
       message:
         customMessage ||
-        `تم تحديث حالة مطالبة التأمين إلى: ${(templateData as any)?.status}`,
+        `تم تحديث حالة مطالبة التأمين إلى: ${(templateData as unknown)?.status}`,
     },
     lab_result_ready: {
       title: 'نتائج المختبر جاهزة',
@@ -324,16 +325,16 @@ async function __generateNotificationContent(
       message: customMessage || `وصفتك الطبية جاهزة للاستلام`,
     },
     general_announcement: {
-      title: (templateData as any)?.title || 'إعلان عام',
+      title: (templateData as unknown)?.title || 'إعلان عام',
       message:
         customMessage ||
-        (templateData as any)?.message ||
+        (templateData as unknown)?.message ||
         'إعلان من المركز الطبي',
     },
   };
 
   return (
-    (templates as any)[type] || {
+    (templates as unknown)[type] || {
       title: 'إشعار',
       message: customMessage || 'لديك إشعار جديد',
     }
@@ -342,5 +343,5 @@ async function __generateNotificationContent(
 
 async function __processNotification(_notificationId: string) {
   // This will be implemented with the actual notification processing logic
-  // // console.log(`Processing notification ${notificationId}`);
+  logger.info(`Processing notification ${notificationId}`);
 }

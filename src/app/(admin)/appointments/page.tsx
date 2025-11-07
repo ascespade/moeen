@@ -104,27 +104,43 @@ function AppointmentsPageContent() {
   }, [searchTerm, statusFilter, typeFilter, dateFilter, updateFilters]);
 
   // Map hook data (snake_case) to page data (camelCase) for compatibility
-  const mappedAppointments = hookAppointments.map((appointment: any) => {
-    const scheduledAt = new Date(appointment.scheduled_at);
+  const mappedAppointments = hookAppointments.map((appointment: unknown) => {
+    const apt = appointment as {
+      scheduled_at: string;
+      id: string;
+      patient_id: string;
+      patients?: { full_name?: string; phone?: string };
+      doctor_id: string;
+      doctors?: { speciality?: string };
+      type?: string;
+      status: string;
+      reason?: string;
+      notes?: string;
+      created_at: string;
+      updated_at?: string;
+      location?: string;
+      room?: string;
+    };
+    const scheduledAt = new Date(apt.scheduled_at);
     return {
-      id: appointment.id,
-      patientId: appointment.patient_id,
-      patientName: appointment.patients?.full_name || 'غير معروف',
-      patientPhone: appointment.patients?.phone || '',
-      doctorId: appointment.doctor_id,
-      doctorName: appointment.doctors?.speciality || 'غير معروف',
-      doctorSpecialization: appointment.doctors?.speciality || '',
+      id: apt.id,
+      patientId: apt.patient_id,
+      patientName: apt.patients?.full_name || 'غير معروف',
+      patientPhone: apt.patients?.phone || '',
+      doctorId: apt.doctor_id,
+      doctorName: apt.doctors?.speciality || 'غير معروف',
+      doctorSpecialization: apt.doctors?.speciality || '',
       date: scheduledAt.toISOString().split('T')[0],
       time: scheduledAt.toTimeString().slice(0, 5),
       duration: 30, // Default duration
-      type: appointment.type || 'in_person',
-      status: appointment.status,
-      reason: appointment.reason || 'موعد طبي',
-      notes: appointment.notes,
-      createdAt: appointment.created_at,
-      updatedAt: appointment.updated_at || appointment.created_at,
-      location: appointment.location,
-      room: appointment.room,
+      type: apt.type || 'in_person',
+      status: apt.status,
+      reason: apt.reason || 'موعد طبي',
+      notes: apt.notes,
+      createdAt: apt.created_at,
+      updatedAt: apt.updated_at || apt.created_at,
+      location: apt.location,
+      room: apt.room,
     };
   });
 
@@ -442,9 +458,10 @@ function AppointmentsPageContent() {
             <CardContent>
               <div className='text-2xl font-bold'>
                 {
-                  appointments.filter((a: any) => {
-                    if (!a.date) return false;
-                    const appointmentDate = new Date(a.date);
+                  appointments.filter((a: unknown) => {
+                    const apt = a as { date?: string };
+                    if (!apt.date) return false;
+                    const appointmentDate = new Date(apt.date);
                     const today = new Date();
                     return (
                       appointmentDate.toDateString() === today.toDateString()
@@ -463,11 +480,11 @@ function AppointmentsPageContent() {
             </CardHeader>
             <CardContent>
               <div className='text-2xl font-bold'>
-                {appointments.filter((a: any) => a.status === 'completed').length}
+                {appointments.filter((a: unknown) => (a as { status: string }).status === 'completed').length}
               </div>
               <p className='text-xs text-muted-foreground'>
                 {Math.round(
-                  (appointments.filter((a: any) => a.status === 'completed').length /
+                  (appointments.filter((a: unknown) => (a as { status: string }).status === 'completed').length /
                     appointments.length) *
                     100
                 )}
@@ -573,7 +590,7 @@ function AppointmentsPageContent() {
                       className='rounded border-[var(--brand-border)]'
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setSelectedAppointments(appointments.map((a: any) => a.id));
+                          setSelectedAppointments(appointments.map((a: unknown) => (a as { id: string }).id));
                         } else {
                           setSelectedAppointments([]);
                         }
@@ -591,41 +608,58 @@ function AppointmentsPageContent() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {appointments.map((appointment: any) => (
-                  <TableRow key={appointment.id}>
+                {appointments.map((appointment: unknown) => {
+                  const apt = appointment as {
+                    id: string;
+                    patientName: string;
+                    patientPhone: string;
+                    doctorName: string;
+                    doctorSpecialization: string;
+                    date: string;
+                    time: string;
+                    duration: number;
+                    location?: string;
+                    room?: string;
+                    type: string;
+                    status: string;
+                    reason: string;
+                    notes?: string;
+                  };
+                  return (
+                  <TableRow key={apt.id}>
                     <TableCell>
                       <input type='checkbox'
                         className='rounded border-[var(--brand-border)]'
-                        checked={selectedAppointments.includes(appointment.id)}
+                        checked={selectedAppointments.includes(apt.id)}
                         onChange={(e) => {
                           if (e.target.checked) {
                             setSelectedAppointments([
                               ...selectedAppointments,
-                              appointment.id,
+                              apt.id,
                             ]);
                           } else {
                             setSelectedAppointments(
                               selectedAppointments.filter(
-                                id => id !== appointment.id
+                                id => id !== apt.id
                               )
                             );
                           }
                         }}
-                        aria-label={`تحديد موعد ${appointment.patientName}`}
+                        aria-label={`تحديد موعد ${apt.patientName}`}
                       />
                     </TableCell>
                     <TableCell>
                       <div className='flex items-center gap-3'>
                         <div className='h-8 w-8 rounded-full bg-primary text-primary-foreground grid place-items-center text-sm'>
-                          {appointment.patientName.charAt(0)}
+                          {apt.patientName.charAt(0)}
                         </div>
                         <div>
                           <div className='font-medium'>
-                            {appointment.patientName}
+                            {apt.patientName}
                           </div>
                           <div className='text-xs text-muted-foreground flex items-center gap-1'>
                             <Phone className='h-3 w-3' />
-                            {appointment.patientPhone}
+                            {apt.patientPhone}
                           </div>
                         </div>
                       </div>
@@ -633,45 +667,45 @@ function AppointmentsPageContent() {
                     <TableCell>
                       <div>
                         <div className='font-medium'>
-                          {appointment.doctorName}
+                          {apt.doctorName}
                         </div>
                         <div className='text-xs text-muted-foreground'>
-                          {appointment.doctorSpecialization}
+                          {apt.doctorSpecialization}
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className='text-sm'>
                         <div className='font-medium'>
-                          {appointment.date
-                            ? formatDate(appointment.date)
+                          {apt.date
+                            ? formatDate(apt.date)
                             : 'غير محدد'}
                         </div>
                         <div className='text-muted-foreground flex items-center gap-1'>
                           <Clock className='h-3 w-3' />
-                          {formatTime(appointment.time)} ({appointment.duration}{' '}
+                          {formatTime(apt.time)} ({apt.duration}{' '}
                           دقيقة)
                         </div>
-                        {appointment.location && (
+                        {apt.location && (
                           <div className='text-xs text-muted-foreground flex items-center gap-1'>
                             <MapPin className='h-3 w-3' />
-                            {appointment.location} - {appointment.room}
+                            {apt.location} - {apt.room}
                           </div>
                         )}
                       </div>
                     </TableCell>
-                    <TableCell>{getTypeBadge(appointment.type)}</TableCell>
+                    <TableCell>{getTypeBadge(apt.type)}</TableCell>
                     <TableCell>
                       <div className='flex items-center gap-2'>
-                        {getStatusIcon(appointment.status)}
-                        {getStatusBadge(appointment.status)}
+                        {getStatusIcon(apt.status)}
+                        {getStatusBadge(apt.status)}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className='text-sm'>{appointment.reason}</div>
-                      {appointment.notes && (
+                      <div className='text-sm'>{apt.reason}</div>
+                      {apt.notes && (
                         <div className='text-xs text-muted-foreground truncate max-w-32'>
-                          {appointment.notes}
+                          {apt.notes}
                         </div>
                       )}
                     </TableCell>
@@ -694,13 +728,13 @@ function AppointmentsPageContent() {
                               تعديل
                             </DropdownMenuItem>
                           )}
-                          {appointment.status === 'scheduled' && (
+                          {apt.status === 'scheduled' && (
                             <DropdownMenuItem>
                               <CheckCircle className='h-4 w-4 mr-2' />
                               تأكيد الموعد
                             </DropdownMenuItem>
                           )}
-                          {appointment.status === 'confirmed' && (
+                          {apt.status === 'confirmed' && (
                             <DropdownMenuItem>
                               <Clock className='h-4 w-4 mr-2' />
                               بدء الموعد
@@ -732,7 +766,8 @@ function AppointmentsPageContent() {
                       </DropdownMenu>
                     </TableCell>
                   </TableRow>
-                ))}
+                  );
+                })}
               </TableBody>
             </Table>
 

@@ -15,7 +15,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         const jwtSecret = process.env.JWT_SECRET;
         if (jwtSecret) {
           const jwt = await import('jsonwebtoken');
-          const decoded = jwt.verify(token, jwtSecret) as any;
+          const decoded = jwt.verify(token, jwtSecret) as unknown;
 
           if (decoded.userId && decoded.email && decoded.role) {
             // Get permissions from PermissionManager (from database)

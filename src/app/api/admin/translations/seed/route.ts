@@ -29,12 +29,13 @@ export async function POST(req: NextRequest) {
       success: true,
       message: 'Translations seeded successfully',
     });
-  } catch (error: any) {
-    console.error('[admin/translations/seed] Error:', error);
+  } catch (error: unknown) {
+    const { logger } = await import('@/lib/utils/logger');
+    logger.error('[admin/translations/seed] Error', { error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       {
         success: false,
-        error: error?.message || 'Failed to seed translations',
+        error: error instanceof Error ? error.message : 'Failed to seed translations',
       },
       { status: 500 }
     );

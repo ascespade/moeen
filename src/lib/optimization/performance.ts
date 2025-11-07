@@ -3,7 +3,7 @@
  * Performance monitoring and optimization utilities
  */
 
-import { logger } from '../monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 interface PerformanceMetrics {
   operation: string;
@@ -11,7 +11,7 @@ interface PerformanceMetrics {
   endTime?: number;
   duration?: number;
   memoryUsage?: NodeJS.MemoryUsage;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 class PerformanceMonitor {
@@ -25,7 +25,7 @@ class PerformanceMonitor {
   startOperation(
     operationId: string,
     operation: string,
-    metadata?: Record<string, any>
+    metadata?: Record<string, unknown>
   ): void {
     const startTime = performance.now();
     const memoryUsage = process.memoryUsage();
@@ -103,7 +103,7 @@ export const performanceMonitor = new PerformanceMonitor();
 // Performance decorator
 export function measurePerformance(operationName?: string) {
   return function (
-    target: any,
+    target: unknown,
     propertyName: string,
     descriptor: PropertyDescriptor
   ) {
@@ -111,7 +111,7 @@ export function measurePerformance(operationName?: string) {
     const operation =
       operationName || `${target.constructor.name}.${propertyName}`;
 
-    descriptor.value = async function (...args: any[]) {
+    descriptor.value = async function (...args: unknown[]) {
       const operationId = `${operation}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
       performanceMonitor.startOperation(operationId, operation, {
@@ -214,7 +214,7 @@ export class BundleOptimizer {
     return 0;
   }
 
-  static analyzeBundle(): Record<string, any> {
+  static analyzeBundle(): Record<string, unknown> {
     // This would analyze the bundle and return optimization suggestions
     return {
       totalSize: this.getBundleSize(),
@@ -229,7 +229,7 @@ export class BundleOptimizer {
 
 // API response optimization
 export class ResponseOptimizer {
-  static compressResponse(data: any): any {
+  static compressResponse(data: unknown): unknown {
     // Remove null/undefined values
     const cleaned = JSON.parse(
       JSON.stringify(data, (_key, value) =>
@@ -241,11 +241,11 @@ export class ResponseOptimizer {
   }
 
   static paginateResponse(
-    data: any[],
+    data: unknown[],
     page: number,
     limit: number
   ): {
-    data: any[];
+    data: unknown[];
     pagination: {
       page: number;
       limit: number;

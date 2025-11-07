@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/Badge';
 
 // import { ROUTES } from '@/constants/routes';
 import { realDB } from '@/lib/supabase-real';
+import { logger } from '@/lib/utils/logger';
 
 import Image from 'next/image';
 
@@ -58,7 +59,20 @@ export default function InsurancePage() {
 
         // Transform data to match our interface
         const transformedClaims: InsuranceClaim[] = claimsData.map(
-          (claim: any) => ({
+          (claim: {
+            id: string;
+            patients?: { users?: { name?: string } };
+            patient_id: string;
+            claim_number?: string;
+            insurance_provider?: string;
+            service_code?: string;
+            amount?: number;
+            status: string;
+            submitted_at?: string;
+            created_at?: string;
+            approved_at?: string;
+            rejection_reason?: string;
+          }) => ({
             id: claim.id,
             patientName: claim.patients?.users?.name || 'غير محدد',
             patientId: claim.patient_id,
@@ -89,7 +103,9 @@ export default function InsurancePage() {
         setClaims(transformedClaims);
       } catch (err) {
         setError('فشل في تحميل بيانات مطالبات التأمين');
-        console.error('Error loading insurance claims:', err);
+        logger.error('Error loading insurance claims', {
+          error: err instanceof Error ? err.message : String(err),
+        });
       } finally {
         setLoading(false);
       }

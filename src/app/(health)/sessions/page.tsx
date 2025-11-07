@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 // import { ROUTES } from '@/constants/routes';
 import { realDB } from '@/lib/supabase-real';
 
-// import Image from 'next/image';
+import Image from 'next/image';
+import { logger } from '@/lib/utils/logger';
 
 interface Session {
   id: string;
@@ -34,7 +35,7 @@ export default function SessionsPage() {
 
         // Transform data to match our interface
         const transformedSessions: Session[] = sessionsData.map(
-          (session: any) => ({
+          (session: unknown) => ({
             id: session.id,
             patientName: session.patients?.users?.name || 'غير محدد',
             doctorName: session.doctors?.users?.name || 'غير محدد',
@@ -63,7 +64,7 @@ export default function SessionsPage() {
         setSessions(transformedSessions);
       } catch (err) {
         setError('فشل في تحميل بيانات الجلسات');
-        console.error('Error loading sessions:', err);
+        logger.error('Error loading sessions:', { error: err })
       } finally {
         setLoading(false);
       }

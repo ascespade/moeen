@@ -5,7 +5,7 @@
  * Based on clsx + tailwind-merge pattern
  */
 
-import { type ClassValue, clsx } from 'clsx';
+import {clsx} from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 /**

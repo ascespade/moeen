@@ -76,10 +76,11 @@ export async function POST(_request: NextRequest): Promise<NextResponse> {
         role: updatedUser.role,
       },
     });
-  } catch (error: any) {
-    console.error('Error updating user to admin:', error);
+  } catch (error: unknown) {
+    const { logger } = await import('@/lib/utils/logger');
+    logger.error('Error updating user to admin', { error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
-      { success: false, error: error.message || 'Internal server error' },
+      { success: false, error: error instanceof Error ? error.message : 'Internal server error' },
       { status: 500 }
     );
   }

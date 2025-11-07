@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { CONTACT_INFO } from '@/lib/constants/ui';
 import { toArabicNumbers } from '@/lib/utils/numbers';
 import { Clock, Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react';
+import { logger } from '@/lib/utils/logger';
 
 export default function ContactFormWithMap() {
   const [isSending, setIsSending] = useState(false);
@@ -46,7 +47,7 @@ export default function ContactFormWithMap() {
         setTimeout(() => setIsSubmitted(false), 5000);
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
+      logger.error('Error submitting form', { error: error instanceof Error ? error.message : String(error) });
     } finally {
       setIsSending(false);
     }

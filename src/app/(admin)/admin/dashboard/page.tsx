@@ -8,8 +8,7 @@ import { Card } from '@/components/ui/Card';
 import { useAdminDashboard } from '@/hooks/useAdminDashboard';
 import { useLocalizedNumber } from '@/hooks/useLocalizedNumber';
 import { ADMIN_PAGES } from '@/lib/admin/page-config';
-import { AdminPageWrapper } from '@/lib/admin/page-wrapper';
-import { cn } from '@/lib/utils';
+import { logger } from '@/lib/utils/logger';
 import {
   Activity,
   AlertTriangle,
@@ -209,12 +208,12 @@ function AdminDashboardPage() {
                 credentials: 'include',
               });
             } catch (error) {
-              console.error('Logout error:', error);
+              logger.error('Logout error:', { error })
             }
             try {
               localStorage.removeItem('user');
             } catch (error) {
-              console.error('LocalStorage error:', error);
+              logger.error('LocalStorage error:', { error })
             }
             router.push('/login');
           }}

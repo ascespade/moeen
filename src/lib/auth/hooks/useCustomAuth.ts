@@ -11,6 +11,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import type { CustomAuthUser } from '../types';
+import { logger } from '@/lib/utils/logger';
 
 interface AuthState {
   user: CustomAuthUser | null;
@@ -139,7 +140,7 @@ export function useCustomAuth() {
         return { success: false, error: data.error || 'Login failed' };
       }
     } catch (error) {
-      console.error('[useCustomAuth] Login error:', error);
+      logger.error('[useCustomAuth] Login error:', { error });
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Login failed',

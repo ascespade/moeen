@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Sidebar from '@/components/shell/Sidebar';
 import Header from '@/components/shell/Header';
@@ -18,7 +18,7 @@ export default function DashboardLayout({
   useEffect(() => {
     // Redirect to login if not authenticated
     if (!loading && !isAuthenticated) {
-      router.push('/login?redirect=' + encodeURIComponent(pathname));
+      router.push(`/login?redirect=${  encodeURIComponent(pathname)}`);
     }
   }, [loading, isAuthenticated, router, pathname]);
 

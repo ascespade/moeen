@@ -14,8 +14,8 @@ interface AriaLabelProps {
 /**
  * Generate ARIA attributes for form inputs
  */
-export function getFormAriaProps(props: AriaLabelProps): Record<string, any> {
-  const attrs: Record<string, any> = {
+export function getFormAriaProps(props: AriaLabelProps): Record<string, unknown> {
+  const attrs: Record<string, unknown> = {
     'aria-label': props.label,
   };
 
@@ -49,8 +49,8 @@ export function getButtonAriaProps(
     disabled?: boolean;
     controls?: string;
   }
-): Record<string, any> {
-  const attrs: Record<string, any> = {
+): Record<string, unknown> {
+  const attrs: Record<string, unknown> = {
     'aria-label': label,
   };
 
@@ -79,7 +79,7 @@ export function getButtonAriaProps(
 export function getNavAriaProps(
   label: string,
   current?: boolean
-): Record<string, any> {
+): Record<string, unknown> {
   return {
     'aria-label': label,
     'aria-current': current ? 'page' : undefined,
@@ -92,7 +92,7 @@ export function getNavAriaProps(
 export function getDialogAriaProps(
   title: string,
   describedBy?: string
-): Record<string, any> {
+): Record<string, unknown> {
   return {
     role: 'dialog',
     'aria-modal': 'true',
@@ -106,7 +106,7 @@ export function getDialogAriaProps(
  */
 export function getAlertAriaProps(
   type: 'error' | 'warning' | 'success' | 'secondary'
-): Record<string, any> {
+): Record<string, unknown> {
   return {
     role: 'alert',
     'aria-live': type === 'error' ? 'assertive' : 'polite',
@@ -117,7 +117,7 @@ export function getAlertAriaProps(
 /**
  * Generate ARIA attributes for tables
  */
-export function getTableAriaProps(caption: string): Record<string, any> {
+export function getTableAriaProps(caption: string): Record<string, unknown> {
   return {
     role: 'table',
     'aria-label': caption,
@@ -131,7 +131,7 @@ export function getTabAriaProps(
   id: string,
   selected: boolean,
   controls: string
-): Record<string, any> {
+): Record<string, unknown> {
   return {
     role: 'tab',
     'aria-selected': String(selected),
@@ -148,7 +148,7 @@ export function getTabPanelAriaProps(
   id: string,
   labelledBy: string,
   hidden: boolean
-): Record<string, any> {
+): Record<string, unknown> {
   return {
     role: 'tabpanel',
     id,
@@ -163,7 +163,7 @@ export function getTabPanelAriaProps(
  */
 export function getLiveRegionAriaProps(
   politeness: 'polite' | 'assertive' = 'polite'
-): Record<string, any> {
+): Record<string, unknown> {
   return {
     'aria-live': politeness,
     'aria-atomic': 'true',

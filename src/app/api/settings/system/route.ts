@@ -80,7 +80,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           acc[setting.key] = value;
           return acc;
         },
-        {} as Record<string, any>
+        {} as Record<string, unknown>
       ) || {};
 
     return NextResponse.json({ settings });

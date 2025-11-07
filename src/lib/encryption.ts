@@ -4,7 +4,7 @@
  * Replaces insecure Base64 encoding
  */
 
-import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 import CryptoJS from 'crypto-js';
 
 /**
@@ -40,7 +40,9 @@ export function encrypt(data: string | object): string {
 
     return encrypted.toString();
   } catch (error) {
-    console.error('Encryption error:', error);
+    logger.error('Encryption error', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     throw new Error('Failed to encrypt data');
   }
 }
@@ -72,7 +74,9 @@ export function decrypt<T = string>(
 
     return plaintext as T;
   } catch (error) {
-    console.error('Decryption error:', error);
+    logger.error('Decryption error', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     throw new Error('Failed to decrypt data');
   }
 }
@@ -147,9 +151,7 @@ export function decryptApiKey(encryptedKey: string): string {
  * @deprecated Use encrypt() instead
  */
 export function encodeBase64(data: string): string {
-  console.warn(
-    '⚠️ encodeBase64 is deprecated. Use encrypt() instead for better security.'
-  );
+  logger.warn('encodeBase64 is deprecated. Use encrypt() instead for better security.');
   return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(data));
 }
 
@@ -158,9 +160,7 @@ export function encodeBase64(data: string): string {
  * @deprecated Use decrypt() instead
  */
 export function decodeBase64(encoded: string): string {
-  console.warn(
-    '⚠️ decodeBase64 is deprecated. Use decrypt() instead for better security.'
-  );
+  logger.warn('decodeBase64 is deprecated. Use decrypt() instead for better security.');
   return CryptoJS.enc.Base64.parse(encoded).toString(CryptoJS.enc.Utf8);
 }
 

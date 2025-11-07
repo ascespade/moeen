@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { logger } from '@/lib/utils/logger';
 
 interface Lead {
   id: string;
@@ -49,7 +50,7 @@ export default function CRMLeadsPage() {
           setLeads([]);
         }
       } catch (error) {
-        console.error('Error fetching leads:', error);
+        logger.error('Error fetching leads:', { error })
         setLeads([]);
       } finally {
         setLoading(false);

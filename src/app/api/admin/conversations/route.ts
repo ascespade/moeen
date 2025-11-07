@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { requireAuth } from '@/lib/auth/authorize';
+import { logger } from '@/lib/utils/logger';
 
 export const revalidate = 60;
 
@@ -61,7 +62,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const { data: conversations, error, count } = await query;
 
     if (error) {
-      console.error('Error fetching conversations:', error);
+      logger.error('Error fetching conversations:', { error });
       // Return empty array if table doesn't exist (no mock data)
       return NextResponse.json({
         success: true,
@@ -79,7 +80,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       limit,
     });
   } catch (error) {
-    console.error('Error fetching conversations:', error);
+    logger.error('Error fetching conversations:', { error });
     return NextResponse.json(
       {
         success: false,

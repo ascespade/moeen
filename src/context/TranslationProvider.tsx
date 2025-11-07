@@ -1,5 +1,5 @@
 'use client';
-// import logger from '@/lib/monitoring/logger';
+import { logger } from '@/lib/utils/logger';
 
 import React, {
   createContext,
@@ -40,7 +40,9 @@ export function TranslationProvider({
         .eq('locale', locale);
 
       if (error) {
-        console.error('Error loading translations:', error);
+        logger.error('Error loading translations', {
+          error: error instanceof Error ? error.message : String(error),
+        });
         return;
       }
 
@@ -58,7 +60,9 @@ export function TranslationProvider({
         setTranslations(translationsMap);
       }
     } catch (error) {
-      console.error('Error loading translations:', error);
+      logger.error('Error loading translations', {
+        error: error instanceof Error ? error.message : String(error),
+      });
     } finally {
       setIsLoading(false);
     }

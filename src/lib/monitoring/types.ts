@@ -12,8 +12,8 @@ export interface TaskStatus {
   startTime: Date;
   endTime?: Date;
   errors: string[];
-  results: any;
-  metadata?: Record<string, any>;
+  results: unknown;
+  metadata?: Record<string, unknown>;
 }
 
 export interface MonitoringReport {
@@ -45,6 +45,6 @@ export interface TaskConfig {
   name: string;
   type: TaskType;
   cpu: number;
-  data: any;
+  data: unknown;
 }
 

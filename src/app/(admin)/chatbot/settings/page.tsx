@@ -7,6 +7,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import { logger } from '@/lib/utils/logger';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -30,7 +31,7 @@ export default function ChatbotSettingsPage() {
         .single();
 
       if (error && error.code !== 'PGRST116') {
-        console.error('Error loading config:', error);
+        logger.error('Error loading config:', { error })
       } else {
         setConfig(data || {
           name: 'معين',
@@ -42,7 +43,7 @@ export default function ChatbotSettingsPage() {
         });
       }
     } catch (error) {
-      console.error('Error:', error);
+      logger.error('Error:', { error })
     } finally {
       setLoading(false);
     }
@@ -56,13 +57,13 @@ export default function ChatbotSettingsPage() {
         .upsert(config, { onConflict: 'id' });
 
       if (error) {
-        console.error('Error saving config:', error);
+        logger.error('Error saving config:', { error })
         alert('حدث خطأ أثناء الحفظ');
       } else {
         alert('تم الحفظ بنجاح');
       }
     } catch (error) {
-      console.error('Error:', error);
+      logger.error('Error:', { error })
       alert('حدث خطأ أثناء الحفظ');
     } finally {
       setSaving(false);

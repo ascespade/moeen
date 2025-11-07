@@ -63,7 +63,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const { data: allAppointments, error } = await query;
 
     // Filter for actual overlaps in JavaScript
-    const conflicts = (allAppointments || []).filter((appt: any) => {
+    const conflicts = (allAppointments || []).filter((appt: unknown) => {
       const apptStart = new Date(appt.scheduled_at);
       const apptEnd = new Date(
         apptStart.getTime() + (appt.duration || 30) * 60000

@@ -42,7 +42,7 @@ for (const testFile of testFiles) {
   }
 }
 
-console.log('\n' + '='.repeat(50));
+console.log(`\n${  '='.repeat(50)}`);
 console.log('📊 Test Summary');
 console.log('='.repeat(50));
 console.log(`✅ Passed: ${totalPassed}`);
