@@ -39,18 +39,16 @@ interface Approval {
   notes?: string;
 }
 
-// جلب الموافقات من قاعدة البيانات
-// Load approvals from database
-const loadApprovalsFromDB = async (): Promise<Approval[]> => {
-  try {
-    const response = await fetch('/api/approvals');
-    if (!response.ok) throw new Error('Failed to load approvals');
-    return await response.json();
-  } catch (error) {
-    logger.error('Error loading approvals:', { error })
-    return [];
-  }
-};
+// const _loadApprovalsFromDB = async (): Promise<Approval[]> => {
+//   try {
+//     const response = await fetch('/api/approvals');
+//     if (!response.ok) throw new Error('Failed to load approvals');
+//     return await response.json();
+//   } catch (error) {
+//     logger.error('Error loading approvals:', { error })
+//     return [];
+//   }
+// };
 
 // Legacy mock data - replaced with database query
 const mockApprovals: Approval[] = [
@@ -243,7 +241,8 @@ export default function ApprovalsPage() {
         return {
           id: apt.id,
           patientName: apt.patients
-            ? `${apt.patients.first_name || ''} ${apt.patients.last_name || ''}`.trim() || 'Unknown'
+            ? `${apt.patients.first_name || ''} ${apt.patients.last_name || ''}`.trim() ||
+              'Unknown'
             : 'Unknown',
           patientId: apt.patient_id,
           requestType: apt.request_type,
@@ -258,21 +257,21 @@ export default function ApprovalsPage() {
           priority: apt.priority,
           estimatedCost: parseFloat(String(apt.estimated_cost || 0)),
           insuranceCoverage: parseFloat(String(apt.insurance_coverage || 0)),
-          patientContribution: parseFloat(String(apt.patient_contribution || 0)),
+          patientContribution: parseFloat(
+            String(apt.patient_contribution || 0)
+          ),
           isBlocked: apt.is_blocked || false,
           blockReason: apt.block_reason,
           hasOutstandingBalance: apt.has_outstanding_balance || false,
           outstandingAmount: parseFloat(String(apt.outstanding_amount || 0)),
-          attachments: Array.isArray(apt.attachments)
-            ? apt.attachments
-            : [],
+          attachments: Array.isArray(apt.attachments) ? apt.attachments : [],
           notes: apt.notes,
         };
       });
 
       setApprovals(transformedApprovals);
     } catch (err) {
-      logger.error('Failed to load approvals:', { error: err })
+      logger.error('Failed to load approvals:', { error: err });
       setError('Failed to load approvals');
       setApprovals([]);
     } finally {
@@ -300,7 +299,11 @@ export default function ApprovalsPage() {
   if (loading) {
     return (
       <div className='flex items-center justify-center min-h-screen'>
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="انتقل للمحتوى الرئيسي">
+        <a
+          href='#main-content'
+          className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded'
+          aria-label='انتقل للمحتوى الرئيسي'
+        >
           انتقل للمحتوى الرئيسي
         </a>
         <div className='text-center'>
@@ -499,7 +502,7 @@ export default function ApprovalsPage() {
         </div>
       </header>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <Card className='p-6 text-center'>
