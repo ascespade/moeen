@@ -18,7 +18,7 @@ const notificationSchema = z.object({
   type: z.enum(['email', 'sms', 'push', 'in_app', 'whatsapp']),
   title: z.string(),
   body: z.string(),
-  data: z.record(z.any()).optional(),
+  data: z.record(z.string(), z.any()).optional(),
   scheduledFor: z.string().datetime().optional(),
 });
 

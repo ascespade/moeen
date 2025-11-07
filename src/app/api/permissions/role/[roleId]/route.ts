@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PermissionManager } from '@/lib/permissions';
+import { PermissionManager } from '@/lib/permissions/index';
 
 export async function GET(
   _request: NextRequest,

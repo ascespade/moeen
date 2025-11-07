@@ -306,7 +306,9 @@ export function DynamicStatsCards({ data }: { data: any }) {
               <p className='text-2xl font-bold text-gray-900 dark:text-white'>
                 {typeof card.value === 'number'
                   ? localizedNumber(card.value.toString())
-                  : localizedNumber(card.value)}
+                  : typeof card.value === 'string'
+                  ? localizedNumber(card.value)
+                  : String(card.value)}
               </p>
             </div>
             <div className={`p-3 rounded-full ${card.bgColor}`}>

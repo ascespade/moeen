@@ -14,7 +14,8 @@ export type UserRole =
   | 'manager'
   | 'therapist'
   | 'nurse'
-  | 'agent';
+  | 'agent'
+  | 'demo';
 
 export type Permission = string;
 export type Resource = string;

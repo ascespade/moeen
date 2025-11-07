@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { realDB } from '@/lib/supabase-real';
 import { requireAuth } from '@/lib/auth/authorize';
-import { PermissionManager } from '@/lib/permissions';
+import { PermissionManager } from '@/lib/permissions/index';
 
 export const revalidate = 60;
 

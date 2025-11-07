@@ -18,7 +18,7 @@ import {
   Clock,
   Calendar,
   Menu,
-  _X,
+  X,
   Bot,
 } from 'lucide-react';
 import Link from 'next/link';

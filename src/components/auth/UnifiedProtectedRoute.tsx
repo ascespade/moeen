@@ -8,7 +8,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useUnifiedAuth } from '@/hooks/useUnifiedAuth';
 import { LoadingSpinner } from '@/components/ui';
 import { getDefaultRoute } from '@/lib/auth/unified-auth';

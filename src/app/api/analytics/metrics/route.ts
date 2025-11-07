@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabaseClient';
 import { requireAuth } from '@/lib/auth/authorize';
-import { PermissionManager } from '@/lib/permissions';
+import { PermissionManager } from '@/lib/permissions/index';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {

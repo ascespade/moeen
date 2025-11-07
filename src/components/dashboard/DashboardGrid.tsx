@@ -261,7 +261,6 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
         );
       }
     }
-
     return <div className='absolute inset-0 overflow-hidden'>{gridCells}</div>;
   };
 
@@ -285,8 +284,8 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
                 variant='outline'
                 size='sm'
                 onClick={onItemAdd}
-                icon={Plus}
               >
+                <Plus className='w-4 h-4 mr-2' />
                 إضافة مكون
               </Button>
             )}
@@ -296,8 +295,8 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
                 variant='outline'
                 size='sm'
                 onClick={onLayoutReset}
-                icon={RotateCcw}
               >
+                <RotateCcw className='w-4 h-4 mr-2' />
                 إعادة تعيين
               </Button>
             )}
@@ -307,8 +306,8 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
                 variant='primary'
                 size='sm'
                 onClick={() => onLayoutSave(items)}
-                icon={Save}
               >
+                <Save className='w-4 h-4 mr-2' />
                 حفظ
               </Button>
             )}
@@ -354,17 +353,19 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
                     variant='secondary'
                     size='sm'
                     onClick={() => onItemRemove?.(item.id)}
-                    icon={X}
                     className='w-6 h-6 p-0 bg-error-500 hover:bg-error-600 text-white'
                     title='حذف المكون'
-                  />
+                  >
+                    <X className='w-4 h-4' />
+                  </Button>
                   <Button
                     variant='secondary'
                     size='sm'
-                    icon={Settings}
                     className='w-6 h-6 p-0'
                     title='إعدادات المكون'
-                  />
+                  >
+                    <Settings className='w-4 h-4' />
+                  </Button>
                   <div
                     className='w-6 h-6 bg-neutral-200 dark:bg-neutral-600 rounded cursor-move flex items-center justify-center'
                     title='سحب المكون'
@@ -416,7 +417,8 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
                 ابدأ بإضافة مكونات إلى داشبوردك
               </p>
               {onItemAdd && (
-                <Button onClick={onItemAdd} icon={Plus}>
+                <Button onClick={onItemAdd}>
+                  <Plus className='w-4 h-4 mr-2' />
                   إضافة مكون أول
                 </Button>
               )}
@@ -430,7 +432,6 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
         <Button
           variant='outline'
           size='sm'
-          icon={Download}
           onClick={() => {
             // Export layout as JSON
             const dataStr = JSON.stringify(items, null, 2);
@@ -445,6 +446,7 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
             linkElement.click();
           }}
         >
+          <Download className='w-4 h-4 mr-2' />
           تصدير التخطيط
         </Button>
       </div>

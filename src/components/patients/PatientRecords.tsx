@@ -3,17 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import {
   User,
-  _Phone,
-  _Mail,
-  _Calendar,
-  _FileText,
+  Phone,
+  Mail,
+  Calendar,
+  FileText,
   Plus,
-  _Edit,
-  _Trash2,
+  Edit,
+  Trash2,
   Search,
-  _Filter,
-  _Download,
-  _Eye,
+  Filter,
+  Download,
+  Eye,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -239,31 +239,31 @@ const PatientRecords: React.FC = () => {
     setShowAddPatient(false);
   };
 
-  const _handleAddRecord = async () => {
-    if (!selectedPatient || !newRecord.date || !newRecord.doctorName) {
-      alert('يرجى ملء الحقول المطلوبة');
-      return;
-    }
+  // const _handleAddRecord = async () => {
+  //   if (!selectedPatient || !newRecord.date || !newRecord.doctorName) {
+  //     alert('يرجى ملء الحقول المطلوبة');
+  //     return;
+  //   }
+  //
+  //   const record: MedicalRecord = {
+  //     id: Date.now().toString(),
+  //     patientId: selectedPatient.id,
+  //     attachments: [],
+      //...newRecord,
+    //};
 
-    const record: MedicalRecord = {
-      id: Date.now().toString(),
-      patientId: selectedPatient.id,
-      attachments: [],
-      ...newRecord,
-    };
-
-    setMedicalRecords(prev => [...prev, record]);
-    setNewRecord({
-      date: '',
-      doctorName: '',
-      diagnosis: '',
-      treatment: '',
-      notes: '',
-      followUpRequired: false,
-      followUpDate: '',
-    });
-    setShowAddRecord(false);
-  };
+    //setMedicalRecords(prev => [...prev, record]);
+    //setNewRecord({
+      //date: '',
+      //doctorName: '',
+      //diagnosis: '',
+      //treatment: '',
+      //notes: '',
+      //followUpRequired: false,
+      //followUpDate: '',
+    //});
+    //setShowAddRecord(false);
+  //};
 
   const getStatusColor = (status: string) => {
     switch (status) {

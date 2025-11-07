@@ -7,7 +7,7 @@ import {
   Bell,
   Bot,
   Building2,
-  _Calendar,
+  Calendar,
   CreditCard,
   FileText,
   LayoutDashboard,

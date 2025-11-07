@@ -349,12 +349,13 @@ export default function MoeenChatbot({
             <div className='flex gap-2'>
               <input type='text'
                 value={input}
-                onChange={(e) => setInput(e.target.value)} aria-label="text" aria-invalid="true"
+                onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder='اكتب رسالتك...'
                 className='flex-1 rounded-md border border-[var(--brand-border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/20'
                 disabled={isLoading}
                 aria-label="حقل إدخال الرسالة"
+                aria-invalid="true"
                 aria-describedby="chatbot-input-help"
               />
               <button 
