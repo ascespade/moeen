@@ -16,7 +16,7 @@ import {
   Phone,
   Mail,
   Calendar,
-  Database,
+  // Database,
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
@@ -34,10 +34,10 @@ interface Integration {
 }
 
 const IntegrationsPage: React.FC = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [integrations, setIntegrations] = useState<Integration[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated) {

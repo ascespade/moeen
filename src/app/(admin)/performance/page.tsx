@@ -125,8 +125,8 @@ interface PerformanceAlert {
 }
 
 function PerformancePageContent() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
+  const { } = useT();
+  const { } = usePermissions({ userRole: 'admin' });
   const [metrics, setMetrics] = useState<PerformanceMetric[]>([]);
   const [alerts, setAlerts] = useState<PerformanceAlert[]>([]);
   const [selectedMetric, setSelectedMetric] =

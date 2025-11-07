@@ -109,8 +109,8 @@ interface Doctor {
 }
 
 export default function DoctorsPage() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
+  const { } = useT();
+  const { } = usePermissions({ userRole: 'admin' });
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -601,7 +601,8 @@ export default function DoctorsPage() {
     );
   };
 
-  const getGenderBadge = (gender: string) => {
+  // getGenderBadge function not used
+  // const getGenderBadge = (gender: string) => {
     return gender === 'male' ? (
       <Badge variant='outline' className='bg-blue-100 text-blue-800'>
         ذكر
@@ -613,7 +614,8 @@ export default function DoctorsPage() {
     );
   };
 
-  const formatDate = (dateString: string) => {
+  // formatDate function not used
+  // const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
       month: 'short',

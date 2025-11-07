@@ -71,7 +71,7 @@ import {
   Settings,
   TrendingUp,
   Target,
-  FileText,
+  // FileText,
   Paperclip,
   Inbox,
   Send as Outbox,
@@ -134,8 +134,8 @@ interface Message {
 }
 
 function MessagesPageContent() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
+  const { } = useT();
+  const { } = usePermissions({ userRole: 'admin' });
   const [messages, setMessages] = useState<Message[]>([]);
   const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
   const [loading, setLoading] = useState(true);

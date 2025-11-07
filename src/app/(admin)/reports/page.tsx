@@ -27,7 +27,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  // DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -116,8 +116,8 @@ interface Report {
 }
 
 export default function ReportsPage() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
+  const { } = useT();
+  const { } = usePermissions({ userRole: 'admin' });
   const [reports, setReports] = useState<Report[]>([]);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(true);
@@ -471,7 +471,8 @@ export default function ReportsPage() {
     });
   };
 
-  const formatTime = (dateString: string) => {
+  // formatTime function not used
+  // const formatTime = (dateString: string) => {
     return new Date(dateString).toLocaleTimeString('ar-SA', {
       hour: '2-digit',
       minute: '2-digit',

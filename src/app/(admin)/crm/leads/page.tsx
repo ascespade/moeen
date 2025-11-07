@@ -29,7 +29,7 @@ interface Lead {
 
 export default function CRMLeadsPage() {
   const [leads, setLeads] = useState<Lead[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'table' | 'kanban'>('table');

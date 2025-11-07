@@ -24,10 +24,10 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import {
-  encrypt,
-  decrypt,
+  // encrypt,
+  // decrypt,
   encryptApiKey,
-  decryptApiKey,
+  // decryptApiKey,
 } from '@/lib/encryption';
 import { createClient } from '@/lib/supabase/client';
 

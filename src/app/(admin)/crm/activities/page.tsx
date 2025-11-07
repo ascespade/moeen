@@ -85,7 +85,8 @@ export default function CRMActivitiesPage() {
     }
   };
 
-  const getTypeText = (type: Activity['type']) => {
+  // getTypeText function not used
+  // const getTypeText = (type: Activity['type']) => {
     switch (type) {
       case 'call':
         return 'مكالمة';

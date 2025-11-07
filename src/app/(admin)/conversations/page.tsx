@@ -528,7 +528,8 @@ function ConversationsPageContent() {
     );
   };
 
-  const _formatDate = (dateString: string) => {
+  // Format date function not used
+  // const _formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
       month: 'short',

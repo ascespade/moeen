@@ -162,7 +162,8 @@ function CRMPageContent() {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [, setIsCreateDialogOpen] = useState(false);
+  // Dialog state not used
+  // const [, setIsCreateDialogOpen] = useState(false);
 
   // Fetch real data from API
   useEffect(() => {

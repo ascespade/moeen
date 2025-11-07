@@ -100,14 +100,14 @@ interface SecurityAlert {
 }
 
 function SecurityPageContent() {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([]);
   const [policies, setPolicies] = useState<SecurityPolicy[]>([]);
   const [sessions, setSessions] = useState<UserSession[]>([]);
   const [alerts, setAlerts] = useState<SecurityAlert[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState<
     'events' | 'policies' | 'sessions' | 'alerts'
   >('events');

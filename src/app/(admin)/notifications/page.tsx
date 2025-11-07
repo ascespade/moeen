@@ -29,7 +29,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  // DialogTrigger,
 } from '@/components/ui/Dialog';
 import {
   Select,
@@ -120,8 +120,8 @@ interface Notification {
 }
 
 function NotificationsPageContent() {
-  const { t } = useT();
-  const { hasPermission } = usePermissions({ userRole: 'admin' });
+  const { } = useT();
+  const { } = usePermissions({ userRole: 'admin' });
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [selectedNotification, setSelectedNotification] =
     useState<Notification | null>(null);
@@ -518,7 +518,8 @@ function NotificationsPageContent() {
     );
   };
 
-  const formatDate = (dateString: string) => {
+  // formatDate function not used
+  // const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('ar-SA', {
       year: 'numeric',
       month: 'short',
@@ -526,7 +527,8 @@ function NotificationsPageContent() {
     });
   };
 
-  const formatTime = (dateString: string) => {
+  // formatTime function not used
+  // const formatTime = (dateString: string) => {
     return new Date(dateString).toLocaleTimeString('ar-SA', {
       hour: '2-digit',
       minute: '2-digit',
