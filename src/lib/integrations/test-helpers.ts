@@ -3,7 +3,7 @@
  * Provides functions for testing various external integrations
  */
 
-import _logger from '@/lib/monitoring/_logger';
+import logger from '@/lib/monitoring/logger';
 import { createClient } from '@/lib/supabase/client';
 
 // ================================================================

@@ -1,5 +1,5 @@
 'use client';
-import _logger from '@/lib/monitoring/_logger';
+import logger from '@/lib/monitoring/logger';
 
 import { useCallback } from 'react';
 import { useT } from '@/hooks/useT';

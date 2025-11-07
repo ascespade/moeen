@@ -28,7 +28,7 @@ export { default as SmartHeader } from './layout/SmartHeader';
 // ============================================
 
 // Auth
-export { default as ProtectedRoute } from './auth/ProtectedRoute';
+export { ProtectedRoute } from './auth/ProtectedRoute';
 
 // Dashboard
 export { default as KpiCard } from './dashboard/KpiCard';

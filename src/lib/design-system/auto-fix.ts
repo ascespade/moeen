@@ -5,7 +5,7 @@
 
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
-import { autoFixCSSClasses, _validateCSSClasses } from './validator';
+import { autoFixCSSClasses, validateCSSClasses } from './validator';
 
 const EXTENSIONS = ['.tsx', '.ts', '.jsx', '.js'];
 const IGNORE_DIRS = ['node_modules', '.next', 'dist', 'build', '.git'];

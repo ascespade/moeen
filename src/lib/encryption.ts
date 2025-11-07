@@ -4,7 +4,7 @@
  * Replaces insecure Base64 encoding
  */
 
-import _logger from '@/lib/monitoring/_logger';
+import logger from '@/lib/monitoring/logger';
 import CryptoJS from 'crypto-js';
 
 /**

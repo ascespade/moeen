@@ -3,8 +3,8 @@ import { User } from '@/types';
 import {
   getUser,
   setUser,
-  _getToken,
-  _setToken,
+  getToken,
+  setToken,
   clearAuth,
 } from '@/utils/storage';
 import { getBrowserSupabase } from '@/lib/supabaseClient';

@@ -1,4 +1,4 @@
-import _logger from '@/lib/monitoring/_logger';
+import logger from '@/lib/monitoring/logger';
 interface SMSData {
   to: string;
   message: string;

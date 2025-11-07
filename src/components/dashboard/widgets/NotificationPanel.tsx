@@ -266,10 +266,11 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
               variant='ghost'
               size='sm'
               onClick={() => setShowFiltersPanel(!showFiltersPanel)}
-              icon={Filter}
               className='w-8 h-8 p-0'
               title='الفلاتر'
-            />
+            >
+              <Filter className='w-4 h-4' />
+            </Button>
           )}
 
           {onMarkAllAsRead && unreadCount > 0 && (
@@ -431,13 +432,14 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
                           <Button
                             variant='ghost'
                             size='sm'
-                            icon={MoreHorizontal}
                             className='w-6 h-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity'
                             onClick={e => {
                               e.stopPropagation();
                               // Show dropdown menu
                             }}
-                          />
+                          >
+                            <MoreHorizontal className='w-4 h-4' />
+                          </Button>
                         </div>
                       </div>
 
@@ -474,10 +476,11 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
                               variant='ghost'
                               size='sm'
                               onClick={_e => handleMarkAsRead(notification.id)}
-                              icon={Eye}
                               className='w-6 h-6 p-0'
                               title='تحديد كمقروء'
-                            />
+                            >
+                              <Eye className='w-4 h-4' />
+                            </Button>
                           )}
 
                           {onArchive && (
@@ -485,10 +488,11 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
                               variant='ghost'
                               size='sm'
                               onClick={() => onArchive(notification.id)}
-                              icon={Archive}
                               className='w-6 h-6 p-0'
                               title='أرشفة'
-                            />
+                            >
+                              <Archive className='w-4 h-4' />
+                            </Button>
                           )}
 
                           {onDelete && (
@@ -496,10 +500,11 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
                               variant='ghost'
                               size='sm'
                               onClick={() => onDelete(notification.id)}
-                              icon={Trash2}
                               className='w-6 h-6 p-0 text-error-500 hover:text-error-600'
                               title='حذف'
-                            />
+                            >
+                              <Trash2 className='w-4 h-4' />
+                            </Button>
                           )}
                         </div>
                       </div>

@@ -6,9 +6,9 @@
  */
 
 import { createClient } from '../supabase/server';
-import { ROLES, _PERMISSIONS, hasPermission as checkPermission } from '../constants';
+import { ROLES, PERMISSIONS, hasPermission as checkPermission } from '../constants';
 import { AppError } from '../errors';
-import { _ERROR_CODES } from '../constants/errors';
+import { ERROR_CODES } from '../constants/errors';
 import type { User } from '../../types/database.types';
 
 /**
