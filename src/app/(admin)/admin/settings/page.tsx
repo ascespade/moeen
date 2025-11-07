@@ -191,7 +191,7 @@ function AdminSettingsPageContent() {
           className='border-[var(--brand-border)] hover:bg-[var(--brand-primary)]/5'
           disabled={isSaving}
           onClick={handleReset}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               handleReset();
@@ -206,7 +206,7 @@ function AdminSettingsPageContent() {
         <Button
           onClick={handleSave}
           disabled={!hasChanges || isSaving}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               if (!isSaving && hasChanges) {
@@ -231,7 +231,7 @@ function AdminSettingsPageContent() {
         </Button>
       </AdminHeader>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-8'>
           {/* Settings Navigation */}
           <div className='lg:col-span-1'>
@@ -257,7 +257,7 @@ function AdminSettingsPageContent() {
                   <button
                     key={tab.id}
                     onClick={() => handleTabChange(tab.id)}
-                    onKeyDown={(e) => {
+                    onKeyDown={e => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         handleTabChange(tab.id);

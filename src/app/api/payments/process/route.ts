@@ -260,7 +260,7 @@ async function __processMoyasarPayment(
       },
       body: JSON.stringify({
         amount: Math.round(amount * 100), // Convert to halalas
-        currency: currency,
+        currency,
         description: `Payment for appointment ${(appointment as any).id}`,
         metadata: {
           appointmentId: (appointment as any).id,

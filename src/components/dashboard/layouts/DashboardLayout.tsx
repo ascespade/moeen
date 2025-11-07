@@ -101,7 +101,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                     type='text'
                     placeholder='البحث في الداشبورد...'
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={e => setSearchQuery(e.target.value)}
                     onFocus={() => setIsSearchFocused(true)}
                     onBlur={() => setIsSearchFocused(false)}
                     aria-label='البحث في الداشبورد'
@@ -230,14 +230,15 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       {isOpen && (
         <div
           className='fixed inset-0 z-40 bg-neutral-900/50 lg:hidden'
-          tabIndex={0} onClick={onToggle}
+          tabIndex={0}
+          onClick={onToggle}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        role="navigation"
-        aria-label="القائمة الجانبية"
+        role='navigation'
+        aria-label='القائمة الجانبية'
         className={cn(
           'fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-64 transform bg-white dark:bg-neutral-900 border-r border-neutral-200 dark:border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0',
           isOpen ? 'translate-x-0' : '-translate-x-full',
@@ -247,7 +248,11 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       >
         <div className='flex h-full flex-col'>
           {/* Navigation */}
-          <nav className='flex-1 space-y-1 p-4' role="navigation" aria-label="القائمة">
+          <nav
+            className='flex-1 space-y-1 p-4'
+            role='navigation'
+            aria-label='القائمة'
+          >
             {navigation.map(item => (
               <div key={item.id}>
                 <button
@@ -256,7 +261,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                       // Handle navigation
                     }
                   }}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       if (item.href) {
@@ -296,7 +301,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                             // Handle navigation
                           }
                         }}
-                        onKeyDown={(e) => {
+                        onKeyDown={e => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
                             if (child.href) {

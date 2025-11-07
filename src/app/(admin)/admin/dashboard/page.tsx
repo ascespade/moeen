@@ -146,9 +146,7 @@ function AdminDashboardPage() {
       <div className='flex items-center justify-center min-h-[400px]'>
         <div className='text-center'>
           <div className='mb-4 h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-blue-600 mx-auto'></div>
-          <p className='text-sm text-gray-600'>
-            جاري تحميل لوحة التحكم...
-          </p>
+          <p className='text-sm text-gray-600'>جاري تحميل لوحة التحكم...</p>
         </div>
       </div>
     );
@@ -171,7 +169,7 @@ function AdminDashboardPage() {
           </Button>
         </AdminHeader>
 
-        <main className='container-app py-8' id="main-content">
+        <main className='container-app py-8' id='main-content'>
           <div className='text-center py-16'>
             <AlertTriangle
               className='w-16 h-16 mx-auto mb-4'
@@ -223,7 +221,11 @@ function AdminDashboardPage() {
         </Button>
         <select
           value={selectedPeriod}
-          onChange={e => setSelectedPeriod(e.target.value as 'today' | 'week' | 'month' | 'year')}
+          onChange={e =>
+            setSelectedPeriod(
+              e.target.value as 'today' | 'week' | 'month' | 'year'
+            )
+          }
           className='rounded-lg border border-[var(--brand-border)] px-4 py-2 text-sm bg-[var(--panel)] text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)]/20'
         >
           <option value='today'>اليوم</option>
@@ -250,7 +252,7 @@ function AdminDashboardPage() {
         </Button>
       </AdminHeader>
 
-      <main className='container-app py-8 space-y-8' id="main-content">
+      <main className='container-app py-8 space-y-8' id='main-content'>
         {/* Main Stats Grid */}
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4'>
           <AdminStatsCard

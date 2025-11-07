@@ -207,9 +207,9 @@
 }
 
 /* Prevent hardcoded colors from breaking design */
-[style*="background-color"]:not([style*="var(--"]),
-[style*="color"]:not([style*="var(--"]),
-[style*="border-color"]:not([style*="var(--"]) {
+[style*='background-color']:not([style*='var(--']),
+[style*='color']:not([style*='var(--']),
+[style*='border-color']:not([style*='var(--']) {
   /* Will be caught by validator */
 }
 
@@ -265,7 +265,12 @@
 }
 
 /* Typography stability */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--text-primary);
   font-weight: 600;
 }

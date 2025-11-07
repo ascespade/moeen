@@ -1,7 +1,7 @@
 /**
  * Typography System - Extracted from Homepage Design
  * نظام الطباعة - مستخرج من تصميم الصفحة الرئيسية
- * 
+ *
  * Source: src/styles/centralized.css, tailwind.config.js
  * Reference: src/components/home/OriginalHero.tsx
  */

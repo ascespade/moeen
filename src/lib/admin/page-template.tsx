@@ -27,23 +27,27 @@ export function AdminPageTemplate({
   errorComponent,
 }: PageTemplateProps) {
   if (loading) {
-    return loadingComponent || (
-      <div className='flex items-center justify-center min-h-[400px]'>
-        <div className='text-center'>
-          <div className='mb-4 h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-blue-600 mx-auto'></div>
-          <p className='text-sm text-gray-600'>جاري التحميل...</p>
+    return (
+      loadingComponent || (
+        <div className='flex items-center justify-center min-h-[400px]'>
+          <div className='text-center'>
+            <div className='mb-4 h-8 w-8 animate-spin rounded-full border-2 border-gray-200 border-t-blue-600 mx-auto'></div>
+            <p className='text-sm text-gray-600'>جاري التحميل...</p>
+          </div>
         </div>
-      </div>
+      )
     );
   }
 
   if (error) {
-    return errorComponent || (
-      <div className='flex items-center justify-center min-h-[400px]'>
-        <div className='text-center'>
-          <p className='text-red-600 mb-4'>حدث خطأ: {error}</p>
+    return (
+      errorComponent || (
+        <div className='flex items-center justify-center min-h-[400px]'>
+          <div className='text-center'>
+            <p className='text-red-600 mb-4'>حدث خطأ: {error}</p>
+          </div>
         </div>
-      </div>
+      )
     );
   }
 
@@ -57,4 +61,3 @@ export function AdminPageTemplate({
     </AdminPageWrapper>
   );
 }
-

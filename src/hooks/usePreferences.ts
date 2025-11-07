@@ -35,7 +35,9 @@ export function usePreferences() {
     return { theme: 'light', language: 'ar' };
   };
 
-  const [preferences, setPreferences] = useState<UserPreferences>(getInitialPreferences());
+  const [preferences, setPreferences] = useState<UserPreferences>(
+    getInitialPreferences()
+  );
   const [isLoading, _setIsLoading] = useState(false); // Start as false - we already have localStorage
 
   // Apply initial preferences immediately
@@ -44,7 +46,10 @@ export function usePreferences() {
     // Then try to load from API (non-blocking)
     loadPreferences()
       .then(prefs => {
-        if (prefs.theme !== preferences.theme || prefs.language !== preferences.language) {
+        if (
+          prefs.theme !== preferences.theme ||
+          prefs.language !== preferences.language
+        ) {
           setPreferences(prefs);
           applyPreferences(prefs);
         }
@@ -52,6 +57,7 @@ export function usePreferences() {
       .catch(() => {
         // Silently fail - we already have localStorage preferences
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Update preference

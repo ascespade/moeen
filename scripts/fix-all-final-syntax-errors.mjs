@@ -17,9 +17,7 @@ const projectRoot = join(__dirname, '..');
 
 console.log('?? Fixing All Final Syntax Errors...\n');
 
-const allFiles = [
-  ...await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }),
-];
+const allFiles = [...(await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }))];
 
 let stats = {
   inputclassName: 0,
@@ -52,43 +50,55 @@ for (const file of allFiles) {
     }
 
     // Fix: onChange={e = aria-invalid="true"> handler}
-    const malformedOnChangePattern = /onChange=\{e\s*=\s*aria-invalid=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
+    const malformedOnChangePattern =
+      /onChange=\{e\s*=\s*aria-invalid=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
     if (malformedOnChangePattern.test(content)) {
-      content = content.replace(malformedOnChangePattern, (match, ariaInvalid, handler) => {
-        // Extract setter from handler
-        const setterMatch = handler.match(/set([^(]+)\(([^)]+)\)/);
-        if (setterMatch) {
-          const setter = setterMatch[1];
-          const value = setterMatch[2];
-          return `onChange={(e) => set${setter}(${value})}`;
-        }
-        // Try to extract from handler directly
-        const handlerMatch = handler.match(/updateService\(([^)]+)\)/);
-        if (handlerMatch) {
+      content = content.replace(
+        malformedOnChangePattern,
+        (match, ariaInvalid, handler) => {
+          // Extract setter from handler
+          const setterMatch = handler.match(/set([^(]+)\(([^)]+)\)/);
+          if (setterMatch) {
+            const setter = setterMatch[1];
+            const value = setterMatch[2];
+            return `onChange={(e) => set${setter}(${value})}`;
+          }
+          // Try to extract from handler directly
+          const handlerMatch = handler.match(/updateService\(([^)]+)\)/);
+          if (handlerMatch) {
+            return `onChange={(e) => ${handler.trim()}}`;
+          }
           return `onChange={(e) => ${handler.trim()}}`;
         }
-        return `onChange={(e) => ${handler.trim()}}`;
-      });
+      );
       stats.malformedOnChange++;
       modified = true;
     }
 
     // Fix: onClick={() => { handler} aria-label="{...}"
-    const malformedOnClickPattern = /onClick=\{\(\)\s*=>\s*\{([^}]+)\}\s*aria-label=["']([^"']+)["']/g;
+    const malformedOnClickPattern =
+      /onClick=\{\(\)\s*=>\s*\{([^}]+)\}\s*aria-label=["']([^"']+)["']/g;
     if (malformedOnClickPattern.test(content)) {
-      content = content.replace(malformedOnClickPattern, (match, handler, ariaLabel) => {
-        return `onClick={() => { ${handler.trim()} }} aria-label="${ariaLabel}"`;
-      });
+      content = content.replace(
+        malformedOnClickPattern,
+        (match, handler, ariaLabel) => {
+          return `onClick={() => { ${handler.trim()} }} aria-label="${ariaLabel}"`;
+        }
+      );
       stats.malformedOnClick++;
       modified = true;
     }
 
     // Fix: onKeyDown={(e) = aria-label="{...}"> { handler }}
-    const malformedOnKeyDownPattern = /onKeyDown=\{\(e\)\s*=\s*aria-label=["']([^"']+)["']\s*>\s*\{([^}]+)\}\}/g;
+    const malformedOnKeyDownPattern =
+      /onKeyDown=\{\(e\)\s*=\s*aria-label=["']([^"']+)["']\s*>\s*\{([^}]+)\}\}/g;
     if (malformedOnKeyDownPattern.test(content)) {
-      content = content.replace(malformedOnKeyDownPattern, (match, ariaLabel, handler) => {
-        return `onKeyDown={(e) => { ${handler.trim()} }}`;
-      });
+      content = content.replace(
+        malformedOnKeyDownPattern,
+        (match, ariaLabel, handler) => {
+          return `onKeyDown={(e) => { ${handler.trim()} }}`;
+        }
+      );
       stats.malformedOnKeyDown++;
       modified = true;
     }
@@ -104,7 +114,8 @@ for (const file of allFiles) {
     }
 
     // Fix: standalone div/main/header/etc without opening <
-    const standaloneTagPattern = /(return\s*\([^<]*?|\)\s*=>\s*\{[^<]*?|\.map\([^<]*?)(div|main|header|aside|section|footer|article|nav)\s+(?!className|id|role|aria|onClick|onKeyDown|onChange|key|ref)/g;
+    const standaloneTagPattern =
+      /(return\s*\([^<]*?|\)\s*=>\s*\{[^<]*?|\.map\([^<]*?)(div|main|header|aside|section|footer|article|nav)\s+(?!className|id|role|aria|onClick|onKeyDown|onChange|key|ref)/g;
     if (standaloneTagPattern.test(content)) {
       content = content.replace(standaloneTagPattern, (match, before, tag) => {
         // Only fix if it's not already a proper tag

@@ -31,9 +31,13 @@ export default function HomePage() {
   };
 
   return (
-    <div className='min-h-screen bg-[var(--background)]' role="application">
+    <div className='min-h-screen bg-[var(--background)]' role='application'>
       {/* Skip Link */}
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--brand-primary)] focus:text-white focus:rounded" aria-label="التخطي للمحتوى الرئيسي">
+      <a
+        href='#main-content'
+        className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--brand-primary)] focus:text-white focus:rounded'
+        aria-label='التخطي للمحتوى الرئيسي'
+      >
         التخطي للمحتوى الرئيسي
       </a>
 
@@ -41,7 +45,7 @@ export default function HomePage() {
       <GlobalHeader />
 
       {/* Main Content */}
-      <main id="main-content" role="main">
+      <main id='main-content' role='main'>
         {/* Hero Section - Original Design */}
         <OriginalHero
           onAppointmentClick={handleAppointmentClick}
@@ -52,14 +56,14 @@ export default function HomePage() {
         <OriginalFeatures />
 
         {/* Business Stats Section */}
-        <section id="stats" className='py-16 bg-[var(--panel)]'>
+        <section id='stats' className='py-16 bg-[var(--panel)]'>
           <div className='container-app'>
             <BusinessSection />
           </div>
         </section>
 
         {/* Services Section */}
-        <section id="services" className='py-20'>
+        <section id='services' className='py-20'>
           <div className='container-app'>
             <div className='text-center mb-16'>
               <h2 className='text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-4'>
@@ -74,14 +78,14 @@ export default function HomePage() {
         </section>
 
         {/* Vision & Mission Section */}
-        <section id="about" className='py-20'>
+        <section id='about' className='py-20'>
           <div className='container-app'>
             <VisionMission />
           </div>
         </section>
 
         {/* Success Stories Section */}
-        <section id="testimonials" className='py-20 bg-[var(--panel)]'>
+        <section id='testimonials' className='py-20 bg-[var(--panel)]'>
           <div className='container-app'>
             <SuccessStories />
           </div>
@@ -91,7 +95,7 @@ export default function HomePage() {
         <InteractiveGallery />
 
         {/* Contact Section */}
-        <section id="contact" className='py-20'>
+        <section id='contact' className='py-20'>
           <div className='container-app'>
             <ContactFormWithMap />
           </div>
@@ -99,7 +103,7 @@ export default function HomePage() {
       </main>
 
       {/* Footer */}
-      <footer className='nav mt-20' role="contentinfo">
+      <footer className='nav mt-20' role='contentinfo'>
         <div className='container-app py-8 text-center text-[var(--text-secondary)]'>
           <p>&copy; 2024 Mu3een. جميع الحقوق محفوظة.</p>
         </div>

@@ -17,9 +17,7 @@ const projectRoot = join(__dirname, '..');
 
 console.log('?? Fixing All ARIA Labels and Syntax Errors...\n');
 
-const allFiles = [
-  ...await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }),
-];
+const allFiles = [...(await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }))];
 
 let stats = {
   buttonkey: 0,
@@ -72,26 +70,38 @@ for (const file of allFiles) {
       content = content.replace(ariaLabelButtonPattern, (match, offset) => {
         // Get context around the match
         const before = content.substring(Math.max(0, offset - 100), offset);
-        const after = content.substring(offset + match.length, Math.min(content.length, offset + match.length + 100));
-        
+        const after = content.substring(
+          offset + match.length,
+          Math.min(content.length, offset + match.length + 100)
+        );
+
         // Try to find button text or onClick handler context
         let label = '??';
-        
+
         // Check for onClick handler
         if (before.includes('onClick') || after.includes('onClick')) {
-          const onClickMatch = (before + after).match(/onClick\s*[=:]\s*\([^)]*\)\s*=>\s*\{?\s*([^}]+)/);
+          const onClickMatch = (before + after).match(
+            /onClick\s*[=:]\s*\([^)]*\)\s*=>\s*\{?\s*([^}]+)/
+          );
           if (onClickMatch) {
             const handler = onClickMatch[1];
-            if (handler.includes('delete') || handler.includes('???')) label = '???';
-            else if (handler.includes('edit') || handler.includes('?????')) label = '?????';
-            else if (handler.includes('save') || handler.includes('???')) label = '???';
-            else if (handler.includes('submit') || handler.includes('?????')) label = '?????';
-            else if (handler.includes('cancel') || handler.includes('?????')) label = '?????';
-            else if (handler.includes('close') || handler.includes('?????')) label = '?????';
-            else if (handler.includes('open') || handler.includes('???')) label = '???';
+            if (handler.includes('delete') || handler.includes('???'))
+              label = '???';
+            else if (handler.includes('edit') || handler.includes('?????'))
+              label = '?????';
+            else if (handler.includes('save') || handler.includes('???'))
+              label = '???';
+            else if (handler.includes('submit') || handler.includes('?????'))
+              label = '?????';
+            else if (handler.includes('cancel') || handler.includes('?????'))
+              label = '?????';
+            else if (handler.includes('close') || handler.includes('?????'))
+              label = '?????';
+            else if (handler.includes('open') || handler.includes('???'))
+              label = '???';
           }
         }
-        
+
         // Check for button text content
         const buttonTextMatch = after.match(/>\s*([^<]+)/);
         if (buttonTextMatch) {
@@ -100,7 +110,7 @@ for (const file of allFiles) {
             label = text;
           }
         }
-        
+
         return `aria-label="${label}"`;
       });
       stats.ariaLabelButton++;
@@ -108,28 +118,36 @@ for (const file of allFiles) {
     }
 
     // Fix malformed onChange: onChange={e = aria-label="..."> -> onChange={(e) => ...} aria-label="..."
-    const malformedOnChangePattern = /onChange=\{e\s*=\s*aria-label=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
+    const malformedOnChangePattern =
+      /onChange=\{e\s*=\s*aria-label=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
     if (malformedOnChangePattern.test(content)) {
-      content = content.replace(malformedOnChangePattern, (match, ariaLabel, handler) => {
-        // Extract setter from handler
-        const setterMatch = handler.match(/set([^(]+)\(([^)]+)\)/);
-        if (setterMatch) {
-          const setter = setterMatch[1];
-          const value = setterMatch[2];
-          return `onChange={(e) => set${setter}(${value})} aria-label="${ariaLabel}"`;
+      content = content.replace(
+        malformedOnChangePattern,
+        (match, ariaLabel, handler) => {
+          // Extract setter from handler
+          const setterMatch = handler.match(/set([^(]+)\(([^)]+)\)/);
+          if (setterMatch) {
+            const setter = setterMatch[1];
+            const value = setterMatch[2];
+            return `onChange={(e) => set${setter}(${value})} aria-label="${ariaLabel}"`;
+          }
+          return `onChange={(e) => ${handler}} aria-label="${ariaLabel}"`;
         }
-        return `onChange={(e) => ${handler}} aria-label="${ariaLabel}"`;
-      });
+      );
       stats.malformedOnChange++;
       modified = true;
     }
 
     // Fix malformed onClick in button: onClick={() = aria-label="Button"> -> onClick={() => ...} aria-label="..."
-    const malformedOnClickPattern = /onClick=\{\(\)\s*=\s*aria-label=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
+    const malformedOnClickPattern =
+      /onClick=\{\(\)\s*=\s*aria-label=["']([^"']+)["']\s*>\s*([^}]+)\}/g;
     if (malformedOnClickPattern.test(content)) {
-      content = content.replace(malformedOnClickPattern, (match, ariaLabel, handler) => {
-        return `onClick={() => ${handler}} aria-label="${ariaLabel}"`;
-      });
+      content = content.replace(
+        malformedOnClickPattern,
+        (match, ariaLabel, handler) => {
+          return `onClick={() => ${handler}} aria-label="${ariaLabel}"`;
+        }
+      );
       stats.malformedOnChange++;
       modified = true;
     }
@@ -154,6 +172,8 @@ console.log(`? Fixed buttononClick: ${stats.buttononClick} files`);
 console.log(`? Fixed inputtype: ${stats.inputtype} files`);
 console.log(`? Fixed buttontype: ${stats.buttontype} files`);
 console.log(`? Fixed aria-label="Button": ${stats.ariaLabelButton} files`);
-console.log(`? Fixed malformed onChange/onClick: ${stats.malformedOnChange} files`);
+console.log(
+  `? Fixed malformed onChange/onClick: ${stats.malformedOnChange} files`
+);
 console.log(`?? Total Files Fixed: ${stats.total}`);
 console.log('='.repeat(70) + '\n');

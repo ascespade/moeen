@@ -35,10 +35,12 @@ export function Tabs({ tabs, defaultTab, onChange, className }: TabsProps) {
       <div className='border-b border-gray-200'>
         <nav className='flex space-x-4' aria-label='Tabs'>
           {tabs.map(tab => (
-            <button 
+            <button
               key={tab.id}
-              onClick={() => { handleTabChange(tab.id) }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                handleTabChange(tab.id);
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   handleTabChange(tab.id);

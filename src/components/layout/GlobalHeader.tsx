@@ -21,14 +21,18 @@ const ThemeLanguageSwitches = memo(function ThemeLanguageSwitches() {
       <button
         className='inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-[var(--foreground)] bg-[var(--panel)] hover:bg-[var(--brand-surface)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] disabled:opacity-50 transition-colors'
         onClick={toggleTheme}
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             toggleTheme();
           }
         }}
         disabled={isLoading}
-        aria-label={isLoading ? 'جاري التحميل...' : t(I18N_KEYS.THEME.LABEL, 'تبديل الثيم')}
+        aria-label={
+          isLoading
+            ? 'جاري التحميل...'
+            : t(I18N_KEYS.THEME.LABEL, 'تبديل الثيم')
+        }
       >
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-[var(--brand-border)] border-t-[var(--brand-primary)]'></div>
@@ -46,14 +50,20 @@ const ThemeLanguageSwitches = memo(function ThemeLanguageSwitches() {
       <button
         className='inline-flex h-9 items-center gap-2 rounded-md border border-[var(--brand-border)] px-3 text-[var(--foreground)] bg-[var(--panel)] hover:bg-[var(--brand-surface)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] disabled:opacity-50 transition-colors'
         onClick={toggleLanguage}
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             toggleLanguage();
           }
         }}
         disabled={isLoading}
-        aria-label={isLoading ? 'جاري التحميل...' : language === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}
+        aria-label={
+          isLoading
+            ? 'جاري التحميل...'
+            : language === 'ar'
+              ? 'Switch to English'
+              : 'التبديل إلى العربية'
+        }
       >
         {isLoading ? (
           <div className='h-4 w-4 animate-spin rounded-full border-2 border-[var(--brand-border)] border-t-[var(--brand-primary)]'></div>

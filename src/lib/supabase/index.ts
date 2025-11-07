@@ -1,7 +1,7 @@
 /**
  * Supabase - Centralized Exports
  * Supabase - التصديرات المركزية
- * 
+ *
  * All Supabase client exports
  */
 

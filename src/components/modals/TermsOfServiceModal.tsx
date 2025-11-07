@@ -20,7 +20,8 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
       style={{
         backgroundColor: 'var(--modal-backdrop, rgba(0, 0, 0, 0.5))',
       }}
-      tabIndex={0} onClick={onClose}
+      tabIndex={0}
+      onClick={onClose}
     >
       <div
         className='relative w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl shadow-2xl transition-all'
@@ -28,7 +29,8 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
           backgroundColor: 'var(--panel, var(--background))',
           border: '1px solid var(--brand-border)',
         }}
-        tabIndex={0} onClick={e => e.stopPropagation()}
+        tabIndex={0}
+        onClick={e => e.stopPropagation()}
       >
         {/* Header */}
         <div
@@ -43,18 +45,18 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
           </h2>
           <button
             onClick={onClose}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 onClose();
               }
             }}
-            aria-label="إغلاق شروط الخدمة"
+            aria-label='إغلاق شروط الخدمة'
             className='rounded-full p-2 transition-colors'
             style={{
               backgroundColor: 'transparent',
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               e.currentTarget.style.backgroundColor =
                 'var(--brand-surface, rgba(0,0,0,0.05))';
             }}
@@ -197,10 +199,10 @@ const TermsOfServiceModal = memo(function TermsOfServiceModal({
                   8. إخلاء المسؤولية
                 </h3>
                 <p className='text-[var(--text-secondary)] leading-relaxed'>
-                  نقدم الموقع والخدمات "كما هي" و"حسب التوفر". لا نضمن أن الموقع
-                  سيكون دائماً متاحاً أو خالياً من الأخطاء. المعلومات الطبية على
-                  الموقع هي لأغراض إعلامية فقط ولا تحل محل الاستشارة الطبية
-                  المباشرة مع أخصائي مؤهل.
+                  نقدم الموقع والخدمات &quot;كما هي&quot; و&quot;حسب
+                  التوفر&quot;. لا نضمن أن الموقع سيكون دائماً متاحاً أو خالياً
+                  من الأخطاء. المعلومات الطبية على الموقع هي لأغراض إعلامية فقط
+                  ولا تحل محل الاستشارة الطبية المباشرة مع أخصائي مؤهل.
                 </p>
               </section>
 

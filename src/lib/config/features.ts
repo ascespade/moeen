@@ -1,6 +1,6 @@
 /**
  * Features Configuration - إعدادات الميزات
- * 
+ *
  * Feature flags and configuration
  */
 
@@ -42,7 +42,10 @@ export const featuresConfig = {
   },
 
   // Get feature name
-  getName(feature: keyof typeof featuresConfig.features, lang: 'ar' | 'en' = 'ar'): string {
+  getName(
+    feature: keyof typeof featuresConfig.features,
+    lang: 'ar' | 'en' = 'ar'
+  ): string {
     const featureData = this.features[feature as string];
     if (!featureData) return feature as string;
     return lang === 'ar' ? featureData.nameAr : featureData.name;

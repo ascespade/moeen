@@ -17,9 +17,7 @@ const projectRoot = join(__dirname, '..');
 
 console.log('?? Fixing All Malformed Handlers...\n');
 
-const allFiles = [
-  ...await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }),
-];
+const allFiles = [...(await glob('src/**/*.{tsx,ts}', { cwd: projectRoot }))];
 
 let stats = {
   onChange: 0,
@@ -36,48 +34,64 @@ for (const file of allFiles) {
 
     // Fix: onChange={e = aria-label="..." aria-invalid="true"> handler}
     // To: onChange={(e) => handler} aria-label="..." aria-invalid="true"
-    const malformedOnChangePattern = /onChange=\{e\s*=\s*aria-label=["']([^"']+)["'](?:\s+aria-invalid=["']([^"']+)["'])?\s*>\s*([^}]+)\}/g;
+    const malformedOnChangePattern =
+      /onChange=\{e\s*=\s*aria-label=["']([^"']+)["'](?:\s+aria-invalid=["']([^"']+)["'])?\s*>\s*([^}]+)\}/g;
     if (malformedOnChangePattern.test(content)) {
-      content = content.replace(malformedOnChangePattern, (match, ariaLabel, ariaInvalid, handler) => {
-        let result = `onChange={(e) => ${handler.trim()}} aria-label="${ariaLabel}"`;
-        if (ariaInvalid) {
-          result += ` aria-invalid="${ariaInvalid}"`;
+      content = content.replace(
+        malformedOnChangePattern,
+        (match, ariaLabel, ariaInvalid, handler) => {
+          let result = `onChange={(e) => ${handler.trim()}} aria-label="${ariaLabel}"`;
+          if (ariaInvalid) {
+            result += ` aria-invalid="${ariaInvalid}"`;
+          }
+          return result;
         }
-        return result;
-      });
+      );
       stats.onChange++;
       modified = true;
     }
 
     // Fix: onClick={() => { handler} aria-label="{...}"
     // To: onClick={() => { handler}} aria-label="..."
-    const malformedOnClickPattern = /onClick=\{\(\)\s*=>\s*\{([^}]+)\}\s*aria-label=["']([^"']+)["']/g;
+    const malformedOnClickPattern =
+      /onClick=\{\(\)\s*=>\s*\{([^}]+)\}\s*aria-label=["']([^"']+)["']/g;
     if (malformedOnClickPattern.test(content)) {
-      content = content.replace(malformedOnClickPattern, (match, handler, ariaLabel) => {
-        return `onClick={() => { ${handler.trim()} }} aria-label="${ariaLabel}"`;
-      });
+      content = content.replace(
+        malformedOnClickPattern,
+        (match, handler, ariaLabel) => {
+          return `onClick={() => { ${handler.trim()} }} aria-label="${ariaLabel}"`;
+        }
+      );
       stats.onClick++;
       modified = true;
     }
 
     // Fix: onKeyDown={(e) = aria-label="..."> { handler }}
     // To: onKeyDown={(e) => { handler }}
-    const malformedOnKeyDownPattern = /onKeyDown=\{\(e\)\s*=\s*aria-label=["']([^"']+)["']\s*>\s*\{([^}]+)\}\}/g;
+    const malformedOnKeyDownPattern =
+      /onKeyDown=\{\(e\)\s*=\s*aria-label=["']([^"']+)["']\s*>\s*\{([^}]+)\}\}/g;
     if (malformedOnKeyDownPattern.test(content)) {
-      content = content.replace(malformedOnKeyDownPattern, (match, ariaLabel, handler) => {
-        return `onKeyDown={(e) => { ${handler.trim()} }}`;
-      });
+      content = content.replace(
+        malformedOnKeyDownPattern,
+        (match, ariaLabel, handler) => {
+          return `onKeyDown={(e) => { ${handler.trim()} }}`;
+        }
+      );
       stats.onKeyDown++;
       modified = true;
     }
 
     // Fix: onClick={async () aria-label="..." { handler }}
     // To: onClick={async () => { handler }} aria-label="..."
-    const malformedAsyncOnClickPattern = /onClick=\{async\s+\(\)\s+aria-label=["']([^"']+)["']\s+([^}]+)\}/g;
+    const malformedAsyncOnClickPattern =
+      /onClick=\{async\s+\(\)\s+aria-label=["']([^"']+)["']\s+([^}]+)\}/g;
     if (malformedAsyncOnClickPattern.test(content)) {
-      content = content.replace(malformedAsyncOnClickPattern, (match, ariaLabel, handler) => {
-        return `onClick={async () => { ${handler.trim()} }} aria-label="${ariaLabel}"`;
-      });
+      content = content.replace(
+        malformedAsyncOnClickPattern,
+        (match, ariaLabel, handler) => {
+          return `onClick={async () => { ${handler.trim()} }} aria-label="${ariaLabel}"`;
+        }
+      );
       stats.onClick++;
       modified = true;
     }

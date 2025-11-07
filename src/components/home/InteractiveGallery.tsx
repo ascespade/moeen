@@ -58,7 +58,8 @@ const InteractiveGallery = memo(function InteractiveGallery() {
               className={`relative group cursor-pointer overflow-hidden rounded-2xl ${
                 index === 0 ? 'md:col-span-2 md:row-span-2' : ''
               } ${index === 4 ? 'md:col-span-2' : ''}`}
-              tabIndex={0} onClick={() => setSelectedImage(image.id)}
+              tabIndex={0}
+              onClick={() => setSelectedImage(image.id)}
             >
               <div className='relative aspect-square'>
                 <Image
@@ -96,17 +97,20 @@ const InteractiveGallery = memo(function InteractiveGallery() {
       {selectedImage && (
         <div
           className='fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4'
-          tabIndex={0} onClick={() => setSelectedImage(null)}
+          tabIndex={0}
+          onClick={() => setSelectedImage(null)}
         >
           <button
-            onClick={() => { setSelectedImage(null) }}
-            onKeyDown={(e) => {
+            onClick={() => {
+              setSelectedImage(null);
+            }}
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setSelectedImage(null);
               }
             }}
-            aria-label="إغلاق الصورة"
+            aria-label='إغلاق الصورة'
             className='absolute top-4 left-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors z-10'
           >
             <X className='w-6 h-6' />
@@ -114,7 +118,8 @@ const InteractiveGallery = memo(function InteractiveGallery() {
 
           <div
             className='relative max-w-6xl max-h-[90vh]'
-            tabIndex={0} onClick={e => e.stopPropagation()}
+            tabIndex={0}
+            onClick={e => e.stopPropagation()}
           >
             {galleryImages
               .filter(img => img.id === selectedImage)
@@ -146,7 +151,7 @@ const InteractiveGallery = memo(function InteractiveGallery() {
                   e.stopPropagation();
                   setSelectedImage(img.id);
                 }}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     e.stopPropagation();

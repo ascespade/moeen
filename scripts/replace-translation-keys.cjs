@@ -72,7 +72,12 @@ const keyMappings = {
   'insurance.claims.submit': 'I18N_KEYS.INSURANCE.SUBMIT',
 };
 
-let stats = { filesProcessed: 0, filesModified: 0, replacements: 0, importsAdded: 0 };
+let stats = {
+  filesProcessed: 0,
+  filesModified: 0,
+  replacements: 0,
+  importsAdded: 0,
+};
 
 function getAllTsFiles(dir, fileList = []) {
   const files = fs.readdirSync(dir);
@@ -80,11 +85,21 @@ function getAllTsFiles(dir, fileList = []) {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
     if (stat.isDirectory()) {
-      if (!file.startsWith('.') && file !== 'node_modules' && file !== '.next' && file !== 'dist' && file !== 'build') {
+      if (
+        !file.startsWith('.') &&
+        file !== 'node_modules' &&
+        file !== '.next' &&
+        file !== 'dist' &&
+        file !== 'build'
+      ) {
         getAllTsFiles(filePath, fileList);
       }
     } else if (file.match(/\.(ts|tsx)$/) && !file.endsWith('.d.ts')) {
-      if (!file.includes('.test.') && !file.includes('.spec.') && !file.endsWith('i18n-keys.ts')) {
+      if (
+        !file.includes('.test.') &&
+        !file.includes('.spec.') &&
+        !file.endsWith('i18n-keys.ts')
+      ) {
         fileList.push(filePath);
       }
     }
@@ -93,7 +108,9 @@ function getAllTsFiles(dir, fileList = []) {
 }
 
 function hasI18nImport(content) {
-  return /import.*I18N_KEYS.*from.*['"]@\/constants\/i18n-keys['"]/.test(content);
+  return /import.*I18N_KEYS.*from.*['"]@\/constants\/i18n-keys['"]/.test(
+    content
+  );
 }
 
 function addI18nImport(content) {
@@ -106,19 +123,27 @@ function addI18nImport(content) {
   const lastImportIndex = content.lastIndexOf(lastImport);
   const afterLastImport = lastImportIndex + lastImport.length;
   const needsNewline = content[afterLastImport] !== '\n';
-  const importStatement = needsNewline ? "\nimport { I18N_KEYS } from '@/constants/i18n-keys';\n" : "import { I18N_KEYS } from '@/constants/i18n-keys';\n";
-  return content.slice(0, afterLastImport) + importStatement + content.slice(afterLastImport);
+  const importStatement = needsNewline
+    ? "\nimport { I18N_KEYS } from '@/constants/i18n-keys';\n"
+    : "import { I18N_KEYS } from '@/constants/i18n-keys';\n";
+  return (
+    content.slice(0, afterLastImport) +
+    importStatement +
+    content.slice(afterLastImport)
+  );
 }
 
 function replaceKeys(content) {
   let newContent = content;
   let replacements = 0;
-  const sortedKeys = Object.keys(keyMappings).sort((a, b) => b.length - a.length);
+  const sortedKeys = Object.keys(keyMappings).sort(
+    (a, b) => b.length - a.length
+  );
   for (const oldKey of sortedKeys) {
     const newKey = keyMappings[oldKey];
     const escapedKey = oldKey.replace(/\./g, '\\.');
-    const pattern1 = new RegExp("t\\(['"]" + escapedKey + "['"]", 'g');
-    const pattern2 = new RegExp('t\\(`' + escapedKey + '`', 'g');
+    const pattern1 = new RegExp(`t\\(['"]${escapedKey}['"]`, 'g');
+    const pattern2 = new RegExp(`t\(\`\${escapedKey}\``, 'g');
     const matches1 = newContent.match(pattern1);
     const matches2 = newContent.match(pattern2);
     if (matches1) {
@@ -170,7 +195,16 @@ function main() {
   console.log('Found ' + files.length + ' files to process\n');
   console.log('ðŸ”„ Processing files...\n');
   files.forEach(processFile);
-  console.log('\nâœ… Complete! Processed: ' + stats.filesProcessed + ', Modified: ' + stats.filesModified + ', Replacements: ' + stats.replacements + ', Imports: ' + stats.importsAdded);
+  console.log(
+    '\nâœ… Complete! Processed: ' +
+      stats.filesProcessed +
+      ', Modified: ' +
+      stats.filesModified +
+      ', Replacements: ' +
+      stats.replacements +
+      ', Imports: ' +
+      stats.importsAdded
+  );
 }
 
 main();

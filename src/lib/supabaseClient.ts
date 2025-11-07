@@ -1,4 +1,5 @@
 import { createBrowserClient } from '@supabase/ssr';
+import { createClient } from '@supabase/supabase-js';
 
 // Singleton browser client instance to prevent multiple GoTrueClient instances
 let browserClientInstance: ReturnType<typeof createBrowserClient> | null = null;
@@ -46,7 +47,6 @@ export async function getServerSupabase() {
 }
 
 export function getServiceSupabase() {
-  const { createClient } = require('@supabase/supabase-js');
   const url =
     process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
   const service =

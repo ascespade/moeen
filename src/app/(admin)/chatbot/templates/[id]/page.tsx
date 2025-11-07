@@ -101,7 +101,7 @@ export default function TemplateEditorPage({
             <div className='flex items-center gap-3'>
               <button
                 onClick={handleTest}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     handleTest();
@@ -114,7 +114,7 @@ export default function TemplateEditorPage({
               </button>
               <button
                 onClick={() => setIsEditing(!isEditing)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setIsEditing(!isEditing);
@@ -128,7 +128,7 @@ export default function TemplateEditorPage({
               {isEditing && (
                 <button
                   onClick={handleSave}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       handleSave();
@@ -145,7 +145,7 @@ export default function TemplateEditorPage({
         </div>
       </header>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
           {/* Template Info */}
           <div className='lg:col-span-1'>
@@ -208,7 +208,7 @@ export default function TemplateEditorPage({
                     {isEditing && (
                       <button
                         onClick={() => handleVariableRemove(variable)}
-                        onKeyDown={(e) => {
+                        onKeyDown={e => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
                             handleVariableRemove(variable);
@@ -229,7 +229,7 @@ export default function TemplateEditorPage({
                       type='text'
                       placeholder='إضافة متغير جديد'
                       className='flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                      onKeyPress={(e) => {
+                      onKeyPress={e => {
                         if (e.key === 'Enter') {
                           handleVariableAdd(e.currentTarget.value);
                           e.currentTarget.value = '';
@@ -247,7 +247,7 @@ export default function TemplateEditorPage({
                           input.value = '';
                         }
                       }}
-                      onKeyDown={(e) => {
+                      onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
                           const input = document.querySelector(
@@ -276,10 +276,16 @@ export default function TemplateEditorPage({
               <div className='mb-6 flex items-center justify-between'>
                 <h3 className='text-lg font-semibold'>محتوى القالب</h3>
                 <div className='flex gap-2'>
-                  <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface' aria-label="نسخ">
+                  <button
+                    className='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface'
+                    aria-label='نسخ'
+                  >
                     نسخ
                   </button>
-                  <button className='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface' aria-label="استيراد">
+                  <button
+                    className='rounded-lg border border-gray-300 px-3 py-1 text-sm hover:bg-surface'
+                    aria-label='استيراد'
+                  >
                     استيراد
                   </button>
                 </div>
@@ -294,10 +300,12 @@ export default function TemplateEditorPage({
                     <input
                       type='text'
                       value={template.name}
-                      onChange={(e) => setTemplate(prev => ({
-                        ...prev,
-                        name: e.target.value,
-                      }))}
+                      onChange={e =>
+                        setTemplate(prev => ({
+                          ...prev,
+                          name: e.target.value,
+                        }))
+                      }
                       className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                       aria-label='اسم القالب'
                     />
@@ -360,7 +368,7 @@ export default function TemplateEditorPage({
               <div className='flex gap-3 border-t border-gray-200 pt-6 dark:border-gray-700'>
                 <button
                   onClick={handleTest}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       handleTest();
@@ -371,16 +379,22 @@ export default function TemplateEditorPage({
                 >
                   اختبار القالب
                 </button>
-                <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="نسخ القالب">
+                <button
+                  className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
+                  aria-label='نسخ القالب'
+                >
                   نسخ القالب
                 </button>
-                <button className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface' aria-label="تصدير">
+                <button
+                  className='rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
+                  aria-label='تصدير'
+                >
                   تصدير
                 </button>
                 {isEditing && (
                   <button
                     onClick={handleSave}
-                    onKeyDown={(e) => {
+                    onKeyDown={e => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         handleSave();
@@ -406,7 +420,7 @@ export default function TemplateEditorPage({
               <h3 className='text-xl font-semibold'>اختبار القالب</h3>
               <button
                 onClick={() => setShowTestModal(false)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowTestModal(false);
@@ -438,10 +452,12 @@ export default function TemplateEditorPage({
                       <input
                         type='text'
                         value={testVariables[variable] || ''}
-                        onChange={(e) => setTestVariables(prev => ({
-                          ...prev,
-                          [variable]: e.target.value,
-                        }))}
+                        onChange={e =>
+                          setTestVariables(prev => ({
+                            ...prev,
+                            [variable]: e.target.value,
+                          }))
+                        }
                         className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                         placeholder={`أدخل قيمة ${variable}`}
                         aria-label={`قيمة المتغير ${variable}`}
@@ -454,7 +470,7 @@ export default function TemplateEditorPage({
               <div className='flex gap-3 pt-4'>
                 <button
                   onClick={() => setShowTestModal(false)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowTestModal(false);
@@ -465,7 +481,10 @@ export default function TemplateEditorPage({
                 >
                   إغلاق
                 </button>
-                <button className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="استخدام القالب">
+                <button
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='استخدام القالب'
+                >
                   استخدام القالب
                 </button>
               </div>

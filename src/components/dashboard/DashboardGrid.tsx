@@ -434,9 +434,9 @@ export const DashboardGrid: React.FC<DashboardGridProps> = ({
           onClick={() => {
             // Export layout as JSON
             const dataStr = JSON.stringify(items, null, 2);
-            const dataUri =
-              'data:application/json;charset=utf-8,' +
-              encodeURIComponent(dataStr);
+            const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(
+              dataStr
+            )}`;
             const exportFileDefaultName = 'dashboard-layout.json';
 
             const linkElement = document.createElement('a');

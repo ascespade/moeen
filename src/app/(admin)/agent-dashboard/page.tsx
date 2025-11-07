@@ -106,7 +106,11 @@ export default function AgentDashboard() {
 
   if (isLoading) {
     return (
-      <div className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center' role='status' aria-live='polite'>
+      <div
+        className='min-h-screen bg-[var(--default-surface)] flex items-center justify-center'
+        role='status'
+        aria-live='polite'
+      >
         <div className='text-center'>
           <div className='animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto'></div>
           <p className='mt-4 text-gray-600'>Loading agent status...</p>
@@ -248,7 +252,7 @@ export default function AgentDashboard() {
         <div className='mt-6 text-center'>
           <button
             onClick={fetchStatus}
-            onKeyDown={(e) => {
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 fetchStatus();

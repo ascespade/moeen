@@ -13,11 +13,13 @@ const baseURL = process.env.BASE_URL || 'http://localhost:3000';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 test.describe('Comprehensive System Tests', () => {
-  
   // Test 1: Supabase Connection
   test('? Supabase Connection Test', async () => {
     try {
-      const { data, error } = await supabase.from('users').select('count').limit(1);
+      const { data, error } = await supabase
+        .from('users')
+        .select('count')
+        .limit(1);
       expect(error).toBeNull();
       console.log('? Test 1: Supabase Connection - PASSED');
     } catch (error) {
@@ -28,9 +30,15 @@ test.describe('Comprehensive System Tests', () => {
 
   // Test 2: Database Tables Exist
   test('? Database Tables Exist', async () => {
-    const requiredTables = ['users', 'patients', 'doctors', 'appointments', 'insurance_claims'];
+    const requiredTables = [
+      'users',
+      'patients',
+      'doctors',
+      'appointments',
+      'insurance_claims',
+    ];
     const results: string[] = [];
-    
+
     for (const table of requiredTables) {
       try {
         const { error } = await supabase.from(table).select('*').limit(1);
@@ -43,7 +51,7 @@ test.describe('Comprehensive System Tests', () => {
         results.push(`? ${table}: ERROR`);
       }
     }
-    
+
     console.log('Test 2 Results:', results.join('\n'));
     const failed = results.filter(r => r.startsWith('?'));
     expect(failed.length).toBe(0);
@@ -81,16 +89,22 @@ test.describe('Comprehensive System Tests', () => {
     try {
       await page.goto(`${baseURL}/login`);
       await page.waitForLoadState('networkidle');
-      
+
       // Check for form elements
-      const emailInput = page.locator('input[type="email"], input[name="email"]');
-      const passwordInput = page.locator('input[type="password"], input[name="password"]');
-      const submitButton = page.locator('button[type="submit"], button:has-text("????? ??????")');
-      
+      const emailInput = page.locator(
+        'input[type="email"], input[name="email"]'
+      );
+      const passwordInput = page.locator(
+        'input[type="password"], input[name="password"]'
+      );
+      const submitButton = page.locator(
+        'button[type="submit"], button:has-text("????? ??????")'
+      );
+
       await expect(emailInput).toBeVisible();
       await expect(passwordInput).toBeVisible();
       await expect(submitButton).toBeVisible();
-      
+
       console.log('? Test 5: Login Page Accessibility - PASSED');
     } catch (error) {
       console.log('? Test 5: Login Page Accessibility - FAILED');
@@ -105,9 +119,9 @@ test.describe('Comprehensive System Tests', () => {
       '/api/appointments',
       '/api/doctors',
     ];
-    
+
     const results: string[] = [];
-    
+
     for (const route of protectedRoutes) {
       try {
         const response = await request.get(`${baseURL}${route}`);
@@ -122,7 +136,7 @@ test.describe('Comprehensive System Tests', () => {
         results.push(`? ${route}: ERROR`);
       }
     }
-    
+
     console.log('Test 6 Results:', results.join('\n'));
     const failed = results.filter(r => r.startsWith('?'));
     expect(failed.length).toBe(0);
@@ -131,19 +145,33 @@ test.describe('Comprehensive System Tests', () => {
   // Test 7: Database Queries Performance
   test('? Database Queries Performance', async () => {
     const queries = [
-      { name: 'Users Count', query: () => supabase.from('users').select('*', { count: 'exact', head: true }) },
-      { name: 'Patients Count', query: () => supabase.from('patients').select('*', { count: 'exact', head: true }) },
-      { name: 'Appointments Count', query: () => supabase.from('appointments').select('*', { count: 'exact', head: true }) },
+      {
+        name: 'Users Count',
+        query: () =>
+          supabase.from('users').select('*', { count: 'exact', head: true }),
+      },
+      {
+        name: 'Patients Count',
+        query: () =>
+          supabase.from('patients').select('*', { count: 'exact', head: true }),
+      },
+      {
+        name: 'Appointments Count',
+        query: () =>
+          supabase
+            .from('appointments')
+            .select('*', { count: 'exact', head: true }),
+      },
     ];
-    
+
     const results: string[] = [];
-    
+
     for (const { name, query } of queries) {
       try {
         const start = Date.now();
         const { error } = await query();
         const duration = Date.now() - start;
-        
+
         if (error) {
           results.push(`? ${name}: ${error.message}`);
         } else if (duration > 5000) {
@@ -155,7 +183,7 @@ test.describe('Comprehensive System Tests', () => {
         results.push(`? ${name}: ERROR`);
       }
     }
-    
+
     console.log('Test 7 Results:', results.join('\n'));
     const failed = results.filter(r => r.startsWith('?'));
     expect(failed.length).toBe(0);
@@ -165,14 +193,14 @@ test.describe('Comprehensive System Tests', () => {
   test('? Page Load Performance', async ({ page }) => {
     const pages = ['/', '/login', '/about'];
     const results: string[] = [];
-    
+
     for (const path of pages) {
       try {
         const start = Date.now();
         await page.goto(`${baseURL}${path}`);
         await page.waitForLoadState('networkidle');
         const duration = Date.now() - start;
-        
+
         if (duration > 10000) {
           results.push(`?? ${path}: Slow (${duration}ms)`);
         } else {
@@ -182,7 +210,7 @@ test.describe('Comprehensive System Tests', () => {
         results.push(`? ${path}: ERROR`);
       }
     }
-    
+
     console.log('Test 8 Results:', results.join('\n'));
     const failed = results.filter(r => r.startsWith('?'));
     expect(failed.length).toBe(0);
@@ -193,16 +221,18 @@ test.describe('Comprehensive System Tests', () => {
     try {
       await page.goto(baseURL);
       await page.waitForLoadState('networkidle');
-      
+
       // Check for basic accessibility
       const hasTitle = await page.title();
       expect(hasTitle).toBeTruthy();
-      
+
       const buttons = await page.locator('button').count();
       const buttonsWithAria = await page.locator('button[aria-label]').count();
-      
+
       console.log(`? Test 9: Accessibility Basics - PASSED`);
-      console.log(`   Total buttons: ${buttons}, With aria-label: ${buttonsWithAria}`);
+      console.log(
+        `   Total buttons: ${buttons}, With aria-label: ${buttonsWithAria}`
+      );
     } catch (error) {
       console.log('? Test 9: Accessibility Basics - FAILED');
       throw error;
@@ -215,11 +245,11 @@ test.describe('Comprehensive System Tests', () => {
       // Test 404
       const notFound = await request.get(`${baseURL}/api/nonexistent`);
       expect([404, 405]).toContain(notFound.status());
-      
+
       // Test invalid method
       const invalidMethod = await request.post(`${baseURL}/api/health`);
       expect([405, 500]).toContain(invalidMethod.status());
-      
+
       console.log('? Test 10: Error Handling - PASSED');
     } catch (error) {
       console.log('? Test 10: Error Handling - FAILED');

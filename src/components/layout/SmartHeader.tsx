@@ -82,10 +82,10 @@ function ThemeLanguageSwitches() {
   return (
     <>
       {/* Theme Toggle Button */}
-      <button 
+      <button
         className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
         onClick={toggleTheme}
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             toggleTheme();
@@ -107,10 +107,10 @@ function ThemeLanguageSwitches() {
       </button>
 
       {/* Language Toggle Button */}
-      <button 
+      <button
         className='inline-flex h-9 items-center gap-2 rounded-md border border-gray-200 px-3 text-gray-700 hover:bg-surface focus:outline-none focus:ring-2 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800 disabled:opacity-50'
         onClick={toggleLanguage}
-        onKeyDown={(e) => {
+        onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             toggleLanguage();
@@ -239,10 +239,12 @@ export default function SmartHeader() {
             )}
 
             {/* Mobile Menu Button */}
-            <button 
+            <button
               className='md:hidden p-2'
-              onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen) }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   setIsMobileMenuOpen(!isMobileMenuOpen);

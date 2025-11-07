@@ -1,13 +1,17 @@
 /**
  * String Utilities - أدوات النصوص
- * 
+ *
  * String manipulation utilities
  */
 
 /**
  * Truncate string
  */
-export function truncate(str: string, length: number, suffix: string = '...'): string {
+export function truncate(
+  str: string,
+  length: number,
+  suffix: string = '...'
+): string {
   if (str.length <= length) return str;
   return str.slice(0, length) + suffix;
 }
@@ -53,11 +57,11 @@ export function mask(str: string, visibleChars: number = 3): string {
   if (str.length <= visibleChars * 2) {
     return '*'.repeat(str.length);
   }
-  
+
   const start = str.slice(0, visibleChars);
   const end = str.slice(-visibleChars);
   const middle = '*'.repeat(str.length - visibleChars * 2);
-  
+
   return `${start}${middle}${end}`;
 }
 
@@ -67,7 +71,7 @@ export function mask(str: string, visibleChars: number = 3): string {
 export function maskEmail(email: string): string {
   const [local, domain] = email.split('@');
   if (!local || !domain) return email;
-  
+
   const maskedLocal = mask(local, 2);
   return `${maskedLocal}@${domain}`;
 }
@@ -78,7 +82,7 @@ export function maskEmail(email: string): string {
 export function maskPhone(phone: string): string {
   const cleaned = phone.replace(/\D/g, '');
   if (cleaned.length < 6) return phone;
-  
+
   return mask(cleaned, 3);
 }
 
@@ -86,13 +90,14 @@ export function maskPhone(phone: string): string {
  * Generate random string
  */
 export function randomString(length: number = 10): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const chars =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
-  
+
   for (let i = 0; i < length; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
-  
+
   return result;
 }
 
@@ -106,7 +111,11 @@ export function isEmpty(str: string | null | undefined): boolean {
 /**
  * Pluralize Arabic word
  */
-export function pluralizeAr(count: number, singular: string, plural: string): string {
+export function pluralizeAr(
+  count: number,
+  singular: string,
+  plural: string
+): string {
   if (count === 1) return singular;
   if (count === 2) return plural;
   if (count >= 3 && count <= 10) return plural;

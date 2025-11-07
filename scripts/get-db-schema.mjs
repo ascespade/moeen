@@ -10,11 +10,14 @@ import fs from 'fs';
 import path from 'path';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
+const supabaseServiceKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
 
 if (!supabaseUrl || !supabaseServiceKey) {
   console.error('? Missing Supabase credentials');
-  console.log('Make sure NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set');
+  console.log(
+    'Make sure NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set'
+  );
   process.exit(1);
 }
 
@@ -48,16 +51,34 @@ async function getSchema() {
 
     // For each table, get its structure using direct SQL queries
     const tableNames = [
-      'users', 'roles', 'permissions', 'patients', 'doctors', 'appointments',
-      'sessions', 'medical_records', 'insurance_claims', 'payments', 'notifications',
-      'translations', 'audit_logs', 'settings', 'center_info', 'staff_members',
-      'emergency_contacts', 'crm_leads', 'crm_contacts', 'customers',
-      'therapist_schedules', 'approvals', 'error_logs'
+      'users',
+      'roles',
+      'permissions',
+      'patients',
+      'doctors',
+      'appointments',
+      'sessions',
+      'medical_records',
+      'insurance_claims',
+      'payments',
+      'notifications',
+      'translations',
+      'audit_logs',
+      'settings',
+      'center_info',
+      'staff_members',
+      'emergency_contacts',
+      'crm_leads',
+      'crm_contacts',
+      'customers',
+      'therapist_schedules',
+      'approvals',
+      'error_logs',
     ];
 
     for (const tableName of tableNames) {
       console.log(`?? Getting schema for: ${tableName}`);
-      
+
       // Get columns
       const { data: columns } = await supabase
         .from(tableName)
@@ -65,7 +86,8 @@ async function getSchema() {
         .limit(0)
         .then(() => {
           // Use RPC to get column info
-          return supabase.rpc('get_table_columns_info', { table_name: tableName })
+          return supabase
+            .rpc('get_table_columns_info', { table_name: tableName })
             .catch(() => ({ data: null }));
         })
         .catch(() => ({ data: null }));
@@ -86,16 +108,15 @@ async function getSchema() {
     // Save schema
     const schemaDir = path.join(process.cwd(), 'supabase');
     fs.mkdirSync(schemaDir, { recursive: true });
-    
+
     const schemaPath = path.join(schemaDir, 'current-schema.json');
     fs.writeFileSync(schemaPath, JSON.stringify(schema, null, 2));
-    
+
     console.log(`\n? Schema saved to: ${schemaPath}`);
     console.log(`\n?? Summary:`);
     console.log(`   - Tables checked: ${tableNames.length}`);
-    
-    return schema;
 
+    return schema;
   } catch (error) {
     console.error('? Error:', error.message);
     console.log('\n?? Tip: Make sure Supabase credentials are correct');
@@ -104,10 +125,12 @@ async function getSchema() {
 }
 
 // Run
-getSchema().then(() => {
-  console.log('\n? Done!');
-  process.exit(0);
-}).catch((error) => {
-  console.error('? Failed:', error);
-  process.exit(1);
-});
+getSchema()
+  .then(() => {
+    console.log('\n? Done!');
+    process.exit(0);
+  })
+  .catch(error => {
+    console.error('? Failed:', error);
+    process.exit(1);
+  });

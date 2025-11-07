@@ -77,7 +77,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const permissions = await PermissionManager.getRolePermissions(userRow.role);
+    const permissions = await PermissionManager.getRolePermissions(
+      userRow.role
+    );
 
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) {

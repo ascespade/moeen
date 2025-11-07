@@ -32,43 +32,45 @@ for (const file of apiFiles) {
     const patterns = [
       // Pattern 1: Missing closing paren before semicolon
       {
-        regex: /NextResponse\.json\([^)]+\)\s*,\s*\{\s*status:\s*\d+[^}]*headers:\s*\{[^}]*\}\s*\}\s*;/g,
-        fix: (match) => {
+        regex:
+          /NextResponse\.json\([^)]+\)\s*,\s*\{\s*status:\s*\d+[^}]*headers:\s*\{[^}]*\}\s*\}\s*;/g,
+        fix: match => {
           if (!match.includes('});')) {
             return match.replace(/;\s*$/, '});');
           }
           return match;
-        }
+        },
       },
       // Pattern 2: Missing closing paren in return statements
       {
-        regex: /return\s+NextResponse\.json\([^)]+\),\s*\{\s*status:\s*\d+[^}]*\}\s*;/g,
-        fix: (match) => {
+        regex:
+          /return\s+NextResponse\.json\([^)]+\),\s*\{\s*status:\s*\d+[^}]*\}\s*;/g,
+        fix: match => {
           if (!match.includes('});')) {
             return match.replace(/;\s*$/, '});');
           }
           return match;
-        }
+        },
       },
       // Pattern 3: Fix broken import statements
       {
         regex: /import\s+[^;]+}\s*from\s+['"]@\//g,
-        fix: (match) => {
+        fix: match => {
           if (!match.includes(';')) {
             return match + ';';
           }
           return match;
-        }
+        },
       },
       // Pattern 4: Fix incomplete const declarations
       {
         regex: /const\s+\{[^}]*\}\s*=\s*await\s+authorize\([^)]*\)\s*$/gm,
-        fix: (match) => {
+        fix: match => {
           if (!match.includes(';')) {
             return match + ';';
           }
           return match;
-        }
+        },
       },
     ];
 
@@ -89,9 +91,9 @@ for (const file of apiFiles) {
     // Manual fixes for specific patterns
     // Fix: } }; -> } });
     content = content.replace(/\}\s*\}\s*;/g, '} });');
-    
+
     // Fix: headers: { ... } }; -> headers: { ... } });
-    content = content.replace(/headers:\s*\{[^}]*\}\s*\}\s*;/g, (match) => {
+    content = content.replace(/headers:\s*\{[^}]*\}\s*\}\s*;/g, match => {
       if (!match.includes('});')) {
         return match.replace(/;\s*$/, '});');
       }

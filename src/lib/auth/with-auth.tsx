@@ -1,7 +1,7 @@
 /**
  * With Auth HOC - Higher Order Component for Authentication
  * مكون HOC للمصادقة
- * 
+ *
  * Wrapper component that requires authentication
  */
 

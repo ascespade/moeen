@@ -81,11 +81,13 @@ export default function SettingsTabs() {
     <div className='grid gap-4'>
       <div className='flex gap-2 overflow-x-auto'>
         {tabs.map(t => (
-          <button 
+          <button
             key={t.id}
             className={`h-9 px-3 rounded-md border whitespace-nowrap ${active === t.id ? 'bg-gray-900 text-white' : 'hover:bg-surface dark:hover:bg-white/10'}`}
-            onClick={() => { setActive(t.id) }}
-            onKeyDown={(e) => {
+            onClick={() => {
+              setActive(t.id);
+            }}
+            onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 setActive(t.id);
@@ -152,8 +154,10 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ general: settings?.general || {} }); }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                save({ general: settings?.general || {} });
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   save({ general: settings?.general || {} });
@@ -188,18 +192,18 @@ export default function SettingsTabs() {
           <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
             <div className='grid gap-2'>
               <label className='text-sm'>Temperature</label>
-              <input 
+              <input
                 className='h-10 rounded-md border px-3'
                 placeholder='0.7'
-                aria-label="0.7"
+                aria-label='0.7'
               />
             </div>
             <div className='grid gap-2'>
               <label className='text-sm'>حد السياق</label>
-              <input 
+              <input
                 className='h-10 rounded-md border px-3'
                 placeholder='4096'
-                aria-label="4096"
+                aria-label='4096'
               />
             </div>
           </div>
@@ -207,8 +211,10 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ provider: settings?.provider || '' }); }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                save({ provider: settings?.provider || '' });
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   save({ provider: settings?.provider || '' });
@@ -270,7 +276,7 @@ export default function SettingsTabs() {
               onClick={() => {
                 save({ voice: settings?.voice || { stt: null, tts: null } });
               }}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   save({ voice: settings?.voice || { stt: null, tts: null } });
@@ -321,20 +327,20 @@ export default function SettingsTabs() {
           </div>
           <div className='grid gap-2'>
             <label className='text-sm'>Phone Number ID</label>
-            <input 
+            <input
               className='h-10 rounded-md border px-3'
               value={getApiConfig().whatsapp.phoneNumberId || ''}
               placeholder='e.g. 123456789012345'
-              aria-label="e.g. 123456789012345"
+              aria-label='e.g. 123456789012345'
             />
           </div>
           <div className='grid gap-2'>
             <label className='text-sm'>Webhook URL</label>
-            <input 
+            <input
               className='h-10 rounded-md border px-3'
               value={getApiConfig().whatsapp.webhookUrl || ''}
               placeholder='https://your-domain.com/api/webhooks/whatsapp'
-              aria-label="https://your-domain.com/api/webhooks/whatsapp"
+              aria-label='https://your-domain.com/api/webhooks/whatsapp'
             />
           </div>
           <div className='grid gap-2'>
@@ -392,8 +398,10 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ providers: settings?.providers || {} }); }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                save({ providers: settings?.providers || {} });
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   save({ providers: settings?.providers || {} });
@@ -446,8 +454,10 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ channels: settings?.channels || {} }); }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                save({ channels: settings?.channels || {} });
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   save({ channels: settings?.channels || {} });
@@ -465,10 +475,12 @@ export default function SettingsTabs() {
         <section className='rounded-xl border p-4 grid gap-4'>
           <div className='grid gap-2'>
             <label className='text-sm'>أيام الاحتفاظ بالبيانات</label>
-            <input className='h-10 rounded-md border px-3'
+            <input
+              className='h-10 rounded-md border px-3'
               type='number'
               value={settings?.security?.dataRetentionDays ?? 30}
-              onChange={(e) => setSettings({
+              onChange={e =>
+                setSettings({
                   ...(settings as Settings),
                   security: {
                     ...(settings?.security || {}),
@@ -479,10 +491,12 @@ export default function SettingsTabs() {
             />
           </div>
           <div className='flex items-center gap-2'>
-            <input id='pii'
+            <input
+              id='pii'
               type='checkbox'
               checked={!!settings?.security?.piiMasking}
-              onChange={(e) => setSettings({
+              onChange={e =>
+                setSettings({
                   ...(settings as Settings),
                   security: {
                     ...(settings?.security || {}),
@@ -499,8 +513,10 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ security: settings?.security || {} }); }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                save({ security: settings?.security || {} });
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   save({ security: settings?.security || {} });
@@ -540,10 +556,10 @@ export default function SettingsTabs() {
               onClick={() => {
                 save({ notifications: settings?.notifications || {} });
               }}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  save({ notifications: settings?.notifications || { } });
+                  save({ notifications: settings?.notifications || {} });
                 }
               }}
               aria-label={saving ? 'جاري الحفظ...' : 'حفظ إعدادات الإشعارات'}
@@ -581,7 +597,7 @@ export default function SettingsTabs() {
               onClick={() => {
                 save({ emergency: settings?.emergency || { keywords: [] } });
               }}
-              onKeyDown={(e) => {
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   save({ emergency: settings?.emergency || { keywords: [] } });
@@ -649,8 +665,10 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ account: settings?.account || {} }); }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                save({ account: settings?.account || {} });
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   save({ account: settings?.account || {} });
@@ -675,10 +693,12 @@ export default function SettingsTabs() {
         <section className='rounded-xl border p-4 grid gap-4'>
           <div className='grid gap-2'>
             <label className='text-sm'>الميزانية اليومية (USD)</label>
-            <input className='h-10 rounded-md border px-3'
+            <input
+              className='h-10 rounded-md border px-3'
               type='number'
               value={settings?.billing?.dailyAiBudgetUsd ?? 20}
-              onChange={(e) => setSettings({
+              onChange={e =>
+                setSettings({
                   ...(settings as Settings),
                   billing: {
                     ...(settings?.billing || {}),
@@ -692,8 +712,10 @@ export default function SettingsTabs() {
             <button
               disabled={saving}
               className='h-10 rounded-md bg-gray-900 text-white px-4'
-              onClick={() => { save({ billing: settings?.billing || {} }); }}
-              onKeyDown={(e) => {
+              onClick={() => {
+                save({ billing: settings?.billing || {} });
+              }}
+              onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
                   save({ billing: settings?.billing || {} });

@@ -92,7 +92,7 @@ export function ThemeSwitch({
             else if (theme === 'dark') setTheme('system');
             else setTheme('light');
           }}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               if (theme === 'light') setTheme('dark');
@@ -135,7 +135,8 @@ export function ThemeSwitch({
           {/* Backdrop */}
           <div
             className='fixed inset-0 z-10'
-            tabIndex={0} onClick={() => setIsOpen(false)}
+            tabIndex={0}
+            onClick={() => setIsOpen(false)}
           />
 
           {/* Dropdown */}
@@ -152,7 +153,7 @@ export function ThemeSwitch({
                       setTheme(themeOption.value);
                       setIsOpen(false);
                     }}
-                    onKeyDown={(e) => {
+                    onKeyDown={e => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         setTheme(themeOption.value);

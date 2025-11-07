@@ -38,12 +38,11 @@ export async function POST(req: NextRequest) {
     }
 
     // 1) Create or get Auth user
-    const { data: existing } =
-      await supabaseAdmin.auth.admin.listUsers({
-        page: 1,
-        perPage: 1,
-        filter: { email },
-      } as any);
+    const { data: existing } = await supabaseAdmin.auth.admin.listUsers({
+      page: 1,
+      perPage: 1,
+      filter: { email },
+    } as any);
 
     let authUserId: string | null = null;
     if (existing && (existing.users?.length || 0) > 0) {

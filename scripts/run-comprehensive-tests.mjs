@@ -27,15 +27,18 @@ const testResults = {
 // Run Playwright tests
 console.log('\n1️⃣  Running Playwright Tests...\n');
 try {
-  const output = execSync('npx playwright test tests/comprehensive-playwright-supabase.test.ts --reporter=list', {
-    cwd: projectRoot,
-    encoding: 'utf-8',
-    stdio: 'pipe',
-    timeout: 300000,
-  });
-  
+  const output = execSync(
+    'npx playwright test tests/comprehensive-playwright-supabase.test.ts --reporter=list',
+    {
+      cwd: projectRoot,
+      encoding: 'utf-8',
+      stdio: 'pipe',
+      timeout: 300000,
+    }
+  );
+
   console.log(output);
-  
+
   // Parse results
   const lines = output.split('\n');
   for (const line of lines) {
@@ -45,7 +48,7 @@ try {
       testResults.failed.push(line.trim());
     }
   }
-  
+
   testResults.total = testResults.passed.length + testResults.failed.length;
 } catch (error) {
   console.log('⚠️  Playwright tests had errors:', error.message);
@@ -59,28 +62,40 @@ try {
   const { createClient } = await import('@supabase/supabase-js');
   const dotenv = await import('dotenv');
   dotenv.config({ path: join(projectRoot, '.env.local') });
-  
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  
+
   if (!supabaseUrl || !supabaseKey) {
     console.log('⚠️  Supabase credentials not found');
   } else {
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
+
     // Test connection
-    const { data, error } = await supabase.from('users').select('count').limit(1);
+    const { data, error } = await supabase
+      .from('users')
+      .select('count')
+      .limit(1);
     if (error) {
       testResults.failed.push('Supabase Connection: ' + error.message);
     } else {
       testResults.passed.push('Supabase Connection: SUCCESS');
     }
-    
+
     // Test tables
-    const tables = ['users', 'patients', 'doctors', 'appointments', 'insurance_claims'];
+    const tables = [
+      'users',
+      'patients',
+      'doctors',
+      'appointments',
+      'insurance_claims',
+    ];
     for (const table of tables) {
       try {
-        const { error: tableError } = await supabase.from(table).select('*').limit(1);
+        const { error: tableError } = await supabase
+          .from(table)
+          .select('*')
+          .limit(1);
         if (tableError) {
           testResults.failed.push(`Table ${table}: ${tableError.message}`);
         } else {
@@ -102,7 +117,9 @@ console.log('📊 Test Summary');
 console.log('='.repeat(70));
 console.log(`✅ Passed: ${testResults.passed.length}`);
 console.log(`❌ Failed: ${testResults.failed.length}`);
-console.log(`📊 Total: ${testResults.total + testResults.passed.length + testResults.failed.length}`);
+console.log(
+  `📊 Total: ${testResults.total + testResults.passed.length + testResults.failed.length}`
+);
 
 if (testResults.failed.length > 0) {
   console.log('\n❌ Failed Tests:');
@@ -114,8 +131,14 @@ const report = {
   timestamp: new Date().toISOString(),
   passed: testResults.passed,
   failed: testResults.failed,
-  total: testResults.total + testResults.passed.length + testResults.failed.length,
-  successRate: ((testResults.passed.length / (testResults.passed.length + testResults.failed.length)) * 100).toFixed(2) + '%',
+  total:
+    testResults.total + testResults.passed.length + testResults.failed.length,
+  successRate:
+    (
+      (testResults.passed.length /
+        (testResults.passed.length + testResults.failed.length)) *
+      100
+    ).toFixed(2) + '%',
 };
 
 writeFileSync(

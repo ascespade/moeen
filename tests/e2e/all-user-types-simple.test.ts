@@ -8,7 +8,6 @@ import { test, expect, Page } from '@playwright/test';
 const baseURL = process.env.PLAYWRIGHT_BASE_URL || 'http://localhost:3000';
 
 test.describe('E2E Tests - All User Types (Simplified)', () => {
-  
   // Test 1: Homepage loads
   test('? Test 1: Homepage loads correctly', async ({ page }) => {
     await page.goto(baseURL);
@@ -31,7 +30,9 @@ test.describe('E2E Tests - All User Types (Simplified)', () => {
   test('? Test 3: API Health Check', async ({ request }) => {
     const response = await request.get(`${baseURL}/api/health`);
     expect([200, 404]).toContain(response.status());
-    console.log(`? Test 3: API Health Check - PASSED (Status: ${response.status()})`);
+    console.log(
+      `? Test 3: API Health Check - PASSED (Status: ${response.status()})`
+    );
   });
 
   // Test 4: Database Connection (via API)
@@ -39,7 +40,9 @@ test.describe('E2E Tests - All User Types (Simplified)', () => {
     // Try to access a protected endpoint - should get 401/403 which means DB is working
     const response = await request.get(`${baseURL}/api/patients`);
     expect([200, 401, 403, 404]).toContain(response.status());
-    console.log(`? Test 4: Database accessible - PASSED (Status: ${response.status()})`);
+    console.log(
+      `? Test 4: Database accessible - PASSED (Status: ${response.status()})`
+    );
   });
 
   // Test 5: Responsive Design
@@ -58,7 +61,9 @@ test.describe('E2E Tests - All User Types (Simplified)', () => {
     await page.waitForLoadState('networkidle');
     const buttons = await page.locator('button').count();
     const buttonsWithAria = await page.locator('button[aria-label]').count();
-    console.log(`  Total buttons: ${buttons}, With aria-label: ${buttonsWithAria}`);
+    console.log(
+      `  Total buttons: ${buttons}, With aria-label: ${buttonsWithAria}`
+    );
     console.log('? Test 6: ARIA Labels check - PASSED');
   });
 
@@ -83,12 +88,15 @@ test.describe('E2E Tests - All User Types (Simplified)', () => {
   test('? Test 9: Semantic HTML Structure', async ({ page }) => {
     await page.goto(baseURL);
     await page.waitForLoadState('networkidle');
-    
-    const hasNav = await page.locator('nav, [role="navigation"]').count() > 0;
-    const hasMain = await page.locator('main, [role="main"]').count() > 0;
-    const hasHeader = await page.locator('header, [role="banner"]').count() > 0;
-    
-    console.log(`  Has nav: ${hasNav}, Has main: ${hasMain}, Has header: ${hasHeader}`);
+
+    const hasNav = (await page.locator('nav, [role="navigation"]').count()) > 0;
+    const hasMain = (await page.locator('main, [role="main"]').count()) > 0;
+    const hasHeader =
+      (await page.locator('header, [role="banner"]').count()) > 0;
+
+    console.log(
+      `  Has nav: ${hasNav}, Has main: ${hasMain}, Has header: ${hasHeader}`
+    );
     console.log('? Test 9: Semantic HTML - PASSED');
   });
 

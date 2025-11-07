@@ -1,4 +1,5 @@
 // Global type definitions
+import type { ReactNode } from 'react';
 export interface User {
   id: string;
   email: string;
@@ -38,7 +39,7 @@ export interface Conversation {
   updatedAt: Date;
 }
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: string;
@@ -64,7 +65,7 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
 // Component Props Types
 export interface BaseComponentProps {
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }
 
 export interface ButtonProps extends BaseComponentProps {

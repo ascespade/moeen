@@ -193,8 +193,8 @@ const ProgressTrackingPage: React.FC = () => {
 
   return (
     <div className='container mx-auto px-4 py-8' dir='rtl'>
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
       {/* Header */}
       <div className='mb-8'>
@@ -319,9 +319,16 @@ const ProgressTrackingPage: React.FC = () => {
       <div className='mb-6'>
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
           <button
-            onClick={() => { setActiveTab('goals') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('goals'); } }}
-            aria-label="عرض الأهداف"
+            onClick={() => {
+              setActiveTab('goals');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setActiveTab('goals');
+              }
+            }}
+            aria-label='عرض الأهداف'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'goals'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -331,9 +338,16 @@ const ProgressTrackingPage: React.FC = () => {
             الأهداف والمراحل
           </button>
           <button
-            onClick={() => { setActiveTab('assessments') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('assessments'); } }}
-            aria-label="عرض التقييمات"
+            onClick={() => {
+              setActiveTab('assessments');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setActiveTab('assessments');
+              }
+            }}
+            aria-label='عرض التقييمات'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'assessments'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -343,9 +357,16 @@ const ProgressTrackingPage: React.FC = () => {
             التقييمات
           </button>
           <button
-            onClick={() => { setActiveTab('reports') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('reports'); } }}
-            aria-label="عرض التقارير"
+            onClick={() => {
+              setActiveTab('reports');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setActiveTab('reports');
+              }
+            }}
+            aria-label='عرض التقارير'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'reports'
                 ? 'bg-white text-gray-900 shadow-sm'

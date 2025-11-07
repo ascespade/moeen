@@ -32,7 +32,7 @@ function analyzeWorkflow(filePath) {
   const workflow = yaml.load(content);
 
   const analysis = {
-    file: filePath.replace(projectRoot + '/', ''),
+    file: filePath.replace(`${projectRoot}/`, ''),
     issues: [],
     optimizations: [],
     metrics: {
@@ -245,7 +245,7 @@ async function main() {
       const optimized = createOptimizedWorkflow(originalPath, analysis);
 
       // Create backup
-      const backupPath = originalPath + '.backup';
+      const backupPath = `${originalPath}.backup`;
       writeFileSync(backupPath, readFileSync(originalPath));
 
       // Write optimized version

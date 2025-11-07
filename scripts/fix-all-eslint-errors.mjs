@@ -32,20 +32,27 @@ if (readFileSync(validationFile, 'utf-8').includes('\\(')) {
 const tsFiles = await glob('src/**/*.{ts,tsx}', { cwd: projectRoot });
 let fixedCount = 0;
 
-for (const file of tsFiles.slice(0, 100)) { // Sample first 100 files
+for (const file of tsFiles.slice(0, 100)) {
+  // Sample first 100 files
   const filePath = join(projectRoot, file);
   try {
     let content = readFileSync(filePath, 'utf-8');
     let modified = false;
 
     // Replace common any patterns with proper types
-    if (content.includes(': any)') && !content.includes('@typescript-eslint/no-explicit-any')) {
+    if (
+      content.includes(': any)') &&
+      !content.includes('@typescript-eslint/no-explicit-any')
+    ) {
       // Skip if already has disable comment
       content = content.replace(/: any\)/g, ': unknown)');
       modified = true;
     }
 
-    if (content.includes('as any') && !content.includes('@typescript-eslint/no-explicit-any')) {
+    if (
+      content.includes('as any') &&
+      !content.includes('@typescript-eslint/no-explicit-any')
+    ) {
       content = content.replace(/as any/g, 'as unknown');
       modified = true;
     }

@@ -1,7 +1,7 @@
 /**
  * Error Constants - Centralized Error Definitions
  * ثوابت الأخطاء - تعريفات الأخطاء المركزية
- * 
+ *
  * Error codes and default messages
  */
 
@@ -113,4 +113,4 @@ export function getErrorMessage(code: string): string {
 }
 
 // Type exports
-export type ErrorCode = typeof ERROR_CODES[keyof typeof ERROR_CODES];
+export type ErrorCode = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];

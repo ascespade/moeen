@@ -334,8 +334,8 @@ function NotificationsPageContent() {
     };
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <Badge variant={config.variant} className={config.className}>
           {config.label}
@@ -740,9 +740,10 @@ function NotificationsPageContent() {
               <TableHeader>
                 <TableRow>
                   <TableHead className='w-12'>
-                    <input type='checkbox'
+                    <input
+                      type='checkbox'
                       className='rounded border-gray-300'
-                      onChange={(e) => {
+                      onChange={e => {
                         if (e.target.checked) {
                           setSelectedNotifications(
                             filteredNotifications.map(n => n.id)
@@ -751,8 +752,8 @@ function NotificationsPageContent() {
                           setSelectedNotifications([]);
                         }
                       }}
-                      aria-label="تحديد الكل"
-                      aria-invalid="true"
+                      aria-label='تحديد الكل'
+                      aria-invalid='true'
                     />
                   </TableHead>
                   <TableHead>العنوان</TableHead>
@@ -769,12 +770,13 @@ function NotificationsPageContent() {
                 {filteredNotifications.map(notification => (
                   <TableRow key={notification.id}>
                     <TableCell>
-                      <input type='checkbox'
+                      <input
+                        type='checkbox'
                         className='rounded border-gray-300'
                         checked={selectedNotifications.includes(
                           notification.id
                         )}
-                        onChange={(e) => {
+                        onChange={e => {
                           if (e.target.checked) {
                             setSelectedNotifications([
                               ...selectedNotifications,
@@ -788,8 +790,8 @@ function NotificationsPageContent() {
                             );
                           }
                         }}
-                        aria-label="تحديد الإشعار"
-                        aria-invalid="true"
+                        aria-label='تحديد الإشعار'
+                        aria-invalid='true'
                       />
                     </TableCell>
                     <TableCell>

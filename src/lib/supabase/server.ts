@@ -1,7 +1,7 @@
 /**
  * Supabase Server Client
  * عميل Supabase للخادم
- * 
+ *
  * Server-side Supabase client with cookie handling
  */
 
@@ -12,7 +12,7 @@ import type { Database } from '../../types/database.types';
 /**
  * Create Supabase client for server-side usage
  * Handles cookies automatically for SSR
- * 
+ *
  * @returns Supabase client instance
  */
 export async function createClient() {

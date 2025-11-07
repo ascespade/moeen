@@ -1,7 +1,7 @@
 /**
  * useToast Hook - Custom Hook for Toast Notifications
  * خطاف useToast - خطاف مخصص للإشعارات
- * 
+ *
  * React hook for showing toast notifications
  */
 
@@ -21,12 +21,16 @@ export interface Toast {
 export function useToast() {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
+  const removeToast = useCallback((id: string) => {
+    setToasts(prev => prev.filter(toast => toast.id !== id));
+  }, []);
+
   const showToast = useCallback(
     (message: string, type: ToastType = 'info', duration: number = 3000) => {
       const id = Math.random().toString(36).substring(7);
       const toast: Toast = { id, message, type, duration };
 
-      setToasts((prev) => [...prev, toast]);
+      setToasts(prev => [...prev, toast]);
 
       if (duration > 0) {
         setTimeout(() => {
@@ -36,30 +40,30 @@ export function useToast() {
 
       return id;
     },
-    []
+    [removeToast]
   );
 
-  const removeToast = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
-  }, []);
-
   const success = useCallback(
-    (message: string, duration?: number) => showToast(message, 'success', duration),
+    (message: string, duration?: number) =>
+      showToast(message, 'success', duration),
     [showToast]
   );
 
   const error = useCallback(
-    (message: string, duration?: number) => showToast(message, 'error', duration),
+    (message: string, duration?: number) =>
+      showToast(message, 'error', duration),
     [showToast]
   );
 
   const info = useCallback(
-    (message: string, duration?: number) => showToast(message, 'info', duration),
+    (message: string, duration?: number) =>
+      showToast(message, 'info', duration),
     [showToast]
   );
 
   const warning = useCallback(
-    (message: string, duration?: number) => showToast(message, 'warning', duration),
+    (message: string, duration?: number) =>
+      showToast(message, 'warning', duration),
     [showToast]
   );
 

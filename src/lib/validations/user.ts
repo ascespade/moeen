@@ -1,7 +1,7 @@
 /**
  * User Validation Schemas - Zod
  * مخططات التحقق من المستخدم - Zod
- * 
+ *
  * All user-related validation schemas
  */
 
@@ -13,8 +13,14 @@ import { CONFIG } from '../constants/config';
 export const userProfileSchema = z.object({
   name: z
     .string()
-    .min(CONFIG.NAME_MIN_LENGTH, MESSAGES.VALIDATION.MIN_LENGTH('الاسم', CONFIG.NAME_MIN_LENGTH))
-    .max(CONFIG.NAME_MAX_LENGTH, MESSAGES.VALIDATION.MAX_LENGTH('الاسم', CONFIG.NAME_MAX_LENGTH)),
+    .min(
+      CONFIG.NAME_MIN_LENGTH,
+      MESSAGES.VALIDATION.MIN_LENGTH('الاسم', CONFIG.NAME_MIN_LENGTH)
+    )
+    .max(
+      CONFIG.NAME_MAX_LENGTH,
+      MESSAGES.VALIDATION.MAX_LENGTH('الاسم', CONFIG.NAME_MAX_LENGTH)
+    ),
   email: z
     .string()
     .min(1, MESSAGES.ERROR.REQUIRED_FIELD)
@@ -36,7 +42,9 @@ export const updateUserSchema = z.object({
     .optional(),
   email: z.string().email().max(CONFIG.EMAIL_MAX_LENGTH).optional(),
   phone: z.string().max(CONFIG.PHONE_MAX_LENGTH).optional(),
-  role: z.enum(['admin', 'doctor', 'patient', 'staff', 'supervisor']).optional(),
+  role: z
+    .enum(['admin', 'doctor', 'patient', 'staff', 'supervisor'])
+    .optional(),
   status: z.enum(['active', 'inactive', 'blocked']).optional(),
 });
 
@@ -44,8 +52,14 @@ export const updateUserSchema = z.object({
 export const createUserSchema = z.object({
   name: z
     .string()
-    .min(CONFIG.NAME_MIN_LENGTH, MESSAGES.VALIDATION.MIN_LENGTH('الاسم', CONFIG.NAME_MIN_LENGTH))
-    .max(CONFIG.NAME_MAX_LENGTH, MESSAGES.VALIDATION.MAX_LENGTH('الاسم', CONFIG.NAME_MAX_LENGTH)),
+    .min(
+      CONFIG.NAME_MIN_LENGTH,
+      MESSAGES.VALIDATION.MIN_LENGTH('الاسم', CONFIG.NAME_MIN_LENGTH)
+    )
+    .max(
+      CONFIG.NAME_MAX_LENGTH,
+      MESSAGES.VALIDATION.MAX_LENGTH('الاسم', CONFIG.NAME_MAX_LENGTH)
+    ),
   email: z
     .string()
     .min(1, MESSAGES.ERROR.REQUIRED_FIELD)
@@ -56,7 +70,9 @@ export const createUserSchema = z.object({
     .min(CONFIG.PASSWORD_MIN_LENGTH, MESSAGES.ERROR.INVALID_PASSWORD)
     .max(CONFIG.PASSWORD_MAX_LENGTH),
   phone: z.string().max(CONFIG.PHONE_MAX_LENGTH).optional(),
-  role: z.enum(['admin', 'doctor', 'patient', 'staff', 'supervisor']).default('patient'),
+  role: z
+    .enum(['admin', 'doctor', 'patient', 'staff', 'supervisor'])
+    .default('patient'),
 });
 
 // Type exports

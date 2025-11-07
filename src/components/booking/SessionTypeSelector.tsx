@@ -66,7 +66,7 @@ export default function SessionTypeSelector({ onSelect, selectedId }: Props) {
         <button
           key={type.id}
           onClick={() => onSelect(type)}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               onSelect(type);

@@ -207,9 +207,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
               0
             ) / staffWorkHours.length
           : 0,
-      departments: [
-        ...new Set(staffWorkHours.map((s: any) => s.department)),
-      ],
+      departments: [...new Set(staffWorkHours.map((s: any) => s.department))],
     };
 
     return NextResponse.json({

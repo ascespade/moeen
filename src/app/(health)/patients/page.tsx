@@ -18,10 +18,7 @@ import { Badge } from '@/components/ui/Badge';
 
 import { Input } from '@/components/ui/Input';
 
-import {
-  Search,
-  Filter,
-} from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 
 interface Patient {
   id: string;
@@ -245,9 +242,16 @@ export default function PatientsPage() {
           <div className='text-default-error text-xl mb-4'>⚠️</div>
           <p className='text-gray-600'>{error}</p>
           <button
-            onClick={() => { window.location.reload() }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.reload(); } }}
-            aria-label="إعادة تحميل الصفحة"
+            onClick={() => {
+              window.location.reload();
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.location.reload();
+              }
+            }}
+            aria-label='إعادة تحميل الصفحة'
             className='mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700'
           >
             إعادة المحاولة
@@ -258,7 +262,10 @@ export default function PatientsPage() {
   }
 
   return (
-    <main className='min-h-screen bg-[var(--default-surface)]' id="main-content">
+    <main
+      className='min-h-screen bg-[var(--default-surface)]'
+      id='main-content'
+    >
       {/* Page Header */}
       <div className='bg-white dark:bg-gray-900 border-b border-[var(--default-border)]'>
         <div className='container-app py-6'>
@@ -288,10 +295,13 @@ export default function PatientsPage() {
               <label className='block text-sm font-medium text-gray-700 mb-2'>
                 البحث
               </label>
-              <input type='text'
+              <input
+                type='text'
                 placeholder='البحث بالاسم، الهاتف، أو البريد الإلكتروني...'
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} aria-label="البحث بالاسم، الهاتف، أو البريد الإلكتروني..." aria-invalid="true"
+                onChange={e => setSearchTerm(e.target.value)}
+                aria-label='البحث بالاسم، الهاتف، أو البريد الإلكتروني...'
+                aria-invalid='true'
                 className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-default-default focus:border-transparent'
               />
             </div>

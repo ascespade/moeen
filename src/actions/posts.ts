@@ -1,7 +1,7 @@
 /**
  * Posts Actions - Server Actions for Post Management
  * إجراءات المنشورات - Server Actions لإدارة المنشورات
- * 
+ *
  * All post-related server actions
  */
 
@@ -112,10 +112,7 @@ export const deletePostAction = withAction(
       throw AppError.forbidden('ليس لديك صلاحية لحذف هذا المنشور');
     }
 
-    const { error } = await adminClient
-      .from('posts')
-      .delete()
-      .eq('id', postId);
+    const { error } = await adminClient.from('posts').delete().eq('id', postId);
 
     if (error) {
       throw AppError.internal(`فشل حذف المنشور: ${error.message}`);

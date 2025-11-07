@@ -18,7 +18,7 @@ export default function RTLToggle({
   return (
     <button
       onClick={toggleRTL}
-      onKeyDown={(e) => {
+      onKeyDown={e => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           toggleRTL();

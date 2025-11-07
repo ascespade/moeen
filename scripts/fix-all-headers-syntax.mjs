@@ -30,7 +30,7 @@ for (const file of apiFiles) {
     // Should be: headers: { ... } });
     const pattern1 = /headers:\s*\{[^}]*\}\s*\}\s*;/g;
     if (pattern1.test(content)) {
-      content = content.replace(pattern1, (match) => {
+      content = content.replace(pattern1, match => {
         if (!match.includes('});')) {
           return match.replace(/;\s*$/, '});');
         }
@@ -43,7 +43,7 @@ for (const file of apiFiles) {
     // Should be: { status: ..., headers: { ... } });
     const pattern2 = /\{\s*status:\s*\d+[^}]*headers:\s*\{[^}]*\}\s*\}\s*;/g;
     if (pattern2.test(content)) {
-      content = content.replace(pattern2, (match) => {
+      content = content.replace(pattern2, match => {
         if (!match.includes('});')) {
           return match.replace(/;\s*$/, '});');
         }

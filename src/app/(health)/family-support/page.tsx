@@ -324,8 +324,8 @@ const FamilySupportPage: React.FC = () => {
 
   return (
     <div className='container mx-auto px-4 py-8' dir='rtl'>
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
       {/* Header */}
       <div className='mb-8'>
@@ -415,9 +415,16 @@ const FamilySupportPage: React.FC = () => {
       <div className='mb-6'>
         <div className='flex space-x-1 bg-surface p-1 rounded-lg'>
           <button
-            onClick={() => { setActiveTab('members') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('members'); } }}
-            aria-label="عرض أعضاء الأسر"
+            onClick={() => {
+              setActiveTab('members');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setActiveTab('members');
+              }
+            }}
+            aria-label='عرض أعضاء الأسر'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'members'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -427,9 +434,16 @@ const FamilySupportPage: React.FC = () => {
             أعضاء الأسر
           </button>
           <button
-            onClick={() => { setActiveTab('sessions') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('sessions'); } }}
-            aria-label="عرض جلسات الدعم"
+            onClick={() => {
+              setActiveTab('sessions');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setActiveTab('sessions');
+              }
+            }}
+            aria-label='عرض جلسات الدعم'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'sessions'
                 ? 'bg-white text-gray-900 shadow-sm'
@@ -439,9 +453,16 @@ const FamilySupportPage: React.FC = () => {
             جلسات الدعم
           </button>
           <button
-            onClick={() => { setActiveTab('resources') }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActiveTab('resources'); } }}
-            aria-label="عرض الموارد التعليمية"
+            onClick={() => {
+              setActiveTab('resources');
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setActiveTab('resources');
+              }
+            }}
+            aria-label='عرض الموارد التعليمية'
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               activeTab === 'resources'
                 ? 'bg-white text-gray-900 shadow-sm'

@@ -1,6 +1,6 @@
 /**
  * Navigation Configuration - إعدادات التنقل
- * 
+ *
  * Navigation menu configuration
  */
 

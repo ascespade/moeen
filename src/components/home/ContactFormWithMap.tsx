@@ -139,7 +139,7 @@ export default function ContactFormWithMap() {
               target='_blank'
               rel='noopener noreferrer'
               className='flex items-center justify-center gap-2 text-[var(--brand-primary)] hover:text-[var(--brand-primary-hover)] hover:underline transition-colors font-medium'
-              aria-label="فتح في خرائط جوجل"
+              aria-label='فتح في خرائط جوجل'
             >
               <MapPin className='h-5 w-5' />
               فتح في خرائط جوجل
@@ -181,16 +181,17 @@ export default function ContactFormWithMap() {
                   >
                     الاسم الكامل
                   </label>
-                  <input type='text'
+                  <input
+                    type='text'
                     id='home-name'
                     name='name'
                     value={formData.name}
                     onChange={handleChange}
                     placeholder='اسمك الكامل'
                     className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-4 py-3 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)] transition-all'
-                    aria-label="اسمك الكامل"
-                    aria-required="true"
-                    aria-invalid="true"
+                    aria-label='اسمك الكامل'
+                    aria-required='true'
+                    aria-invalid='true'
                   />
                 </div>
                 <div>
@@ -200,16 +201,17 @@ export default function ContactFormWithMap() {
                   >
                     البريد الإلكتروني
                   </label>
-                  <input type='email'
+                  <input
+                    type='email'
                     id='home-email'
                     name='email'
                     value={formData.email}
                     onChange={handleChange}
                     placeholder='name@example.com'
                     className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-4 py-3 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)] transition-all'
-                    aria-label="name@example.com"
-                    aria-required="true"
-                    aria-invalid="true"
+                    aria-label='name@example.com'
+                    aria-required='true'
+                    aria-invalid='true'
                   />
                 </div>
               </div>
@@ -221,16 +223,17 @@ export default function ContactFormWithMap() {
                 >
                   الموضوع
                 </label>
-                <input type='text'
+                <input
+                  type='text'
                   id='home-subject'
                   name='subject'
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder='موضوع الرسالة'
                   className='w-full rounded-lg border border-[var(--brand-border)] bg-[var(--background)] px-4 py-3 text-[var(--text-primary)] focus:border-[var(--brand-primary)] focus:ring-2 focus:ring-[var(--brand-primary)] transition-all'
-                  aria-label="موضوع الرسالة"
-                  aria-required="true"
-                  aria-invalid="true"
+                  aria-label='موضوع الرسالة'
+                  aria-required='true'
+                  aria-invalid='true'
                 />
               </div>
 
@@ -298,19 +301,19 @@ export default function ContactFormWithMap() {
                   <div className='mt-1 text-[var(--brand-primary)] transition-transform group-hover:scale-110'>
                     <Icon className='h-6 w-6' />
                   </div>
-                <div className='flex-1'>
-                  <h4 className='mb-1 font-semibold text-[var(--text-primary)] transition-colors group-hover:text-[var(--brand-primary)]'>
-                    {info.title}
-                  </h4>
-                  <p className='mb-1 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--brand-primary)]'>
-                    {info.value}
-                  </p>
-                  {info.description && info.link !== '#' && (
-                    <p className='text-xs text-[var(--text-muted)] group-hover:text-[var(--brand-primary)]'>
-                      {info.description}
+                  <div className='flex-1'>
+                    <h4 className='mb-1 font-semibold text-[var(--text-primary)] transition-colors group-hover:text-[var(--brand-primary)]'>
+                      {info.title}
+                    </h4>
+                    <p className='mb-1 text-[var(--text-secondary)] transition-colors group-hover:text-[var(--brand-primary)]'>
+                      {info.value}
                     </p>
-                  )}
-                </div>
+                    {info.description && info.link !== '#' && (
+                      <p className='text-xs text-[var(--text-muted)] group-hover:text-[var(--brand-primary)]'>
+                        {info.description}
+                      </p>
+                    )}
+                  </div>
                 </a>
               );
             })}

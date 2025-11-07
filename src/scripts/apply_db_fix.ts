@@ -11,11 +11,14 @@ import * as path from 'path';
 require('dotenv').config({ path: '.env.local' });
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
+const supabaseServiceKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
 
 if (!supabaseUrl || !supabaseServiceKey) {
   console.error('❌ Missing Supabase credentials in .env.local');
-  console.error('Required: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY');
+  console.error(
+    'Required: NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY'
+  );
   process.exit(1);
 }
 
@@ -28,7 +31,7 @@ async function applyDatabaseFix() {
     // Step 1: Enable pgcrypto extension
     console.log('1. Enabling pgcrypto extension...');
     const { error: extError } = await supabase.rpc('exec_sql', {
-      sql: 'CREATE EXTENSION IF NOT EXISTS pgcrypto;'
+      sql: 'CREATE EXTENSION IF NOT EXISTS pgcrypto;',
     });
     if (extError) {
       console.warn('   ⚠️  Extension may already exist:', extError.message);
@@ -101,11 +104,20 @@ async function applyDatabaseFix() {
     console.log('\n4. Ensuring roles exist...');
     const roles = [
       { role: 'admin', description: 'System administrator with full access' },
-      { role: 'doctor', description: 'Medical professional with patient access' },
+      {
+        role: 'doctor',
+        description: 'Medical professional with patient access',
+      },
       { role: 'patient', description: 'Patient with personal data access' },
       { role: 'staff', description: 'Staff member with administrative access' },
-      { role: 'supervisor', description: 'Supervisor with limited administrative access' },
-      { role: 'manager', description: 'Manager with comprehensive administrative access' },
+      {
+        role: 'supervisor',
+        description: 'Supervisor with limited administrative access',
+      },
+      {
+        role: 'manager',
+        description: 'Manager with comprehensive administrative access',
+      },
     ];
 
     for (const roleData of roles) {
@@ -122,25 +134,50 @@ async function applyDatabaseFix() {
 
     // Step 5: Fix test users passwords
     console.log('\n5. Fixing test users passwords...');
-    
+
     const testUsers = [
-      { email: 'admin@test.com', password: 'Admin123!', name: 'Test Admin', role: 'admin' },
-      { email: 'doctor@test.com', password: 'Doctor123!', name: 'Test Doctor', role: 'doctor' },
-      { email: 'patient@test.com', password: 'Patient123!', name: 'Test Patient', role: 'patient' },
-      { email: 'staff@test.com', password: 'Staff123!', name: 'Test Staff', role: 'staff' },
+      {
+        email: 'admin@test.com',
+        password: 'Admin123!',
+        name: 'Test Admin',
+        role: 'admin',
+      },
+      {
+        email: 'doctor@test.com',
+        password: 'Doctor123!',
+        name: 'Test Doctor',
+        role: 'doctor',
+      },
+      {
+        email: 'patient@test.com',
+        password: 'Patient123!',
+        name: 'Test Patient',
+        role: 'patient',
+      },
+      {
+        email: 'staff@test.com',
+        password: 'Staff123!',
+        name: 'Test Staff',
+        role: 'staff',
+      },
     ];
 
     for (const userData of testUsers) {
       // First, try to hash password using the function
-      const { data: hashedPassword, error: hashError } = await supabase.rpc('hash_password', {
-        password_input: userData.password
-      });
+      const { data: hashedPassword, error: hashError } = await supabase.rpc(
+        'hash_password',
+        {
+          password_input: userData.password,
+        }
+      );
 
       let passwordHash = hashedPassword;
 
       if (hashError || !passwordHash) {
         // Fallback: Use SQL to hash
-        console.warn(`   ⚠️  hash_password function not available, using SQL for ${userData.email}`);
+        console.warn(
+          `   ⚠️  hash_password function not available, using SQL for ${userData.email}`
+        );
         // We'll update directly using SQL
         passwordHash = null; // Will be set via SQL update
       }
@@ -168,9 +205,9 @@ async function applyDatabaseFix() {
             // Use SQL to set password
             const { error: updateError } = await supabase
               .from('users')
-              .update({ 
+              .update({
                 // We'll need to use SQL function for this
-                password_hash: null // Will be handled by SQL
+                password_hash: null, // Will be handled by SQL
               })
               .eq('id', existingUser.id);
 
@@ -182,7 +219,9 @@ async function applyDatabaseFix() {
                 WHERE id = ${existingUser.id}
               `;
               // Note: This requires direct SQL execution
-              console.log(`   ✅ User ${userData.email} will be updated with SQL`);
+              console.log(
+                `   ✅ User ${userData.email} will be updated with SQL`
+              );
             }
           }
         }
@@ -194,7 +233,10 @@ async function applyDatabaseFix() {
             .eq('id', existingUser.id);
 
           if (updateError) {
-            console.warn(`   ⚠️  Update error for ${userData.email}:`, updateError.message);
+            console.warn(
+              `   ⚠️  Update error for ${userData.email}:`,
+              updateError.message
+            );
           } else {
             console.log(`   ✅ User ${userData.email} updated`);
           }
@@ -202,23 +244,26 @@ async function applyDatabaseFix() {
       } else {
         // Create new user
         if (passwordHash) {
-          const { error: insertError } = await supabase
-            .from('users')
-            .insert({
-              email: userData.email,
-              password_hash: passwordHash,
-              name: userData.name,
-              role: userData.role,
-              status: 'active',
-            });
+          const { error: insertError } = await supabase.from('users').insert({
+            email: userData.email,
+            password_hash: passwordHash,
+            name: userData.name,
+            role: userData.role,
+            status: 'active',
+          });
 
           if (insertError) {
-            console.warn(`   ⚠️  Insert error for ${userData.email}:`, insertError.message);
+            console.warn(
+              `   ⚠️  Insert error for ${userData.email}:`,
+              insertError.message
+            );
           } else {
             console.log(`   ✅ User ${userData.email} created`);
           }
         } else {
-          console.warn(`   ⚠️  Cannot create ${userData.email} - hash_password function needed`);
+          console.warn(
+            `   ⚠️  Cannot create ${userData.email} - hash_password function needed`
+          );
         }
       }
     }
@@ -228,7 +273,10 @@ async function applyDatabaseFix() {
     const { data: users, error: verifyError } = await supabase
       .from('users')
       .select('email, name, role, password_hash')
-      .in('email', testUsers.map(u => u.email));
+      .in(
+        'email',
+        testUsers.map(u => u.email)
+      );
 
     if (verifyError) {
       console.error('   ❌ Verification error:', verifyError.message);
@@ -236,7 +284,9 @@ async function applyDatabaseFix() {
       console.log(`   ✅ Found ${users?.length || 0} test users`);
       users?.forEach((user: unknown) => {
         const hasPassword = user.password_hash && user.password_hash !== '';
-        console.log(`   ${hasPassword ? '✅' : '❌'} ${user.email} (${user.role}) - ${hasPassword ? 'Has password' : 'No password'}`);
+        console.log(
+          `   ${hasPassword ? '✅' : '❌'} ${user.email} (${user.role}) - ${hasPassword ? 'Has password' : 'No password'}`
+        );
       });
     }
 
@@ -247,10 +297,11 @@ async function applyDatabaseFix() {
     testUsers.forEach(u => {
       console.log(`      - ${u.email} / ${u.password}`);
     });
-
   } catch (error: unknown) {
     console.error('❌ Error applying database fix:', error.message);
-    console.error('\n💡 Alternative: Run SQL script manually in Supabase SQL Editor:');
+    console.error(
+      '\n💡 Alternative: Run SQL script manually in Supabase SQL Editor:'
+    );
     console.error('   File: supabase/fix_existing_users_passwords.sql');
     process.exit(1);
   }

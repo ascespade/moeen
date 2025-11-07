@@ -3,7 +3,7 @@
  * Provides helper functions for database operations with CUID support
  */
 
-import { _generatePublicId, cuidEntity } from '@/lib/cuid';
+import { generatePublicId, cuidEntity } from '@/lib/cuid';
 
 /**
  * Database helper functions for CUID generation and management

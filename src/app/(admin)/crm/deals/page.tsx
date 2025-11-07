@@ -117,9 +117,7 @@ export default function CRMDealsPage() {
       <header className='border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900'>
         <div className='container-app py-6'>
           <div className='mb-4'>
-            <h1 className='text-default text-2xl font-bold'>
-              إدارة الصفقات
-            </h1>
+            <h1 className='text-default text-2xl font-bold'>إدارة الصفقات</h1>
             <p className='text-gray-600 dark:text-gray-300'>
               تتبع وإدارة صفقات المبيعات
             </p>
@@ -128,14 +126,14 @@ export default function CRMDealsPage() {
             <div className='flex rounded-lg border border-gray-300'>
               <button
                 onClick={() => setViewMode('table')}
-                aria-label="عرض الجدول"
+                aria-label='عرض الجدول'
                 className={`px-3 py-2 text-sm ${viewMode === 'table' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 جدول
               </button>
               <button
                 onClick={() => setViewMode('kanban')}
-                aria-label="عرض كانبان"
+                aria-label='عرض كانبان'
                 className={`px-3 py-2 text-sm ${viewMode === 'kanban' ? 'bg-[var(--default-default)] text-white' : 'text-gray-600'}`}
               >
                 كانبان
@@ -143,7 +141,7 @@ export default function CRMDealsPage() {
             </div>
             <button
               onClick={() => setShowCreateModal(true)}
-              aria-label="إضافة صفقة جديدة"
+              aria-label='إضافة صفقة جديدة'
               className='btn-default rounded-lg px-6 py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
             >
               إضافة صفقة
@@ -152,7 +150,7 @@ export default function CRMDealsPage() {
         </div>
       </header>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-default-default'>
@@ -170,7 +168,9 @@ export default function CRMDealsPage() {
           </div>
           <div className='card p-6 text-center'>
             <div className='mb-2 text-3xl font-bold text-purple-600'>
-              {deals.reduce((sum, d) => sum + (d.value || 0), 0).toLocaleString()}{' '}
+              {deals
+                .reduce((sum, d) => sum + (d.value || 0), 0)
+                .toLocaleString()}{' '}
               ريال
             </div>
             <div className='text-gray-600 dark:text-gray-300'>
@@ -182,7 +182,7 @@ export default function CRMDealsPage() {
               {Math.round(
                 deals.length > 0
                   ? deals.reduce((sum, d) => sum + (d.probability || 0), 0) /
-                    deals.length
+                      deals.length
                   : 0
               )}
               %
@@ -199,9 +199,11 @@ export default function CRMDealsPage() {
               <label className='mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300'>
                 البحث
               </label>
-              <input type='text'
+              <input
+                type='text'
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} aria-label="text"
+                onChange={e => setSearchTerm(e.target.value)}
+                aria-label='text'
                 placeholder='ابحث في الصفقات...'
                 className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
               />
@@ -225,7 +227,10 @@ export default function CRMDealsPage() {
               </select>
             </div>
             <div className='flex items-end'>
-              <button className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="تطبيق الفلاتر">
+              <button
+                className='btn-default w-full rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                aria-label='تطبيق الفلاتر'
+              >
                 تطبيق الفلاتر
               </button>
             </div>
@@ -281,10 +286,16 @@ export default function CRMDealsPage() {
                           </div>
                         </div>
                         <div className='mt-3 flex gap-1'>
-                          <button className='flex-1 rounded bg-[var(--default-default)] px-2 py-1 text-xs text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="عرض">
+                          <button
+                            className='flex-1 rounded bg-[var(--default-default)] px-2 py-1 text-xs text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                            aria-label='عرض'
+                          >
                             عرض
                           </button>
-                          <button className='rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-surface' aria-label="تحريك">
+                          <button
+                            className='rounded border border-gray-300 px-2 py-1 text-xs text-gray-700 transition-colors hover:bg-surface'
+                            aria-label='تحريك'
+                          >
                             تحريك
                           </button>
                         </div>
@@ -371,10 +382,16 @@ export default function CRMDealsPage() {
                       </td>
                       <td className='whitespace-nowrap px-6 py-4 text-sm font-medium'>
                         <div className='flex gap-2'>
-                          <button className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]' aria-label="عرض">
+                          <button
+                            className='text-[var(--default-default)] hover:text-[var(--default-default-hover)]'
+                            aria-label='عرض'
+                          >
                             عرض
                           </button>
-                          <button className='text-gray-600 hover:text-gray-900' aria-label="تعديل">
+                          <button
+                            className='text-gray-600 hover:text-gray-900'
+                            aria-label='تعديل'
+                          >
                             تعديل
                           </button>
                         </div>
@@ -407,7 +424,11 @@ export default function CRMDealsPage() {
           <div className='w-full max-w-2xl rounded-lg bg-white p-6 dark:bg-gray-900'>
             <div className='mb-6 flex items-center justify-between'>
               <h3 className='text-xl font-semibold'>إضافة صفقة جديدة</h3>
-              <button onClick={() => { setShowCreateModal(false) }} aria-label="button"
+              <button
+                onClick={() => {
+                  setShowCreateModal(false);
+                }}
+                aria-label='button'
                 className='text-gray-400 hover:text-gray-600'
               >
                 ✕
@@ -422,7 +443,7 @@ export default function CRMDealsPage() {
                   type='text'
                   className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                   placeholder='أدخل عنوان الصفقة'
-                  aria-label="أدخل عنوان الصفقة"
+                  aria-label='أدخل عنوان الصفقة'
                 />
               </div>
               <div className='grid grid-cols-2 gap-4'>
@@ -434,7 +455,7 @@ export default function CRMDealsPage() {
                     type='number'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0'
-                    aria-label="قيمة الصفقة"
+                    aria-label='قيمة الصفقة'
                   />
                 </div>
                 <div>
@@ -447,7 +468,7 @@ export default function CRMDealsPage() {
                     max='100'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
                     placeholder='0-100'
-                    aria-label="احتمالية الإغلاق"
+                    aria-label='احتمالية الإغلاق'
                   />
                 </div>
               </div>
@@ -470,19 +491,26 @@ export default function CRMDealsPage() {
                   <input
                     type='date'
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-[var(--default-default)]'
-                    aria-label="تاريخ الإغلاق المتوقع"
+                    aria-label='تاريخ الإغلاق المتوقع'
                   />
                 </div>
               </div>
               <div className='flex gap-3 pt-4'>
-                <button type='button'
-                  onClick={() => { setShowCreateModal(false) }} aria-label="button"
+                <button
+                  type='button'
+                  onClick={() => {
+                    setShowCreateModal(false);
+                  }}
+                  aria-label='button'
                   className='flex-1 rounded-lg border border-gray-300 px-4 py-2 transition-colors hover:bg-surface'
                 >
                   إلغاء
                 </button>
-                <button type='submit'
-                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]' aria-label="إضافة الصفقة">
+                <button
+                  type='submit'
+                  className='btn-default flex-1 rounded-lg py-2 text-white transition-colors hover:bg-[var(--default-default-hover)]'
+                  aria-label='إضافة الصفقة'
+                >
                   إضافة الصفقة
                 </button>
               </div>

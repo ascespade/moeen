@@ -1,13 +1,16 @@
 /**
  * Moeen Chatbot Core System
  * نظام المساعد معين الأساسي
- * 
+ *
  * Core personality and interaction system for Moeen chatbot
  */
 
 export interface MoeenPersonality {
   name: string;
-  personalityType: 'professional_friendly' | 'warm_caring' | 'professional_formal';
+  personalityType:
+    | 'professional_friendly'
+    | 'warm_caring'
+    | 'professional_formal';
   tone: 'warm_caring' | 'professional' | 'casual';
   language: 'ar' | 'en';
   responseStyle: string;
@@ -42,7 +45,8 @@ export class MoeenChatbot {
       personalityType: 'professional_friendly',
       tone: 'warm_caring',
       language: 'ar',
-      responseStyle: 'أنا مساعد ودود ومهتم. أقدم المساعدة والمعلومات بطريقة واضحة ومفيدة. أساعد المرضى في حجز المواعيد والاستفسارات. أكون متعاطفاً ومهتماً بصحة المرضى وراحتهم.',
+      responseStyle:
+        'أنا مساعد ودود ومهتم. أقدم المساعدة والمعلومات بطريقة واضحة ومفيدة. أساعد المرضى في حجز المواعيد والاستفسارات. أكون متعاطفاً ومهتماً بصحة المرضى وراحتهم.',
     };
   }
 
@@ -284,10 +288,7 @@ export class MoeenChatbot {
     return 'سأسعد بمساعدتك. يرجى إخباري بالموضوع الذي تريد معلومات عنه وسأقدم لك المعلومات المتاحة.';
   }
 
-  private handleGeneralChat(
-    _message: string,
-    _context: MoeenContext
-  ): string {
+  private handleGeneralChat(_message: string, _context: MoeenContext): string {
     return 'أفهم. أنا هنا لمساعدتك. يمكنني مساعدتك في حجز المواعيد أو الإجابة على استفساراتك أو أي شيء آخر تحتاج إليه.';
   }
 }

@@ -8,15 +8,19 @@ import { test, expect } from '@playwright/test';
 test.describe('API Authorization', () => {
   const baseURL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001';
 
-  test('Unauthenticated request to protected endpoint should return 401', async ({ request }) => {
+  test('Unauthenticated request to protected endpoint should return 401', async ({
+    request,
+  }) => {
     const response = await request.get(`${baseURL}/api/patients`);
     expect(response.status()).toBe(401);
-    
+
     const body = await response.json();
     expect(body.error).toContain('Unauthorized');
   });
 
-  test('Authenticated user without permissions should return 403', async ({ request }) => {
+  test('Authenticated user without permissions should return 403', async ({
+    request,
+  }) => {
     // This test requires a test user with limited permissions
     // Implementation depends on your test setup
     // TODO: Add authentication token for test user

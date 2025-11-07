@@ -16,12 +16,12 @@ describe('RLS Policies', () => {
   beforeEach(() => {
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_ANON_KEY;
-    
+
     if (!supabaseUrl || !supabaseKey) {
       console.warn('Skipping RLS tests - Supabase credentials not configured');
       return;
     }
-    
+
     supabase = createClient(supabaseUrl, supabaseKey);
   });
 
@@ -45,7 +45,6 @@ describe('RLS Policies', () => {
     //   .select('*')
     //   .eq('id', patientId)
     //   .single();
-    
     // expect(error).toBeNull();
     // expect(data).toBeTruthy();
   });
@@ -58,7 +57,6 @@ describe('RLS Policies', () => {
     //   .select('*')
     //   .eq('id', otherPatientId)
     //   .single();
-    
     // Should be blocked by RLS
     // expect(error).toBeTruthy();
     // expect(data).toBeNull();

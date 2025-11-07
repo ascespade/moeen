@@ -118,8 +118,7 @@ function fixSupabaseClient() {
           !content.includes('import { createClient }') &&
           content.includes('supabase.')
         ) {
-          content =
-            `import { createClient } from '@/lib/supabase/client';\n` + content;
+          content = `import { createClient } from '@/lib/supabase/client';\n${content}`;
         }
 
         // Fix: const supabase = createClient();
@@ -253,7 +252,7 @@ function fixExportErrors() {
   for (const fix of fixes) {
     try {
       if (fs.existsSync(fix.file)) {
-        let content = fs.readFileSync(fix.file, 'utf8');
+        const content = fs.readFileSync(fix.file, 'utf8');
 
         // Find the export default { ... }
         // Replace with const name = { ... }; export default name;

@@ -124,8 +124,8 @@ export default function PatientIEPPage() {
   if (loading) {
     return (
       <div className='container-app py-8'>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <div className='card p-12 text-center'>
           <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--default-default)] mx-auto'></div>
@@ -188,7 +188,9 @@ export default function PatientIEPPage() {
           <p className='text-gray-600 dark:text-gray-400 mb-6'>
             يجب على الأخصائي إنشاء خطة IEP للطفل
           </p>
-          <button className='btn btn-default' aria-label="إنشاء خطة IEP جديدة">إنشاء خطة IEP جديدة</button>
+          <button className='btn btn-default' aria-label='إنشاء خطة IEP جديدة'>
+            إنشاء خطة IEP جديدة
+          </button>
         </div>
       ) : (
         <>
@@ -247,7 +249,9 @@ export default function PatientIEPPage() {
               <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
                 الأهداف
               </h2>
-              <button className='btn btn-outline' aria-label="+ إضافة هدف جديد">+ إضافة هدف جديد</button>
+              <button className='btn btn-outline' aria-label='+ إضافة هدف جديد'>
+                + إضافة هدف جديد
+              </button>
             </div>
 
             {goals.length === 0 ? (

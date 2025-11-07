@@ -13,11 +13,7 @@ export function DesignSystemMonitor() {
 
     // Monitor for hardcoded colors
     const checkForViolations = () => {
-      const forbiddenClasses = [
-        'bg-gray-',
-        'text-gray-',
-        'border-gray-',
-      ];
+      const forbiddenClasses = ['bg-gray-', 'text-gray-', 'border-gray-'];
 
       forbiddenClasses.forEach(pattern => {
         const elements = document.querySelectorAll(`[class*="${pattern}"]`);
@@ -55,4 +51,3 @@ export function DesignSystemMonitor() {
 
   return null;
 }
-

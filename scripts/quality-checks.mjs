@@ -13,16 +13,16 @@ const execAsync = promisify(exec);
 
 async function runChecks() {
   console.log('?? Running code quality checks...\n');
-  
+
   const checks = [
     { name: 'Linting', command: 'npm run lint:check' },
     { name: 'Type Checking', command: 'npm run type:check' },
-    { name: 'Build', command: 'npm run build' }
+    { name: 'Build', command: 'npm run build' },
   ];
-  
+
   let passed = 0;
   let failed = 0;
-  
+
   for (const check of checks) {
     try {
       await execAsync(check.command);
@@ -33,9 +33,9 @@ async function runChecks() {
       failed++;
     }
   }
-  
+
   console.log(`\n?? Results: ${passed} passed, ${failed} failed`);
-  
+
   if (failed > 0) {
     process.exit(1);
   }

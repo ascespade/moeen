@@ -43,10 +43,7 @@
     "primary_language": "ar",
     "secondary_language": "en",
     "rtl_enabled": true,
-    "translation_files": [
-      "src/locales/ar.json",
-      "src/locales/en.json"
-    ]
+    "translation_files": ["src/locales/ar.json", "src/locales/en.json"]
   },
   "database": {
     "platform": "supabase",
@@ -79,7 +76,13 @@
       "name": "Chatbot & AI",
       "path": "src/app/(admin)/chatbot",
       "status": "active",
-      "features": ["conversations", "templates", "flows", "analytics", "integrations"]
+      "features": [
+        "conversations",
+        "templates",
+        "flows",
+        "analytics",
+        "integrations"
+      ]
     },
     {
       "name": "Appointments Management",
@@ -105,7 +108,13 @@
       "name": "Authentication",
       "path": "src/app/(auth)",
       "status": "active",
-      "features": ["login", "register", "forgot_password", "reset_password", "verify_email"]
+      "features": [
+        "login",
+        "register",
+        "forgot_password",
+        "reset_password",
+        "verify_email"
+      ]
     },
     {
       "name": "Analytics & Reports",

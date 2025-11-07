@@ -17,7 +17,9 @@ export const storage = {
 
     try {
       localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   remove: (key: string): void => {
@@ -25,7 +27,9 @@ export const storage = {
 
     try {
       localStorage.removeItem(key);
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   clear: (): void => {
@@ -33,7 +37,9 @@ export const storage = {
 
     try {
       localStorage.clear();
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   // Session Storage
@@ -53,7 +59,9 @@ export const storage = {
 
     try {
       sessionStorage.setItem(key, JSON.stringify(value));
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   removeSession: (key: string): void => {
@@ -61,7 +69,9 @@ export const storage = {
 
     try {
       sessionStorage.removeItem(key);
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   clearSession: (): void => {
@@ -69,7 +79,9 @@ export const storage = {
 
     try {
       sessionStorage.clear();
-    } catch (error) { console.error(error); }
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 

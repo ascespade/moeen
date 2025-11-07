@@ -323,9 +323,11 @@ export default function Header() {
             <div className='hidden md:flex flex-1 max-w-xl ml-4'>
               <div className='relative w-full'>
                 <Search className='absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none' />
-                <input type='search'
+                <input
+                  type='search'
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)} aria-label="search" aria-invalid="true"
+                  onChange={e => setSearchQuery(e.target.value)}
+                  aria-invalid='true'
                   className='w-full h-10 pr-10 pl-4 border border-gray-200 dark:border-gray-700 rounded-lg text-sm text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 bg-gray-50 dark:bg-gray-800/50 focus:bg-white dark:focus:bg-gray-800 focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent transition-all'
                   placeholder={
                     t(I18N_KEYS.COMMON.SEARCH_PLACEHOLDER) || 'بحث...'
@@ -372,7 +374,7 @@ export default function Header() {
               <div className='relative' data-dropdown>
                 <button
                   onClick={() => setShowAIFeatures(!showAIFeatures)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowAIFeatures(!showAIFeatures);
@@ -414,7 +416,8 @@ export default function Header() {
                                 {t(I18N_KEYS.HEADER.CHATBOT) || 'المساعد معين'}
                               </div>
                               <div className='text-xs text-gray-500 dark:text-gray-400'>
-                                {t(I18N_KEYS.HEADER.CHATBOT_STATUS) || 'حالة المساعد'}
+                                {t(I18N_KEYS.HEADER.CHATBOT_STATUS) ||
+                                  'حالة المساعد'}
                               </div>
                             </div>
                           </div>
@@ -430,14 +433,14 @@ export default function Header() {
             <div className='relative' data-dropdown>
               <button
                 onClick={() => setShowNotifDropdown(!showNotifDropdown)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowNotifDropdown(!showNotifDropdown);
                   }
                 }}
                 className='relative h-10 w-10 rounded-lg border border-[var(--brand-border)] dark:border-gray-700 grid place-items-center text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] transition-colors'
-                aria-label="إشعارات"
+                aria-label='إشعارات'
                 aria-haspopup='menu'
                 aria-expanded={showNotifDropdown}
               >
@@ -461,8 +464,8 @@ export default function Header() {
                         </div>
                         {unreadCount > 0 && (
                           <div className='text-xs text-gray-500 dark:text-gray-400 mt-0.5'>
-                            {unreadCount} إشعار{unreadCount > 1 ? 'ات' : ''}{' '}
-                            غير مقروء
+                            {unreadCount} إشعار{unreadCount > 1 ? 'ات' : ''} غير
+                            مقروء
                           </div>
                         )}
                       </div>
@@ -480,7 +483,7 @@ export default function Header() {
                                       credentials: 'include',
                                     }).catch(() => {})
                                   )
-                                );
+                              );
                               // Refresh notifications
                               const response = await fetch(
                                 `/api/notifications/schedule?recipientId=${user?.id}&limit=5`,
@@ -527,104 +530,103 @@ export default function Header() {
                       </div>
                     ) : (
                       <div className='p-2'>
-                        {notifications
-                          .slice(0, 5)
-                          .map((notification: any) => {
-                            const isUnread =
-                              !notification.is_read && !notification.read;
-                            const createdDate =
-                              notification.created_at || notification.createdAt;
-                            const timeAgo = createdDate
-                              ? new Date(createdDate).toLocaleString('ar-SA', {
-                                  year: 'numeric',
-                                  month: 'short',
-                                  day: 'numeric',
-                                  hour: '2-digit',
-                                  minute: '2-digit',
-                                })
-                              : '';
+                        {notifications.slice(0, 5).map((notification: any) => {
+                          const isUnread =
+                            !notification.is_read && !notification.read;
+                          const createdDate =
+                            notification.created_at || notification.createdAt;
+                          const timeAgo = createdDate
+                            ? new Date(createdDate).toLocaleString('ar-SA', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })
+                            : '';
 
-                            return (
-                              <div
-                                key={notification.id}
-                                tabIndex={0} onClick={async () => {
-                                  if (isUnread) {
-                                    try {
-                                      // Try POST first
-                                      let markResponse = await fetch(
+                          return (
+                            <div
+                              key={notification.id}
+                              tabIndex={0}
+                              onClick={async () => {
+                                if (isUnread) {
+                                  try {
+                                    // Try POST first
+                                    let markResponse = await fetch(
+                                      `/api/notifications/${notification.id}/read`,
+                                      {
+                                        method: 'POST',
+                                        credentials: 'include',
+                                      }
+                                    );
+
+                                    // If POST fails, try PATCH
+                                    if (!markResponse.ok) {
+                                      markResponse = await fetch(
                                         `/api/notifications/${notification.id}/read`,
                                         {
-                                          method: 'POST',
+                                          method: 'PATCH',
                                           credentials: 'include',
                                         }
                                       );
+                                    }
 
-                                      // If POST fails, try PATCH
-                                      if (!markResponse.ok) {
-                                        markResponse = await fetch(
-                                          `/api/notifications/${notification.id}/read`,
-                                          {
-                                            method: 'PATCH',
-                                            credentials: 'include',
-                                          }
-                                        );
-                                      }
-
-                                      // Update local state if successful
-                                      if (markResponse.ok) {
-                                        setNotifications(
-                                          notifications.map((n: any) =>
-                                            n.id === notification.id
-                                              ? {
-                                                  ...n,
-                                                  is_read: true,
-                                                  status: 'read',
-                                                }
-                                              : n
-                                          )
-                                        );
-                                      }
-                                    } catch (error) {
-                                      console.error(
-                                        'Error marking notification as read:',
-                                        error
+                                    // Update local state if successful
+                                    if (markResponse.ok) {
+                                      setNotifications(
+                                        notifications.map((n: any) =>
+                                          n.id === notification.id
+                                            ? {
+                                                ...n,
+                                                is_read: true,
+                                                status: 'read',
+                                              }
+                                            : n
+                                        )
                                       );
                                     }
+                                  } catch (error) {
+                                    console.error(
+                                      'Error marking notification as read:',
+                                      error
+                                    );
                                   }
-                                }}
-                                className={`rounded-lg border p-3 mb-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer ${
-                                  isUnread
-                                    ? 'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10'
-                                    : 'border-gray-200 dark:border-gray-700'
-                                }`}
-                              >
-                                <div className='flex items-start gap-3'>
-                                  {isUnread && (
-                                    <div className='w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0'></div>
-                                  )}
-                                  <div className='flex-1 min-w-0'>
-                                    <div className='text-sm font-medium text-gray-900 dark:text-white'>
-                                      {notification.title ||
-                                        notification.message ||
-                                        'رسالة'}
-                                    </div>
-                                    {notification.message &&
-                                      notification.message !==
-                                        notification.title && (
-                                        <div className='text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2'>
-                                          {notification.message}
-                                        </div>
-                                      )}
-                                    {timeAgo && (
-                                      <div className='text-xs text-gray-500 dark:text-gray-500 mt-1'>
-                                        {timeAgo}
+                                }
+                              }}
+                              className={`rounded-lg border p-3 mb-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer ${
+                                isUnread
+                                  ? 'border-blue-200 dark:border-blue-800 bg-blue-50/50 dark:bg-blue-900/10'
+                                  : 'border-gray-200 dark:border-gray-700'
+                              }`}
+                            >
+                              <div className='flex items-start gap-3'>
+                                {isUnread && (
+                                  <div className='w-2 h-2 rounded-full bg-blue-500 mt-1.5 flex-shrink-0'></div>
+                                )}
+                                <div className='flex-1 min-w-0'>
+                                  <div className='text-sm font-medium text-gray-900 dark:text-white'>
+                                    {notification.title ||
+                                      notification.message ||
+                                      'رسالة'}
+                                  </div>
+                                  {notification.message &&
+                                    notification.message !==
+                                      notification.title && (
+                                      <div className='text-xs text-gray-600 dark:text-gray-400 mt-1 line-clamp-2'>
+                                        {notification.message}
                                       </div>
                                     )}
-                                  </div>
+                                  {timeAgo && (
+                                    <div className='text-xs text-gray-500 dark:text-gray-500 mt-1'>
+                                      {timeAgo}
+                                    </div>
+                                  )}
                                 </div>
                               </div>
-                            );
-                          })}
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
@@ -647,7 +649,7 @@ export default function Header() {
             <div className='relative' data-dropdown>
               <button
                 onClick={() => setShowUserDropdown(!showUserDropdown)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowUserDropdown(!showUserDropdown);
@@ -722,7 +724,7 @@ export default function Header() {
                   <div className='border-t border-gray-200 dark:border-gray-700 p-2'>
                     <button
                       onClick={handleLogout}
-                      onKeyDown={(e) => {
+                      onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
                           handleLogout();

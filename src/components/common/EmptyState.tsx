@@ -37,7 +37,7 @@ export default function EmptyState({
       {action && (
         <button
           onClick={action.onClick}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               action.onClick();

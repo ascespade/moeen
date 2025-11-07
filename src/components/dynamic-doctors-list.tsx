@@ -18,7 +18,7 @@ import {
   RefreshCw,
   Star,
   Stethoscope,
-  User
+  User,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -155,8 +155,8 @@ export default function DynamicDoctorsList({
   if (loading) {
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
         <div className={`flex items-center justify-center p-8 ${className}`}>
           <RefreshCw className='h-8 w-8 animate-spin' />
@@ -271,9 +271,9 @@ export default function DynamicDoctorsList({
                   {doctor.phone && (
                     <div className='flex items-center gap-2'>
                       <Phone className='h-4 w-4 text-muted-foreground' />
-                      <a 
+                      <a
                         href={`tel:${doctor.phone}`}
-                        className='text-sm text-default hover:underline' 
+                        className='text-sm text-default hover:underline'
                         aria-label={doctor.phone}
                       >
                         {doctor.phone}
@@ -284,9 +284,9 @@ export default function DynamicDoctorsList({
                   {doctor.email && (
                     <div className='flex items-center gap-2'>
                       <Mail className='h-4 w-4 text-muted-foreground' />
-                      <a 
+                      <a
                         href={`mailto:${doctor.email}`}
-                        className='text-sm text-default hover:underline' 
+                        className='text-sm text-default hover:underline'
                         aria-label={doctor.email}
                       >
                         {doctor.email}

@@ -1,12 +1,12 @@
 /**
  * Post Validation Schemas - Zod
  * مخططات التحقق من المنشورات - Zod
- * 
+ *
  * All post-related validation schemas
  */
 
 import { z } from 'zod';
-import { _MESSAGES } from '../constants/messages';
+import { MESSAGES } from '../constants/messages';
 
 // Create Post Schema
 export const createPostSchema = z.object({

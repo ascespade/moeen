@@ -1,7 +1,7 @@
 /**
  * Query Keys - React Query Keys
  * مفاتيح الاستعلام - مفاتيح React Query
- * 
+ *
  * Centralized query keys for React Query / SWR
  */
 

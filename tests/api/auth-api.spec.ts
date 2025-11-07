@@ -3,7 +3,9 @@ import { test, expect } from '@playwright/test';
 test.describe('Auth API Tests', () => {
   const baseURL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001';
 
-  test('POST /api/auth/custom-login should return success with valid credentials', async ({ request }) => {
+  test('POST /api/auth/custom-login should return success with valid credentials', async ({
+    request,
+  }) => {
     const response = await request.post(`${baseURL}/api/auth/custom-login`, {
       data: {
         email: 'admin@test.com',
@@ -20,7 +22,9 @@ test.describe('Auth API Tests', () => {
     expect(data.data.user.email).toBe('admin@test.com');
   });
 
-  test('POST /api/auth/custom-login should return error with invalid credentials', async ({ request }) => {
+  test('POST /api/auth/custom-login should return error with invalid credentials', async ({
+    request,
+  }) => {
     const response = await request.post(`${baseURL}/api/auth/custom-login`, {
       data: {
         email: 'invalid@test.com',
@@ -34,14 +38,19 @@ test.describe('Auth API Tests', () => {
     expect(data.error).toBeTruthy();
   });
 
-  test('POST /api/auth/verify should verify valid token', async ({ request }) => {
+  test('POST /api/auth/verify should verify valid token', async ({
+    request,
+  }) => {
     // First login to get token
-    const loginResponse = await request.post(`${baseURL}/api/auth/custom-login`, {
-      data: {
-        email: 'admin@test.com',
-        password: 'Admin123!',
-      },
-    });
+    const loginResponse = await request.post(
+      `${baseURL}/api/auth/custom-login`,
+      {
+        data: {
+          email: 'admin@test.com',
+          password: 'Admin123!',
+        },
+      }
+    );
 
     const loginData = await loginResponse.json();
     expect(loginData.success).toBe(true);
@@ -59,7 +68,9 @@ test.describe('Auth API Tests', () => {
     expect(verifyData.user.email).toBe('admin@test.com');
   });
 
-  test('POST /api/auth/verify should reject invalid token', async ({ request }) => {
+  test('POST /api/auth/verify should reject invalid token', async ({
+    request,
+  }) => {
     const response = await request.post(`${baseURL}/api/auth/verify`, {
       data: { token: 'invalid-token' },
     });

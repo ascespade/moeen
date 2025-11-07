@@ -87,13 +87,15 @@ const VisionMission = memo(function VisionMission() {
               icon: Trophy,
               title: 'الجودة والتميز',
               description: 'أعلى معايير الجودة الطبية',
-              bgColor: 'bg-gradient-to-br from-[var(--feature-quality-start)] to-[var(--feature-quality-end)]',
+              bgColor:
+                'bg-gradient-to-br from-[var(--feature-quality-start)] to-[var(--feature-quality-end)]',
             },
             {
               icon: Heart,
               title: 'الرعاية المتخصصة',
               description: 'فريق طبي متخصص ومؤهل',
-              bgColor: 'bg-gradient-to-br from-[var(--feature-care-start)] to-[var(--feature-care-end)]',
+              bgColor:
+                'bg-gradient-to-br from-[var(--feature-care-start)] to-[var(--feature-care-end)]',
             },
           ].map((value, index) => {
             const Icon = value.icon;

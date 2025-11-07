@@ -18,13 +18,15 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
     return (
       <div className='flex items-start space-x-3'>
         <div className='flex items-center h-5'>
-          <input type='checkbox'
+          <input
+            type='checkbox'
             className={cn(
               'w-4 h-4 text-default-default bg-surface border-gray-300 rounded focus:ring-default-default dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600',
               className
             )}
             ref={ref}
-            onChange={(e) => onCheckedChange?.(e.target.checked)} aria-label="checkbox"
+            onChange={e => onCheckedChange?.(e.target.checked)}
+            aria-label='checkbox'
             {...props}
           />
         </div>

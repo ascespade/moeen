@@ -1,7 +1,7 @@
 /**
  * Shadow System - Extracted from Homepage Design
  * نظام الظلال - مستخرج من تصميم الصفحة الرئيسية
- * 
+ *
  * Source: src/styles/centralized.css
  * Reference: src/components/ui/Card.tsx
  */

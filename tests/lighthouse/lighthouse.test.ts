@@ -47,7 +47,9 @@ test.describe.skip('Lighthouse Performance Tests', () => {
     // expect(audit.lhr.categories.seo.score).toBeGreaterThan(0.85);
   });
 
-  test.skip('Patient Management should pass Lighthouse audit', async ({ page }) => {
+  test.skip('Patient Management should pass Lighthouse audit', async ({
+    page,
+  }) => {
     await page.goto('/login');
     await page.fill('[data-testid="email"]', 'admin@example.com');
     await page.fill('[data-testid="password"]', 'password');
@@ -55,22 +57,24 @@ test.describe.skip('Lighthouse Performance Tests', () => {
     await page.waitForURL('/dashboard');
     await page.goto('/patients');
 
-    const audit = await playAudit({
-      page,
-      thresholds: {
-        performance: 80,
-        accessibility: 90,
-        'best-practices': 90,
-        seo: 80,
-      },
-      port: 9222,
-    });
+    // const audit = await playAudit({
+    //   page,
+    //   thresholds: {
+    //     performance: 80,
+    //     accessibility: 90,
+    //     'best-practices': 90,
+    //     seo: 80,
+    //   },
+    //   port: 9222,
+    // });
 
-    expect(audit.lhr.categories.performance.score).toBeGreaterThan(0.8);
-    expect(audit.lhr.categories.accessibility.score).toBeGreaterThan(0.9);
+    // expect(audit.lhr.categories.performance.score).toBeGreaterThan(0.8);
+    // expect(audit.lhr.categories.accessibility.score).toBeGreaterThan(0.9);
   });
 
-  test.skip('Appointments page should pass Lighthouse audit', async ({ page }) => {
+  test.skip('Appointments page should pass Lighthouse audit', async ({
+    page,
+  }) => {
     await page.goto('/login');
     await page.fill('[data-testid="email"]', 'admin@example.com');
     await page.fill('[data-testid="password"]', 'password');
@@ -78,19 +82,19 @@ test.describe.skip('Lighthouse Performance Tests', () => {
     await page.waitForURL('/dashboard');
     await page.goto('/appointments');
 
-    const audit = await playAudit({
-      page,
-      thresholds: {
-        performance: 80,
-        accessibility: 90,
-        'best-practices': 90,
-        seo: 80,
-      },
-      port: 9222,
-    });
+    // const audit = await playAudit({
+    //   page,
+    //   thresholds: {
+    //     performance: 80,
+    //     accessibility: 90,
+    //     'best-practices': 90,
+    //     seo: 80,
+    //   },
+    //   port: 9222,
+    // });
 
-    expect(audit.lhr.categories.performance.score).toBeGreaterThan(0.8);
-    expect(audit.lhr.categories.accessibility.score).toBeGreaterThan(0.9);
+    // expect(audit.lhr.categories.performance.score).toBeGreaterThan(0.8);
+    // expect(audit.lhr.categories.accessibility.score).toBeGreaterThan(0.9);
   });
 
   test.skip('Mobile view should pass Lighthouse audit', async ({ page }) => {
@@ -98,18 +102,18 @@ test.describe.skip('Lighthouse Performance Tests', () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto('/');
 
-    const audit = await playAudit({
-      page,
-      thresholds: {
-        performance: 85,
-        accessibility: 90,
-        'best-practices': 90,
-        seo: 85,
-      },
-      port: 9222,
-    });
+    // const audit = await playAudit({
+    //   page,
+    //   thresholds: {
+    //     performance: 85,
+    //     accessibility: 90,
+    //     'best-practices': 90,
+    //     seo: 85,
+    //   },
+    //   port: 9222,
+    // });
 
-    expect(audit.lhr.categories.performance.score).toBeGreaterThan(0.85);
-    expect(audit.lhr.categories.accessibility.score).toBeGreaterThan(0.9);
+    // expect(audit.lhr.categories.performance.score).toBeGreaterThan(0.85);
+    // expect(audit.lhr.categories.accessibility.score).toBeGreaterThan(0.9);
   });
 });

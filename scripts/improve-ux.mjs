@@ -29,7 +29,11 @@ for (const file of pageFiles.slice(0, 20)) {
     let modified = false;
 
     // Add loading state if using useState and fetching
-    if (content.includes('useState') && content.includes('fetch') && !content.includes('loading')) {
+    if (
+      content.includes('useState') &&
+      content.includes('fetch') &&
+      !content.includes('loading')
+    ) {
       // Add loading state
       const useStatePattern = /const \[(\w+), set\w+\] = useState/;
       const match = content.match(useStatePattern);

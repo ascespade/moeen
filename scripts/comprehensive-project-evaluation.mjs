@@ -3,7 +3,7 @@
 /**
  * Comprehensive Project Evaluation
  * ????? ???? ???????
- * 
+ *
  * Evaluates:
  * - Structure
  * - Organization
@@ -83,7 +83,9 @@ try {
 
   // Check for separation of concerns
   const hasApiRoutes = existsSync(join(appDir, 'api'));
-  const hasPages = existsSync(join(appDir, '(admin)')) || existsSync(join(appDir, '(patient)'));
+  const hasPages =
+    existsSync(join(appDir, '(admin)')) ||
+    existsSync(join(appDir, '(patient)'));
   const hasLayouts = glob.sync('**/layout.tsx', { cwd: appDir }).length > 0;
 
   if (hasApiRoutes) {
@@ -102,11 +104,23 @@ try {
   } else issues.push('Missing layout files');
 
   // Check for config files
-  const configFiles = ['package.json', 'tsconfig.json', 'next.config.js', 'tailwind.config.js'];
-  const existingConfigs = configFiles.filter(f => existsSync(join(projectRoot, f))).length;
+  const configFiles = [
+    'package.json',
+    'tsconfig.json',
+    'next.config.js',
+    'tailwind.config.js',
+  ];
+  const existingConfigs = configFiles.filter(f =>
+    existsSync(join(projectRoot, f))
+  ).length;
   structureScore += (existingConfigs / configFiles.length) * 20;
 
-  evaluation.structure = { score: structureScore, maxScore: 100, issues, strengths };
+  evaluation.structure = {
+    score: structureScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${structureScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -122,15 +136,24 @@ try {
   // Check for organized directories
   const organizedDirs = ['components', 'lib', 'hooks', 'utils', 'constants'];
   const srcFiles = readdirSync(join(projectRoot, 'src'));
-  const hasOrganizedDirs = organizedDirs.filter(d => srcFiles.includes(d) || glob.sync(`**/${d}/**`, { cwd: join(projectRoot, 'src') }).length > 0).length;
+  const hasOrganizedDirs = organizedDirs.filter(
+    d =>
+      srcFiles.includes(d) ||
+      glob.sync(`**/${d}/**`, { cwd: join(projectRoot, 'src') }).length > 0
+  ).length;
   orgScore += (hasOrganizedDirs / organizedDirs.length) * 30;
-  if (hasOrganizedDirs === organizedDirs.length) strengths.push('Well-organized directory structure');
+  if (hasOrganizedDirs === organizedDirs.length)
+    strengths.push('Well-organized directory structure');
   else issues.push('Some directories could be better organized');
 
   // Check for duplicate files
-  const allFiles = glob.sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') });
+  const allFiles = glob.sync('**/*.{ts,tsx}', {
+    cwd: join(projectRoot, 'src'),
+  });
   const fileNames = allFiles.map(f => f.split('/').pop());
-  const duplicates = fileNames.filter((name, idx) => fileNames.indexOf(name) !== idx);
+  const duplicates = fileNames.filter(
+    (name, idx) => fileNames.indexOf(name) !== idx
+  );
   if (duplicates.length === 0) {
     orgScore += 20;
     strengths.push('No duplicate files');
@@ -146,23 +169,38 @@ try {
 
   // Check for documentation
   const docsFiles = glob.sync('*.md', { cwd: projectRoot });
-  const essentialDocs = ['README.md', 'WORKFLOWS_DOCUMENTATION.md', 'ACCOUNTS_TYPES_AND_PERMISSIONS.md'];
-  const hasEssentialDocs = essentialDocs.filter(d => docsFiles.includes(d)).length;
+  const essentialDocs = [
+    'README.md',
+    'WORKFLOWS_DOCUMENTATION.md',
+    'ACCOUNTS_TYPES_AND_PERMISSIONS.md',
+  ];
+  const hasEssentialDocs = essentialDocs.filter(d =>
+    docsFiles.includes(d)
+  ).length;
   orgScore += (hasEssentialDocs / essentialDocs.length) * 20;
-  if (hasEssentialDocs === essentialDocs.length) strengths.push('Essential documentation present');
+  if (hasEssentialDocs === essentialDocs.length)
+    strengths.push('Essential documentation present');
   else issues.push('Some documentation missing');
 
   // Check .gitignore
   if (existsSync(join(projectRoot, '.gitignore'))) {
     const gitignore = readFileSync(join(projectRoot, '.gitignore'), 'utf-8');
     const requiredIgnores = ['node_modules', '.next', 'test-results'];
-    const hasRequired = requiredIgnores.filter(r => gitignore.includes(r)).length;
+    const hasRequired = requiredIgnores.filter(r =>
+      gitignore.includes(r)
+    ).length;
     orgScore += (hasRequired / requiredIgnores.length) * 15;
-    if (hasRequired === requiredIgnores.length) strengths.push('.gitignore properly configured');
+    if (hasRequired === requiredIgnores.length)
+      strengths.push('.gitignore properly configured');
     else issues.push('.gitignore missing some entries');
   }
 
-  evaluation.organization = { score: orgScore, maxScore: 100, issues, strengths };
+  evaluation.organization = {
+    score: orgScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${orgScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -176,9 +214,15 @@ try {
   const strengths = [];
 
   // Check for TypeScript usage
-  const tsFiles = glob.sync('**/*.ts', { cwd: join(projectRoot, 'src') }).length;
-  const tsxFiles = glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src') }).length;
-  const jsFiles = glob.sync('**/*.js', { cwd: join(projectRoot, 'src') }).length;
+  const tsFiles = glob.sync('**/*.ts', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
+  const tsxFiles = glob.sync('**/*.tsx', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
+  const jsFiles = glob.sync('**/*.js', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   const totalFiles = tsFiles + tsxFiles + jsFiles;
   const tsRatio = (tsFiles + tsxFiles) / totalFiles;
   cleanScore += tsRatio * 25;
@@ -186,7 +230,8 @@ try {
   else issues.push(`Only ${(tsRatio * 100).toFixed(1)}% TypeScript usage`);
 
   // Check for any types
-  const anyUsage = glob.sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
+  const anyUsage = glob
+    .sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
     .filter(content => /:\s*any\b/.test(content)).length;
   const totalTsFiles = tsFiles + tsxFiles;
@@ -196,7 +241,8 @@ try {
   else issues.push(`${(anyRatio * 100).toFixed(1)}% of files use any type`);
 
   // Check for error handling
-  const filesWithTryCatch = glob.sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
+  const filesWithTryCatch = glob
+    .sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
     .filter(content => /try\s*\{/.test(content)).length;
   const tryCatchRatio = filesWithTryCatch / totalTsFiles;
@@ -205,15 +251,20 @@ try {
   else issues.push('Low error handling coverage');
 
   // Check for consistent naming
-  const componentFiles = glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') });
-  const pascalCaseFiles = componentFiles.filter(f => /^[A-Z]/.test(f.split('/').pop() || '')).length;
+  const componentFiles = glob.sync('**/*.tsx', {
+    cwd: join(projectRoot, 'src/components'),
+  });
+  const pascalCaseFiles = componentFiles.filter(f =>
+    /^[A-Z]/.test(f.split('/').pop() || '')
+  ).length;
   const namingRatio = pascalCaseFiles / componentFiles.length;
   cleanScore += namingRatio * 15;
   if (namingRatio > 0.9) strengths.push('Consistent naming conventions');
-  else issues.push('Some files don\'t follow naming conventions');
+  else issues.push("Some files don't follow naming conventions");
 
   // Check for comments
-  const filesWithComments = glob.sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
+  const filesWithComments = glob
+    .sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
     .slice(0, 50) // Sample
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
     .filter(content => /\/\//.test(content) || /\/\*/.test(content)).length;
@@ -222,7 +273,12 @@ try {
   if (commentRatio > 0.3) strengths.push('Good code documentation');
   else issues.push('Low code documentation');
 
-  evaluation.cleanCode = { score: cleanScore, maxScore: 100, issues, strengths };
+  evaluation.cleanCode = {
+    score: cleanScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${cleanScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -236,7 +292,9 @@ try {
   const strengths = [];
 
   // Check for centralized styles
-  const centralizedStyles = glob.sync('**/centralized.css', { cwd: projectRoot }).length;
+  const centralizedStyles = glob.sync('**/centralized.css', {
+    cwd: projectRoot,
+  }).length;
   if (centralizedStyles > 0) {
     centralScore += 25;
     strengths.push('Centralized CSS variables');
@@ -244,33 +302,47 @@ try {
 
   // Check for utility files
   const utilityDirs = ['lib', 'utils', 'helpers'];
-  const hasUtils = utilityDirs.filter(d => glob.sync(`**/${d}/**/*.ts`, { cwd: join(projectRoot, 'src') }).length > 0).length;
+  const hasUtils = utilityDirs.filter(
+    d =>
+      glob.sync(`**/${d}/**/*.ts`, { cwd: join(projectRoot, 'src') }).length > 0
+  ).length;
   centralScore += (hasUtils / utilityDirs.length) * 25;
   if (hasUtils === utilityDirs.length) strengths.push('Centralized utilities');
   else issues.push('Some utilities not centralized');
 
   // Check for constants file
-  const constantsFiles = glob.sync('**/constants/**/*.ts', { cwd: join(projectRoot, 'src') }).length;
+  const constantsFiles = glob.sync('**/constants/**/*.ts', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (constantsFiles > 0) {
     centralScore += 15;
     strengths.push('Centralized constants');
   } else issues.push('No constants directory');
 
   // Check for permissions system
-  const permissionsFile = glob.sync('**/permissions.ts', { cwd: join(projectRoot, 'src') }).length;
+  const permissionsFile = glob.sync('**/permissions.ts', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (permissionsFile > 0) {
     centralScore += 20;
     strengths.push('Centralized permissions system');
   } else issues.push('No centralized permissions');
 
   // Check for workflows system
-  const workflowsFile = glob.sync('**/workflows/**/*.ts', { cwd: join(projectRoot, 'src') }).length;
+  const workflowsFile = glob.sync('**/workflows/**/*.ts', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (workflowsFile > 0) {
     centralScore += 15;
     strengths.push('Centralized workflows');
   } else issues.push('No centralized workflows');
 
-  evaluation.centralization = { score: centralScore, maxScore: 100, issues, strengths };
+  evaluation.centralization = {
+    score: centralScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${centralScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -284,7 +356,9 @@ try {
   const strengths = [];
 
   // Check for aria-labels
-  const componentFiles = glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') }).slice(0, 30);
+  const componentFiles = glob
+    .sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') })
+    .slice(0, 30);
   const filesWithAria = componentFiles
     .map(f => readFileSync(join(projectRoot, 'src/components', f), 'utf-8'))
     .filter(content => /aria-label/.test(content)).length;
@@ -308,7 +382,9 @@ try {
   // Check for semantic HTML
   const filesWithSemantic = componentFiles
     .map(f => readFileSync(join(projectRoot, 'src/components', f), 'utf-8'))
-    .filter(content => /<nav|main|header|footer|article|section/.test(content)).length;
+    .filter(content =>
+      /<nav|main|header|footer|article|section/.test(content)
+    ).length;
   const semanticRatio = filesWithSemantic / componentFiles.length;
   a11yScore += semanticRatio * 25;
   if (semanticRatio > 0.3) strengths.push('Good semantic HTML usage');
@@ -323,7 +399,12 @@ try {
   if (keyboardRatio > 0.2) strengths.push('Keyboard navigation support');
   else issues.push('Limited keyboard navigation');
 
-  evaluation.accessibility = { score: a11yScore, maxScore: 100, issues, strengths };
+  evaluation.accessibility = {
+    score: a11yScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${a11yScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -337,7 +418,8 @@ try {
   const strengths = [];
 
   // Check for loading states
-  const filesWithLoading = glob.sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
+  const filesWithLoading = glob
+    .sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
     .slice(0, 50)
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
     .filter(content => /loading|isLoading|isPending/.test(content)).length;
@@ -347,7 +429,8 @@ try {
   else issues.push('Limited loading states');
 
   // Check for error states
-  const filesWithError = glob.sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
+  const filesWithError = glob
+    .sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
     .slice(0, 50)
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
     .filter(content => /error|Error|catch/.test(content)).length;
@@ -357,7 +440,8 @@ try {
   else issues.push('Limited error handling');
 
   // Check for responsive design
-  const filesWithResponsive = glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src/app') })
+  const filesWithResponsive = glob
+    .sync('**/*.tsx', { cwd: join(projectRoot, 'src/app') })
     .slice(0, 30)
     .map(f => readFileSync(join(projectRoot, 'src/app', f), 'utf-8'))
     .filter(content => /md:|lg:|xl:|sm:/.test(content)).length;
@@ -367,7 +451,8 @@ try {
   else issues.push('Limited responsive design');
 
   // Check for user feedback
-  const filesWithFeedback = glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') })
+  const filesWithFeedback = glob
+    .sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') })
     .slice(0, 30)
     .map(f => readFileSync(join(projectRoot, 'src/components', f), 'utf-8'))
     .filter(content => /toast|notification|message|alert/.test(content)).length;
@@ -390,14 +475,17 @@ try {
   const strengths = [];
 
   // Check for design system
-  const designSystemFiles = glob.sync('**/*design*.{ts,tsx,css}', { cwd: projectRoot }).length;
+  const designSystemFiles = glob.sync('**/*design*.{ts,tsx,css}', {
+    cwd: projectRoot,
+  }).length;
   if (designSystemFiles > 0) {
     designScore += 20;
     strengths.push('Design system files present');
   } else issues.push('No design system files');
 
   // Check for consistent color usage
-  const filesWithColors = glob.sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
+  const filesWithColors = glob
+    .sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
     .slice(0, 50)
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
     .filter(content => /var\(--|--brand-|--text-/.test(content)).length;
@@ -407,14 +495,17 @@ try {
   else issues.push('Inconsistent color usage');
 
   // Check for theme support
-  const themeFiles = glob.sync('**/*theme*.{ts,tsx}', { cwd: join(projectRoot, 'src') }).length;
+  const themeFiles = glob.sync('**/*theme*.{ts,tsx}', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (themeFiles > 0) {
     designScore += 25;
     strengths.push('Theme system present');
   } else issues.push('No theme system');
 
   // Check for consistent spacing
-  const filesWithSpacing = glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') })
+  const filesWithSpacing = glob
+    .sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') })
     .slice(0, 30)
     .map(f => readFileSync(join(projectRoot, 'src/components', f), 'utf-8'))
     .filter(content => /p-|m-|gap-|space-/.test(content)).length;
@@ -437,44 +528,61 @@ try {
   const strengths = [];
 
   // Check for authentication
-  const authFiles = glob.sync('**/*auth*.{ts,tsx}', { cwd: join(projectRoot, 'src') }).length;
+  const authFiles = glob.sync('**/*auth*.{ts,tsx}', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (authFiles > 0) {
     securityScore += 20;
     strengths.push('Authentication system present');
   } else issues.push('No authentication system');
 
   // Check for authorization
-  const authzFiles = glob.sync('**/*authorize*.{ts,tsx}', { cwd: join(projectRoot, 'src') }).length;
+  const authzFiles = glob.sync('**/*authorize*.{ts,tsx}', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (authzFiles > 0) {
     securityScore += 20;
     strengths.push('Authorization system present');
   } else issues.push('No authorization system');
 
   // Check for input validation
-  const validationFiles = glob.sync('**/*validation*.{ts,tsx}', { cwd: join(projectRoot, 'src') }).length;
+  const validationFiles = glob.sync('**/*validation*.{ts,tsx}', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (validationFiles > 0) {
     securityScore += 15;
     strengths.push('Input validation system');
   } else issues.push('No validation system');
 
   // Check for protected routes
-  const protectedRouteFiles = glob.sync('**/*Protected*.{ts,tsx}', { cwd: join(projectRoot, 'src') }).length;
+  const protectedRouteFiles = glob.sync('**/*Protected*.{ts,tsx}', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (protectedRouteFiles > 0) {
     securityScore += 15;
     strengths.push('Protected route components');
   } else issues.push('No protected route components');
 
   // Check for API security
-  const apiFiles = glob.sync('**/api/**/*.ts', { cwd: join(projectRoot, 'src') }).slice(0, 30);
+  const apiFiles = glob
+    .sync('**/api/**/*.ts', { cwd: join(projectRoot, 'src') })
+    .slice(0, 30);
   const securedApis = apiFiles
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
-    .filter(content => /requireAuth|authorize|requireRole/.test(content)).length;
+    .filter(content =>
+      /requireAuth|authorize|requireRole/.test(content)
+    ).length;
   const apiSecurityRatio = securedApis / apiFiles.length;
   securityScore += apiSecurityRatio * 30;
   if (apiSecurityRatio > 0.7) strengths.push('Most APIs are secured');
   else issues.push('Some APIs not secured');
 
-  evaluation.security = { score: securityScore, maxScore: 100, issues, strengths };
+  evaluation.security = {
+    score: securityScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${securityScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -488,11 +596,15 @@ try {
   const strengths = [];
 
   // Check for modular structure
-  const componentFiles = glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') }).length;
-  const avgFileSize = glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') })
-    .slice(0, 20)
-    .map(f => statSync(join(projectRoot, 'src/components', f)).size)
-    .reduce((a, b) => a + b, 0) / 20;
+  const componentFiles = glob.sync('**/*.tsx', {
+    cwd: join(projectRoot, 'src/components'),
+  }).length;
+  const avgFileSize =
+    glob
+      .sync('**/*.tsx', { cwd: join(projectRoot, 'src/components') })
+      .slice(0, 20)
+      .map(f => statSync(join(projectRoot, 'src/components', f)).size)
+      .reduce((a, b) => a + b, 0) / 20;
   const isModular = avgFileSize < 10000; // Less than 10KB average
   maintainScore += isModular ? 25 : 10;
   if (isModular) strengths.push('Modular component structure');
@@ -505,20 +617,30 @@ try {
   else issues.push('Limited documentation');
 
   // Check for type safety
-  const tsFiles = glob.sync('**/*.ts', { cwd: join(projectRoot, 'src') }).length;
-  const totalFiles = tsFiles + glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src') }).length;
+  const tsFiles = glob.sync('**/*.ts', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
+  const totalFiles =
+    tsFiles + glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src') }).length;
   const tsRatio = tsFiles / totalFiles;
   maintainScore += tsRatio * 25;
   if (tsRatio > 0.3) strengths.push('Good TypeScript usage');
   else issues.push('Limited TypeScript');
 
   // Check for test files
-  const testFiles = glob.sync('**/*.{test,spec}.{ts,tsx}', { cwd: join(projectRoot, 'src') }).length;
+  const testFiles = glob.sync('**/*.{test,spec}.{ts,tsx}', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   maintainScore += Math.min(testFiles * 2, 25);
   if (testFiles > 5) strengths.push('Test files present');
   else issues.push('Limited test coverage');
 
-  evaluation.maintainability = { score: maintainScore, maxScore: 100, issues, strengths };
+  evaluation.maintainability = {
+    score: maintainScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${maintainScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -532,17 +654,23 @@ try {
   const strengths = [];
 
   // Check for try-catch blocks
-  const apiFiles = glob.sync('**/api/**/*.ts', { cwd: join(projectRoot, 'src') }).slice(0, 30);
+  const apiFiles = glob
+    .sync('**/api/**/*.ts', { cwd: join(projectRoot, 'src') })
+    .slice(0, 30);
   const filesWithTryCatch = apiFiles
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
-    .filter(content => /try\s*\{/.test(content) && /catch/.test(content)).length;
+    .filter(
+      content => /try\s*\{/.test(content) && /catch/.test(content)
+    ).length;
   const tryCatchRatio = filesWithTryCatch / apiFiles.length;
   errorHandlingScore += tryCatchRatio * 30;
   if (tryCatchRatio > 0.8) strengths.push('Excellent error handling');
   else issues.push('Some files missing error handling');
 
   // Check for error boundaries
-  const errorBoundaryFiles = glob.sync('**/*ErrorBoundary*.{ts,tsx}', { cwd: join(projectRoot, 'src') }).length;
+  const errorBoundaryFiles = glob.sync('**/*ErrorBoundary*.{ts,tsx}', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (errorBoundaryFiles > 0) {
     errorHandlingScore += 20;
     strengths.push('Error boundaries present');
@@ -551,7 +679,9 @@ try {
   // Check for error logging
   const filesWithLogging = apiFiles
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
-    .filter(content => /console\.error|logger\.error|log\.error/.test(content)).length;
+    .filter(content =>
+      /console\.error|logger\.error|log\.error/.test(content)
+    ).length;
   const loggingRatio = filesWithLogging / apiFiles.length;
   errorHandlingScore += loggingRatio * 25;
   if (loggingRatio > 0.6) strengths.push('Good error logging');
@@ -560,13 +690,20 @@ try {
   // Check for user-friendly error messages
   const filesWithUserErrors = apiFiles
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
-    .filter(content => /error.*message|error.*user|Unauthorized|Forbidden/.test(content)).length;
+    .filter(content =>
+      /error.*message|error.*user|Unauthorized|Forbidden/.test(content)
+    ).length;
   const userErrorRatio = filesWithUserErrors / apiFiles.length;
   errorHandlingScore += userErrorRatio * 25;
   if (userErrorRatio > 0.7) strengths.push('User-friendly error messages');
   else issues.push('Some errors not user-friendly');
 
-  evaluation.errorHandling = { score: errorHandlingScore, maxScore: 100, issues, strengths };
+  evaluation.errorHandling = {
+    score: errorHandlingScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${errorHandlingScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -580,7 +717,8 @@ try {
   const strengths = [];
 
   // Check for code splitting
-  const hasDynamicImports = glob.sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
+  const hasDynamicImports = glob
+    .sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
     .slice(0, 30)
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
     .filter(content => /dynamic|import\(/.test(content)).length;
@@ -590,7 +728,8 @@ try {
   else issues.push('Limited code splitting');
 
   // Check for image optimization
-  const hasNextImage = glob.sync('**/*.tsx', { cwd: join(projectRoot, 'src/app') })
+  const hasNextImage = glob
+    .sync('**/*.tsx', { cwd: join(projectRoot, 'src/app') })
     .slice(0, 20)
     .map(f => readFileSync(join(projectRoot, 'src/app', f), 'utf-8'))
     .filter(content => /next\/image|Image/.test(content)).length;
@@ -600,7 +739,8 @@ try {
   else issues.push('Limited image optimization');
 
   // Check for caching
-  const hasCaching = glob.sync('**/api/**/*.ts', { cwd: join(projectRoot, 'src') })
+  const hasCaching = glob
+    .sync('**/api/**/*.ts', { cwd: join(projectRoot, 'src') })
     .slice(0, 20)
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
     .filter(content => /Cache-Control|revalidate|cache/.test(content)).length;
@@ -610,7 +750,8 @@ try {
   else issues.push('Limited caching');
 
   // Check for database optimization
-  const hasIndexing = glob.sync('**/*.{sql,mjs}', { cwd: join(projectRoot, 'scripts') })
+  const hasIndexing = glob
+    .sync('**/*.{sql,mjs}', { cwd: join(projectRoot, 'scripts') })
     .slice(0, 10)
     .map(f => readFileSync(join(projectRoot, 'scripts', f), 'utf-8'))
     .filter(content => /CREATE INDEX|index/.test(content)).length;
@@ -620,7 +761,8 @@ try {
   } else issues.push('No database indexing');
 
   // Check for lazy loading
-  const hasLazy = glob.sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
+  const hasLazy = glob
+    .sync('**/*.{ts,tsx}', { cwd: join(projectRoot, 'src') })
     .slice(0, 30)
     .map(f => readFileSync(join(projectRoot, 'src', f), 'utf-8'))
     .filter(content => /lazy|Suspense/.test(content)).length;
@@ -629,7 +771,12 @@ try {
   if (lazyRatio > 0.1) strengths.push('Lazy loading components');
   else issues.push('Limited lazy loading');
 
-  evaluation.performance = { score: perfScore, maxScore: 100, issues, strengths };
+  evaluation.performance = {
+    score: perfScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${perfScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -645,7 +792,11 @@ try {
   // Check build time (if available)
   try {
     const buildStart = Date.now();
-    execSync('npm run build', { cwd: projectRoot, stdio: 'pipe', timeout: 300000 });
+    execSync('npm run build', {
+      cwd: projectRoot,
+      stdio: 'pipe',
+      timeout: 300000,
+    });
     const buildTime = (Date.now() - buildStart) / 1000; // seconds
     if (buildTime < 120) {
       speedScore += 30;
@@ -662,14 +813,18 @@ try {
   }
 
   // Check for optimized imports
-  const hasBarrelExports = glob.sync('**/index.ts', { cwd: join(projectRoot, 'src') }).length;
+  const hasBarrelExports = glob.sync('**/index.ts', {
+    cwd: join(projectRoot, 'src'),
+  }).length;
   if (hasBarrelExports > 5) {
     speedScore += 20;
     strengths.push('Barrel exports for faster imports');
   } else issues.push('Limited barrel exports');
 
   // Check for minimal dependencies
-  const packageJson = JSON.parse(readFileSync(join(projectRoot, 'package.json'), 'utf-8'));
+  const packageJson = JSON.parse(
+    readFileSync(join(projectRoot, 'package.json'), 'utf-8')
+  );
   const depCount = Object.keys(packageJson.dependencies || {}).length;
   const devDepCount = Object.keys(packageJson.devDependencies || {}).length;
   const totalDeps = depCount + devDepCount;
@@ -686,7 +841,10 @@ try {
   // Check for production optimizations
   const hasProdConfig = existsSync(join(projectRoot, 'next.config.js'));
   if (hasProdConfig) {
-    const nextConfig = readFileSync(join(projectRoot, 'next.config.js'), 'utf-8');
+    const nextConfig = readFileSync(
+      join(projectRoot, 'next.config.js'),
+      'utf-8'
+    );
     if (/compress|optimize|swcMinify/.test(nextConfig)) {
       speedScore += 25;
       strengths.push('Production optimizations enabled');
@@ -708,23 +866,37 @@ try {
 
   // Key Selling Points
   const features = [
-    'workflow', 'permissions', 'insurance', 'chatbot', 'appointments',
-    'payments', 'reports', 'analytics', 'notifications', 'multi-role'
+    'workflow',
+    'permissions',
+    'insurance',
+    'chatbot',
+    'appointments',
+    'payments',
+    'reports',
+    'analytics',
+    'notifications',
+    'multi-role',
   ];
-  
-  const featureFiles = features.map(f => 
-    glob.sync(`**/*${f}*`, { cwd: join(projectRoot, 'src') }).length
+
+  const featureFiles = features.map(
+    f => glob.sync(`**/*${f}*`, { cwd: join(projectRoot, 'src') }).length
   );
   const hasFeatures = featureFiles.filter(count => count > 0).length;
   marketScore += (hasFeatures / features.length) * 40;
-  if (hasFeatures === features.length) strengths.push('All key features present');
+  if (hasFeatures === features.length)
+    strengths.push('All key features present');
   else issues.push(`Missing ${features.length - hasFeatures} key features`);
 
   // Modern tech stack
   const modernStack = ['next', 'react', 'typescript', 'tailwind', 'supabase'];
-  const packageJson = JSON.parse(readFileSync(join(projectRoot, 'package.json'), 'utf-8'));
-  const allDeps = { ...packageJson.dependencies, ...packageJson.devDependencies };
-  const hasModern = modernStack.filter(tech => 
+  const packageJson = JSON.parse(
+    readFileSync(join(projectRoot, 'package.json'), 'utf-8')
+  );
+  const allDeps = {
+    ...packageJson.dependencies,
+    ...packageJson.devDependencies,
+  };
+  const hasModern = modernStack.filter(tech =>
     Object.keys(allDeps).some(dep => dep.toLowerCase().includes(tech))
   ).length;
   marketScore += (hasModern / modernStack.length) * 30;
@@ -732,14 +904,22 @@ try {
   else issues.push('Some modern technologies missing');
 
   // Scalability indicators
-  const hasModular = glob.sync('**/components/**', { cwd: join(projectRoot, 'src') }).length > 50;
-  const hasApi = glob.sync('**/api/**', { cwd: join(projectRoot, 'src/app') }).length > 50;
+  const hasModular =
+    glob.sync('**/components/**', { cwd: join(projectRoot, 'src') }).length >
+    50;
+  const hasApi =
+    glob.sync('**/api/**', { cwd: join(projectRoot, 'src/app') }).length > 50;
   if (hasModular && hasApi) {
     marketScore += 30;
     strengths.push('Scalable architecture');
   } else issues.push('Architecture scalability concerns');
 
-  evaluation.marketCompetition = { score: marketScore, maxScore: 100, issues, strengths };
+  evaluation.marketCompetition = {
+    score: marketScore,
+    maxScore: 100,
+    issues,
+    strengths,
+  };
   console.log(`   Score: ${marketScore}/100\n`);
 } catch (error) {
   console.log(`   Error: ${error.message}\n`);
@@ -768,23 +948,37 @@ const categories = [
 
 categories.forEach(cat => {
   const evalData = evaluation[cat.key];
-  const percentage = (evalData.score / evalData.maxScore * 100).toFixed(1);
+  const percentage = ((evalData.score / evalData.maxScore) * 100).toFixed(1);
   const status = percentage >= 80 ? '?' : percentage >= 60 ? '??' : '?';
-  console.log(`${status} ${cat.name}: ${percentage}% (${evalData.score}/${evalData.maxScore})`);
+  console.log(
+    `${status} ${cat.name}: ${percentage}% (${evalData.score}/${evalData.maxScore})`
+  );
 });
 
-const totalScore = categories.reduce((sum, cat) => sum + evaluation[cat.key].score, 0);
-const maxTotalScore = categories.reduce((sum, cat) => sum + evaluation[cat.key].maxScore, 0);
-const overallPercentage = (totalScore / maxTotalScore * 100).toFixed(1);
+const totalScore = categories.reduce(
+  (sum, cat) => sum + evaluation[cat.key].score,
+  0
+);
+const maxTotalScore = categories.reduce(
+  (sum, cat) => sum + evaluation[cat.key].maxScore,
+  0
+);
+const overallPercentage = ((totalScore / maxTotalScore) * 100).toFixed(1);
 
-console.log(`\n?? Overall Score: ${overallPercentage}% (${totalScore}/${maxTotalScore})`);
+console.log(
+  `\n?? Overall Score: ${overallPercentage}% (${totalScore}/${maxTotalScore})`
+);
 console.log('='.repeat(70) + '\n');
 
 // Save report
 import { writeFileSync } from 'fs';
 writeFileSync(
   join(projectRoot, 'COMPREHENSIVE_EVALUATION_REPORT.json'),
-  JSON.stringify({ evaluation, overallPercentage, timestamp: new Date().toISOString() }, null, 2)
+  JSON.stringify(
+    { evaluation, overallPercentage, timestamp: new Date().toISOString() },
+    null,
+    2
+  )
 );
 
 console.log('?? Report saved to: COMPREHENSIVE_EVALUATION_REPORT.json\n');

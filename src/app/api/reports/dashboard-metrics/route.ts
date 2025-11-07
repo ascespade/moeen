@@ -104,11 +104,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     const totalAppointments = appointments?.length || 0;
     const completedAppointments =
-      appointments?.filter((a: any) => a.status === 'completed').length ||
-      0;
+      appointments?.filter((a: any) => a.status === 'completed').length || 0;
     const cancelledAppointments =
-      appointments?.filter((a: any) => a.status === 'cancelled').length ||
-      0;
+      appointments?.filter((a: any) => a.status === 'cancelled').length || 0;
     const upcomingAppointments =
       appointments?.filter(
         (a: any) => a.status === 'pending' || a.status === 'confirmed'

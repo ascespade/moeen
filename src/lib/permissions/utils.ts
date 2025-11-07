@@ -7,9 +7,7 @@ export function hasPermission(
   userPermissions: string[],
   permission: string
 ): boolean {
-  return (
-    userPermissions.includes(permission) || userPermissions.includes('*')
-  );
+  return userPermissions.includes(permission) || userPermissions.includes('*');
 }
 
 export function hasAnyPermission(
@@ -64,4 +62,3 @@ export function getPermissionsByCategory(
     return permissionObj?.category === category;
   });
 }
-

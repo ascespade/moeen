@@ -28,10 +28,13 @@ export function UnifiedPageHandler({
 
   // Get page config automatically from pathname if pageKey not provided
   const pageConfig = pageKey
-    ? Object.values(require('./page-config').ADMIN_PAGES).find(p => p.path === pageKey)
+    ? Object.values(require('./page-config').ADMIN_PAGES).find(
+        p => p.path === pageKey
+      )
     : getPageConfig(pathname);
 
-  const requiredPermissions = customPermissions || pageConfig?.requiredPermissions || [];
+  const requiredPermissions =
+    customPermissions || pageConfig?.requiredPermissions || [];
   const requiredRoles = customRoles || pageConfig?.requiredRoles || [];
 
   return (
@@ -44,4 +47,3 @@ export function UnifiedPageHandler({
     </AdminPageWrapper>
   );
 }
-

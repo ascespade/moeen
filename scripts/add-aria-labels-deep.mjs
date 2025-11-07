@@ -18,8 +18,8 @@ const projectRoot = join(__dirname, '..');
 console.log('? Deep Aria-Labels Addition...\n');
 
 const allFiles = [
-  ...await glob('src/components/**/*.tsx', { cwd: projectRoot }),
-  ...await glob('src/app/**/page.tsx', { cwd: projectRoot }),
+  ...(await glob('src/components/**/*.tsx', { cwd: projectRoot })),
+  ...(await glob('src/app/**/page.tsx', { cwd: projectRoot })),
 ];
 
 let totalButtons = 0;
@@ -35,17 +35,17 @@ for (const file of allFiles) {
     // Find all buttons
     const buttonPattern = /<button([^>]*?)>(.*?)<\/button>/gs;
     const matches = [...content.matchAll(buttonPattern)];
-    
+
     for (const match of matches) {
       totalButtons++;
       const attrs = match[1];
       const text = match[2].replace(/<[^>]+>/g, '').trim();
-      
+
       if (attrs.includes('aria-label') || attrs.includes('aria-labelledby')) {
         buttonsWithAria++;
         continue;
       }
-      
+
       // Generate aria-label
       let ariaLabel = '';
       if (text && text.length > 0 && text.length < 50) {
@@ -64,7 +64,7 @@ for (const file of allFiles) {
           ariaLabel = 'Button';
         }
       }
-      
+
       // Add aria-label
       const newAttrs = attrs.trim() + ` aria-label="${ariaLabel}"`;
       const newButton = `<button${newAttrs}>${match[2]}</button>`;
@@ -76,11 +76,26 @@ for (const file of allFiles) {
     // Replace div with semantic HTML
     const semanticReplacements = [
       { pattern: /<div className="nav/i, replacement: '<nav className="nav' },
-      { pattern: /<div className="main/i, replacement: '<main className="main' },
-      { pattern: /<div className="header/i, replacement: '<header className="header' },
-      { pattern: /<div className="footer/i, replacement: '<footer className="footer' },
-      { pattern: /<div className="article/i, replacement: '<article className="article' },
-      { pattern: /<div className="section/i, replacement: '<section className="section' },
+      {
+        pattern: /<div className="main/i,
+        replacement: '<main className="main',
+      },
+      {
+        pattern: /<div className="header/i,
+        replacement: '<header className="header',
+      },
+      {
+        pattern: /<div className="footer/i,
+        replacement: '<footer className="footer',
+      },
+      {
+        pattern: /<div className="article/i,
+        replacement: '<article className="article',
+      },
+      {
+        pattern: /<div className="section/i,
+        replacement: '<section className="section',
+      },
     ];
 
     for (const { pattern, replacement } of semanticReplacements) {
@@ -107,7 +122,7 @@ for (const file of allFiles) {
         const lines = content.split('\n');
         let depth = 0;
         let foundOpen = false;
-        
+
         for (let i = 0; i < lines.length; i++) {
           if (lines[i].includes(open)) {
             foundOpen = true;
@@ -125,7 +140,7 @@ for (const file of allFiles) {
             }
           }
         }
-        
+
         if (foundOpen) {
           content = lines.join('\n');
           modified = true;
@@ -147,5 +162,7 @@ for (const file of allFiles) {
 
 console.log(`\n?? Summary:`);
 console.log(`   Total buttons found: ${totalButtons}`);
-console.log(`   Buttons with aria-label: ${buttonsWithAria} (${totalButtons > 0 ? (buttonsWithAria / totalButtons * 100).toFixed(1) : 0}%)`);
+console.log(
+  `   Buttons with aria-label: ${buttonsWithAria} (${totalButtons > 0 ? ((buttonsWithAria / totalButtons) * 100).toFixed(1) : 0}%)`
+);
 console.log(`   Files improved: ${fixedCount}\n`);

@@ -110,14 +110,16 @@ export function usePermissions({
 
   const getPermissionsByCategoryCheck = (category: string): string[] => {
     // Use dynamic import from client-safe exports
-    return import('@/lib/permissions/client').then(({ PERMISSIONS }) => {
-      return permissions.filter(permission => {
-        const permissionObj = Object.values(PERMISSIONS).find(
-          (p: any) => p.id === permission
-        );
-        return permissionObj?.category === category;
-      });
-    }).catch(() => permissions); // Fallback: return all permissions on error
+    return import('@/lib/permissions/client')
+      .then(({ PERMISSIONS }) => {
+        return permissions.filter(permission => {
+          const permissionObj = Object.values(PERMISSIONS).find(
+            (p: any) => p.id === permission
+          );
+          return permissionObj?.category === category;
+        });
+      })
+      .catch(() => permissions); // Fallback: return all permissions on error
   };
 
   return {

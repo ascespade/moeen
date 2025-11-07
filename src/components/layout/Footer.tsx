@@ -190,16 +190,16 @@ const Footer = memo(function Footer() {
               <li className='flex items-start gap-3'>
                 <Phone className='w-5 h-5 text-[var(--brand-default)] mt-0.5 flex-shrink-0' />
                 <div className='flex flex-col gap-1'>
-                  <a 
+                  <a
                     href={`tel:+966126173693`}
-                    className='text-sm hover:text-[var(--brand-default)] transition-colors' 
+                    className='text-sm hover:text-[var(--brand-default)] transition-colors'
                     aria-label={CONTACT_INFO.PHONE}
                   >
                     {CONTACT_INFO.PHONE}
                   </a>
-                  <a 
+                  <a
                     href={`tel:+966555381558`}
-                    className='text-sm hover:text-[var(--brand-default)] transition-colors' 
+                    className='text-sm hover:text-[var(--brand-default)] transition-colors'
                     aria-label={CONTACT_INFO.MOBILE}
                   >
                     {CONTACT_INFO.MOBILE}
@@ -208,9 +208,9 @@ const Footer = memo(function Footer() {
               </li>
               <li className='flex items-center gap-3'>
                 <Mail className='w-5 h-5 text-[var(--brand-default)] flex-shrink-0' />
-                <a 
+                <a
                   href={`mailto:${CONTACT_INFO.EMAIL}`}
-                  className='text-sm hover:text-[var(--brand-default)] transition-colors' 
+                  className='text-sm hover:text-[var(--brand-default)] transition-colors'
                   aria-label={CONTACT_INFO.EMAIL}
                 >
                   {CONTACT_INFO.EMAIL}
@@ -228,28 +228,32 @@ const Footer = memo(function Footer() {
             </p>
             <div className='flex gap-6 items-center'>
               <button
-                onClick={() => { setIsPrivacyOpen(true) }}
-                onKeyDown={(e) => {
+                onClick={() => {
+                  setIsPrivacyOpen(true);
+                }}
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setIsPrivacyOpen(true);
                   }
                 }}
-                aria-label="فتح سياسة الخصوصية"
+                aria-label='فتح سياسة الخصوصية'
                 className='text-sm text-gray-400 hover:text-[var(--brand-default)] transition-colors cursor-pointer'
               >
                 سياسة الخصوصية
               </button>
               <span className='text-gray-600'>|</span>
               <button
-                onClick={() => { setIsTermsOpen(true) }}
-                onKeyDown={(e) => {
+                onClick={() => {
+                  setIsTermsOpen(true);
+                }}
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setIsTermsOpen(true);
                   }
                 }}
-                aria-label="فتح شروط الخدمة"
+                aria-label='فتح شروط الخدمة'
                 className='text-sm text-gray-400 hover:text-[var(--brand-default)] transition-colors cursor-pointer'
               >
                 شروط الاستخدام

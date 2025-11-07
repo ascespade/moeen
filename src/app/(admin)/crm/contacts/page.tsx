@@ -245,8 +245,8 @@ function ContactsPageContent() {
 
   return (
     <div className='container mx-auto px-4 py-8' dir='rtl'>
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
       {/* Header */}
       <div className='mb-8'>
@@ -413,7 +413,8 @@ function ContactsPageContent() {
                           ? 'border-[var(--default-default)] bg-surface'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
-                      tabIndex={0} onClick={() => setSelectedContact(contact)}
+                      tabIndex={0}
+                      onClick={() => setSelectedContact(contact)}
                     >
                       <div className='flex items-start justify-between'>
                         <div className='flex items-center gap-4'>

@@ -1,7 +1,7 @@
 /**
  * Supabase Client - Browser Client
  * عميل Supabase - المتصفح
- * 
+ *
  * Client-side Supabase client for browser usage
  */
 
@@ -10,7 +10,7 @@ import type { Database } from '../../types/database.types';
 
 /**
  * Create Supabase client for browser
- * 
+ *
  * @returns Supabase client instance
  */
 export function createClient() {

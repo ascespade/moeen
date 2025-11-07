@@ -1,7 +1,7 @@
 /**
  * API Endpoints - Centralized API Routes
  * نقاط نهاية API - مسارات API المركزية
- * 
+ *
  * All API endpoints defined here
  */
 

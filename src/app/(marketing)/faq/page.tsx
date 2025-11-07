@@ -146,8 +146,15 @@ export default function FAQPage() {
             {filteredFAQs.map(faq => (
               <Card key={faq.id} className='p-6'>
                 <button
-                  onClick={() => { toggleFAQ(faq.id) }}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFAQ(faq.id); } }}
+                  onClick={() => {
+                    toggleFAQ(faq.id);
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleFAQ(faq.id);
+                    }
+                  }}
                   aria-label={`${faq.question} - اضغط للفتح/الإغلاق`}
                   className='w-full text-left flex items-center justify-between'
                 >

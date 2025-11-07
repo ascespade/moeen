@@ -16,9 +16,7 @@
     "organization": {
       "score": 80,
       "maxScore": 100,
-      "issues": [
-        "294 duplicate files found"
-      ],
+      "issues": ["294 duplicate files found"],
       "strengths": [
         "Well-organized directory structure",
         "Archive directory for old files",
@@ -29,9 +27,7 @@
     "cleanCode": {
       "score": 83.93865844089076,
       "maxScore": 100,
-      "issues": [
-        "17.9% of files use any type"
-      ],
+      "issues": ["17.9% of files use any type"],
       "strengths": [
         "High TypeScript usage",
         "Good error handling coverage",
@@ -42,9 +38,7 @@
     "centralization": {
       "score": 91.66666666666666,
       "maxScore": 100,
-      "issues": [
-        "Some utilities not centralized"
-      ],
+      "issues": ["Some utilities not centralized"],
       "strengths": [
         "Centralized CSS variables",
         "Centralized constants",
@@ -60,28 +54,18 @@
         "Low semantic HTML usage",
         "Limited keyboard navigation"
       ],
-      "strengths": [
-        "Good alt text usage"
-      ]
+      "strengths": ["Good alt text usage"]
     },
     "ux": {
       "score": 37.666666666666664,
       "maxScore": 100,
-      "issues": [
-        "Limited loading states",
-        "Limited user feedback"
-      ],
-      "strengths": [
-        "Good error state handling",
-        "Good responsive design"
-      ]
+      "issues": ["Limited loading states", "Limited user feedback"],
+      "strengths": ["Good error state handling", "Good responsive design"]
     },
     "design": {
       "score": 66.43333333333334,
       "maxScore": 100,
-      "issues": [
-        "Inconsistent color usage"
-      ],
+      "issues": ["Inconsistent color usage"],
       "strengths": [
         "Design system files present",
         "Theme system present",
@@ -114,9 +98,7 @@
     "errorHandling": {
       "score": 75.66666666666667,
       "maxScore": 100,
-      "issues": [
-        "Limited error logging"
-      ],
+      "issues": ["Limited error logging"],
       "strengths": [
         "Excellent error handling",
         "Error boundaries present",
@@ -132,16 +114,12 @@
         "Limited caching",
         "Limited lazy loading"
       ],
-      "strengths": [
-        "Database indexing"
-      ]
+      "strengths": ["Database indexing"]
     },
     "speed": {
       "score": 70,
       "maxScore": 100,
-      "issues": [
-        "Build failed - cannot evaluate speed"
-      ],
+      "issues": ["Build failed - cannot evaluate speed"],
       "strengths": [
         "Barrel exports for faster imports",
         "Reasonable dependency count",
@@ -151,13 +129,8 @@
     "marketCompetition": {
       "score": 96,
       "maxScore": 100,
-      "issues": [
-        "Missing 1 key features"
-      ],
-      "strengths": [
-        "Modern tech stack",
-        "Scalable architecture"
-      ]
+      "issues": ["Missing 1 key features"],
+      "strengths": ["Modern tech stack", "Scalable architecture"]
     }
   },
   "overallPercentage": "72.2",

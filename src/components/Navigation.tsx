@@ -11,7 +11,7 @@ import {
   Settings,
   Shield,
   X,
-  Zap
+  Zap,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -41,15 +41,17 @@ export default function Navigation() {
 
   return (
     <>
-      <div aria-live="polite" aria-atomic="true" className="sr-only">
-        <span id="live-region"></span>
+      <div aria-live='polite' aria-atomic='true' className='sr-only'>
+        <span id='live-region'></span>
       </div>
 
       {/* Mobile menu button */}
       <div className='lg:hidden fixed top-4 left-4 z-50'>
         <button
-          onClick={() => { setIsMobileMenuOpen(!isMobileMenuOpen) }}
-          onKeyDown={(e) => {
+          onClick={() => {
+            setIsMobileMenuOpen(!isMobileMenuOpen);
+          }}
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -70,7 +72,8 @@ export default function Navigation() {
       {isMobileMenuOpen && (
         <div
           className='lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm'
-          tabIndex={0} onClick={() => setIsMobileMenuOpen(false)}
+          tabIndex={0}
+          onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
@@ -125,9 +128,12 @@ export default function Navigation() {
               {quickActions.map(action => {
                 const Sun = action.icon;
                 return (
-                  <button key={action.name}
-                    onClick={() => { handleQuickAction(action.action) }}
-                    onKeyDown={(e) => {
+                  <button
+                    key={action.name}
+                    onClick={() => {
+                      handleQuickAction(action.action);
+                    }}
+                    onKeyDown={e => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         handleQuickAction(action.action);

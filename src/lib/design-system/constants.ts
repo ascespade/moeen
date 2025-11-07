@@ -169,4 +169,3 @@ export const DESIGN_SYSTEM = {
   COMPONENTS,
   VERSION: DESIGN_SYSTEM_VERSION,
 } as const;
-

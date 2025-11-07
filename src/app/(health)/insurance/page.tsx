@@ -165,9 +165,16 @@ export default function InsurancePage() {
           <div className='text-red-500 text-6xl mb-4'>⚠️</div>
           <p className='text-red-600 text-lg mb-4'>{error}</p>
           <button
-            onClick={() => { window.location.reload() }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.reload(); } }}
-            aria-label="إعادة تحميل الصفحة"
+            onClick={() => {
+              window.location.reload();
+            }}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.location.reload();
+              }
+            }}
+            aria-label='إعادة تحميل الصفحة'
             className='px-4 py-2 bg-[var(--default-default)] text-white rounded-lg hover:bg-[var(--default-default-dark)]'
           >
             إعادة المحاولة
@@ -212,7 +219,7 @@ export default function InsurancePage() {
         </div>
       </header>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <Card className='p-6 text-center'>

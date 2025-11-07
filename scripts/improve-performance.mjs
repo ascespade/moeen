@@ -29,7 +29,10 @@ for (const component of heavyComponents) {
   const filePath = join(projectRoot, component);
   if (existsSync(filePath)) {
     let content = readFileSync(filePath, 'utf-8');
-    if (!content.includes('next/dynamic') && content.includes('export default')) {
+    if (
+      !content.includes('next/dynamic') &&
+      content.includes('export default')
+    ) {
       // Check if it's a client component
       if (content.includes("'use client'")) {
         const dynamicImport = `import dynamic from 'next/dynamic';\n`;
@@ -52,12 +55,18 @@ if (existsSync(nextConfigPath)) {
   let modified = false;
 
   if (!config.includes('swcMinify')) {
-    config = config.replace(/module.exports = \{/, `module.exports = {\n  swcMinify: true,`);
+    config = config.replace(
+      /module.exports = \{/,
+      `module.exports = {\n  swcMinify: true,`
+    );
     modified = true;
   }
 
   if (!config.includes('compress')) {
-    config = config.replace(/module.exports = \{/, `module.exports = {\n  compress: true,`);
+    config = config.replace(
+      /module.exports = \{/,
+      `module.exports = {\n  compress: true,`
+    );
     modified = true;
   }
 
@@ -75,7 +84,10 @@ for (const route of apiRoutes.slice(0, 20)) {
   const filePath = join(projectRoot, route);
   try {
     let content = readFileSync(filePath, 'utf-8');
-    if (!content.includes('export const revalidate') && content.includes('export async function GET')) {
+    if (
+      !content.includes('export const revalidate') &&
+      content.includes('export async function GET')
+    ) {
       // Add revalidate before GET function
       content = content.replace(
         /export async function GET/g,

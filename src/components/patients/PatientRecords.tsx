@@ -362,7 +362,8 @@ const PatientRecords: React.FC = () => {
                         ? 'bg-surface border-blue-200'
                         : ''
                     }`}
-                    tabIndex={0} onClick={() => setSelectedPatient(patient)}
+                    tabIndex={0}
+                    onClick={() => setSelectedPatient(patient)}
                   >
                     <div className='flex justify-between items-start'>
                       <div>

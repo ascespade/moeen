@@ -5,6 +5,7 @@
 ## المتطلبات الأساسية
 
 ### المتطلبات
+
 - Node.js 18+
 - npm أو yarn
 - Supabase account

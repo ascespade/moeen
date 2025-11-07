@@ -1,7 +1,7 @@
 /**
  * Email Service - Business Logic for Email
  * خدمة البريد الإلكتروني - منطق الأعمال للبريد
- * 
+ *
  * Business logic layer for email operations
  */
 
@@ -54,7 +54,10 @@ export class EmailService {
   /**
    * Send password reset email
    */
-  static async sendPasswordResetEmail(email: string, resetLink: string): Promise<void> {
+  static async sendPasswordResetEmail(
+    email: string,
+    resetLink: string
+  ): Promise<void> {
     await this.sendEmail({
       to: email,
       subject: 'إعادة تعيين كلمة المرور',
@@ -87,7 +90,10 @@ export class EmailService {
   /**
    * Send verification email
    */
-  static async sendVerificationEmail(email: string, verificationLink: string): Promise<void> {
+  static async sendVerificationEmail(
+    email: string,
+    verificationLink: string
+  ): Promise<void> {
     await this.sendEmail({
       to: email,
       subject: 'تحقق من بريدك الإلكتروني',

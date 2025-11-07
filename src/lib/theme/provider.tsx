@@ -1,7 +1,7 @@
 /**
  * Theme Provider - Design System Provider
  * موفر الثيم - موفر نظام التصميم
- * 
+ *
  * Provides design tokens from extracted homepage design
  */
 
@@ -18,9 +18,7 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   return (
-    <ThemeContext.Provider value={{ theme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={{ theme }}>{children}</ThemeContext.Provider>
   );
 }
 

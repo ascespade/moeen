@@ -99,6 +99,8 @@ export const ADMIN_PAGES: Record<string, AdminPageConfig> = {
 };
 
 export function getPageConfig(path: string): AdminPageConfig | null {
-  return Object.values(ADMIN_PAGES).find(config => path.startsWith(config.path)) || null;
+  return (
+    Object.values(ADMIN_PAGES).find(config => path.startsWith(config.path)) ||
+    null
+  );
 }
-

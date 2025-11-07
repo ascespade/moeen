@@ -110,7 +110,10 @@ export default function ChatbotIntegrationsPage() {
   };
 
   return (
-    <div className='min-h-screen bg-[var(--default-surface)]' role='application'>
+    <div
+      className='min-h-screen bg-[var(--default-surface)]'
+      role='application'
+    >
       {/* Header */}
       <header className='border-default sticky top-0 z-10 border-b bg-white dark:bg-gray-900'>
         <div className='container-app py-4'>
@@ -137,7 +140,7 @@ export default function ChatbotIntegrationsPage() {
         </div>
       </header>
 
-      <main className='container-app py-8' id="main-content">
+      <main className='container-app py-8' id='main-content'>
         {/* Stats Cards */}
         <div className='mb-8 grid grid-cols-1 gap-6 md:grid-cols-4'>
           <div className='card p-6 text-center'>
@@ -229,7 +232,7 @@ export default function ChatbotIntegrationsPage() {
                   <>
                     <button
                       onClick={() => handleTestWebhook(integration.id)}
-                      onKeyDown={(e) => {
+                      onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
                           handleTestWebhook(integration.id);
@@ -245,7 +248,7 @@ export default function ChatbotIntegrationsPage() {
                     </button>
                     <button
                       onClick={() => handleDisconnect(integration.id)}
-                      onKeyDown={(e) => {
+                      onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
                           handleDisconnect(integration.id);
@@ -260,13 +263,15 @@ export default function ChatbotIntegrationsPage() {
                 ) : (
                   <button
                     onClick={() => handleConnect(integration.id)}
-                    onKeyDown={(e) => {
+                    onKeyDown={e => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         handleConnect(integration.id);
                       }
                     }}
-                    aria-label={integration.status === 'error' ? 'إعادة الاتصال' : 'اتصال'}
+                    aria-label={
+                      integration.status === 'error' ? 'إعادة الاتصال' : 'اتصال'
+                    }
                     className='btn-default flex-1 rounded-lg py-2 text-sm text-white transition-colors hover:bg-[var(--default-default-hover)]'
                   >
                     {integration.status === 'error' ? 'إعادة الاتصال' : 'اتصال'}
@@ -316,7 +321,10 @@ export default function ChatbotIntegrationsPage() {
                 <p className='mb-3 text-sm text-gray-600 dark:text-gray-300'>
                   {integration.description}
                 </p>
-                <button className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-surface' aria-label="إضافة">
+                <button
+                  className='w-full rounded-lg border border-gray-300 px-3 py-2 text-sm transition-colors hover:bg-surface'
+                  aria-label='إضافة'
+                >
                   إضافة
                 </button>
               </div>
@@ -333,7 +341,7 @@ export default function ChatbotIntegrationsPage() {
               <h3 className='text-xl font-semibold'>إعداد التكامل</h3>
               <button
                 onClick={() => setShowConnectModal(null)}
-                onKeyDown={(e) => {
+                onKeyDown={e => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     setShowConnectModal(null);
@@ -382,7 +390,7 @@ export default function ChatbotIntegrationsPage() {
               <div className='flex gap-3 pt-4'>
                 <button
                   onClick={() => setShowConnectModal(null)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowConnectModal(null);
@@ -395,7 +403,7 @@ export default function ChatbotIntegrationsPage() {
                 </button>
                 <button
                   onClick={() => setShowConnectModal(null)}
-                  onKeyDown={(e) => {
+                  onKeyDown={e => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
                       setShowConnectModal(null);

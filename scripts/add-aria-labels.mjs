@@ -17,7 +17,9 @@ const projectRoot = join(__dirname, '..');
 
 console.log('? Adding aria-labels...\n');
 
-const componentFiles = await glob('src/components/**/*.tsx', { cwd: projectRoot });
+const componentFiles = await glob('src/components/**/*.tsx', {
+  cwd: projectRoot,
+});
 let fixedCount = 0;
 
 for (const file of componentFiles.slice(0, 100)) {
@@ -29,12 +31,20 @@ for (const file of componentFiles.slice(0, 100)) {
     // Add aria-label to buttons without labels
     const buttonPattern = /<button([^>]*)>(.*?)<\/button>/gs;
     const matches = [...content.matchAll(buttonPattern)];
-    
+
     for (const match of matches) {
       const buttonAttrs = match[1];
-      const buttonText = match[2].trim().replace(/<[^>]+>/g, '').slice(0, 50);
-      
-      if (!buttonAttrs.includes('aria-label') && buttonText && buttonText.length > 0 && buttonText.length < 50) {
+      const buttonText = match[2]
+        .trim()
+        .replace(/<[^>]+>/g, '')
+        .slice(0, 50);
+
+      if (
+        !buttonAttrs.includes('aria-label') &&
+        buttonText &&
+        buttonText.length > 0 &&
+        buttonText.length < 50
+      ) {
         const newButton = `<button${buttonAttrs} aria-label="${buttonText}">${match[2]}</button>`;
         content = content.replace(match[0], newButton);
         modified = true;
@@ -42,8 +52,14 @@ for (const file of componentFiles.slice(0, 100)) {
     }
 
     // Replace div with semantic HTML where appropriate
-    if (content.includes('<div className="nav') || content.includes('<div className="navigation')) {
-      content = content.replace(/<div className="(nav|navigation)/g, '<nav className="$1');
+    if (
+      content.includes('<div className="nav') ||
+      content.includes('<div className="navigation')
+    ) {
+      content = content.replace(
+        /<div className="(nav|navigation)/g,
+        '<nav className="$1'
+      );
       content = content.replace(/<\/div>\s*<!-- navigation -->/g, '</nav>');
       modified = true;
     }

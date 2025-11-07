@@ -353,8 +353,8 @@ class CISelfHealingManager {
       await this.learningDB.recordSolution(errorData.errorHash, {
         solutionType: fix.type,
         solutionData: fix.solutionData,
-        success: success,
-        resolutionTime: resolutionTime,
+        success,
+        resolutionTime,
       });
 
       if (success) {

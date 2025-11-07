@@ -1,7 +1,7 @@
 /**
  * useTheme Hook - Custom Hook for Theme Management
  * خطاف useTheme - خطاف مخصص لإدارة الثيم
- * 
+ *
  * React hook for theme (light/dark) management
  */
 
@@ -24,7 +24,9 @@ export function useTheme() {
 
     // Calculate resolved theme
     if (initialTheme === 'system') {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
       setResolvedTheme(prefersDark ? 'dark' : 'light');
     } else {
       setResolvedTheme(initialTheme);
@@ -35,9 +37,11 @@ export function useTheme() {
     if (!mounted) return;
 
     const root = document.documentElement;
-    
+
     if (theme === 'system') {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const prefersDark = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches;
       setResolvedTheme(prefersDark ? 'dark' : 'light');
       root.classList.toggle('dark', prefersDark);
     } else {

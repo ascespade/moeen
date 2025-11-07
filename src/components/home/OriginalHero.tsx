@@ -63,8 +63,12 @@ const OriginalHero = memo(function OriginalHero({
               {/* 24/7 Support Card - Floating */}
               <div className='absolute top-4 right-4 bg-[var(--background)]/95 backdrop-blur-sm rounded-xl p-3 shadow-lg border border-[var(--brand-border)]'>
                 <div className='text-center'>
-                  <div className='text-2xl font-bold text-[var(--text-primary)]'>24/7</div>
-                  <div className='text-xs text-[var(--text-secondary)]'>دعم فوري</div>
+                  <div className='text-2xl font-bold text-[var(--text-primary)]'>
+                    24/7
+                  </div>
+                  <div className='text-xs text-[var(--text-secondary)]'>
+                    دعم فوري
+                  </div>
                 </div>
               </div>
             </div>
@@ -144,4 +148,3 @@ const OriginalHero = memo(function OriginalHero({
 
 OriginalHero.displayName = 'OriginalHero';
 export default OriginalHero;
-

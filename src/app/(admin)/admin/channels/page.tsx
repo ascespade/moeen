@@ -1,8 +1,15 @@
 export default function ChannelsAdminPage() {
   return (
-    <main className='min-h-screen bg-[var(--default-surface)]' role='application'>
+    <main
+      className='min-h-screen bg-[var(--default-surface)]'
+      role='application'
+    >
       {/* Skip Link */}
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded" aria-label="التخطي للمحتوى الرئيسي">
+      <a
+        href='#main-content'
+        className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded'
+        aria-label='التخطي للمحتوى الرئيسي'
+      >
         التخطي للمحتوى الرئيسي
       </a>
       <div className='container-app py-6'>

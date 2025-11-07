@@ -11,7 +11,9 @@ export const revalidate = 60;
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(request);
+    const authResult = await requireAuth(['admin', 'supervisor', 'staff'])(
+      request
+    );
     if (!authResult.authorized) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
@@ -90,4 +92,3 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     );
   }
 }
-

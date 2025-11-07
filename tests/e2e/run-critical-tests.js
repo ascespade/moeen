@@ -12,7 +12,7 @@ const path = require('path');
 const testFiles = [
   'tests/e2e/critical-modules.spec.ts',
   'tests/e2e/critical-modules-functional.spec.ts',
-  'tests/e2e/visual-regression.spec.ts'
+  'tests/e2e/visual-regression.spec.ts',
 ];
 
 console.log('🚀 Starting Critical Modules Tests...\n');
@@ -28,11 +28,11 @@ for (const testFile of testFiles) {
   }
 
   console.log(`\n📝 Running: ${path.basename(testFile)}`);
-  
+
   try {
     execSync(`npx playwright test ${testFile} --reporter=list`, {
       stdio: 'inherit',
-      cwd: process.cwd()
+      cwd: process.cwd(),
     });
     totalPassed++;
     console.log(`✅ Passed: ${path.basename(testFile)}`);
@@ -42,7 +42,7 @@ for (const testFile of testFiles) {
   }
 }
 
-console.log('\n' + '='.repeat(50));
+console.log(`\n${'='.repeat(50)}`);
 console.log('📊 Test Summary');
 console.log('='.repeat(50));
 console.log(`✅ Passed: ${totalPassed}`);
@@ -56,4 +56,3 @@ if (totalFailed === 0) {
   console.log('\n⚠️  Some tests failed');
   process.exit(1);
 }
-

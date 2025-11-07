@@ -1,7 +1,7 @@
 /**
  * Auth Actions - Server Actions for Authentication
  * إجراءات المصادقة - Server Actions للمصادقة
- * 
+ *
  * All authentication-related server actions
  */
 
@@ -10,7 +10,12 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { loginSchema, registerSchema, resetPasswordSchema, forgotPasswordSchema } from '@/lib/validations';
+import {
+  loginSchema,
+  registerSchema,
+  resetPasswordSchema,
+  forgotPasswordSchema,
+} from '@/lib/validations';
 import { handleServerActionError } from '@/lib/errors';
 import { AppError } from '@/lib/errors';
 import { ROUTES } from '@/lib/constants';
@@ -59,7 +64,7 @@ export async function registerAction(input: {
     const validated = registerSchema.parse(input);
 
     const supabase = await createClient();
-    
+
     // Sign up user
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email: validated.email,
@@ -76,15 +81,13 @@ export async function registerAction(input: {
 
     // Create user record in users table
     const adminClient = createAdminClient();
-    const { error: userError } = await adminClient
-      .from('users')
-      .insert({
-        id: authData.user.id,
-        email: validated.email,
-        name: validated.name,
-        role: 'user',
-        status: 'active',
-      });
+    const { error: userError } = await adminClient.from('users').insert({
+      id: authData.user.id,
+      email: validated.email,
+      name: validated.name,
+      role: 'user',
+      status: 'active',
+    });
 
     if (userError) {
       throw AppError.internal(`فشل إنشاء سجل المستخدم: ${userError.message}`);
@@ -124,12 +127,17 @@ export async function forgotPasswordAction(input: { email: string }) {
     const validated = forgotPasswordSchema.parse(input);
 
     const supabase = await createClient();
-    const { error } = await supabase.auth.resetPasswordForEmail(validated.email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}${ROUTES.AUTH.RESET_PASSWORD}`,
-    });
+    const { error } = await supabase.auth.resetPasswordForEmail(
+      validated.email,
+      {
+        redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}${ROUTES.AUTH.RESET_PASSWORD}`,
+      }
+    );
 
     if (error) {
-      throw AppError.internal(`فشل إرسال رابط إعادة تعيين كلمة المرور: ${error.message}`);
+      throw AppError.internal(
+        `فشل إرسال رابط إعادة تعيين كلمة المرور: ${error.message}`
+      );
     }
 
     return { success: true };
@@ -141,7 +149,10 @@ export async function forgotPasswordAction(input: { email: string }) {
 /**
  * Reset password action
  */
-export async function resetPasswordAction(input: { password: string; confirmPassword: string }) {
+export async function resetPasswordAction(input: {
+  password: string;
+  confirmPassword: string;
+}) {
   try {
     const validated = resetPasswordSchema.parse(input);
 
@@ -173,7 +184,9 @@ export async function verifyEmailAction(token: string) {
     });
 
     if (error) {
-      throw AppError.badRequest(`فشل التحقق من البريد الإلكتروني: ${error.message}`);
+      throw AppError.badRequest(
+        `فشل التحقق من البريد الإلكتروني: ${error.message}`
+      );
     }
 
     revalidatePath(ROUTES.AUTH.LOGIN);

@@ -111,7 +111,7 @@ export default function EnhancedSidebar() {
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               setCollapsed(!collapsed);
@@ -148,7 +148,7 @@ export default function EnhancedSidebar() {
         <ul className='space-y-2'>
           {menuItems.map(item => {
             const isActive =
-              pathname === item.path || pathname.startsWith(item.path + '/');
+              pathname === item.path || pathname.startsWith(`${item.path}/`);
             const Icon = item.icon ? getIconComponent(item.icon) : null;
 
             return (
@@ -207,7 +207,7 @@ export default function EnhancedSidebar() {
       <div className='p-4 border-t border-[var(--border)]'>
         <button
           onClick={handleLogout}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               handleLogout();

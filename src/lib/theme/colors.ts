@@ -1,7 +1,7 @@
 /**
  * Color System - Extracted from Homepage Design
  * نظام الألوان - مستخرج من تصميم الصفحة الرئيسية
- * 
+ *
  * Source: src/styles/centralized.css
  * Reference: src/app/page.tsx
  */
@@ -75,10 +75,10 @@ export const cssVariables = {
 } as const;
 
 // Type exports
-export type BrandColor = typeof brandColors[keyof typeof brandColors];
-export type FeatureColor = typeof featureColors[keyof typeof featureColors];
-export type LightThemeColor = typeof lightTheme[keyof typeof lightTheme];
-export type DarkThemeColor = typeof darkTheme[keyof typeof darkTheme];
+export type BrandColor = (typeof brandColors)[keyof typeof brandColors];
+export type FeatureColor = (typeof featureColors)[keyof typeof featureColors];
+export type LightThemeColor = (typeof lightTheme)[keyof typeof lightTheme];
+export type DarkThemeColor = (typeof darkTheme)[keyof typeof darkTheme];
 
 // Helper function to get CSS variable
 export function getCSSVariable(varName: keyof typeof cssVariables): string {

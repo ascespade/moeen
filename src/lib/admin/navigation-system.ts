@@ -14,13 +14,16 @@ export function useAdminNavigation() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const navigateToPage = useCallback((pageKey: string) => {
-    const pageConfig = ADMIN_PAGES[pageKey];
-    if (pageConfig && pageConfig.path !== pathname) {
-      // Use Next.js router for client-side navigation (no refresh)
-      router.push(pageConfig.path);
-    }
-  }, [router, pathname]);
+  const navigateToPage = useCallback(
+    (pageKey: string) => {
+      const pageConfig = ADMIN_PAGES[pageKey];
+      if (pageConfig && pageConfig.path !== pathname) {
+        // Use Next.js router for client-side navigation (no refresh)
+        router.push(pageConfig.path);
+      }
+    },
+    [router, pathname]
+  );
 
   const getCurrentPage = useCallback(() => {
     return getPageConfig(pathname);
@@ -32,4 +35,3 @@ export function useAdminNavigation() {
     currentPath: pathname,
   };
 }
-

@@ -1,7 +1,7 @@
 /**
  * Error Logger - Error Logging Utilities
  * مسجل الأخطاء - أدوات تسجيل الأخطاء
- * 
+ *
  * Specialized error logging
  */
 
@@ -22,10 +22,7 @@ export interface ErrorLogContext {
 /**
  * Log error with context
  */
-export function logError(
-  error: unknown,
-  context?: ErrorLogContext
-): void {
+export function logError(error: unknown, context?: ErrorLogContext): void {
   const errorData = {
     timestamp: new Date().toISOString(),
     ...context,

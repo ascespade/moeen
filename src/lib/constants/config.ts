@@ -1,7 +1,7 @@
 /**
  * Config Constants - Application Configuration
  * ثوابت الإعدادات - إعدادات التطبيق
- * 
+ *
  * Application-wide configuration constants
  */
 

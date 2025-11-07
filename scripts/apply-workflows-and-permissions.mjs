@@ -3,7 +3,7 @@
 /**
  * Apply Workflows and Permissions System
  * ????? ???? ????????? ??????????
- * 
+ *
  * This script applies all workflows and permissions to the system
  */
 
@@ -53,7 +53,7 @@ let skippedCount = 0;
 
 for (const routePath of apiRoutesToUpdate) {
   const fullPath = join(projectRoot, routePath);
-  
+
   if (!existsSync(fullPath)) {
     console.log(`??  Skipping ${routePath} (not found)`);
     skippedCount++;
@@ -67,13 +67,13 @@ for (const routePath of apiRoutesToUpdate) {
     // Check if PermissionManager is already imported
     if (!content.includes('PermissionManager')) {
       // Add import if not present
-      if (content.includes("import { authorize }")) {
+      if (content.includes('import { authorize }')) {
         content = content.replace(
           "import { authorize } from '@/lib/auth/authorize';",
           "import { authorize } from '@/lib/auth/authorize';\nimport { PermissionManager } from '@/lib/permissions';"
         );
         modified = true;
-      } else if (content.includes("import { requireAuth }")) {
+      } else if (content.includes('import { requireAuth }')) {
         content = content.replace(
           "import { requireAuth } from '@/lib/auth/authorize';",
           "import { requireAuth } from '@/lib/auth/authorize';\nimport { PermissionManager } from '@/lib/permissions';"
@@ -83,20 +83,26 @@ for (const routePath of apiRoutesToUpdate) {
     }
 
     // Add permission check for GET endpoints
-    if (content.includes('export async function GET') && !content.includes('PermissionManager.hasPermission')) {
+    if (
+      content.includes('export async function GET') &&
+      !content.includes('PermissionManager.hasPermission')
+    ) {
       // Find the GET function and add permission check after auth check
-      const getFunctionRegex = /export async function GET\([^)]*\)[^{]*\{[^}]*try[^{]*\{/s;
+      const getFunctionRegex =
+        /export async function GET\([^)]*\)[^{]*\{[^}]*try[^{]*\{/s;
       const match = content.match(getFunctionRegex);
-      
+
       if (match) {
         // Add permission check after auth
-        const authCheck = content.match(/const.*auth.*=.*await.*authorize|requireAuth/s);
+        const authCheck = content.match(
+          /const.*auth.*=.*await.*authorize|requireAuth/s
+        );
         if (authCheck) {
           // Find the position after auth check
           const authIndex = content.indexOf(authCheck[0]);
           const afterAuth = content.substring(authIndex);
           const nextBrace = afterAuth.indexOf('}');
-          
+
           if (nextBrace > 0) {
             const insertPoint = authIndex + nextBrace + 1;
             const permissionCheck = `
@@ -116,7 +122,10 @@ for (const routePath of apiRoutesToUpdate) {
       );
     }
 `;
-            content = content.substring(0, insertPoint) + permissionCheck + content.substring(insertPoint);
+            content =
+              content.substring(0, insertPoint) +
+              permissionCheck +
+              content.substring(insertPoint);
             modified = true;
           }
         }
@@ -124,17 +133,23 @@ for (const routePath of apiRoutesToUpdate) {
     }
 
     // Add permission check for POST endpoints
-    if (content.includes('export async function POST') && !content.includes('PermissionManager.hasPermission')) {
-      const postFunctionRegex = /export async function POST\([^)]*\)[^{]*\{[^}]*try[^{]*\{/s;
+    if (
+      content.includes('export async function POST') &&
+      !content.includes('PermissionManager.hasPermission')
+    ) {
+      const postFunctionRegex =
+        /export async function POST\([^)]*\)[^{]*\{[^}]*try[^{]*\{/s;
       const match = content.match(postFunctionRegex);
-      
+
       if (match) {
-        const authCheck = content.match(/const.*auth.*=.*await.*authorize|requireAuth/s);
+        const authCheck = content.match(
+          /const.*auth.*=.*await.*authorize|requireAuth/s
+        );
         if (authCheck) {
           const authIndex = content.indexOf(authCheck[0]);
           const afterAuth = content.substring(authIndex);
           const nextBrace = afterAuth.indexOf('}');
-          
+
           if (nextBrace > 0) {
             const insertPoint = authIndex + nextBrace + 1;
             const permissionCheck = `
@@ -154,7 +169,10 @@ for (const routePath of apiRoutesToUpdate) {
       );
     }
 `;
-            content = content.substring(0, insertPoint) + permissionCheck + content.substring(insertPoint);
+            content =
+              content.substring(0, insertPoint) +
+              permissionCheck +
+              content.substring(insertPoint);
             modified = true;
           }
         }
@@ -166,7 +184,9 @@ for (const routePath of apiRoutesToUpdate) {
       console.log(`? Updated ${routePath}`);
       updatedCount++;
     } else {
-      console.log(`??  Skipped ${routePath} (already has permissions or no auth)`);
+      console.log(
+        `??  Skipped ${routePath} (already has permissions or no auth)`
+      );
       skippedCount++;
     }
   } catch (error) {
@@ -186,7 +206,7 @@ console.log('\n?? Checking pages...');
 
 for (const pagePath of pagesToUpdate) {
   const fullPath = join(projectRoot, pagePath);
-  
+
   if (!existsSync(fullPath)) {
     console.log(`??  Skipping ${pagePath} (not found)`);
     skippedCount++;
@@ -211,7 +231,8 @@ for (const pagePath of pagesToUpdate) {
         if (firstImport) {
           content = content.replace(
             firstImport[0],
-            firstImport[0] + "\nimport UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';"
+            firstImport[0] +
+              "\nimport UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';"
           );
           modified = true;
         }
@@ -232,14 +253,16 @@ for (const pagePath of pagesToUpdate) {
 
     // Wrap the main return with UnifiedProtectedRoute
     if (!content.includes('<UnifiedProtectedRoute')) {
-      const exportDefaultMatch = content.match(/export default function[^{]*\{[\s\S]*?return\s*\(/);
+      const exportDefaultMatch = content.match(
+        /export default function[^{]*\{[\s\S]*?return\s*\(/
+      );
       if (exportDefaultMatch) {
         const returnIndex = content.indexOf('return (');
         if (returnIndex > 0) {
           const returnContent = content.substring(returnIndex);
           const openingTag = `    <UnifiedProtectedRoute allowedRoles={[${allowedRoles.map(r => `'${r}'`).join(', ')}]}>\n`;
           const closingTag = '\n    </UnifiedProtectedRoute>';
-          
+
           // Find the closing of the return statement
           let braceCount = 0;
           let closingIndex = returnIndex;
@@ -254,11 +277,12 @@ for (const pagePath of pagesToUpdate) {
             }
           }
 
-          content = content.substring(0, returnIndex + 8) + 
-                   openingTag + 
-                   content.substring(returnIndex + 8, closingIndex).trim() + 
-                   closingTag + 
-                   content.substring(closingIndex);
+          content =
+            content.substring(0, returnIndex + 8) +
+            openingTag +
+            content.substring(returnIndex + 8, closingIndex).trim() +
+            closingTag +
+            content.substring(closingIndex);
           modified = true;
         }
       }

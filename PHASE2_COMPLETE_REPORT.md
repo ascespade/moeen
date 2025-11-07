@@ -1,4 +1,5 @@
 # Phase 2: Setup & Centralization - Complete Report
+
 ## تقرير المرحلة 2: الإعداد والمركزية - مكتمل
 
 **Status:** ✅ **COMPLETED**  
@@ -19,6 +20,7 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 ### ✅ Step 1: Setup Husky + lint-staged
 
 **Completed:**
+
 - ✅ Installed `husky`, `lint-staged`, `@commitlint/cli`, `@commitlint/config-conventional`
 - ✅ Initialized Husky with `npx husky init`
 - ✅ Created pre-commit hook with lint-staged
@@ -27,11 +29,13 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 - ✅ Created `commitlint.config.js` with conventional commit rules
 
 **Files Created:**
+
 - `.husky/pre-commit` - Runs lint-staged before commits
 - `.husky/commit-msg` - Validates commit messages
 - `commitlint.config.js` - Commit message validation rules
 
 **Configuration Added:**
+
 ```json
 "lint-staged": {
   "*.{ts,tsx}": ["eslint --fix", "prettier --write"],
@@ -45,11 +49,13 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 ### ✅ Step 2: Create Constants Files
 
 **Completed:**
+
 - ✅ Created all 9 constants files
 - ✅ All files properly typed with TypeScript
 - ✅ Centralized exports in `index.ts`
 
 **Files Created:**
+
 1. `src/lib/constants/routes.ts` - All application routes
 2. `src/lib/constants/api-endpoints.ts` - API endpoints
 3. `src/lib/constants/messages.ts` - User messages (success, error, info, confirmation)
@@ -61,6 +67,7 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 9. `src/lib/constants/index.ts` - Central exports
 
 **Features:**
+
 - Type-safe constants
 - Helper functions for common operations
 - Arabic and English support
@@ -71,11 +78,13 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 ### ✅ Step 3: Create Validation Schemas
 
 **Completed:**
+
 - ✅ Created all validation schemas with Zod
 - ✅ All schemas properly typed
 - ✅ Integrated with constants for messages
 
 **Files Created:**
+
 1. `src/lib/validations/auth.ts` - Authentication schemas (login, register, password reset, etc.)
 2. `src/lib/validations/user.ts` - User profile and management schemas
 3. `src/lib/validations/post.ts` - Post/Content schemas
@@ -84,6 +93,7 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 6. `src/lib/validations/index.ts` - Central exports
 
 **Features:**
+
 - Type-safe validation with Zod
 - Custom error messages in Arabic
 - Integration with config constants for validation rules
@@ -94,12 +104,14 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 ### ✅ Step 4: Create Error Handling System
 
 **Completed:**
+
 - ✅ Created comprehensive error handling system
 - ✅ Custom AppError class with error codes
 - ✅ Error handler utilities
 - ✅ Error logging utilities
 
 **Files Created:**
+
 1. `src/lib/errors/app-error.ts` - Custom AppError class with static factory methods
 2. `src/lib/errors/error-handler.ts` - Global error handler
 3. `src/lib/errors/error-codes.ts` - Re-exported error codes
@@ -107,8 +119,9 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 5. `src/lib/errors/index.ts` - Central exports
 
 **Features:**
+
 - HTTP status code mapping
-- Error code system (AUTH_*, VALID_*, DB_*, API_*, etc.)
+- Error code system (AUTH*\*, VALID*\_, DB\_\_, API\_\*, etc.)
 - Zod validation error handling
 - Context-aware error logging
 - API and server action error handlers
@@ -118,11 +131,13 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 ### ✅ Step 5: Create Utilities
 
 **Completed:**
+
 - ✅ Created all utility modules
 - ✅ Installed `date-fns` for date utilities
 - ✅ All utilities properly typed
 
 **Files Created:**
+
 1. `src/lib/utils/cn.ts` - Class name utility (clsx + tailwind-merge)
 2. `src/lib/utils/format.ts` - Formatting utilities (dates, currency, numbers, file size, phone)
 3. `src/lib/utils/validation.ts` - Validation utilities (email, phone, password, URL, file)
@@ -133,6 +148,7 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 8. `src/lib/utils/index.ts` - Central exports
 
 **Features:**
+
 - Date formatting with Arabic/English locales
 - Currency formatting for SAR
 - Phone number formatting
@@ -145,6 +161,7 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 ### ✅ Step 6: Create Config Files
 
 **Completed:**
+
 - ✅ Created all configuration files
 - ✅ Environment variable handling
 - ✅ Site configuration
@@ -152,6 +169,7 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 - ✅ Feature flags
 
 **Files Created:**
+
 1. `src/lib/config/env.ts` - Environment variables with validation
 2. `src/lib/config/site.ts` - Site-wide configuration
 3. `src/lib/config/navigation.ts` - Navigation menu configuration
@@ -159,6 +177,7 @@ Phase 2 has been **successfully completed**. All setup tasks, constants, validat
 5. `src/lib/config/index.ts` - Central exports
 
 **Features:**
+
 - Type-safe environment variables
 - Default values and validation
 - Site metadata (SEO, social links, contact)
@@ -185,6 +204,7 @@ All success criteria have been met:
 ## 📊 Statistics - الإحصائيات
 
 **Files Created:** 35 files
+
 - Constants: 9 files
 - Validations: 6 files
 - Errors: 5 files
@@ -195,6 +215,7 @@ All success criteria have been met:
 **Lines of Code:** ~2,500+ lines
 
 **Dependencies Installed:**
+
 - `husky@^9.1.7`
 - `lint-staged@^16.2.6`
 - `@commitlint/cli@^20.1.0`
@@ -208,6 +229,7 @@ All success criteria have been met:
 **Result:** ✅ **PASSED**
 
 All Phase 2 files pass TypeScript compilation:
+
 ```bash
 npx tsc --noEmit --skipLibCheck src/lib/constants/*.ts src/lib/validations/*.ts src/lib/errors/*.ts src/lib/utils/*.ts src/lib/config/*.ts
 ```
@@ -265,6 +287,7 @@ src/lib/
 ## 🎯 Next Steps - الخطوات التالية
 
 **Ready for Phase 3:**
+
 - Database queries centralization
 - Server actions implementation
 - Auth helpers

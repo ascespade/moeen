@@ -41,13 +41,13 @@ export default function NotificationsSettingsPage() {
   if (loading) {
     return (
       <>
-        <div aria-live="polite" aria-atomic="true" className="sr-only">
-          <span id="live-region"></span>
+        <div aria-live='polite' aria-atomic='true' className='sr-only'>
+          <span id='live-region'></span>
         </div>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-gray-600">جاري التحميل...</p>
+        <div className='flex items-center justify-center min-h-screen'>
+          <div className='text-center'>
+            <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto'></div>
+            <p className='mt-4 text-gray-600'>جاري التحميل...</p>
           </div>
         </div>
       </>
@@ -56,33 +56,29 @@ export default function NotificationsSettingsPage() {
 
   return (
     <>
-      <div className="container mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6">إعدادات الإشعارات</h1>
+      <div className='container mx-auto p-6'>
+        <h1 className='text-3xl font-bold mb-6'>إعدادات الإشعارات</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           {/* Templates */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">قوالب الإشعارات</h2>
-            <p className="text-gray-600 mb-4">
-              {templates.length} قالب موجود
-            </p>
+          <div className='bg-white rounded-lg shadow p-6'>
+            <h2 className='text-xl font-semibold mb-4'>قوالب الإشعارات</h2>
+            <p className='text-gray-600 mb-4'>{templates.length} قالب موجود</p>
             <button
-              className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark"
-              aria-label="إضافة قالب جديد"
+              className='px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark'
+              aria-label='إضافة قالب جديد'
             >
               إضافة قالب جديد
             </button>
           </div>
 
           {/* Rules */}
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-4">قواعد الإشعارات</h2>
-            <p className="text-gray-600 mb-4">
-              {rules.length} قاعدة موجودة
-            </p>
+          <div className='bg-white rounded-lg shadow p-6'>
+            <h2 className='text-xl font-semibold mb-4'>قواعد الإشعارات</h2>
+            <p className='text-gray-600 mb-4'>{rules.length} قاعدة موجودة</p>
             <button
-              className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark"
-              aria-label="إضافة قاعدة جديدة"
+              className='px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark'
+              aria-label='إضافة قاعدة جديدة'
             >
               إضافة قاعدة جديدة
             </button>
