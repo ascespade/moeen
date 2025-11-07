@@ -25,14 +25,9 @@ export default function DashboardRedirect() {
     const targetRoute = getDefaultRoute(role);
 
     // Redirect if not already on target route
-    if (
-      window.location.pathname !== targetRoute &&
-      targetRoute !== '/dashboard'
-    ) {
+    // Use router.replace for client-side navigation (no refresh)
+    if (targetRoute !== '/dashboard') {
       router.replace(targetRoute);
-    } else if (targetRoute === '/dashboard') {
-      // If agent role, show <maindashboard instead of redirecting
-      // This allows them to see the dashboard
     }
   }, [router]);
 

@@ -75,12 +75,11 @@ function CRMDashboardContent() {
   const [dateFilter, setDateFilter] = useState('today');
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-      return;
+    // Layout handles authentication check - no need to redirect here
+    if (isAuthenticated) {
+      loadDashboardData();
     }
-    loadDashboardData();
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated]);
 
   const loadDashboardData = async () => {
     try {

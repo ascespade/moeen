@@ -56,7 +56,7 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
   height = 300,
   showLegend = true,
   showGrid = true,
-  _animate = true,
+  // _animate = true,
   isLoading = false,
   error,
   onRefresh,
@@ -66,10 +66,10 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
   className,
   trend,
 }) => {
-  const _chartId = useMemo(
-    () => `chart-${Math.random().toString(36).substr(2, 9)}`,
-    []
-  );
+  // const _chartId = useMemo(
+  //   () => `chart-${Math.random().toString(36).substr(2, 9)}`,
+  //   []
+  // );
 
   const renderChart = () => {
     if (error) {
@@ -88,8 +88,8 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
                 variant='outline'
                 size='sm'
                 onClick={onRefresh}
-                icon={RefreshCw}
               >
+                <RefreshCw className='w-4 h-4 mr-2' />
                 إعادة المحاولة
               </Button>
             )}
@@ -259,7 +259,7 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
     padding: number,
     isArea: boolean
   ) => {
-    const elements = [];
+    const elements: JSX.Element[] = [];
 
     datasets.forEach((dataset, datasetIndex) => {
       const points = dataset.data
@@ -338,7 +338,7 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
     isDoughnut: boolean
   ) => {
     const data = datasets[0]?.data || [];
-    const total = data.reduce((sum, value) => sum + value, 0);
+    const total = data.reduce((sum: number, value: number) => sum + value, 0);
     const centerX = width / 2;
     const centerY = height / 2;
     const radius = Math.min(width, height) / 3;
@@ -438,34 +438,38 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({
               variant='ghost'
               size='sm'
               onClick={onRefresh}
-              icon={RefreshCw}
               className='w-8 h-8 p-0'
-            />
+            >
+              <RefreshCw className='w-4 h-4' />
+            </Button>
           )}
           {onExport && (
             <Button
               variant='ghost'
               size='sm'
               onClick={onExport}
-              icon={Download}
               className='w-8 h-8 p-0'
-            />
+            >
+              <Download className='w-4 h-4' />
+            </Button>
           )}
           {onExpand && (
             <Button
               variant='ghost'
               size='sm'
               onClick={onExpand}
-              icon={isExpanded ? Minimize2 : Maximize2}
               className='w-8 h-8 p-0'
-            />
+            >
+              {isExpanded ? <Minimize2 className='w-4 h-4' /> : <Maximize2 className='w-4 h-4' />}
+            </Button>
           )}
           <Button
             variant='ghost'
             size='sm'
-            icon={MoreHorizontal}
             className='w-8 h-8 p-0'
-          />
+          >
+            <MoreHorizontal className='w-4 h-4' />
+          </Button>
         </div>
       </div>
 

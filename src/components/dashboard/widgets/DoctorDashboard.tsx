@@ -74,7 +74,7 @@ const mockPerformanceData = [
 ];
 
 const DoctorDashboard: React.FC<DoctorDashboardProps> = ({
-  _doctorId,
+  // _doctorId,
   className,
 }) => {
   const [selectedView, setSelectedView] = useState<

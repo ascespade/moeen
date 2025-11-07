@@ -181,15 +181,13 @@ const APIKeysSettingsPage: React.FC = () => {
     },
   ];
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-      return;
+    // Layout handles authentication check - no need to redirect here
+    if (isAuthenticated) {
+      loadApiKeys();
     }
-    loadApiKeys();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated]);
 
   const loadApiKeys = async () => {
     try {

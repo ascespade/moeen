@@ -9,7 +9,7 @@
 import { Suspense } from 'react';
 import Sidebar from '@/components/shell/Sidebar';
 import Header from '@/components/shell/Header';
-import UnifiedProtectedRoute from '@/components/auth/UnifiedProtectedRoute';
+import { UnifiedPageGuard } from '@/lib/auth/unified-page-guard';
 import AdminLoading from './loading';
 
 export default function AdminLayout({
@@ -18,7 +18,11 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <UnifiedProtectedRoute allowedRoles={['admin', 'manager', 'supervisor']}>
+    <UnifiedPageGuard
+      requiredRoles={['admin', 'manager', 'supervisor']}
+      showError={true}
+      redirectOnUnauthorized={false}
+    >
       <div className='flex min-h-dvh bg-background text-foreground overflow-hidden' role="application">
         {/* Sidebar - Always visible, sticky */}
         <nav className='sticky top-0 h-screen overflow-hidden flex-shrink-0' role="navigation" aria-label="القائمة الجانبية">
@@ -40,6 +44,6 @@ export default function AdminLayout({
           </main>
         </div>
       </div>
-    </UnifiedProtectedRoute>
+    </UnifiedPageGuard>
   );
 }

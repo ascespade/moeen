@@ -216,7 +216,7 @@ function AdminDashboardPage() {
             } catch (error) {
               console.error('LocalStorage error:', error);
             }
-            window.location.replace('/login');
+            router.push('/login');
           }}
         >
           خروج

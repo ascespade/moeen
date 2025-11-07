@@ -18,14 +18,14 @@ import {
   Clock,
   Calendar,
   Menu,
-  X,
+  // X,
   Bot,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 
 export default function Header() {
-  const { _theme } = useTheme();
+  // const { _theme } = useTheme();
   const { language, direction } = useLanguage();
   // Use custom auth hook (preferred) or fallback to unified auth
   const customAuth = useCustomAuth();
@@ -37,7 +37,7 @@ export default function Header() {
     customAuth.isAuthenticated || unifiedAuth.isAuthenticated;
   const logout = customAuth.logout || unifiedAuth.logout;
   const router = useRouter();
-  const _pathname = usePathname();
+  // const _pathname = usePathname();
   const [notifications, setNotifications] = useState<any[]>([]);
   const [notificationsLoading, setNotificationsLoading] = useState(true);
   const [showNotifDropdown, setShowNotifDropdown] = useState(false);
@@ -119,7 +119,7 @@ export default function Header() {
           });
 
           // Sort: unread first, then by date
-          const sorted = userNotifications.sort((a: unknown, b: unknown) => {
+          const sorted = userNotifications.sort((a: any, b: any) => {
             const aUnread = !a.is_read && !a.read;
             const bUnread = !b.is_read && !b.read;
             if (aUnread !== bUnread) return aUnread ? -1 : 1;
@@ -230,9 +230,9 @@ export default function Header() {
   }, []);
 
   // Get enabled modules for quick access
-  const _enabledModules = Object.entries(systemConfig.modules)
-    .filter(([_, config]) => config.enabled)
-    .map(([name, config]) => ({ name, ...config }));
+  // const _enabledModules = Object.entries(systemConfig.modules)
+  //   .filter(([_, config]) => config.enabled)
+  //   .map(([name, config]) => ({ name, ...config }));
 
   // Get AI features status
   const aiFeaturesEnabled = Object.values(systemConfig.ai_features).some(

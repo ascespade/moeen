@@ -19,7 +19,7 @@ export function ThemeSwitch({
   showLabel = true,
   className = '',
 }: ThemeSwitchProps) {
-  const { theme, setTheme, isDark, isLight, _isSystem } = useTheme();
+  const { theme, setTheme, isDark, isLight } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   const themes = [

@@ -93,9 +93,9 @@ export const AdvancedLineChart: React.FC<
   const processedData = useMemo(() => {
     const categories = [...new Set(data.map(d => d.category || 'default'))];
     return categories.map((category, index) => ({
-      category,
+      category: category || 'default',
       points: data.filter(d => (d.category || 'default') === category),
-      color: colorScheme[index % colorScheme.length],
+      color: colorScheme[index % colorScheme.length] || colorScheme[0],
     }));
   }, [data, colorScheme]);
 
@@ -259,7 +259,7 @@ export const AdvancedLineChart: React.FC<
         />
 
         {/* Data */}
-        {processedData.map(({ points, color }) => svgPoints(points, color))}
+        {processedData.map(({ points, color }) => svgPoints(points, color || colorScheme[0]))}
       </svg>
     </div>
   );
@@ -546,7 +546,7 @@ export const AdvancedCharts: React.FC<AdvancedChartProps> = ({
   height = 300,
   showLegend = true,
   showGrid = true,
-  _showTooltip = true,
+  // _showTooltip = true,
   animate = true,
   interactive = true,
   colorScheme,
@@ -718,10 +718,11 @@ export const AdvancedCharts: React.FC<AdvancedChartProps> = ({
                 variant='ghost'
                 size='sm'
                 onClick={onRefresh}
-                icon={RefreshCw}
                 className='w-8 h-8 p-0'
                 title='تحديث'
-              />
+              >
+                <RefreshCw className='w-4 h-4' />
+              </Button>
             )}
 
             {onExport && (
@@ -729,10 +730,11 @@ export const AdvancedCharts: React.FC<AdvancedChartProps> = ({
                 variant='ghost'
                 size='sm'
                 onClick={() => onExport('png')}
-                icon={Download}
                 className='w-8 h-8 p-0'
                 title='تصدير'
-              />
+              >
+                <Download className='w-4 h-4' />
+              </Button>
             )}
 
             {onExpand && (
@@ -740,10 +742,11 @@ export const AdvancedCharts: React.FC<AdvancedChartProps> = ({
                 variant='ghost'
                 size='sm'
                 onClick={onExpand}
-                icon={Maximize2}
                 className='w-8 h-8 p-0'
                 title='تكبير'
-              />
+              >
+                <Maximize2 className='w-4 h-4' />
+              </Button>
             )}
           </div>
         </div>

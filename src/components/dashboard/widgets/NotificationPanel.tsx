@@ -241,10 +241,11 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
               variant='ghost'
               size='sm'
               onClick={onSoundToggle}
-              icon={soundEnabled ? Volume2 : VolumeX}
               className='w-8 h-8 p-0'
               title={soundEnabled ? 'كتم الصوت' : 'تفعيل الصوت'}
-            />
+            >
+              {soundEnabled ? <Volume2 className='w-4 h-4' /> : <VolumeX className='w-4 h-4' />}
+            </Button>
           )}
 
           {onRefresh && (
@@ -252,11 +253,12 @@ const NotificationPanel: React.FC<NotificationPanelProps> = ({
               variant='ghost'
               size='sm'
               onClick={onRefresh}
-              icon={RefreshCw}
               className='w-8 h-8 p-0'
               title='تحديث'
               disabled={isLoading}
-            />
+            >
+              <RefreshCw className='w-4 h-4' />
+            </Button>
           )}
 
           {showFilters && (

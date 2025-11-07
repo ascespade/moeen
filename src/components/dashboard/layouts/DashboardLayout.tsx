@@ -120,10 +120,11 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 variant='ghost'
                 size='sm'
                 onClick={onThemeToggle}
-                icon={isDarkMode ? Sun : Moon}
                 className='w-9 h-9 p-0'
                 title={isDarkMode ? 'الوضع الفاتح' : 'الوضع المظلم'}
-              />
+              >
+                {isDarkMode ? <Sun className='w-4 h-4' /> : <Moon className='w-4 h-4' />}
+              </Button>
             )}
 
             {/* Notifications */}
@@ -132,10 +133,10 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 variant='ghost'
                 size='sm'
                 onClick={onNotificationsClick}
-                icon={Bell}
                 className='w-9 h-9 p-0 relative'
                 title='الإشعارات'
               >
+                <Bell className='w-4 h-4' />
                 {notificationCount > 0 && (
                   <span className='absolute -top-1 -right-1 w-5 h-5 bg-error-500 text-white text-xs rounded-full flex items-center justify-center font-medium'>
                     {notificationCount > 99 ? '99+' : notificationCount}
@@ -148,10 +149,11 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             <Button
               variant='ghost'
               size='sm'
-              icon={Settings}
               className='w-9 h-9 p-0'
               title='الإعدادات'
-            />
+            >
+              <Settings className='w-4 h-4' />
+            </Button>
 
             {/* User Menu */}
             {user && (
@@ -180,10 +182,11 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 <Button
                   variant='ghost'
                   size='sm'
-                  icon={LogOut}
                   className='w-8 h-8 p-0 text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50'
                   title='تسجيل الخروج'
-                />
+                >
+                  <LogOut className='w-4 h-4' />
+                </Button>
               </div>
             )}
           </div>
@@ -264,7 +267,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
                       }
                     }
                   }}
-                  aria-label={item.label || item.name}
+                  aria-label={item.label}
                   className={cn(
                     'w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors',
                     activeItem === item.id
@@ -464,9 +467,10 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           variant='outline'
           size='sm'
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          icon={sidebarOpen ? X : Menu}
           className='w-10 h-10 p-0'
-        />
+        >
+          {sidebarOpen ? <X className='w-4 h-4' /> : <Menu className='w-4 h-4' />}
+        </Button>
       </div>
 
       <div className='flex'>

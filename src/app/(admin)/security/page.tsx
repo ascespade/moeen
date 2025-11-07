@@ -116,12 +116,11 @@ function SecurityPageContent() {
   const [filterSeverity, setFilterSeverity] = useState<string>('all');
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-      return;
+    // Layout handles authentication check - no need to redirect here
+    if (isAuthenticated) {
+      loadSecurityData();
     }
-    loadSecurityData();
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated]);
 
   const loadSecurityData = async () => {
     try {
