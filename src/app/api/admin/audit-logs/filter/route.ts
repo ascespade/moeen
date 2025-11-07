@@ -197,17 +197,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 //       };
 //
 //     case 'year':
-      const yearStart = new Date(today.getFullYear(), 0, 1);
-      const yearEnd = new Date(today.getFullYear(), 11, 31);
-      return {
-        startDate: yearStart.toISOString(),
-        endDate: yearEnd.toISOString(),
-      };
-
-    default:
-      return _getDateRanges('month');
-  }
-}
+//       const yearStart = new Date(today.getFullYear(), 0, 1);
+//       const yearEnd = new Date(today.getFullYear(), 11, 31);
+//       return {
+//         startDate: yearStart.toISOString(),
+//         endDate: yearEnd.toISOString(),
+//       };
+//
+//     default:
+//       return _getDateRanges('month');
+//   }
+// }
 
 function getActionDisplayName(action: string): string {
   const actionNames: Record<string, string> = {
