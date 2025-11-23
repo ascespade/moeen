@@ -1,0 +1,134 @@
+{
+  "summary": {
+    "status": "BLOCKED",
+    "totalTests": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "duration": 0,
+    "timestamp": "2025-11-01T00:00:00.000Z"
+  },
+  "testResults": {
+    "unit": {
+      "status": "BLOCKED",
+      "error": "Vitest not found - test runner not installed",
+      "command": "npm run test:unit",
+      "resolution": "Install dependencies with: npm install"
+    },
+    "integration": {
+      "status": "NOT_RUN",
+      "reason": "Dependencies not installed"
+    },
+    "e2e": {
+      "status": "NOT_RUN",
+      "reason": "Dependencies not installed"
+    }
+  },
+  "impactedModules": [
+    {
+      "module": "admin/patients",
+      "files": ["src/app/(admin)/admin/patients/page.tsx"],
+      "testsToRun": ["admin/patients.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "admin/conversations",
+      "files": ["src/app/(admin)/conversations/page.tsx"],
+      "testsToRun": ["conversations.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "admin/doctors",
+      "files": ["src/app/(admin)/doctors/page.tsx"],
+      "testsToRun": ["doctors.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "admin/messages",
+      "files": ["src/app/(admin)/messages/page.tsx"],
+      "testsToRun": ["messages.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "admin/notifications",
+      "files": ["src/app/(admin)/notifications/page.tsx"],
+      "testsToRun": ["notifications.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "admin/performance",
+      "files": ["src/app/(admin)/performance/page.tsx"],
+      "testsToRun": ["performance.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "api/agent",
+      "files": [
+        "src/app/api/agent/completion/route.ts",
+        "src/app/api/agent/status/route.ts",
+        "src/app/api/agent/tasks/route.ts"
+      ],
+      "testsToRun": ["api/agent/*.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "api/analytics",
+      "files": ["src/app/api/analytics/metrics/route.ts"],
+      "testsToRun": ["api/analytics.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "api/appointments",
+      "files": ["src/app/api/appointments/book/route.ts"],
+      "testsToRun": ["api/appointments.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "api/auth",
+      "files": [
+        "src/app/api/auth/check-user/route.ts",
+        "src/app/api/auth/me/route.ts",
+        "src/app/api/auth/permissions/route.ts",
+        "src/app/api/auth/simple-login/route.ts"
+      ],
+      "testsToRun": ["api/auth/*.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "core/api",
+      "files": ["src/core/api/base-handler.ts"],
+      "testsToRun": ["core/api.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "lib/auth",
+      "files": ["src/lib/auth/authorize.ts"],
+      "testsToRun": ["lib/auth.test.ts"],
+      "status": "BLOCKED"
+    },
+    {
+      "module": "middleware",
+      "files": ["src/middleware/permissions.ts"],
+      "testsToRun": ["middleware.test.ts"],
+      "status": "BLOCKED"
+    }
+  ],
+  "environmentIssues": {
+    "dependencies": {
+      "status": "MISSING",
+      "issues": [
+        "vitest not installed",
+        "next not installed",
+        "typescript not installed"
+      ],
+      "resolution": "Run: npm install"
+    }
+  },
+  "recommendations": [
+    "Install project dependencies: npm install",
+    "Run incremental unit tests: npm run test:unit",
+    "Run integration tests for API routes",
+    "Add tests for new API endpoints if not exists",
+    "Ensure all critical modules have test coverage"
+  ]
+}
