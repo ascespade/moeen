@@ -1,0 +1,29 @@
+{
+  "timestamp": "2025-11-01T00:00:00.000Z",
+  "status": "PENDING",
+  "test_framework": "playwright",
+  "total_tests": 1050,
+  "affected_tests": [
+    "accessibility/accessibility.test.ts",
+    "api/appointments-routes.spec.ts",
+    "api/auth-routes.spec.ts",
+    "api/chatbot-routes.spec.ts",
+    "api/notifications-routes.spec.ts",
+    "api/patients-routes.spec.ts",
+    "api/routes-test.spec.ts"
+  ],
+  "results": {
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "total": 1050
+  },
+  "coverage": {
+    "statements": "N/A",
+    "branches": "N/A",
+    "functions": "N/A",
+    "lines": "N/A"
+  },
+  "note": "Tests require running application server. Incremental test execution recommended for changed modules: auth, dashboard, chatbot, admin APIs",
+  "recommendation": "Tests should be run in CI pipeline with proper environment setup"
+}

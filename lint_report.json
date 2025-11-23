@@ -1,0 +1,57 @@
+{
+  "timestamp": "2025-11-01T00:00:00.000Z",
+  "status": "FAILED",
+  "critical_errors": 9,
+  "warnings": 8,
+  "errors": [
+    {
+      "file": "src/app/(admin)/dashboard-modern/page.tsx",
+      "line": 243,
+      "severity": "error",
+      "rule": "react/no-children-prop",
+      "message": "Do not pass children as props. Instead, nest children between the opening and closing tags."
+    },
+    {
+      "file": "src/components/admin/settings/ModuleSettings.tsx",
+      "line": 303,
+      "severity": "error",
+      "rule": "@next/next/no-assign-module-variable",
+      "message": "Do not assign to the variable `module`."
+    },
+    {
+      "file": "src/components/dashboard/widgets/PatientDashboard.tsx",
+      "line": 334,
+      "severity": "error",
+      "rule": "react/jsx-no-undef",
+      "message": "'Thermometer' is not defined."
+    },
+    {
+      "file": "src/components/dashboard/widgets/PatientDashboard.tsx",
+      "line": 387,
+      "severity": "error",
+      "rule": "react/jsx-no-undef",
+      "message": "'Thermometer' is not defined."
+    },
+    {
+      "file": "src/components/modals/TermsOfServiceModal.tsx",
+      "line": 189,
+      "severity": "error",
+      "rule": "react/no-unescaped-entities",
+      "message": "Unescaped quotes - can be escaped with &quot;, &ldquo;, &#34;, &rdquo;."
+    },
+    {
+      "file": "src/core/errors/index.ts",
+      "line": 290,
+      "severity": "error",
+      "rule": "@typescript-eslint/no-require-imports",
+      "message": "Definition for rule '@typescript-eslint/no-require-imports' was not found."
+    }
+  ],
+  "summary": {
+    "files_checked": 75,
+    "errors": 9,
+    "warnings": 8,
+    "fixable": 0
+  },
+  "recommendation": "BLOCK_MERGE - Critical errors must be fixed before merge"
+}
