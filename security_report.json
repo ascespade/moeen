@@ -1,0 +1,48 @@
+{
+  "status": "warning",
+  "timestamp": "2025-11-01T00:00:00Z",
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "moderate": 2,
+    "low": 0,
+    "info": 0,
+    "total": 2
+  },
+  "vulnerabilities": [
+    {
+      "name": "tar",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": "supabase",
+      "advisory": "GHSA-29xp-372q-xqph",
+      "title": "node-tar has a race condition leading to uninitialized memory exposure",
+      "url": "https://github.com/advisories/GHSA-29xp-372q-xqph",
+      "cwe": "CWE-362",
+      "range": "=7.5.1",
+      "fixAvailable": true
+    },
+    {
+      "name": "supabase",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": "tar",
+      "range": "2.46.0 - 2.55.4",
+      "fixAvailable": true
+    }
+  ],
+  "dependencies": {
+    "production": 698,
+    "development": 328,
+    "optional": 140,
+    "peer": 10,
+    "total": 1110
+  },
+  "recommendations": [
+    "Run 'npm audit fix' to automatically fix moderate vulnerabilities",
+    "Update supabase package to version >= 2.55.5 if available",
+    "Review tar package vulnerability and assess impact on production"
+  ],
+  "shouldBlockMerge": false,
+  "reason": "Only moderate vulnerabilities found, no critical or high severity issues"
+}
