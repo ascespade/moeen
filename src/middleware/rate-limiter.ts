@@ -14,7 +14,7 @@ interface RateLimitConfig {
 const rateLimitConfigs: Record<string, RateLimitConfig> = {
   '/api/auth/login': {
     windowMs: 15 * 60 * 1000, // 15 minutes
-    maxRequests: 1000, // Disabled for testing
+    maxRequests: 5, // 5 attempts per 15 minutes (production-ready)
     message: 'Too many login attempts, please try again later',
   },
   '/api/appointments/book': {
